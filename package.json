@@ -1,5 +1,7 @@
 {
   "name": "union-beta",
+  "author": "@unioncredit",
+  "description": "Union Finance Beta Application",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -20,5 +22,15 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^5.0.3"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unioncredit/union-beta.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/unioncredit/union-beta/issues"
+  },
+  "homepage": "https://github.com/unioncredit/union-beta#readme"
 }
