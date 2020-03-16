@@ -2,6 +2,7 @@ import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { Fragment } from "react";
+import Button from "./button";
 
 const Web3Connection = () => {
   const { active, account, connector, error } = useWeb3React();
@@ -10,23 +11,23 @@ const Web3Connection = () => {
 
   if (account)
     return (
-      <button>
+      <Button invert>
         <p>{ENSName ?? truncateAddress(account)}</p>
-      </button>
+      </Button>
     );
 
   if (error) {
-    <button>
+    <Button invert>
       <p>
         {error instanceof UnsupportedChainIdError ? "Wrong Network" : "Error"}
       </p>
-    </button>;
+    </Button>;
   }
 
   return (
-    <button>
+    <Button invert>
       <p>Connect to a wallet</p>
-    </button>
+    </Button>
   );
 };
 
