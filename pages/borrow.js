@@ -1,14 +1,14 @@
 import Head from "next/head";
 
-export default function Home() {
+export default function Borrow() {
   return (
     <div className="container">
       <Head>
-        <title>Union</title>
+        <title>Borrow | Union</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Home</h1>
+      <h1>Borrow</h1>
     </div>
   );
 }
