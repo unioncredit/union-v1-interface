@@ -1,12 +1,83 @@
+/* stylelint-disable at-rule-no-unknown,  */
+
 /* purgecss start ignore */
-@import "tailwindcss/base";
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: auto;
+  src: local("Montserrat Regular"), local("Montserrat-Regular"),
+    url(/Montserrat-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: auto;
+  src: local("Montserrat Medium"), local("Montserrat-Medium"),
+    url(/Montserrat-500.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: auto;
+  src: local("Montserrat SemiBold"), local("Montserrat-SemiBold"),
+    url(/Montserrat-600.woff2) format("woff2");
+}
+
+@tailwind base;
 /* purgecss end ignore */
 
-@import "tailwindcss/components";
+@tailwind components;
 
-@import "tailwindcss/utilities";
+.btn {
+  @apply font-semibold py-2 px-4 rounded transition-colors duration-200;
+}
+.btn:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.btn-primary {
+  @apply bg-pink-500 text-white border border-pink-500;
+}
+.btn-primary:hover:enabled {
+  @apply bg-pink-700 border-pink-700;
+}
+
+.btn-secondary {
+  @apply bg-blue-800 text-white border border-blue-800;
+}
+.btn-secondary:hover:enabled {
+  @apply bg-blue-900 border-blue-900;
+}
+
+.btn-invert {
+  @apply bg-transparent text-blue-800 border border-gray-300;
+}
+.btn-invert:hover:enabled {
+  @apply bg-gray-300;
+}
+
+@tailwind utilities;
+
+/* stylelint-enable at-rule-no-unknown */
 
 /* purgecss start ignore */
-@import "./reachui.css";
-@import "./fonts.css";
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.66);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+[data-reach-dialog-content] {
+  width: 50vw;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  outline: none;
+}
 /* purgecss end ignore */
