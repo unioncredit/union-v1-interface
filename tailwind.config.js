@@ -24,5 +24,9 @@ module.exports = {
     }
   },
   variants: {},
-  plugins: []
+  plugins: [],
+  corePlugins: {
+    float: false,
+    container: false
+  }
 };
