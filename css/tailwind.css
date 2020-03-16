@@ -1,9 +1,12 @@
 /* purgecss start ignore */
 @import "tailwindcss/base";
-@import "./reachui.css";
-@import "./fonts.css";
 /* purgecss end ignore */
 
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
+
+/* purgecss start ignore */
+@import "./reachui.css";
+@import "./fonts.css";
+/* purgecss end ignore */
