@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./logo";
+import Web3Status from "./web3status";
 
 const Navigation = () => {
   return (
@@ -28,7 +29,9 @@ const Navigation = () => {
           </Link>
         </li>
         <li>ACTIVITY</li>
-        <li>WALLET STATUS</li>
+        <li>
+          <Web3Status />
+        </li>
       </ul>
 
       <style jsx>{`
