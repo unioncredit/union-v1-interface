@@ -1,14 +1,17 @@
 import Head from "next/head";
+import Container from "@components/container";
 
 export default function Borrow() {
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Borrow | Union</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Borrow</h1>
+      <Container>
+        <h1>Borrow</h1>
+      </Container>
     </div>
   );
 }

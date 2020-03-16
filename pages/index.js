@@ -1,14 +1,17 @@
 import Head from "next/head";
+import Container from "@components/container";
 
 export default function Home() {
   return (
-    <div className="container">
+    <div>
       <Head>
         <title>Union</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Home</h1>
+      <Container>
+        <h1>Home</h1>
+      </Container>
     </div>
   );
 }
