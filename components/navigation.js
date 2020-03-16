@@ -32,6 +32,10 @@ const Navigation = () => {
       </ul>
 
       <style jsx>{`
+        nav {
+          border-bottom: 1px solid;
+        }
+
         a {
           font-weight: bold;
           text-decoration: none;
