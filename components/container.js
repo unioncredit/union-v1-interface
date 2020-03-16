@@ -1,7 +1,7 @@
 import classNames from "classnames";
 
-const Container = ({ children, wide = false }) => {
-  const cachedClassNames = classNames("w-full mx-auto", {
+const Container = ({ children, className, wide = false }) => {
+  const cachedClassNames = classNames(className, "w-full mx-auto", {
     "max-w-screen-lg-gutter": !wide,
     "max-w-screen-xl-gutter": wide
   });
