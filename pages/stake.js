@@ -40,10 +40,12 @@ export default function Stake() {
 
           <table className="table-auto">
             <thead>
-              <th className="px-4 py-2">Address</th>
-              <th className="px-4 py-2">Vouched</th>
-              <th className="px-4 py-2">Used</th>
-              <th className="px-4 py-2">Health</th>
+              <tr>
+                <th className="px-4 py-2">Address</th>
+                <th className="px-4 py-2">Vouched</th>
+                <th className="px-4 py-2">Used</th>
+                <th className="px-4 py-2">Health</th>
+              </tr>
             </thead>
             <tbody>
               <tr>
