@@ -17,7 +17,7 @@ export default function Vouch() {
             <p className="font-semibold">21,000 DAI</p>
           </div>
           <div>
-            <Button invert>Open request for credit</Button>
+            <Button type="invert">Open request for credit</Button>
           </div>
         </div>
 

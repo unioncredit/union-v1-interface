@@ -55,12 +55,12 @@ export default function Stake() {
 
               <div className="flex -mx-3">
                 <div className="flex-1 px-3">
-                  <Button secondary wide>
+                  <Button type="secondary" wide>
                     Deposit
                   </Button>
                 </div>
                 <div className="flex-1 px-3">
-                  <Button invert wide>
+                  <Button type="invert" wide>
                     Withdraw
                   </Button>
                 </div>
@@ -72,7 +72,7 @@ export default function Stake() {
             <div className="flex justify-between items-center mb-5">
               <h2>Addresses You Trust</h2>
 
-              <Button invert>Trust a new member</Button>
+              <Button type="invert">Trust a new member</Button>
             </div>
 
             <table className="table-auto">

@@ -11,13 +11,13 @@ const Web3Connection = () => {
 
   if (account)
     return (
-      <Button invert>
+      <Button type="invert">
         <p>{ENSName ?? truncateAddress(account)}</p>
       </Button>
     );
 
   if (error) {
-    <Button invert>
+    <Button type="invert">
       <p>
         {error instanceof UnsupportedChainIdError ? "Wrong Network" : "Error"}
       </p>
@@ -25,7 +25,7 @@ const Web3Connection = () => {
   }
 
   return (
-    <Button invert>
+    <Button type="invert">
       <p>Connect to a wallet</p>
     </Button>
   );
