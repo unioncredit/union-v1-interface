@@ -6,12 +6,12 @@ import { Contract } from "@ethersproject/contracts";
  *
  * @param {String} address The address of the deployed contract
  * @param {import("@ethersproject/contracts").ContractInterface} ABI The ABI itself
- * @param {import("@ethersproject/abstract-signer").Signer} provider The Web3 Provider
+ * @param {import("@ethersproject/abstract-signer").Signer} signer The Web3 Provider's Signer
  */
-export async function getContract(address, ABI, provider) {
+export async function getContract(address, ABI, signer) {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
 
-  return new Contract(address, ABI, provider);
+  return new Contract(address, ABI, signer);
 }
