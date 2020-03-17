@@ -18,42 +18,42 @@ export default function Stake() {
             </div>
 
             <div className="bg-pink-100 border border-pink-200 rounded p-6">
-              <div>
-                <p>Your total stake</p>
-                <p className="font-semibold">900 DAI</p>
+              <div className="mb-4">
+                <p className="text-lg">Your total stake</p>
+                <p className="font-semibold text-xl">900 DAI</p>
               </div>
 
-              <div className="flex justify-between">
-                <p>Utilized Stake</p>
-                <p className="font-semibold">700 DAI</p>
+              <div className="flex justify-between py-2 items-center leading-tight">
+                <p className="opacity-50">Utilized Stake</p>
+                <p className="font-semibold text-lg">700 DAI</p>
               </div>
 
-              <div className="flex justify-between">
-                <p>Defaulted Stake</p>
-                <p className="font-semibold">0 DAI</p>
+              <div className="flex justify-between py-2 items-center leading-tight">
+                <p className="opacity-50">Defaulted Stake</p>
+                <p className="font-semibold text-lg">0 DAI</p>
               </div>
 
-              <div className="flex justify-between">
-                <p>Withdrawable Stake</p>
-                <p className="font-semibold">200 DAI</p>
+              <div className="flex justify-between py-2 items-center leading-tight mb-10">
+                <p className="opacity-50">Withdrawable Stake</p>
+                <p className="font-semibold text-lg">200 DAI</p>
               </div>
 
-              <div>
-                <p>Rewards multiplier</p>
-                <p className="font-semibold">X1</p>
+              <div className="mb-4">
+                <p className="text-lg">Rewards multiplier</p>
+                <p className="font-semibold text-xl">X1</p>
               </div>
 
-              <div className="flex justify-between">
-                <p>Rewards</p>
-                <p className="font-semibold">0 DAI</p>
+              <div className="flex justify-between py-2 items-center leading-tight">
+                <p className="opacity-50">Rewards</p>
+                <p className="font-semibold text-lg">0 DAI</p>
               </div>
 
-              <div className="flex justify-between">
-                <p>Union Per Year (UPY)</p>
-                <p className="font-semibold">1.87 UPY</p>
+              <div className="flex justify-between py-2 items-center leading-tight">
+                <p className="opacity-50">Union Per Year (UPY)</p>
+                <p className="font-semibold text-lg">1.87 UPY</p>
               </div>
 
-              <div className="flex -mx-3">
+              <div className="flex -mx-3 mt-10">
                 <div className="flex-1 px-3">
                   <Button type="secondary" wide>
                     Deposit
