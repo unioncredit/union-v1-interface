@@ -17,24 +17,49 @@ export default function Stake() {
               <h1>Stake</h1>
             </div>
 
-            <div className="bg-gray-100 border border-gray-300 rounded p-6">
+            <div className="bg-pink-100 border border-pink-200 rounded p-6">
               <div>
                 <p>Your total stake</p>
-                <p>900 DAI</p>
+                <p className="font-semibold">900 DAI</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Utilized Stake</p>
+                <p className="font-semibold">700 DAI</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Defaulted Stake</p>
+                <p className="font-semibold">0 DAI</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Withdrawable Stake</p>
+                <p className="font-semibold">200 DAI</p>
               </div>
 
               <div>
                 <p>Rewards multiplier</p>
-                <p>X1</p>
+                <p className="font-semibold">X1</p>
               </div>
 
-              <div className="flex -mx-2">
-                <div className="flex-1 px-2">
+              <div className="flex justify-between">
+                <p>Rewards</p>
+                <p className="font-semibold">0 DAI</p>
+              </div>
+
+              <div className="flex justify-between">
+                <p>Union Per Year (UPY)</p>
+                <p className="font-semibold">1.87 UPY</p>
+              </div>
+
+              <div className="flex -mx-3">
+                <div className="flex-1 px-3">
                   <Button secondary wide>
                     Deposit
                   </Button>
                 </div>
-                <div className="flex-1 px-2">
+                <div className="flex-1 px-3">
                   <Button invert wide>
                     Withdraw
                   </Button>
