@@ -31,7 +31,7 @@
 
 /* purgecss start ignore */
 .btn {
-  @apply font-semibold py-2 px-4 rounded transition-colors duration-200;
+  @apply font-semibold py-3 px-10 leading-snug rounded transition-colors duration-200;
 }
 .btn:disabled {
   @apply cursor-not-allowed opacity-50;
@@ -49,6 +49,13 @@
 }
 .btn-secondary:hover:enabled {
   @apply bg-blue-900 border-blue-900;
+}
+
+.btn-tertiary {
+  @apply bg-gray-600 text-white border border-gray-600;
+}
+.btn-tertiary:hover:enabled {
+  @apply bg-gray-800 border-gray-800;
 }
 
 .btn-invert {
