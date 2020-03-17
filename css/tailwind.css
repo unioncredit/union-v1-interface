@@ -52,7 +52,7 @@
 }
 
 .btn-invert {
-  @apply bg-transparent text-blue-800 border border-gray-300;
+  @apply bg-white text-blue-800 border border-gray-300;
 }
 .btn-invert:hover:enabled {
   @apply bg-gray-300;
