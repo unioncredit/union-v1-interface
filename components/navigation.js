@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "./container";
 import Logo from "./logo";
-import Web3Status from "./web3status";
+import Web3Status from "./web3Status";
 
 const Navigation = () => {
   return (
