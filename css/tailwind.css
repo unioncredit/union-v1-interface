@@ -79,6 +79,6 @@
   overflow: auto;
 }
 [data-reach-dialog-content] {
-  @apply bg-white max-w-screen-sm mx-auto outline-none;
+  @apply px-6 py-8 rounded bg-white max-w-md mx-auto outline-none;
 }
 /* purgecss end ignore */

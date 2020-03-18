@@ -10,10 +10,14 @@ const WalletModal = () => {
 
   return (
     <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal}>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet porro
-      placeat quibusdam nisi id ipsa temporibus voluptas nostrum impedit quod,
-      magni, illo voluptatum mollitia excepturi dicta quaerat maiores voluptates
-      architecto!
+      <div className="mb-8">
+        <p className="text-center text-xl mb-3">Connect your wallet</p>
+        <div className="w-full h-1 bg-pink-200" />
+        <p className="text-center leading-tight mt-6">
+          As a final step your wallet will ask you to authorize UNION to access
+          your account.
+        </p>
+      </div>
     </Modal>
   );
 };
