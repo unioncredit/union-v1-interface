@@ -1,9 +1,14 @@
 import Footer from "@components/footer";
 import Navigation from "@components/navigation";
+import ApplicationContext from "@contexts/Application";
 import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import Head from "next/head";
 import "../css/tailwind.css";
+
+const ContextProviders = ({ children }) => (
+  <ApplicationContext>{children}</ApplicationContext>
+);
 
 export default function UnionApp({ Component, pageProps }) {
   return (
@@ -32,15 +37,17 @@ export default function UnionApp({ Component, pageProps }) {
         />
       </Head>
 
-      <header>
-        <Navigation />
-      </header>
+      <ContextProviders>
+        <header>
+          <Navigation />
+        </header>
 
-      <main>
-        <Component {...pageProps} />
-      </main>
+        <main>
+          <Component {...pageProps} />
+        </main>
 
-      <Footer />
+        <Footer />
+      </ContextProviders>
     </Web3ReactProvider>
   );
 }
