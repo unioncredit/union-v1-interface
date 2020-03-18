@@ -17,7 +17,7 @@ export default function Stake() {
               <h1>Stake</h1>
             </div>
 
-            <div className="bg-pink-100 border border-pink-200 rounded p-6">
+            <div className="bg-pink-100 border border-pink-200 rounded p-4 md:p-6">
               <div className="mb-4">
                 <p className="text-lg">Your total stake</p>
                 <p className="font-semibold text-xl">900 DAI</p>
@@ -25,17 +25,17 @@ export default function Stake() {
 
               <div className="flex justify-between py-2 items-center leading-tight">
                 <p className="opacity-50">Utilized Stake</p>
-                <p className="font-semibold text-lg">700 DAI</p>
+                <p className="font-semibold text-lg text-right">700 DAI</p>
               </div>
 
               <div className="flex justify-between py-2 items-center leading-tight">
                 <p className="opacity-50">Defaulted Stake</p>
-                <p className="font-semibold text-lg">0 DAI</p>
+                <p className="font-semibold text-lg text-right">0 DAI</p>
               </div>
 
               <div className="flex justify-between py-2 items-center leading-tight mb-10">
                 <p className="opacity-50">Withdrawable Stake</p>
-                <p className="font-semibold text-lg">200 DAI</p>
+                <p className="font-semibold text-lg text-right">200 DAI</p>
               </div>
 
               <div className="mb-4">
@@ -45,12 +45,12 @@ export default function Stake() {
 
               <div className="flex justify-between py-2 items-center leading-tight">
                 <p className="opacity-50">Rewards</p>
-                <p className="font-semibold text-lg">0 DAI</p>
+                <p className="font-semibold text-lg text-right">0 DAI</p>
               </div>
 
               <div className="flex justify-between py-2 items-center leading-tight">
                 <p className="opacity-50">Union Per Year (UPY)</p>
-                <p className="font-semibold text-lg">1.87 UPY</p>
+                <p className="font-semibold text-lg text-right">1.87 UPY</p>
               </div>
 
               <div className="flex -mx-3 mt-10">
