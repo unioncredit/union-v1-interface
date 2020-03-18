@@ -79,10 +79,6 @@
   overflow: auto;
 }
 [data-reach-dialog-content] {
-  width: 50vw;
-  margin: 10vh auto;
-  background: white;
-  padding: 2rem;
-  outline: none;
+  @apply bg-white max-w-screen-sm mx-auto outline-none;
 }
 /* purgecss end ignore */
