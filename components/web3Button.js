@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import PropTypes from "prop-types";
 
 const Web3Button = ({ error = false, ...props }) => {
   const cachedClassNames = classNames(
@@ -9,6 +10,13 @@ const Web3Button = ({ error = false, ...props }) => {
   );
 
   return <button className={cachedClassNames} {...props} />;
+};
+
+Web3Button.propTypes = {
+  /**
+   * Changes the button to an error background and border color
+   */
+  error: PropTypes.bool
 };
 
 export default Web3Button;
