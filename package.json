@@ -24,6 +24,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-hook-form": "^5.0.3",
+    "react-jazzicon-custom-colors": "^0.1.7",
     "tailwindcss": "^1.2.0"
   },
   "devDependencies": {
