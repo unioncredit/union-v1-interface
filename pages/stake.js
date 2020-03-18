@@ -75,34 +75,36 @@ export default function Stake() {
               <Button type="invert">Trust a new member</Button>
             </div>
 
-            <table className="table-auto">
-              <thead>
-                <tr>
-                  <th className="px-4 py-2">Address</th>
-                  <th className="px-4 py-2">Vouched</th>
-                  <th className="px-4 py-2">Used</th>
-                  <th className="px-4 py-2">Health</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border px-4 py-2">mirshko.eth</td>
-                  <td className="border px-4 py-2">250 DAI</td>
-                  <td className="border px-4 py-2">100 DAI</td>
-                  <td className="border px-4 py-2">
-                    <progress value="50" max="100" />
-                  </td>
-                </tr>
-                <tr className="bg-gray-100">
-                  <td className="border px-4 py-2">lexi.eth</td>
-                  <td className="border px-4 py-2">250 DAI</td>
-                  <td className="border px-4 py-2">100 DAI</td>
-                  <td className="border px-4 py-2">
-                    <progress value="100" max="100" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="bg-white border border-gray-400 rounded p-4 md:p-6">
+              <table className="table-auto">
+                <thead>
+                  <tr>
+                    <th className="px-4 py-2">Address</th>
+                    <th className="px-4 py-2">Vouched</th>
+                    <th className="px-4 py-2">Used</th>
+                    <th className="px-4 py-2">Health</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="border px-4 py-2">mirshko.eth</td>
+                    <td className="border px-4 py-2">250 DAI</td>
+                    <td className="border px-4 py-2">100 DAI</td>
+                    <td className="border px-4 py-2">
+                      <progress value="50" max="100" />
+                    </td>
+                  </tr>
+                  <tr className="bg-gray-100">
+                    <td className="border px-4 py-2">lexi.eth</td>
+                    <td className="border px-4 py-2">250 DAI</td>
+                    <td className="border px-4 py-2">100 DAI</td>
+                    <td className="border px-4 py-2">
+                      <progress value="100" max="100" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </Container>
