@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Container from "@components/container";
 import Button from "@components/button";
+import HealthBar from "@components/healthBar";
 
 export default function Vouch() {
   return (
@@ -47,7 +48,7 @@ export default function Vouch() {
                 <td className="border px-4 py-2">250 DAI</td>
                 <td className="border px-4 py-2">100 DAI</td>
                 <td className="border px-4 py-2">
-                  <progress value="50" max="100" />
+                  <HealthBar health={50} />
                 </td>
               </tr>
               <tr className="bg-gray-100">
@@ -56,7 +57,7 @@ export default function Vouch() {
                 <td className="border px-4 py-2">250 DAI</td>
                 <td className="border px-4 py-2">100 DAI</td>
                 <td className="border px-4 py-2">
-                  <progress value="100" max="100" />
+                  <HealthBar health={100} />
                 </td>
               </tr>
             </tbody>

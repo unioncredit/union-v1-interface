@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Container from "@components/container";
 import Button from "@components/button";
+import HealthBar from "@components/healthBar";
 
 export default function Stake() {
   return (
@@ -101,7 +102,7 @@ export default function Stake() {
                     <td className="py-3 border-b border-gray-400">250 DAI</td>
                     <td className="py-3 border-b border-gray-400">100 DAI</td>
                     <td className="py-3 border-b border-gray-400">
-                      <progress value="50" max="100" />
+                      <HealthBar health={75} />
                     </td>
                   </tr>
                   <tr>
@@ -109,7 +110,7 @@ export default function Stake() {
                     <td className="py-3 border-b border-gray-400">250 DAI</td>
                     <td className="py-3 border-b border-gray-400">100 DAI</td>
                     <td className="py-3 border-b border-gray-400">
-                      <progress value="100" max="100" />
+                      <HealthBar health={50} />
                     </td>
                   </tr>
                 </tbody>

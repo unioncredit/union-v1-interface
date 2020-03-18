@@ -2,6 +2,7 @@ import Button from "@components/button";
 import Container from "@components/container";
 import Head from "next/head";
 import Link from "next/link";
+import HealthBar from "@components/healthBar";
 
 export default function Borrow() {
   return (
@@ -31,7 +32,7 @@ export default function Borrow() {
               <div className="flex justify-between py-2">
                 <p className="opacity-50">Percent Utilization</p>
                 <div className="flex items-center">
-                  <progress value={66.99} max={100} />
+                  <HealthBar health={66.99} />
                   <p className="font-semibold leading-none text-lg ml-4">
                     66.99%
                   </p>
