@@ -1,5 +1,5 @@
+import { useWalletModalToggle } from "@contexts/Application";
 import useENSName from "@hooks/useENSName";
-import { CONNECTORS } from "@lib/connectors";
 import truncateAddress from "@util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import dynamic from "next/dynamic";
@@ -11,15 +11,15 @@ import Web3Button from "./web3Button";
 const Identicon = dynamic(() => import("./identicon"));
 
 const Web3Connection = () => {
-  const { active, account, connector, error, activate } = useWeb3React();
+  const { account, error } = useWeb3React();
 
   const ENSName = useENSName(account);
 
-  const activateInjected = () => activate(CONNECTORS.INJECTED);
+  const toggleWalletModal = useWalletModalToggle();
 
   if (account)
     return (
-      <Web3Button>
+      <Web3Button onClick={toggleWalletModal}>
         <div className="ml-1 flex items-center">
           <Identicon />
           <div className="ml-3">{ENSName ?? truncateAddress(account)}</div>
@@ -29,19 +29,17 @@ const Web3Connection = () => {
 
   if (error)
     return (
-      <Web3Button error>
+      <Web3Button onClick={toggleWalletModal} error>
         {error instanceof UnsupportedChainIdError ? "Wrong Network" : "Error"}
       </Web3Button>
     );
 
-  return <Button onClick={activateInjected}>Start now</Button>;
+  return <Button onClick={toggleWalletModal}>Start now</Button>;
 };
 
-export default () => {
-  return (
-    <Fragment>
-      <Web3Connection />
-      <WalletModal />
-    </Fragment>
-  );
-};
+export default () => (
+  <Fragment>
+    <Web3Connection />
+    <WalletModal />
+  </Fragment>
+);

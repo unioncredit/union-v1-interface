@@ -1,17 +1,19 @@
+import {
+  useWalletModalOpen,
+  useWalletModalToggle
+} from "@contexts/Application";
 import Modal from "./modal";
 
 const WalletModal = () => {
-  const onDismiss = () => false;
-  const isOpen = false;
+  const walletModalOpen = useWalletModalOpen();
+  const toggleWalletModal = useWalletModalToggle();
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss}>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit ea
-        fugiat itaque. Repudiandae, laboriosam similique! Saepe voluptas
-        temporibus eos porro, veniam, non ipsum voluptatem quisquam illum
-        tempore quos voluptatum autem.
-      </p>
+    <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal}>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet porro
+      placeat quibusdam nisi id ipsa temporibus voluptas nostrum impedit quod,
+      magni, illo voluptatum mollitia excepturi dicta quaerat maiores voluptates
+      architecto!
     </Modal>
   );
 };
