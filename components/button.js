@@ -75,7 +75,6 @@ Button.propTypes = {
    * The style of button to be displayed
    */
   type: PropTypes.oneOf(["primary", "secondary", "tertiary", "invert"])
-    .isRequired
 };
 
 export default Button;
