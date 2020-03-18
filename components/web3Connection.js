@@ -37,7 +37,7 @@ const Web3Connection = () => {
   return <Button onClick={activateInjected}>Start now</Button>;
 };
 
-const Web3Status = () => {
+export default () => {
   return (
     <Fragment>
       <Web3Connection />
@@ -45,5 +45,3 @@ const Web3Status = () => {
     </Fragment>
   );
 };
-
-export default Web3Status;
