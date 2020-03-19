@@ -34,7 +34,14 @@ const Web3Connection = () => {
       </Web3Button>
     );
 
-  return <Button onClick={toggleWalletModal}>Start now</Button>;
+  return (
+    <Button
+      className="bg-primary-100 border-primary-100"
+      onClick={toggleWalletModal}
+    >
+      Start now
+    </Button>
+  );
 };
 
 export default () => (

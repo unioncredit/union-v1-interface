@@ -19,14 +19,16 @@ export default function Borrow() {
 
         <div className="flex -mx-3 mb-5">
           <div className="w-1/2 px-3">
-            <div className="bg-blue-800 border border-blue-800 rounded p-6 text-white">
+            <div className="bg-secondary-500 border border-secondary-500 rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <div>
                   <p className="mb-2 text-lg">Available Credit</p>
                   <p className="font-semibold text-xl">1520 DAI</p>
                 </div>
 
-                <Button type="tertiary">Borrow</Button>
+                <Button wide type="tertiary">
+                  Borrow
+                </Button>
               </div>
 
               <div className="flex justify-between py-2">
@@ -50,14 +52,14 @@ export default function Borrow() {
             </div>
           </div>
           <div className="w-1/2 px-3">
-            <div className="bg-white border border-grey-200 rounded p-6">
+            <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
                 <div>
                   <p className="mb-2 text-lg">Balance Owed</p>
                   <p className="font-semibold text-xl">693.34 DAI</p>
                 </div>
 
-                <Button>Repay</Button>
+                <Button wide>Repay</Button>
               </div>
 
               <div className="flex justify-between py-2">
@@ -77,7 +79,7 @@ export default function Borrow() {
           <h2>Transactions</h2>
         </div>
 
-        <div className="mb-4 bg-white border border-grey-200 rounded p-6 flex items-center">
+        <div className="mb-4 bg-white border rounded p-6 flex items-center">
           <div className="h-12 w-12 rounded-full bg-gray-300" />
 
           <div className="flex-1 mx-4">
@@ -93,7 +95,7 @@ export default function Borrow() {
           </div>
         </div>
 
-        <div className="mb-4 bg-white border border-grey-200 rounded p-6 flex items-center">
+        <div className="mb-4 bg-white border rounded p-6 flex items-center">
           <div className="h-12 w-12 rounded-full bg-gray-300" />
 
           <div className="flex-1 mx-4">

@@ -9,7 +9,8 @@ import PropTypes from "prop-types";
  * @param {any} children The inside of the button
  * @param {String} className Any extra classes to spread into the button's classes
  * @param {String} href If set, turns the button into a link, internal or external
- * @param {Boolean} wide Makes the button full-width
+ * @param {Boolean} wide Makes the button have more left and right padding
+ * @param {Boolean} full Makes the button take up the width of the container
  * @param {("primary"|"secondary"|"tertiary"|"invert")} type The style of button to be displayed
  */
 const Button = ({
@@ -19,10 +20,12 @@ const Button = ({
   href,
   type = "primary",
   wide,
+  full,
   ...props
 }) => {
   const cachedClassNames = classNames(className, "btn", `btn-${type}`, {
-    "w-full": wide
+    "px-10": wide,
+    "w-full": full
   });
 
   if (href) {
@@ -68,9 +71,13 @@ Button.propTypes = {
    */
   href: PropTypes.string,
   /**
-   * Makes the button full-width
+   * Makes the button have more left and right padding
    */
   wide: PropTypes.bool,
+  /**
+   * Makes the button take up the width of the container
+   */
+  full: PropTypes.bool,
   /**
    * The style of button to be displayed
    */

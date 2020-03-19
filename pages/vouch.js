@@ -23,7 +23,7 @@ export default function Vouch() {
         </div>
 
         <div className="mb-5">
-          <div className="h-12 w-full bg-blue-500" />
+          <div className="h-12 w-full bg-primary-500" />
         </div>
 
         <div className="mb-10">

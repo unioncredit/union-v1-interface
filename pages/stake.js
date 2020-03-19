@@ -56,12 +56,12 @@ export default function Stake() {
 
               <div className="flex -mx-3 mt-10">
                 <div className="flex-1 px-3">
-                  <Button type="secondary" wide>
+                  <Button type="secondary" full>
                     Deposit
                   </Button>
                 </div>
                 <div className="flex-1 px-3">
-                  <Button type="invert" wide>
+                  <Button type="invert" full>
                     Withdraw
                   </Button>
                 </div>
@@ -76,40 +76,38 @@ export default function Stake() {
               <Button type="invert">Trust a new member</Button>
             </div>
 
-            <div className="bg-white border border-gray-400 rounded p-4 md:p-6">
+            <div className="bg-white border rounded p-4 md:p-6">
               <table className="table-auto w-full border-none ">
                 <thead>
                   <tr>
-                    <th className="pb-8 pt-4 leading-none border-b border-gray-400 text-left">
+                    <th className="pb-8 pt-4 leading-none border-b text-left">
                       Address
                     </th>
-                    <th className="pb-8 pt-4 leading-none border-b border-gray-400 text-right">
+                    <th className="pb-8 pt-4 leading-none border-b text-right">
                       Vouched
                     </th>
-                    <th className="pb-8 pt-4 leading-none border-b border-gray-400 text-right">
+                    <th className="pb-8 pt-4 leading-none border-b text-right">
                       Used
                     </th>
-                    <th className="pb-8 pt-4 leading-none border-b border-gray-400 text-right">
+                    <th className="pb-8 pt-4 leading-none border-b text-right">
                       Health
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="py-3 border-b border-gray-400">
-                      mirshko.eth
-                    </td>
-                    <td className="py-3 border-b border-gray-400">250 DAI</td>
-                    <td className="py-3 border-b border-gray-400">100 DAI</td>
-                    <td className="py-3 border-b border-gray-400">
+                    <td className="py-3 border-b">mirshko.eth</td>
+                    <td className="py-3 border-b">250 DAI</td>
+                    <td className="py-3 border-b">100 DAI</td>
+                    <td className="py-3 border-b">
                       <HealthBar health={75} />
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 border-b border-gray-400">lexi.eth</td>
-                    <td className="py-3 border-b border-gray-400">250 DAI</td>
-                    <td className="py-3 border-b border-gray-400">100 DAI</td>
-                    <td className="py-3 border-b border-gray-400">
+                    <td className="py-3 border-b">lexi.eth</td>
+                    <td className="py-3 border-b">250 DAI</td>
+                    <td className="py-3 border-b">100 DAI</td>
+                    <td className="py-3 border-b">
                       <HealthBar health={50} />
                     </td>
                   </tr>

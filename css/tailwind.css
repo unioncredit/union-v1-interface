@@ -25,13 +25,19 @@
 }
 
 @tailwind base;
+
+*,
+::before,
+::after {
+  @apply border-accent;
+}
 /* purgecss end ignore */
 
 @tailwind components;
 
 /* purgecss start ignore */
 .btn {
-  @apply font-semibold py-3 px-10 leading-snug rounded transition-colors duration-200;
+  @apply font-semibold py-3 px-6 leading-snug rounded transition-colors duration-200 border-2;
 }
 .btn:focus {
   @apply outline-none shadow-outline;
@@ -41,31 +47,32 @@
 }
 
 .btn-primary {
-  @apply bg-primary-500 text-secondary-500 border border-primary-500;
+  @apply bg-primary-500 text-secondary-500 border-primary-500;
 }
 .btn-primary:hover:enabled {
 }
 
 .btn-secondary {
-  @apply bg-secondary-500 text-white border border-secondary-500;
+  @apply bg-secondary-500 text-white border-secondary-500;
 }
 .btn-secondary:hover:enabled {
 }
 
 .btn-tertiary {
-  @apply bg-gray-600 text-white border border-gray-600;
+  @apply text-white border-transparent;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .btn-tertiary:hover:enabled {
 }
 
 .btn-invert {
-  @apply bg-white text-secondary-500 border border-gray-300;
+  @apply bg-white text-secondary-500;
 }
 .btn-invert:hover:enabled {
 }
 
 .divider {
-  @apply w-full h-1 bg-primary-500;
+  @apply w-full h-px bg-accent;
 }
 
 /* purgecss end ignore */
@@ -80,9 +87,17 @@
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
   overflow: auto;
 }
+
 [data-reach-dialog-content] {
-  @apply px-6 py-8 rounded bg-white max-w-md mx-auto outline-none;
+  @apply px-4 py-6 rounded bg-white max-w-md mx-auto outline-none self-end mb-6;
+}
+@media (width >= 640px) {
+  [data-reach-dialog-content] {
+    @apply px-6 py-8 self-start mb-0;
+    margin-top: 20vh;
+  }
 }
 /* purgecss end ignore */

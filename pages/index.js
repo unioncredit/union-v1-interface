@@ -23,7 +23,7 @@ export default function Home() {
                 earn higher interest when staking.{" "}
               </p>
 
-              <Button wide type="secondary">
+              <Button full type="secondary">
                 Become a member
               </Button>
 
@@ -45,7 +45,7 @@ export default function Home() {
                 Connect your Ethereum wallet in order to use Union.
               </p>
 
-              <Button wide>Start staking</Button>
+              <Button full>Start staking</Button>
             </div>
           </div>
         </div>
