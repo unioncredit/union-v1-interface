@@ -1,7 +1,8 @@
-import Head from "next/head";
-import Container from "@components/container";
 import Button from "@components/button";
+import Container from "@components/container";
 import HealthBar from "@components/healthBar";
+import LabelPair from "@components/labelPair";
+import Head from "next/head";
 
 export default function Vouch() {
   return (
@@ -13,10 +14,12 @@ export default function Vouch() {
 
       <Container>
         <div className="flex justify-between mb-10">
-          <div>
-            <p>Total credit vouched for you</p>
-            <p className="font-semibold">21,000 DAI</p>
-          </div>
+          <LabelPair
+            label="Total credit vouched for you"
+            value="21,000 DAI"
+            large
+          />
+
           <div>
             <Button type="invert">Open request for credit</Button>
           </div>

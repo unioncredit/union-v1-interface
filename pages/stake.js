@@ -1,7 +1,8 @@
-import Head from "next/head";
-import Container from "@components/container";
 import Button from "@components/button";
+import Container from "@components/container";
 import HealthBar from "@components/healthBar";
+import LabelPair from "@components/labelPair";
+import Head from "next/head";
 
 export default function Stake() {
   return (
@@ -19,41 +20,46 @@ export default function Stake() {
             </div>
 
             <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6">
-              <div className="mb-4">
-                <p className="text-lg">Your total stake</p>
-                <p className="font-semibold text-xl">900 DAI</p>
-              </div>
+              <LabelPair
+                label="Your total stake"
+                value="900 DAI"
+                className="mb-4"
+                large
+              />
 
-              <div className="flex justify-between py-2 items-center leading-tight">
-                <p className="opacity-50">Utilized Stake</p>
-                <p className="font-semibold text-lg text-right">700 DAI</p>
-              </div>
+              <LabelPair
+                label="Utilized Stake"
+                tooltip="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, aperiam sit ducimus, maxime maiores, mollitia quos deserunt vero animi tenetur architecto at alias repudiandae explicabo voluptatem voluptates laboriosam obcaecati recusandae."
+                value="700 DAI"
+              />
+              <LabelPair
+                label="Defaulted Stake"
+                tooltip="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, aperiam sit ducimus, maxime maiores, mollitia quos deserunt vero animi tenetur architecto at alias repudiandae explicabo voluptatem voluptates laboriosam obcaecati recusandae."
+                value="0 DAI"
+              />
+              <LabelPair
+                label="Withdrawable Stake"
+                tooltip="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, aperiam sit ducimus, maxime maiores, mollitia quos deserunt vero animi tenetur architecto at alias repudiandae explicabo voluptatem voluptates laboriosam obcaecati recusandae."
+                value="200 DAI"
+              />
 
-              <div className="flex justify-between py-2 items-center leading-tight">
-                <p className="opacity-50">Defaulted Stake</p>
-                <p className="font-semibold text-lg text-right">0 DAI</p>
-              </div>
+              <LabelPair
+                label="Rewards multiplier"
+                value="X1"
+                className="mb-4 mt-12"
+                large
+              />
 
-              <div className="flex justify-between py-2 items-center leading-tight mb-10">
-                <p className="opacity-50">Withdrawable Stake</p>
-                <p className="font-semibold text-lg text-right">200 DAI</p>
-              </div>
-
-              <div className="mb-4">
-                <p className="text-lg">Rewards multiplier</p>
-                <p className="font-semibold text-xl">X1</p>
-              </div>
-
-              <div className="flex justify-between py-2 items-center leading-tight">
-                <p className="opacity-50">Rewards</p>
-                <p className="font-semibold text-lg text-right">0 DAI</p>
-              </div>
-
-              <div className="flex justify-between py-2 items-center leading-tight">
-                <p className="opacity-50">Union Per Year (UPY)</p>
-                <p className="font-semibold text-lg text-right">1.87 UPY</p>
-              </div>
-
+              <LabelPair
+                label="Rewards"
+                tooltip="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, aperiam sit ducimus, maxime maiores, mollitia quos deserunt vero animi tenetur architecto at alias repudiandae explicabo voluptatem voluptates laboriosam obcaecati recusandae."
+                value="0 DAI"
+              />
+              <LabelPair
+                label="Union Per Year (UPY)"
+                tooltip="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero, aperiam sit ducimus, maxime maiores, mollitia quos deserunt vero animi tenetur architecto at alias repudiandae explicabo voluptatem voluptates laboriosam obcaecati recusandae."
+                value="1.87 UNION"
+              />
               <div className="flex -mx-3 mt-10">
                 <div className="flex-1 px-3">
                   <Button type="secondary" full>

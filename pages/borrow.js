@@ -1,8 +1,9 @@
 import Button from "@components/button";
 import Container from "@components/container";
+import HealthBar from "@components/healthBar";
+import LabelPair from "@components/labelPair";
 import Head from "next/head";
 import Link from "next/link";
-import HealthBar from "@components/healthBar";
 
 export default function Borrow() {
   return (
@@ -21,25 +22,22 @@ export default function Borrow() {
           <div className="w-1/2 px-3">
             <div className="bg-secondary-500 border border-secondary-500 rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
-                <div>
-                  <p className="mb-2 text-lg">Available Credit</p>
-                  <p className="font-semibold text-xl">1520 DAI</p>
-                </div>
+                <LabelPair label="Available Credit" value="1520 DAI" large />
 
                 <Button wide type="tertiary">
                   Borrow
                 </Button>
               </div>
 
-              <div className="flex justify-between py-2">
-                <p className="opacity-50">Percent Utilization</p>
-                <div className="flex items-center">
-                  <HealthBar health={66.99} />
-                  <p className="font-semibold leading-none text-lg ml-4">
-                    66.99%
-                  </p>
-                </div>
-              </div>
+              <LabelPair
+                label="Percent Utilization"
+                value={
+                  <div className="flex items-center">
+                    <HealthBar health={66.99} />
+                    <p className="ml-4">66.99%</p>
+                  </div>
+                }
+              />
 
               <div className="flex justify-between py-2">
                 <Link href="/vouch">
@@ -54,23 +52,14 @@ export default function Borrow() {
           <div className="w-1/2 px-3">
             <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
-                <div>
-                  <p className="mb-2 text-lg">Balance Owed</p>
-                  <p className="font-semibold text-xl">693.34 DAI</p>
-                </div>
+                <LabelPair label="Balance Owed" value="693.34 DAI" large />
 
                 <Button wide>Repay</Button>
               </div>
 
-              <div className="flex justify-between py-2">
-                <p className="opacity-50">Minimum Payment Due</p>
-                <p className="font-semibold">64.28 DAI</p>
-              </div>
+              <LabelPair label="Minimum Payment Due" value="64.28 DAI" />
 
-              <div className="flex justify-between py-2">
-                <p className="opacity-50">Payment Due Date</p>
-                <p className="font-semibold">in 10 Days</p>
-              </div>
+              <LabelPair label="Payment Due Date" value="in 10 Days" />
             </div>
           </div>
         </div>
