@@ -1,4 +1,3 @@
-import Footer from "@components/footer";
 import Navigation from "@components/navigation";
 import ApplicationContext from "@contexts/Application";
 import getLibrary from "@lib/getLibrary";
@@ -45,8 +44,6 @@ export default function UnionApp({ Component, pageProps }) {
         <main>
           <Component {...pageProps} />
         </main>
-
-        <Footer />
       </ContextProviders>
     </Web3ReactProvider>
   );
