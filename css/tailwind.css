@@ -31,6 +31,12 @@
 ::after {
   @apply border-accent;
 }
+
+h1,
+h2 {
+  @apply text-2xl font-semibold;
+}
+
 /* purgecss end ignore */
 
 @tailwind components;

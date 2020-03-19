@@ -15,7 +15,7 @@ export default function Stake() {
         <div className="flex -mx-2">
           <div className="w-5/12 px-2">
             <div className="mb-5 h-12">
-              <h1 className="text-2xl font-semibold">Stake</h1>
+              <h1>Stake</h1>
             </div>
 
             <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6">
@@ -71,7 +71,7 @@ export default function Stake() {
 
           <div className="w-7/12 px-2">
             <div className="flex justify-between items-center mb-5 h-12">
-              <h2 className="text-2xl font-semibold">Addresses You Trust</h2>
+              <h2>Addresses You Trust</h2>
 
               <Button type="invert">Trust a new member</Button>
             </div>
