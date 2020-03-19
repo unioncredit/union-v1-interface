@@ -9,14 +9,16 @@ import withinRange from "@util/withinRange";
  */
 const HealthBar = ({ health, width = 100 }) => {
   return (
-    <div className="h-4 w-full bg-green-200 relative">
-      <span className="block h-4 bg-green-600" />
+    <div className="w-full bg-green-200 relative">
+      <span className="block bg-green-600" />
       <style jsx>{`
         div {
           min-width: ${width}px;
+          height: 14px;
         }
         span {
           width: ${health}%;
+          height: 14px;
         }
       `}</style>
     </div>
