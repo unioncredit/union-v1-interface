@@ -1,4 +1,7 @@
 /* purgecss start ignore */
+
+@tailwind base;
+
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
@@ -24,8 +27,6 @@
     url(/Montserrat-600.woff2) format("woff2");
 }
 
-@tailwind base;
-
 *,
 ::before,
 ::after {
@@ -34,7 +35,7 @@
 
 h1,
 h2 {
-  @apply text-2xl font-semibold;
+  @apply text-2xl font-semibold leading-tight;
 }
 
 /* purgecss end ignore */
