@@ -17,6 +17,17 @@ module.exports = {
       ]
     },
     extend: {
+      colors: {
+        primary: {
+          "100": "#fcf7f7",
+          "500": "#F4DBD8"
+        },
+        secondary: {
+          "100": "#F6F9FC",
+          "200": "#CAE0F5",
+          "500": "#032437"
+        }
+      },
       maxWidth: {
         "screen-lg-gutter": "calc(1080px + 1rem * 2)",
         "screen-xl-gutter": "calc(1280px + 1rem * 2)"
