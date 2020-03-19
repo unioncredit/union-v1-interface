@@ -26,7 +26,8 @@ module.exports = {
           "100": "#F6F9FC",
           "200": "#CAE0F5",
           "500": "#032437"
-        }
+        },
+        accent: "#F3F4F7"
       },
       maxWidth: {
         "screen-lg-gutter": "calc(1080px + 1rem * 2)",
