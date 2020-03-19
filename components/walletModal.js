@@ -15,7 +15,7 @@ const WalletModal = () => {
         <p className="text-center text-xl mb-3">Connect your wallet</p>
         <div className="divider h-1 bg-primary-500" />
         <p className="text-center leading-tight mt-6">
-          As a final step your wallet will ask you to authorize UNION to access
+          As a final step your wallet will ask you to authorize Union to access
           your account.
         </p>
       </div>
