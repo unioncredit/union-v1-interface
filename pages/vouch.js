@@ -26,7 +26,11 @@ export default function Vouch() {
         </div>
 
         <div className="mb-5">
-          <div className="h-12 w-full bg-primary-500" />
+          <div className="h-16 flex rounded overflow-hidden relative w-full">
+            <div className="h-16 w-1/12 bg-secondary-100" />
+            <div className="h-16 w-3/12 bg-secondary-200" />
+            <div className="h-16 w-8/12 bg-secondary-500" />
+          </div>
         </div>
 
         <div className="mb-10">
@@ -54,7 +58,7 @@ export default function Vouch() {
                   <HealthBar health={50} />
                 </td>
               </tr>
-              <tr className="bg-gray-100">
+              <tr>
                 <td className="border px-4 py-2">lexi.eth</td>
                 <td className="border px-4 py-2">40%</td>
                 <td className="border px-4 py-2">250 DAI</td>

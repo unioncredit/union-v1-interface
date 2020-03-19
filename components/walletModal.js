@@ -38,7 +38,7 @@ const WalletModal = () => {
         </div>
       </div>
 
-      <div className="divider bg-gray-300" />
+      <div className="divider" />
 
       <p className="text-sm text-center mt-6">
         Don't have an account?{" "}

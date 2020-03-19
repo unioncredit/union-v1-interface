@@ -7,13 +7,14 @@ import withinRange from "@util/withinRange";
  * @param {Number} health The health of the user, between 0 - 100
  * @param {Number} width The width of the HealthBar
  */
-const HealthBar = ({ health, width = 100 }) => {
+const HealthBar = ({ health, width = 92 }) => {
   return (
-    <div className="w-full bg-green-200 relative">
+    <div className="w-full bg-green-200 relative overflow-hidden">
       <span className="block bg-green-600" />
       <style jsx>{`
         div {
           min-width: ${width}px;
+          border-radius: 2px;
           height: 14px;
         }
         span {
