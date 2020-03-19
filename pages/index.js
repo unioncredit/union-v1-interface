@@ -13,7 +13,7 @@ export default function Home() {
       <Container>
         <div className="flex -mx-3">
           <div className="w-1/2 px-3">
-            <div className="bg-gray-100 border border-gray-400 rounded p-4 md:p-6 h-full text-center">
+            <div className="bg-secondary-100 border border-secondary-200 rounded p-4 md:p-6 h-full text-center">
               <h2 className="mb-4 text-2xl font-semibold">
                 Become part of Union
               </h2>
@@ -36,7 +36,7 @@ export default function Home() {
             </div>
           </div>
           <div className="w-1/2 px-3">
-            <div className="bg-pink-100 border border-pink-200 rounded p-4 md:p-6 h-full text-center">
+            <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6 h-full text-center">
               <h2 className="mb-4 text-2xl font-semibold">
                 Are you just looking to stake?
               </h2>

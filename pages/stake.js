@@ -18,7 +18,7 @@ export default function Stake() {
               <h1 className="text-2xl font-semibold">Stake</h1>
             </div>
 
-            <div className="bg-pink-100 border border-pink-200 rounded p-4 md:p-6">
+            <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6">
               <div className="mb-4">
                 <p className="text-lg">Your total stake</p>
                 <p className="font-semibold text-xl">900 DAI</p>

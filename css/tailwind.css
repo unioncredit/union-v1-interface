@@ -33,37 +33,41 @@
 .btn {
   @apply font-semibold py-3 px-10 leading-snug rounded transition-colors duration-200;
 }
+.btn:focus {
+  @apply outline-none shadow-outline;
+}
 .btn:disabled {
   @apply cursor-not-allowed opacity-50;
 }
 
 .btn-primary {
-  @apply bg-pink-500 text-white border border-pink-500;
+  @apply bg-primary-500 text-secondary-500 border border-primary-500;
 }
 .btn-primary:hover:enabled {
-  @apply bg-pink-700 border-pink-700;
 }
 
 .btn-secondary {
-  @apply bg-blue-800 text-white border border-blue-800;
+  @apply bg-secondary-500 text-white border border-secondary-500;
 }
 .btn-secondary:hover:enabled {
-  @apply bg-blue-900 border-blue-900;
 }
 
 .btn-tertiary {
   @apply bg-gray-600 text-white border border-gray-600;
 }
 .btn-tertiary:hover:enabled {
-  @apply bg-gray-800 border-gray-800;
 }
 
 .btn-invert {
-  @apply bg-white text-blue-800 border border-gray-300;
+  @apply bg-white text-secondary-500 border border-gray-300;
 }
 .btn-invert:hover:enabled {
-  @apply bg-gray-300;
 }
+
+.divider {
+  @apply w-full h-1 bg-primary-500;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;

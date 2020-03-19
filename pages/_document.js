@@ -3,7 +3,7 @@ import Document, { Head, Html, Main, NextScript } from "next/document";
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en" className="font-medium antialiased">
+      <Html lang="en" className="font-medium antialiased text-secondary-500">
         <Head />
         <body>
           <Main />
