@@ -2,6 +2,7 @@ import Button from "@components/button";
 import Container from "@components/container";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
+import VouchBar from "@components/vouchBar";
 import Head from "next/head";
 
 export default function Vouch() {
@@ -25,13 +26,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <div className="mb-12">
-          <div className="h-16 flex rounded overflow-hidden relative w-full">
-            <div className="h-16 w-1/12 bg-secondary-100" />
-            <div className="h-16 w-3/12 bg-secondary-200" />
-            <div className="h-16 w-8/12 bg-secondary-500" />
-          </div>
-        </div>
+        <VouchBar className="mb-12" slices={[60, 20, 10, 5, 3, 2]} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
