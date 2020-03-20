@@ -1,12 +1,11 @@
 import Link from "next/link";
-import Container from "./container";
 import Logo from "./logo";
 import Web3Status from "./web3Connection";
 
 const Navigation = () => {
   return (
     <nav className="border-b mb-10 py-4">
-      <Container wide>
+      <div className="w-full mx-auto max-w-screen-xl">
         <ul className="flex items-center justify-between">
           <li>
             <Link href="/">
@@ -55,7 +54,7 @@ const Navigation = () => {
             </li>
           </ul>
         </ul>
-      </Container>
+      </div>
     </nav>
   );
 };

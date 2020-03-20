@@ -1,13 +1,7 @@
-import classNames from "classnames";
-
-const Container = ({ children, className, wide = false }) => {
-  const cachedClassNames = classNames(
-    className,
-    "w-full mx-auto",
-    `max-w-screen-${wide ? "xl" : "lg"}-gutter`
+const Container = ({ children }) => {
+  return (
+    <div className="w-full mx-auto max-w-screen-lg-gutter">{children}</div>
   );
-
-  return <div className={cachedClassNames}>{children}</div>;
 };
 
 export default Container;

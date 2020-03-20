@@ -1,11 +1,9 @@
-import Container from "./container";
-
 const Footer = () => {
   return (
     <footer>
-      <Container wide>
+      <div className="w-full mx-auto max-w-screen-xl">
         <p>© Union Finance 2020</p>
-      </Container>
+      </div>
     </footer>
   );
 };
