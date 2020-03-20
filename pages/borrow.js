@@ -1,11 +1,17 @@
+import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
 import Container from "@components/container";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
+import RepayModal from "@components/repayModal";
+import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import Head from "next/head";
 import Link from "next/link";
 
 export default function Borrow() {
+  const toggleBorrowModal = useBorrowModalToggle();
+  const toggleRepayModal = useRepayModalToggle();
+
   return (
     <div>
       <Head>
@@ -24,7 +30,7 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair label="Available Credit" value="1520 DAI" large />
 
-                <Button wide type="tertiary">
+                <Button wide type="tertiary" onClick={toggleBorrowModal}>
                   Borrow
                 </Button>
               </div>
@@ -54,7 +60,9 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair label="Balance Owed" value="693.34 DAI" large />
 
-                <Button wide>Repay</Button>
+                <Button wide onClick={toggleRepayModal}>
+                  Repay
+                </Button>
               </div>
 
               <LabelPair label="Minimum Payment Due" value="64.28 DAI" />
@@ -100,6 +108,9 @@ export default function Borrow() {
           </div>
         </div>
       </Container>
+
+      <BorrowModal />
+      <RepayModal />
     </div>
   );
 }
