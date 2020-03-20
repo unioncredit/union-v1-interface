@@ -27,21 +27,17 @@ const WalletModal = () => {
 
         <div className="mt-8 mb-10">
           <div className="mt-4">
-            <Button
-              full
-              type="invert"
-              onClick={() => activate(CONNECTORS.INJECTED)}
-            >
+            <Button full invert onClick={() => activate(CONNECTORS.INJECTED)}>
               MetaMask
             </Button>
           </div>
           {/* <div className="mt-4">
-            <Button full type="invert">
+            <Button full invert>
               WalletConnect
             </Button>
           </div>
           <div className="mt-4">
-            <Button full type="invert">
+            <Button full invert>
               Fortmatic
             </Button>
           </div> */}

@@ -11,19 +11,28 @@ import PropTypes from "prop-types";
  * @param {String} href If set, turns the button into a link, internal or external
  * @param {Boolean} wide Makes the button have more left and right padding
  * @param {Boolean} full Makes the button take up the width of the container
- * @param {("primary"|"secondary"|"tertiary"|"invert")} type The style of button to be displayed
+ * @param {Boolean} primary
+ * @param {Boolean} secondary
+ * @param {Boolean} tertiary
+ * @param {Boolean} invert
  */
 const Button = ({
   as,
   children,
   className = "",
   href,
-  type = "primary",
+  secondary,
+  tertiary,
+  invert,
   wide,
   full,
   ...props
 }) => {
-  const cachedClassNames = classNames(className, "btn", `btn-${type}`, {
+  const cachedClassNames = classNames(className, "btn", {
+    "btn-primary": !(secondary && tertiary && invert),
+    "btn-secondary": secondary,
+    "btn-tertiary": tertiary,
+    "btn-invert": invert,
     "px-10": wide,
     "w-full": full
   });
@@ -47,7 +56,7 @@ const Button = ({
   }
 
   return (
-    <button type="button" className={cachedClassNames} {...props}>
+    <button className={cachedClassNames} {...props}>
       {children}
     </button>
   );
@@ -78,10 +87,10 @@ Button.propTypes = {
    * Makes the button take up the width of the container
    */
   full: PropTypes.bool,
-  /**
-   * The style of button to be displayed
-   */
-  type: PropTypes.oneOf(["primary", "secondary", "tertiary", "invert"])
+  primary: PropTypes.bool,
+  secondary: PropTypes.bool,
+  tertiary: PropTypes.bool,
+  invert: PropTypes.bool
 };
 
 export default Button;

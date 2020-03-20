@@ -21,7 +21,7 @@ export default function Home() {
                 earn higher interest when staking.{" "}
               </p>
 
-              <Button full type="secondary">
+              <Button full secondary>
                 Become a member
               </Button>
 

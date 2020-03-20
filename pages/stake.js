@@ -74,12 +74,12 @@ export default function Stake() {
               />
               <div className="flex -mx-3 mt-10">
                 <div className="flex-1 px-3">
-                  <Button type="secondary" full onClick={toggleDepositModal}>
+                  <Button secondary full onClick={toggleDepositModal}>
                     Deposit
                   </Button>
                 </div>
                 <div className="flex-1 px-3">
-                  <Button type="invert" full onClick={toggleWithdrawModal}>
+                  <Button invert full onClick={toggleWithdrawModal}>
                     Withdraw
                   </Button>
                 </div>
@@ -91,7 +91,7 @@ export default function Stake() {
             <div className="flex justify-between items-center mb-5">
               <h2 className="leading-loose">Addresses You Trust</h2>
 
-              <Button type="invert" onClick={toggleTrustModal}>
+              <Button invert onClick={toggleTrustModal}>
                 Trust a new member
               </Button>
             </div>

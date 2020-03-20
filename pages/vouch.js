@@ -38,7 +38,7 @@ export default function Vouch() {
           />
 
           <div>
-            <Button type="invert" onClick={toggleCreditRequestModal}>
+            <Button invert onClick={toggleCreditRequestModal}>
               Open request for credit
             </Button>
           </div>

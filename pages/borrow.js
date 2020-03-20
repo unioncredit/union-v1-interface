@@ -30,7 +30,7 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair label="Available Credit" value="1520 DAI" large />
 
-                <Button wide type="tertiary" onClick={toggleBorrowModal}>
+                <Button wide tertiary onClick={toggleBorrowModal}>
                   Borrow
                 </Button>
               </div>
