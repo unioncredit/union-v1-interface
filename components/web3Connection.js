@@ -2,13 +2,11 @@ import { useWalletModalToggle } from "@contexts/Application";
 import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import dynamic from "next/dynamic";
 import { Fragment } from "react";
 import Button from "./button";
+import Identicon from "./identicon";
 import WalletModal from "./walletModal";
 import Web3Button from "./web3Button";
-
-const Identicon = dynamic(() => import("./identicon"));
 
 const Web3Connection = () => {
   const { account, error } = useWeb3React();
@@ -21,7 +19,7 @@ const Web3Connection = () => {
     return (
       <Web3Button onClick={toggleWalletModal}>
         <div className="ml-1 flex items-center">
-          <Identicon />
+          <Identicon address={account} />
           <div className="ml-3">{ENSName ?? truncateAddress(account)}</div>
         </div>
       </Web3Button>

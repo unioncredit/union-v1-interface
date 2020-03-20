@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon-custom-colors";
 
 const jazziconTheme = [
@@ -14,14 +13,12 @@ const jazziconTheme = [
   "#f19e02"
 ];
 
-const Identicon = ({ large = false }) => {
-  const { account } = useWeb3React();
-
+const Identicon = ({ address, large = false }) => {
   return (
     <Jazzicon
       color={jazziconTheme}
       diameter={large ? 72 : 18}
-      seed={jsNumberForAddress(account)}
+      seed={jsNumberForAddress(address)}
     />
   );
 };
