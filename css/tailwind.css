@@ -78,10 +78,6 @@ h2 {
 .btn-invert:hover:enabled {
 }
 
-.divider {
-  @apply w-full h-px bg-accent;
-}
-
 /* purgecss end ignore */
 
 @tailwind utilities;
