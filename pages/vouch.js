@@ -3,9 +3,13 @@ import Container from "@components/container";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
+import { useVouchModalToggle } from "@contexts/Vouch";
 import Head from "next/head";
+import VouchModal from "@components/vouchModal";
 
 export default function Vouch() {
+  const toggleVouchModal = useVouchModalToggle();
+
   return (
     <div>
       <Head>
@@ -22,7 +26,9 @@ export default function Vouch() {
           />
 
           <div>
-            <Button type="invert">Open request for credit</Button>
+            <Button type="invert" onClick={toggleVouchModal}>
+              Open request for credit
+            </Button>
           </div>
         </div>
 
@@ -66,6 +72,8 @@ export default function Vouch() {
           </table>
         </div>
       </Container>
+
+      <VouchModal />
     </div>
   );
 }
