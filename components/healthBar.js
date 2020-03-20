@@ -10,12 +10,13 @@ const HealthBar = ({ health, width = 96 }) => {
   const inner = health > 100 ? 100 : health < 0 ? 0 : health;
 
   return (
-    <div className="w-full bg-green-200 relative overflow-hidden">
+    <div className="w-full bg-green-200 relative overflow-hidden ml-auto">
       <span className="block bg-green-600" />
       <style jsx>{`
         div {
           min-width: ${width}px;
-          border-radius: 2px;
+          max-width: 192px;
+          border-radius: 1px;
           height: 14px;
         }
         span {
