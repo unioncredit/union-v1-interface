@@ -4,8 +4,12 @@ import {
 } from "@contexts/Application";
 import Modal from "./modal";
 import Button from "./button";
+import { useWeb3React } from "@web3-react/core";
+import { CONNECTORS } from "@lib/connectors";
 
 const WalletModal = () => {
+  const { activate } = useWeb3React();
+
   const open = useWalletModalOpen();
   const toggle = useWalletModalToggle();
 
@@ -23,11 +27,15 @@ const WalletModal = () => {
 
         <div className="mt-8 mb-10">
           <div className="mt-4">
-            <Button full type="invert">
+            <Button
+              full
+              type="invert"
+              onClick={() => activate(CONNECTORS.INJECTED)}
+            >
               MetaMask
             </Button>
           </div>
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <Button full type="invert">
               WalletConnect
             </Button>
@@ -36,7 +44,7 @@ const WalletModal = () => {
             <Button full type="invert">
               Fortmatic
             </Button>
-          </div>
+          </div> */}
         </div>
 
         <div className="w-full h-px bg-accent" />
