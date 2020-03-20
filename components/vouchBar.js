@@ -1,10 +1,11 @@
-import classNames from "classnames";
+import pastels from "@lib/pastels";
 
 const Vouch = ({ width, index }) => {
   return (
-    <div className={classNames("h-16", `bg-green-${9 - index}00`)}>
+    <div className="h-16">
       <style jsx>{`
         div {
+          background: ${pastels[index]};
           width: ${width}%;
         }
       `}</style>
@@ -16,8 +17,8 @@ const VouchBar = ({ className, slices }) => {
   return (
     <div className={className}>
       <div className="h-16 flex rounded overflow-hidden relative w-full select-none flex-row-reverse">
-        {slices.map((width, i) => (
-          <Vouch key={i} index={i} width={width} />
+        {slices.map((slice, i) => (
+          <Vouch key={i} index={i} width={slice} />
         ))}
       </div>
     </div>

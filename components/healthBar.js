@@ -16,7 +16,7 @@ const HealthBar = ({ health, width = 96 }) => {
         div {
           background-color: #ecf9f1;
           min-width: ${width}px;
-          max-width: 192px;
+          max-width: 128px;
           border-radius: 1px;
           height: 14px;
         }
