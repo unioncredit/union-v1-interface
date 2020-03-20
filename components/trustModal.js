@@ -20,12 +20,13 @@ const TrustModal = () => {
         />
 
         <Input
-          className="mb-4"
-          label="Trust amount"
-          id="trust"
           chip="DAI"
-          tip="The amount you trust this address to borrow and be able to repay."
+          className="mb-4"
+          id="trust"
+          type="number"
+          label="Trust amount"
           placeholder="0.00"
+          tip="The amount you trust this address to borrow and be able to repay."
         />
 
         <div className="mt-20">
