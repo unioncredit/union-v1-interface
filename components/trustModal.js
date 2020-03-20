@@ -1,5 +1,6 @@
 import Modal, { ModalHeader } from "./modal";
 import { useTrustModalOpen, useTrustModalToggle } from "@contexts/Stake";
+import Button from "./button";
 
 const TrustModal = () => {
   const open = useTrustModalOpen();
@@ -15,6 +16,12 @@ const TrustModal = () => {
           cumque dolores facere porro nostrum, voluptatum aliquam pariatur saepe
           eos consequatur dolore.
         </p>
+
+        <div className="w-full h-px bg-accent" />
+
+        <div className="mt-12">
+          <Button full>Confirm</Button>
+        </div>
       </div>
     </Modal>
   );
