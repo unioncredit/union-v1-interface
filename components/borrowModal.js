@@ -2,12 +2,12 @@ import { useBorrowModalOpen, useBorrowModalToggle } from "@contexts/Borrow";
 import Modal, { ModalHeader } from "./modal";
 
 const BorrowModal = () => {
-  const borrowModalOpen = useBorrowModalOpen();
-  const toggleBorrowModal = useBorrowModalToggle();
+  const open = useBorrowModalOpen();
+  const toggle = useBorrowModalToggle();
 
   return (
-    <Modal isOpen={borrowModalOpen} onDismiss={toggleBorrowModal}>
-      <ModalHeader title="Borrow" onDismiss={toggleBorrowModal} />
+    <Modal isOpen={open} onDismiss={toggle}>
+      <ModalHeader title="Borrow" onDismiss={toggle} />
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis vel

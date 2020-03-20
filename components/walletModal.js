@@ -6,11 +6,11 @@ import Modal from "./modal";
 import Button from "./button";
 
 const WalletModal = () => {
-  const walletModalOpen = useWalletModalOpen();
-  const toggleWalletModal = useWalletModalToggle();
+  const open = useWalletModalOpen();
+  const toggle = useWalletModalToggle();
 
   return (
-    <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal}>
+    <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <div className="mb-8">
           <p className="text-center text-xl mb-3">Connect your wallet</p>

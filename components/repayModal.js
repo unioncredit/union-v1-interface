@@ -2,12 +2,12 @@ import { useRepayModalOpen, useRepayModalToggle } from "@contexts/Borrow";
 import Modal, { ModalHeader } from "./modal";
 
 const RepayModal = () => {
-  const repayModalOpen = useRepayModalOpen();
-  const toggleRepayModal = useRepayModalToggle();
+  const isOpen = useRepayModalOpen();
+  const toggle = useRepayModalToggle();
 
   return (
-    <Modal isOpen={repayModalOpen} onDismiss={toggleRepayModal}>
-      <ModalHeader title="Repay" onDismiss={toggleRepayModal} />
+    <Modal isOpen={isOpen} onDismiss={toggle}>
+      <ModalHeader title="Repay" onDismiss={toggle} />
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis vel
