@@ -19,6 +19,17 @@ export default function Vouch() {
       </Head>
 
       <Container>
+        <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6 mb-6">
+          <h2 className="mb-4 leading-none">
+            Hi, welcome to UNION, the future of credit!
+          </h2>
+          <p className="text-large leading-snug">
+            In order to become a member, start vouching for other people,
+            borrow, and earn higher interest on your staking, you need 3 members
+            to vouch for you.
+          </p>
+        </div>
+
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Total credit vouched for you"
@@ -33,7 +44,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <VouchBar className="mb-12" slices={[60, 20, 10, 5, 3, 2]} />
+        <VouchBar className="mb-12" slices={[60, 20, 10, 10]} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
