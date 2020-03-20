@@ -112,7 +112,7 @@ table td:not(:first-of-type) {
 }
 
 [data-reach-dialog-content] {
-  @apply rounded bg-white max-w-md mx-auto outline-none self-end mb-6;
+  @apply rounded bg-white max-w-md mx-auto w-full outline-none self-end mb-6;
 }
 @media (width >= 640px) {
   [data-reach-dialog-content] {
