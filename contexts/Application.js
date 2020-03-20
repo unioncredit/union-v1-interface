@@ -12,6 +12,8 @@ const TOGGLE_WALLET_MODAL = "TOGGLE_WALLET_MODAL";
 
 const ApplicationContext = createContext();
 
+ApplicationContext.displayName = "ApplicationContext";
+
 function useApplicationContext() {
   return useContext(ApplicationContext);
 }
@@ -49,6 +51,8 @@ export default function Provider({ children }) {
     </ApplicationContext.Provider>
   );
 }
+
+Provider.displayName = "ApplicationProvider";
 
 export function useWalletModalOpen() {
   const [state] = useApplicationContext();

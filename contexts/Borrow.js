@@ -14,6 +14,8 @@ const TOGGLE_REPAY_MODAL = "TOGGLE_REPAY_MODAL";
 
 const BorrowContext = createContext();
 
+BorrowContext.displayName = "BorrowContext";
+
 function useBorrowContext() {
   return useContext(BorrowContext);
 }
@@ -60,6 +62,8 @@ export default function Provider({ children }) {
     </BorrowContext.Provider>
   );
 }
+
+Provider.displayName = "BorrowProvider";
 
 export function useBorrowModalOpen() {
   const [state] = useBorrowContext();

@@ -12,6 +12,8 @@ const TOGGLE_VOUCH_MODAL = "TOGGLE_VOUCH_MODAL";
 
 const VouchContext = createContext();
 
+VouchContext.displayName = "VouchContext";
+
 function useVouchContext() {
   return useContext(VouchContext);
 }
@@ -47,6 +49,8 @@ export default function Provider({ children }) {
     </VouchContext.Provider>
   );
 }
+
+Provider.displayName = "VouchProvider";
 
 export function useVouchModalOpen() {
   const [state] = useVouchContext();
