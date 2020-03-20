@@ -102,18 +102,18 @@ export default function Stake() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="py-3 border-b">mirshko.eth</td>
-                    <td className="py-3 text-right border-b">250 DAI</td>
-                    <td className="py-3 text-right border-b">100 DAI</td>
-                    <td className="py-3 text-right border-b">
+                    <td className="py-4 border-b">mirshko.eth</td>
+                    <td className="py-4 text-right border-b">250 DAI</td>
+                    <td className="py-4 text-right border-b">100 DAI</td>
+                    <td className="py-4 text-right border-b">
                       <HealthBar health={75} />
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-3 border-b">lexi.eth</td>
-                    <td className="py-3 text-right border-b">250 DAI</td>
-                    <td className="py-3 text-right border-b">100 DAI</td>
-                    <td className="py-3 text-right border-b">
+                    <td className="py-4 border-b">lexi.eth</td>
+                    <td className="py-4 text-right border-b">250 DAI</td>
+                    <td className="py-4 text-right border-b">100 DAI</td>
+                    <td className="py-4 text-right border-b">
                       <HealthBar health={50} />
                     </td>
                   </tr>

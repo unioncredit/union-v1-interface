@@ -13,7 +13,7 @@ export default function Vouch() {
       </Head>
 
       <Container>
-        <div className="flex justify-between mb-10">
+        <div className="flex justify-between mb-6">
           <LabelPair
             label="Total credit vouched for you"
             value="21,000 DAI"
@@ -25,7 +25,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <div className="mb-5">
+        <div className="mb-12">
           <div className="h-16 flex rounded overflow-hidden relative w-full">
             <div className="h-16 w-1/12 bg-secondary-100" />
             <div className="h-16 w-3/12 bg-secondary-200" />
@@ -33,37 +33,47 @@ export default function Vouch() {
           </div>
         </div>
 
-        <div className="mb-10">
+        <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
         </div>
 
-        <div>
-          <table className="table-auto w-full">
+        <div className="bg-white border rounded p-4 md:p-6">
+          <table className="table-auto w-full border-none">
             <thead>
               <tr>
-                <th className="px-4 py-2">Address</th>
-                <th className="px-4 py-2">Percentage</th>
-                <th className="px-4 py-2">Vouched</th>
-                <th className="px-4 py-2">Used</th>
-                <th className="px-4 py-2">Health</th>
+                <th className="pb-8 pt-4 leading-none border-b text-left">
+                  Address
+                </th>
+                <th className="pb-8 pt-4 leading-none border-b text-right">
+                  Percentage
+                </th>
+                <th className="pb-8 pt-4 leading-none border-b text-right">
+                  Vouched
+                </th>
+                <th className="pb-8 pt-4 leading-none border-b text-right">
+                  Used
+                </th>
+                <th className="pb-8 pt-4 leading-none border-b text-right">
+                  Health
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border px-4 py-2">mirshko.eth</td>
-                <td className="border px-4 py-2">70%</td>
-                <td className="border px-4 py-2">250 DAI</td>
-                <td className="border px-4 py-2">100 DAI</td>
-                <td className="border px-4 py-2">
+                <td className="py-4 border-b">mirshko.eth</td>
+                <td className="py-4 border-b text-right">70%</td>
+                <td className="py-4 border-b text-right">250 DAI</td>
+                <td className="py-4 border-b text-right">100 DAI</td>
+                <td className="py-4 border-b text-right">
                   <HealthBar health={50} />
                 </td>
               </tr>
               <tr>
-                <td className="border px-4 py-2">lexi.eth</td>
-                <td className="border px-4 py-2">40%</td>
-                <td className="border px-4 py-2">250 DAI</td>
-                <td className="border px-4 py-2">100 DAI</td>
-                <td className="border px-4 py-2">
+                <td className="py-4 border-b">lexi.eth</td>
+                <td className="py-4 border-b text-right">40%</td>
+                <td className="py-4 border-b text-right">250 DAI</td>
+                <td className="py-4 border-b text-right">100 DAI</td>
+                <td className="py-4 border-b text-right">
                   <HealthBar health={100} />
                 </td>
               </tr>
