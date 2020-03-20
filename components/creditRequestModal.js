@@ -1,12 +1,15 @@
-import { useVouchModalOpen, useVouchModalToggle } from "@contexts/Vouch";
+import {
+  useCreditRequestModalOpen,
+  useCreditRequestModalToggle
+} from "@contexts/Vouch";
 import Modal from "./modal";
 
-const VouchModal = () => {
-  const vouchModalOpen = useVouchModalOpen();
-  const toggleVouchModal = useVouchModalToggle();
+const CreditRequestModal = () => {
+  const open = useCreditRequestModalOpen();
+  const toggle = useCreditRequestModalToggle();
 
   return (
-    <Modal isOpen={vouchModalOpen} onDismiss={toggleVouchModal}>
+    <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum quae
@@ -19,4 +22,4 @@ const VouchModal = () => {
   );
 };
 
-export default VouchModal;
+export default CreditRequestModal;

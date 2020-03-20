@@ -1,15 +1,15 @@
+import Address from "@components/address";
 import Button from "@components/button";
 import Container from "@components/container";
+import CreditRequestModal from "@components/creditRequestModal";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
-import { useVouchModalToggle } from "@contexts/Vouch";
+import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import Head from "next/head";
-import VouchModal from "@components/vouchModal";
-import Address from "@components/address";
 
 export default function Vouch() {
-  const toggleVouchModal = useVouchModalToggle();
+  const toggleCreditRequestModal = useCreditRequestModalToggle();
 
   return (
     <div>
@@ -27,7 +27,7 @@ export default function Vouch() {
           />
 
           <div>
-            <Button type="invert" onClick={toggleVouchModal}>
+            <Button type="invert" onClick={toggleCreditRequestModal}>
               Open request for credit
             </Button>
           </div>
@@ -78,7 +78,7 @@ export default function Vouch() {
         </div>
       </Container>
 
-      <VouchModal />
+      <CreditRequestModal />
     </div>
   );
 }

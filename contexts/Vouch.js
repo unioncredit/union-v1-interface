@@ -6,9 +6,9 @@ import {
   useReducer
 } from "react";
 
-const VOUCH_MODAL_OPEN = "VOUCH_MODAL_OPEN";
+const CREDIT_REQUEST_MODAL = "CREDIT_REQUEST_MODAL";
 
-const TOGGLE_VOUCH_MODAL = "TOGGLE_VOUCH_MODAL";
+const TOGGLE_CREDIT_REQUEST_MODAL = "TOGGLE_CREDIT_REQUEST_MODAL";
 
 const VouchContext = createContext();
 
@@ -20,8 +20,8 @@ function useVouchContext() {
 
 function reducer(state, { type, payload }) {
   switch (type) {
-    case TOGGLE_VOUCH_MODAL: {
-      return { ...state, [VOUCH_MODAL_OPEN]: !state[VOUCH_MODAL_OPEN] };
+    case TOGGLE_CREDIT_REQUEST_MODAL: {
+      return { ...state, [CREDIT_REQUEST_MODAL]: !state[CREDIT_REQUEST_MODAL] };
     }
     default: {
       throw Error(`Unexpected action type in VouchContext reducer: '${type}'.`);
@@ -31,18 +31,18 @@ function reducer(state, { type, payload }) {
 
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    [VOUCH_MODAL_OPEN]: false
+    [CREDIT_REQUEST_MODAL]: false
   });
 
-  const toggleVouchModal = useCallback(() => {
-    dispatch({ type: TOGGLE_VOUCH_MODAL });
+  const toggleCreditRequest = useCallback(() => {
+    dispatch({ type: TOGGLE_CREDIT_REQUEST_MODAL });
   }, []);
 
   return (
     <VouchContext.Provider
-      value={useMemo(() => [state, { toggleVouchModal }], [
+      value={useMemo(() => [state, { toggleCreditRequest }], [
         state,
-        toggleVouchModal
+        toggleCreditRequest
       ])}
     >
       {children}
@@ -52,14 +52,14 @@ export default function Provider({ children }) {
 
 Provider.displayName = "VouchProvider";
 
-export function useVouchModalOpen() {
+export function useCreditRequestModalOpen() {
   const [state] = useVouchContext();
 
-  return state[VOUCH_MODAL_OPEN];
+  return state[CREDIT_REQUEST_MODAL];
 }
 
-export function useVouchModalToggle() {
-  const [, { toggleVouchModal }] = useVouchContext();
+export function useCreditRequestModalToggle() {
+  const [, { toggleCreditRequest }] = useVouchContext();
 
-  return toggleVouchModal;
+  return toggleCreditRequest;
 }
