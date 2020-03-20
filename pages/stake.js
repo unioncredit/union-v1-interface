@@ -3,8 +3,20 @@ import Container from "@components/container";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import Head from "next/head";
+import {
+  useTrustModalToggle,
+  useDepositModalToggle,
+  useWithdrawModalToggle
+} from "@contexts/Stake";
+import TrustModal from "@components/trustModal";
+import DepositModal from "@components/depositModal";
+import WithdrawModal from "@components/withdrawModal";
 
 export default function Stake() {
+  const toggleTrustModal = useTrustModalToggle();
+  const toggleDepositModal = useDepositModalToggle();
+  const toggleWithdrawModal = useWithdrawModalToggle();
+
   return (
     <div>
       <Head>
@@ -62,12 +74,12 @@ export default function Stake() {
               />
               <div className="flex -mx-3 mt-10">
                 <div className="flex-1 px-3">
-                  <Button type="secondary" full>
+                  <Button type="secondary" full onClick={toggleDepositModal}>
                     Deposit
                   </Button>
                 </div>
                 <div className="flex-1 px-3">
-                  <Button type="invert" full>
+                  <Button type="invert" full onClick={toggleWithdrawModal}>
                     Withdraw
                   </Button>
                 </div>
@@ -79,7 +91,9 @@ export default function Stake() {
             <div className="flex justify-between items-center mb-5">
               <h2 className="leading-loose">Addresses You Trust</h2>
 
-              <Button type="invert">Trust a new member</Button>
+              <Button type="invert" onClick={toggleTrustModal}>
+                Trust a new member
+              </Button>
             </div>
 
             <div className="bg-white border rounded p-4 md:p-6">
@@ -115,6 +129,10 @@ export default function Stake() {
           </div>
         </div>
       </Container>
+
+      <TrustModal />
+      <DepositModal />
+      <WithdrawModal />
     </div>
   );
 }
