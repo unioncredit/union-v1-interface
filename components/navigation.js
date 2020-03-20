@@ -5,7 +5,7 @@ import Web3Status from "./web3Connection";
 
 const Navigation = () => {
   return (
-    <nav className="border-b mb-10">
+    <nav className="border-b mb-10 py-4">
       <Container wide>
         <ul className="flex items-center justify-between">
           <li>
@@ -15,6 +15,7 @@ const Navigation = () => {
               </a>
             </Link>
           </li>
+
           <ul className="flex items-center">
             <li>
               <Link href="/vouch">
@@ -38,8 +39,9 @@ const Navigation = () => {
               </Link>
             </li>
           </ul>
+
           <ul className="flex items-center">
-            <li>
+            <li className="mr-8">
               <span
                 className="leading-none text-2xl"
                 role="img"
