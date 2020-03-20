@@ -29,7 +29,7 @@ const Button = ({
   ...props
 }) => {
   const cachedClassNames = classNames(className, "btn", {
-    "btn-primary": !(secondary && tertiary && invert),
+    "btn-primary": !(secondary || tertiary || invert) ? true : false,
     "btn-secondary": secondary,
     "btn-tertiary": tertiary,
     "btn-invert": invert,
