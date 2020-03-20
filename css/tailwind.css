@@ -115,11 +115,11 @@ table td:not(:first-of-type) {
 }
 
 [data-reach-dialog-content] {
-  @apply px-4 py-6 rounded bg-white max-w-md mx-auto outline-none self-end mb-6;
+  @apply rounded bg-white max-w-md mx-auto outline-none self-end mb-6;
 }
 @media (width >= 640px) {
   [data-reach-dialog-content] {
-    @apply px-6 py-8 self-start mb-0;
+    @apply self-start mb-0;
     margin-top: 20vh;
   }
 }
