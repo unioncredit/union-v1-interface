@@ -1,6 +1,7 @@
 import Navigation from "@components/navigation";
 import ApplicationContext from "@contexts/Application";
 import BorrowContext from "@contexts/Borrow";
+import StakeContext from "@contexts/Stake";
 import VouchContext from "@contexts/Vouch";
 import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
@@ -10,7 +11,9 @@ import "../css/tailwind.css";
 const ContextProviders = ({ children }) => (
   <ApplicationContext>
     <BorrowContext>
-      <VouchContext>{children}</VouchContext>
+      <VouchContext>
+        <StakeContext>{children}</StakeContext>
+      </VouchContext>
     </BorrowContext>
   </ApplicationContext>
 );
