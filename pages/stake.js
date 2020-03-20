@@ -15,8 +15,8 @@ export default function Stake() {
       <Container>
         <div className="flex -mx-2">
           <div className="w-5/12 px-2">
-            <div className="mb-5 h-12">
-              <h1>Stake</h1>
+            <div className="mb-5">
+              <h1 className="leading-loose">Stake</h1>
             </div>
 
             <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6">
@@ -76,8 +76,8 @@ export default function Stake() {
           </div>
 
           <div className="w-7/12 px-2">
-            <div className="flex justify-between items-center mb-5 h-12">
-              <h2>Addresses You Trust</h2>
+            <div className="flex justify-between items-center mb-5">
+              <h2 className="leading-loose">Addresses You Trust</h2>
 
               <Button type="invert">Trust a new member</Button>
             </div>
@@ -103,17 +103,17 @@ export default function Stake() {
                 <tbody>
                   <tr>
                     <td className="py-3 border-b">mirshko.eth</td>
-                    <td className="py-3 border-b">250 DAI</td>
-                    <td className="py-3 border-b">100 DAI</td>
-                    <td className="py-3 border-b">
+                    <td className="py-3 text-right border-b">250 DAI</td>
+                    <td className="py-3 text-right border-b">100 DAI</td>
+                    <td className="py-3 text-right border-b">
                       <HealthBar health={75} />
                     </td>
                   </tr>
                   <tr>
                     <td className="py-3 border-b">lexi.eth</td>
-                    <td className="py-3 border-b">250 DAI</td>
-                    <td className="py-3 border-b">100 DAI</td>
-                    <td className="py-3 border-b">
+                    <td className="py-3 text-right border-b">250 DAI</td>
+                    <td className="py-3 text-right border-b">100 DAI</td>
+                    <td className="py-3 text-right border-b">
                       <HealthBar health={50} />
                     </td>
                   </tr>
