@@ -44,7 +44,7 @@ h2 {
 
 /* purgecss start ignore */
 .btn {
-  @apply font-semibold py-3 px-6 leading-snug rounded transition-colors duration-200 border-2;
+  @apply font-semibold py-2 px-6 leading-7 rounded transition-colors duration-200 border-2;
 }
 .btn:focus {
   @apply outline-none shadow-outline;
