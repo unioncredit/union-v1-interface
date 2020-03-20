@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import withinRange from "@util/withinRange";
 
 /**
  * @name HealthBar
