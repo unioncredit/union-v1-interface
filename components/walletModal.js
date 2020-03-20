@@ -14,7 +14,7 @@ const WalletModal = () => {
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <div className="mb-8">
           <p className="text-center text-xl mb-3">Connect your wallet</p>
-          <div className="w-full h-px h-1 bg-primary-500" />
+          <div className="w-full h-1 bg-primary-500" />
           <p className="text-center leading-tight mt-6">
             As a final step your wallet will ask you to authorize Union to
             access your account.
