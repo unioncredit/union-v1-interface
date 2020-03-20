@@ -38,42 +38,32 @@ export default function Vouch() {
         </div>
 
         <div className="bg-white border rounded p-4 md:p-6">
-          <table className="table-auto w-full border-none">
+          <table>
             <thead>
               <tr>
-                <th className="pb-8 pt-4 leading-none border-b text-left">
-                  Address
-                </th>
-                <th className="pb-8 pt-4 leading-none border-b text-right">
-                  Percentage
-                </th>
-                <th className="pb-8 pt-4 leading-none border-b text-right">
-                  Vouched
-                </th>
-                <th className="pb-8 pt-4 leading-none border-b text-right">
-                  Used
-                </th>
-                <th className="pb-8 pt-4 leading-none border-b text-right">
-                  Health
-                </th>
+                <th>Address</th>
+                <th>Percentage</th>
+                <th>Vouched</th>
+                <th>Used</th>
+                <th>Health</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="py-4 border-b">mirshko.eth</td>
-                <td className="py-4 border-b text-right">70%</td>
-                <td className="py-4 border-b text-right">250 DAI</td>
-                <td className="py-4 border-b text-right">100 DAI</td>
-                <td className="py-4 border-b text-right">
+                <td>mirshko.eth</td>
+                <td>70%</td>
+                <td>250 DAI</td>
+                <td>100 DAI</td>
+                <td>
                   <HealthBar health={50} />
                 </td>
               </tr>
               <tr>
-                <td className="py-4 border-b">lexi.eth</td>
-                <td className="py-4 border-b text-right">40%</td>
-                <td className="py-4 border-b text-right">250 DAI</td>
-                <td className="py-4 border-b text-right">100 DAI</td>
-                <td className="py-4 border-b text-right">
+                <td>lexi.eth</td>
+                <td>40%</td>
+                <td>250 DAI</td>
+                <td>100 DAI</td>
+                <td>
                   <HealthBar health={100} />
                 </td>
               </tr>
