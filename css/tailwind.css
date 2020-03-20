@@ -87,6 +87,10 @@ h2 {
 @tailwind utilities;
 
 /* purgecss start ignore */
+:root {
+  --reach-dialog: 1;
+}
+
 [data-reach-dialog-overlay] {
   background: hsla(0, 0%, 0%, 0.66);
   position: fixed;
