@@ -6,6 +6,7 @@ import VouchBar from "@components/vouchBar";
 import { useVouchModalToggle } from "@contexts/Vouch";
 import Head from "next/head";
 import VouchModal from "@components/vouchModal";
+import Address from "@components/address";
 
 export default function Vouch() {
   const toggleVouchModal = useVouchModalToggle();
@@ -39,7 +40,7 @@ export default function Vouch() {
         </div>
 
         <div className="bg-white border rounded p-4 md:p-6">
-          <table>
+          <table className="table-fixed">
             <thead>
               <tr>
                 <th>Address</th>
@@ -51,7 +52,9 @@ export default function Vouch() {
             </thead>
             <tbody>
               <tr>
-                <td>mirshko.eth</td>
+                <td>
+                  <Address address="0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8" />
+                </td>
                 <td>70%</td>
                 <td>250 DAI</td>
                 <td>100 DAI</td>
@@ -60,7 +63,9 @@ export default function Vouch() {
                 </td>
               </tr>
               <tr>
-                <td>lexi.eth</td>
+                <td>
+                  <Address address="0xc92df132c0588c3d337d2e70225a9e85f2338088" />
+                </td>
                 <td>40%</td>
                 <td>250 DAI</td>
                 <td>100 DAI</td>

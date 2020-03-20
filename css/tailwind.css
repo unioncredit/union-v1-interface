@@ -39,7 +39,7 @@ h2 {
 }
 
 table {
-  @apply table-auto w-full border-none;
+  @apply w-full border-none;
 }
 table th {
   @apply pb-8 pt-4 leading-none border-b text-right;
