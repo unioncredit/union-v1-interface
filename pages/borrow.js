@@ -15,10 +15,10 @@ export default function Borrow() {
   const toggleRepayModal = useRepayModalToggle();
 
   const data = {
-    availableCredit: "1520 DAI",
-    percentUtilization: 70,
-    balanceOwed: "693.34 DAI",
-    minPaymentDue: "64.28 DAI",
+    availableCredit: "0 DAI",
+    percentUtilization: 0,
+    balanceOwed: "0 DAI",
+    minPaymentDue: "0 DAI",
     paymentDueDate: "in 10 Days",
     transactions: ["", ""]
   };
@@ -56,8 +56,8 @@ export default function Borrow() {
                 label="Percent Utilization"
                 value={
                   <div className="flex items-center">
-                    <HealthBar health={data.percentUtilization} />
-                    <p className="ml-4">{data.percentUtilization}%</p>
+                    <p className="mr-4">{data.percentUtilization}%</p>
+                    <HealthBar health={data.percentUtilization} dark />
                   </div>
                 }
               />
