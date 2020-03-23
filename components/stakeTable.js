@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
