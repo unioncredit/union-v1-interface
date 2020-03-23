@@ -30,6 +30,7 @@ module.exports = {
         accent: "#F3F4F7"
       },
       maxWidth: {
+        "screen-md-gutter": "calc(912px + 1rem * 2)",
         "screen-lg-gutter": "calc(1080px + 1rem * 2)",
         "screen-xl-gutter": "calc(1280px + 1rem * 2)"
       }

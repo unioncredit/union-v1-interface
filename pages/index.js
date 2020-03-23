@@ -1,8 +1,10 @@
+import { useWalletModalToggle } from "@contexts/Application";
 import Head from "next/head";
-import Container from "@components/container";
-import Button from "@components/button";
+import Link from "next/link";
 
 export default function Home() {
+  const toggleWalletModal = useWalletModalToggle();
+
   return (
     <div>
       <Head>
@@ -10,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <div className="w-full mx-auto max-w-screen-md-gutter">
         <div className="flex -mx-3">
           <div className="w-1/2 px-3">
             <div className="bg-secondary-100 border border-secondary-200 rounded p-4 md:p-6 h-full text-center">
@@ -18,16 +20,19 @@ export default function Home() {
 
               <p className="mb-8">
                 Borrow tokens with no collateral, vouch for other people and
-                earn higher interest when staking.{" "}
+                earn higher interest when staking.
               </p>
 
-              <Button full secondary>
-                Become a member
-              </Button>
+              <Link href="/borrow">
+                <a className="btn btn-secondary w-full"> Become a member</a>
+              </Link>
 
               <p className="text-sm mt-4">
                 Already have an account?{" "}
-                <button className="underline font-medium">
+                <button
+                  className="underline font-medium"
+                  onClick={toggleWalletModal}
+                >
                   Connect your wallet
                 </button>
               </p>
@@ -38,14 +43,17 @@ export default function Home() {
               <h2 className="mb-4">Are you just looking to stake?</h2>
 
               <p className="mb-8">
-                Connect your Ethereum wallet in order to use Union.
+                Connect your Ethereum wallet in order to <br />
+                use Union.
               </p>
 
-              <Button full>Start staking</Button>
+              <Link href="/stake">
+                <a className="btn btn-primary w-full">Start staking</a>
+              </Link>
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 }
