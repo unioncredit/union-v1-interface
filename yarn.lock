@@ -999,10 +999,10 @@
   dependencies:
     "@ethersproject/bignumber" ">=5.0.0-beta.130"
 
-"@ethersproject/contracts@^5.0.0-beta.144":
-  version "5.0.0-beta.144"
-  resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.0-beta.144.tgz#e863d69dacbb22575784aad8c8b3e258e39dde2c"
-  integrity sha512-8SZCRwVX+4Ov9n57OAyYfqGkcOQib5exIUa0wzYxDy/C9vUcAHMPyD8H39/hSx5QQVR9XU9ANCKyXaUPrOa0sA==
+"@ethersproject/contracts@^5.0.0-beta.145":
+  version "5.0.0-beta.145"
+  resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.0-beta.145.tgz#e568ed2dd4edc003c0f44cedea833c5d7a279a05"
+  integrity sha512-N+kvW1Aq4EcSqLUXv9QLVX6gSeOHfs8HMnL4oITuKqXY+TU6Y16Z+0MwQsKYCh2wbUksvg9RduEFAKatLGrk2w==
   dependencies:
     "@ethersproject/abi" ">=5.0.0-beta.137"
     "@ethersproject/abstract-provider" ">=5.0.0-beta.131"
@@ -1052,10 +1052,10 @@
   dependencies:
     "@ethersproject/logger" ">=5.0.0-beta.129"
 
-"@ethersproject/providers@^5.0.0-beta.155":
-  version "5.0.0-beta.155"
-  resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.0.0-beta.155.tgz#be1ea8daf928e316fdc9a8b8b3bc8d948abc5b62"
-  integrity sha512-fA4lsmkFO2LCcso1Ayp1jfjcAcOGDPm15NRJMxLP34V9FsEqFcWkJbG3NET5DwdoMwwgzKz5Gx2aTGNbc6cmcw==
+"@ethersproject/providers@^5.0.0-beta.157":
+  version "5.0.0-beta.157"
+  resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.0.0-beta.157.tgz#c7d7ab0f11993db55b8940bda3666e04f09ac97c"
+  integrity sha512-nXhy2gtmjbxuPTcSeCXlkjk+mdsceMzpLr21k/XJbzaDQJMC6xH7N+7AGg/8IM/D9DpEu7jIl8j4/RdSCPig6A==
   dependencies:
     "@ethersproject/abstract-provider" ">=5.0.0-beta.131"
     "@ethersproject/abstract-signer" ">=5.0.0-beta.132"
@@ -1072,6 +1072,7 @@
     "@ethersproject/strings" ">=5.0.0-beta.130"
     "@ethersproject/transactions" ">=5.0.0-beta.128"
     "@ethersproject/web" ">=5.0.0-beta.129"
+    ws "7.2.3"
 
 "@ethersproject/random@>=5.0.0-beta.128":
   version "5.0.0-beta.134"
@@ -1155,30 +1156,30 @@
   resolved "https://registry.yarnpkg.com/@next/polyfill-nomodule/-/polyfill-nomodule-9.3.1.tgz#d5e12855cbb3d9a9b668fdc133d843a025dbdb6c"
   integrity sha512-4mP4m7cuobjLcjltQzPrv9/b/C/AQR3Q1PwQw/0VLkZTsC8HxCt/gbafXdyDmalDPsp6EEZ6IaHUpuFBz+QBmw==
 
-"@reach/dialog@^0.8.6":
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/@reach/dialog/-/dialog-0.8.6.tgz#964474495e31ac49fb4b901daf254b6ce8e0fcd4"
-  integrity sha512-4zEVkbb1KZr1T2nUqrsVo63bO0iqGKWMxYUzuP/dSw2FN2hyiWrnPcEAioKmA8GPAhmzraGHLnKjtoxKI/ukQw==
+"@reach/dialog@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@reach/dialog/-/dialog-0.9.1.tgz#683daf9be621d8a4e7cde2bc0ca545cf6935224c"
+  integrity sha512-UR959q6d5LEeB2OSRhPwRtIW3C7UVXdgxayP1F5+IUW4YlcpC25/FQm86dj8CC1fR7Sgs6z14nF2sIY5l05HxQ==
   dependencies:
-    "@reach/portal" "^0.8.6"
-    "@reach/utils" "^0.8.6"
+    "@reach/portal" "^0.9.0"
+    "@reach/utils" "^0.9.0"
     prop-types "^15.7.2"
     react-focus-lock "^2.2.1"
     react-remove-scroll "^2.2.0"
     tslib "^1.10.0"
 
-"@reach/portal@^0.8.6":
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.8.6.tgz#b96b92dca36955f7b3ef20617d2c35cf58b58c48"
-  integrity sha512-tmBpHe/3juLsXtsMUUQrHOz3rv5reILPZpt5ISQj5ucdRQ1cgSeWaGM2uDme5vKNXWz3/xTakkEExZyOhsM6zQ==
+"@reach/portal@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@reach/portal/-/portal-0.9.0.tgz#8346c4403aba071b36ff0bd5137b1363f70ade15"
+  integrity sha512-V3xmdKCWLyKwAdSvvF4EvO8wKPGInQsJXmCuo9c7RU5ZCDnErCQmiD/jqyD78UzGF0snXATiGHuQV0h/Ppjt0w==
   dependencies:
-    "@reach/utils" "^0.8.6"
+    "@reach/utils" "^0.9.0"
     tslib "^1.10.0"
 
-"@reach/utils@^0.8.6":
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.8.6.tgz#41c7ac8b7699d0e663bda773398ae1c459679ee3"
-  integrity sha512-ec9Ea99LQhlBoMKsJ7n2GYD3u3a0IHDLcfbA50C6aDKnSFvVYSPkF2Iav3fQ07VGfe+FuNGi0iYi1qkE8uSmDw==
+"@reach/utils@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.9.0.tgz#ee47c25c79eb2f98e6c0e728a2672075cc9991d5"
+  integrity sha512-cmiykRaxuCysVTsSY3PgrLjySnEIt1PLiSYKh5rAH8nYyEmaOCtw0vaNItFAiqQIjfrxkixmcUE8dyD8kqVuJA==
   dependencies:
     tslib "^1.10.0"
     warning "^4.0.3"
@@ -6548,6 +6549,11 @@ write-file-atomic@^3.0.0:
     is-typedarray "^1.0.0"
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
+
+ws@7.2.3:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
+  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
 xtend@^4.0.0, xtend@^4.0.2, xtend@~4.0.1:
   version "4.0.2"
