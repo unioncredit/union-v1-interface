@@ -1,15 +1,37 @@
 import Button from "@components/button";
 import Container from "@components/container";
 import DepositModal from "@components/depositModal";
-import HealthBar from "@components/healthBar";
 import StakeCard from "@components/stakeCard";
+import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
 import WithdrawModal from "@components/withdrawModal";
 import { useTrustModalToggle } from "@contexts/Stake";
 import Head from "next/head";
+import { useMemo } from "react";
 
 export default function Stake() {
   const toggleTrustModal = useTrustModalToggle();
+
+  /**
+   * @todo Hook up to contract
+   */
+  const data = useMemo(
+    () => [
+      {
+        address: "mirshko.eth",
+        vouched: 250,
+        used: 100,
+        health: 75
+      },
+      {
+        address: "lexi.eth",
+        vouched: 400,
+        used: 250,
+        health: 50
+      }
+    ],
+    []
+  );
 
   return (
     <div>
@@ -32,13 +54,14 @@ export default function Stake() {
             <div className="flex justify-between items-center mb-5">
               <h2 className="leading-loose">Addresses You Trust</h2>
 
-              <Button invert onClick={toggleTrustModal}>
+              <Button invert disabled onClick={toggleTrustModal}>
                 Trust a new member
               </Button>
             </div>
 
             <div className="bg-white border rounded p-4 md:p-6">
-              <table>
+              <StakeTable data={data} />
+              {/* <table>
                 <thead>
                   <tr>
                     <th>Address</th>
@@ -65,7 +88,7 @@ export default function Stake() {
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> */}
             </div>
           </div>
         </div>

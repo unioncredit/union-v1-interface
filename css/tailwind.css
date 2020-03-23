@@ -39,7 +39,7 @@ table {
   @apply w-full border-none;
 }
 table th {
-  @apply pb-8 pt-4 leading-none border-b text-right;
+  @apply pb-8 pt-4 leading-none border-b text-right select-none;
 }
 table th:first-of-type {
   @apply text-left;
