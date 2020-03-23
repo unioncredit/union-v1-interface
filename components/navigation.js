@@ -17,9 +17,9 @@ const Navigation = () => {
 
           <ul className="flex items-center">
             <li>
-              <Link href="/vouch">
+              <Link href="/stake">
                 <a className="p-3 leading-none mx-4 text-lg font-semibold">
-                  Vouch
+                  Stake
                 </a>
               </Link>
             </li>
@@ -31,9 +31,9 @@ const Navigation = () => {
               </Link>
             </li>
             <li>
-              <Link href="/stake">
+              <Link href="/vouch">
                 <a className="p-3 leading-none mx-4 text-lg font-semibold">
-                  Stake
+                  Vouch
                 </a>
               </Link>
             </li>
