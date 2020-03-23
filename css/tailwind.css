@@ -96,6 +96,20 @@ table td:not(:first-of-type) {
     0px 0px 12px rgba(19, 44, 106, 0.1);
 }
 
+.active-nav-tab {
+  position: relative;
+}
+
+.active-nav-tab::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  height: 4px;
+  width: 100%;
+  bottom: calc(-1rem + -4px + 1px);
+  background-color: #f4dbd8;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;
