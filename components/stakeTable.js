@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
+import EmptyState from "./emptyState";
 import HealthBar from "./healthBar";
 
 const StakeTable = ({
@@ -88,6 +89,8 @@ const StakeTable = ({
           })}
         </tbody>
       </table>
+
+      {rows.length === 0 && <EmptyState />}
     </div>
   );
 };
