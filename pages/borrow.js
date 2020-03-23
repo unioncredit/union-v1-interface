@@ -8,10 +8,20 @@ import RepayModal from "@components/repayModal";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import Head from "next/head";
 import Link from "next/link";
+import Transaction from "@components/transaction";
 
 export default function Borrow() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
+
+  const data = {
+    availableCredit: "1520 DAI",
+    percentUtilization: 70,
+    balanceOwed: "693.34 DAI",
+    minPaymentDue: "64.28 DAI",
+    paymentDueDate: "in 10 Days",
+    transactions: ["", ""]
+  };
 
   return (
     <div>
@@ -27,11 +37,15 @@ export default function Borrow() {
           <h1>Dashboard</h1>
         </div>
 
-        <div className="flex -mx-3 mb-5">
+        <div className="flex -mx-3 mb-10">
           <div className="w-1/2 px-3">
             <div className="bg-secondary-500 border border-secondary-500 rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
-                <LabelPair label="Available Credit" value="1520 DAI" large />
+                <LabelPair
+                  label="Available Credit"
+                  value={data.availableCredit}
+                  large
+                />
 
                 <Button wide tertiary onClick={toggleBorrowModal}>
                   Borrow
@@ -42,8 +56,8 @@ export default function Borrow() {
                 label="Percent Utilization"
                 value={
                   <div className="flex items-center">
-                    <HealthBar health={66.99} />
-                    <p className="ml-4">66.99%</p>
+                    <HealthBar health={data.percentUtilization} />
+                    <p className="ml-4">{data.percentUtilization}%</p>
                   </div>
                 }
               />
@@ -61,16 +75,23 @@ export default function Borrow() {
           <div className="w-1/2 px-3">
             <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
-                <LabelPair label="Balance Owed" value="693.34 DAI" large />
+                <LabelPair
+                  label="Balance Owed"
+                  value={data.balanceOwed}
+                  large
+                />
 
                 <Button wide onClick={toggleRepayModal}>
                   Repay
                 </Button>
               </div>
 
-              <LabelPair label="Minimum Payment Due" value="64.28 DAI" />
+              <LabelPair
+                label="Minimum Payment Due"
+                value={data.minPaymentDue}
+              />
 
-              <LabelPair label="Payment Due Date" value="in 10 Days" />
+              <LabelPair label="Payment Due Date" value={data.paymentDueDate} />
             </div>
           </div>
         </div>
@@ -79,37 +100,8 @@ export default function Borrow() {
           <h2>Transactions</h2>
         </div>
 
-        <div className="mb-4 bg-white border rounded p-6 flex items-center">
-          <div className="h-12 w-12 rounded-full bg-accent" />
-
-          <div className="flex-1 mx-4">
-            <p className="mb-2 leading-none">
-              <strong className="font-semibold">alex56.eth increased</strong>{" "}
-              your credit limit
-            </p>
-            <p className="font-normal leading-none">4 Feb 2020</p>
-          </div>
-
-          <div>
-            <p>650 DAI</p>
-          </div>
-        </div>
-
-        <div className="mb-4 bg-white border rounded p-6 flex items-center">
-          <div className="h-12 w-12 rounded-full bg-accent" />
-
-          <div className="flex-1 mx-4">
-            <p className="mb-2 leading-none">
-              <strong className="font-semibold">alex56.eth increased</strong>{" "}
-              your credit limit
-            </p>
-            <p className="font-normal leading-none">4 Feb 2020</p>
-          </div>
-
-          <div>
-            <p>650 DAI</p>
-          </div>
-        </div>
+        {data.transactions.length > 0 &&
+          data.transactions.map((datum, i) => <Transaction key={i} />)}
       </Container>
 
       <BorrowModal />

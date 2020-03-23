@@ -73,7 +73,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <VouchBar className="mb-12" slices={data.vouches} />
+        <VouchBar className="mb-10" slices={data.vouches} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
