@@ -1,6 +1,6 @@
 import {
   useWalletModalOpen,
-  useWalletModalToggle,
+  useWalletModalToggle
 } from "@contexts/Application";
 import Modal from "./modal";
 import Button from "./button";
@@ -8,6 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { CONNECTORS } from "@lib/connectors";
 import useEagerConnect from "@hooks/useEagerConnect";
 import { useState, useEffect } from "react";
+import getErrorMessage from "@lib/getErrorMessage";
 
 const WalletModal = () => {
   const {
@@ -17,7 +18,7 @@ const WalletModal = () => {
     account,
     library,
     deactivate,
-    error,
+    error
   } = useWeb3React();
 
   const open = useWalletModalOpen();
@@ -46,8 +47,9 @@ const WalletModal = () => {
         </div>
 
         <div className="mt-8 mb-10">
-          {Object.keys(CONNECTORS).map((name) => {
+          {Object.keys(CONNECTORS).map(name => {
             const currentConnector = CONNECTORS[name];
+
             const activating = currentConnector === activatingConnector;
             const connected = currentConnector === connector;
             const disabled =
@@ -65,13 +67,18 @@ const WalletModal = () => {
                     toggle();
                   }}
                 >
-                  {activating && "🌀 "}
-                  {name}
+                  {activating ? "Waiting for confirmation..." : name}
                 </Button>
               </div>
             );
           })}
         </div>
+
+        {!!error && (
+          <p className="text-sm text-center text-red-500 my-4">
+            {getErrorMessage(error)}
+          </p>
+        )}
 
         <div className="w-full h-px bg-accent" />
 
