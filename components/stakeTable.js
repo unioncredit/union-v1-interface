@@ -91,15 +91,14 @@ const StakeTable = ({
       </table>
 
       {rows.length === 0 && (
-        <div className="flex items-center flex-col h-full">
-          <div className="mt-8 h-40 bg-primary-500 w-24" />
+        <div className="flex items-center flex-col mt-16">
+          <div className="w-24 h-40 bg-accent" />
           <p className="text-xl text-center my-6 max-w-md">
             Borrow without collateral and earn higher interest on your deposits
-            if you are a member.
           </p>
-          <Link href="/vouch">
-            <a className="btn btn-primary">Become a member</a>
-          </Link>
+          <button className="text-center font-semibold underline">
+            Learn more
+          </button>
         </div>
       )}
     </div>

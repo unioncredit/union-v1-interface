@@ -106,12 +106,12 @@ const VouchTable = ({
       </table>
 
       {rows.length === 0 && (
-        <div className="flex items-center flex-col mt-20 mb-16">
-          <div className="h-40 bg-primary-500 w-24" />
+        <div className="flex items-center flex-col my-16">
+          <div className="w-24 h-40 bg-accent" />
           <p className="text-xl text-center my-6 max-w-md">
             You need 3 people to vouch for you
           </p>
-          <Button>Ask someone to vouch for you</Button>
+          <Button>Get invited</Button>
         </div>
       )}
     </div>
