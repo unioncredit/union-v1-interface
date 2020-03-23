@@ -20,6 +20,7 @@ const LabelPair = ({
 }) => {
   const cachedLabelClassNames = classNames("leading-tight", {
     "text-lg mb-2": large,
+    "cursor-help": tooltip,
   });
 
   const cachedValueClassNames = classNames(
