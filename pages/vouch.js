@@ -12,6 +12,19 @@ import Head from "next/head";
 export default function Vouch() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
+  const data = {
+    /**
+     * @type {String}
+     * @example 21,000 DAI
+     */
+    vouch: "0 DAI",
+    /**
+     * @type {Array<Number>}
+     * @example [60, 20, 10, 10]
+     */
+    vouches: []
+  };
+
   return (
     <div>
       <Head>
@@ -25,7 +38,7 @@ export default function Vouch() {
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Total credit vouched for you"
-            value="21,000 DAI"
+            value={data.vouch}
             large
           />
 
@@ -36,7 +49,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <VouchBar className="mb-12" slices={[60, 20, 10, 10]} />
+        <VouchBar className="mb-12" slices={data.vouches} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>

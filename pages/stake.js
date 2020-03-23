@@ -14,8 +14,8 @@ export default function Stake() {
 
   /**
    * @todo Hook up to contract
-   */
-  const data = useMemo(
+   * @description memoized array of objects
+   * @example useMemo(
     () => [
       {
         address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
@@ -31,7 +31,9 @@ export default function Stake() {
       }
     ],
     []
-  );
+  )
+   */
+  const data = useMemo(() => [], []);
 
   return (
     <div>
