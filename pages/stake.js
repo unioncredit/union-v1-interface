@@ -18,13 +18,13 @@ export default function Stake() {
   const data = useMemo(
     () => [
       {
-        address: "mirshko.eth",
+        address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
         vouched: 250,
         used: 100,
         health: 75
       },
       {
-        address: "lexi.eth",
+        address: "0xc92df132c0588c3d337d2e70225a9e85f2338088",
         vouched: 400,
         used: 250,
         health: 50
@@ -41,55 +41,29 @@ export default function Stake() {
       </Head>
 
       <Container>
-        <div className="flex -mx-2">
+        <div className="flex -mx-2 mb-5">
           <div className="w-5/12 px-2">
-            <div className="mb-5">
-              <h1 className="leading-loose">Stake</h1>
-            </div>
-
-            <StakeCard />
+            <h1 className="leading-loose">Stake</h1>
           </div>
 
           <div className="w-7/12 px-2">
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex justify-between items-center">
               <h2 className="leading-loose">Addresses You Trust</h2>
 
               <Button invert disabled onClick={toggleTrustModal}>
                 Trust a new member
               </Button>
             </div>
+          </div>
+        </div>
 
-            <div className="bg-white border rounded p-4 md:p-6">
-              <StakeTable data={data} />
-              {/* <table>
-                <thead>
-                  <tr>
-                    <th>Address</th>
-                    <th>Vouched</th>
-                    <th>Used</th>
-                    <th>Health</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>mirshko.eth</td>
-                    <td>250 DAI</td>
-                    <td>100 DAI</td>
-                    <td>
-                      <HealthBar health={75} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>lexi.eth</td>
-                    <td>250 DAI</td>
-                    <td>100 DAI</td>
-                    <td>
-                      <HealthBar health={50} />
-                    </td>
-                  </tr>
-                </tbody>
-              </table> */}
-            </div>
+        <div className="flex -mx-2">
+          <div className="w-5/12 px-2">
+            <StakeCard />
+          </div>
+
+          <div className="w-7/12 px-2">
+            <StakeTable data={data} />
           </div>
         </div>
       </Container>
