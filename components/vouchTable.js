@@ -1,14 +1,19 @@
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
+import Button from "./button";
 import HealthBar from "./healthBar";
 
-const StakeTable = ({
+const VouchTable = ({
   columns = useMemo(
     () => [
       {
         Header: "Address",
         accessor: "address"
+      },
+      {
+        Header: "Percentage",
+        accessor: "percentage"
       },
       {
         Header: "Vouched",
@@ -42,7 +47,7 @@ const StakeTable = ({
   );
 
   return (
-    <div className="bg-white border rounded p-4 md:p-6 h-full">
+    <div className="bg-white border rounded p-4 md:p-6 mb-10">
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -71,14 +76,25 @@ const StakeTable = ({
                   ({ getCellProps, render, value, column: { Header } }) => {
                     let cellRenderer = render("Cell");
 
-                    if (Header === "Health")
-                      cellRenderer = <HealthBar health={value} />;
-
                     if (Header === "Address")
                       cellRenderer = <Address address={value} />;
 
+                    if (Header === "Percentage")
+                      cellRenderer = (
+                        <span>
+                          {Number(value).toLocaleString(undefined, {
+                            style: "percentage",
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 2
+                          })}
+                        </span>
+                      );
+
                     if (Header === "Used" || Header === "Vouched")
                       cellRenderer = <span>{value} DAI</span>;
+
+                    if (Header === "Health")
+                      cellRenderer = <HealthBar health={value} />;
 
                     return <td {...getCellProps()}>{cellRenderer}</td>;
                   }
@@ -90,19 +106,16 @@ const StakeTable = ({
       </table>
 
       {rows.length === 0 && (
-        <div className="flex items-center flex-col h-full">
+        <div className="flex items-center flex-col my-12">
           <div className="mt-8 h-40 bg-primary-500 w-24" />
           <p className="text-xl text-center my-6 max-w-md">
-            Borrow without collateral and earn higher interest on your deposits
-            if you are a member.
+            You need 3 people to vouch for you
           </p>
-          <Link href="/vouch">
-            <a className="btn btn-primary">Become a member</a>
-          </Link>
+          <Button>Ask someone to vouch for you</Button>
         </div>
       )}
     </div>
   );
 };
 
-export default StakeTable;
+export default VouchTable;

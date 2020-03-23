@@ -1,13 +1,13 @@
-import Address from "@components/address";
 import ApplicationCard from "@components/applicationCard";
 import Button from "@components/button";
 import Container from "@components/container";
 import CreditRequestModal from "@components/creditRequestModal";
-import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
+import VouchTable from "@components/vouchTable";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import Head from "next/head";
+import { useMemo } from "react";
 
 export default function Vouch() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
@@ -20,9 +20,33 @@ export default function Vouch() {
     vouch: "0 DAI",
     /**
      * @type {Array<Number>}
-     * @example [60, 20, 10, 10]
+     * @example [70, 30]
      */
-    vouches: []
+    vouches: [],
+    /**
+   * @todo Hook up to contract
+   * @description memoized array of objects
+   * @example useMemo(
+    () => [
+      {
+        address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
+        percentage: 70
+        vouched: 250,
+        used: 100,
+        health: 75
+      },
+      {
+        address: "0xc92df132c0588c3d337d2e70225a9e85f2338088",
+        percentage: 30
+        vouched: 400,
+        used: 250,
+        health: 50
+      }
+    ],
+    []
+  )
+   */
+    data: useMemo(() => [], [])
   };
 
   return (
@@ -55,43 +79,7 @@ export default function Vouch() {
           <h1>Addresses who vouched for you</h1>
         </div>
 
-        <div className="bg-white border rounded p-4 md:p-6">
-          <table className="table-fixed">
-            <thead>
-              <tr>
-                <th>Address</th>
-                <th>Percentage</th>
-                <th>Vouched</th>
-                <th>Used</th>
-                <th>Health</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <Address address="0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8" />
-                </td>
-                <td>70%</td>
-                <td>250 DAI</td>
-                <td>100 DAI</td>
-                <td>
-                  <HealthBar health={50} />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <Address address="0xc92df132c0588c3d337d2e70225a9e85f2338088" />
-                </td>
-                <td>40%</td>
-                <td>250 DAI</td>
-                <td>100 DAI</td>
-                <td>
-                  <HealthBar health={100} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <VouchTable data={data.data} />
       </Container>
 
       <CreditRequestModal />
