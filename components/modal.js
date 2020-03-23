@@ -29,7 +29,7 @@ Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
   label: PropTypes.string,
-  children: PropTypes.any
+  children: PropTypes.any,
 };
 
 export default Modal;

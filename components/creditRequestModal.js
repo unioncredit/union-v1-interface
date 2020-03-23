@@ -1,6 +1,6 @@
 import {
   useCreditRequestModalOpen,
-  useCreditRequestModalToggle
+  useCreditRequestModalToggle,
 } from "@contexts/Vouch";
 import Modal from "./modal";
 

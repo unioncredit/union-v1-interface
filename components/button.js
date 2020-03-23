@@ -34,7 +34,7 @@ const Button = ({
     "btn-tertiary": tertiary,
     "btn-invert": invert,
     "px-10": wide,
-    "w-full": full
+    "w-full": full,
   });
 
   if (href) {
@@ -90,7 +90,7 @@ Button.propTypes = {
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
   tertiary: PropTypes.bool,
-  invert: PropTypes.bool
+  invert: PropTypes.bool,
 };
 
 export default Button;

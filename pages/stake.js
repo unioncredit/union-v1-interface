@@ -6,7 +6,7 @@ import Head from "next/head";
 import {
   useTrustModalToggle,
   useDepositModalToggle,
-  useWithdrawModalToggle
+  useWithdrawModalToggle,
 } from "@contexts/Stake";
 import TrustModal from "@components/trustModal";
 import DepositModal from "@components/depositModal";

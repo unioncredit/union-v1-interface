@@ -3,7 +3,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useReducer
+  useReducer,
 } from "react";
 
 const TRUST_MODAL_OPEN = "TRUST_MODAL_OPEN";
@@ -34,7 +34,7 @@ function reducer(state, { type, payload }) {
     case TOGGLE_WITHDRAW_MODAL: {
       return {
         ...state,
-        [WITHDRAW_MODAL_OPEN]: !state[WITHDRAW_MODAL_OPEN]
+        [WITHDRAW_MODAL_OPEN]: !state[WITHDRAW_MODAL_OPEN],
       };
     }
     default: {
@@ -47,7 +47,7 @@ export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     [TRUST_MODAL_OPEN]: false,
     [DEPOSIT_MODAL_OPEN]: false,
-    [WITHDRAW_MODAL_OPEN]: false
+    [WITHDRAW_MODAL_OPEN]: false,
   });
 
   const toggleTrustModal = useCallback(() => {
@@ -67,7 +67,7 @@ export default function Provider({ children }) {
       value={useMemo(
         () => [
           state,
-          { toggleTrustModal, toggleDepositModal, toggleWithdrawModal }
+          { toggleTrustModal, toggleDepositModal, toggleWithdrawModal },
         ],
         [state, toggleTrustModal, toggleDepositModal, toggleWithdrawModal]
       )}

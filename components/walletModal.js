@@ -1,6 +1,6 @@
 import {
   useWalletModalOpen,
-  useWalletModalToggle
+  useWalletModalToggle,
 } from "@contexts/Application";
 import Modal from "./modal";
 import Button from "./button";

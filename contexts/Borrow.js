@@ -3,7 +3,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useReducer
+  useReducer,
 } from "react";
 
 const BORROW_MODAL_OPEN = "BORROW_MODAL_OPEN";
@@ -39,7 +39,7 @@ function reducer(state, { type, payload }) {
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
     [BORROW_MODAL_OPEN]: false,
-    [REPAY_MODAL_OPEN]: false
+    [REPAY_MODAL_OPEN]: false,
   });
 
   const toggleBorrowModal = useCallback(() => {
@@ -55,7 +55,7 @@ export default function Provider({ children }) {
       value={useMemo(() => [state, { toggleBorrowModal, toggleRepayModal }], [
         state,
         toggleBorrowModal,
-        toggleRepayModal
+        toggleRepayModal,
       ])}
     >
       {children}

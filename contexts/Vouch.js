@@ -3,7 +3,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useReducer
+  useReducer,
 } from "react";
 
 const CREDIT_REQUEST_MODAL = "CREDIT_REQUEST_MODAL";
@@ -31,7 +31,7 @@ function reducer(state, { type, payload }) {
 
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    [CREDIT_REQUEST_MODAL]: false
+    [CREDIT_REQUEST_MODAL]: false,
   });
 
   const toggleCreditRequest = useCallback(() => {
@@ -42,7 +42,7 @@ export default function Provider({ children }) {
     <VouchContext.Provider
       value={useMemo(() => [state, { toggleCreditRequest }], [
         state,
-        toggleCreditRequest
+        toggleCreditRequest,
       ])}
     >
       {children}

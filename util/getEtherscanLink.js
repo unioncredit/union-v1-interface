@@ -3,7 +3,7 @@ const ETHERSCAN_PREFIXES = {
   3: "ropsten.",
   4: "rinkeby.",
   5: "goerli.",
-  42: "kovan."
+  42: "kovan.",
 };
 
 /**
@@ -16,8 +16,9 @@ const ETHERSCAN_PREFIXES = {
  * @returns {String}
  */
 export default function getEtherscanLink(networkId, data, type) {
-  const prefix = `https://${ETHERSCAN_PREFIXES[networkId] ||
-    ETHERSCAN_PREFIXES[1]}etherscan.io`;
+  const prefix = `https://${
+    ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
+  }etherscan.io`;
 
   switch (type) {
     case "TRANSACTION": {

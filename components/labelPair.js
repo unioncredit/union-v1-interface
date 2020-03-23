@@ -16,10 +16,10 @@ const LabelPair = ({
   label,
   tooltip,
   value,
-  large = false
+  large = false,
 }) => {
   const cachedLabelClassNames = classNames("leading-tight", {
-    "text-lg mb-2": large
+    "text-lg mb-2": large,
   });
 
   const cachedValueClassNames = classNames(
@@ -29,7 +29,7 @@ const LabelPair = ({
   );
 
   const cachedClassNames = classNames(className, {
-    "flex justify-between items-center py-2": !large
+    "flex justify-between items-center py-2": !large,
   });
 
   return (
@@ -69,7 +69,7 @@ LabelPair.propTypes = {
   /**
    * Changes the LabelPair to be stacked
    */
-  large: PropTypes.bool
+  large: PropTypes.bool,
 };
 
 export default LabelPair;

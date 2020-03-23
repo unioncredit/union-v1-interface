@@ -3,7 +3,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useReducer
+  useReducer,
 } from "react";
 
 const WALLET_MODAL_OPEN = "WALLET_MODAL_OPEN";
@@ -33,7 +33,7 @@ function reducer(state, { type, payload }) {
 
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    [WALLET_MODAL_OPEN]: false
+    [WALLET_MODAL_OPEN]: false,
   });
 
   const toggleWalletModal = useCallback(() => {
@@ -44,7 +44,7 @@ export default function Provider({ children }) {
     <ApplicationContext.Provider
       value={useMemo(() => [state, { toggleWalletModal }], [
         state,
-        toggleWalletModal
+        toggleWalletModal,
       ])}
     >
       {children}
