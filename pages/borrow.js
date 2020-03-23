@@ -1,3 +1,4 @@
+import ApplicationCard from "@components/applicationCard";
 import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
 import Container from "@components/container";
@@ -20,6 +21,8 @@ export default function Borrow() {
       </Head>
 
       <Container>
+        <ApplicationCard />
+
         <div className="mb-5">
           <h1>Dashboard</h1>
         </div>

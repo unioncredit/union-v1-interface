@@ -1,4 +1,5 @@
 import Address from "@components/address";
+import ApplicationCard from "@components/applicationCard";
 import Button from "@components/button";
 import Container from "@components/container";
 import CreditRequestModal from "@components/creditRequestModal";
@@ -19,16 +20,7 @@ export default function Vouch() {
       </Head>
 
       <Container>
-        <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6 mb-6">
-          <h2 className="mb-4 leading-none">
-            Hi, welcome to UNION, the future of credit!
-          </h2>
-          <p className="text-large leading-snug">
-            In order to become a member, start vouching for other people,
-            borrow, and earn higher interest on your staking, you need 3 members
-            to vouch for you.
-          </p>
-        </div>
+        <ApplicationCard />
 
         <div className="flex justify-between mb-6">
           <LabelPair
