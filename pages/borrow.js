@@ -9,6 +9,7 @@ import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import Head from "next/head";
 import Link from "next/link";
 import Transaction from "@components/transaction";
+import { placeholderTip } from "../text/tooltips";
 
 export default function Borrow() {
   const toggleBorrowModal = useBorrowModalToggle();
@@ -47,13 +48,14 @@ export default function Borrow() {
                   large
                 />
 
-                <Button wide tertiary onClick={toggleBorrowModal}>
+                <Button wide tertiary disabled onClick={toggleBorrowModal}>
                   Borrow
                 </Button>
               </div>
 
               <LabelPair
                 label="Percent Utilization"
+                tooltip={placeholderTip}
                 value={
                   <div className="flex items-center">
                     <p className="mr-4">{data.percentUtilization}%</p>
@@ -81,17 +83,22 @@ export default function Borrow() {
                   large
                 />
 
-                <Button wide onClick={toggleRepayModal}>
+                <Button wide disabled onClick={toggleRepayModal}>
                   Repay
                 </Button>
               </div>
 
               <LabelPair
+                tooltip={placeholderTip}
                 label="Minimum Payment Due"
                 value={data.minPaymentDue}
               />
 
-              <LabelPair label="Payment Due Date" value={data.paymentDueDate} />
+              <LabelPair
+                label="Payment Due Date"
+                tooltip={placeholderTip}
+                value={data.paymentDueDate}
+              />
             </div>
           </div>
         </div>
