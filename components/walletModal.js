@@ -27,7 +27,14 @@ const WalletModal = () => {
 
         <div className="mt-8 mb-10">
           <div className="mt-4">
-            <Button full invert onClick={() => activate(CONNECTORS.INJECTED)}>
+            <Button
+              full
+              invert
+              onClick={async () => {
+                await activate(CONNECTORS.INJECTED);
+                await toggle();
+              }}
+            >
               MetaMask
             </Button>
           </div>
