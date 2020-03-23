@@ -6,12 +6,32 @@ import Modal from "./modal";
 import Button from "./button";
 import { useWeb3React } from "@web3-react/core";
 import { CONNECTORS } from "@lib/connectors";
+import useEagerConnect from "@hooks/useEagerConnect";
+import { useState, useEffect } from "react";
 
 const WalletModal = () => {
-  const { activate } = useWeb3React();
+  const {
+    activate,
+    connector,
+    active,
+    account,
+    library,
+    deactivate,
+    error,
+  } = useWeb3React();
 
   const open = useWalletModalOpen();
   const toggle = useWalletModalToggle();
+
+  const [activatingConnector, setActivatingConnector] = useState();
+
+  useEffect(() => {
+    if (activatingConnector && activatingConnector === connector) {
+      setActivatingConnector(undefined);
+    }
+  }, [activatingConnector, connector]);
+
+  const triedEager = useEagerConnect();
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -26,28 +46,31 @@ const WalletModal = () => {
         </div>
 
         <div className="mt-8 mb-10">
-          <div className="mt-4">
-            <Button
-              full
-              invert
-              onClick={async () => {
-                await activate(CONNECTORS.INJECTED);
-                await toggle();
-              }}
-            >
-              MetaMask
-            </Button>
-          </div>
-          {/* <div className="mt-4">
-            <Button full invert>
-              WalletConnect
-            </Button>
-          </div>
-          <div className="mt-4">
-            <Button full invert>
-              Fortmatic
-            </Button>
-          </div> */}
+          {Object.keys(CONNECTORS).map((name) => {
+            const currentConnector = CONNECTORS[name];
+            const activating = currentConnector === activatingConnector;
+            const connected = currentConnector === connector;
+            const disabled =
+              !triedEager || !!activatingConnector || connected || !!error;
+
+            return (
+              <div className="mt-4" key={name}>
+                <Button
+                  full
+                  invert
+                  disabled={disabled}
+                  onClick={async () => {
+                    setActivatingConnector(currentConnector);
+                    await activate(CONNECTORS[name]);
+                    toggle();
+                  }}
+                >
+                  {activating && "🌀 "}
+                  {name}
+                </Button>
+              </div>
+            );
+          })}
         </div>
 
         <div className="w-full h-px bg-accent" />
