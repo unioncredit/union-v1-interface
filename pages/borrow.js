@@ -57,7 +57,9 @@ export default function Borrow() {
                 tooltip={placeholderTip}
                 value={
                   <div className="flex items-center">
-                    <p className="mr-4">{data.percentUtilization}%</p>
+                    <p className="mr-4 text-white">
+                      {data.percentUtilization}%
+                    </p>
                     <HealthBar health={data.percentUtilization} dark />
                   </div>
                 }
