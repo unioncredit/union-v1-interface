@@ -1,4 +1,6 @@
 import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
+import Button from "./button";
+import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 
 const DepositModal = () => {
@@ -9,12 +11,22 @@ const DepositModal = () => {
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Deposit" onDismiss={toggle} />
       <div className="px-4 py-6 sm:px-6 sm:py-8">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis vel
-          distinctio quod tempora necessitatibus consequuntur ab blanditiis id
-          cumque dolores facere porro nostrum, voluptatum aliquam pariatur saepe
-          eos consequatur dolore.
-        </p>
+        <div className="mb-6">Current total stake</div>
+
+        <Input
+          className="mb-4"
+          id="depositAmount"
+          label="Deposit Amount"
+          placeholder="0.00"
+          chip="DAI"
+          tip="Increases your UPY by 0 UNION"
+        />
+
+        <div className="w-full h-px bg-accent" />
+
+        <div className="mb-8 mt-6">New total stake</div>
+
+        <Button full>Confirm</Button>
       </div>
     </Modal>
   );
