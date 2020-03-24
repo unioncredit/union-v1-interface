@@ -19,6 +19,7 @@ const TrustModal = () => {
       <ModalHeader title="Vouch for a member" onDismiss={toggle} />
 
       <form
+        method="POST"
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >

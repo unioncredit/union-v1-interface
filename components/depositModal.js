@@ -19,6 +19,7 @@ const DepositModal = ({ totalStake }) => {
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Deposit" onDismiss={toggle} />
       <form
+        method="POST"
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >

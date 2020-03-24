@@ -1,7 +1,19 @@
 import { forwardRef } from "react";
 
 const Input = forwardRef(
-  ({ className, id, label, type = "text", chip, tip, ...props }, ref) => {
+  (
+    {
+      autoComplete = "off",
+      chip,
+      className,
+      id,
+      label,
+      tip,
+      type = "text",
+      ...props
+    },
+    ref
+  ) => {
     return (
       <div className={className}>
         <div className="p-4 w-full rounded border bg-white focus-within:input transition-shadow transition-colors duration-150">
@@ -13,7 +25,7 @@ const Input = forwardRef(
 
           <div className="flex">
             <input
-              autoComplete="off"
+              autoComplete={autoComplete}
               className="focus:outline-none text-lg leading-snug flex-1"
               id={id}
               name={id}

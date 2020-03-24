@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import EmailModal from "./emailModal";
 import Logo from "./logo";
 import Web3Status from "./web3Connection";
 
@@ -64,6 +65,8 @@ const Navigation = () => {
           </ul>
         </ul>
       </div>
+
+      <EmailModal />
     </nav>
   );
 };

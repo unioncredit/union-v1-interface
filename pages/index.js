@@ -1,9 +1,13 @@
-import { useWalletModalToggle } from "@contexts/Application";
+import Button from "@components/button";
+import {
+  useEmailModalToggle,
+  useWalletModalToggle,
+} from "@contexts/Application";
 import Head from "next/head";
-import Link from "next/link";
 
 export default function Home() {
   const toggleWalletModal = useWalletModalToggle();
+  const toggleEmailModal = useEmailModalToggle();
 
   return (
     <div>
@@ -20,9 +24,9 @@ export default function Home() {
             higher interest when staking.{" "}
           </p>
 
-          <Link href="/stake">
-            <a className="btn btn-primary w-full">Start now</a>
-          </Link>
+          <Button onClick={toggleEmailModal} full>
+            Start now
+          </Button>
 
           <p className="mt-4">
             Already have an account?{" "}
