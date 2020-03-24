@@ -7,7 +7,6 @@ import {
 } from "react";
 
 const CREDIT_REQUEST_MODAL = "CREDIT_REQUEST_MODAL";
-
 const TOGGLE_CREDIT_REQUEST_MODAL = "TOGGLE_CREDIT_REQUEST_MODAL";
 
 const VouchContext = createContext();
