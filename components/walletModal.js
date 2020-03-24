@@ -1,15 +1,20 @@
 import {
   useWalletModalOpen,
-  useWalletModalToggle,
+  useWalletModalToggle
 } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
 import { CONNECTORS, SUPPORTED_WALLETS } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
-import isMetaMask from "@lib/isMetaMask";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
+
+const isMetaMask =
+  typeof window !== "undefined" &&
+  !!(window.ethereum && window.ethereum.isMetaMask)
+    ? true
+    : false;
 
 const WalletModal = () => {
   const {
@@ -19,7 +24,7 @@ const WalletModal = () => {
     account,
     library,
     deactivate,
-    error,
+    error
   } = useWeb3React();
 
   const open = useWalletModalOpen();
@@ -48,7 +53,7 @@ const WalletModal = () => {
         </div>
 
         <div className="mt-8 mb-10">
-          {Object.keys(CONNECTORS).map((name) => {
+          {Object.keys(CONNECTORS).map(name => {
             const currentConnector = CONNECTORS[name];
 
             const activating = currentConnector === activatingConnector;
@@ -70,7 +75,7 @@ const WalletModal = () => {
                 >
                   {activating
                     ? "Waiting for confirmation..."
-                    : isMetaMask
+                    : name === "Injected" && isMetaMask
                     ? SUPPORTED_WALLETS.MetaMask.name
                     : SUPPORTED_WALLETS[name].name}
                 </Button>
@@ -80,7 +85,7 @@ const WalletModal = () => {
         </div>
 
         {!!error && (
-          <p className="text-sm text-center text-red-500 my-4">
+          <p className="text-sm text-center text-red-500 mb-10">
             {getErrorMessage(error)}
           </p>
         )}
