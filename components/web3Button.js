@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Web3Button = ({ error = false, ...props }) => {
   const cachedClassNames = classNames(
     "font-medium px-4 py-3 rounded border leading-snug transition-colors duration-200",
-    !error ? "bg-border-pure" : "bg-red-500 border-red-700 text-white"
+    !error ? "bg-border-light" : "bg-red-500 border-red-700 text-white"
   );
 
   return <button className={cachedClassNames} {...props} />;

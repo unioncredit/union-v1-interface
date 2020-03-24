@@ -86,7 +86,7 @@ table td:not(:first-of-type) {
 }
 
 .btn-invert {
-  @apply bg-white text-black-pure;
+  @apply bg-white border-border-pure text-black-pure;
 }
 .btn-invert:hover:enabled {
 }
