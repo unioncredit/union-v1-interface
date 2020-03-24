@@ -3,7 +3,7 @@ module.exports = {
     colors: {
       pink: {
         pure: "#F4DBD8",
-        light: "#F6F3F5",
+        light: "#FCF7F7",
       },
       "pink-2": {
         pure: "#FDAFA6",
