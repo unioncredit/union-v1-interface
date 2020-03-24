@@ -47,7 +47,7 @@ export default function Borrow() {
                   large
                 />
 
-                <Button wide tertiary disabled onClick={toggleBorrowModal}>
+                <Button wide tertiary onClick={toggleBorrowModal}>
                   Borrow
                 </Button>
               </div>
@@ -82,7 +82,7 @@ export default function Borrow() {
                   large
                 />
 
-                <Button wide disabled onClick={toggleRepayModal}>
+                <Button wide onClick={toggleRepayModal}>
                   Repay
                 </Button>
               </div>
@@ -111,7 +111,7 @@ export default function Borrow() {
       </div>
 
       <BorrowModal />
-      <RepayModal />
+      <RepayModal balanceOwed={data.balanceOwed} />
     </div>
   );
 }
