@@ -1,10 +1,7 @@
 import Button from "@components/button";
-import Container from "@components/container";
-import DepositModal from "@components/depositModal";
 import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
-import WithdrawModal from "@components/withdrawModal";
 import { useTrustModalToggle } from "@contexts/Stake";
 import Head from "next/head";
 import { useMemo } from "react";
@@ -42,7 +39,7 @@ export default function Stake() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <div className="container">
         <div className="flex -mx-2 mb-5">
           <div className="w-5/12 px-2">
             <h1 className="leading-loose">Stake</h1>
@@ -68,11 +65,9 @@ export default function Stake() {
             <StakeTable data={data} />
           </div>
         </div>
-      </Container>
+      </div>
 
       <TrustModal />
-      <DepositModal />
-      <WithdrawModal />
     </div>
   );
 }

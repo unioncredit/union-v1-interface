@@ -114,6 +114,10 @@ table td:not(:first-of-type) {
   cursor: help;
 }
 
+.container {
+  @apply w-full mx-auto max-w-screen-lg-gutter;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;

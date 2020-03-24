@@ -1,7 +1,9 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
+import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
+import WithdrawModal from "./withdrawModal";
 
 const StakeCard = ({}) => {
   /**
@@ -30,16 +32,19 @@ const StakeCard = ({}) => {
       />
 
       <LabelPair
+        className="text-grey-pure"
         label="Utilized Stake"
         tooltip={placeholderTip}
         value={data.utilizedStake}
       />
       <LabelPair
+        className="text-grey-pure"
         label="Defaulted Stake"
         tooltip={placeholderTip}
         value={data.defaultedStake}
       />
       <LabelPair
+        className="text-grey-pure"
         label="Withdrawable Stake"
         tooltip={placeholderTip}
         value={data.withdrawableStake}
@@ -53,12 +58,14 @@ const StakeCard = ({}) => {
       />
 
       <LabelPair
+        className="text-grey-pure"
         label="Rewards"
         tooltip={placeholderTip}
         value={data.rewards}
       />
       <LabelPair
-        label="Union Per Year (UPY)"
+        className="text-grey-pure"
+        label="UNION Per Year (est.)"
         tooltip={placeholderTip}
         value={data.upy}
       />
@@ -74,6 +81,9 @@ const StakeCard = ({}) => {
           </Button>
         </div>
       </div>
+
+      <DepositModal totalStake={data.totalStake} />
+      <WithdrawModal totalStake={data.totalStake} />
     </div>
   );
 };

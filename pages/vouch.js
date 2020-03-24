@@ -1,6 +1,5 @@
 import ApplicationCard from "@components/applicationCard";
 import Button from "@components/button";
-import Container from "@components/container";
 import CreditRequestModal from "@components/creditRequestModal";
 import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
@@ -46,7 +45,7 @@ export default function Vouch() {
     []
   )
    */
-    data: useMemo(() => [], []),
+    data: useMemo(() => [], [])
   };
 
   return (
@@ -56,7 +55,7 @@ export default function Vouch() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <div className="container">
         <ApplicationCard />
 
         <div className="flex justify-between mb-6">
@@ -80,7 +79,7 @@ export default function Vouch() {
         </div>
 
         <VouchTable data={data.data} />
-      </Container>
+      </div>
 
       <CreditRequestModal />
     </div>

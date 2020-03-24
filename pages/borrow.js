@@ -1,14 +1,13 @@
 import ApplicationCard from "@components/applicationCard";
 import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
-import Container from "@components/container";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import RepayModal from "@components/repayModal";
+import Transaction from "@components/transaction";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import Head from "next/head";
 import Link from "next/link";
-import Transaction from "@components/transaction";
 import { placeholderTip } from "../text/tooltips";
 
 export default function Borrow() {
@@ -31,7 +30,7 @@ export default function Borrow() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <div className="container">
         <ApplicationCard />
 
         <div className="mb-5">
@@ -109,7 +108,7 @@ export default function Borrow() {
 
         {data.transactions.length > 0 &&
           data.transactions.map((datum, i) => <Transaction key={i} />)}
-      </Container>
+      </div>
 
       <BorrowModal />
       <RepayModal />
