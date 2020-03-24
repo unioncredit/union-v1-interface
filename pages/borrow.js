@@ -20,7 +20,7 @@ export default function Borrow() {
     balanceOwed: "0 DAI",
     minPaymentDue: "0 DAI",
     paymentDueDate: "in 10 Days",
-    transactions: ["", ""]
+    transactions: ["", ""],
   };
 
   return (

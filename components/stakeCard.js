@@ -16,7 +16,7 @@ const StakeCard = ({}) => {
     withdrawableStake: "0 DAI",
     rewardsMultiplier: "1x",
     rewards: "0 UNION",
-    upy: "0 UNION"
+    upy: "0 UNION",
   };
 
   const toggleDepositModal = useDepositModalToggle();

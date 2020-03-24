@@ -10,7 +10,7 @@ const WithdrawModal = ({ totalStake }) => {
 
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     setTimeout(() => console.log(values), 1000);
   };
 

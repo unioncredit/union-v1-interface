@@ -9,35 +9,35 @@ const StakeTable = ({
     () => [
       {
         Header: "Address",
-        accessor: "address"
+        accessor: "address",
       },
       {
         Header: "Vouched",
-        accessor: "vouched"
+        accessor: "vouched",
       },
       {
         Header: "Used",
-        accessor: "used"
+        accessor: "used",
       },
       {
         Header: "Health",
-        accessor: "health"
-      }
+        accessor: "health",
+      },
     ],
     []
   ),
-  data
+  data,
 }) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
   } = useTable(
     {
       columns,
-      data
+      data,
     },
     useSortBy
   );
@@ -46,9 +46,9 @@ const StakeTable = ({
     <div className="bg-white border rounded p-4 md:p-6 h-full">
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
                   <span>

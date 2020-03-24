@@ -14,7 +14,7 @@ Web3Button.propTypes = {
   /**
    * Changes the button to an error background and border color
    */
-  error: PropTypes.bool
+  error: PropTypes.bool,
 };
 
 export default Web3Button;

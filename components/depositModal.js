@@ -11,10 +11,10 @@ const DepositModal = ({ totalStake }) => {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting }
+    formState: { isSubmitting },
   } = useForm();
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     setTimeout(() => console.log(values), 1000);
   };
 

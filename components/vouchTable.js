@@ -9,39 +9,39 @@ const VouchTable = ({
     () => [
       {
         Header: "Address",
-        accessor: "address"
+        accessor: "address",
       },
       {
         Header: "Percentage",
-        accessor: "percentage"
+        accessor: "percentage",
       },
       {
         Header: "Vouched",
-        accessor: "vouched"
+        accessor: "vouched",
       },
       {
         Header: "Used",
-        accessor: "used"
+        accessor: "used",
       },
       {
         Header: "Health",
-        accessor: "health"
-      }
+        accessor: "health",
+      },
     ],
     []
   ),
-  data
+  data,
 }) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
   } = useTable(
     {
       columns,
-      data
+      data,
     },
     useSortBy
   );
@@ -50,9 +50,9 @@ const VouchTable = ({
     <div className="bg-white border rounded p-4 md:p-6 mb-10">
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map(headerGroup => (
+          {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
+              {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                   {column.render("Header")}
                   <span>
@@ -85,7 +85,7 @@ const VouchTable = ({
                           {Number(value).toLocaleString(undefined, {
                             style: "percentage",
                             maximumFractionDigits: 2,
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                           })}
                         </span>
                       );
