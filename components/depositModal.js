@@ -29,15 +29,16 @@ const DepositModal = ({ totalStake }) => {
         />
 
         <Input
+          autoFocus
+          chip="DAI"
           className="mb-8"
           id="depositAmount"
           label="Deposit Amount"
           placeholder="0.00"
           ref={register}
-          type="number"
           required
-          chip="DAI"
           tip={`Increases your UPY by ${0} UNION`}
+          type="number"
         />
 
         <div className="divider" />

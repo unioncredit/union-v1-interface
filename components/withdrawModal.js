@@ -29,14 +29,15 @@ const WithdrawModal = ({ totalStake }) => {
         />
 
         <Input
+          autoFocus
+          chip="DAI"
           className="mb-8"
           id="withdrawAmount"
           label="Withdraw Amount"
           placeholder="0.00"
           ref={register}
-          type="number"
           required
-          chip="DAI"
+          type="number"
         />
 
         <div className="divider" />

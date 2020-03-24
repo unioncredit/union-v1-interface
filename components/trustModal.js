@@ -23,24 +23,25 @@ const TrustModal = () => {
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
         <Input
+          autoFocus
           className="mb-4"
           id="address"
-          ref={register}
-          required
           label="Address or ENS Name"
           placeholder="Enter address or ENS"
+          ref={register}
+          required
         />
 
         <Input
           chip="DAI"
           className="mb-4"
           id="trust"
-          type="number"
-          ref={register}
-          required
           label="Trust amount"
           placeholder="0.00"
+          ref={register}
+          required
           tip="The amount you trust this address to borrow and be able to repay."
+          type="number"
         />
 
         <div className="mt-20">
