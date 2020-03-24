@@ -46,7 +46,7 @@ export default function Vouch() {
     []
   )
    */
-    data: useMemo(() => [], [])
+    data: useMemo(() => [], []),
   };
 
   return (

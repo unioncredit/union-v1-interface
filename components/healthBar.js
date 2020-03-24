@@ -41,7 +41,7 @@ HealthBar.propTypes = {
    * The width of the HealthBar
    */
   width: PropTypes.number,
-  dark: PropTypes.bool
+  dark: PropTypes.bool,
 };
 
 export default HealthBar;

@@ -34,9 +34,6 @@ module.exports = {
         "screen-lg-gutter": "calc(1080px + 1rem * 2)",
         "screen-xl-gutter": "calc(1280px + 1rem * 2)",
       },
-      cursor: {
-        help: "help",
-      },
     },
   },
   variants: {},

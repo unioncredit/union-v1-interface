@@ -110,6 +110,10 @@ table td:not(:first-of-type) {
   background-color: #f4dbd8;
 }
 
+.cursor-help {
+  cursor: help;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;
