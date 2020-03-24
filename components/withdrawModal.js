@@ -39,7 +39,7 @@ const WithdrawModal = ({ totalStake }) => {
           chip="DAI"
         />
 
-        <div className="w-full h-px bg-border-pure" />
+        <div className="divider" />
 
         <LabelPair
           className="mb-8 mt-6"

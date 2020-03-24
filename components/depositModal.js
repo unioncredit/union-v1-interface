@@ -40,7 +40,7 @@ const DepositModal = ({ totalStake }) => {
           tip={`Increases your UPY by ${0} UNION`}
         />
 
-        <div className="w-full h-px bg-border-pure" />
+        <div className="divider" />
 
         <LabelPair
           className="mb-8 mt-6"

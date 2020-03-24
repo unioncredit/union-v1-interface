@@ -118,6 +118,10 @@ table td:not(:first-of-type) {
   @apply w-full mx-auto max-w-screen-lg-gutter;
 }
 
+.divider {
+  @apply w-full h-px bg-border-pure;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;
