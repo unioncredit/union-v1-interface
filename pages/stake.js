@@ -49,7 +49,7 @@ export default function Stake() {
             <div className="flex justify-between items-center">
               <h2 className="leading-loose">Addresses You Trust</h2>
 
-              <Button invert disabled onClick={toggleTrustModal}>
+              <Button invert onClick={toggleTrustModal}>
                 Trust a new member
               </Button>
             </div>

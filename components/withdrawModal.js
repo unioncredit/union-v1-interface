@@ -2,6 +2,7 @@ import { useWithdrawModalOpen, useWithdrawModalToggle } from "@contexts/Stake";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
+import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const WithdrawModal = ({ totalStake }) => {
@@ -10,7 +11,7 @@ const WithdrawModal = ({ totalStake }) => {
 
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     setTimeout(() => console.log(values), 1000);
   };
 
@@ -21,7 +22,11 @@ const WithdrawModal = ({ totalStake }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
-        <div className="mb-6">Current total stake: {totalStake}</div>
+        <LabelPair
+          className="mb-6"
+          label="Current total stake"
+          value={totalStake}
+        />
 
         <Input
           className="mb-8"
@@ -36,7 +41,11 @@ const WithdrawModal = ({ totalStake }) => {
 
         <div className="w-full h-px bg-border-pure" />
 
-        <div className="mb-8 mt-6">New total stake</div>
+        <LabelPair
+          className="mb-8 mt-6"
+          label="New total stake"
+          value={totalStake}
+        />
 
         <Button full type="submit">
           Confirm

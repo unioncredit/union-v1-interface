@@ -2,19 +2,16 @@ import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
+import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const DepositModal = ({ totalStake }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
-  const {
-    handleSubmit,
-    register,
-    formState: { isSubmitting },
-  } = useForm();
+  const { handleSubmit, register } = useForm();
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     setTimeout(() => console.log(values), 1000);
   };
 
@@ -25,7 +22,11 @@ const DepositModal = ({ totalStake }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
-        <div className="mb-6">Current total stake: {totalStake}</div>
+        <LabelPair
+          className="mb-6"
+          label="Current total stake"
+          value={totalStake}
+        />
 
         <Input
           className="mb-8"
@@ -36,14 +37,18 @@ const DepositModal = ({ totalStake }) => {
           type="number"
           required
           chip="DAI"
-          tip="Increases your UPY by 0 UNION"
+          tip={`Increases your UPY by ${0} UNION`}
         />
 
         <div className="w-full h-px bg-border-pure" />
 
-        <div className="mb-8 mt-6">New total stake</div>
+        <LabelPair
+          className="mb-8 mt-6"
+          label="New total stake"
+          value={totalStake}
+        />
 
-        <Button full type="submit" disabled={isSubmitting}>
+        <Button full type="submit">
           Confirm
         </Button>
       </form>
