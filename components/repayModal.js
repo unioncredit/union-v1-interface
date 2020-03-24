@@ -42,7 +42,7 @@ const RepayModal = ({ balanceOwed }) => {
         <LabelPair className="mb-8" label="New balance owed" value={"-"} />
 
         <LabelPair
-          className="mb-8"
+          className="mb-8 text-grey-pure"
           label="New min payment"
           value={balanceOwed}
         />
