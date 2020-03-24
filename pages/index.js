@@ -21,7 +21,7 @@ export default function Home() {
           <h1 className="mb-4">Join Union</h1>
           <p className="text-lg leading-6 text-grey-pure mb-48">
             Borrow tokens with no collateral, vouch for other people and earn
-            higher interest when staking.{" "}
+            higher interest when staking.
           </p>
 
           <Button onClick={toggleEmailModal} full>
