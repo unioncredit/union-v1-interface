@@ -27,7 +27,7 @@
 *,
 ::before,
 ::after {
-  @apply border-accent;
+  @apply border-border-pure;
 }
 
 h1,
@@ -67,13 +67,13 @@ table td:not(:first-of-type) {
 }
 
 .btn-primary {
-  @apply bg-primary-500 text-secondary-500 border-primary-500;
+  @apply bg-pink-pure text-black-pure border-pink-pure;
 }
 .btn-primary:hover:enabled {
 }
 
 .btn-secondary {
-  @apply bg-secondary-500 text-white border-secondary-500;
+  @apply bg-black-pure text-white border-black-pure;
 }
 .btn-secondary:hover:enabled {
 }
@@ -86,7 +86,7 @@ table td:not(:first-of-type) {
 }
 
 .btn-invert {
-  @apply bg-white text-secondary-500;
+  @apply bg-white text-black-pure;
 }
 .btn-invert:hover:enabled {
 }

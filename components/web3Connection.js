@@ -34,7 +34,7 @@ const Web3Connection = () => {
 
   return (
     <Button
-      className="bg-primary-100 border-primary-100"
+      className="bg-pink-light border-pink-light"
       onClick={toggleWalletModal}
     >
       Start now

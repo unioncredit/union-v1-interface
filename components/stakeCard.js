@@ -14,14 +14,14 @@ const StakeCard = ({}) => {
     withdrawableStake: "0 DAI",
     rewardsMultiplier: "1x",
     rewards: "0 UNION",
-    upy: "0 UNION",
+    upy: "0 UNION"
   };
 
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
 
   return (
-    <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6">
+    <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6">
       <LabelPair
         label="Your total stake"
         value={data.totalStake}

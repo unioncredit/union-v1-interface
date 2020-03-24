@@ -1,7 +1,7 @@
 const Transaction = ({}) => {
   return (
     <div className="mt-4 bg-white border rounded p-6 flex items-center">
-      <div className="h-12 w-12 rounded-full bg-accent" />
+      <div className="h-12 w-12 rounded-full bg-border-pure" />
 
       <div className="flex-1 mx-4">
         <p className="mb-2 leading-none">

@@ -2,7 +2,7 @@ import Button from "./button";
 
 const ApplicationCard = () => {
   return (
-    <div className="bg-primary-100 border border-primary-500 rounded p-4 md:p-6 mb-10">
+    <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 mb-10">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-lg leading-snug mb-2">Become a member of Union</p>
@@ -14,7 +14,7 @@ const ApplicationCard = () => {
         <Button>Ask someone to vouch for you</Button>
       </div>
 
-      <div className="my-6 h-5 bg-primary-500 rounded-full w-1/3"></div>
+      <div className="my-6 h-5 bg-pink-pure rounded-full w-1/3"></div>
 
       <p>
         <button className="underline font-medium">What is vouching?</button>

@@ -21,7 +21,7 @@ export default function Borrow() {
     balanceOwed: "0 DAI",
     minPaymentDue: "0 DAI",
     paymentDueDate: "in 10 Days",
-    transactions: ["", ""],
+    transactions: ["", ""]
   };
 
   return (
@@ -40,7 +40,7 @@ export default function Borrow() {
 
         <div className="flex -mx-3 mb-10">
           <div className="w-1/2 px-3">
-            <div className="bg-secondary-500 border border-secondary-500 rounded p-6 text-white">
+            <div className="bg-black-pure border border-black-pure rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"

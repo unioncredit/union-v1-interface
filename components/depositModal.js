@@ -22,7 +22,7 @@ const DepositModal = () => {
           tip="Increases your UPY by 0 UNION"
         />
 
-        <div className="w-full h-px bg-accent" />
+        <div className="w-full h-px bg-border-pure" />
 
         <div className="mb-8 mt-6">New total stake</div>
 
