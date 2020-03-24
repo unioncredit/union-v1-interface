@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Jazzicon, { jsNumberForAddress } from "react-jazzicon-custom-colors";
 
 const jazziconTheme = [
@@ -10,7 +11,7 @@ const jazziconTheme = [
   "#f3c100",
   "#1598f2",
   "#2465e1",
-  "#f19e02",
+  "#f19e02"
 ];
 
 const Identicon = ({ address, large = false }) => {
@@ -23,4 +24,4 @@ const Identicon = ({ address, large = false }) => {
   );
 };
 
-export default Identicon;
+export default memo(Identicon);
