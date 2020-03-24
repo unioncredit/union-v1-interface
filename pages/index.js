@@ -12,46 +12,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="w-full mx-auto max-w-screen-md-gutter">
-        <div className="flex -mx-3">
-          <div className="w-1/2 px-3">
-            <div className="bg-border-light border border-border-pure rounded p-4 md:p-6 h-full text-center">
-              <h2 className="mb-4">Become part of Union</h2>
+      <div className="container">
+        <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
+          <h1 className="mb-4">Join Union</h1>
+          <p className="text-lg leading-6 text-grey-pure mb-48">
+            Borrow tokens with no collateral, vouch for other people and earn
+            higher interest when staking.{" "}
+          </p>
 
-              <p className="mb-8">
-                Borrow tokens with no collateral, vouch for other people and
-                earn higher interest when staking.
-              </p>
+          <Link href="/stake">
+            <a className="btn btn-primary w-full">Start now</a>
+          </Link>
 
-              <Link href="/borrow">
-                <a className="btn btn-secondary w-full"> Become a member</a>
-              </Link>
-
-              <p className="text-sm mt-4">
-                Already have an account?{" "}
-                <button
-                  className="underline font-medium"
-                  onClick={toggleWalletModal}
-                >
-                  Connect your wallet
-                </button>
-              </p>
-            </div>
-          </div>
-          <div className="w-1/2 px-3">
-            <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 h-full text-center">
-              <h2 className="mb-4">Are you just looking to stake?</h2>
-
-              <p className="mb-8">
-                Connect your Ethereum wallet in order to <br />
-                use Union.
-              </p>
-
-              <Link href="/stake">
-                <a className="btn btn-primary w-full">Start staking</a>
-              </Link>
-            </div>
-          </div>
+          <p className="mt-4">
+            Already have an account?{" "}
+            <button
+              className="underline font-medium"
+              onClick={toggleWalletModal}
+            >
+              Sign in
+            </button>
+          </p>
         </div>
       </div>
     </div>
