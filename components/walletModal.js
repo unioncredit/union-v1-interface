@@ -1,11 +1,11 @@
 import {
   useWalletModalOpen,
-  useWalletModalToggle
+  useWalletModalToggle,
 } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
 import { CONNECTORS, SUPPORTED_WALLETS } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
-import isMetaMask from "@util/isMetaMask";
+import isMetaMask from "@lib/isMetaMask";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import Button from "./button";
@@ -19,7 +19,7 @@ const WalletModal = () => {
     account,
     library,
     deactivate,
-    error
+    error,
   } = useWeb3React();
 
   const open = useWalletModalOpen();
@@ -48,7 +48,7 @@ const WalletModal = () => {
         </div>
 
         <div className="mt-8 mb-10">
-          {Object.keys(CONNECTORS).map(name => {
+          {Object.keys(CONNECTORS).map((name) => {
             const currentConnector = CONNECTORS[name];
 
             const activating = currentConnector === activatingConnector;
