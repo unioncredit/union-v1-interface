@@ -5,14 +5,14 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const DepositModal = ({ totalStake }) => {
+const DepositModal = ({ totalStake, onDeposit }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    onDeposit(values.depositAmount);
   };
 
   return (

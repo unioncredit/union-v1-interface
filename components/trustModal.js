@@ -4,14 +4,14 @@ import Button from "./button";
 import Input from "./input";
 import { useForm } from "react-hook-form";
 
-const TrustModal = () => {
+const TrustModal = (props) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    props.onTrust(values.address, values.trust);
   };
 
   return (

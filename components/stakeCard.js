@@ -5,20 +5,7 @@ import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 
-const StakeCard = ({}) => {
-  /**
-   * @todo Hook up to contract
-   */
-  const data = {
-    totalStake: "0 DAI",
-    utilizedStake: "0 DAI",
-    defaultedStake: "0 DAI",
-    withdrawableStake: "0 DAI",
-    rewardsMultiplier: "1x",
-    rewards: "0 UNION",
-    upy: "0 UNION",
-  };
-
+const StakeCard = ({ data, onDeposit, onWithdraw }) => {
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
 
@@ -82,8 +69,8 @@ const StakeCard = ({}) => {
         </div>
       </div>
 
-      <DepositModal totalStake={data.totalStake} />
-      <WithdrawModal totalStake={data.totalStake} />
+      <DepositModal totalStake={data.totalStake} onDeposit={onDeposit} />
+      <WithdrawModal totalStake={data.totalStake} onWithdraw={onWithdraw} />
     </div>
   );
 };

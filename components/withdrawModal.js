@@ -5,14 +5,14 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const WithdrawModal = ({ totalStake }) => {
+const WithdrawModal = ({ totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    onWithdraw(values.withdrawAmount);
   };
 
   return (
