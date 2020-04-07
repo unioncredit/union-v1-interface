@@ -38,6 +38,15 @@ const WalletModal = () => {
     }
   }, [activatingConnector, connector]);
 
+  useEffect(() => {
+    if (!!error) {
+      window.alert(getErrorMessage(error));
+      setActivatingConnector(undefined);
+      // if (connector === walletconnect) connector.close();
+      deactivate();
+    }
+  }, [error]);
+
   const triedEager = useEagerConnect();
 
   return (
