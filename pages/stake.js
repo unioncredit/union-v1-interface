@@ -7,7 +7,6 @@ import { useTrustModalToggle } from "@contexts/Stake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useMemo } from "react";
 
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { getRewards } from "@lib/contracts/getRewards";
@@ -69,11 +68,6 @@ export default function Stake() {
     const res = await getTrust(account, TOKENS[chainId]["DAI"], library, chainId);
     setTrustData(res);
   }
-
-  // trustData = useMemo(
-  //   () => [],
-  //   []
-  // );
 
   const onDeposit = async (amount) => {
     await stake(TOKENS[chainId]["DAI"], amount, library, chainId);

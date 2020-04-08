@@ -1,13 +1,14 @@
 import Button from "./button";
 
-const ApplicationCard = () => {
+const ApplicationCard = (props) => {
+  const c = 1;
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 mb-10">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-lg leading-snug mb-2">Become a member of Union</p>
           <p className="text-xl font-normal">
-            <strong className="font-semibold">0 out of 3 members</strong>{" "}
+            <strong className="font-semibold">{props.count} out of 3 members</strong>{" "}
             vouched for you
           </p>
         </div>
