@@ -76,12 +76,14 @@ const WalletModal = () => {
                   full
                   invert
                   disabled={disabled}
+                  icon={SUPPORTED_WALLETS[name].icon}
                   onClick={async () => {
                     setActivatingConnector(currentConnector);
                     await activate(CONNECTORS[name]);
                     toggle();
                   }}
                 >
+                  
                   {activating
                     ? "Waiting for confirmation..."
                     : name === "Injected" && isMetaMask

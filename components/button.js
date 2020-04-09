@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
  * @param {String} href If set, turns the button into a link, internal or external
  * @param {Boolean} wide Makes the button have more left and right padding
  * @param {Boolean} full Makes the button take up the width of the container
+ * @param {any} icon Adds an absolutely positioned icon to the left of the button
  * @param {Boolean} primary
  * @param {Boolean} secondary
  * @param {Boolean} tertiary
@@ -25,6 +26,7 @@ const Button = ({
   tertiary,
   invert,
   wide,
+  icon,
   full,
   ...props
 }) => {
@@ -35,6 +37,7 @@ const Button = ({
     "btn-invert": invert,
     "px-10": wide,
     "w-full": full,
+    "relative": icon
   });
 
   if (href) {
@@ -54,6 +57,14 @@ const Button = ({
       </Link>
     );
   }
+
+  if (icon)
+    return (
+      <button className={cachedClassNames} {...props}>
+        <div className="btn-icon">{icon}</div>
+        {children}
+      </button>
+    );
 
   return (
     <button className={cachedClassNames} {...props}>
@@ -91,6 +102,7 @@ Button.propTypes = {
   secondary: PropTypes.bool,
   tertiary: PropTypes.bool,
   invert: PropTypes.bool,
+  icon: PropTypes.any
 };
 
 export default Button;
