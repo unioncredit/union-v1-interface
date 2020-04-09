@@ -1,22 +1,20 @@
 import Button from "@components/button";
 import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
-import { TOKENS } from "@constants/";
 import TrustModal from "@components/trustModal";
+import { TOKENS } from "@constants/index";
 import { useTrustModalToggle } from "@contexts/Stake";
-import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-import { useMemo } from "react";
-
-import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { getRewards } from "@lib/contracts/getRewards";
-import { getSupplyPerYear } from "@lib/contracts/getSupplyPerYear";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
+import { getStakeAmount } from "@lib/contracts/getStakeAmount";
+import { getSupplyPerYear } from "@lib/contracts/getSupplyPerYear";
+import { getTrust } from "@lib/contracts/getTrust";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
-import { getTrust } from "@lib/contracts/getTrust";
+import { useWeb3React } from "@web3-react/core";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
