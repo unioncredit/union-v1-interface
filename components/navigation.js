@@ -1,8 +1,26 @@
+import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EmailModal from "./emailModal";
 import Logo from "./logo";
 import Web3Status from "./web3Connection";
+
+const NavigationLink = ({ href, children, ...rest }) => {
+  const { pathname } = useRouter();
+
+  const isActive = pathname === href ? true : false;
+
+  const cachedClassNames = classNames(
+    "p-3 leading-none mx-4 text-lg font-semibold",
+    { "active-nav-tab": isActive }
+  );
+
+  return (
+    <Link href={href} {...rest}>
+      <a className={cachedClassNames}>{children}</a>
+    </Link>
+  );
+};
 
 const Navigation = () => {
   const { pathname } = useRouter();
@@ -24,25 +42,13 @@ const Navigation = () => {
           {!isHomepage && (
             <ul className="flex flex-1 justify-center items-center py-4 h-20">
               <li>
-                <Link href="/stake">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold active-nav-tab">
-                    Stake
-                  </a>
-                </Link>
+                <NavigationLink href="/stake">Stake</NavigationLink>
               </li>
               <li>
-                <Link href="/borrow">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold text-grey-pure">
-                    Borrow
-                  </a>
-                </Link>
+                <NavigationLink href="/borrow">Borrow</NavigationLink>
               </li>
               <li>
-                <Link href="/vouch">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold text-grey-pure">
-                    Vouch
-                  </a>
-                </Link>
+                <NavigationLink href="/vouch">Vouch</NavigationLink>
               </li>
             </ul>
           )}
