@@ -7,6 +7,7 @@ import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import Head from "next/head";
 import "../css/tailwind.css";
+import Footer from "@components/footer";
 
 const ContextProviders = ({ children }) => (
   <ApplicationContext>
@@ -53,6 +54,8 @@ export default function UnionApp({ Component, pageProps }) {
         <main>
           <Component {...pageProps} />
         </main>
+
+        <Footer />
       </ContextProviders>
     </Web3ReactProvider>
   );

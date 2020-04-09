@@ -18,7 +18,7 @@ export default function Home() {
       </Head>
 
       <div className="container">
-        <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 mb-10 text-center">
+        <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
           <div
             className="bg-border-pure mx-auto"
             style={{ height: 130, width: 280 }}
