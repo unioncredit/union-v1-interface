@@ -52,16 +52,16 @@ const WalletModal = () => {
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
-        <div className="mb-8">
-          <p className="text-center text-xl mb-3">Connect your wallet</p>
+        <div className="mb-10">
+          <p className="text-center text-xl mb-3">Sign in</p>
           <div className="w-full h-1 bg-pink-pure" />
-          <p className="text-center leading-tight mt-6">
+          {/* <p className="text-center leading-tight mt-6">
             As a final step your wallet will ask you to authorize Union to
             access your account.
-          </p>
+          </p> */}
         </div>
 
-        <div className="mt-8 mb-10">
+        <div className="mb-10">
           {Object.keys(CONNECTORS).map((name) => {
             const currentConnector = CONNECTORS[name];
 
@@ -103,7 +103,7 @@ const WalletModal = () => {
 
         <p className="text-sm text-center mt-6">
           Don't have an account?{" "}
-          <button className="underline font-medium">Start now</button>
+          <button className="underline font-medium">Sign up</button>
         </p>
       </div>
     </Modal>
