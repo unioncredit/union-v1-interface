@@ -86,7 +86,7 @@ const WalletModal = () => {
     if (!!error) {
       window.alert(getErrorMessage(error));
       setActivatingConnector(undefined);
-      // if (connector === walletconnect) connector.close();
+      if (connector === walletconnect) connector.close();
       deactivate();
     }
   }, [error]);
@@ -103,7 +103,7 @@ const WalletModal = () => {
               <div className="w-full h-1 bg-pink-pure" />
             </div>
 
-            <div className="mb-10">
+            <div className="mb-6">
               {Object.keys(CONNECTORS).map((name) => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
@@ -128,7 +128,7 @@ const WalletModal = () => {
             </div>
 
             {!!error && (
-              <p className="text-sm text-center text-red-500 mb-10">
+              <p className="text-sm text-center text-red-500 mb-6">
                 {getErrorMessage(error)}
               </p>
             )}
@@ -167,7 +167,7 @@ const WalletModal = () => {
               <div className="w-full h-1 bg-pink-pure" />
             </div>
 
-            <div className="mb-10">
+            <div className="mb-6">
               {Object.keys(CONNECTORS).map((name) => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
@@ -193,7 +193,7 @@ const WalletModal = () => {
             </div>
 
             {!!error && (
-              <p className="text-sm text-center text-red-500 mb-10">
+              <p className="text-sm text-center text-red-500 mb-6">
                 {getErrorMessage(error)}
               </p>
             )}
