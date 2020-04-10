@@ -20,7 +20,7 @@ const ApplicationCard = () => {
         </Button>
       </div>
 
-      <div className="my-6 h-5 bg-pink-pure rounded-full w-1/2"></div>
+      <div className="my-6 h-5 bg-pink-2-light rounded-full w-1/2"></div>
 
       <p>
         <p title={placeholderTip}>
