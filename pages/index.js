@@ -1,14 +1,21 @@
 import Button from "@components/button";
-import {
-  useEmailModalToggle,
-  useWalletModalToggle,
-} from "@contexts/Application";
+import { useEmailModalToggle, useWalletModalToggle } from "@contexts/Application";
+import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { Fragment, useEffect } from "react";
 
 export default function Home() {
+  const { account, library } = useWeb3React();
+
+  const router = useRouter();
+
   const toggleWalletModal = useWalletModalToggle();
   const toggleEmailModal = useEmailModalToggle();
+
+  useEffect(() => {
+    if (account && library) router.push("/stake");
+  }, [account, library]);
 
   return (
     <Fragment>
