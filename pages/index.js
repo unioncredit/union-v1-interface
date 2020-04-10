@@ -1,5 +1,8 @@
 import Button from "@components/button";
-import { useEmailModalToggle, useWalletModalToggle } from "@contexts/Application";
+import {
+  useEmailModalToggle,
+  useWalletModalToggle,
+} from "@contexts/Application";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -11,7 +14,6 @@ export default function Home() {
   const router = useRouter();
 
   const toggleWalletModal = useWalletModalToggle();
-  const toggleEmailModal = useEmailModalToggle();
 
   useEffect(() => {
     if (account && library) router.push("/stake");
@@ -36,7 +38,7 @@ export default function Home() {
             higher interest when staking.
           </p>
 
-          <Button onClick={toggleEmailModal} full>
+          <Button onClick={toggleWalletModal} full>
             Start now
           </Button>
 

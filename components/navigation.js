@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import EmailModal from "./emailModal";
 import GetInvitedModal from "./getInvitedModal";
 import Logo from "./logo";
+import WalletModal from "./walletModal";
 import Web3Status from "./web3Connection";
 
 const NavigationLink = ({ href, children, ...rest }) => {
@@ -57,8 +58,8 @@ const Navigation = () => {
             </ul>
           )}
 
-          <ul className="flex flex-1 items-center justify-end py-4">
-            {!isHomepage && (
+          {!isHomepage && (
+            <ul className="flex flex-1 items-center justify-end py-4">
               <li>
                 <span
                   className="leading-none text-2xl"
@@ -68,15 +69,16 @@ const Navigation = () => {
                   🔔
                 </span>
               </li>
-            )}
-            <li className="ml-8">
-              <Web3Status />
-            </li>
-          </ul>
+              <li className="ml-8">
+                <Web3Status />
+              </li>
+            </ul>
+          )}
         </ul>
       </div>
 
       <EmailModal />
+      <WalletModal />
       <GetInvitedModal />
     </nav>
   );
