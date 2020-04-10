@@ -10,9 +10,22 @@ const GetInvitedModal = () => {
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa, laudantium
-      facilis nisi ab reiciendis impedit adipisci explicabo distinctio, nam est
-      autem magni perferendis atque consectetur? Vitae, hic fugit. Qui, cumque.
+      <div className="text-center">
+        <h2 className="text-3xl mb-4">How to become a member?</h2>
+
+        <p className="text-lg text-grey-pure leading-tight mb-4">
+          Joining Union is invite only, it means that someone who is already a
+          member needs to vouch for you.
+        </p>
+
+        <p className="text-lg mb-4">
+          Here are 2 simple ways to become a member.
+        </p>
+
+        <p className="text-center mb-10">
+          <button className="underline font-medium">Learn more</button>
+        </p>
+      </div>
     </Modal>
   );
 };

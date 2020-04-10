@@ -1,4 +1,5 @@
 import { useGetInvitedModalToggle } from "@contexts/Vouch";
+import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 
 const ApplicationCard = () => {
@@ -22,15 +23,17 @@ const ApplicationCard = () => {
       <div className="my-6 h-5 bg-pink-pure rounded-full w-1/2"></div>
 
       <p>
-        <button
-          onClick={toggleGetInvitedModal}
-          className="underline font-medium"
-        >
-          What is vouching?
-        </button>
+        <p title={placeholderTip}>
+          <span className="underline">What is vouching?</span>{" "}
+          <span
+            className="text-sm leading-none"
+            role="img"
+            aria-label="Information"
+          >
+            ℹ️
+          </span>
+        </p>
       </p>
-
-     
     </div>
   );
 };
