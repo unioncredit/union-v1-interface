@@ -143,7 +143,7 @@ export default function Stake() {
       </Head>
 
       <div className="container">
-        <div className="flex -mx-2 mb-5">
+        <div className="flex -mx-2 mb-4">
           <div className="w-5/12 px-2">
             <h1 className="leading-loose">Stake</h1>
           </div>

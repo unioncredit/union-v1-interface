@@ -12,7 +12,10 @@ const NavigationLink = ({ href, children, ...rest }) => {
 
   const cachedClassNames = classNames(
     "p-3 leading-none mx-4 text-lg font-semibold",
-    { "active-nav-tab": isActive }
+    {
+      "active-nav-tab": isActive,
+      "text-type-lightest": !isActive,
+    }
   );
 
   return (

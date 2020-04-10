@@ -33,6 +33,12 @@ module.exports = {
         pure: "#657794",
         light: "#E0E4EA",
       },
+      type: {
+        base: "#032437",
+        light: "#657794",
+        lighter: "#A7B2C2",
+        lightest: "#A4A8AD",
+      },
       white: "#fff",
       "true-black": "#000",
       transparent: "transparent",
