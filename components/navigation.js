@@ -2,6 +2,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EmailModal from "./emailModal";
+import GetInvitedModal from "./getInvitedModal";
 import Logo from "./logo";
 import Web3Status from "./web3Connection";
 
@@ -76,6 +77,7 @@ const Navigation = () => {
       </div>
 
       <EmailModal />
+      <GetInvitedModal />
     </nav>
   );
 };
