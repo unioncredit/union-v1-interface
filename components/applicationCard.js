@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "@contexts/Vouch";
+import { useGetInvitedModalToggle } from "@contexts/Application";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 

@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "@contexts/Vouch";
+import { useGetInvitedModalToggle } from "@contexts/Application";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";

@@ -1,7 +1,7 @@
 import {
   useGetInvitedModalOpen,
   useGetInvitedModalToggle,
-} from "@contexts/Vouch";
+} from "@contexts/Application";
 import Modal from "./modal";
 
 const GetInvitedModal = () => {
@@ -23,7 +23,9 @@ const GetInvitedModal = () => {
         </p>
 
         <p className="text-center mb-10">
-          <a href="#!" className="underline font-medium">Learn more</a>
+          <a href="#!" className="underline font-medium">
+            Learn more
+          </a>
         </p>
       </div>
     </Modal>

@@ -37,7 +37,7 @@ const Button = ({
     "btn-invert": invert,
     "px-10": wide,
     "w-full": full,
-    "relative": icon
+    relative: icon,
   });
 
   if (href) {
@@ -102,7 +102,7 @@ Button.propTypes = {
   secondary: PropTypes.bool,
   tertiary: PropTypes.bool,
   invert: PropTypes.bool,
-  icon: PropTypes.any
+  icon: PropTypes.any,
 };
 
 export default Button;

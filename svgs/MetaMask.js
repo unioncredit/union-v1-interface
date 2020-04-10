@@ -98,4 +98,3 @@ export default ({ size = 24 }) => (
     />
   </svg>
 );
-
