@@ -36,7 +36,7 @@ const Navigation = () => {
     <nav className="border-b mb-10">
       <div className="w-full mx-auto max-w-screen-xl">
         <ul className="flex items-center">
-          <li className="py-4 flex-1 flex items-center justify-start">
+          <li className="py-4 flex-1 h-20 flex items-center justify-start">
             <Link href="/">
               <a>
                 <Logo />
