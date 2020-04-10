@@ -103,13 +103,13 @@ export function useEmailModalToggle() {
 }
 
 export function useGetInvitedModalOpen() {
-  const [state] = useVouchContext();
+  const [state] = useApplicationContext();
 
   return state[GET_INVITED_MODAL];
 }
 
 export function useGetInvitedModalToggle() {
-  const [, { toggleGetInvitedModal }] = useVouchContext();
+  const [, { toggleGetInvitedModal }] = useApplicationContext();
 
   return toggleGetInvitedModal;
 }

@@ -1,8 +1,5 @@
 import Button from "@components/button";
-import {
-  useEmailModalToggle,
-  useWalletModalToggle,
-} from "@contexts/Application";
+import { useWalletModalToggle } from "@contexts/Application";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import { useRouter } from "next/router";
