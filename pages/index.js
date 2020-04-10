@@ -14,7 +14,6 @@ export default function Home() {
     <Fragment>
       <Head>
         <title>Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">

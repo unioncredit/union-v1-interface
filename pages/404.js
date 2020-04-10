@@ -5,7 +5,6 @@ export default function FourOhFour() {
     <div>
       <Head>
         <title>404 | Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">

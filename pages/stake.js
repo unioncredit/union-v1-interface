@@ -139,7 +139,6 @@ export default function Stake() {
     <div>
       <Head>
         <title>Stake | Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">
