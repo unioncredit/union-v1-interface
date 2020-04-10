@@ -1,11 +1,9 @@
-import {
-  useWalletModalOpen,
-  useWalletModalToggle,
-} from "@contexts/Application";
+import { useWalletModalOpen, useWalletModalToggle } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
 import { CONNECTORS, SUPPORTED_WALLETS } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
@@ -26,6 +24,8 @@ const WalletModal = () => {
     deactivate,
     error,
   } = useWeb3React();
+
+  const router = useRouter();
 
   const open = useWalletModalOpen();
   const toggle = useWalletModalToggle();
@@ -84,7 +84,8 @@ const WalletModal = () => {
                   onClick={async () => {
                     setActivatingConnector(currentConnector);
                     await activate(CONNECTORS[name]);
-                    toggle();
+                    await toggle();
+                    router.push("/stake");
                   }}
                 >
                   {activating
