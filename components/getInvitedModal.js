@@ -23,7 +23,7 @@ const GetInvitedModal = () => {
         </p>
 
         <p className="text-center mb-10">
-          <button className="underline font-medium">Learn more</button>
+          <a href="#!" className="underline font-medium">Learn more</a>
         </p>
       </div>
     </Modal>
