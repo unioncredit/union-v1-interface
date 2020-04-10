@@ -2,6 +2,7 @@ import { useGetInvitedModalToggle } from "@contexts/Vouch";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
+import Button from "./button";
 import HealthBar from "./healthBar";
 
 const StakeTable = ({
@@ -99,12 +100,7 @@ const StakeTable = ({
             Borrow without collateral and earn higher interest on your deposits
           </p>
           <p className="text-center">
-            <button
-              onClick={toggleGetInvitedModal}
-              className="font-semibold underline"
-            >
-              Become a member
-            </button>
+            <Button onClick={toggleGetInvitedModal}>Become a member</Button>
           </p>
         </div>
       )}
