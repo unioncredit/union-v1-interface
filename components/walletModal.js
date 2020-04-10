@@ -1,6 +1,6 @@
 import { useWalletModalOpen, useWalletModalToggle } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
-import { CONNECTORS, SUPPORTED_WALLETS } from "@lib/connectors";
+import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
@@ -111,6 +111,25 @@ const WalletModal = () => {
           Don't have an account?{" "}
           <button className="underline font-medium">Sign up</button>
         </p>
+
+        {active && (
+          <div className="mt-6">
+            <div className="divider" />
+
+            <p className="text-sm text-center mt-6">
+              <Button
+                full
+                invert
+                onClick={() => {
+                  if (connector === walletconnect) connector.close();
+                  deactivate();
+                }}
+              >
+                Disconnect
+              </Button>
+            </p>
+          </div>
+        )}
       </div>
     </Modal>
   );
