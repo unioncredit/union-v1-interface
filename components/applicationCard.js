@@ -2,7 +2,7 @@ import { useGetInvitedModalToggle } from "@contexts/Application";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 
-const ApplicationCard = () => {
+const ApplicationCard = (props) => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   return (

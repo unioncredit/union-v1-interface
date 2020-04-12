@@ -7,9 +7,7 @@ import { useTrustModalToggle } from "@contexts/Stake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { Web3Provider } from "@ethersproject/providers";
 
-import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
@@ -18,19 +16,9 @@ import { getTrust } from "@lib/contracts/getTrust";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
-  // console.log(Web3Provider)
-  // const provider = new Web3Provider(library, chainId);
-  // console.log(provider)
-  // const provider = new Provider.Web3Provider(library);
-  // // There is only ever up to one account in MetaMask exposed
-  // const signer = provider.getSigner();
-
   const toggleTrustModal = useTrustModalToggle();
 
   const [totalStake, setTotalStake] = useState("N/A");
@@ -41,6 +29,7 @@ export default function Stake() {
   const [upy, setUpy] = useState("N/A");
   const [rewardsMultiplier, setRewardsMultiplier] = useState("N/A");
   const [trustData, setTrustData] = useState([]);
+  const [signer, setSigner] = useState([]);
 
   useEffect(() => {
     if (library) {
@@ -49,6 +38,7 @@ export default function Stake() {
       getUpyData();
       getRewardsMultiplierData();
       getTrustData();
+      setSigner(library.getSigner());
     }
   }, []);
 
@@ -99,15 +89,15 @@ export default function Stake() {
   };
 
   const onDeposit = async (amount) => {
-    await stake(TOKENS[chainId]["DAI"], amount, library, chainId);
+    await stake(TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(TOKENS[chainId]["DAI"], amount, library, chainId);
+    await unstake(TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
 
   const onTrust = async (address, amount) => {
-    await vouch(address, TOKENS[chainId]["DAI"], amount, library, chainId);
+    await vouch(address, TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
 
   const stakeCardData = {
