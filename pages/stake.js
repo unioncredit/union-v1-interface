@@ -1,8 +1,8 @@
 import Button from "@components/button";
 import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
-import { TOKENS } from "@constants/";
 import TrustModal from "@components/trustModal";
+import { TOKENS } from "@constants/index";
 import { useTrustModalToggle } from "@contexts/Stake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
@@ -10,25 +10,29 @@ import Head from "next/head";
 
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { getRewards } from "@lib/contracts/getRewards";
-import { getSupplyPerYear } from "@lib/contracts/getSupplyPerYear";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
+import { getStakeAmount } from "@lib/contracts/getStakeAmount";
+import { getSupplyPerYear } from "@lib/contracts/getSupplyPerYear";
+import { getTrust } from "@lib/contracts/getTrust";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
-import { getTrust } from "@lib/contracts/getTrust";
+import { useWeb3React } from "@web3-react/core";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
 
   const toggleTrustModal = useTrustModalToggle();
 
-  const [totalStake, setTotalStake] = useState('N/A');
-  const [utilizedStake, setUtilizedStake] = useState('N/A');
-  const [defaultedStake, setDefaultedStake] = useState('N/A');
-  const [withdrawableStake, setWithdrawableStake] = useState('N/A');
-  const [rewards, setRewards] = useState('N/A');
-  const [upy, setUpy] = useState('N/A');
-  const [rewardsMultiplier, setRewardsMultiplier] = useState('N/A');
+  const [totalStake, setTotalStake] = useState("N/A");
+  const [utilizedStake, setUtilizedStake] = useState("N/A");
+  const [defaultedStake, setDefaultedStake] = useState("N/A");
+  const [withdrawableStake, setWithdrawableStake] = useState("N/A");
+  const [rewards, setRewards] = useState("N/A");
+  const [upy, setUpy] = useState("N/A");
+  const [rewardsMultiplier, setRewardsMultiplier] = useState("N/A");
   const [trustData, setTrustData] = useState([]);
 
   useEffect(() => {
@@ -42,44 +46,62 @@ export default function Stake() {
   }, []);
 
   const getStakeData = async () => {
-    const res = await getStakeAmount(account, TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getStakeAmount(
+      account,
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setTotalStake(res.stakingAmount.toString());
     setUtilizedStake(res.lendingAmount.toString());
     setDefaultedStake(res.freezeAmount.toString());
     setWithdrawableStake(res.stakingAmount.sub(res.vouchingAmount).toString());
-  }
+  };
 
   const getRewardData = async () => {
     const res = await getRewards(TOKENS[chainId]["DAI"], library, chainId);
     setRewards(res.toString());
-  }
+  };
 
   const getUpyData = async () => {
-    const res = await getSupplyPerYear(TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getSupplyPerYear(
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setUpy(res.toString());
-  }
+  };
 
   const getRewardsMultiplierData = async () => {
-    const res = await getRewardsMultiplier(TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getRewardsMultiplier(
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setRewardsMultiplier(res);
-  }
+  };
 
   const getTrustData = async () => {
-    const res = await getTrust(account, TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getTrust(
+      account,
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setTrustData(res);
-  }
+  };
 
   const onDeposit = async (amount) => {
     await stake(TOKENS[chainId]["DAI"], amount, library, chainId);
-  }
+  };
 
   const onWithdraw = async (amount) => {
     await unstake(TOKENS[chainId]["DAI"], amount, library, chainId);
-  }
+  };
 
   const onTrust = async (address, amount) => {
     await vouch(address, TOKENS[chainId]["DAI"], amount, library, chainId);
-  }
+  };
 
   /**
    * @todo Hook up to contract
@@ -117,11 +139,10 @@ export default function Stake() {
     <div>
       <Head>
         <title>Stake | Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">
-        <div className="flex -mx-2 mb-5">
+        <div className="flex -mx-2 mb-4">
           <div className="w-5/12 px-2">
             <h1 className="leading-loose">Stake</h1>
           </div>
@@ -139,7 +160,11 @@ export default function Stake() {
 
         <div className="flex -mx-2">
           <div className="w-5/12 px-2">
-            <StakeCard data={stakeCardData} onDeposit={onDeposit} onWithdraw={onWithdraw} />
+            <StakeCard
+              data={stakeCardData}
+              onDeposit={onDeposit}
+              onWithdraw={onWithdraw}
+            />
           </div>
 
           <div className="w-7/12 px-2">

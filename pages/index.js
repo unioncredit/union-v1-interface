@@ -1,30 +1,41 @@
 import Button from "@components/button";
-import {
-  useEmailModalToggle,
-  useWalletModalToggle,
-} from "@contexts/Application";
+import { useWalletModalToggle } from "@contexts/Application";
+import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { Fragment, useEffect } from "react";
 
 export default function Home() {
+  const { account, library } = useWeb3React();
+
+  const router = useRouter();
+
   const toggleWalletModal = useWalletModalToggle();
-  const toggleEmailModal = useEmailModalToggle();
+
+  useEffect(() => {
+    if (account && library) router.push("/stake");
+  }, [account, library]);
 
   return (
-    <div>
+    <Fragment>
       <Head>
         <title>Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">
         <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
-          <h1 className="mb-4">Join Union</h1>
-          <p className="text-lg leading-6 text-grey-pure mb-48">
+          <div
+            className="bg-border-pure mx-auto"
+            style={{ height: 130, width: 280 }}
+          />
+
+          <h1 className="mb-4 mt-6">Join Union</h1>
+          <p className="text-lg leading-6 text-grey-pure mb-8">
             Borrow tokens with no collateral, vouch for other people and earn
             higher interest when staking.
           </p>
 
-          <Button onClick={toggleEmailModal} full>
+          <Button onClick={toggleWalletModal} full>
             Start now
           </Button>
 
@@ -39,6 +50,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }

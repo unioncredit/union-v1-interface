@@ -1,8 +1,31 @@
+import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EmailModal from "./emailModal";
+import GetInvitedModal from "./getInvitedModal";
 import Logo from "./logo";
+import WalletModal from "./walletModal";
 import Web3Status from "./web3Connection";
+
+const NavigationLink = ({ href, children, ...rest }) => {
+  const { pathname } = useRouter();
+
+  const isActive = pathname === href ? true : false;
+
+  const cachedClassNames = classNames(
+    "p-3 leading-none mx-4 text-lg font-semibold",
+    {
+      "active-nav-tab": isActive,
+      "text-type-lightest": !isActive,
+    }
+  );
+
+  return (
+    <Link href={href} {...rest}>
+      <a className={cachedClassNames}>{children}</a>
+    </Link>
+  );
+};
 
 const Navigation = () => {
   const { pathname } = useRouter();
@@ -13,7 +36,7 @@ const Navigation = () => {
     <nav className="border-b mb-10">
       <div className="w-full mx-auto max-w-screen-xl">
         <ul className="flex items-center">
-          <li className="py-4 flex-1 flex items-center justify-start">
+          <li className="py-4 flex-1 h-20 flex items-center justify-start">
             <Link href="/">
               <a>
                 <Logo />
@@ -24,31 +47,19 @@ const Navigation = () => {
           {!isHomepage && (
             <ul className="flex flex-1 justify-center items-center py-4 h-20">
               <li>
-                <Link href="/stake">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold active-nav-tab">
-                    Stake
-                  </a>
-                </Link>
+                <NavigationLink href="/stake">Stake</NavigationLink>
               </li>
               <li>
-                <Link href="/borrow">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold text-grey-pure">
-                    Borrow
-                  </a>
-                </Link>
+                <NavigationLink href="/borrow">Borrow</NavigationLink>
               </li>
               <li>
-                <Link href="/vouch">
-                  <a className="p-3 leading-none mx-4 text-lg font-semibold text-grey-pure">
-                    Vouch
-                  </a>
-                </Link>
+                <NavigationLink href="/vouch">Vouch</NavigationLink>
               </li>
             </ul>
           )}
 
-          <ul className="flex flex-1 items-center justify-end py-4">
-            {!isHomepage && (
+          {!isHomepage && (
+            <ul className="flex flex-1 items-center justify-end py-4">
               <li>
                 <span
                   className="leading-none text-2xl"
@@ -58,15 +69,17 @@ const Navigation = () => {
                   🔔
                 </span>
               </li>
-            )}
-            <li className="ml-8">
-              <Web3Status />
-            </li>
-          </ul>
+              <li className="ml-8">
+                <Web3Status />
+              </li>
+            </ul>
+          )}
         </ul>
       </div>
 
       <EmailModal />
+      <WalletModal />
+      <GetInvitedModal />
     </nav>
   );
 };

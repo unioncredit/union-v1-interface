@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import DAI from "../svgs/DAI";
 
 const Input = forwardRef(
   (
@@ -36,7 +37,10 @@ const Input = forwardRef(
             />
 
             {chip && (
-              <span className="font-semibold ml-4 select-none">DAI</span>
+              <div className="flex items-center select-none ml-2">
+                <DAI />
+                <span className="font-semibold ml-2 leading-3">DAI</span>
+              </div>
             )}
           </div>
         </div>

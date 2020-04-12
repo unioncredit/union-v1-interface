@@ -55,7 +55,6 @@ export default function Vouch() {
     <div>
       <Head>
         <title>Vouch | Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">

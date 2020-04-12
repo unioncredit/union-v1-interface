@@ -1,3 +1,4 @@
+import { useGetInvitedModalToggle } from "@contexts/Application";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
@@ -45,6 +46,8 @@ const VouchTable = ({
     },
     useSortBy
   );
+
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   return (
     <div className="bg-white border rounded p-4 md:p-6 mb-10">
@@ -111,7 +114,7 @@ const VouchTable = ({
           <p className="text-xl text-center my-6 max-w-md">
             You need 3 people to vouch for you
           </p>
-          <Button>Get invited</Button>
+          <Button onClick={toggleGetInvitedModal}>Get invited</Button>
         </div>
       )}
     </div>

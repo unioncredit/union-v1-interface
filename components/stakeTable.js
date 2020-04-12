@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { useGetInvitedModalToggle } from "@contexts/Application";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
+import Button from "./button";
 import HealthBar from "./healthBar";
 
 const StakeTable = ({
@@ -41,6 +42,8 @@ const StakeTable = ({
     },
     useSortBy
   );
+
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   return (
     <div className="bg-white border rounded p-4 md:p-6 h-full">
@@ -96,9 +99,9 @@ const StakeTable = ({
           <p className="text-xl text-center my-6 max-w-md">
             Borrow without collateral and earn higher interest on your deposits
           </p>
-          <button className="text-center font-semibold underline">
-            Learn more
-          </button>
+          <p className="text-center">
+            <Button onClick={toggleGetInvitedModal}>Become a member</Button>
+          </p>
         </div>
       )}
     </div>

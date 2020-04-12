@@ -2,10 +2,8 @@ import { useWalletModalToggle } from "@contexts/Application";
 import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { Fragment } from "react";
 import Button from "./button";
 import Identicon from "./identicon";
-import WalletModal from "./walletModal";
 import Web3Button from "./web3Button";
 
 const Web3Connection = () => {
@@ -42,9 +40,4 @@ const Web3Connection = () => {
   );
 };
 
-export default () => (
-  <Fragment>
-    <Web3Connection />
-    <WalletModal />
-  </Fragment>
-);
+export default Web3Connection;

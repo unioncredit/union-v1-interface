@@ -27,7 +27,6 @@ export default function Borrow() {
     <div>
       <Head>
         <title>Borrow | Union</title>
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="container">

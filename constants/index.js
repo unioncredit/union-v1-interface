@@ -36,6 +36,6 @@ export const SCALE = 10 ** 18;
 
 export const TOKENS = {
   1337: {
-    "DAI": "0x442ab2cA11e8ECACfB0cAc9fEd41725b4FC72B27",
-  }
-}
+    DAI: "0x442ab2cA11e8ECACfB0cAc9fEd41725b4FC72B27",
+  },
+};
