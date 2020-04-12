@@ -7,6 +7,7 @@ import { useTrustModalToggle } from "@contexts/Stake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { Web3Provider } from "@ethersproject/providers";
 
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { getRewards } from "@lib/contracts/getRewards";
@@ -23,6 +24,12 @@ import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
+  // console.log(Web3Provider)
+  // const provider = new Web3Provider(library, chainId);
+  // console.log(provider)
+  // const provider = new Provider.Web3Provider(library);
+  // // There is only ever up to one account in MetaMask exposed
+  // const signer = provider.getSigner();
 
   const toggleTrustModal = useTrustModalToggle();
 
@@ -102,28 +109,6 @@ export default function Stake() {
   const onTrust = async (address, amount) => {
     await vouch(address, TOKENS[chainId]["DAI"], amount, library, chainId);
   };
-
-  /**
-   * @todo Hook up to contract
-   * @description memoized array of objects
-   * @example useMemo(
-    () => [
-      {
-        address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
-        vouched: 250,
-        used: 100,
-        health: 75
-      },
-      {
-        address: "0xc92df132c0588c3d337d2e70225a9e85f2338088",
-        vouched: 400,
-        used: 250,
-        health: 50
-      }
-    ],
-    []
-  )
-   */
 
   const stakeCardData = {
     totalStake: `${totalStake} DAI`,

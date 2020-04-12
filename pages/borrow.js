@@ -3,16 +3,35 @@ import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
+import { TOKENS } from "@constants/";
 import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
+import { useWeb3React } from "@web3-react/core";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { placeholderTip } from "../text/tooltips";
 
+import { borrow } from "@lib/contracts/borrow";
+import { repay } from "@lib/contracts/repay";
+import { getBorrowed } from "@lib/contracts/getBorrowed";
+import { getCreditLimit } from "@lib/contracts/getCreditLimit";
+import { getLastRepay } from "@lib/contracts/getLastRepay";
+import { getInterest } from "@lib/contracts/getInterest";
+import { getTrustCount } from "@lib/contracts/getTrustCount";
+
 export default function Borrow() {
+  const { account, library, chainId } = useWeb3React();
+
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
+
+  const [borrowed, setBorrowed] = useState('N/A');
+  const [creditLimit, setCreditLimit] = useState('N/A');
+  const [interest, setInterest] = useState('N/A');
+  const [trustCount, setTrustCount] = useState(0);
+  const [paymentDueDate, setPaymentDueDate] = useState(0);
 
   const data = {
     availableCredit: "0 DAI",
@@ -23,6 +42,49 @@ export default function Borrow() {
     transactions: ["", ""],
   };
 
+  useEffect(() => {
+    if (library) {
+      getCreditData();
+      getTrustCountData();
+      getBorrowedData();
+      getInterestData();
+      getPaymentDueDate();
+    }
+  }, []);
+
+  const getBorrowedData = async () => {
+    const res = await getBorrowed(account, TOKENS[chainId]["DAI"], library, chainId);
+    setBorrowed(res.toString());
+  }
+
+  const getTrustCountData = async () => {
+    const res = await getTrustCount(account, TOKENS[chainId]["DAI"], library, chainId);
+    setTrustCount(res);
+  }
+
+  const getCreditData = async () => {
+    const res = await getCreditLimit(TOKENS[chainId]["DAI"], account, library, chainId);
+    setCreditLimit(res.toString());
+  }
+
+  const getInterestData = async () => {
+    const res = await getInterest(TOKENS[chainId]["DAI"], account, library, chainId);
+    setInterest(res.toString());
+  }
+
+  const getPaymentDueDate = async () => {
+    const res = await getLastRepay(TOKENS[chainId]["DAI"], account, library, chainId);
+    setPaymentDueDate(res.toString());
+  }
+
+  const onBorrow = async (amount) => {
+    await borrow(TOKENS[chainId]["DAI"], amount, library, chainId);
+  }
+
+  const onRepay = async (amount) => {
+    await repay(TOKENS[chainId]["DAI"], amount, library, chainId);
+  }
+
   return (
     <div>
       <Head>
@@ -30,7 +92,7 @@ export default function Borrow() {
       </Head>
 
       <div className="container">
-        <ApplicationCard />
+        <ApplicationCard count={trustCount} />
 
         <div className="mb-5">
           <h1>Dashboard</h1>
@@ -42,7 +104,7 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={data.availableCredit}
+                  value={creditLimit}
                   large
                 />
 
@@ -57,9 +119,9 @@ export default function Borrow() {
                 value={
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {data.percentUtilization}%
+                      {creditLimit > 0 ? ((borrowed / creditLimit) * 100).toFixed(0) : 0}%
                     </p>
-                    <HealthBar health={data.percentUtilization} dark />
+                    <HealthBar health={creditLimit > 0 ? ((borrowed / creditLimit) * 100).toFixed(0) : 0} dark />
                   </div>
                 }
               />
@@ -79,7 +141,7 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
-                  value={data.balanceOwed}
+                  value={borrowed}
                   large
                 />
 
@@ -91,13 +153,13 @@ export default function Borrow() {
               <LabelPair
                 tooltip={placeholderTip}
                 label="Minimum Payment Due"
-                value={data.minPaymentDue}
+                value={interest}
               />
 
               <LabelPair
                 label="Payment Due Date"
                 tooltip={placeholderTip}
-                value={data.paymentDueDate}
+                value={paymentDueDate}
               />
             </div>
           </div>
@@ -111,8 +173,8 @@ export default function Borrow() {
           data.transactions.map((datum, i) => <Transaction key={i} />)}
       </div>
 
-      <BorrowModal />
-      <RepayModal balanceOwed={data.balanceOwed} />
+      <BorrowModal balanceOwed={borrowed} onRepay={onRepay} />
+      <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </div>
   );
 }
