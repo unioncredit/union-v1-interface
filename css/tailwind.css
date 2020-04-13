@@ -150,12 +150,15 @@ table td:not(:first-of-type) {
 }
 
 [data-reach-dialog-content] {
-  @apply bg-white mx-auto w-full outline-none;
+  @apply bg-white w-full outline-none;
+}
+
+[data-reach-dialog-content].fullscreen {
 }
 
 @media (width >= 640px) {
-  [data-reach-dialog-content] {
-    @apply self-start rounded;
+  [data-reach-dialog-content]:not(.fullscreen) {
+    @apply self-start rounded mx-auto;
     margin-top: 20vh;
     max-width: 24rem;
   }

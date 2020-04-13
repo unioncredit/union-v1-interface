@@ -17,10 +17,12 @@ export const ModalHeader = ({ title, onDismiss }) => (
   </div>
 );
 
-const Modal = ({ isOpen, onDismiss, children, label = "Modal" }) => {
+const Modal = ({ isOpen, onDismiss, children, label = "Modal", ...rest }) => {
   return (
     <DialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
-      <DialogContent aria-label={label}>{children}</DialogContent>
+      <DialogContent aria-label={label} {...rest}>
+        {children}
+      </DialogContent>
     </DialogOverlay>
   );
 };
