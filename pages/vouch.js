@@ -13,6 +13,9 @@ import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
+const getVouchBarData = (vouchData) =>
+  vouchData.map(({ vouched }) => parseFloat(vouched));
+
 export default function Vouch() {
   const { account, library, chainId } = useWeb3React();
 
@@ -47,11 +50,6 @@ export default function Vouch() {
     setTrustCount(res);
   };
 
-  let slices = [];
-  vouchData.forEach((v) => {
-    slices.push(parseFloat(v.vouched));
-  });
-
   return (
     <div>
       <Head>
@@ -75,7 +73,7 @@ export default function Vouch() {
           </div>
         </div>
 
-        <VouchBar className="mb-10" slices={slices} />
+        <VouchBar className="mb-10" slices={getVouchBarData(vouchData)} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
