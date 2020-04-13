@@ -26,12 +26,12 @@ export default function Stake() {
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
   useEffect(() => {
-    if (!email_modal_completed) toggleEmailModal();
-  }, [email_modal_completed]);
-
-  useEffect(() => {
-    if (!!email_modal_completed && !tutorial_modal_completed)
+    if (!email_modal_completed) {
+      toggleEmailModal();
+    }
+    if (!!email_modal_completed && !tutorial_modal_completed) {
       toggleTutorialModal();
+    }
   }, [email_modal_completed, tutorial_modal_completed]);
 
   useEffect(() => {
