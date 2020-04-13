@@ -2,9 +2,10 @@ import Button from "@components/button";
 import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
+import TutorialModal from "@components/tutorialModal";
 import { TOKENS } from "@constants/index";
 import { useEmailModalToggle } from "@contexts/Application";
-import { useTrustModalToggle } from "@contexts/Stake";
+import { useTrustModalToggle, useTutorialModalToggle } from "@contexts/Stake";
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
@@ -22,6 +23,7 @@ export default function Stake() {
   const { account, library, chainId } = useWeb3React();
   const toggleTrustModal = useTrustModalToggle();
   const toggleEmailModal = useEmailModalToggle();
+  const toggleTutorialModal = useTutorialModalToggle();
 
   const [totalStake, setTotalStake] = useState("N/A");
   const [utilizedStake, setUtilizedStake] = useState("N/A");
@@ -33,7 +35,7 @@ export default function Stake() {
   const [trustData, setTrustData] = useState([]);
   const [signer, setSigner] = useState(undefined);
 
-  const { email_modal_completed } = parseCookies();
+  const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
   useEffect(() => {
     if (library && account) {
@@ -49,6 +51,11 @@ export default function Stake() {
   useEffect(() => {
     if (!email_modal_completed) toggleEmailModal();
   }, [email_modal_completed]);
+
+  useEffect(() => {
+    if (!!email_modal_completed && !tutorial_modal_completed)
+      toggleTutorialModal();
+  }, [email_modal_completed, tutorial_modal_completed]);
 
   const getStakeData = async () => {
     const res = await getStakeAmount(
@@ -157,6 +164,7 @@ export default function Stake() {
       </div>
 
       <TrustModal onTrust={onTrust} />
+      <TutorialModal />
     </div>
   );
 }
