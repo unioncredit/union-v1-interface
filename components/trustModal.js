@@ -4,15 +4,13 @@ import Button from "./button";
 import Input from "./input";
 import { useForm } from "react-hook-form";
 
-const TrustModal = (props) => {
+const TrustModal = ({ onTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = (values) => {
-    props.onTrust(values.address, values.trust);
-  };
+  const onSubmit = (values) => onTrust(values.address, values.trust);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
