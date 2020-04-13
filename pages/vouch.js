@@ -4,8 +4,8 @@ import CreditRequestModal from "@components/creditRequestModal";
 import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
 import VouchTable from "@components/vouchTable";
-import { TOKENS } from "@constants/";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getVouched } from "@lib/contracts/getVouched";
 import { useWeb3React } from "@web3-react/core";
@@ -24,15 +24,15 @@ const getVouchBarData = (vouchData) =>
 export default function Vouch() {
   const { account, library, chainId } = useWeb3React();
 
+  const curToken = useCurrentToken();
+
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-  const [curToken, setCurToken] = useState();
   const [creditLimit, setCreditLimit] = useState("N/A");
   const [vouchData, setVouchData] = useState([]);
 
   useEffect(() => {
     if (library && account) {
-      setCurToken(TOKENS[chainId]["DAI"]);
       getVouchData();
       getCreditData();
     }
