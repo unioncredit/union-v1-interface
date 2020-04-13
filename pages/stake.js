@@ -3,9 +3,9 @@ import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
 import TutorialModal from "@components/tutorialModal";
-import { TOKENS } from "@constants/index";
 import { useEmailModalToggle } from "@contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "@contexts/Stake";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrust } from "@lib/contracts/getTrust";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
@@ -19,7 +19,7 @@ export default function Stake() {
   const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
 
-  const [curToken, setCurToken] = useState();
+  const curToken = useCurrentToken();
 
   const [trustData, setTrustData] = useState([]);
 
@@ -42,7 +42,6 @@ export default function Stake() {
     };
 
     if (library && account) {
-      setCurToken(TOKENS[chainId]["DAI"]);
       getTrustData();
     }
   }, [library, account, chainId, curToken]);

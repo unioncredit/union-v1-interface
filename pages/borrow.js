@@ -5,8 +5,8 @@ import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
-import { TOKENS } from "@constants/";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
@@ -27,11 +27,12 @@ const getPercentUtilized = (borrowed, creditLimit) =>
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
 
+  const curToken = useCurrentToken();
+
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
   const [borrowed, setBorrowed] = useState("N/A");
-  const [curToken, setCurToken] = useState();
   const [creditLimit, setCreditLimit] = useState("N/A");
   const [interest, setInterest] = useState("N/A");
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
@@ -41,7 +42,6 @@ export default function Borrow() {
 
   useEffect(() => {
     if (library && account) {
-      setCurToken(TOKENS[chainId]["DAI"]);
       getCreditData();
       getBorrowedData();
       getInterestData();

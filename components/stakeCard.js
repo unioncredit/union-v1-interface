@@ -1,5 +1,5 @@
-import { TOKENS } from "@constants/index";
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
@@ -19,7 +19,7 @@ const StakeCard = () => {
   const toggleWithdrawModal = useWithdrawModalToggle();
   const { account, library, chainId } = useWeb3React();
 
-  const [curToken, setCurToken] = useState();
+  const curToken = useCurrentToken();
 
   const [totalStake, setTotalStake] = useState("N/A");
   const [utilizedStake, setUtilizedStake] = useState("N/A");
@@ -33,7 +33,6 @@ const StakeCard = () => {
 
   useEffect(() => {
     if (library && account) {
-      setCurToken(TOKENS[chainId]["DAI"]);
       getStakeData();
       getRewardData();
       getUpyData();
