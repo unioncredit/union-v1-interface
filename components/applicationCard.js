@@ -1,10 +1,33 @@
+import { TOKENS } from "@constants/";
 import { useGetInvitedModalToggle } from "@contexts/Application";
+import { getTrustCount } from "@lib/contracts/getTrustCount";
+import { useWeb3React } from "@web3-react/core";
+import classNames from "classnames";
+import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
-import classNames from "classnames";
 
-const ApplicationCard = ({ count = 0 }) => {
+const ApplicationCard = () => {
+  const { account, library, chainId } = useWeb3React();
+
   const toggleGetInvitedModal = useGetInvitedModalToggle();
+
+  const [trustCount, setTrustCount] = useState(0);
+
+  useEffect(() => {
+    const getTrustCountData = async () => {
+      const res = await getTrustCount(
+        account,
+        TOKENS[chainId]["DAI"],
+        library,
+        chainId
+      );
+
+      setTrustCount(res);
+    };
+
+    if (library && account) getTrustCountData();
+  }, [library, account, chainId]);
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 mb-10">
@@ -12,7 +35,9 @@ const ApplicationCard = ({ count = 0 }) => {
         <div>
           <p className="text-lg leading-snug mb-2">Become a member of Union</p>
           <p className="text-xl font-normal">
-            <strong className="font-semibold">{count} out of 3 members</strong>{" "}
+            <strong className="font-semibold">
+              {trustCount} out of 3 members
+            </strong>{" "}
             vouched for you
           </p>
         </div>
@@ -25,7 +50,7 @@ const ApplicationCard = ({ count = 0 }) => {
         <div
           className={classNames(
             "absolute bg-pink-2-pure h-full",
-            `w-${count}/3`
+            `w-${trustCount}/3`
           )}
         ></div>
       </div>

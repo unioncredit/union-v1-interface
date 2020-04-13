@@ -7,7 +7,6 @@ import VouchTable from "@components/vouchTable";
 import { TOKENS } from "@constants/";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
-import { getTrustCount } from "@lib/contracts/getTrustCount";
 import { getVouched } from "@lib/contracts/getVouched";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
@@ -29,7 +28,6 @@ export default function Vouch() {
 
   const [curToken, setCurToken] = useState();
   const [creditLimit, setCreditLimit] = useState("N/A");
-  const [trustCount, setTrustCount] = useState(0);
   const [vouchData, setVouchData] = useState([]);
 
   useEffect(() => {
@@ -37,7 +35,6 @@ export default function Vouch() {
       setCurToken(TOKENS[chainId]["DAI"]);
       getVouchData();
       getCreditData();
-      getTrustCountData();
     }
   }, [library, account]);
 
@@ -51,11 +48,6 @@ export default function Vouch() {
     setCreditLimit(res.toFixed(4));
   };
 
-  const getTrustCountData = async () => {
-    const res = await getTrustCount(account, curToken, library, chainId);
-    setTrustCount(res);
-  };
-
   return (
     <div>
       <Head>
@@ -63,7 +55,7 @@ export default function Vouch() {
       </Head>
 
       <div className="container">
-        <ApplicationCard count={trustCount} />
+        <ApplicationCard />
 
         <div className="flex justify-between mb-6">
           <LabelPair
