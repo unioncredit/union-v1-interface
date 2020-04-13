@@ -16,7 +16,7 @@ const Vouch = ({ width, index }) => {
 const VouchBar = ({ className, slices }) => {
   return (
     <div className={className}>
-      <div className="h-16 bg-border-pure flex rounded overflow-hidden relative w-full select-none flex-row-reverse">
+      <div className="h-16 bg-border-light flex rounded overflow-hidden relative w-full select-none flex-row-reverse">
         {slices.length > 0 &&
           slices.map((slice, i) => <Vouch key={i} index={i} width={slice} />)}
       </div>
