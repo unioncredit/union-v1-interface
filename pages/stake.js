@@ -19,6 +19,8 @@ export default function Stake() {
   const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
 
+  const [curToken, setCurToken] = useState();
+
   const [trustData, setTrustData] = useState([]);
 
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
@@ -33,22 +35,21 @@ export default function Stake() {
   }, [email_modal_completed, tutorial_modal_completed]);
 
   useEffect(() => {
+    setCurToken(TOKENS[chainId]["DAI"]);
+  }, [chainId]);
+
+  useEffect(() => {
     if (library && account) {
       (async () => {
-        const res = await getTrust(
-          account,
-          TOKENS[chainId]["DAI"],
-          library,
-          chainId
-        );
+        const res = await getTrust(account, curToken, library, chainId);
 
         setTrustData(res);
       })();
     }
-  }, [library, account, chainId]);
+  }, [library, account, chainId, curToken]);
 
   const onTrust = async (address, amount) => {
-    await vouch(address, TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await vouch(address, curToken, amount, signer, chainId);
   };
 
   const stakeTableData = useMemo(() => trustData, [trustData]);

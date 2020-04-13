@@ -19,6 +19,8 @@ const StakeCard = () => {
   const toggleWithdrawModal = useWithdrawModalToggle();
   const { account, library, chainId } = useWeb3React();
 
+  const [curToken, setCurToken] = useState();
+
   const [totalStake, setTotalStake] = useState("N/A");
   const [utilizedStake, setUtilizedStake] = useState("N/A");
   const [defaultedStake, setDefaultedStake] = useState("N/A");
@@ -26,7 +28,12 @@ const StakeCard = () => {
   const [rewards, setRewards] = useState("N/A");
   const [upy, setUpy] = useState("N/A");
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
+
   const [signer, setSigner] = useState(undefined);
+
+  useEffect(() => {
+    setCurToken(TOKENS[chainId]["DAI"]);
+  }, [chainId]);
 
   useEffect(() => {
     if (library && account) {
@@ -39,47 +46,35 @@ const StakeCard = () => {
   }, [library, account]);
 
   const getStakeData = async () => {
-    const res = await getStakeAmount(
-      account,
-      TOKENS[chainId]["DAI"],
-      library,
-      chainId
-    );
+    const res = await getStakeAmount(account, curToken, library, chainId);
     setTotalStake(res.stakingAmount);
-    setUtilizedStake(res.lendingAmount);
+    setUtilizedStake(res.creditUsed);
     setDefaultedStake(res.freezeAmount);
-    setWithdrawableStake(res.stakingAmount.sub(res.vouchingAmount));
+    setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
   };
 
   const getRewardData = async () => {
-    const res = await getRewards(TOKENS[chainId]["DAI"], library, chainId);
-    setRewards(res);
+    const res = await getRewards(curToken, library, chainId);
+    setRewards(res.toFixed(4));
   };
 
   const getUpyData = async () => {
-    const res = await getSupplyPerYear(
-      TOKENS[chainId]["DAI"],
-      library,
-      chainId
-    );
-    setUpy(res);
+    const res = await getSupplyPerYear(curToken, library, chainId);
+
+    setUpy(res.toFixed(2));
   };
 
   const getRewardsMultiplierData = async () => {
-    const res = await getRewardsMultiplier(
-      TOKENS[chainId]["DAI"],
-      library,
-      chainId
-    );
+    const res = await getRewardsMultiplier(curToken, library, chainId);
     setRewardsMultiplier(res);
   };
 
   const onDeposit = async (amount) => {
-    await stake(TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await stake(curToken, amount, signer, chainId);
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await unstake(curToken, amount, signer, chainId);
   };
 
   /**
