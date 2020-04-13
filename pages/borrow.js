@@ -32,9 +32,9 @@ export default function Borrow() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const [borrowed, setBorrowed] = useState("N/A");
-  const [creditLimit, setCreditLimit] = useState("N/A");
-  const [interest, setInterest] = useState("N/A");
+  const [borrowed, setBorrowed] = useState(0);
+  const [creditLimit, setCreditLimit] = useState(0);
+  const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
   const [signer, setSigner] = useState([]);
 

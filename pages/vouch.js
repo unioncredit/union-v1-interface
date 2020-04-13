@@ -28,7 +28,7 @@ export default function Vouch() {
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-  const [creditLimit, setCreditLimit] = useState("N/A");
+  const [creditLimit, setCreditLimit] = useState(0);
   const [vouchData, setVouchData] = useState([]);
 
   useEffect(() => {

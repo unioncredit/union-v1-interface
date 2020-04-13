@@ -21,12 +21,12 @@ const StakeCard = () => {
 
   const curToken = useCurrentToken();
 
-  const [totalStake, setTotalStake] = useState("N/A");
-  const [utilizedStake, setUtilizedStake] = useState("N/A");
-  const [defaultedStake, setDefaultedStake] = useState("N/A");
-  const [withdrawableStake, setWithdrawableStake] = useState("N/A");
-  const [rewards, setRewards] = useState("N/A");
-  const [upy, setUpy] = useState("N/A");
+  const [totalStake, setTotalStake] = useState(0);
+  const [utilizedStake, setUtilizedStake] = useState(0);
+  const [defaultedStake, setDefaultedStake] = useState(0);
+  const [withdrawableStake, setWithdrawableStake] = useState(0);
+  const [rewards, setRewards] = useState(0);
+  const [upy, setUpy] = useState(0);
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
   const [signer, setSigner] = useState(undefined);
