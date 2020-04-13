@@ -35,16 +35,15 @@ export default function Stake() {
   }, [email_modal_completed, tutorial_modal_completed]);
 
   useEffect(() => {
-    const getTrustData = async () => {
-      const res = await getTrust(account, curToken, library, chainId);
-
-      setTrustData(res);
-    };
-
     if (library && account) {
       getTrustData();
     }
-  }, [library, account, chainId, curToken]);
+  }, [library, account]);
+
+  const getTrustData = async () => {
+    const res = await getTrust(account, curToken, library, chainId);
+    setTrustData(res);
+  };
 
   const onTrust = async (address, amount) => {
     await vouch(address, curToken, amount, signer, chainId);
