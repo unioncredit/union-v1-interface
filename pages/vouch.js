@@ -2,49 +2,63 @@ import ApplicationCard from "@components/applicationCard";
 import Button from "@components/button";
 import CreditRequestModal from "@components/creditRequestModal";
 import LabelPair from "@components/labelPair";
-import { TOKENS } from "@constants/";
 import VouchBar from "@components/vouchBar";
 import VouchTable from "@components/vouchTable";
-import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
+import { TOKENS } from "@constants/";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
-import Head from "next/head";
-
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getTrustCount } from "@lib/contracts/getTrustCount";
 import { getVouched } from "@lib/contracts/getVouched";
+import { useWeb3React } from "@web3-react/core";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Vouch() {
   const { account, library, chainId } = useWeb3React();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-  const [creditLimit, setCreditLimit] = useState('N/A');
+  const [creditLimit, setCreditLimit] = useState("N/A");
   const [trustCount, setTrustCount] = useState(0);
   const [vouchData, setVouchData] = useState([]);
 
   useEffect(() => {
-    if (library) {
+    if (library && account) {
       getVouchData();
       getCreditData();
       getTrustCountData();
     }
-  }, []);
+  }, [library, account]);
 
   const getVouchData = async () => {
-    const res = await getVouched(account, TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getVouched(
+      account,
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setVouchData(res);
-  }
+  };
 
   const getCreditData = async () => {
-    const res = await getCreditLimit(TOKENS[chainId]["DAI"], account, library, chainId);
+    const res = await getCreditLimit(
+      TOKENS[chainId]["DAI"],
+      account,
+      library,
+      chainId
+    );
     setCreditLimit(res.toString());
-  }
+  };
 
   const getTrustCountData = async () => {
-    const res = await getTrustCount(account, TOKENS[chainId]["DAI"], library, chainId);
+    const res = await getTrustCount(
+      account,
+      TOKENS[chainId]["DAI"],
+      library,
+      chainId
+    );
     setTrustCount(res);
-  }
+  };
 
   let slices = [];
   vouchData.forEach((v) => {

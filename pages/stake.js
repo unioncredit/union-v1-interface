@@ -44,7 +44,7 @@ export default function Stake() {
       getUpyData();
       getRewardsMultiplierData();
       getTrustData();
-      setSigner(library.getSigner(account));
+      setSigner(library.getSigner());
     }
   }, [library, account]);
 
