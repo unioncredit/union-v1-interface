@@ -4,6 +4,10 @@ import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
 import { TOKENS } from "@constants/index";
 import { useTrustModalToggle } from "@contexts/Stake";
+import { useWeb3React } from "@web3-react/core";
+import { useEffect, useState } from "react";
+import Head from "next/head";
+
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
@@ -12,13 +16,9 @@ import { getTrust } from "@lib/contracts/getTrust";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
-import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
-import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
-
   const toggleTrustModal = useTrustModalToggle();
 
   const [totalStake, setTotalStake] = useState("N/A");
@@ -29,6 +29,7 @@ export default function Stake() {
   const [upy, setUpy] = useState("N/A");
   const [rewardsMultiplier, setRewardsMultiplier] = useState("N/A");
   const [trustData, setTrustData] = useState([]);
+  const [signer, setSigner] = useState([]);
 
   useEffect(() => {
     if (library) {
@@ -37,6 +38,7 @@ export default function Stake() {
       getUpyData();
       getRewardsMultiplierData();
       getTrustData();
+      setSigner(library.getSigner());
     }
   }, []);
 
@@ -86,44 +88,17 @@ export default function Stake() {
     setTrustData(res);
   };
 
-  // trustData = useMemo(
-  //   () => [],
-  //   []
-  // );
-
   const onDeposit = async (amount) => {
-    await stake(TOKENS[chainId]["DAI"], amount, library, chainId);
+    await stake(TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(TOKENS[chainId]["DAI"], amount, library, chainId);
+    await unstake(TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
 
   const onTrust = async (address, amount) => {
-    await vouch(address, TOKENS[chainId]["DAI"], amount, library, chainId);
+    await vouch(address, TOKENS[chainId]["DAI"], amount, signer, chainId);
   };
-
-  /**
-   * @todo Hook up to contract
-   * @description memoized array of objects
-   * @example useMemo(
-    () => [
-      {
-        address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
-        vouched: 250,
-        used: 100,
-        health: 75
-      },
-      {
-        address: "0xc92df132c0588c3d337d2e70225a9e85f2338088",
-        vouched: 400,
-        used: 250,
-        health: 50
-      }
-    ],
-    []
-  )
-   */
 
   const stakeCardData = {
     totalStake: `${totalStake} DAI`,

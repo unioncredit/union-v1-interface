@@ -2,7 +2,7 @@ import { useGetInvitedModalToggle } from "@contexts/Application";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 
-const ApplicationCard = () => {
+const ApplicationCard = (props) => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   return (
@@ -11,7 +11,7 @@ const ApplicationCard = () => {
         <div>
           <p className="text-lg leading-snug mb-2">Become a member of Union</p>
           <p className="text-xl font-normal">
-            <strong className="font-semibold">0 out of 3 members</strong>{" "}
+            <strong className="font-semibold">{props.count} out of 3 members</strong>{" "}
             vouched for you
           </p>
         </div>

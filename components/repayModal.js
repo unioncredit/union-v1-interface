@@ -5,14 +5,14 @@ import LabelPair from "./labelPair";
 import Input from "./input";
 import Button from "./button";
 
-const RepayModal = ({ balanceOwed }) => {
+const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    onRepay(values.repayAmount);
   };
 
   return (

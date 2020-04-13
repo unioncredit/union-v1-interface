@@ -146,7 +146,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "lendingAmount",
+                "name": "creditUsed",
                 "type": "uint256"
             },
             {
@@ -324,12 +324,17 @@
             },
             {
                 "internalType": "uint256",
-                "name": "lendingAmount",
+                "name": "creditUsed",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
                 "name": "updated",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "lastInflationIndex",
                 "type": "uint256"
             }
         ],
@@ -346,7 +351,7 @@
                 "type": "address"
             }
         ],
-        "name": "totalFreezed",
+        "name": "totalFrozen",
         "outputs": [
             {
                 "internalType": "uint256",
