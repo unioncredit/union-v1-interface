@@ -39,12 +39,14 @@ export default function Stake() {
   }, [chainId]);
 
   useEffect(() => {
-    if (library && account) {
-      (async () => {
-        const res = await getTrust(account, curToken, library, chainId);
+    const getTrustData = async () => {
+      const res = await getTrust(account, curToken, library, chainId);
 
-        setTrustData(res);
-      })();
+      setTrustData(res);
+    };
+
+    if (library && account) {
+      getTrustData();
     }
   }, [library, account, chainId, curToken]);
 
