@@ -19,7 +19,7 @@ export default function Vouch() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
   const [curToken, setCurToken] = useState();
-  const [creditLimit, setCreditLimit] = useState('N/A');
+  const [creditLimit, setCreditLimit] = useState("N/A");
   const [trustCount, setTrustCount] = useState(0);
   const [vouchData, setVouchData] = useState([]);
 
@@ -33,32 +33,17 @@ export default function Vouch() {
   }, [library, account]);
 
   const getVouchData = async () => {
-    const res = await getVouched(
-      account,
-      curToken,
-      library,
-      chainId
-    );
+    const res = await getVouched(account, curToken, library, chainId);
     setVouchData(res);
   };
 
   const getCreditData = async () => {
-    const res = await getCreditLimit(
-      curToken,
-      account,
-      library,
-      chainId
-    );
+    const res = await getCreditLimit(curToken, account, library, chainId);
     setCreditLimit(res.toFixed(4));
-  }
+  };
 
   const getTrustCountData = async () => {
-    const res = await getTrustCount(
-      account,
-      curToken,
-      library,
-      chainId
-    );
+    const res = await getTrustCount(account, curToken, library, chainId);
     setTrustCount(res);
   };
 

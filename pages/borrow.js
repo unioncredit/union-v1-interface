@@ -11,9 +11,9 @@ import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
-import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
-import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getInterest } from "@lib/contracts/getInterest";
+import { getLastRepay } from "@lib/contracts/getLastRepay";
+import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
 import { getTrustCount } from "@lib/contracts/getTrustCount";
 import { repay } from "@lib/contracts/repay";
 import { useWeb3React } from "@web3-react/core";
@@ -22,25 +22,24 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
-import { Web3Provider } from "@ethersproject/providers";
-
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
 
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const [borrowed, setBorrowed] = useState('N/A');
+  const [borrowed, setBorrowed] = useState("N/A");
   const [curToken, setCurToken] = useState();
-  const [creditLimit, setCreditLimit] = useState('N/A');
-  const [interest, setInterest] = useState('N/A');
+  const [creditLimit, setCreditLimit] = useState("N/A");
+  const [interest, setInterest] = useState("N/A");
   const [paymentDueDate, setPaymentDueDate] = useState(0);
   const [signer, setSigner] = useState([]);
   const [trustCount, setTrustCount] = useState(0);
 
   const data = {
     availableCredit: `${creditLimit} DAI`,
-    percentUtilization: creditLimit > 0 ? ((borrowed / creditLimit) * 100).toFixed(0) : 0,
+    percentUtilization:
+      creditLimit > 0 ? ((borrowed / creditLimit) * 100).toFixed(0) : 0,
     balanceOwed: `${borrowed} DAI`,
     minPaymentDue: `${interest} DAI`,
     paymentDueDate: paymentDueDate,
@@ -60,90 +59,46 @@ export default function Borrow() {
   }, [library, account]);
 
   const getBorrowedData = async () => {
-    const res = await getBorrowed(
-      account,
-      curToken,
-      library,
-      chainId
-    );
+    const res = await getBorrowed(account, curToken, library, chainId);
     setBorrowed(res.toFixed(4));
-  }
+  };
 
   const getTrustCountData = async () => {
-    const res = await getTrustCount(
-      account,
-      curToken,
-      library,
-      chainId
-    );
+    const res = await getTrustCount(account, curToken, library, chainId);
     setTrustCount(res);
   };
 
   const getCreditData = async () => {
-    const res = await getCreditLimit(
-      curToken,
-      account,
-      library,
-      chainId
-    );
+    const res = await getCreditLimit(curToken, account, library, chainId);
     setCreditLimit(res.toFixed(4));
-  }
+  };
 
   const getInterestData = async () => {
-    const res = await getInterest(
-      curToken,
-      account,
-      library,
-      chainId
-    );
+    const res = await getInterest(curToken, account, library, chainId);
     setInterest(res.toFixed(4));
-  }
+  };
 
   const getPaymentDueDate = async () => {
-    const isOverdue = await checkIsOverdue(
-      curToken,
-      account,
-      library,
-      chainId
-    );
+    const isOverdue = await checkIsOverdue(curToken, account, library, chainId);
     if (isOverdue) {
-      setPaymentDueDate('is overdue');
+      setPaymentDueDate("is overdue");
     } else {
-      const lastRepay = await getLastRepay(
-        curToken,
-        account,
-        library,
-        chainId
-      );
+      const lastRepay = await getLastRepay(curToken, account, library, chainId);
 
-      const overdueBlocks = await getOverdueBlocks(
-        curToken,
-        library,
-        chainId
-      );
+      const overdueBlocks = await getOverdueBlocks(curToken, library, chainId);
       const curBlock = await library.getBlockNumber();
-      const days = (lastRepay + overdueBlocks - curBlock) * 15 / 86400;
+      const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
       setPaymentDueDate(`in ${days} Days`);
     }
-  }
+  };
 
   const onBorrow = async (amount) => {
-    await borrow(
-      curToken,
-      amount,
-      signer,
-      chainId
-    );
-  }
+    await borrow(curToken, amount, signer, chainId);
+  };
 
   const onRepay = async (amount) => {
-    await repay(
-      curToken,
-      amount,
-      signer,
-      chainId
-    );
-  }
+    await repay(curToken, amount, signer, chainId);
+  };
 
   return (
     <div>
