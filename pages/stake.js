@@ -15,12 +15,12 @@ import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
+import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
   const toggleTrustModal = useTrustModalToggle();
-
   const toggleEmailModal = useEmailModalToggle();
 
   const [totalStake, setTotalStake] = useState("N/A");
@@ -29,13 +29,11 @@ export default function Stake() {
   const [withdrawableStake, setWithdrawableStake] = useState("N/A");
   const [rewards, setRewards] = useState("N/A");
   const [upy, setUpy] = useState("N/A");
-  const [rewardsMultiplier, setRewardsMultiplier] = useState("N/A");
+  const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
   const [trustData, setTrustData] = useState([]);
-  const [signer, setSigner] = useState([]);
+  const [signer, setSigner] = useState(undefined);
 
-  useEffect(() => {
-    toggleEmailModal();
-  }, []);
+  const { email_modal_completed } = parseCookies();
 
   useEffect(() => {
     if (library && account) {
@@ -48,6 +46,10 @@ export default function Stake() {
     }
   }, [library, account]);
 
+  useEffect(() => {
+    if (!email_modal_completed) toggleEmailModal();
+  }, [email_modal_completed]);
+
   const getStakeData = async () => {
     const res = await getStakeAmount(
       account,
@@ -55,15 +57,15 @@ export default function Stake() {
       library,
       chainId
     );
-    setTotalStake(res.stakingAmount.toString());
-    setUtilizedStake(res.lendingAmount.toString());
-    setDefaultedStake(res.freezeAmount.toString());
-    setWithdrawableStake(res.stakingAmount.sub(res.vouchingAmount).toString());
+    setTotalStake(res.stakingAmount);
+    setUtilizedStake(res.lendingAmount);
+    setDefaultedStake(res.freezeAmount);
+    setWithdrawableStake(res.stakingAmount.sub(res.vouchingAmount));
   };
 
   const getRewardData = async () => {
     const res = await getRewards(TOKENS[chainId]["DAI"], library, chainId);
-    setRewards(res.toString());
+    setRewards(res);
   };
 
   const getUpyData = async () => {
@@ -72,7 +74,7 @@ export default function Stake() {
       library,
       chainId
     );
-    setUpy(res.toString());
+    setUpy(res);
   };
 
   const getRewardsMultiplierData = async () => {
