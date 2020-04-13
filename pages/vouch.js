@@ -13,8 +13,14 @@ import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
+/**
+ * @name getVouchBarData
+ * @param {Array} vouchData
+ */
 const getVouchBarData = (vouchData) =>
-  vouchData.map(({ vouched }) => parseFloat(vouched));
+  vouchData.length > 0
+    ? vouchData.map(({ vouched }) => parseFloat(vouched))
+    : [];
 
 export default function Vouch() {
   const { account, library, chainId } = useWeb3React();
