@@ -23,7 +23,12 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
-        <LabelPair className="mb-10" label="Balance owed" value={balanceOwed} />
+        <LabelPair
+          className="mb-10"
+          label="Balance owed"
+          value={balanceOwed}
+          valueType="DAI"
+        />
 
         <p className="mb-4">How much would you like to repay?</p>
 
@@ -39,12 +44,18 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
           type="number"
         />
 
-        <LabelPair className="mb-8" label="New balance owed" value={"-"} />
+        <LabelPair
+          className="mb-8"
+          label="New balance owed"
+          value={0}
+          valueType="DAI"
+        />
 
         <LabelPair
           className="mb-8 text-grey-pure"
           label="New min payment"
           value={balanceOwed}
+          valueType="DAI"
         />
 
         <Button type="submit" full>

@@ -27,6 +27,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
           className="mb-6"
           label="Current total stake"
           value={totalStake}
+          valueType="DAI"
         />
 
         <Input
@@ -47,6 +48,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
           className="mb-8 mt-6"
           label="New total stake"
           value={totalStake}
+          valueType="DAI"
         />
 
         <Button full type="submit">
