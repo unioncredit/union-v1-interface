@@ -23,6 +23,7 @@ export default function Stake() {
   const toggleTrustModal = useTrustModalToggle();
   const toggleEmailModal = useEmailModalToggle();
 
+  const [curToken, setCurToken] = useState();
   const [totalStake, setTotalStake] = useState("N/A");
   const [utilizedStake, setUtilizedStake] = useState("N/A");
   const [defaultedStake, setDefaultedStake] = useState("N/A");
@@ -37,6 +38,7 @@ export default function Stake() {
 
   useEffect(() => {
     if (library && account) {
+      setCurToken(TOKENS[chainId]["DAI"]);
       getStakeData();
       getRewardData();
       getUpyData();
@@ -53,33 +55,34 @@ export default function Stake() {
   const getStakeData = async () => {
     const res = await getStakeAmount(
       account,
-      TOKENS[chainId]["DAI"],
+      curToken,
       library,
       chainId
     );
     setTotalStake(res.stakingAmount);
-    setUtilizedStake(res.lendingAmount);
+    setUtilizedStake(res.creditUsed);
     setDefaultedStake(res.freezeAmount);
-    setWithdrawableStake(res.stakingAmount.sub(res.vouchingAmount));
+    setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
   };
 
   const getRewardData = async () => {
-    const res = await getRewards(TOKENS[chainId]["DAI"], library, chainId);
-    setRewards(res);
+    const res = await getRewards(curToken, library, chainId);
+    setRewards(res.toFixed(4));
   };
 
   const getUpyData = async () => {
     const res = await getSupplyPerYear(
-      TOKENS[chainId]["DAI"],
+      curToken,
       library,
       chainId
     );
-    setUpy(res);
+
+    setUpy(res.toFixed(2));
   };
 
   const getRewardsMultiplierData = async () => {
     const res = await getRewardsMultiplier(
-      TOKENS[chainId]["DAI"],
+      curToken,
       library,
       chainId
     );
@@ -89,7 +92,7 @@ export default function Stake() {
   const getTrustData = async () => {
     const res = await getTrust(
       account,
-      TOKENS[chainId]["DAI"],
+      curToken,
       library,
       chainId
     );
@@ -97,15 +100,15 @@ export default function Stake() {
   };
 
   const onDeposit = async (amount) => {
-    await stake(TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await stake(curToken, amount, signer, chainId);
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await unstake(curToken, amount, signer, chainId);
   };
 
   const onTrust = async (address, amount) => {
-    await vouch(address, TOKENS[chainId]["DAI"], amount, signer, chainId);
+    await vouch(address, curToken, amount, signer, chainId);
   };
 
   const stakeCardData = {
