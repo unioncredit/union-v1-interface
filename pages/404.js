@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function FourOhFour() {
+export default function Custom404() {
   return (
     <div>
       <Head>
