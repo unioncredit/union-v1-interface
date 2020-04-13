@@ -55,8 +55,8 @@ const ApplicationCard = () => {
         ></div>
       </div>
 
-      <p>
-        <p title={placeholderTip}>
+      <div>
+        <span className="cursor-help" title={placeholderTip}>
           <span className="underline">What is vouching?</span>{" "}
           <span
             className="text-sm leading-none"
@@ -65,8 +65,8 @@ const ApplicationCard = () => {
           >
             ℹ️
           </span>
-        </p>
-      </p>
+        </span>
+      </div>
     </div>
   );
 };
