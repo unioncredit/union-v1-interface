@@ -23,12 +23,10 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
-        <LabelPair
-          className="mb-6"
-          label="Current total stake"
-          value={totalStake}
-          valueType="DAI"
-        />
+        <dl className="flex justify-between py-2 items-center mb-4 leading-tight">
+          <dt>Current total stake</dt>
+          <dd className="text-right">{`${totalStake} DAI`}</dd>
+        </dl>
 
         <Input
           autoFocus
@@ -45,9 +43,9 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
         <div className="divider" />
 
         <LabelPair
-          className="mb-8 mt-6"
+          className="mb-6 mt-4"
           label="New total stake"
-          value={totalStake}
+          value={0}
           valueType="DAI"
         />
 
