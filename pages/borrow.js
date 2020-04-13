@@ -22,6 +22,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
+const getPercentUtilized = (borrowed, creditLimit) =>
+  creditLimit > 0 ? (borrowed / creditLimit) * 100 : 0;
+
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
 
@@ -32,19 +35,11 @@ export default function Borrow() {
   const [curToken, setCurToken] = useState();
   const [creditLimit, setCreditLimit] = useState("N/A");
   const [interest, setInterest] = useState("N/A");
-  const [paymentDueDate, setPaymentDueDate] = useState(0);
+  const [paymentDueDate, setPaymentDueDate] = useState("N/A");
   const [signer, setSigner] = useState([]);
   const [trustCount, setTrustCount] = useState(0);
 
-  const data = {
-    availableCredit: `${creditLimit} DAI`,
-    percentUtilization:
-      creditLimit > 0 ? ((borrowed / creditLimit) * 100).toFixed(0) : 0,
-    balanceOwed: `${borrowed} DAI`,
-    minPaymentDue: `${interest} DAI`,
-    paymentDueDate: paymentDueDate,
-    transactions: ["", ""],
-  };
+  const transactions = ["", ""];
 
   useEffect(() => {
     if (library && account) {
@@ -81,14 +76,14 @@ export default function Borrow() {
   const getPaymentDueDate = async () => {
     const isOverdue = await checkIsOverdue(curToken, account, library, chainId);
     if (isOverdue) {
-      setPaymentDueDate("is overdue");
+      setPaymentDueDate("Overdue");
     } else {
       const lastRepay = await getLastRepay(curToken, account, library, chainId);
 
       const overdueBlocks = await getOverdueBlocks(curToken, library, chainId);
       const curBlock = await library.getBlockNumber();
       const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
-      setPaymentDueDate(`in ${days} Days`);
+      setPaymentDueDate(`in ${days} days`);
     }
   };
 
@@ -119,7 +114,8 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={data.availableCredit}
+                  value={creditLimit}
+                  valueType="DAI"
                   large
                 />
 
@@ -134,9 +130,18 @@ export default function Borrow() {
                 value={
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {data.percentUtilization}%
+                      {getPercentUtilized(borrowed, creditLimit).toLocaleString(
+                        undefined,
+                        {
+                          style: "percent",
+                          maximumFractionDigits: 0,
+                        }
+                      )}
                     </p>
-                    <HealthBar health={data.percentUtilization} dark />
+                    <HealthBar
+                      health={getPercentUtilized(borrowed, creditLimit)}
+                      dark
+                    />
                   </div>
                 }
               />
@@ -156,7 +161,8 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
-                  value={data.balanceOwed}
+                  value={borrowed}
+                  valueType="DAI"
                   large
                 />
 
@@ -168,13 +174,14 @@ export default function Borrow() {
               <LabelPair
                 tooltip={placeholderTip}
                 label="Minimum Payment Due"
-                value={data.minPaymentDue}
+                valueType="DAI"
+                value={interest}
               />
 
               <LabelPair
                 label="Payment Due Date"
                 tooltip={placeholderTip}
-                value={data.paymentDueDate}
+                value={paymentDueDate}
               />
             </div>
           </div>
@@ -184,12 +191,12 @@ export default function Borrow() {
           <h2>Transactions</h2>
         </div>
 
-        {data.transactions.length > 0 &&
-          data.transactions.map((datum, i) => <Transaction key={i} />)}
+        {transactions.length > 0 &&
+          transactions.map((datum, i) => <Transaction key={i} />)}
       </div>
 
-      <BorrowModal balanceOwed={data.balanceOwed} onRepay={onRepay} />
-      <RepayModal balanceOwed={data.balanceOwed} onRepay={onRepay} />
+      <BorrowModal balanceOwed={borrowed} onRepay={onRepay} />
+      <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </div>
   );
 }
