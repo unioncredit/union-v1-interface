@@ -44,7 +44,7 @@ const EmailModal = () => {
         </form>
 
         <p className="text-center">
-          <button className="font-medium text-sm underline">
+          <button onClick={toggle} className="font-medium text-sm underline">
             Skip for now
           </button>
         </p>

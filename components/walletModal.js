@@ -1,14 +1,14 @@
 import {
+  useEmailModalToggle,
   useWalletModalOpen,
   useWalletModalToggle,
-  useEmailModalToggle,
 } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
-import { useEffect, useState, Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
 
@@ -18,46 +18,43 @@ const isMetaMask =
     ? true
     : false;
 
+const getWalletIcon = (name) =>
+  name === "Injected" && isMetaMask
+    ? SUPPORTED_WALLETS.MetaMask.icon
+    : SUPPORTED_WALLETS[name].icon;
+
+const getWalletName = (name) =>
+  name === "Injected" && isMetaMask
+    ? SUPPORTED_WALLETS.MetaMask.name
+    : SUPPORTED_WALLETS[name].name;
+
+const WalletOption = ({ name, activating, disabled, onClick }) => (
+  <div className="mt-4" key={name}>
+    <Button
+      full
+      icon={getWalletIcon(name)}
+      invert
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {activating ? "Waiting for confirmation..." : getWalletName(name)}
+    </Button>
+  </div>
+);
+
 const WALLET_VIEWS = {
   SIGN_IN: "SIGN_IN",
   CREATE: "CREATE",
 };
 
-const WalletOption = ({ name, activating, disabled, onClick }) => {
-  const walletIcon =
-    name === "Injected" && isMetaMask
-      ? SUPPORTED_WALLETS.MetaMask.icon
-      : SUPPORTED_WALLETS[name].icon;
-
-  const walletName =
-    name === "Injected" && isMetaMask
-      ? SUPPORTED_WALLETS.MetaMask.name
-      : SUPPORTED_WALLETS[name].name;
-
-  return (
-    <div className="mt-4" key={name}>
-      <Button
-        full
-        invert
-        disabled={disabled}
-        icon={walletIcon}
-        onClick={onClick}
-      >
-        {activating ? "Waiting for confirmation..." : walletName}
-      </Button>
-    </div>
-  );
-};
-
 const WalletModal = () => {
   const {
-    activate,
-    connector,
+    error,
     active,
     account,
-    library,
+    activate,
+    connector,
     deactivate,
-    error,
   } = useWeb3React();
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.CREATE);
@@ -66,8 +63,6 @@ const WalletModal = () => {
 
   const open = useWalletModalOpen();
   const toggle = useWalletModalToggle();
-
-  const toggleEmailModal = useEmailModalToggle();
 
   const [activatingConnector, setActivatingConnector] = useState();
 
@@ -113,8 +108,6 @@ const WalletModal = () => {
 
                 return (
                   <WalletOption
-                    activating={activating}
-                    disabled={disabled}
                     name={name}
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
@@ -122,6 +115,8 @@ const WalletModal = () => {
                       await toggle();
                       router.push("/stake");
                     }}
+                    disabled={disabled}
+                    activating={activating}
                   />
                 );
               })}
@@ -177,16 +172,15 @@ const WalletModal = () => {
 
                 return (
                   <WalletOption
-                    activating={activating}
-                    disabled={disabled}
                     name={name}
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
                       await activate(CONNECTORS[name]);
                       await toggle();
-                      await toggleEmailModal();
-                      // router.push("/stake");
+                      router.push("/stake");
                     }}
+                    disabled={disabled}
+                    activating={activating}
                   />
                 );
               })}

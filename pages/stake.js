@@ -3,11 +3,8 @@ import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
 import { TOKENS } from "@constants/index";
+import { useEmailModalToggle } from "@contexts/Application";
 import { useTrustModalToggle } from "@contexts/Stake";
-import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
-import Head from "next/head";
-
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
@@ -16,10 +13,15 @@ import { getTrust } from "@lib/contracts/getTrust";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { vouch } from "@lib/contracts/vouch";
+import { useWeb3React } from "@web3-react/core";
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
   const toggleTrustModal = useTrustModalToggle();
+
+  const toggleEmailModal = useEmailModalToggle();
 
   const [totalStake, setTotalStake] = useState("N/A");
   const [utilizedStake, setUtilizedStake] = useState("N/A");
@@ -32,15 +34,19 @@ export default function Stake() {
   const [signer, setSigner] = useState([]);
 
   useEffect(() => {
-    if (library) {
+    toggleEmailModal();
+  }, []);
+
+  useEffect(() => {
+    if (library && account) {
       getStakeData();
       getRewardData();
       getUpyData();
       getRewardsMultiplierData();
       getTrustData();
-      setSigner(library.getSigner());
+      setSigner(library.getSigner(account));
     }
-  }, []);
+  }, [library, account]);
 
   const getStakeData = async () => {
     const res = await getStakeAmount(
