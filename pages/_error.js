@@ -1,12 +1,11 @@
 export default function Error({ statusCode }) {
   return (
     <div className="container">
-      <div className="text-center pt-32">
-        <h1>Error</h1>
+      <div className="text-center py-32">
+        <h1>Something went wrong</h1>
         <p className="text-lg mt-4">
-          {statusCode
-            ? `An error ${statusCode} occurred on server`
-            : "An error occurred on client"}
+          An unexpected error occurred.{" "}
+          <a href="mailto:support@union.finance">Contact Support</a>.
         </p>
       </div>
     </div>
