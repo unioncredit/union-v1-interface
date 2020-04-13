@@ -99,7 +99,7 @@ const WalletModal = () => {
             </div>
 
             <div className="mb-6">
-              {Object.keys(CONNECTORS).map((name) => {
+              {Object.keys(CONNECTORS).map((name, i) => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
@@ -108,6 +108,7 @@ const WalletModal = () => {
 
                 return (
                   <WalletOption
+                    key={i}
                     name={name}
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
@@ -163,7 +164,7 @@ const WalletModal = () => {
             </div>
 
             <div className="mb-6">
-              {Object.keys(CONNECTORS).map((name) => {
+              {Object.keys(CONNECTORS).map((name, i) => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
@@ -172,6 +173,7 @@ const WalletModal = () => {
 
                 return (
                   <WalletOption
+                    key={i}
                     name={name}
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
