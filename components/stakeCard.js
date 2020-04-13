@@ -32,18 +32,15 @@ const StakeCard = () => {
   const [signer, setSigner] = useState(undefined);
 
   useEffect(() => {
-    setCurToken(TOKENS[chainId]["DAI"]);
-  }, [chainId]);
-
-  useEffect(() => {
     if (library && account) {
+      setCurToken(TOKENS[chainId]["DAI"]);
       getStakeData();
       getRewardData();
       getUpyData();
       getRewardsMultiplierData();
       setSigner(library.getSigner());
     }
-  }, [library, account]);
+  }, [library, account, chainId]);
 
   const getStakeData = async () => {
     const res = await getStakeAmount(account, curToken, library, chainId);
@@ -77,26 +74,14 @@ const StakeCard = () => {
     await unstake(curToken, amount, signer, chainId);
   };
 
-  /**
-   * @todo move format to LabelPair component as a prop
-   */
-  const stakeCardData = {
-    totalStake: `${totalStake} DAI`,
-    utilizedStake: `${utilizedStake} DAI`,
-    defaultedStake: `${defaultedStake} DAI`,
-    withdrawableStake: `${withdrawableStake} DAI`,
-    rewardsMultiplier: `${rewardsMultiplier}x`,
-    rewards: `${rewards} UNION`,
-    upy: `${upy} UNION`,
-  };
-
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6">
       <LabelPair
-        label="Your total stake"
-        value={totalStake}
         className="mb-4"
+        label="Your total stake"
         large
+        value={totalStake}
+        valueType="DAI"
       />
 
       <LabelPair
@@ -104,25 +89,28 @@ const StakeCard = () => {
         label="Utilized Stake"
         tooltip={placeholderTip}
         value={utilizedStake}
+        valueType="DAI"
       />
       <LabelPair
         className="text-grey-pure"
         label="Defaulted Stake"
         tooltip={placeholderTip}
         value={defaultedStake}
+        valueType="DAI"
       />
       <LabelPair
         className="text-grey-pure"
         label="Withdrawable Stake"
         tooltip={placeholderTip}
         value={withdrawableStake}
+        valueType="DAI"
       />
 
       <LabelPair
-        label="Rewards multiplier"
-        value={rewardsMultiplier}
         className="mb-4 mt-12"
+        label="Rewards multiplier"
         large
+        value={`${rewardsMultiplier}x`}
       />
 
       <LabelPair
@@ -130,12 +118,14 @@ const StakeCard = () => {
         label="Rewards"
         tooltip={placeholderTip}
         value={rewards}
+        valueType="UNION"
       />
       <LabelPair
         className="text-grey-pure"
         label="UNION Per Year (est.)"
         tooltip={placeholderTip}
         value={upy}
+        valueType="UNION"
       />
       <div className="flex -mx-3 mt-10">
         <div className="flex-1 px-3">

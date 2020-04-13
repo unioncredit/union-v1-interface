@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
  * @param {any} tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
  * @param {String} value
  * @param {Boolean} large Changes the LabelPair to be stacked
+ * @param {String} valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  */
 const LabelPair = ({
   className = "",
@@ -17,6 +18,7 @@ const LabelPair = ({
   tooltip,
   value,
   large = false,
+  valueType,
 }) => {
   const cachedLabelClassNames = classNames("leading-tight", {
     "text-lg mb-2": large,
@@ -51,7 +53,9 @@ const LabelPair = ({
           label
         )}
       </dt>
-      <dd className={cachedValueClassNames}>{value}</dd>
+      <dd className={cachedValueClassNames}>
+        {Boolean(valueType) ? `${value} ${valueType}` : value}
+      </dd>
     </dl>
   );
 };
@@ -71,6 +75,10 @@ LabelPair.propTypes = {
    * Changes the LabelPair to be stacked
    */
   large: PropTypes.bool,
+  /**
+   * A secondary piece of information to append to the value, either a currency type of unit of measurement
+   */
+  valueType: PropTypes.oneOf(["DAI", "UNION"]),
 };
 
 export default LabelPair;

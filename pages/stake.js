@@ -35,10 +35,6 @@ export default function Stake() {
   }, [email_modal_completed, tutorial_modal_completed]);
 
   useEffect(() => {
-    setCurToken(TOKENS[chainId]["DAI"]);
-  }, [chainId]);
-
-  useEffect(() => {
     const getTrustData = async () => {
       const res = await getTrust(account, curToken, library, chainId);
 
@@ -46,6 +42,7 @@ export default function Stake() {
     };
 
     if (library && account) {
+      setCurToken(TOKENS[chainId]["DAI"]);
       getTrustData();
     }
   }, [library, account, chainId, curToken]);
