@@ -12,7 +12,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    onWithdraw(values.withdrawAmount);
+    onWithdraw(values.amount);
   };
 
   return (
@@ -32,7 +32,8 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
           autoFocus
           chip="DAI"
           className="mb-8"
-          id="withdrawAmount"
+          id="amount"
+          name="amount"
           label="Withdraw Amount"
           placeholder="0.00"
           ref={register}
