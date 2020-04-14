@@ -39,38 +39,66 @@ const StakeCard = () => {
   }, [library, account, chainId]);
 
   const getStakeData = async () => {
-    const res = await getStakeAmount(account, curToken, library, chainId);
-    setTotalStake(res.stakingAmount);
-    setUtilizedStake(res.creditUsed);
-    setDefaultedStake(res.freezeAmount);
-    setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
+    try {
+      const res = await getStakeAmount(account, curToken, library, chainId);
+
+      setTotalStake(res.stakingAmount);
+      setUtilizedStake(res.creditUsed);
+      setDefaultedStake(res.freezeAmount);
+      setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getRewardData = async () => {
-    const res = await getRewards(curToken, library.getSigner(), chainId);
-    setRewards(res.toFixed(4));
+    try {
+      const res = await getRewards(curToken, library.getSigner(), chainId);
+
+      setRewards(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getUpyData = async () => {
-    const res = await getSupplyPerYear(curToken, library, chainId);
-    setUpy(res.toFixed(2));
+    try {
+      const res = await getSupplyPerYear(curToken, library, chainId);
+
+      setUpy(res.toFixed(2));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getRewardsMultiplierData = async () => {
-    const res = await getRewardsMultiplier(
-      curToken,
-      library.getSigner(),
-      chainId
-    );
-    setRewardsMultiplier(res);
+    try {
+      const res = await getRewardsMultiplier(
+        curToken,
+        library.getSigner(),
+        chainId
+      );
+
+      setRewardsMultiplier(res);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onDeposit = async (amount) => {
-    await stake(curToken, amount, library.getSigner(), chainId);
+    try {
+      await stake(curToken, amount, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(curToken, amount, library.getSigner(), chainId);
+    try {
+      await unstake(curToken, amount, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (

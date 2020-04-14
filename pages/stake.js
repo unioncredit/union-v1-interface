@@ -58,12 +58,20 @@ export default function Stake() {
   }, [library, account, query]);
 
   const getTrustData = async () => {
-    const res = await getTrust(account, curToken, library, chainId);
-    setTrustData(res);
+    try {
+      const res = await getTrust(account, curToken, library, chainId);
+      setTrustData(res);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onTrust = async (address, amount) => {
-    await vouch(address, curToken, amount, library.getSigner(), chainId);
+    try {
+      await vouch(address, curToken, amount, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const stakeTableData = useMemo(() => trustData, [trustData]);
