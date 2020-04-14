@@ -34,7 +34,7 @@ const Navigation = () => {
   const isHomepage = pathname === "/" ? true : false;
 
   return (
-    <nav className="border-b mb-10">
+    <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
         <ul className="flex items-center">
           <li className="py-4 flex-1 h-20 flex items-center justify-start">
