@@ -61,6 +61,7 @@ export default function Vouch() {
           <LabelPair
             label="Total credit vouched for you"
             value={creditLimit}
+            valueType="DAI"
             large
           />
 
