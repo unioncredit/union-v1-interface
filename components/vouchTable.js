@@ -86,7 +86,7 @@ const VouchTable = ({
                       cellRenderer = (
                         <span>
                           {Number(value).toLocaleString(undefined, {
-                            style: "percentage",
+                            style: "percent",
                             maximumFractionDigits: 2,
                             minimumFractionDigits: 2,
                           })}
