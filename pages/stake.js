@@ -46,7 +46,7 @@ export default function Stake() {
   };
 
   const onTrust = async (address, amount) => {
-    await vouch(address, curToken, amount, signer, chainId);
+    await vouch(address, curToken, amount, library.getSigner(), chainId);
   };
 
   const stakeTableData = useMemo(() => trustData, [trustData]);

@@ -29,15 +29,12 @@ const StakeCard = () => {
   const [upy, setUpy] = useState(0);
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
-  const [signer, setSigner] = useState(undefined);
-
   useEffect(() => {
     if (library && account) {
       getStakeData();
       getRewardData();
       getUpyData();
       getRewardsMultiplierData();
-      setSigner(library.getSigner());
     }
   }, [library, account, chainId]);
 
@@ -56,21 +53,20 @@ const StakeCard = () => {
 
   const getUpyData = async () => {
     const res = await getSupplyPerYear(curToken, library, chainId);
-
     setUpy(res.toFixed(2));
   };
 
   const getRewardsMultiplierData = async () => {
-    const res = await getRewardsMultiplier(curToken, library, chainId);
+    const res = await getRewardsMultiplier(curToken, library.getSigner(), chainId);
     setRewardsMultiplier(res);
   };
 
   const onDeposit = async (amount) => {
-    await stake(curToken, amount, signer, chainId);
+    await stake(curToken, amount, library.getSigner(), chainId);
   };
 
   const onWithdraw = async (amount) => {
-    await unstake(curToken, amount, signer, chainId);
+    await unstake(curToken, amount, library.getSigner(), chainId);
   };
 
   return (
