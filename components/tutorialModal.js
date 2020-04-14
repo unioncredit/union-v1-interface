@@ -1,11 +1,10 @@
 import { useLearnMoreModalToggle } from "@contexts/Application";
 import { useTutorialModalOpen, useTutorialModalToggle } from "@contexts/Stake";
-import VisuallyHidden from "@reach/visually-hidden";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
 import Button from "./button";
-import Modal from "./modal";
+import Modal, { CloseButton } from "./modal";
 
 const TUTORIAL_VIEWS = ["FIRST", "SECOND", "THIRD", "FOURTH"];
 
@@ -37,16 +36,8 @@ const TutorialModal = () => {
 
   return (
     <Modal isOpen={open} onDismiss={handleToggle}>
-      <div className="flex justify-end px-4 sm:px-6 pt-4 sm:pt-6 pb-4">
-        <button
-          className="focus:outline-none focus:shadow-outline leading-none p-2 rounded inline-flex"
-          onClick={handleToggle}
-        >
-          <VisuallyHidden>Close</VisuallyHidden>
-          <span aria-hidden className="w-4" role="img">
-            ❌
-          </span>
-        </button>
+      <div className="flex justify-end p-4 sm:p-6">
+        <CloseButton onClick={handleToggle} />
       </div>
 
       <div
