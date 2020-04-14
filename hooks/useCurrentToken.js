@@ -9,7 +9,11 @@ import { useWeb3React } from "@web3-react/core";
 export default function useCurrentToken(symbol = "DAI") {
   const { chainId } = useWeb3React();
 
-  if (chainId) {
+  if (
+    chainId &&
+    TOKENS.hasOwnProperty(chainId) &&
+    TOKENS[chainId].hasOwnProperty(symbol)
+  ) {
     return TOKENS[chainId][symbol];
   }
 
