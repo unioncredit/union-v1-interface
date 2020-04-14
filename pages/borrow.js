@@ -80,7 +80,6 @@ export default function Borrow() {
         const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
         setPaymentDueDate(`in ${days} days`);
       }
-
     }
   };
 

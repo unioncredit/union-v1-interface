@@ -53,7 +53,9 @@ function reducer(state, { type, payload }) {
       };
     }
     default: {
-      throw new Error(`Unexpected action type in StakeContext reducer: '${type}'.`);
+      throw new Error(
+        `Unexpected action type in StakeContext reducer: '${type}'.`
+      );
     }
   }
 }

@@ -57,7 +57,11 @@ const StakeCard = () => {
   };
 
   const getRewardsMultiplierData = async () => {
-    const res = await getRewardsMultiplier(curToken, library.getSigner(), chainId);
+    const res = await getRewardsMultiplier(
+      curToken,
+      library.getSigner(),
+      chainId
+    );
     setRewardsMultiplier(res);
   };
 
