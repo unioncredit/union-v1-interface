@@ -4,7 +4,7 @@ import Button from "./button";
 import Input from "./input";
 import { useForm } from "react-hook-form";
 
-const TrustModal = ({ onTrust }) => {
+const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
@@ -24,8 +24,10 @@ const TrustModal = ({ onTrust }) => {
         <Input
           autoFocus
           className="mb-4"
+          defaultValue={initialAddress}
           id="address"
           label="Address or ENS Name"
+          name="address"
           placeholder="Enter address or ENS"
           ref={register}
           required
@@ -34,8 +36,10 @@ const TrustModal = ({ onTrust }) => {
         <Input
           chip="DAI"
           className="mb-4"
+          defaultValue={initialTrust > 0 ? initialTrust : undefined}
           id="trust"
           label="Trust amount"
+          name="trust"
           placeholder="0.00"
           ref={register}
           required
