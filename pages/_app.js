@@ -1,4 +1,3 @@
-import ErrorBoundary from "@components/errorBoundary";
 import Footer from "@components/footer";
 import Navigation from "@components/navigation";
 import ApplicationContext from "@contexts/Application";
@@ -8,7 +7,6 @@ import VouchContext from "@contexts/Vouch";
 import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import "../css/tailwind.css";
-import Error from "./_error";
 
 const ContextProviders = ({ children }) => (
   <ApplicationContext>
@@ -29,9 +27,7 @@ export default function UnionApp({ Component, pageProps }) {
         </header>
 
         <main>
-          <ErrorBoundary fallback={<Error />}>
-            <Component {...pageProps} />
-          </ErrorBoundary>
+          <Component {...pageProps} />
         </main>
 
         <Footer />
