@@ -1,7 +1,10 @@
 import Bell from "../svgs/Bell";
 
 const Activity = () => {
-  const pending = true;
+  /**
+   * @todo Hook up if there are pending new notifications
+   */
+  const pending = false;
 
   return (
     <button className="h-8 w-8 bg-white items-center justify-center inline-flex rounded focus:outline-none focus:shadow-outline">
