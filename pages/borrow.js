@@ -51,44 +51,82 @@ export default function Borrow() {
   }, [library, account]);
 
   const getBorrowedData = async () => {
-    const res = await getBorrowed(account, curToken, library, chainId);
-    setBorrowed(res.toFixed(4));
+    try {
+      const res = await getBorrowed(account, curToken, library, chainId);
+
+      setBorrowed(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getCreditData = async () => {
-    const res = await getCreditLimit(curToken, account, library, chainId);
-    setCreditLimit(res.toFixed(4));
+    try {
+      const res = await getCreditLimit(curToken, account, library, chainId);
+
+      setCreditLimit(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getInterestData = async () => {
-    const res = await getInterest(curToken, account, library, chainId);
-    setInterest(res.toFixed(4));
+    try {
+      const res = await getInterest(curToken, account, library, chainId);
+
+      setInterest(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getPaymentDueDate = async () => {
-    const isOverdue = await checkIsOverdue(curToken, account, library, chainId);
-    if (isOverdue) {
-      setPaymentDueDate("Overdue");
-    } else {
+    try {
+      const isOverdue = await checkIsOverdue(
+        curToken,
+        account,
+        library,
+        chainId
+      );
+
+      if (isOverdue) {
+        setPaymentDueDate("Overdue");
+        return;
+      }
+
       const lastRepay = await getLastRepay(curToken, account, library, chainId);
 
       const overdueBlocks = await getOverdueBlocks(curToken, library, chainId);
+
       const curBlock = await library.getBlockNumber();
+
       if (lastRepay == 0) {
         setPaymentDueDate(`-`);
-      } else {
-        const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
-        setPaymentDueDate(`in ${days} days`);
+        return;
       }
+
+      const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
+
+      setPaymentDueDate(`in ${days} days`);
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const onBorrow = async (amount) => {
-    await borrow(curToken, amount, signer, chainId);
+    try {
+      await borrow(curToken, amount, signer, chainId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onRepay = async (amount) => {
-    await repay(curToken, amount, signer, chainId);
+    try {
+      await repay(curToken, amount, signer, chainId);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -191,7 +229,7 @@ export default function Borrow() {
           transactions.map((datum, i) => <Transaction key={i} />)}
       </div>
 
-      <BorrowModal balanceOwed={borrowed} onRepay={onRepay} />
+      <BorrowModal balanceOwed={borrowed} onBorrow={onBorrow} />
       <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </div>
   );

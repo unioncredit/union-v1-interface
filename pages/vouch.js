@@ -10,7 +10,7 @@ import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getVouched } from "@lib/contracts/getVouched";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 /**
  * @name getVouchBarData
@@ -39,14 +39,26 @@ export default function Vouch() {
   }, [library, account]);
 
   const getVouchData = async () => {
-    const res = await getVouched(account, curToken, library, chainId);
-    setVouchData(res);
+    try {
+      const res = await getVouched(account, curToken, library, chainId);
+
+      setVouchData(res);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getCreditData = async () => {
-    const res = await getCreditLimit(curToken, account, library, chainId);
-    setCreditLimit(res.toFixed(4));
+    try {
+      const res = await getCreditLimit(curToken, account, library, chainId);
+
+      setCreditLimit(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  const vouchTableData = useMemo(() => vouchData, [vouchData]);
 
   return (
     <div>
@@ -78,7 +90,7 @@ export default function Vouch() {
           <h1>Addresses who vouched for you</h1>
         </div>
 
-        <VouchTable data={vouchData} />
+        <VouchTable data={vouchTableData} />
       </div>
 
       <CreditRequestModal />

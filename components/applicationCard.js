@@ -16,14 +16,18 @@ const ApplicationCard = () => {
 
   useEffect(() => {
     const getTrustCountData = async () => {
-      const res = await getTrustCount(
-        account,
-        TOKENS[chainId]["DAI"],
-        library,
-        chainId
-      );
+      try {
+        const res = await getTrustCount(
+          account,
+          TOKENS[chainId]["DAI"],
+          library,
+          chainId
+        );
 
-      setTrustCount(res);
+        setTrustCount(res);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     if (library && account) getTrustCountData();
