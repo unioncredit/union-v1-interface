@@ -47,7 +47,7 @@ const StakeCard = () => {
   };
 
   const getRewardData = async () => {
-    const res = await getRewards(curToken, library, chainId);
+    const res = await getRewards(curToken, library.getSigner(), chainId);
     setRewards(res.toFixed(4));
   };
 
