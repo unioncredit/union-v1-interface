@@ -74,8 +74,13 @@ export default function Borrow() {
 
       const overdueBlocks = await getOverdueBlocks(curToken, library, chainId);
       const curBlock = await library.getBlockNumber();
-      const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
-      setPaymentDueDate(`in ${days} days`);
+      if (lastRepay == 0) {
+        setPaymentDueDate(`-`);
+      } else {
+        const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
+        setPaymentDueDate(`in ${days} days`);
+      }
+
     }
   };
 
