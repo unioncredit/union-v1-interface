@@ -27,7 +27,7 @@ const FOOTER_LINKS = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border-pure py-6 mt-8">
+    <footer className="border-t border-border-pure py-6 mt-10">
       <div className="container">
         <div className="flex">
           <div className="w-3/4">
