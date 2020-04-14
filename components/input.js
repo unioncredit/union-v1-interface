@@ -27,7 +27,7 @@ const Input = forwardRef(
           <div className="flex">
             <input
               autoComplete={autoComplete}
-              className="focus:outline-none text-lg leading-snug flex-1"
+              className="focus:outline-none text-lg leading-snug flex-1 text-overflow-clip"
               id={id}
               name={id}
               ref={ref}
@@ -50,10 +50,10 @@ const Input = forwardRef(
             className="block text-xs leading-tight mt-2"
             id={`${id}InputTip`}
           >
-            {tip}{" "}
             <span role="img" aria-label="Information">
               ℹ️
-            </span>
+            </span>{" "}
+            {tip}
           </span>
         )}
       </div>
