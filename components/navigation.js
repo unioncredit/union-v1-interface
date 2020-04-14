@@ -59,8 +59,8 @@ const Navigation = () => {
             </ul>
           )}
 
-          {!isHomepage && (
-            <ul className="flex flex-1 items-center justify-end py-4">
+          <ul className="flex flex-1 items-center justify-end py-4">
+            {!isHomepage && (
               <li>
                 <span
                   className="leading-none text-2xl"
@@ -70,11 +70,11 @@ const Navigation = () => {
                   🔔
                 </span>
               </li>
-              <li className="ml-8">
-                <Web3Status />
-              </li>
-            </ul>
-          )}
+            )}
+            <li className="ml-8">
+              <Web3Status />
+            </li>
+          </ul>
         </ul>
       </div>
 
