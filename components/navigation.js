@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import EmailModal from "./emailModal";
 import GetInvitedModal from "./getInvitedModal";
+import LearnMoreModal from "./learnMoreModal";
 import Logo from "./logo";
 import WalletModal from "./walletModal";
 import Web3Status from "./web3Connection";
@@ -80,6 +81,7 @@ const Navigation = () => {
       <EmailModal />
       <WalletModal />
       <GetInvitedModal />
+      <LearnMoreModal />
     </nav>
   );
 };

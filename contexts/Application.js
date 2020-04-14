@@ -15,6 +15,9 @@ const TOGGLE_EMAIL_MODAL = "TOGGLE_EMAIL_MODAL";
 const GET_INVITED_MODAL = "GET_INVITED_MODAL";
 const TOGGLE_GET_INVITED_MODAL = "TOGGLE_GET_INVITED_MODAL";
 
+const LEARN_MORE_MODAL = "LEARN_MORE_MODAL";
+const TOGGLE_LEARN_MORE_MODAL = "TOGGLE_LEARN_MORE_MODAL";
+
 const ApplicationContext = createContext();
 
 ApplicationContext.displayName = "ApplicationContext";
@@ -34,6 +37,9 @@ function reducer(state, { type, payload }) {
     case TOGGLE_GET_INVITED_MODAL: {
       return { ...state, [GET_INVITED_MODAL]: !state[GET_INVITED_MODAL] };
     }
+    case TOGGLE_LEARN_MORE_MODAL: {
+      return { ...state, [LEARN_MORE_MODAL]: !state[LEARN_MORE_MODAL] };
+    }
     default: {
       throw Error(
         `Unexpected action type in ApplicationContext reducer: '${type}'.`
@@ -47,6 +53,7 @@ export default function Provider({ children }) {
     [WALLET_MODAL_OPEN]: false,
     [EMAIL_MODAL_OPEN]: false,
     [GET_INVITED_MODAL]: false,
+    [LEARN_MORE_MODAL]: false,
   });
 
   const toggleWalletModal = useCallback(() => {
@@ -61,14 +68,29 @@ export default function Provider({ children }) {
     dispatch({ type: TOGGLE_GET_INVITED_MODAL });
   }, []);
 
+  const toggleLearnMoreModal = useCallback(() => {
+    dispatch({ type: TOGGLE_LEARN_MORE_MODAL });
+  }, []);
+
   return (
     <ApplicationContext.Provider
       value={useMemo(
         () => [
           state,
-          { toggleWalletModal, toggleEmailModal, toggleGetInvitedModal },
+          {
+            toggleWalletModal,
+            toggleEmailModal,
+            toggleGetInvitedModal,
+            toggleLearnMoreModal,
+          },
         ],
-        [state, toggleWalletModal, toggleEmailModal, toggleGetInvitedModal]
+        [
+          state,
+          toggleWalletModal,
+          toggleEmailModal,
+          toggleGetInvitedModal,
+          toggleLearnMoreModal,
+        ]
       )}
     >
       {children}
@@ -112,4 +134,16 @@ export function useGetInvitedModalToggle() {
   const [, { toggleGetInvitedModal }] = useApplicationContext();
 
   return toggleGetInvitedModal;
+}
+
+export function useLearnMoreModalOpen() {
+  const [state] = useApplicationContext();
+
+  return state[LEARN_MORE_MODAL];
+}
+
+export function useLearnMoreModalToggle() {
+  const [, { toggleLearnMoreModal }] = useApplicationContext();
+
+  return toggleLearnMoreModal;
 }
