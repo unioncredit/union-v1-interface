@@ -5,8 +5,8 @@ import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 
-const StakeTable = ({
-  columns = useMemo(
+const StakeTable = ({ data }) => {
+  const columns = useMemo(
     () => [
       {
         Header: "Address",
@@ -26,9 +26,8 @@ const StakeTable = ({
       },
     ],
     []
-  ),
-  data,
-}) => {
+  );
+
   const {
     getTableProps,
     getTableBodyProps,

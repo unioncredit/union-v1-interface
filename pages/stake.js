@@ -10,11 +10,15 @@ import { getTrust } from "@lib/contracts/getTrust";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
+
+  const { query } = useRouter();
+
   const toggleTrustModal = useTrustModalToggle();
   const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
@@ -22,6 +26,9 @@ export default function Stake() {
   const curToken = useCurrentToken();
 
   const [trustData, setTrustData] = useState([]);
+
+  const [initialTrust, setInitialTrust] = useState(undefined);
+  const [initialAddress, setInitialAddress] = useState(undefined);
 
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
@@ -39,6 +46,16 @@ export default function Stake() {
       getTrustData();
     }
   }, [library, account]);
+
+  useEffect(() => {
+    const { trust, address } = query;
+
+    if (library && account && trust && address) {
+      setInitialAddress(address);
+      setInitialTrust(trust);
+      toggleTrustModal();
+    }
+  }, [library, account, query]);
 
   const getTrustData = async () => {
     const res = await getTrust(account, curToken, library, chainId);
@@ -85,7 +102,11 @@ export default function Stake() {
         </div>
       </div>
 
-      <TrustModal onTrust={onTrust} />
+      <TrustModal
+        onTrust={onTrust}
+        initialAddress={initialAddress}
+        initialTrust={initialTrust}
+      />
       <TutorialModal />
     </div>
   );
