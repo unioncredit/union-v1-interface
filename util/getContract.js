@@ -11,7 +11,7 @@ import { AddressZero } from "@constants/";
  */
 export async function getContract(address, ABI, signer) {
   if (!isAddress(address) || address === AddressZero) {
-    throw Error(`Invalid 'address' parameter '${address}'.`);
+    throw new Error(`Invalid 'address' parameter '${address}'.`);
   }
 
   return new Contract(address, ABI, signer);

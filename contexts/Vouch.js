@@ -23,7 +23,7 @@ function reducer(state, { type, payload }) {
       return { ...state, [CREDIT_REQUEST_MODAL]: !state[CREDIT_REQUEST_MODAL] };
     }
     default: {
-      throw Error(`Unexpected action type in VouchContext reducer: '${type}'.`);
+      throw new Error(`Unexpected action type in VouchContext reducer: '${type}'.`);
     }
   }
 }

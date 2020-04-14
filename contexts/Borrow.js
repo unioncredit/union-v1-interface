@@ -29,7 +29,7 @@ function reducer(state, { type, payload }) {
       return { ...state, [REPAY_MODAL_OPEN]: !state[REPAY_MODAL_OPEN] };
     }
     default: {
-      throw Error(
+      throw new Error(
         `Unexpected action type in BorrowContext reducer: '${type}'.`
       );
     }

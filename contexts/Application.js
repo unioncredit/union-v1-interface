@@ -41,7 +41,7 @@ function reducer(state, { type, payload }) {
       return { ...state, [LEARN_MORE_MODAL]: !state[LEARN_MORE_MODAL] };
     }
     default: {
-      throw Error(
+      throw new Error(
         `Unexpected action type in ApplicationContext reducer: '${type}'.`
       );
     }
