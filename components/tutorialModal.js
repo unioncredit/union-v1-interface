@@ -1,10 +1,11 @@
+import { useLearnMoreModalToggle } from "@contexts/Application";
 import { useTutorialModalOpen, useTutorialModalToggle } from "@contexts/Stake";
 import VisuallyHidden from "@reach/visually-hidden";
 import { setCookie } from "nookies";
-import Modal from "./modal";
+import { Fragment } from "react";
 import { useStateList } from "react-use";
 import Button from "./button";
-import { Fragment } from "react";
+import Modal from "./modal";
 
 const TUTORIAL_VIEWS = ["FIRST", "SECOND", "THIRD", "FOURTH"];
 
@@ -12,14 +13,25 @@ const TutorialModal = () => {
   const open = useTutorialModalOpen();
   const toggle = useTutorialModalToggle();
 
-  const { state, prev, next, currentIndex } = useStateList(TUTORIAL_VIEWS);
+  const toggleLearnMoreModal = useLearnMoreModalToggle();
 
-  const handleToggle = () => {
+  const { state, prev, next } = useStateList(TUTORIAL_VIEWS);
+
+  const completeTutorial = () =>
     setCookie(null, "tutorial_modal_completed", true, {
       maxAge: 30 * 24 * 60 * 60,
       sameSite: true,
       secure: process.env.NODE_ENV === "production",
     });
+
+  const handleToggle = () => {
+    completeTutorial();
+    toggle();
+  };
+
+  const handleLearnMore = () => {
+    completeTutorial();
+    toggleLearnMoreModal();
     toggle();
   };
 
@@ -43,11 +55,10 @@ const TutorialModal = () => {
       >
         {state === "FIRST" && (
           <article className="text-center">
-            <div className=" w-24 h-24 rounded-full mx-auto bg-border-pure" />
-
+            <div className="w-24 h-24 rounded-full mx-auto bg-border-pure" />
             <h2 className="mt-4 mb-2 text-xl">Stake</h2>
             <p className="mb-4">Step 1</p>
-            <p className=" eading-tight text-grey-pure">
+            <p className="leading-tight text-grey-pure">
               Staked amount will be deposited in a lending pool in a way that
               the principal and interest are both accounted for
             </p>
@@ -56,8 +67,7 @@ const TutorialModal = () => {
 
         {state === "SECOND" && (
           <article className="text-center">
-            <div className=" w-24 h-24 rounded-full mx-auto bg-border-pure" />
-
+            <div className="w-24 h-24 rounded-full mx-auto bg-border-pure" />
             <h2 className="mt-4 mb-2 text-xl">Trust a Member</h2>
             <p className="mb-4">Step 2</p>
             <p className="leading-tight text-grey-pure">
@@ -70,8 +80,7 @@ const TutorialModal = () => {
 
         {state === "THIRD" && (
           <article className="text-center">
-            <div className=" w-24 h-24 rounded-full mx-auto bg-border-pure" />
-
+            <div className="w-24 h-24 rounded-full mx-auto bg-border-pure" />
             <h2 className="mt-4 mb-4 text-xl">
               You can trust more people with the amount you stake
             </h2>
@@ -87,7 +96,6 @@ const TutorialModal = () => {
           <Fragment>
             <article className="text-center">
               <div className="h-24 w-48 mx-auto bg-border-pure" />
-
               <h2 className="mt-8 mb-4 text-xl">Join Union</h2>
               <p className="leading-tight text-grey-pure">
                 Joining Union is invite only, it means that 3 people who are
@@ -96,7 +104,12 @@ const TutorialModal = () => {
             </article>
 
             <div className="mt-auto">
-              <Button full>Learn more</Button>
+              <Button onClick={handleToggle} full className="mb-4">
+                Start staking
+              </Button>
+              <Button onClick={handleLearnMore} full invert>
+                Learn more
+              </Button>
             </div>
           </Fragment>
         )}
