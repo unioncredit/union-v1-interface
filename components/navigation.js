@@ -56,6 +56,9 @@ const Navigation = () => {
               <li>
                 <NavigationLink href="/vouch">Vouch</NavigationLink>
               </li>
+              <li>
+                <NavigationLink href="/faucet">Faucet</NavigationLink>
+              </li>
             </ul>
           )}
 
