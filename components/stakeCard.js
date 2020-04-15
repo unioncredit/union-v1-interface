@@ -2,8 +2,8 @@ import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
+import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
-import { getSupplyPerYear } from "@lib/contracts/getSupplyPerYear";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { useWeb3React } from "@web3-react/core";
@@ -63,7 +63,7 @@ const StakeCard = () => {
 
   const getUpyData = async () => {
     try {
-      const res = await getSupplyPerYear(curToken, library, chainId);
+      const res = await getRewardsPerYear(curToken, library.getSigner(), chainId);
 
       setUpy(res.toFixed(2));
     } catch (err) {

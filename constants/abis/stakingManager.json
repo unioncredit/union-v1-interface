@@ -247,6 +247,27 @@
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "rewardsPerYearEst",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [
             {
@@ -329,7 +350,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "updated",
+                "name": "lastWithdrawBlock",
                 "type": "uint256"
             },
             {
