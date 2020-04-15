@@ -3,14 +3,13 @@ import {
   useCreditRequestModalToggle,
 } from "@contexts/Vouch";
 import { useWeb3React } from "@web3-react/core";
+import dyanmic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useCopyToClipboard } from "react-use";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
-import { useState, useEffect } from "react";
-
-import dyanmic from "next/dynamic";
-import { useCopyToClipboard } from "react-use";
 
 const QRCode = dyanmic(() => import("./shareQRCode"));
 
