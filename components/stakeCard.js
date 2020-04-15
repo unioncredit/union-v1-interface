@@ -7,14 +7,14 @@ import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { useWeb3React } from "@web3-react/core";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 
-const StakeCard = memo(() => {
+const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
   const { account, library, chainId } = useWeb3React();
@@ -175,6 +175,6 @@ const StakeCard = memo(() => {
       <WithdrawModal totalStake={totalStake} onWithdraw={onWithdraw} />
     </div>
   );
-});
+};
 
 export default StakeCard;
