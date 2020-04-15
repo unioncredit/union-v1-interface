@@ -7,7 +7,7 @@ import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
 
@@ -46,7 +46,7 @@ const WALLET_VIEWS = {
   CREATE: "CREATE",
 };
 
-const WalletModal = () => {
+const WalletModal = memo(() => {
   const {
     error,
     active,
@@ -233,6 +233,6 @@ const WalletModal = () => {
       </div>
     </Modal>
   );
-};
+});
 
 export default WalletModal;
