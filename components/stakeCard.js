@@ -63,7 +63,11 @@ const StakeCard = () => {
 
   const getUpyData = async () => {
     try {
-      const res = await getRewardsPerYear(curToken, library.getSigner(), chainId);
+      const res = await getRewardsPerYear(
+        curToken,
+        library.getSigner(),
+        chainId
+      );
 
       setUpy(res.toFixed(2));
     } catch (err) {
