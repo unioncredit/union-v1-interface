@@ -1,5 +1,4 @@
 import {
-  useEmailModalToggle,
   useWalletModalOpen,
   useWalletModalToggle,
 } from "@contexts/Application";
@@ -11,7 +10,6 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
-import Link from "next/link";
 
 const isMetaMask =
   typeof window !== "undefined" &&

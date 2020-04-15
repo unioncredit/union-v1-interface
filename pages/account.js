@@ -2,7 +2,7 @@ import Button from "@components/button";
 import Input from "@components/input";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;

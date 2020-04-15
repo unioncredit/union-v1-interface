@@ -10,7 +10,7 @@ import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getVouched } from "@lib/contracts/getVouched";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 /**
  * @name getVouchBarData
