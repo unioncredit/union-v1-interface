@@ -6,7 +6,7 @@ import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { stake } from "@lib/contracts/stake";
-import { TOKENS } from "@constants/"
+import { TOKENS } from "@constants/";
 import { unstake } from "@lib/contracts/unstake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
@@ -45,7 +45,11 @@ const StakeCard = () => {
 
   const getUnionBalance = async () => {
     try {
-      const res = await getErc20Balance(TOKENS[chainId]["UNION"], library.getSigner(), chainId);
+      const res = await getErc20Balance(
+        TOKENS[chainId]["UNION"],
+        library.getSigner(),
+        chainId
+      );
 
       setUnionBalance(res.toFixed(4));
     } catch (err) {
@@ -126,7 +130,7 @@ const StakeCard = () => {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6">

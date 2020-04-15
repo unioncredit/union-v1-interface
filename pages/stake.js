@@ -6,13 +6,12 @@ import TutorialModal from "@components/tutorialModal";
 import { useEmailModalToggle } from "@contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
-import { getTrust } from "@lib/contracts/getTrust";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 
 export default function Stake() {
   const { account, library, chainId } = useWeb3React();
@@ -25,11 +24,6 @@ export default function Stake() {
 
   const curToken = useCurrentToken();
 
-  const [trustData, setTrustData] = useState([]);
-
-  const [initialTrust, setInitialTrust] = useState(undefined);
-  const [initialAddress, setInitialAddress] = useState(undefined);
-
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
   useEffect(() => {
@@ -41,30 +35,16 @@ export default function Stake() {
     }
   }, [email_modal_completed, tutorial_modal_completed]);
 
-  useEffect(() => {
-    if (library && account) {
-      getTrustData();
-    }
-  }, [library, account]);
+  /**
+   * @note Rename query parameters to indicate where theyre coming from
+   */
+  const { trust: paramTrust, address: paramAddress } = query;
 
   useEffect(() => {
-    const { trust, address } = query;
-
-    if (library && account && trust && address) {
-      setInitialAddress(address);
-      setInitialTrust(trust);
+    if (library && account && paramTrust && paramAddress) {
       toggleTrustModal();
     }
   }, [library, account, query]);
-
-  const getTrustData = async () => {
-    try {
-      const res = await getTrust(account, curToken, library, chainId);
-      setTrustData(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const onTrust = async (address, amount) => {
     try {
@@ -73,8 +53,6 @@ export default function Stake() {
       console.error(err);
     }
   };
-
-  const stakeTableData = useMemo(() => trustData, [trustData]);
 
   return (
     <div className="mt-10">
@@ -105,15 +83,15 @@ export default function Stake() {
           </div>
 
           <div className="w-7/12 px-2">
-            <StakeTable data={stakeTableData} />
+            <StakeTable />
           </div>
         </div>
       </div>
 
       <TrustModal
         onTrust={onTrust}
-        initialAddress={initialAddress}
-        initialTrust={initialTrust}
+        initialAddress={paramAddress ?? undefined}
+        initialTrust={paramTrust ?? undefined}
       />
       <TutorialModal />
     </div>

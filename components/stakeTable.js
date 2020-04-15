@@ -1,12 +1,36 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
-import { useMemo } from "react";
+import useCurrentToken from "@hooks/useCurrentToken";
+import { getTrust } from "@lib/contracts/getTrust";
+import { useWeb3React } from "@web3-react/core";
+import { useEffect, useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 
-const StakeTable = ({ data }) => {
-  const columns = useMemo(
+const StakeTable = () => {
+  const { library, account, chainId } = useWeb3React();
+
+  const curToken = useCurrentToken();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (library && account) {
+      getTrustData();
+    }
+  }, [library, account, chainId]);
+
+  const getTrustData = async () => {
+    try {
+      const res = await getTrust(account, curToken, library, chainId);
+      setData(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const memoizedColumns = useMemo(
     () => [
       {
         Header: "Address",
@@ -28,6 +52,8 @@ const StakeTable = ({ data }) => {
     []
   );
 
+  const memoizedData = useMemo(() => data, [data]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -36,8 +62,8 @@ const StakeTable = ({ data }) => {
     prepareRow,
   } = useTable(
     {
-      columns,
-      data,
+      columns: memoizedColumns,
+      data: memoizedData,
     },
     useSortBy
   );
