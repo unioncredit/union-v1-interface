@@ -1,13 +1,16 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
+import { getErc20Balance } from "@lib/contracts/getErc20Balance";
 import { getRewards } from "@lib/contracts/getRewards";
 import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { stake } from "@lib/contracts/stake";
+import { TOKENS } from "@constants/"
 import { unstake } from "@lib/contracts/unstake";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
+import { withdrawRewards } from "@lib/contracts/withdrawRewards";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./depositModal";
@@ -24,6 +27,7 @@ const StakeCard = () => {
   const [totalStake, setTotalStake] = useState(0);
   const [utilizedStake, setUtilizedStake] = useState(0);
   const [defaultedStake, setDefaultedStake] = useState(0);
+  const [unionBalance, setUnionBalance] = useState(0);
   const [withdrawableStake, setWithdrawableStake] = useState(0);
   const [rewards, setRewards] = useState(0);
   const [upy, setUpy] = useState(0);
@@ -34,9 +38,20 @@ const StakeCard = () => {
       getStakeData();
       getRewardData();
       getUpyData();
+      getUnionBalance();
       getRewardsMultiplierData();
     }
   }, [library, account, chainId]);
+
+  const getUnionBalance = async () => {
+    try {
+      const res = await getErc20Balance(TOKENS[chainId]["UNION"], library.getSigner(), chainId);
+
+      setUnionBalance(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const getStakeData = async () => {
     try {
@@ -105,6 +120,14 @@ const StakeCard = () => {
     }
   };
 
+  const onWithdrawRewards = async () => {
+    try {
+      await withdrawRewards(curToken, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6">
       <LabelPair
@@ -146,6 +169,14 @@ const StakeCard = () => {
 
       <LabelPair
         className="text-grey-pure"
+        label="UNION Balance"
+        tooltip={placeholderTip}
+        value={unionBalance}
+        valueType="UNION"
+      />
+
+      <LabelPair
+        className="text-grey-pure"
         label="Rewards"
         tooltip={placeholderTip}
         value={rewards}
@@ -167,6 +198,13 @@ const StakeCard = () => {
         <div className="flex-1 px-3">
           <Button invert full onClick={toggleWithdrawModal}>
             Withdraw
+          </Button>
+        </div>
+      </div>
+      <div className="flex -mx-3 mt-10">
+        <div className="flex-1 px-3">
+          <Button invert full onClick={onWithdrawRewards}>
+            Withdraw Rewards
           </Button>
         </div>
       </div>
