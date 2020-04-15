@@ -31,6 +31,9 @@ const Input = forwardRef(
               id={id}
               name={id}
               ref={ref}
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
               type={type}
               {...props}
               {...(tip && { "aria-describedby": `${id}InputTip` })}
