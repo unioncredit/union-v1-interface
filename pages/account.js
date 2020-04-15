@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 
-export default function Home() {
+export default function Account() {
   const { register, handleSubmit } = useForm();
   const { library, account } = useWeb3React();
 
