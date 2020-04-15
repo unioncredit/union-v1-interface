@@ -2,14 +2,20 @@ import Button from "@components/button";
 import Input from "@components/input";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
+
+  useEffect(() => {
+    /**
+     * @todo lookup email by account and fill placeholder input greyed out like Set protocol does
+     */
+  }, [account]);
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -20,13 +26,17 @@ export default function Home() {
       const signer = library.getSigner();
 
       const signature = await signer.signMessage(MESSAGE);
+
+      /**
+       * @todo Post email to DB here with a key / value pair of address / email
+       */
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <Fragment>
+    <div className="mt-10">
       <Head>
         <title>Union</title>
       </Head>
@@ -42,6 +52,7 @@ export default function Home() {
               id="email"
               label="Your email"
               name="email"
+              required
               placeholder="name@email.com"
               ref={register}
               type="email"
@@ -53,6 +64,6 @@ export default function Home() {
           </form>
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 }

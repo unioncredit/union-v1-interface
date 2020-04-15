@@ -77,7 +77,7 @@ export default function Stake() {
   const stakeTableData = useMemo(() => trustData, [trustData]);
 
   return (
-    <div>
+    <div className="mt-10">
       <Head>
         <title>Stake | Union</title>
       </Head>

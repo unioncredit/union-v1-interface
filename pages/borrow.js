@@ -130,7 +130,7 @@ export default function Borrow() {
   };
 
   return (
-    <div>
+    <div className="mt-10">
       <Head>
         <title>Borrow | Union</title>
       </Head>

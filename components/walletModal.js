@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
+import Link from "next/link";
 
 const isMetaMask =
   typeof window !== "undefined" &&
@@ -131,18 +132,19 @@ const WalletModal = () => {
 
             <div className="divider" />
 
-            <p className="text-sm text-center mt-6">
-              Don't have an account?{" "}
-              <button
-                onClick={() => setWalletView(WALLET_VIEWS.CREATE)}
-                className="underline font-medium"
-              >
-                Sign up
-              </button>
-            </p>
+            {active ? (
+              <div className="mt-6">
+                <Button
+                  full
+                  className="mb-2"
+                  onClick={() => {
+                    toggle();
+                    router.push("/account");
+                  }}
+                >
+                  My account
+                </Button>
 
-            {active && (
-              <p className="text-sm text-center mt-6">
                 <Button
                   full
                   invert
@@ -153,6 +155,16 @@ const WalletModal = () => {
                 >
                   Disconnect
                 </Button>
+              </div>
+            ) : (
+              <p className="text-sm text-center mt-6">
+                Don't have an account?{" "}
+                <button
+                  onClick={() => setWalletView(WALLET_VIEWS.CREATE)}
+                  className="underline font-medium"
+                >
+                  Sign up
+                </button>
               </p>
             )}
           </Fragment>

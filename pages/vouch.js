@@ -61,7 +61,7 @@ export default function Vouch() {
   const vouchTableData = useMemo(() => vouchData, [vouchData]);
 
   return (
-    <div>
+    <div className="mt-10">
       <Head>
         <title>Vouch | Union</title>
       </Head>
