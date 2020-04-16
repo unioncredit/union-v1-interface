@@ -285,7 +285,7 @@ export default function Home() {
         <div className="divider"></div>
       </div>
 
-      <section className="py-10 sm:py-12 md:py-20 lg:py-32">
+      <section className="pt-10 sm:pt-12 md:pt-20 lg:pt-32">
         <div className="container">
           <div className="flex">
             <div className="w-1/2">

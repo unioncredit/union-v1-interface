@@ -173,19 +173,12 @@ const StakeCard = () => {
 
       <LabelPair
         className="text-grey-pure"
-        label="UNION Balance"
-        tooltip={placeholderTip}
-        value={unionBalance}
-        valueType="UNION"
-      />
-
-      <LabelPair
-        className="text-grey-pure"
         label="Rewards"
         tooltip={placeholderTip}
         value={rewards}
         valueType="UNION"
       />
+
       <LabelPair
         className="text-grey-pure"
         label="UNION Per Year (est.)"
@@ -193,6 +186,15 @@ const StakeCard = () => {
         value={upy}
         valueType="UNION"
       />
+
+      <LabelPair
+        className="text-grey-pure"
+        label="UNION Balance"
+        tooltip={placeholderTip}
+        value={unionBalance}
+        valueType="UNION"
+      />
+
       <div className="flex -mx-2 mt-10">
         <div className="flex-1 px-2">
           <Button secondary full onClick={toggleDepositModal}>
