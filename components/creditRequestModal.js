@@ -7,17 +7,33 @@ import dyanmic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCopyToClipboard } from "react-use";
+import Telegram from "svgs/Telegram";
+import Twitter from "svgs/Twitter";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 
 const QRCode = dyanmic(() => import("./shareQRCode"));
 
-const generateLink = (address, amount = 0) => {
+const SHARE_MESSAGE = `Please vouch for me on Union!`;
+
+const generateLink = (address, amount) => {
   if (!address) throw new Error("`account` is required");
 
-  return `${window.location.origin}/stake?address=${address}&trust=${amount}`;
+  return `${window.location.origin}/stake?address=${address}${
+    amount && "&trust=" + amount
+  }`;
 };
+
+const generateTwitterLink = (shareLink) =>
+  `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}&via=unionprotocol`;
+
+const generateTelegramLink = (shareLink) =>
+  `https://telegram.me/share/url?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}`;
 
 const CreditRequestModal = () => {
   const open = useCreditRequestModalOpen();
@@ -64,6 +80,29 @@ const CreditRequestModal = () => {
           <Button full onClick={() => copyToClipboard(shareLink)}>
             {copied ? "Copied!" : "Copy link"}
           </Button>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={generateTwitterLink(shareLink)}
+            className="btn btn-invert w-full relative mt-4"
+          >
+            <div className="btn-icon">
+              <Twitter />
+            </div>
+            Share to Twitter
+          </a>
+
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={generateTelegramLink(shareLink)}
+            className="btn btn-invert w-full relative mt-4"
+          >
+            <div className="btn-icon">
+              <Telegram />
+            </div>
+            Share to Telegram
+          </a>
         </div>
       ) : (
         <form

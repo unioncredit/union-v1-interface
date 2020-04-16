@@ -176,7 +176,7 @@ table td:not(:first-of-type) {
 @media (width >= 640px) {
   [data-reach-dialog-content]:not(.fullscreen) {
     @apply self-start rounded mx-auto;
-    margin-top: 20vh;
+    margin-top: 12vh;
     max-width: 24rem;
   }
 }
