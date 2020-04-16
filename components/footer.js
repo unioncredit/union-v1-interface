@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const FOOTER_LINKS = [
   {
     href: "",
@@ -32,6 +34,11 @@ const Footer = () => {
         <div className="flex">
           <div className="w-3/4">
             <ul className="flex flex-wrap text-type-lightest text-sm -mr-4 -mb-2 flex-wrap">
+              <li className="pb-2 pr-4">
+                <Link href="/faucet">
+                  <a className="hover:underline">Faucet</a>
+                </Link>
+              </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (
                 <li key={i} className="pb-2 pr-4">
                   <a className="hover:underline" href={href}>

@@ -36,7 +36,7 @@ const Navigation = () => {
   return (
     <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
-        <ul className="flex items-center">
+        <ul className="flex flex-col lg:flex-row items-center">
           <li className="py-4 w-1/4 h-20 flex items-center justify-start">
             <Link href="/">
               <a>
@@ -45,22 +45,21 @@ const Navigation = () => {
             </Link>
           </li>
 
-          {!isHomepage && (
-            <ul className="flex w-2/4  justify-center items-center py-4 h-20">
-              <li>
-                <NavigationLink href="/stake">Stake</NavigationLink>
-              </li>
-              <li>
-                <NavigationLink href="/borrow">Borrow</NavigationLink>
-              </li>
-              <li>
-                <NavigationLink href="/vouch">Vouch</NavigationLink>
-              </li>
-              <li>
-                <NavigationLink href="/faucet">Faucet</NavigationLink>
-              </li>
-            </ul>
-          )}
+          <ul className="flex flex-1  justify-center items-center py-4 h-20">
+            {!isHomepage && (
+              <>
+                <li>
+                  <NavigationLink href="/stake">Stake</NavigationLink>
+                </li>
+                <li>
+                  <NavigationLink href="/borrow">Borrow</NavigationLink>
+                </li>
+                <li>
+                  <NavigationLink href="/vouch">Vouch</NavigationLink>
+                </li>
+              </>
+            )}
+          </ul>
 
           <ul className="flex w-1/4 justify-end py-4">
             <Web3Status />

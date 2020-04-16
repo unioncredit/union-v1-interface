@@ -24,7 +24,7 @@ export default function Faucet() {
       </Head>
 
       <div className="container text-center">
-        <h1 className="leading-loose mb-4">Testnet Faucet</h1>
+        <h1 className="mb-4">Testnet Faucet</h1>
 
         <Button invert onClick={onGetToken}>
           Get 10000 Test Tokens
