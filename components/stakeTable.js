@@ -1,9 +1,11 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrust } from "@lib/contracts/getTrust";
+import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
+
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
@@ -70,6 +72,14 @@ const StakeTable = () => {
 
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
+  const onVerifyMembership = async () => {
+    try {
+      await verifyMembership(account, curToken, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="bg-white border rounded p-4 md:p-6 h-full">
       <table {...getTableProps()}>
@@ -125,7 +135,14 @@ const StakeTable = () => {
             Borrow without collateral and earn higher interest on your deposits
           </p>
           <p className="text-center">
-            <Button onClick={toggleGetInvitedModal}>Become a member</Button>
+            <div className="flex mt-10">
+              <div className="flex-1 px-3">
+                <Button onClick={toggleGetInvitedModal}>Get invited</Button>
+              </div>
+              <div className="flex-1 px-3">
+                <Button onClick={onVerifyMembership}>Become a member</Button>
+              </div>
+            </div>
           </p>
         </div>
       )}
