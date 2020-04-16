@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
-  creditLimit > 0 ? (borrowed / creditLimit) * 100 : 0;
+  creditLimit > 0 ? (borrowed / creditLimit) : 0;
 
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
@@ -105,7 +105,7 @@ export default function Borrow() {
         return;
       }
 
-      const days = ((lastRepay + overdueBlocks - curBlock) * 15) / 86400;
+      const days = (((lastRepay + overdueBlocks - curBlock) * 15) / 86400).toFixed(2);
 
       setPaymentDueDate(`in ${days} days`);
     } catch (err) {
