@@ -40,7 +40,7 @@ export default function Home() {
         <title>Union</title>
       </Head>
 
-      <section className="py-10 sm:py-12 md:py-20 lg:pb-32 relative overflow-hidden">
+      <section className="py-10 sm:py-12 lg:pb-32 relative overflow-hidden">
         <div className="container z-10">
           <div className="flex">
             <div className="w-1/2">
@@ -51,18 +51,43 @@ export default function Home() {
                   revealing personal information on a public ledger.
                 </p>
                 <Button>Get started</Button>
+
+                <div className="mt-16">
+                  <div
+                    className="bg-grey-light"
+                    style={{ width: 280, height: 130 }}
+                  />
+                </div>
               </div>
             </div>
             <div className="w-1/2">
               <div
                 className="bg-grey-light"
                 style={{ width: 680, height: 586 }}
-              ></div>
+              />
+
+              <div className="mt-16">
+                <p className="font-semibold text-type-light mb-6">
+                  Trusted by industry lead companies
+                </p>
+
+                <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="https://placehold.it/70x35" alt="Logo" />
+                  </div>
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="https://placehold.it/70x35" alt="Logo" />
+                  </div>
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="https://placehold.it/70x35" alt="Logo" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div
+        {/* <div
           className="bg-pink-light absolute bottom-0 left-0 w-full"
           style={{
             height: 400,
@@ -70,7 +95,7 @@ export default function Home() {
             transform: "skew(0, -4.76deg) translateY(calc(50vw / 12))",
             minHeight: "400px",
           }}
-        ></div>
+        /> */}
       </section>
 
       <section className="py-10 sm:py-12 md:py-20 lg:pb-24 lg:pt-32">
@@ -173,9 +198,7 @@ export default function Home() {
 
       <section className="py-10 sm:py-12 md:py-20">
         <div className="container">
-          <h2 className="text-3xl mb-20 text-center">
-            Union member statistics
-          </h2>
+          <h2 className="text-3xl mb-20 text-center">Union member stats</h2>
           <ul className="flex justify-center">
             <li>
               <div className="p-4 text-center">
