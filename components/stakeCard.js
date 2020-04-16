@@ -193,24 +193,22 @@ const StakeCard = () => {
         value={upy}
         valueType="UNION"
       />
-      <div className="flex -mx-3 mt-10">
-        <div className="flex-1 px-3">
+      <div className="flex -mx-2 mt-10">
+        <div className="flex-1 px-2">
           <Button secondary full onClick={toggleDepositModal}>
             Deposit
           </Button>
         </div>
-        <div className="flex-1 px-3">
+        <div className="flex-1 px-2">
           <Button invert full onClick={toggleWithdrawModal}>
             Withdraw
           </Button>
         </div>
       </div>
-      <div className="flex -mx-3 mt-10">
-        <div className="flex-1 px-3">
-          <Button invert full onClick={onWithdrawRewards}>
-            Withdraw Rewards
-          </Button>
-        </div>
+      <div className="mt-4">
+        <Button invert full onClick={onWithdrawRewards}>
+          Withdraw Rewards
+        </Button>
       </div>
 
       <DepositModal totalStake={totalStake} onDeposit={onDeposit} />

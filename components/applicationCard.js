@@ -1,6 +1,8 @@
 import { TOKENS } from "@constants/";
 import { useGetInvitedModalToggle } from "@contexts/Application";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrustCount } from "@lib/contracts/getTrustCount";
+import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
@@ -11,6 +13,8 @@ const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
 
   const toggleGetInvitedModal = useGetInvitedModalToggle();
+
+  const curToken = useCurrentToken();
 
   const [trustCount, setTrustCount] = useState(0);
 
@@ -33,6 +37,14 @@ const ApplicationCard = () => {
     if (library && account) getTrustCountData();
   }, [library, account, chainId]);
 
+  const onVerifyMembership = async () => {
+    try {
+      await verifyMembership(account, curToken, library.getSigner(), chainId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 mb-10">
       <div className="flex justify-between items-start">
@@ -45,8 +57,14 @@ const ApplicationCard = () => {
             vouched for you
           </p>
         </div>
-        <Button onClick={toggleGetInvitedModal}>
-          Ask someone to vouch for you
+        <Button
+          onClick={
+            trustCount === 3 ? onVerifyMembership : toggleGetInvitedModal
+          }
+        >
+          {trustCount === 3
+            ? "Verify Membership"
+            : "Ask someone to vouch for you"}
         </Button>
       </div>
 
