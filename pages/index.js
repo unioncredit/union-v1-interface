@@ -45,7 +45,7 @@ export default function Home() {
           <div className="flex">
             <div className="w-1/2">
               <div>
-                <h1 className="text-4xl mb-8 mt-20">Credit backed by trust</h1>
+                <h1 className="text-4xl mb-8">Credit backed by trust</h1>
                 <p className="text-xl leading-tight font-normal mb-10 max-w-md">
                   Union works without the need for collateral, credit score, or
                   revealing personal information on a public ledger.
@@ -73,13 +73,22 @@ export default function Home() {
 
                 <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="https://placehold.it/70x35" alt="Logo" />
+                    <div
+                      className="bg-grey-light"
+                      style={{ width: 70, height: 35 }}
+                    />
                   </div>
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="https://placehold.it/70x35" alt="Logo" />
+                    <div
+                      className="bg-grey-light"
+                      style={{ width: 70, height: 35 }}
+                    />
                   </div>
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="https://placehold.it/70x35" alt="Logo" />
+                    <div
+                      className="bg-grey-light"
+                      style={{ width: 70, height: 35 }}
+                    />
                   </div>
                 </div>
               </div>
@@ -87,26 +96,44 @@ export default function Home() {
           </div>
         </div>
 
-        {/* <div
+        <div
           className="bg-pink-light absolute bottom-0 left-0 w-full"
           style={{
-            height: 400,
+            height: 420,
             zIndex: -1,
             transform: "skew(0, -4.76deg) translateY(calc(50vw / 12))",
-            minHeight: "400px",
+            minHeight: 420,
           }}
-        /> */}
+        />
       </section>
 
       <section className="py-10 sm:py-12 md:py-20 lg:pb-24 lg:pt-32">
         <div className="container">
-          <h2 className="text-3xl mb-8">Union key benefits</h2>
-          <p className="text-xl leading-tight font-normal mb-10 max-w-md">
-            You can join union by yourself and be able to just stake or join
-            with the help of 3 friends vouching for you and enjoy all the
-            benefits of Union
-          </p>
-          <Button>Get started</Button>
+          <div className="flex">
+            <div className="w-1/2">
+              <div>
+                <h2 className="text-3xl mb-8">Union key benefits</h2>
+                <p className="text-xl leading-tight font-normal mb-10 max-w-md">
+                  You can join union by yourself and be able to just stake or
+                  join with the help of 3 friends vouching for you and enjoy all
+                  the benefits of Union
+                </p>
+                <Button>Get started</Button>
+              </div>
+            </div>
+            <div className="w-1/2 flex justify-end">
+              <div className="flex flex-col">
+                <div
+                  className="bg-grey-light mb-4"
+                  style={{ width: 357, height: 48 }}
+                />
+                <div
+                  className="bg-grey-light"
+                  style={{ width: 357, height: 490 }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -119,7 +146,7 @@ export default function Home() {
           <div className="flex flex-row-reverse">
             <div className="w-1/2 flex justify-end">
               <div>
-                <h2 className="text-3xl mb-10 mt-6">Become your own bank</h2>
+                <h2 className="text-3xl mb-10">Become your own bank</h2>
                 <ol className="max-w-md">
                   <li className="pb-6">
                     <div className="rounded p-6 bg-white shadow-lg leading-tight flex items-center">
@@ -160,7 +187,7 @@ export default function Home() {
               <div
                 className="bg-grey-light"
                 style={{ height: 545, width: 525 }}
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -179,7 +206,7 @@ export default function Home() {
             <div className="w-1/2 flex justify-end">
               <div
                 className="bg-grey-light"
-                style={{ height: 400, width: 400 }}
+                style={{ width: 400, height: 400 }}
               ></div>
             </div>
           </div>
@@ -188,11 +215,25 @@ export default function Home() {
 
       <section className="bg-black-pure text-white py-10 sm:py-12 md:py-20 lg:py-32">
         <div className="container">
-          <h2 className="text-3xl mb-4">Check what you can build with Union</h2>
-          <p className="text-xl leading-tight font-normal mb-8 max-w-md">
-            Ability to give your smart contracts credit lines and more.
-          </p>
-          <Button>Read the docs</Button>
+          <div className="flex">
+            <div className="w-1/2">
+              <div
+                className="bg-grey-light"
+                style={{ width: 508, height: 264 }}
+              />
+            </div>
+            <div className="w-1/2">
+              <div className="max-w-md">
+                <h2 className="text-3xl mb-4">
+                  Check what you can build with Union
+                </h2>
+                <p className="text-xl leading-tight font-normal mb-8">
+                  Ability to give your smart contracts credit lines and more.
+                </p>
+                <Button>Read the docs</Button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -246,8 +287,20 @@ export default function Home() {
 
       <section className="py-10 sm:py-12 md:py-20 lg:py-32">
         <div className="container">
-          <h2 className="text-3xl mb-10">Learn more about Union</h2>
-          <Button>Read the white paper</Button>
+          <div className="flex">
+            <div className="w-1/2">
+              <div>
+                <h2 className="text-3xl mb-10">Learn more about Union</h2>
+                <Button>Read the white paper</Button>
+              </div>
+            </div>
+            <div className="w-1/2 flex justify-end">
+              <div
+                className="bg-grey-light"
+                style={{ width: 330, height: 256 }}
+              />
+            </div>
+          </div>
         </div>
       </section>
     </Fragment>
