@@ -37,7 +37,7 @@ const Navigation = () => {
     <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
         <ul className="flex items-center">
-          <li className="py-4 flex-1 h-20 flex items-center justify-start">
+          <li className="py-4 w-1/4 h-20 flex items-center justify-start">
             <Link href="/">
               <a>
                 <Logo />
@@ -46,7 +46,7 @@ const Navigation = () => {
           </li>
 
           {!isHomepage && (
-            <ul className="flex flex-1 justify-center items-center py-4 h-20">
+            <ul className="flex w-2/4  justify-center items-center py-4 h-20">
               <li>
                 <NavigationLink href="/stake">Stake</NavigationLink>
               </li>
@@ -62,7 +62,7 @@ const Navigation = () => {
             </ul>
           )}
 
-          <ul className="flex flex-1 justify-end py-4">
+          <ul className="flex w-1/4 justify-end py-4">
             <Web3Status />
           </ul>
         </ul>
