@@ -65,6 +65,11 @@
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "creditLimit",
+                "type": "uint256"
             }
         ],
         "name": "addTrust",
