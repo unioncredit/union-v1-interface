@@ -42,8 +42,8 @@ export default function Home() {
 
       <section className="py-10 sm:py-12 lg:pb-32 relative overflow-hidden">
         <div className="container z-10">
-          <div className="flex">
-            <div className="w-1/2">
+          <div className="flex -mx-4">
+            <div className="w-1/2 px-4">
               <div>
                 <h1 className="text-4xl mb-8">Credit backed by trust</h1>
                 <p className="text-xl leading-tight font-normal mb-10 max-w-md">
@@ -60,7 +60,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 px-4">
               <div
                 className="bg-grey-light"
                 style={{ width: 680, height: 586 }}
@@ -109,8 +109,8 @@ export default function Home() {
 
       <section className="py-10 sm:py-12 md:py-20 lg:pb-24 lg:pt-32">
         <div className="container">
-          <div className="flex">
-            <div className="w-1/2">
+          <div className="flex -mx-4">
+            <div className="w-1/2 px-4">
               <div>
                 <h2 className="text-3xl mb-8">Union key benefits</h2>
                 <p className="text-xl leading-tight font-normal mb-10 max-w-md">
@@ -121,7 +121,7 @@ export default function Home() {
                 <Button>Get started</Button>
               </div>
             </div>
-            <div className="w-1/2 flex justify-end">
+            <div className="w-1/2 px-4 flex justify-end">
               <div className="flex flex-col">
                 <div
                   className="bg-grey-light mb-4"
@@ -143,8 +143,8 @@ export default function Home() {
 
       <section className="py-10 sm:py-12 md:py-20 lg:pt-24 lg:pb-32">
         <div className="container">
-          <div className="flex flex-row-reverse">
-            <div className="w-1/2 flex justify-end">
+          <div className="flex flex-row-reverse -mx-4">
+            <div className="w-1/2 px-4 flex justify-end">
               <div>
                 <h2 className="text-3xl mb-10">Become your own bank</h2>
                 <ol className="max-w-md">
@@ -183,7 +183,7 @@ export default function Home() {
                 </ol>
               </div>
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 px-4">
               <div
                 className="bg-grey-light"
                 style={{ height: 545, width: 525 }}
@@ -196,14 +196,14 @@ export default function Home() {
       <section className="bg-border-light py-10 sm:py-12 md:py-20">
         <div className="container">
           <div className="flex items-center">
-            <div className="w-1/2">
+            <div className="w-1/2 px-4">
               <h2 className="text-3xl mb-8">Your circle of trust</h2>
               <p className="text-xl leading-tight font-normal max-w-md">
                 Union is all about trust. Create your own cirlce of trust where
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
-            <div className="w-1/2 flex justify-end">
+            <div className="w-1/2 px-4 flex justify-end">
               <div
                 className="bg-grey-light"
                 style={{ width: 400, height: 400 }}
@@ -215,14 +215,14 @@ export default function Home() {
 
       <section className="bg-black-pure text-white py-10 sm:py-12 md:py-20 lg:py-32">
         <div className="container">
-          <div className="flex">
-            <div className="w-1/2">
+          <div className="flex -mx-4">
+            <div className="w-1/2 px-4">
               <div
                 className="bg-grey-light"
                 style={{ width: 508, height: 264 }}
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-1/2 px-4">
               <div className="max-w-md">
                 <h2 className="text-3xl mb-4">
                   Check what you can build with Union
@@ -287,14 +287,14 @@ export default function Home() {
 
       <section className="pt-10 sm:pt-12 md:pt-20 lg:pt-32">
         <div className="container">
-          <div className="flex">
-            <div className="w-1/2">
+          <div className="flex -mx-4">
+            <div className="w-1/2 px-4">
               <div>
                 <h2 className="text-3xl mb-10">Learn more about Union</h2>
                 <Button>Read the white paper</Button>
               </div>
             </div>
-            <div className="w-1/2 flex justify-end">
+            <div className="w-1/2 px-4 flex justify-end">
               <div
                 className="bg-grey-light"
                 style={{ width: 330, height: 256 }}
