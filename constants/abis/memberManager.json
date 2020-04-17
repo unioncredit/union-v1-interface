@@ -773,7 +773,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "member",
+                "name": "memberAddress",
                 "type": "address"
             },
             {
@@ -783,7 +783,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "blocks",
+                "name": "lastRepay",
                 "type": "uint256"
             }
         ],
