@@ -9,11 +9,14 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, watch, getValues } = useForm();
 
   const onSubmit = (values) => {
     onRepay(values.amount);
   };
+
+  let value = getValues();
+  watch("amount");
 
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
@@ -47,16 +50,16 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <LabelPair
           className="mt-4 mb-2"
           label="New balance owed"
-          value={0}
+          value={(parseFloat(balanceOwed) - parseFloat(value.amount ? value.amount : 0)).toFixed(4)}
           valueType="DAI"
         />
 
-        <div className="divider" />
+        {/* <div className="divider" />
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">New min payment</dt>
           <dd className="text-right">{`${0} DAI`}</dd>
-        </dl>
+        </dl> */}
 
         <div className="divider" />
 

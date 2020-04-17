@@ -13,6 +13,7 @@ import { getBorrowed } from "@lib/contracts/getBorrowed";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
+import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
 import { repay } from "@lib/contracts/repay";
 import { useWeb3React } from "@web3-react/core";
@@ -36,9 +37,10 @@ export default function Borrow() {
   const [creditLimit, setCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
+  const [fee, setFee] = useState(0);
   const [signer, setSigner] = useState([]);
 
-  const transactions = ["", ""];
+  const transactions = [];
 
   useEffect(() => {
     if (library && account) {
@@ -46,6 +48,7 @@ export default function Borrow() {
       getBorrowedData();
       getInterestData();
       getPaymentDueDate();
+      getOriginationFeeData();
       setSigner(library.getSigner());
     }
   }, [library, account]);
@@ -65,6 +68,16 @@ export default function Borrow() {
       const res = await getCreditLimit(curToken, account, library, chainId);
 
       setCreditLimit(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getOriginationFeeData = async () => {
+    try {
+      const res = await getOriginationFee(curToken, library, chainId);
+
+      setFee(res.toFixed(4));
     } catch (err) {
       console.error(err);
     }
@@ -151,6 +164,7 @@ export default function Borrow() {
                   value={creditLimit}
                   valueType="DAI"
                   large
+                  outline={true}
                 />
 
                 <Button wide tertiary onClick={toggleBorrowModal}>
@@ -229,7 +243,7 @@ export default function Borrow() {
           transactions.map((datum, i) => <Transaction key={i} />)}
       </div>
 
-      <BorrowModal balanceOwed={borrowed} onBorrow={onBorrow} />
+      <BorrowModal balanceOwed={borrowed} creditLimit={creditLimit} paymentDueDate={paymentDueDate} fee={fee} onBorrow={onBorrow} />
       <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </div>
   );
