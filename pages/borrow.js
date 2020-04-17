@@ -17,6 +17,7 @@ import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
 import { repay } from "@lib/contracts/repay";
+import { blockSpeed } from "@constants";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
@@ -131,7 +132,7 @@ export default function Borrow() {
         return;
       }
 
-      const days = (((lastRepay + overdueBlocks - curBlock) * 15) / 86400).toFixed(2);
+      const days = (((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) / 86400).toFixed(2);
 
       setPaymentDueDate(`in ${days} days`);
     } catch (err) {
