@@ -14,7 +14,7 @@ const NavigationLink = ({ href, children, ...rest }) => {
   const isActive = pathname === href ? true : false;
 
   const cachedClassNames = classNames(
-    "p-3 leading-none mx-4 text-lg font-semibold",
+    "p-2 md:p-3 leading-none md:mx-4 text-lg font-semibold",
     {
       "active-nav-tab": isActive,
       "text-type-lightest": !isActive,
@@ -64,6 +64,22 @@ const Navigation = () => {
           <ul className="flex w-1/2 md:w-1/4 justify-end py-4">
             <Web3Status />
           </ul>
+        </ul>
+
+        <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
+          {!isHomepage && (
+            <>
+              <li>
+                <NavigationLink href="/stake">Stake</NavigationLink>
+              </li>
+              <li>
+                <NavigationLink href="/borrow">Borrow</NavigationLink>
+              </li>
+              <li>
+                <NavigationLink href="/vouch">Vouch</NavigationLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 
