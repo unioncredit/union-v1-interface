@@ -41,6 +41,10 @@ h2 {
   }
 }
 
+strong {
+  @apply font-semibold;
+}
+
 table {
   @apply w-full border-none;
 }
