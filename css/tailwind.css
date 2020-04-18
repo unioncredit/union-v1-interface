@@ -149,7 +149,7 @@ table td:not(:first-of-type) {
 }
 
 .container {
-  @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
+  @apply w-full px-6 mx-auto max-w-screen-lg-gutter;
 }
 
 .divider {

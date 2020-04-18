@@ -71,9 +71,9 @@ module.exports = {
         "4xl": "2.5rem",
       },
       maxWidth: {
-        "screen-md-gutter": "calc(912px + 1rem * 2)",
-        "screen-lg-gutter": "calc(1080px + 1rem * 2)",
-        "screen-xl-gutter": "calc(1280px + 1rem * 2)",
+        "screen-md-gutter": "calc(912px + 1.5rem * 2)",
+        "screen-lg-gutter": "calc(1080px + 1.5rem * 2)",
+        "screen-xl-gutter": "calc(1280px + 1.5rem * 2)",
       },
     },
   },
