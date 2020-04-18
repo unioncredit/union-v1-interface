@@ -21,13 +21,15 @@ const LabelPair = ({
   valueType,
   outline = false,
 }) => {
-  const cachedLabelClassNames = classNames("leading-tight", {
+  const cachedLabelClassNames = classNames("leading-tight whitespace-no-wrap", {
     "text-lg mb-2": large,
     "cursor-help": tooltip,
   });
 
   const cachedValueClassNames = classNames(
-    `leading-tight font-semibold text-${outline ? "white" : "black"}-pure`,
+    `leading-tight whitespace-no-wrap font-semibold text-${
+      outline ? "white" : "black"
+    }-pure`,
     `text-${large ? "xl" : "lg"}`,
     `text-${large ? "left" : "right"}`
   );

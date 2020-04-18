@@ -61,7 +61,7 @@ export default function Vouch() {
   const vouchTableData = useMemo(() => vouchData, [vouchData]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-8 md:mt-10">
       <Head>
         <title>Vouch | Union</title>
       </Head>
@@ -77,7 +77,7 @@ export default function Vouch() {
             large
           />
 
-          <div>
+          <div className="hidden md:block">
             <Button invert onClick={toggleCreditRequestModal}>
               Open request for credit
             </Button>
@@ -88,6 +88,15 @@ export default function Vouch() {
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
+
+          <Button
+            full
+            invert
+            onClick={toggleCreditRequestModal}
+            className="mt-6 inline-block md:hidden"
+          >
+            Open request for credit
+          </Button>
         </div>
 
         <VouchTable data={vouchTableData} />

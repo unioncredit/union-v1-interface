@@ -32,7 +32,13 @@
 
 h1,
 h2 {
-  @apply text-2xl font-semibold leading-tight;
+  @apply text-xl font-semibold leading-tight;
+}
+@media (width >= 768px) {
+  h1,
+  h2 {
+    @apply text-2xl;
+  }
 }
 
 table {
@@ -42,7 +48,8 @@ table {
 table thead {
   display: none;
 }
-@media screen and (min-width: 896px) {
+
+@media (width >= 896px) {
   table thead {
     display: table-header-group;
   }
@@ -183,7 +190,7 @@ table td:not(:first-of-type) {
 [data-reach-dialog-content].fullscreen {
 }
 
-@media (width >= 640px) {
+@media (width >= 768px) {
   [data-reach-dialog-content]:not(.fullscreen) {
     @apply self-start rounded mx-auto;
     margin-top: 12vh;

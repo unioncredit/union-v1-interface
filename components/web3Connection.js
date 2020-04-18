@@ -20,7 +20,7 @@ const Web3Connection = () => {
         <li>
           <Activity />
         </li>
-        <li className="ml-8">
+        <li className="ml-6 md:ml-8">
           <Web3Button onClick={toggleWalletModal} error={Boolean(error)}>
             {Boolean(error) ? (
               error instanceof UnsupportedChainIdError ? (
