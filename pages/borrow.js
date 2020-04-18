@@ -159,8 +159,8 @@ export default function Borrow() {
           <h1>Dashboard</h1>
         </div>
 
-        <div className="flex -mx-3 mb-10">
-          <div className="w-1/2 px-3">
+        <div className="flex flex-col md:flex-row -mx-3 mb-10">
+          <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
             <div className="bg-black-pure border border-black-pure rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
@@ -171,15 +171,25 @@ export default function Borrow() {
                   outline={true}
                 />
 
-                <Button wide tertiary onClick={toggleBorrowModal}>
+                <Button tertiary onClick={toggleBorrowModal}>
                   Borrow
                 </Button>
               </div>
 
-              <LabelPair
-                label="Percent Utilization"
-                tooltip={placeholderTip}
-                value={
+              <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
+                <dt className="leading-tight whitespace-no-wrap cursor-help mb-4 md:mb-0">
+                  <div className="flex items-center" title={placeholderTip}>
+                    <div className="mr-2">Percent Utilization</div>
+                    <span
+                      className="text-sm leading-none"
+                      role="img"
+                      aria-label="Information"
+                    >
+                      ℹ️
+                    </span>
+                  </div>
+                </dt>
+                <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
                       {getPercentUtilized(borrowed, creditLimit).toLocaleString(
@@ -195,8 +205,8 @@ export default function Borrow() {
                       dark
                     />
                   </div>
-                }
-              />
+                </dd>
+              </dl>
 
               <div className="flex justify-between py-2">
                 <Link href="/vouch">
@@ -208,7 +218,7 @@ export default function Borrow() {
               </div>
             </div>
           </div>
-          <div className="w-1/2 px-3">
+          <div className="w-full md:w-1/2 px-3">
             <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
@@ -218,12 +228,11 @@ export default function Borrow() {
                   large
                 />
 
-                <Button wide onClick={toggleRepayModal}>
-                  Repay
-                </Button>
+                <Button onClick={toggleRepayModal}>Repay</Button>
               </div>
 
               <LabelPair
+                className="text-type-light"
                 tooltip={placeholderTip}
                 label="Minimum Payment Due"
                 valueType="DAI"
@@ -231,6 +240,7 @@ export default function Borrow() {
               />
 
               <LabelPair
+                className="text-type-light"
                 label="Payment Due Date"
                 tooltip={placeholderTip}
                 value={paymentDueDate}
