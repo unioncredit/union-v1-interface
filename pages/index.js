@@ -237,7 +237,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-10 sm:py-12 md:py-20">
+      {/* <section className="py-10 sm:py-12 md:py-20">
         <div className="container">
           <h2 className="text-3xl mb-20 text-center">Union member stats</h2>
           <ul className="flex justify-center">
@@ -283,18 +283,22 @@ export default function Home() {
 
       <div className="container">
         <div className="divider"></div>
-      </div>
+      </div> */}
 
-      <section className="pt-10 sm:pt-12 md:pt-20 lg:pt-32">
+      <section className="pt-10 pb-4 md:pb-12 sm:pt-12 md:pt-20 lg:pt-32">
         <div className="container">
-          <div className="flex -mx-4">
-            <div className="w-1/2 px-4">
+          <div className="flex flex-col md:flex-row -mx-4">
+            <div className="w-full md:w-1/2 px-4 mb-12 md:mb-0">
               <div>
-                <h2 className="text-3xl mb-10">Learn more about Union</h2>
-                <Button>Read the white paper</Button>
+                <h2 className="text-2xl md:text-3xl mb-6 md:mb-10">
+                  Learn more about Union
+                </h2>
+                <Button className="btn-full-mobile">
+                  Read the white paper
+                </Button>
               </div>
             </div>
-            <div className="w-1/2 px-4 flex justify-end">
+            <div className="w-full md:w-1/2 px-4 flex justify-center md:justify-end">
               <div
                 className="bg-grey-light"
                 style={{ width: 330, height: 256 }}
