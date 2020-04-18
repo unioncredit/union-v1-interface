@@ -11,18 +11,21 @@ import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
+import { getRemainingCreditLimit } from "@lib/contracts/getRemainingCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
+import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
 import { repay } from "@lib/contracts/repay";
+import { blockSpeed } from "@constants";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
-const getPercentUtilized = (borrowed, creditLimit) =>
-  creditLimit > 0 ? (borrowed / creditLimit) : 0;
+const getPercentUtilized = (availableCreditLimit, creditLimit) =>
+  creditLimit > 0 ? ((creditLimit - availableCreditLimit) / creditLimit) : 0;
 
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
@@ -34,18 +37,22 @@ export default function Borrow() {
 
   const [borrowed, setBorrowed] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
+  const [availableCreditLimit, setAvailableCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
+  const [fee, setFee] = useState(0);
   const [signer, setSigner] = useState([]);
 
-  const transactions = ["", ""];
+  const transactions = [];
 
   useEffect(() => {
     if (library && account) {
       getCreditData();
+      getAvailableCreditData();
       getBorrowedData();
       getInterestData();
       getPaymentDueDate();
+      getOriginationFeeData();
       setSigner(library.getSigner());
     }
   }, [library, account]);
@@ -65,6 +72,26 @@ export default function Borrow() {
       const res = await getCreditLimit(curToken, account, library, chainId);
 
       setCreditLimit(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getAvailableCreditData = async () => {
+    try {
+      const res = await getRemainingCreditLimit(curToken, account, library, chainId);
+
+      setAvailableCreditLimit(res.toFixed(4));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getOriginationFeeData = async () => {
+    try {
+      const res = await getOriginationFee(curToken, library, chainId);
+
+      setFee(res.toFixed(4));
     } catch (err) {
       console.error(err);
     }
@@ -105,7 +132,7 @@ export default function Borrow() {
         return;
       }
 
-      const days = (((lastRepay + overdueBlocks - curBlock) * 15) / 86400).toFixed(2);
+      const days = (((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) / 86400).toFixed(2);
 
       setPaymentDueDate(`in ${days} days`);
     } catch (err) {
@@ -148,9 +175,10 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={creditLimit}
+                  value={availableCreditLimit}
                   valueType="DAI"
                   large
+                  outline={true}
                 />
 
                 <Button wide tertiary onClick={toggleBorrowModal}>
@@ -164,16 +192,16 @@ export default function Borrow() {
                 value={
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {getPercentUtilized(borrowed, creditLimit).toLocaleString(
+                      {getPercentUtilized(availableCreditLimit, creditLimit).toLocaleString(
                         undefined,
                         {
                           style: "percent",
-                          maximumFractionDigits: 0,
+                          maximumFractionDigits: 2,
                         }
                       )}
                     </p>
                     <HealthBar
-                      health={getPercentUtilized(borrowed, creditLimit)}
+                      health={getPercentUtilized(availableCreditLimit, creditLimit)}
                       dark
                     />
                   </div>
@@ -229,7 +257,7 @@ export default function Borrow() {
           transactions.map((datum, i) => <Transaction key={i} />)}
       </div>
 
-      <BorrowModal balanceOwed={borrowed} onBorrow={onBorrow} />
+      <BorrowModal balanceOwed={borrowed} creditLimit={creditLimit} paymentDueDate={paymentDueDate} fee={fee} onBorrow={onBorrow} />
       <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </div>
   );

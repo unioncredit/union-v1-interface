@@ -37,6 +37,11 @@ export const STAKING_MAMAGER_ADDRESSES = {
 
 export const SCALE = 10 ** 18;
 
+export const blockSpeed = {
+  1: 12,
+  42: 4,
+}
+
 export const TOKENS = {
   42: {
     DAI: "0x986671E78cF5991e248E17aa02948F1f22E9B0Df",

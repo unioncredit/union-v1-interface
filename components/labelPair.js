@@ -19,6 +19,7 @@ const LabelPair = ({
   value,
   large = false,
   valueType,
+  outline = false,
 }) => {
   const cachedLabelClassNames = classNames("leading-tight", {
     "text-lg mb-2": large,
@@ -26,7 +27,7 @@ const LabelPair = ({
   });
 
   const cachedValueClassNames = classNames(
-    "leading-tight font-semibold text-black-pure",
+    `leading-tight font-semibold text-${outline ? "white" : "black"}-pure`,
     `text-${large ? "xl" : "lg"}`,
     `text-${large ? "left" : "right"}`
   );
@@ -50,8 +51,8 @@ const LabelPair = ({
             </span>
           </div>
         ) : (
-          label
-        )}
+            label
+          )}
       </dt>
       <dd className={cachedValueClassNames}>
         {Boolean(valueType) ? `${value} ${valueType}` : value}

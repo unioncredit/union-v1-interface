@@ -102,7 +102,7 @@ const StakeCard = () => {
         chainId
       );
 
-      setRewardsMultiplier(res);
+      setRewardsMultiplier(res.toFixed(4));
     } catch (err) {
       console.error(err);
     }
