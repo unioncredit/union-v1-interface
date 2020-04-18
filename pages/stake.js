@@ -55,7 +55,7 @@ export default function Stake() {
   };
 
   return (
-    <div className="mt-8 md:mt-10">
+    <div className="my-8 md:my-10">
       <Head>
         <title>Stake | Union</title>
       </Head>

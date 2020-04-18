@@ -147,7 +147,7 @@ export default function Borrow() {
   };
 
   return (
-    <div className="mt-8 md:mt-10">
+    <div className="my-8 md:my-10">
       <Head>
         <title>Borrow | Union</title>
       </Head>
