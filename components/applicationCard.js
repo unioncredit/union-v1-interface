@@ -73,7 +73,7 @@ const ApplicationCard = () => {
         <div
           className={classNames(
             "absolute bg-pink-2-pure h-full",
-            trustCount === 3 ? "w-full" : `w-${trustCount}/3`
+            `w-${trustCount >= 3 ? "full" : `${trustCount}/3`}`
           )}
         ></div>
       </div>
