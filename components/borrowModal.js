@@ -5,7 +5,13 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const BorrowModal = ({ balanceOwed, creditLimit, paymentDueDate, fee, onBorrow }) => {
+const BorrowModal = ({
+  balanceOwed,
+  creditLimit,
+  paymentDueDate,
+  fee,
+  onBorrow,
+}) => {
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
 
@@ -50,7 +56,10 @@ const BorrowModal = ({ balanceOwed, creditLimit, paymentDueDate, fee, onBorrow }
         <LabelPair
           className="mt-4"
           label="New balance owed"
-          value={(parseFloat(balanceOwed) + parseFloat(value.amount ? value.amount : 0)).toFixed(4)}
+          value={(
+            parseFloat(balanceOwed) +
+            parseFloat(value.amount ? value.amount : 0)
+          ).toFixed(4)}
           valueType="DAI"
         />
 
@@ -58,14 +67,24 @@ const BorrowModal = ({ balanceOwed, creditLimit, paymentDueDate, fee, onBorrow }
           <span role="img" aria-label="Information">
             ℹ️
           </span>{" "}
-          <span className="underline">Includes fee of {(parseFloat(value.amount ? value.amount : 0) * parseFloat(fee)).toFixed(4)} DAI</span>
+          <span className="underline">
+            Includes fee of{" "}
+            {(
+              parseFloat(value.amount ? value.amount : 0) * parseFloat(fee)
+            ).toFixed(4)}{" "}
+            DAI
+          </span>
         </div>
 
         <div className="divider" />
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">New available credit</dt>
-          <dd className="text-right">{`${(parseFloat(creditLimit) - parseFloat(balanceOwed) - parseFloat(value.amount ? value.amount : 0)).toFixed(4)} DAI`}</dd>
+          <dd className="text-right">{`${(
+            parseFloat(creditLimit) -
+            parseFloat(balanceOwed) -
+            parseFloat(value.amount ? value.amount : 0)
+          ).toFixed(4)} DAI`}</dd>
         </dl>
 
         <div className="divider" />

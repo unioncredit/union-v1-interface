@@ -50,7 +50,10 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <LabelPair
           className="mt-4 mb-2"
           label="New balance owed"
-          value={(parseFloat(balanceOwed) - parseFloat(value.amount ? value.amount : 0)).toFixed(4)}
+          value={(
+            parseFloat(balanceOwed) -
+            parseFloat(value.amount ? value.amount : 0)
+          ).toFixed(4)}
           valueType="DAI"
         />
 

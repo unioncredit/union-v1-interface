@@ -51,8 +51,8 @@ const LabelPair = ({
             </span>
           </div>
         ) : (
-            label
-          )}
+          label
+        )}
       </dt>
       <dd className={cachedValueClassNames}>
         {Boolean(valueType) ? `${value} ${valueType}` : value}
