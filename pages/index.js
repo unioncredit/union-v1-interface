@@ -147,9 +147,9 @@ export default function Home() {
                 </h2>
 
                 <div className="block md:hidden mb-8">
-                  <div
-                    className="bg-grey-light"
-                    style={{ height: 545, width: "100%", maxWidth: 525 }}
+                  <img
+                    src="https://placehold.it/545x525/E0E4EA/E0E4EA"
+                    alt=""
                   />
                 </div>
 
@@ -212,10 +212,7 @@ export default function Home() {
               </p>
             </div>
             <div className="w-full md:w-1/2 px-4 flex justify-end">
-              <div
-                className="bg-grey-light"
-                style={{ width: "100%", maxWidth: 400, height: 400 }}
-              ></div>
+              <img src="https://placehold.it/400x400/E0E4EA/E0E4EA" alt="" />
             </div>
           </div>
         </div>
@@ -236,10 +233,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 px-4">
-              <div
-                className="bg-grey-light"
-                style={{ width: "100%", maxWidth: 508, height: 264 }}
-              />
+              <img src="https://placehold.it/508x264/E0E4EA/E0E4EA" alt="" />
             </div>
           </div>
         </div>
@@ -307,10 +301,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 px-4 flex justify-center md:justify-end">
-              <div
-                className="bg-grey-light"
-                style={{ width: "100%", maxWidth: 330, height: 256 }}
-              />
+              <img src="https://placehold.it/330x256/E0E4EA/E0E4EA" alt="" />
             </div>
           </div>
         </div>
