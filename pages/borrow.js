@@ -11,7 +11,6 @@ import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
-import { getRemainingCreditLimit } from "@lib/contracts/getRemainingCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
@@ -24,8 +23,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
-const getPercentUtilized = (availableCreditLimit, creditLimit) =>
-  creditLimit > 0 ? ((creditLimit - availableCreditLimit) / creditLimit) : 0;
+const getPercentUtilized = (borrowed, creditLimit) =>
+  creditLimit > 0 ? (borrowed / creditLimit) : 0;
 
 export default function Borrow() {
   const { account, library, chainId } = useWeb3React();
@@ -37,7 +36,6 @@ export default function Borrow() {
 
   const [borrowed, setBorrowed] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
-  const [availableCreditLimit, setAvailableCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
   const [fee, setFee] = useState(0);
@@ -48,7 +46,6 @@ export default function Borrow() {
   useEffect(() => {
     if (library && account) {
       getCreditData();
-      getAvailableCreditData();
       getBorrowedData();
       getInterestData();
       getPaymentDueDate();
@@ -72,16 +69,6 @@ export default function Borrow() {
       const res = await getCreditLimit(curToken, account, library, chainId);
 
       setCreditLimit(res.toFixed(4));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getAvailableCreditData = async () => {
-    try {
-      const res = await getRemainingCreditLimit(curToken, account, library, chainId);
-
-      setAvailableCreditLimit(res.toFixed(4));
     } catch (err) {
       console.error(err);
     }
@@ -175,7 +162,7 @@ export default function Borrow() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={availableCreditLimit}
+                  value={creditLimit}
                   valueType="DAI"
                   large
                   outline={true}
@@ -192,16 +179,16 @@ export default function Borrow() {
                 value={
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {getPercentUtilized(availableCreditLimit, creditLimit).toLocaleString(
+                      {getPercentUtilized(borrowed, creditLimit).toLocaleString(
                         undefined,
                         {
                           style: "percent",
-                          maximumFractionDigits: 2,
+                          maximumFractionDigits: 0,
                         }
                       )}
                     </p>
                     <HealthBar
-                      health={getPercentUtilized(availableCreditLimit, creditLimit)}
+                      health={getPercentUtilized(borrowed, creditLimit)}
                       dark
                     />
                   </div>
