@@ -2,6 +2,7 @@ import Button from "@components/button";
 import { useWalletModalToggle } from "@contexts/Application";
 import Head from "next/head";
 import { Fragment } from "react";
+import Benefits from "@components/benefits";
 
 const JoinCard = () => {
   const toggleWalletModal = useWalletModalToggle();
@@ -40,12 +41,12 @@ export default function Home() {
         <title>Union</title>
       </Head>
 
-      <section className="py-10 sm:py-12 lg:pb-32 relative overflow-hidden">
+      <section className="py-10 sm:py-12 lg:pb-72 relative overflow-hidden">
         <div className="container z-10">
           <div className="flex flex-col md:flex-row -mx-4">
             <div className="w-full md:w-1/2 px-4">
               <div>
-                <h1 className="text-3xl md:text-4xl mb-6 md:mb-8">
+                <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
                   Credit backed by trust
                 </h1>
                 <p className="text-lg md:text-xl leading-tight font-normal mb-6 md:mb-8 max-w-md">
@@ -63,43 +64,42 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            {/* <div className="w-full md:w-1/2 px-4">
-              <div
-                className="bg-grey-light"
-                style={{ width: "100%", maxWidth: 680, height: 586 }}
-              />
+            <div className="w-full md:w-1/2 px-4">
+              <div className="-mb-72">
+                <img src="https://placehold.it/680x586/E0E4EA/E0E4EA" alt="" />
 
-              <div className="mt-16">
-                <p className="font-semibold text-type-light mb-6">
-                  Trusted by industry lead companies
-                </p>
+                <div className="md:ml-16 mt-16">
+                  <p className="font-semibold text-type-light mb-6">
+                    Trusted by industry lead companies
+                  </p>
 
-                <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
-                  <div className="pb-4 pr-8 md:pr-16">
-                    <div
-                      className="bg-grey-light"
-                      style={{ width: "100%", maxWidth: 70, height: 35 }}
-                    />
-                  </div>
-                  <div className="pb-4 pr-8 md:pr-16">
-                    <div
-                      className="bg-grey-light"
-                      style={{ width: "100%", maxWidth: 70, height: 35 }}
-                    />
-                  </div>
-                  <div className="pb-4 pr-8 md:pr-16">
-                    <div
-                      className="bg-grey-light"
-                      style={{ width: "100%", maxWidth: 70, height: 35 }}
-                    />
+                  <div className="flex flex-wrap h-10 items-center -mb-4 -mr-8 md:-mr-16">
+                    <div className="pb-4 pr-8 md:pr-16">
+                      <img
+                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
+                        alt=""
+                      />
+                    </div>
+                    <div className="pb-4 pr-8 md:pr-16">
+                      <img
+                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
+                        alt=""
+                      />
+                    </div>
+                    <div className="pb-4 pr-8 md:pr-16">
+                      <img
+                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
+                        alt=""
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
 
-        {/* <div
+        <div
           className="bg-pink-light absolute bottom-0 left-0 w-full"
           style={{
             height: 420,
@@ -107,7 +107,7 @@ export default function Home() {
             transform: "skew(0, -4.76deg) translateY(calc(50vw / 12))",
             minHeight: 420,
           }}
-        /> */}
+        />
       </section>
 
       <section className="py-10 sm:py-12 md:py-20 lg:pb-24 lg:pt-32">
@@ -127,7 +127,7 @@ export default function Home() {
               </div>
             </div>
             <div className="w-full md:w-1/2 px-4 flex md:justify-end">
-              <div></div>
+              <Benefits />
             </div>
           </div>
         </div>
