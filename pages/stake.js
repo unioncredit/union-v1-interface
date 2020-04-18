@@ -55,35 +55,33 @@ export default function Stake() {
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-8 md:mt-10">
       <Head>
         <title>Stake | Union</title>
       </Head>
 
       <div className="container">
-        <div className="flex -mx-2 mb-4">
-          <div className="w-5/12 px-2">
-            <h1 className="leading-loose">Stake</h1>
-          </div>
-
-          <div className="w-7/12 px-2">
-            <div className="flex justify-between items-center">
-              <h2 className="leading-loose">Addresses You Trust</h2>
-
-              <Button invert onClick={toggleTrustModal}>
-                Trust a new member
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex -mx-2">
-          <div className="w-5/12 px-2">
+        <div className="flex flex-col md:flex-row -mx-2">
+          <div className="w-full md:w-5/12 px-2 mb-12 md:mb-0">
+            <h1 className="hidden md:block mb-4 h-12">Stake</h1>
             <StakeCard />
           </div>
 
-          <div className="w-7/12 px-2">
-            <StakeTable />
+          <div className="w-full md:w-7/12 px-2">
+            <div className="flex flex-col h-full">
+              <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 md:mb-4">
+                <h2 className="mb-4 md:mb-0 text-xl md:text-2xl">
+                  Addresses You Trust
+                </h2>
+
+                <Button invert onClick={toggleTrustModal}>
+                  Trust a new member
+                </Button>
+              </div>
+              <div className="flex-1">
+                <StakeTable />
+              </div>
+            </div>
           </div>
         </div>
       </div>

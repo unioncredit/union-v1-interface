@@ -60,6 +60,12 @@ module.exports = {
       ],
     },
     extend: {
+      screens: {
+        sm: "768px",
+        md: "896px",
+        lg: "1280px",
+        xl: "1440px",
+      },
       fontSize: {
         "3xl": "2rem",
         "4xl": "2.5rem",
