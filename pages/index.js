@@ -57,9 +57,9 @@ export default function Home() {
                 <Button className="btn-full-mobile">Get started</Button>
 
                 <div className="mt-12">
-                  <div
-                    className="bg-grey-light"
-                    style={{ width: "100%", maxWidth: 280, height: 130 }}
+                  <img
+                    src="https://placehold.it/280x130/E0E4EA/E0E4EA"
+                    alt=""
                   />
                 </div>
               </div>
