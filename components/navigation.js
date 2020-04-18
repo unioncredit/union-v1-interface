@@ -36,8 +36,8 @@ const Navigation = () => {
   return (
     <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
-        <ul className="flex flex-col lg:flex-row items-center">
-          <li className="py-4 w-1/4 h-20 flex items-center justify-start">
+        <ul className="flex items-center">
+          <li className="py-4 w-1/2 md:w-1/4 h-20 flex items-center justify-start">
             <Link href="/">
               <a>
                 <Logo />
@@ -45,7 +45,7 @@ const Navigation = () => {
             </Link>
           </li>
 
-          <ul className="flex flex-1  justify-center items-center py-4 h-20">
+          <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
             {!isHomepage && (
               <>
                 <li>
@@ -61,7 +61,7 @@ const Navigation = () => {
             )}
           </ul>
 
-          <ul className="flex w-1/4 justify-end py-4">
+          <ul className="flex w-1/2 md:w-1/4 justify-end py-4">
             <Web3Status />
           </ul>
         </ul>

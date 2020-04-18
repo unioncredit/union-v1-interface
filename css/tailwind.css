@@ -38,6 +38,16 @@ h2 {
 table {
   @apply w-full border-none;
 }
+
+table thead {
+  display: none;
+}
+@media screen and (min-width: 896px) {
+  table thead {
+    display: table-header-group;
+  }
+}
+
 table th {
   @apply pb-8 pt-4 leading-none border-b text-right select-none font-medium;
 }

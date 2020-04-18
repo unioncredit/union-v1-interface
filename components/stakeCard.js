@@ -133,7 +133,7 @@ const StakeCard = () => {
   };
 
   return (
-    <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6">
+    <div className="bg-pink-light border border-pink-pure rounded p-6">
       <LabelPair
         className="mb-4"
         label="Your total stake"
@@ -165,7 +165,7 @@ const StakeCard = () => {
       />
 
       <LabelPair
-        className="mb-4 mt-12"
+        className="mb-4 mt-16"
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
@@ -195,7 +195,7 @@ const StakeCard = () => {
         valueType="UNION"
       />
 
-      <div className="flex -mx-2 mt-10">
+      <div className="flex -mx-2 mt-12">
         <div className="flex-1 px-2">
           <Button secondary full onClick={toggleDepositModal}>
             Deposit

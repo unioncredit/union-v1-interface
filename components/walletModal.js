@@ -2,7 +2,6 @@ import {
   useWalletModalOpen,
   useWalletModalToggle,
 } from "@contexts/Application";
-import useEagerConnect from "@hooks/useEagerConnect";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
@@ -85,8 +84,6 @@ const WalletModal = () => {
     }
   }, [error]);
 
-  const triedEager = useEagerConnect();
-
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
@@ -102,8 +99,7 @@ const WalletModal = () => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
-                const disabled =
-                  !triedEager || !!activatingConnector || connected || !!error;
+                const disabled = !!activatingConnector || connected || !!error;
 
                 return (
                   <WalletOption
@@ -178,8 +174,7 @@ const WalletModal = () => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
-                const disabled =
-                  !triedEager || !!activatingConnector || connected || !!error;
+                const disabled = !!activatingConnector || connected || !!error;
 
                 return (
                   <WalletOption

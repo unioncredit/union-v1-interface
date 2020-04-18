@@ -46,10 +46,11 @@ const ApplicationCard = () => {
   };
 
   return (
-    <div className="bg-pink-light border border-pink-pure rounded p-4 md:p-6 mb-10">
-      <div className="flex justify-between items-start">
+    <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
+      <div className="flex flex-col md:flex-row justify-between items-start">
         <div>
           <p className="text-lg leading-snug mb-2">Become a member of Union</p>
+
           <p className="text-xl font-normal">
             <strong className="font-semibold">
               {trustCount} out of 3 members
@@ -57,18 +58,18 @@ const ApplicationCard = () => {
             vouched for you
           </p>
         </div>
+
         <Button
+          className="mt-6 md:mt-0"
           onClick={
             trustCount === 3 ? onVerifyMembership : toggleGetInvitedModal
           }
         >
-          {trustCount === 3
-            ? "Verify Membership"
-            : "Ask someone to vouch for you"}
+          {trustCount === 3 ? "Verify Membership" : "Ask for a vouch"}
         </Button>
       </div>
 
-      <div className="my-6 h-5 bg-pink-2-light rounded-full w-1/2 relative overflow-hidden">
+      <div className="mt-6 mb-4 h-5 bg-pink-2-light rounded-full w-full md:w-1/2 relative overflow-hidden">
         <div
           className={classNames(
             "absolute bg-pink-2-pure h-full",
@@ -77,7 +78,7 @@ const ApplicationCard = () => {
         ></div>
       </div>
 
-      <div>
+      <div className="mb-2">
         <span className="cursor-help" title={placeholderTip}>
           <span className="underline">What is vouching?</span>{" "}
           <span
