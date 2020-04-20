@@ -157,8 +157,45 @@ table td:not(:first-of-type) {
 }
 
 .container-sm {
-  max-width: calc(1008px + 2rem * 2);
-  @apply w-full px-8 mx-auto;
+  max-width: calc(1008px + 1.5rem * 2);
+  @apply w-full px-6 mx-auto;
+}
+
+.skew {
+  @apply bg-pink-light absolute bottom-0 left-0 w-full;
+  z-index: -2;
+  transform: skew(0, -5deg) translateY(calc(50vw / 12));
+  height: calc(100vmin - 4rem + 10rem + 8.5rem);
+}
+
+@media (width >= 338px) {
+  .skew {
+    height: calc(100vmin - 4rem + 10rem + 6rem);
+  }
+}
+
+@media (width >= 375px) {
+  .skew {
+    height: calc(100vmin - 4rem + 10rem + 5rem);
+  }
+}
+
+@media (width >= 896px) {
+  .skew {
+    height: 22rem;
+  }
+}
+
+@media (width >= 968px) {
+  .skew {
+    height: 24rem;
+  }
+}
+
+@media (width >= 1048px) {
+  .skew {
+    height: 27rem;
+  }
 }
 
 .divider {
@@ -184,6 +221,12 @@ table td:not(:first-of-type) {
 
 .app {
   max-width: unset;
+}
+
+@media (width <= 768px) {
+  .app {
+    max-width: 100%;
+  }
 }
 
 .shadow-app {

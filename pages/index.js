@@ -44,10 +44,10 @@ export default function Home() {
         <meta name="twitter:title" content="Union" />
       </Head>
 
-      <section className="pt-12 pb-16 relative overflow-hidden">
+      <section className="py-12 md:pb-16 relative overflow-hidden">
         <div className="container-sm z-10">
-          <div className="md:flex md:-mx-8">
-            <div className="w-full md:w-1/2 md:px-8">
+          <div className="md:flex md:-mx-6">
+            <div className="w-full md:w-1/2 md:p-8">
               <div className="w-full">
                 <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
                   Credit backed by trust
@@ -70,10 +70,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 md:px-8">
-              <img className="app shadow-app" src="/images/app.svg" alt="" />
+            <div className="w-full md:w-1/2 md:p-8">
+              <div className="ml-8 pt-20 md:pt-0 md:ml-0 -mr-8">
+                <img className="app shadow-app" src="/images/app.svg" alt="" />
+              </div>
 
-              <div className="ml-10 md:ml-16 mt-16">
+              <div className="ml-8 md:ml-16 mt-8 md:mt-16">
                 <p className="text-type-light mb-6">
                   Trusted by industry lead companies
                 </p>
@@ -90,30 +92,16 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
-            {/* <div className="w-full md:w-1/2 md:px-8">
-              <div className="-mb-72">
-                <img src="https://placehold.it/680x586/E0E4EA/E0E4EA" alt="" />
-
-                
-              </div>
-            </div> */}
           </div>
         </div>
 
-        <div
-          className="bg-pink-light absolute bottom-0 left-0 w-full h-80"
-          style={{
-            zIndex: -2,
-            transform: "skew(0, -4.76deg) translateY(calc(50vw / 12))",
-          }}
-        />
+        <div className="skew" />
       </section>
 
       <section className="pt-16 pb-0 pt-16 md:py-20 lg:pb-20 lg:pt-40">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row md:-mx-8">
-            <div className="w-full md:w-1/2 md:px-8 mb-12 md:mb-0">
+          <div className="flex flex-col md:flex-row md:-mx-6">
+            <div className="w-full md:w-1/2 md:p-8 mb-12 md:mb-0">
               <div className="w-full">
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-8 md:mt-16">
                   Union key benefits
@@ -128,7 +116,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 md:px-8 flex md:justify-end">
+            <div className="w-full md:w-1/2 md:p-8 flex md:justify-end">
               <Benefits />
             </div>
           </div>
@@ -141,8 +129,8 @@ export default function Home() {
 
       <section className="py-12 md:py-20 lg:pt-24 lg:pb-32">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row-reverse md:-mx-8">
-            <div className="w-full md:w-1/2 md:px-8 flex md:justify-end">
+          <div className="flex flex-col md:flex-row-reverse md:-mx-6">
+            <div className="w-full md:w-1/2 md:p-8 flex md:justify-end">
               <div className="w-full">
                 <h2 className="text-2xl md:text-3xl mb-8 md:my-10">
                   Become your own bank
@@ -152,7 +140,7 @@ export default function Home() {
                   <img
                     src="/images/become-your-own-bank.svg"
                     alt="Become your own bank"
-                    className="-mb-6"
+                    className="-mb-6 -ml-4"
                   />
                 </div>
 
@@ -192,11 +180,11 @@ export default function Home() {
                 </ol>
               </div>
             </div>
-            <div className="w-full md:w-1/2 md:px-8 hidden md:block">
+            <div className="w-full md:w-1/2 md:p-8 hidden md:block">
               <img
                 src="/images/become-your-own-bank.svg"
                 alt="Become your own bank"
-                className="-mb-10"
+                className="-mb-10 -ml-6"
               />
             </div>
           </div>
@@ -205,8 +193,8 @@ export default function Home() {
 
       <section className="bg-border-light pt-8 pb-10 sm:pt-12 sm:pb-16 md:pt-24 md:pb-32">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row md:items-center md:-mx-8">
-            <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
+          <div className="flex flex-col md:flex-row md:items-center md:-mx-6">
+            <div className="w-full md:w-1/2 md:p-8 mb-8 md:mb-0">
               <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
                 Your circle of trust
               </h2>
@@ -215,7 +203,7 @@ export default function Home() {
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
-            <div className="w-full md:w-1/2 md:px-8 flex justify-center md:justify-end">
+            <div className="w-full md:w-1/2 md:p-8 flex justify-center md:justify-end">
               <img
                 src="/images/circle-of-trust.svg"
                 alt="Your circle of trust"
@@ -227,8 +215,8 @@ export default function Home() {
 
       <section className="bg-black-pure text-white py-8 sm:py-12 md:py-20 lg:py-32">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row-reverse md:-mx-8">
-            <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
+          <div className="flex flex-col md:flex-row-reverse md:-mx-6">
+            <div className="w-full md:w-1/2 md:p-8 mb-8 md:mb-0">
               <div className="max-w-md">
                 <h2 className="text-2xl md:text-3xl mb-6 md:my-4 ">
                   Check what you can build with Union
@@ -241,7 +229,7 @@ export default function Home() {
                 </Button> */}
               </div>
             </div>
-            <div className="w-full md:w-1/2 md:px-8">
+            <div className="w-full md:w-1/2 md:p-8">
               <Snippet />
             </div>
           </div>
@@ -298,8 +286,8 @@ export default function Home() {
 
       <section className="pt-10 pb-4 sm:pb-10 sm:pt-20 lg:pt-32">
         <div className="container-sm">
-          <div className="flex flex-col sm:flex-row sm:-mx-8">
-            <div className="w-full sm:w-1/2 sm:px-8 mb-12 sm:mb-0">
+          <div className="flex flex-col sm:flex-row sm:-mx-6">
+            <div className="w-full sm:w-1/2 sm:p-8 mb-12 sm:mb-0">
               <div className="w-full">
                 {/* <h2 className="text-2xl sm:text-3xl mb-6 sm:mb-10">
                   Learn more about Union
@@ -309,7 +297,7 @@ export default function Home() {
                 </Button> */}
               </div>
             </div>
-            <div className="w-full sm:w-1/2 sm:px-8 flex justify-end">
+            <div className="w-full sm:w-1/2 sm:p-8 flex justify-end">
               <img
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"
