@@ -10,7 +10,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en" className="font-medium antialiased text-type-base">
         <Head>
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/favicon.png" />
           <link
             rel="preload"
             href="/Montserrat-400.woff2"
@@ -33,6 +33,12 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
           />
           <meta property="og:type" content="website" />
+          <meta
+            name="twitter:image"
+            content="https://union.finance/og-image.png"
+          />
+          <meta name="og:image" content="https://union.finance/og-image.png" />
+          <meta name="twitter:site" content="@unionprotocol" />
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:creator" content="@unionprotocol" />
           <meta name="description" content={META_TAGS.DESCRIPTION} />
