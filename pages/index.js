@@ -1,8 +1,9 @@
+import Benefits from "@components/benefits";
 import Button from "@components/button";
+import Snippet from "@components/snippet";
 import { useWalletModalToggle } from "@contexts/Application";
 import Head from "next/head";
 import { Fragment } from "react";
-import Benefits from "@components/benefits";
 
 const JoinCard = () => {
   const toggleWalletModal = useWalletModalToggle();
@@ -45,8 +46,8 @@ export default function Home() {
 
       <section className="py-12 md:pb-72 relative overflow-hidden">
         <div className="container-sm z-10">
-          <div className="flex flex-col md:flex-row -mx-8">
-            <div className="w-full md:w-1/2 px-8">
+          <div className="flex flex-col md:flex-row md:-mx-8">
+            <div className="w-full md:w-1/2 md:px-8">
               <div>
                 <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
                   Credit backed by trust
@@ -69,7 +70,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 px-8">
+            <div className="w-full md:w-1/2 md:px-8">
               <div className="ml-10 md:ml-16 mt-16">
                 <p className="text-type-light mb-6">
                   Trusted by industry lead companies
@@ -88,7 +89,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* <div className="w-full md:w-1/2 px-8">
+            {/* <div className="w-full md:w-1/2 md:px-8">
               <div className="-mb-72">
                 <img src="https://placehold.it/680x586/E0E4EA/E0E4EA" alt="" />
 
@@ -107,10 +108,10 @@ export default function Home() {
         />
       </section>
 
-      <section className="pt-16 pb-0 sm:py-16 md:py-20 lg:pb-20 lg:pt-40">
+      <section className="pt-16 pb-0 pt-16 md:py-20 lg:pb-20 lg:pt-40">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row -mx-8">
-            <div className="w-full md:w-1/2 px-8 mb-12 md:mb-0">
+          <div className="flex flex-col md:flex-row md:-mx-8">
+            <div className="w-full md:w-1/2 md:px-8 mb-12 md:mb-0">
               <div>
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
                   Union key benefits
@@ -125,7 +126,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-8 flex md:justify-end">
+            <div className="w-full md:w-1/2 md:px-8 flex md:justify-end">
               <Benefits />
             </div>
           </div>
@@ -138,14 +139,14 @@ export default function Home() {
 
       <section className="py-12 md:py-20 lg:pt-24 lg:pb-32">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row-reverse -mx-8">
-            <div className="w-full md:w-1/2 px-8 flex justify-end">
-              <div>
+          <div className="flex flex-col md:flex-row-reverse md:-mx-8">
+            <div className="w-full md:w-1/2 md:px-8 flex md:justify-end">
+              <div className="w-full">
                 <h2 className="text-2xl md:text-3xl mb-8 md:mb-10">
                   Become your own bank
                 </h2>
 
-                <div className="block md:hidden pb-8">
+                <div className="flex justify-center md:hidden pb-8">
                   <img
                     src="/images/become-your-own-bank.svg"
                     alt="Become your own bank"
@@ -153,7 +154,7 @@ export default function Home() {
                   />
                 </div>
 
-                <ol className="max-w-md">
+                <ol className="md:max-w-md">
                   <li className="pb-4 md:pb-6">
                     <div className="rounded p-6 bg-white shadow-card leading-tight flex items-center">
                       <div className="mr-4 h-10 w-10 rounded-full bg-pink-2-light text-xl font-semibold leading-10 text-center">
@@ -189,7 +190,7 @@ export default function Home() {
                 </ol>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-8 hidden md:block">
+            <div className="w-full md:w-1/2 md:px-8 hidden md:block">
               <img
                 src="/images/become-your-own-bank.svg"
                 alt="Become your own bank"
@@ -202,8 +203,8 @@ export default function Home() {
 
       <section className="bg-border-light py-8 sm:py-12 md:py-24">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row md:items-center -mx-8">
-            <div className="w-full md:w-1/2 px-8 mb-8 md:mb-0">
+          <div className="flex flex-col md:flex-row md:items-center md:-mx-8">
+            <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
               <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
                 Your circle of trust
               </h2>
@@ -212,7 +213,7 @@ export default function Home() {
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
-            <div className="w-full md:w-1/2 px-8 flex justify-end">
+            <div className="w-full md:w-1/2 md:px-8 flex justify-center md:justify-end">
               <img
                 src="/images/circle-of-trust.svg"
                 alt="Your circle of trust"
@@ -224,8 +225,8 @@ export default function Home() {
 
       <section className="bg-black-pure text-white py-8 sm:py-12 md:py-20 lg:py-32">
         <div className="container-sm">
-          <div className="flex flex-col md:flex-row-reverse -mx-8">
-            <div className="w-full md:w-1/2 px-8 mb-8 md:mb-0">
+          <div className="flex flex-col md:flex-row-reverse md:-mx-8">
+            <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
               <div className="max-w-md">
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-4">
                   Check what you can build with Union
@@ -238,8 +239,8 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-8">
-              <img src="https://placehold.it/508x264/E0E4EA/E0E4EA" alt="" />
+            <div className="w-full md:w-1/2 md:px-8">
+              <Snippet />
             </div>
           </div>
         </div>
@@ -295,8 +296,8 @@ export default function Home() {
 
       <section className="pt-10 pb-4 sm:pb-10 sm:pt-20 lg:pt-32">
         <div className="container-sm">
-          <div className="flex flex-col sm:flex-row -mx-8">
-            <div className="w-full sm:w-1/2 px-8 mb-12 sm:mb-0">
+          <div className="flex flex-col sm:flex-row sm:-mx-8">
+            <div className="w-full sm:w-1/2 sm:px-8 mb-12 sm:mb-0">
               <div>
                 <h2 className="text-2xl sm:text-3xl mb-6 sm:mb-10">
                   Learn more about Union
@@ -306,7 +307,7 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-            <div className="w-full sm:w-1/2 px-8 flex justify-end">
+            <div className="w-full sm:w-1/2 sm:px-8 flex justify-end">
               <img
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"
