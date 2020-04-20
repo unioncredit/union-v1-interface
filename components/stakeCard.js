@@ -184,7 +184,6 @@ const StakeCard = () => {
         label="UNION Per Year (est.)"
         tooltip={placeholderTip}
         value={upy}
-        valueType="UNION"
       />
 
       <LabelPair
@@ -192,7 +191,6 @@ const StakeCard = () => {
         label="UNION Balance"
         tooltip={placeholderTip}
         value={unionBalance}
-        valueType="UNION"
       />
 
       <div className="flex -mx-2 mt-12">
