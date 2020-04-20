@@ -41,10 +41,10 @@ export default function Home() {
         <title>Union</title>
       </Head>
 
-      <section className="py-10 sm:py-12 lg:pb-72 relative overflow-hidden">
-        <div className="container z-10">
-          <div className="flex flex-col md:flex-row -mx-4">
-            <div className="w-full md:w-1/2 px-4">
+      <section className="py-12 md:pb-72 relative overflow-hidden">
+        <div className="container-sm z-10">
+          <div className="flex flex-col md:flex-row -mx-8">
+            <div className="w-full md:w-1/2 px-8">
               <div>
                 <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
                   Credit backed by trust
@@ -58,105 +58,103 @@ export default function Home() {
 
                 <div className="mt-12">
                   <img
-                    src="https://placehold.it/280x130/E0E4EA/E0E4EA"
-                    alt=""
+                    src="/images/credit-backed-by-trust.svg"
+                    alt="Credit backed by trust"
+                    className="relative"
+                    style={{ zIndex: -2 }}
                   />
                 </div>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-4">
-              <div className="-mb-72">
-                <img src="https://placehold.it/680x586/E0E4EA/E0E4EA" alt="" />
 
-                <div className="md:ml-16 mt-16">
-                  <p className="font-semibold text-type-light mb-6">
-                    Trusted by industry lead companies
-                  </p>
-
-                  <div className="flex flex-wrap h-10 items-center -mb-4 -mr-8 md:-mr-16">
-                    <div className="pb-4 pr-8 md:pr-16">
-                      <img
-                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
-                        alt=""
-                      />
-                    </div>
-                    <div className="pb-4 pr-8 md:pr-16">
-                      <img
-                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
-                        alt=""
-                      />
-                    </div>
-                    <div className="pb-4 pr-8 md:pr-16">
-                      <img
-                        src="https://placehold.it/70x35/E0E4EA/E0E4EA"
-                        alt=""
-                      />
-                    </div>
+            <div className="w-full md:w-1/2 px-8">
+              <div className="ml-10 md:ml-16 mt-16">
+                <p className="text-type-light mb-6">
+                  Trusted by industry lead companies
+                </p>
+                <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="/images/1kx.svg" alt="1kx" />
+                  </div>
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="/images/kr1.svg" alt="KR1" />
+                  </div>
+                  <div className="pb-4 pr-8 md:pr-16">
+                    <img src="/images/coinfund.svg" alt="CoinFund" />
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* <div className="w-full md:w-1/2 px-8">
+              <div className="-mb-72">
+                <img src="https://placehold.it/680x586/E0E4EA/E0E4EA" alt="" />
+
+                
+              </div>
+            </div> */}
           </div>
         </div>
 
         <div
-          className="bg-pink-light absolute bottom-0 left-0 w-full"
+          className="bg-pink-light absolute bottom-0 left-0 w-full h-80"
           style={{
-            height: 420,
-            zIndex: -1,
+            zIndex: -2,
             transform: "skew(0, -4.76deg) translateY(calc(50vw / 12))",
-            minHeight: 420,
           }}
         />
       </section>
 
-      <section className="py-10 sm:py-12 md:py-20 lg:pb-24 lg:pt-32">
-        <div className="container">
-          <div className="flex flex-col md:flex-row -mx-4">
-            <div className="w-full md:w-1/2 px-4 mb-12 md:mb-0">
+      <section className="pt-16 pb-0 sm:py-16 md:py-20 lg:pb-20 lg:pt-40">
+        <div className="container-sm">
+          <div className="flex flex-col md:flex-row -mx-8">
+            <div className="w-full md:w-1/2 px-8 mb-12 md:mb-0">
               <div>
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
                   Union key benefits
                 </h2>
-                <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 max-w-md">
+                <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-md">
                   You can join union by yourself and be able to just stake or
                   join with the help of 3 friends vouching for you and enjoy all
                   the benefits of Union
                 </p>
-                <Button className="btn-full-mobile">Get started</Button>
+                <Button className="btn-full-mobile" wide>
+                  Get started
+                </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-4 flex md:justify-end">
+            <div className="w-full md:w-1/2 px-8 flex md:justify-end">
               <Benefits />
             </div>
           </div>
         </div>
       </section>
 
-      <div className="container hidden md:block">
+      <section className="container-sm hidden md:block">
         <div className="divider"></div>
-      </div>
+      </section>
 
       <section className="py-12 md:py-20 lg:pt-24 lg:pb-32">
-        <div className="container">
-          <div className="flex flex-col md:flex-row-reverse -mx-4">
-            <div className="w-full md:w-1/2 px-4 flex justify-end">
+        <div className="container-sm">
+          <div className="flex flex-col md:flex-row-reverse -mx-8">
+            <div className="w-full md:w-1/2 px-8 flex justify-end">
               <div>
                 <h2 className="text-2xl md:text-3xl mb-8 md:mb-10">
                   Become your own bank
                 </h2>
 
-                <div className="block md:hidden mb-8">
+                <div className="block md:hidden pb-8">
                   <img
-                    src="https://placehold.it/545x525/E0E4EA/E0E4EA"
-                    alt=""
+                    src="/images/become-your-own-bank.svg"
+                    alt="Become your own bank"
+                    className="-mb-6"
                   />
                 </div>
 
                 <ol className="max-w-md">
                   <li className="pb-4 md:pb-6">
-                    <div className="rounded p-6 bg-white shadow-lg leading-tight flex items-center">
-                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-pure text-xl font-semibold leading-10 text-center">
+                    <div className="rounded p-6 bg-white shadow-card leading-tight flex items-center">
+                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-2-light text-xl font-semibold leading-10 text-center">
                         1
                       </div>
                       <div className="flex-1">
@@ -166,8 +164,8 @@ export default function Home() {
                     </div>
                   </li>
                   <li className="pb-4 md:pb-6">
-                    <div className="rounded p-6 bg-white shadow-lg leading-tight flex items-center">
-                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-pure text-xl font-semibold leading-10 text-center">
+                    <div className="rounded p-6 bg-white shadow-card leading-tight flex items-center">
+                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-2-light text-xl font-semibold leading-10 text-center">
                         2
                       </div>
                       <div className="flex-1">
@@ -176,8 +174,8 @@ export default function Home() {
                     </div>
                   </li>
                   <li>
-                    <div className="rounded p-6 bg-white shadow-lg leading-tight flex items-center">
-                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-pure text-xl font-semibold leading-10 text-center">
+                    <div className="rounded p-6 bg-white shadow-card leading-tight flex items-center">
+                      <div className="mr-4 h-10 w-10 rounded-full bg-pink-2-light text-xl font-semibold leading-10 text-center">
                         3
                       </div>
                       <div className="flex-1">
@@ -189,20 +187,21 @@ export default function Home() {
                 </ol>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-4 hidden md:block">
-              <div
-                className="bg-grey-light"
-                style={{ height: 545, width: "100%", maxWidth: 525 }}
+            <div className="w-full md:w-1/2 px-8 hidden md:block">
+              <img
+                src="/images/become-your-own-bank.svg"
+                alt="Become your own bank"
+                className="-mb-10"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-border-light py-8 sm:py-12 md:py-20">
-        <div className="container">
-          <div className="flex flex-col md:flex-row md:items-center -mx-4">
-            <div className="w-full md:w-1/2 px-4 mb-8 md:mb-0">
+      <section className="bg-border-light py-8 sm:py-12 md:py-24">
+        <div className="container-sm">
+          <div className="flex flex-col md:flex-row md:items-center -mx-8">
+            <div className="w-full md:w-1/2 px-8 mb-8 md:mb-0">
               <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
                 Your circle of trust
               </h2>
@@ -211,17 +210,20 @@ export default function Home() {
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
-            <div className="w-full md:w-1/2 px-4 flex justify-end">
-              <img src="https://placehold.it/400x400/E0E4EA/E0E4EA" alt="" />
+            <div className="w-full md:w-1/2 px-8 flex justify-end">
+              <img
+                src="/images/circle-of-trust.svg"
+                alt="Your circle of trust"
+              />
             </div>
           </div>
         </div>
       </section>
 
       <section className="bg-black-pure text-white py-8 sm:py-12 md:py-20 lg:py-32">
-        <div className="container">
-          <div className="flex flex-col md:flex-row-reverse -mx-4">
-            <div className="w-full md:w-1/2 px-4 mb-8 md:mb-0">
+        <div className="container-sm">
+          <div className="flex flex-col md:flex-row-reverse -mx-8">
+            <div className="w-full md:w-1/2 px-8 mb-8 md:mb-0">
               <div className="max-w-md">
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-4">
                   Check what you can build with Union
@@ -229,10 +231,12 @@ export default function Home() {
                 <p className="md:text-xl leading-tight font-normal mb-6 md:mb-8">
                   Ability to give your smart contracts credit lines and more.
                 </p>
-                <Button className="btn-full-mobile">Read the docs</Button>
+                <Button className="btn-full-mobile" wide>
+                  Read the docs
+                </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-4">
+            <div className="w-full md:w-1/2 px-8">
               <img src="https://placehold.it/508x264/E0E4EA/E0E4EA" alt="" />
             </div>
           </div>
@@ -240,7 +244,7 @@ export default function Home() {
       </section>
 
       {/* <section className="py-10 sm:py-12 md:py-20">
-        <div className="container">
+        <div className="container-sm">
           <h2 className="text-3xl mb-20 text-center">Union member stats</h2>
           <ul className="flex justify-center">
             <li>
@@ -283,25 +287,29 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="container">
+      <div className="container-sm">
         <div className="divider"></div>
       </div> */}
 
-      <section className="pt-10 pb-4 md:pb-12 sm:pt-12 md:pt-20 lg:pt-32">
-        <div className="container">
-          <div className="flex flex-col md:flex-row -mx-4">
-            <div className="w-full md:w-1/2 px-4 mb-12 md:mb-0">
+      <section className="pt-10 pb-4 sm:pb-10 sm:pt-20 lg:pt-32">
+        <div className="container-sm">
+          <div className="flex flex-col sm:flex-row -mx-8">
+            <div className="w-full sm:w-1/2 px-8 mb-12 sm:mb-0">
               <div>
-                <h2 className="text-2xl md:text-3xl mb-6 md:mb-10">
+                <h2 className="text-2xl sm:text-3xl mb-6 sm:mb-10">
                   Learn more about Union
                 </h2>
-                <Button className="btn-full-mobile">
+                <Button className="btn-full-mobile" wide>
                   Read the white paper
                 </Button>
               </div>
             </div>
-            <div className="w-full md:w-1/2 px-4 flex justify-center md:justify-end">
-              <img src="https://placehold.it/330x256/E0E4EA/E0E4EA" alt="" />
+            <div className="w-full sm:w-1/2 px-8 flex justify-end">
+              <img
+                className="w-56 sm:w-72"
+                src="/images/learn-more.svg"
+                alt="Learn more about Union"
+              />
             </div>
           </div>
         </div>
