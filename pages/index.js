@@ -201,7 +201,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-border-light py-8 sm:py-12 md:py-24">
+      <section className="bg-border-light pt-8 pb-10 sm:pt-12 sm:pb-16 md:pt-24 md:pb-32">
         <div className="container-sm">
           <div className="flex flex-col md:flex-row md:items-center md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
