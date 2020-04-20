@@ -181,7 +181,7 @@ const StakeCard = () => {
 
       <LabelPair
         className="text-grey-pure"
-        label="UNION Per Year (est.)"
+        label="UNION Per Year"
         tooltip={placeholderTip}
         value={upy}
       />
