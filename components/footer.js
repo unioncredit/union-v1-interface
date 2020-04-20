@@ -3,30 +3,30 @@ import GitHub from "svgs/GitHub";
 import Twitter from "svgs/Twitter";
 
 const FOOTER_LINKS = [
+  // {
+  //   href: "",
+  //   label: "White paper",
+  // },
+  // {
+  //   href: "",
+  //   label: "Documentation",
+  // },
+  // {
+  //   href: "",
+  //   label: "Terms of Service",
+  // },
   {
-    href: "",
-    label: "White paper",
-  },
-  {
-    href: "",
-    label: "Documentation",
-  },
-  {
-    href: "",
-    label: "Terms of Service",
-  },
-  {
-    href: "",
+    href: "https://medium.com/union-finance",
     label: "Blog",
   },
-  {
-    href: "",
-    label: "Forum",
-  },
-  {
-    href: "",
-    label: "FAQ",
-  },
+  // {
+  //   href: "",
+  //   label: "Forum",
+  // },
+  // {
+  //   href: "",
+  //   label: "FAQ",
+  // },
 ];
 
 const Footer = () => {
