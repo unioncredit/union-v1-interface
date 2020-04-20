@@ -15,6 +15,8 @@ import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
+import { getBorrowTransactions } from "@lib/contracts/getBorrowTransactions";
+import { getRepayTransactions } from "@lib/contracts/getRepayTransactions";
 import { repay } from "@lib/contracts/repay";
 import { blockSpeed } from "@constants";
 import { useWeb3React } from "@web3-react/core";
@@ -40,8 +42,7 @@ export default function Borrow() {
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
   const [fee, setFee] = useState(0);
   const [signer, setSigner] = useState([]);
-
-  const transactions = [];
+  const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     if (library && account) {
@@ -50,9 +51,27 @@ export default function Borrow() {
       getInterestData();
       getPaymentDueDate();
       getOriginationFeeData();
+      getTransactionsData();
       setSigner(library.getSigner());
     }
   }, [library, account]);
+
+  const getTransactionsData = async () => {
+    const borrowTxs = await getBorrowTransactions(curToken, library.getSigner(), chainId);
+    const repayTxs = await getRepayTransactions(curToken, library.getSigner(), chainId);
+    let txs = [].concat(borrowTxs, repayTxs);
+    txs.sort((x, y) => {
+      if (x.blockNumber > y.blockNumber) {
+        return -1;
+      }
+      if (x.blockNumber < y.blockNumber) {
+        return 1;
+      }
+      return 0;
+    });
+
+    setTransactions(txs);
+  }
 
   const getBorrowedData = async () => {
     try {
@@ -252,9 +271,8 @@ export default function Borrow() {
         <div className="mb-5">
           <h2>Transactions</h2>
         </div>
-
         {transactions.length > 0 &&
-          transactions.map((datum, i) => <Transaction key={i} />)}
+          transactions.map((datum, i) => <Transaction key={i} data={datum} />)}
       </div>
 
       <BorrowModal

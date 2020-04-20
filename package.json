@@ -23,6 +23,7 @@
     "@web3-react/walletconnect-connector": "^6.0.9",
     "bignumber.js": "^9.0.0",
     "classnames": "^2.2.6",
+    "dayjs": "^1.8.24",
     "next": "^9.3.4",
     "nookies": "^2.2.2",
     "prop-types": "^15.7.2",
