@@ -113,7 +113,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8 mb-12 md:mb-0">
               <div>
-                <h2 className="text-2xl md:text-3xl mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl mb-6 md:mb-8 md:mt-16">
                   Union key benefits
                 </h2>
                 <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-md">
@@ -142,7 +142,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row-reverse md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8 flex md:justify-end">
               <div className="w-full">
-                <h2 className="text-2xl md:text-3xl mb-8 md:mb-10">
+                <h2 className="text-2xl md:text-3xl mb-8 md:my-10">
                   Become your own bank
                 </h2>
 
@@ -228,7 +228,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row-reverse md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8 mb-8 md:mb-0">
               <div className="max-w-md">
-                <h2 className="text-2xl md:text-3xl mb-6 md:mb-4">
+                <h2 className="text-2xl md:text-3xl mb-6 md:my-4 ">
                   Check what you can build with Union
                 </h2>
                 <p className="md:text-xl leading-tight font-normal mb-6 md:mb-8">
