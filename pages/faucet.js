@@ -21,6 +21,8 @@ export default function Faucet() {
     <div className="mt-10">
       <Head>
         <title>Faucet | Union</title>
+        <meta property="og:title" content="Faucet | Union" />
+        <meta name="twitter:title" content="Faucet | Union" />
       </Head>
 
       <div className="container text-center">

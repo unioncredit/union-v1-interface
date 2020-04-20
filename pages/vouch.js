@@ -64,6 +64,8 @@ export default function Vouch() {
     <div className="my-8 md:my-10">
       <Head>
         <title>Vouch | Union</title>
+        <meta property="og:title" content="Vouch | Union" />
+        <meta name="twitter:title" content="Vouch | Union" />
       </Head>
 
       <div className="container">

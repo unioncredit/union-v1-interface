@@ -38,7 +38,9 @@ export default function Account() {
   return (
     <div className="mt-10">
       <Head>
-        <title>Union</title>
+        <title>Account | Union</title>
+        <meta property="og:title" content="Account | Union" />
+        <meta name="twitter:title" content="Account | Union" />
       </Head>
 
       <div className="container">

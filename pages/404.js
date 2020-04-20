@@ -5,6 +5,8 @@ export default function Custom404() {
     <div>
       <Head>
         <title>404 | Union</title>
+        <meta property="og:title" content="404 | Union" />
+        <meta name="twitter:title" content="404 | Union" />
       </Head>
 
       <div className="container">

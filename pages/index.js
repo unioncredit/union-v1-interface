@@ -39,6 +39,8 @@ export default function Home() {
     <Fragment>
       <Head>
         <title>Union</title>
+        <meta property="og:title" content="Union" />
+        <meta name="twitter:title" content="Union" />
       </Head>
 
       <section className="py-12 md:pb-72 relative overflow-hidden">

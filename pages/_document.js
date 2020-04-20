@@ -1,5 +1,10 @@
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
+const META_TAGS = {
+  DESCRIPTION:
+    "Credit backed by trust. Union works without the need for collateral, credit score, or revealing personal information on a public ledger.",
+};
+
 class MyDocument extends Document {
   render() {
     return (
@@ -27,6 +32,13 @@ class MyDocument extends Document {
             type="font/woff2"
             crossOrigin="anonymous"
           />
+          <meta property="og:type" content="website" />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:creator" content="@unionprotocol" />
+          <meta name="description" content={META_TAGS.DESCRIPTION} />
+          <meta property="og:description" content={META_TAGS.DESCRIPTION} />
+          <meta name="twitter:description" content={META_TAGS.DESCRIPTION} />
+          <meta name="theme-color" content="#032437" />
         </Head>
         <body>
           <Main />

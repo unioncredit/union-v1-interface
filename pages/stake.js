@@ -58,6 +58,8 @@ export default function Stake() {
     <div className="my-8 md:my-10">
       <Head>
         <title>Stake | Union</title>
+        <meta property="og:title" content="Stake | Union" />
+        <meta name="twitter:title" content="Stake | Union" />
       </Head>
 
       <div className="container">

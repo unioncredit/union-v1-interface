@@ -57,8 +57,16 @@ export default function Borrow() {
   }, [library, account]);
 
   const getTransactionsData = async () => {
-    const borrowTxs = await getBorrowTransactions(curToken, library.getSigner(), chainId);
-    const repayTxs = await getRepayTransactions(curToken, library.getSigner(), chainId);
+    const borrowTxs = await getBorrowTransactions(
+      curToken,
+      library.getSigner(),
+      chainId
+    );
+    const repayTxs = await getRepayTransactions(
+      curToken,
+      library.getSigner(),
+      chainId
+    );
     let txs = [].concat(borrowTxs, repayTxs);
     txs.sort((x, y) => {
       if (x.blockNumber > y.blockNumber) {
@@ -71,7 +79,7 @@ export default function Borrow() {
     });
 
     setTransactions(txs);
-  }
+  };
 
   const getBorrowedData = async () => {
     try {
@@ -169,6 +177,8 @@ export default function Borrow() {
     <div className="my-8 md:my-10">
       <Head>
         <title>Borrow | Union</title>
+        <meta property="og:title" content="Borrow | Union" />
+        <meta name="twitter:title" content="Borrow | Union" />
       </Head>
 
       <div className="container">
