@@ -44,9 +44,9 @@ export default function Home() {
         <meta name="twitter:title" content="Union" />
       </Head>
 
-      <section className="py-12 md:pb-72 relative overflow-hidden">
+      <section className="pt-12 pb-16 relative overflow-hidden">
         <div className="container-sm z-10">
-          <div className="flex flex-col md:flex-row md:-mx-8">
+          <div className="md:flex md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8">
               <div className="w-full">
                 <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
@@ -71,6 +71,8 @@ export default function Home() {
             </div>
 
             <div className="w-full md:w-1/2 md:px-8">
+              <img className="app shadow-app" src="/images/app.svg" alt="" />
+
               <div className="ml-10 md:ml-16 mt-16">
                 <p className="text-type-light mb-6">
                   Trusted by industry lead companies
