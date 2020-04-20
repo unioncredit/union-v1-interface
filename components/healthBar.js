@@ -11,7 +11,7 @@ const HealthBar = ({ health, width = 96, dark }) => {
   const inner = health > 100 ? 100 : health < 0 ? 0 : health;
 
   return (
-    <div className="w-full relative ml-auto">
+    <div className="w-full relative md:ml-auto">
       <span className="block" />
       <style jsx>{`
         div {

@@ -5,14 +5,14 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const WithdrawModal = ({ totalStake }) => {
+const WithdrawModal = ({ totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    onWithdraw(values.amount);
   };
 
   return (
@@ -23,17 +23,17 @@ const WithdrawModal = ({ totalStake }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
-        <LabelPair
-          className="mb-6"
-          label="Current total stake"
-          value={totalStake}
-        />
+        <dl className="flex justify-between py-2 items-center mb-4 leading-tight">
+          <dt>Current total stake</dt>
+          <dd className="text-right">{`${totalStake} DAI`}</dd>
+        </dl>
 
         <Input
           autoFocus
           chip="DAI"
           className="mb-8"
-          id="withdrawAmount"
+          id="amount"
+          name="amount"
           label="Withdraw Amount"
           placeholder="0.00"
           ref={register}
@@ -44,9 +44,10 @@ const WithdrawModal = ({ totalStake }) => {
         <div className="divider" />
 
         <LabelPair
-          className="mb-8 mt-6"
+          className="mb-6 mt-4"
           label="New total stake"
-          value={totalStake}
+          value={0}
+          valueType="DAI"
         />
 
         <Button full type="submit">

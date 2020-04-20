@@ -14,7 +14,7 @@ const jazziconTheme = [
   "#f19e02",
 ];
 
-const Identicon = ({ address, large = false }) => {
+const Identicon = memo(({ address, large = false }) => {
   return (
     <Jazzicon
       color={jazziconTheme}
@@ -22,6 +22,6 @@ const Identicon = ({ address, large = false }) => {
       seed={jsNumberForAddress(address)}
     />
   );
-};
+});
 
-export default memo(Identicon);
+export default Identicon;

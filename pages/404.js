@@ -1,11 +1,12 @@
 import Head from "next/head";
 
-export default function FourOhFour() {
+export default function Custom404() {
   return (
     <div>
       <Head>
         <title>404 | Union</title>
-        <link rel="icon" href="/favicon.ico" />
+        <meta property="og:title" content="404 | Union" />
+        <meta name="twitter:title" content="404 | Union" />
       </Head>
 
       <div className="container">

@@ -1,19 +1,22 @@
 import { useRepayModalOpen, useRepayModalToggle } from "@contexts/Borrow";
-import Modal, { ModalHeader } from "./modal";
 import { useForm } from "react-hook-form";
-import LabelPair from "./labelPair";
-import Input from "./input";
 import Button from "./button";
+import Input from "./input";
+import LabelPair from "./labelPair";
+import Modal, { ModalHeader } from "./modal";
 
-const RepayModal = ({ balanceOwed }) => {
+const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, watch, getValues } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    onRepay(values.amount);
   };
+
+  let value = getValues();
+  watch("amount");
 
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
@@ -21,17 +24,22 @@ const RepayModal = ({ balanceOwed }) => {
       <form
         method="POST"
         onSubmit={handleSubmit(onSubmit)}
-        className="px-4 py-6 sm:px-6 sm:py-8"
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
       >
-        <LabelPair className="mb-10" label="Balance owed" value={balanceOwed} />
+        <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
+          <dt>Balance owed</dt>
+          <dd className="text-right">{`${balanceOwed} DAI`}</dd>
+        </dl>
 
-        <p className="mb-4">How much would you like to repay?</p>
+        <div className="divider" />
+
+        <p className="mt-6 mb-4">How much would you like to borrow?</p>
 
         <Input
           autoFocus
           chip="DAI"
-          className="mb-10"
-          id="repayAmount"
+          id="amount"
+          name="amount"
           label="Amount"
           placeholder="0.00"
           ref={register}
@@ -39,17 +47,30 @@ const RepayModal = ({ balanceOwed }) => {
           type="number"
         />
 
-        <LabelPair className="mb-8" label="New balance owed" value={"-"} />
-
         <LabelPair
-          className="mb-8 text-grey-pure"
-          label="New min payment"
-          value={balanceOwed}
+          className="mt-4 mb-2"
+          label="New balance owed"
+          value={(
+            parseFloat(balanceOwed) -
+            parseFloat(value.amount ? value.amount : 0)
+          ).toFixed(4)}
+          valueType="DAI"
         />
 
-        <Button type="submit" full>
-          Confirm
-        </Button>
+        {/* <div className="divider" />
+
+        <dl className="flex justify-between py-2 items-center my-2 leading-tight">
+          <dt className="text-type-light">New min payment</dt>
+          <dd className="text-right">{`${0} DAI`}</dd>
+        </dl> */}
+
+        <div className="divider" />
+
+        <div className="mt-6">
+          <Button type="submit" full>
+            Confirm
+          </Button>
+        </div>
       </form>
     </Modal>
   );

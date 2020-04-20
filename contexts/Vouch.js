@@ -23,7 +23,9 @@ function reducer(state, { type, payload }) {
       return { ...state, [CREDIT_REQUEST_MODAL]: !state[CREDIT_REQUEST_MODAL] };
     }
     default: {
-      throw Error(`Unexpected action type in VouchContext reducer: '${type}'.`);
+      throw new Error(
+        `Unexpected action type in VouchContext reducer: '${type}'.`
+      );
     }
   }
 }
@@ -33,15 +35,15 @@ export default function Provider({ children }) {
     [CREDIT_REQUEST_MODAL]: false,
   });
 
-  const toggleCreditRequest = useCallback(() => {
+  const toggleCreditRequestModal = useCallback(() => {
     dispatch({ type: TOGGLE_CREDIT_REQUEST_MODAL });
   }, []);
 
   return (
     <VouchContext.Provider
-      value={useMemo(() => [state, { toggleCreditRequest }], [
+      value={useMemo(() => [state, { toggleCreditRequestModal }], [
         state,
-        toggleCreditRequest,
+        toggleCreditRequestModal,
       ])}
     >
       {children}
@@ -58,7 +60,7 @@ export function useCreditRequestModalOpen() {
 }
 
 export function useCreditRequestModalToggle() {
-  const [, { toggleCreditRequest }] = useVouchContext();
+  const [, { toggleCreditRequestModal }] = useVouchContext();
 
-  return toggleCreditRequest;
+  return toggleCreditRequestModal;
 }

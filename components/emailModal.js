@@ -1,8 +1,9 @@
 import { useEmailModalOpen, useEmailModalToggle } from "@contexts/Application";
+import { setCookie } from "nookies";
+import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
 import Modal from "./modal";
-import { useForm } from "react-hook-form";
 
 const EmailModal = () => {
   const open = useEmailModalOpen();
@@ -11,11 +12,23 @@ const EmailModal = () => {
   const { handleSubmit, register } = useForm();
 
   const onSubmit = (values) => {
-    setTimeout(() => console.log(values), 1000);
+    setTimeout(() => {
+      console.log(values);
+      handleToggle();
+    }, 1000);
+  };
+
+  const handleToggle = () => {
+    setCookie(null, "email_modal_completed", true, {
+      maxAge: 30 * 24 * 60 * 60,
+      sameSite: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    toggle();
   };
 
   return (
-    <Modal isOpen={open} onDismiss={toggle}>
+    <Modal isOpen={open} onDismiss={handleToggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <div className="mb-12">
           <p className="text-center text-xl mb-3">Almost there</p>
@@ -44,7 +57,10 @@ const EmailModal = () => {
         </form>
 
         <p className="text-center">
-          <button className="font-medium text-sm underline">
+          <button
+            onClick={handleToggle}
+            className="font-medium text-sm underline"
+          >
             Skip for now
           </button>
         </p>

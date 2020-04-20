@@ -1,3 +1,4 @@
+import { useGetInvitedModalToggle } from "@contexts/Application";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
@@ -46,8 +47,10 @@ const VouchTable = ({
     useSortBy
   );
 
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
+
   return (
-    <div className="bg-white border rounded p-4 md:p-6 mb-10">
+    <div className="bg-white border rounded p-4 sm:p-6 h-full">
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -83,7 +86,7 @@ const VouchTable = ({
                       cellRenderer = (
                         <span>
                           {Number(value).toLocaleString(undefined, {
-                            style: "percentage",
+                            style: "percent",
                             maximumFractionDigits: 2,
                             minimumFractionDigits: 2,
                           })}
@@ -106,12 +109,12 @@ const VouchTable = ({
       </table>
 
       {rows.length === 0 && (
-        <div className="flex items-center flex-col my-16">
+        <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
           <div className="w-24 h-40 bg-border-pure" />
-          <p className="text-xl text-center my-6 max-w-md">
+          <p className="text-lg md:text-xl text-center mt-6  mb-4 md:mb-6 max-w-md">
             You need 3 people to vouch for you
           </p>
-          <Button>Get invited</Button>
+          <Button onClick={toggleGetInvitedModal}>Get invited</Button>
         </div>
       )}
     </div>

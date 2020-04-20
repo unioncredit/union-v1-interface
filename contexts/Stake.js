@@ -15,6 +15,9 @@ const TOGGLE_DEPOSIT_MODAL = "TOGGLE_DEPOSIT_MODAL";
 const WITHDRAW_MODAL_OPEN = "WITHDRAW_MODAL_OPEN";
 const TOGGLE_WITHDRAW_MODAL = "TOGGLE_WITHDRAW_MODAL";
 
+const TUTORIAL_MODAL_OPEN = "TUTORIAL_MODAL_OPEN";
+const TOGGLE_TUTORIAL_MODAL = "TOGGLE_TUTORIAL_MODAL";
+
 const StakeContext = createContext();
 
 StakeContext.displayName = "StakeContext";
@@ -26,10 +29,16 @@ function useStakeContext() {
 function reducer(state, { type, payload }) {
   switch (type) {
     case TOGGLE_TRUST_MODAL: {
-      return { ...state, [TRUST_MODAL_OPEN]: !state[TRUST_MODAL_OPEN] };
+      return {
+        ...state,
+        [TRUST_MODAL_OPEN]: !state[TRUST_MODAL_OPEN],
+      };
     }
     case TOGGLE_DEPOSIT_MODAL: {
-      return { ...state, [DEPOSIT_MODAL_OPEN]: !state[DEPOSIT_MODAL_OPEN] };
+      return {
+        ...state,
+        [DEPOSIT_MODAL_OPEN]: !state[DEPOSIT_MODAL_OPEN],
+      };
     }
     case TOGGLE_WITHDRAW_MODAL: {
       return {
@@ -37,8 +46,16 @@ function reducer(state, { type, payload }) {
         [WITHDRAW_MODAL_OPEN]: !state[WITHDRAW_MODAL_OPEN],
       };
     }
+    case TOGGLE_TUTORIAL_MODAL: {
+      return {
+        ...state,
+        [TUTORIAL_MODAL_OPEN]: !state[TUTORIAL_MODAL_OPEN],
+      };
+    }
     default: {
-      throw Error(`Unexpected action type in StakeContext reducer: '${type}'.`);
+      throw new Error(
+        `Unexpected action type in StakeContext reducer: '${type}'.`
+      );
     }
   }
 }
@@ -48,6 +65,7 @@ export default function Provider({ children }) {
     [TRUST_MODAL_OPEN]: false,
     [DEPOSIT_MODAL_OPEN]: false,
     [WITHDRAW_MODAL_OPEN]: false,
+    [TUTORIAL_MODAL_OPEN]: false,
   });
 
   const toggleTrustModal = useCallback(() => {
@@ -62,14 +80,29 @@ export default function Provider({ children }) {
     dispatch({ type: TOGGLE_WITHDRAW_MODAL });
   }, []);
 
+  const toggleTutorialModal = useCallback(() => {
+    dispatch({ type: TOGGLE_TUTORIAL_MODAL });
+  }, []);
+
   return (
     <StakeContext.Provider
       value={useMemo(
         () => [
           state,
-          { toggleTrustModal, toggleDepositModal, toggleWithdrawModal },
+          {
+            toggleTrustModal,
+            toggleDepositModal,
+            toggleWithdrawModal,
+            toggleTutorialModal,
+          },
         ],
-        [state, toggleTrustModal, toggleDepositModal, toggleWithdrawModal]
+        [
+          state,
+          toggleTrustModal,
+          toggleDepositModal,
+          toggleWithdrawModal,
+          toggleTutorialModal,
+        ]
       )}
     >
       {children}
@@ -113,4 +146,16 @@ export function useWithdrawModalToggle() {
   const [, { toggleWithdrawModal }] = useStakeContext();
 
   return toggleWithdrawModal;
+}
+
+export function useTutorialModalOpen() {
+  const [state] = useStakeContext();
+
+  return state[TUTORIAL_MODAL_OPEN];
+}
+
+export function useTutorialModalToggle() {
+  const [, { toggleTutorialModal }] = useStakeContext();
+
+  return toggleTutorialModal;
 }

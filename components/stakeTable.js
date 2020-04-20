@@ -1,11 +1,36 @@
-import Link from "next/link";
-import { useMemo } from "react";
+import { useGetInvitedModalToggle } from "@contexts/Application";
+import useCurrentToken from "@hooks/useCurrentToken";
+import { getTrust } from "@lib/contracts/getTrust";
+import { useWeb3React } from "@web3-react/core";
+import { useEffect, useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
+import Button from "./button";
 import HealthBar from "./healthBar";
 
-const StakeTable = ({
-  columns = useMemo(
+const StakeTable = () => {
+  const { library, account, chainId } = useWeb3React();
+
+  const curToken = useCurrentToken();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (library && account) {
+      getTrustData();
+    }
+  }, [library, account, chainId]);
+
+  const getTrustData = async () => {
+    try {
+      const res = await getTrust(account, curToken, library, chainId);
+      setData(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const memoizedColumns = useMemo(
     () => [
       {
         Header: "Address",
@@ -25,9 +50,10 @@ const StakeTable = ({
       },
     ],
     []
-  ),
-  data,
-}) => {
+  );
+
+  const memoizedData = useMemo(() => data, [data]);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -36,14 +62,16 @@ const StakeTable = ({
     prepareRow,
   } = useTable(
     {
-      columns,
-      data,
+      columns: memoizedColumns,
+      data: memoizedData,
     },
     useSortBy
   );
 
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
+
   return (
-    <div className="bg-white border rounded p-4 md:p-6 h-full">
+    <div className="bg-white border rounded p-4 sm:p-6 h-full">
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -91,14 +119,13 @@ const StakeTable = ({
       </table>
 
       {rows.length === 0 && (
-        <div className="flex items-center flex-col mt-16">
+        <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
           <div className="w-24 h-40 bg-border-pure" />
-          <p className="text-xl text-center my-6 max-w-md">
+          <p className="text-lg md:text-xl text-center my-6 max-w-md">
             Borrow without collateral and earn higher interest on your deposits
+            if you are a member.
           </p>
-          <button className="text-center font-semibold underline">
-            Learn more
-          </button>
+          <Button onClick={toggleGetInvitedModal}>Become a member</Button>
         </div>
       )}
     </div>

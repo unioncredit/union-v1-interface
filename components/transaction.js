@@ -1,18 +1,17 @@
-const Transaction = ({}) => {
+const Transaction = ({ data }) => {
   return (
     <div className="mt-4 bg-white border rounded p-6 flex items-center">
       <div className="h-12 w-12 rounded-full bg-border-pure" />
 
       <div className="flex-1 mx-4">
         <p className="mb-2 leading-none">
-          <strong className="font-semibold">alex56.eth increased</strong> your
-          credit limit
+          <strong className="font-semibold">{data.type}</strong>
         </p>
-        <p className="font-normal leading-none">4 Feb 2020</p>
+        <p className="font-normal leading-none">{data.date}</p>
       </div>
 
       <div>
-        <p>650 DAI</p>
+        <p>{data.amount.toFixed(4)} DAI</p>
       </div>
     </div>
   );

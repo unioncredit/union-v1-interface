@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import DAI from "../svgs/DAI";
 
 const Input = forwardRef(
   (
@@ -26,17 +27,23 @@ const Input = forwardRef(
           <div className="flex">
             <input
               autoComplete={autoComplete}
-              className="focus:outline-none text-lg leading-snug flex-1"
+              className="focus:outline-none text-lg leading-snug flex-1 text-overflow-clip"
               id={id}
               name={id}
               ref={ref}
+              autoCorrect="off"
+              autoCapitalize="off"
+              spellCheck="false"
               type={type}
               {...props}
               {...(tip && { "aria-describedby": `${id}InputTip` })}
             />
 
             {chip && (
-              <span className="font-semibold ml-4 select-none">DAI</span>
+              <div className="flex items-center select-none ml-2">
+                <DAI />
+                <span className="font-semibold ml-2 leading-3">DAI</span>
+              </div>
             )}
           </div>
         </div>
@@ -46,10 +53,10 @@ const Input = forwardRef(
             className="block text-xs leading-tight mt-2"
             id={`${id}InputTip`}
           >
-            {tip}{" "}
             <span role="img" aria-label="Information">
               ℹ️
-            </span>
+            </span>{" "}
+            {tip}
           </span>
         )}
       </div>

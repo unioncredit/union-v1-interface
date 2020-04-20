@@ -1,5 +1,6 @@
 import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
+import { AddressZero } from "@constants/";
 
 /**
  * @name getContract
@@ -10,7 +11,7 @@ import { Contract } from "@ethersproject/contracts";
  */
 export async function getContract(address, ABI, signer) {
   if (!isAddress(address) || address === AddressZero) {
-    throw Error(`Invalid 'address' parameter '${address}'.`);
+    throw new Error(`Invalid 'address' parameter '${address}'.`);
   }
 
   return new Contract(address, ABI, signer);
