@@ -7,7 +7,7 @@ const SegmentedControlButton = ({ active, onClick, label }) => {
   );
 
   return (
-    <div className="flex-1 px-1">
+    <div className="flex-1 px-2px">
       <button className={cachedClassNames} onClick={onClick}>
         {label}
       </button>
@@ -23,7 +23,7 @@ const SegmentedControlWrapper = ({ className, children }) => {
 
   return (
     <div className={cachedClassNames}>
-      <div className="flex -mx-1">{children}</div>
+      <div className="flex -mx-2px">{children}</div>
     </div>
   );
 };
