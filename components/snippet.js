@@ -9,76 +9,59 @@ const Snippet = () => (
       <div role="presentation">
         <pre role="presentation">
           <span role="presentation">
-            <span className="pl-k">contract</span>{" "}
-            <span className="pl-c1">LendingMarket</span>{" "}
-            <span className="text-type-light">...</span> {"{"}
+            <span className="text-type-light">// Get max credit limit</span>
+          </span>
+        </pre>
+        <pre role="presentation">
+          <span role="presentation">
+            <span className="pl-k">function</span>{" "}
+            <span className="pl-en">getCreditLimit</span>(<span>account</span>)
+            {" {"}
           </span>
         </pre>
         <pre role="presentation">
           <span role="presentation">
             &nbsp;&nbsp;
-            <span className="pl-k">function</span>{" "}
-            <span className="pl-en">borrow</span>(
-            <span className="pl-c1">uint256</span> <span>amount</span>)
+            <span className="pl-k">return</span>{" "}
+            <span className="pl-c1">creditLimit</span>
           </span>
         </pre>
         <pre role="presentation">
-          <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">external</span>
-          </span>
-        </pre>
-        <pre role="presentation">
-          <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">onlyMember</span>(
-            <span className="pl-k">msg</span>.
-            <span className="pl-k">sender</span>
-            <span>)</span>
-          </span>
-        </pre>
-        <pre role="presentation">
-          <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">whenNotPaused</span>(
-            <span className="pl-k">address</span>(
-            <span className="pl-k">poolToken</span>
-            ))
-          </span>
+          <span role="presentation">{"}"}</span>
         </pre>
         <pre role="presentation">
           <span role="presentation">&nbsp;</span>
         </pre>
         <pre role="presentation">
           <span role="presentation">
-            &nbsp;&nbsp;
+            <span className="text-type-light">
+              // Borrow up to max credit limit
+            </span>
+          </span>
+        </pre>
+        <pre role="presentation">
+          <span role="presentation">
             <span className="pl-k">function</span>{" "}
-            <span className="pl-en">repay</span>(
-            <span className="pl-c1">uint256</span> <span>amount</span>)
+            <span className="pl-en">borrowMax</span>() {"{"}
           </span>
         </pre>
         <pre role="presentation">
           <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">external</span>
+            &nbsp;&nbsp;
+            <span className="pl-k">const</span>{" "}
+            <span className="pl-c1">max</span> ={" "}
+            <span className="pl-en">
+              getCreditLimit(<span className="pl-c1">account</span>)
+            </span>
           </span>
         </pre>
         <pre role="presentation">
           <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">onlyMember</span>(
-            <span className="pl-k">msg</span>.
-            <span className="pl-k">sender</span>
-            <span>)</span>
-          </span>
-        </pre>
-        <pre role="presentation">
-          <span role="presentation">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <span className="pl-k">whenNotPaused</span>(
-            <span className="pl-k">address</span>(
-            <span className="pl-k">poolToken</span>
-            ))
+            &nbsp;&nbsp;
+            <span className="pl-en">borrow</span>
+            <span>
+              (<span className="pl-c1">max</span>)
+            </span>
           </span>
         </pre>
         <pre role="presentation">
