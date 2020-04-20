@@ -6,6 +6,9 @@ export const Solo = ({ hasButton = false }) => (
   <div className="rounded bg-white w-full flex-1 flex flex-col border">
     <div className="px-6 pb-6 pt-20 relative">
       <p className="text-2xl font-semibold leading-tight">Solo</p>
+      <div className="absolute bottom-0 right-0 mr-4 md:mr-8">
+        <img src="/images/solo.svg" alt="Solo" />
+      </div>
     </div>
 
     <div className="divider"></div>
@@ -34,6 +37,9 @@ export const Together = ({ hasButton = false }) => (
   <div className="rounded bg-white w-full flex-1 flex flex-col border">
     <div className="px-6 pb-6 pt-20 relative">
       <p className="text-2xl font-semibold leading-tight">Together</p>
+      <div className="absolute bottom-0 right-0 mr-4 md:mr-8">
+        <img src="/images/together.svg" alt="Solo" />
+      </div>
     </div>
 
     <div className="divider"></div>
@@ -78,7 +84,7 @@ const Benefits = ({ defaultTab = "TOGETHER" }) => {
   const [tab, setTab] = useState(TABS[defaultTab]);
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full md:max-w-sm">
       <SegmentedControl.Wrapper className="mb-4">
         <SegmentedControl.Button
           onClick={() => setTab(TABS.SOLO)}
