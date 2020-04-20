@@ -1,4 +1,6 @@
 import Link from "next/link";
+import GitHub from "svgs/GitHub";
+import Twitter from "svgs/Twitter";
 
 const FOOTER_LINKS = [
   {
@@ -33,7 +35,7 @@ const Footer = () => {
       <div className="container">
         <div className="flex">
           <div className="w-3/4">
-            <ul className="flex flex-wrap text-type-lightest text-sm -mr-4 -mb-2 flex-wrap">
+            <ul className="flex flex-col sm:flex-row sm:flex-wrap text-type-lightest text-sm -mr-4 -mb-2">
               <li className="pb-2 pr-4">
                 <Link href="/faucet">
                   <a className="hover:underline">Faucet</a>
@@ -49,12 +51,20 @@ const Footer = () => {
               <li className="pb-2 pr-4">© 2020 Union.Finance</li>
             </ul>
           </div>
-          <ul className="flex w-1/4 justify-end">
+          <ul className="flex w-1/4 justify-end text-type-lightest">
             <li className="ml-4">
-              <div className="h-6 w-6 rounded-full bg-type-lightest"></div>
+              <a href="https://github.com/unioncredit">
+                <div className="p-2px">
+                  <GitHub size={20} />
+                </div>
+              </a>
             </li>
             <li className="ml-4">
-              <div className="h-6 w-6 rounded-full bg-type-lightest"></div>
+              <a href="https://twitter.com/unionprotocol">
+                <div className="p-2px">
+                  <Twitter size={20} color="currentColor" />
+                </div>
+              </a>
             </li>
           </ul>
         </div>
