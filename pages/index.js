@@ -48,7 +48,7 @@ export default function Home() {
         <div className="container-sm z-10">
           <div className="flex flex-col md:flex-row md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8">
-              <div>
+              <div className="w-full">
                 <h1 className="text-3xl md:text-4xl md:mt-20 mb-6 md:mb-8">
                   Credit backed by trust
                 </h1>
@@ -112,7 +112,7 @@ export default function Home() {
         <div className="container-sm">
           <div className="flex flex-col md:flex-row md:-mx-8">
             <div className="w-full md:w-1/2 md:px-8 mb-12 md:mb-0">
-              <div>
+              <div className="w-full">
                 <h2 className="text-2xl md:text-3xl mb-6 md:mb-8 md:mt-16">
                   Union key benefits
                 </h2>
@@ -234,9 +234,9 @@ export default function Home() {
                 <p className="md:text-xl leading-tight font-normal mb-6 md:mb-8">
                   Ability to give your smart contracts credit lines and more.
                 </p>
-                <Button className="btn-full-mobile" wide>
+                {/* <Button className="btn-full-mobile" wide>
                   Read the docs
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="w-full md:w-1/2 md:px-8">
@@ -298,13 +298,13 @@ export default function Home() {
         <div className="container-sm">
           <div className="flex flex-col sm:flex-row sm:-mx-8">
             <div className="w-full sm:w-1/2 sm:px-8 mb-12 sm:mb-0">
-              <div>
-                <h2 className="text-2xl sm:text-3xl mb-6 sm:mb-10">
+              <div className="w-full">
+                {/* <h2 className="text-2xl sm:text-3xl mb-6 sm:mb-10">
                   Learn more about Union
                 </h2>
                 <Button className="btn-full-mobile" wide>
                   Read the white paper
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="w-full sm:w-1/2 sm:px-8 flex justify-end">
