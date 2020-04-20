@@ -60,11 +60,7 @@ const Navigation = () => {
           )}
 
           <ul className="flex md:w-1/4 justify-end py-4">
-            <a href="#!" className="btn btn-secondary px-10">
-              Apply
-            </a>
-
-            {/* <Web3Status /> */}
+            <Web3Status />
           </ul>
         </ul>
 
