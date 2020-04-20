@@ -57,7 +57,9 @@ export default function Home() {
                   revealing personal information on a public ledger.
                 </p>
 
-                <Button className="btn-full-mobile">Get started</Button>
+                <a href="#!" className="btn px-10 btn-primary btn-full-mobile">
+                  Get started
+                </a>
 
                 <div className="mt-12">
                   <img
@@ -111,9 +113,9 @@ export default function Home() {
                   join with the help of 3 friends vouching for you and enjoy all
                   the benefits of Union
                 </p>
-                <Button className="btn-full-mobile" wide>
+                <a href="#!" className="btn px-10 btn-primary btn-full-mobile">
                   Get started
-                </Button>
+                </a>
               </div>
             </div>
             <div className="w-full md:w-1/2 md:p-8 flex md:justify-end">
