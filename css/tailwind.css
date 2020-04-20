@@ -156,6 +156,11 @@ table td:not(:first-of-type) {
   @apply w-full px-6 mx-auto max-w-screen-lg-gutter;
 }
 
+.container-sm {
+  max-width: calc(1008px + 1.5rem * 2);
+  @apply w-full px-6 mx-auto;
+}
+
 .divider {
   @apply w-full h-px bg-border-pure;
 }
@@ -175,10 +180,6 @@ table td:not(:first-of-type) {
 
 .shadow-card {
   box-shadow: 0px 5px 13px rgba(207, 192, 192, 0.25);
-}
-
-.p-2px {
-  padding: 2px;
 }
 
 /* purgecss end ignore */
