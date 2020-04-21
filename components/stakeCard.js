@@ -51,7 +51,7 @@ const StakeCard = () => {
         chainId
       );
 
-      setUnionBalance(res.toFixed(4));
+      setUnionBalance(res.toFixed(3));
     } catch (err) {
       console.error(err);
     }
@@ -74,7 +74,7 @@ const StakeCard = () => {
     try {
       const res = await getRewards(curToken, library.getSigner(), chainId);
 
-      setRewards(res.toFixed(4));
+      setRewards(res.toFixed(3));
     } catch (err) {
       console.error(err);
     }
@@ -181,16 +181,18 @@ const StakeCard = () => {
 
       <LabelPair
         className="text-grey-pure"
-        label="UNION Per Year"
+        label="Earned Per Year"
         tooltip={placeholderTip}
         value={upy}
+        valueType="UNION"
       />
 
       <LabelPair
         className="text-grey-pure"
-        label="UNION Balance"
+        label="Wallet Balance"
         tooltip={placeholderTip}
         value={unionBalance}
+        valueType="UNION"
       />
 
       <div className="flex -mx-2 mt-12">
