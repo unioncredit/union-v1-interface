@@ -1,14 +1,13 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrustCount } from "@lib/contracts/getTrustCount";
-import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
+import ApplicationModal from "./applicationModal";
 import Button from "./button";
-import UniswapModal from "./uniswapModal";
-import { useAutoEffect, useAutoCallback } from "hooks.macro";
 
 const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -21,7 +20,7 @@ const ApplicationCard = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleUniswapModal = () => setIsOpen(!isOpen);
+  const toggleApplicationModal = () => setIsOpen(!isOpen);
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -52,16 +51,6 @@ const ApplicationCard = () => {
     };
   });
 
-  const handleSubmitApplication = useAutoCallback(async () => {
-    try {
-      toggleUniswapModal();
-
-      await verifyMembership(account, curToken, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
       <div className="flex flex-col md:flex-row justify-between items-start">
@@ -76,15 +65,15 @@ const ApplicationCard = () => {
           </p>
         </div>
 
-        <Button onClick={handleSubmitApplication}>Submit application</Button>
+        <Button onClick={toggleApplicationModal}>Become a member</Button>
 
         <Button
           className="mt-6 md:mt-0"
           onClick={
-            trustCount === 3 ? handleSubmitApplication : toggleGetInvitedModal
+            trustCount === 3 ? toggleApplicationModal : toggleGetInvitedModal
           }
         >
-          {trustCount === 3 ? "Submit application" : "Ask for a vouch"}
+          {trustCount === 3 ? "Become a member" : "Ask for a vouch"}
         </Button>
       </div>
 
@@ -110,7 +99,7 @@ const ApplicationCard = () => {
         </span>
       </div>
 
-      <UniswapModal isOpen={isOpen} onDismiss={toggleUniswapModal} />
+      <ApplicationModal isOpen={isOpen} onDismiss={toggleApplicationModal} />
     </div>
   );
 };
