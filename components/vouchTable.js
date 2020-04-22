@@ -1,38 +1,38 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
-import { useMemo } from "react";
+import { useAutoMemo } from "hooks.macro";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 
-const VouchTable = ({
-  columns = useMemo(
-    () => [
-      {
-        Header: "Address",
-        accessor: "address",
-      },
-      {
-        Header: "Percentage",
-        accessor: "percentage",
-      },
-      {
-        Header: "Vouched",
-        accessor: "vouched",
-      },
-      {
-        Header: "Used",
-        accessor: "used",
-      },
-      {
-        Header: "Health",
-        accessor: "health",
-      },
-    ],
-    []
-  ),
-  data,
-}) => {
+const VouchTable = ({ data }) => {
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
+
+  const memoizedColumns = useAutoMemo(() => [
+    {
+      Header: "Address",
+      accessor: "address",
+    },
+    {
+      Header: "Percentage",
+      accessor: "percentage",
+    },
+    {
+      Header: "Vouched",
+      accessor: "vouched",
+    },
+    {
+      Header: "Used",
+      accessor: "used",
+    },
+    {
+      Header: "Health",
+      accessor: "health",
+    },
+  ]);
+
+  const memoizedData = useAutoMemo(data);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -41,13 +41,11 @@ const VouchTable = ({
     prepareRow,
   } = useTable(
     {
-      columns,
-      data,
+      columns: memoizedColumns,
+      data: memoizedData,
     },
     useSortBy
   );
-
-  const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   return (
     <div className="bg-white border rounded p-4 sm:p-6 h-full">

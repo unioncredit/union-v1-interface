@@ -16,6 +16,8 @@ const StakeTable = () => {
 
   const [data, setData] = useState([]);
 
+  const toggleLearnMoreModal = useLearnMoreModalToggle();
+
   useAutoEffect(() => {
     let isMounted = true;
 
@@ -74,8 +76,6 @@ const StakeTable = () => {
     useSortBy
   );
 
-  const toggleGetInvitedModal = useLearnMoreModalToggle();
-
   return (
     <div className="bg-white border rounded p-4 sm:p-6 h-full">
       <table {...getTableProps()}>
@@ -131,7 +131,7 @@ const StakeTable = () => {
             Borrow without collateral and earn higher interest on your deposits
             if you are a member.
           </p>
-          <Button onClick={toggleGetInvitedModal}>Become a member</Button>
+          <Button onClick={toggleLearnMoreModal}>Become a member</Button>
         </div>
       )}
     </div>

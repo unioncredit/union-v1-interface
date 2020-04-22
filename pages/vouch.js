@@ -82,8 +82,6 @@ export default function VouchPage() {
 
     return () => {
       isMounted = false;
-
-      console.log({ isMounted });
     };
   });
 
