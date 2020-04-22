@@ -9,7 +9,8 @@ import { stake } from "@lib/contracts/stake";
 import { unstake } from "@lib/contracts/unstake";
 import { withdrawRewards } from "@lib/contracts/withdrawRewards";
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
+import { useAutoCallback, useAutoEffect } from "hooks.macro";
+import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./depositModal";
@@ -17,11 +18,13 @@ import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 
 const StakeCard = () => {
-  const toggleDepositModal = useDepositModalToggle();
-  const toggleWithdrawModal = useWithdrawModalToggle();
   const { account, library, chainId } = useWeb3React();
 
+  const toggleDepositModal = useDepositModalToggle();
+  const toggleWithdrawModal = useWithdrawModalToggle();
+
   const curToken = useCurrentToken();
+
   const curUnionToken = useCurrentToken("UNION");
 
   const [totalStake, setTotalStake] = useState(0);
@@ -33,7 +36,72 @@ const StakeCard = () => {
   const [upy, setUpy] = useState(0);
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
-  useEffect(() => {
+  useAutoEffect(() => {
+    const getUnionBalance = async () => {
+      try {
+        const res = await getErc20Balance(
+          curUnionToken,
+          library.getSigner(),
+          chainId
+        );
+
+        setUnionBalance(res.toFixed(3));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getStakeData = async () => {
+      try {
+        const res = await getStakeAmount(account, curToken, library, chainId);
+
+        setTotalStake(res.stakingAmount);
+        setUtilizedStake(res.creditUsed);
+        setDefaultedStake(res.freezeAmount);
+        setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getRewardData = async () => {
+      try {
+        const res = await getRewards(curToken, library.getSigner(), chainId);
+
+        setRewards(res.toFixed(3));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getUpyData = async () => {
+      try {
+        const res = await getRewardsPerYear(
+          curToken,
+          library.getSigner(),
+          chainId
+        );
+
+        setUpy(res.toFixed(2));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getRewardsMultiplierData = async () => {
+      try {
+        const res = await getRewardsMultiplier(
+          curToken,
+          library.getSigner(),
+          chainId
+        );
+
+        setRewardsMultiplier(res.toFixed(2));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (library && account) {
       getStakeData();
       getRewardData();
@@ -41,96 +109,31 @@ const StakeCard = () => {
       getUnionBalance();
       getRewardsMultiplierData();
     }
-  }, [library, account, chainId]);
+  });
 
-  const getUnionBalance = async () => {
-    try {
-      const res = await getErc20Balance(
-        curUnionToken,
-        library.getSigner(),
-        chainId
-      );
-
-      setUnionBalance(res.toFixed(3));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getStakeData = async () => {
-    try {
-      const res = await getStakeAmount(account, curToken, library, chainId);
-
-      setTotalStake(res.stakingAmount);
-      setUtilizedStake(res.creditUsed);
-      setDefaultedStake(res.freezeAmount);
-      setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getRewardData = async () => {
-    try {
-      const res = await getRewards(curToken, library.getSigner(), chainId);
-
-      setRewards(res.toFixed(3));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getUpyData = async () => {
-    try {
-      const res = await getRewardsPerYear(
-        curToken,
-        library.getSigner(),
-        chainId
-      );
-
-      setUpy(res.toFixed(2));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getRewardsMultiplierData = async () => {
-    try {
-      const res = await getRewardsMultiplier(
-        curToken,
-        library.getSigner(),
-        chainId
-      );
-
-      setRewardsMultiplier(res.toFixed(2));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onDeposit = async (amount) => {
+  const onDeposit = useAutoCallback(async (amount) => {
     try {
       await stake(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
-  const onWithdraw = async (amount) => {
+  const onWithdraw = useAutoCallback(async (amount) => {
     try {
       await unstake(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
-  const onWithdrawRewards = async () => {
+  const onWithdrawRewards = useAutoCallback(async () => {
     try {
       await withdrawRewards(curToken, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6">
