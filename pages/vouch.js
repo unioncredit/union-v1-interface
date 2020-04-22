@@ -9,8 +9,9 @@ import useCurrentToken from "@hooks/useCurrentToken";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getVouched } from "@lib/contracts/getVouched";
 import { useWeb3React } from "@web3-react/core";
+import { useAutoEffect, useAutoMemo } from "hooks.macro";
 import Head from "next/head";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
 /**
  * @name getVouchBarData
@@ -31,34 +32,34 @@ export default function Vouch() {
   const [creditLimit, setCreditLimit] = useState(0);
   const [vouchData, setVouchData] = useState([]);
 
-  useEffect(() => {
+  useAutoEffect(() => {
+    const getVouchData = async () => {
+      try {
+        const res = await getVouched(account, curToken, library, chainId);
+
+        setVouchData(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getCreditData = async () => {
+      try {
+        const res = await getCreditLimit(curToken, account, library, chainId);
+
+        setCreditLimit(res.toFixed(4));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (library && account) {
       getVouchData();
       getCreditData();
     }
-  }, [library, account]);
+  });
 
-  const getVouchData = async () => {
-    try {
-      const res = await getVouched(account, curToken, library, chainId);
-
-      setVouchData(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getCreditData = async () => {
-    try {
-      const res = await getCreditLimit(curToken, account, library, chainId);
-
-      setCreditLimit(res.toFixed(4));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const vouchTableData = useMemo(() => vouchData, [vouchData]);
+  const vouchTableData = useAutoMemo(vouchData);
 
   return (
     <div className="my-8 md:my-10">

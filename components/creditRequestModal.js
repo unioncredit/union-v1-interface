@@ -3,6 +3,7 @@ import {
   useCreditRequestModalToggle,
 } from "@contexts/Vouch";
 import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback } from "hooks.macro";
 import dyanmic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -46,7 +47,7 @@ const CreditRequestModal = () => {
 
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = async (values) => {
+  const onSubmit = useAutoCallback(async (values) => {
     const { amount } = values;
 
     try {
@@ -54,7 +55,7 @@ const CreditRequestModal = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
   useEffect(() => {
     return () => {

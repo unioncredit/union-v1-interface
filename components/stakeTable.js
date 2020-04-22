@@ -2,7 +2,8 @@ import { useGetInvitedModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrust } from "@lib/contracts/getTrust";
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useMemo, useState } from "react";
+import { useAutoEffect, useAutoMemo } from "hooks.macro";
+import { useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Address from "./address";
 import Button from "./button";
@@ -15,44 +16,41 @@ const StakeTable = () => {
 
   const [data, setData] = useState([]);
 
-  useEffect(() => {
+  useAutoEffect(() => {
+    const getTrustData = async () => {
+      try {
+        const res = await getTrust(account, curToken, library, chainId);
+        setData(res);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (library && account) {
       getTrustData();
     }
   }, [library, account, chainId]);
 
-  const getTrustData = async () => {
-    try {
-      const res = await getTrust(account, curToken, library, chainId);
-      setData(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const memoizedColumns = useAutoMemo(() => [
+    {
+      Header: "Address",
+      accessor: "address",
+    },
+    {
+      Header: "Vouched",
+      accessor: "vouched",
+    },
+    {
+      Header: "Used",
+      accessor: "used",
+    },
+    {
+      Header: "Health",
+      accessor: "health",
+    },
+  ]);
 
-  const memoizedColumns = useMemo(
-    () => [
-      {
-        Header: "Address",
-        accessor: "address",
-      },
-      {
-        Header: "Vouched",
-        accessor: "vouched",
-      },
-      {
-        Header: "Used",
-        accessor: "used",
-      },
-      {
-        Header: "Health",
-        accessor: "health",
-      },
-    ],
-    []
-  );
-
-  const memoizedData = useMemo(() => data, [data]);
+  const memoizedData = useAutoMemo(data);
 
   const {
     getTableProps,

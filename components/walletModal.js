@@ -5,8 +5,9 @@ import {
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
+import { useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
 
@@ -64,25 +65,25 @@ const WalletModal = () => {
 
   const [activatingConnector, setActivatingConnector] = useState();
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (open) setWalletView(WALLET_VIEWS.CREATE);
     if (open && active && account) setWalletView(WALLET_VIEWS.SIGN_IN);
-  }, [open, active, account]);
+  });
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
     }
-  }, [activatingConnector, connector]);
+  });
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (!!error) {
       window.alert(getErrorMessage(error));
       setActivatingConnector(undefined);
       if (connector === walletconnect) connector.close();
       deactivate();
     }
-  }, [error]);
+  });
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>

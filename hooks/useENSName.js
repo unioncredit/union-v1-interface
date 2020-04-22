@@ -1,6 +1,7 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
+import { useAutoEffect } from "hooks.macro";
+import { useState } from "react";
 
 /**
  * @name useENSName
@@ -13,7 +14,7 @@ export default function useENSName(address) {
 
   const [ENSName, setENSName] = useState();
 
-  useEffect(() => {
+  useAutoEffect(() => {
     if (!!(isAddress(address) && library)) {
       let stale = false;
       library
@@ -38,7 +39,7 @@ export default function useENSName(address) {
         setENSName();
       };
     }
-  }, [library, address]);
+  });
 
   return ENSName;
 }

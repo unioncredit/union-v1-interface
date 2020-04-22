@@ -1,14 +1,14 @@
-import { TOKENS } from "@constants/";
 import { useGetInvitedModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrustCount } from "@lib/contracts/getTrustCount";
 import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 import UniswapModal from "./uniswapModal";
+import { useAutoEffect, useAutoCallback } from "hooks.macro";
 
 const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -21,17 +21,12 @@ const ApplicationCard = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggleUniswapModal = () => setIsOpen(!isOpen);
 
-  useEffect(() => {
+  useAutoEffect(() => {
     const getTrustCountData = async () => {
       try {
-        const res = await getTrustCount(
-          account,
-          TOKENS[chainId]["DAI"],
-          library,
-          chainId
-        );
+        const res = await getTrustCount(account, curToken, library, chainId);
 
         setTrustCount(res);
       } catch (err) {
@@ -40,17 +35,17 @@ const ApplicationCard = () => {
     };
 
     if (library && account) getTrustCountData();
-  }, [library, account, chainId]);
+  });
 
-  const handleSubmitApplication = async () => {
+  const handleSubmitApplication = useAutoCallback(async () => {
     try {
-      toggle();
+      toggleUniswapModal();
 
-      // await verifyMembership(account, curToken, library.getSigner(), chainId);
+      await verifyMembership(account, curToken, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
@@ -100,7 +95,7 @@ const ApplicationCard = () => {
         </span>
       </div>
 
-      <UniswapModal isOpen={isOpen} onDismiss={toggle} />
+      <UniswapModal isOpen={isOpen} onDismiss={toggleUniswapModal} />
     </div>
   );
 };

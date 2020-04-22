@@ -5,24 +5,25 @@ import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
+import { blockSpeed } from "@constants";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
+import { getBorrowTransactions } from "@lib/contracts/getBorrowTransactions";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
-import { getBorrowTransactions } from "@lib/contracts/getBorrowTransactions";
 import { getRepayTransactions } from "@lib/contracts/getRepayTransactions";
 import { repay } from "@lib/contracts/repay";
-import { blockSpeed } from "@constants";
 import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
@@ -41,10 +42,124 @@ export default function Borrow() {
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("N/A");
   const [fee, setFee] = useState(0);
-  const [signer, setSigner] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
-  useEffect(() => {
+  useAutoEffect(() => {
+    const getTransactionsData = async () => {
+      try {
+        const borrowTxs = await getBorrowTransactions(
+          curToken,
+          library.getSigner(),
+          chainId
+        );
+
+        const repayTxs = await getRepayTransactions(
+          curToken,
+          library.getSigner(),
+          chainId
+        );
+
+        let txs = [].concat(borrowTxs, repayTxs);
+
+        txs.sort((x, y) => {
+          if (x.blockNumber > y.blockNumber) return -1;
+
+          if (x.blockNumber < y.blockNumber) return 1;
+
+          return 0;
+        });
+
+        setTransactions(txs);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getBorrowedData = async () => {
+      try {
+        const res = await getBorrowed(account, curToken, library, chainId);
+
+        setBorrowed(res.toFixed(4));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getCreditData = async () => {
+      try {
+        const res = await getCreditLimit(curToken, account, library, chainId);
+
+        setCreditLimit(res.toFixed(4));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getOriginationFeeData = async () => {
+      try {
+        const res = await getOriginationFee(curToken, library, chainId);
+
+        setFee(res.toFixed(4));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getInterestData = async () => {
+      try {
+        const res = await getInterest(curToken, account, library, chainId);
+
+        setInterest(res.toFixed(4));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const getPaymentDueDate = async () => {
+      try {
+        const isOverdue = await checkIsOverdue(
+          curToken,
+          account,
+          library,
+          chainId
+        );
+
+        if (isOverdue) {
+          setPaymentDueDate("Overdue");
+          return;
+        }
+
+        const lastRepay = await getLastRepay(
+          curToken,
+          account,
+          library,
+          chainId
+        );
+
+        const overdueBlocks = await getOverdueBlocks(
+          curToken,
+          library,
+          chainId
+        );
+
+        const curBlock = await library.getBlockNumber();
+
+        if (lastRepay == 0) {
+          setPaymentDueDate(`-`);
+          return;
+        }
+
+        const days = (
+          ((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) /
+          86400
+        ).toFixed(2);
+
+        setPaymentDueDate(`in ${days} days`);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (library && account) {
       getCreditData();
       getBorrowedData();
@@ -52,126 +167,24 @@ export default function Borrow() {
       getPaymentDueDate();
       getOriginationFeeData();
       getTransactionsData();
-      setSigner(library.getSigner());
     }
-  }, [library, account]);
+  });
 
-  const getTransactionsData = async () => {
-    const borrowTxs = await getBorrowTransactions(
-      curToken,
-      library.getSigner(),
-      chainId
-    );
-    const repayTxs = await getRepayTransactions(
-      curToken,
-      library.getSigner(),
-      chainId
-    );
-    let txs = [].concat(borrowTxs, repayTxs);
-    txs.sort((x, y) => {
-      if (x.blockNumber > y.blockNumber) {
-        return -1;
-      }
-      if (x.blockNumber < y.blockNumber) {
-        return 1;
-      }
-      return 0;
-    });
-
-    setTransactions(txs);
-  };
-
-  const getBorrowedData = async () => {
+  const onBorrow = useAutoCallback(async (amount) => {
     try {
-      const res = await getBorrowed(account, curToken, library, chainId);
-
-      setBorrowed(res.toFixed(4));
+      await borrow(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
+  });
 
-  const getCreditData = async () => {
+  const onRepay = useAutoCallback(async (amount) => {
     try {
-      const res = await getCreditLimit(curToken, account, library, chainId);
-
-      setCreditLimit(res.toFixed(4));
+      await repay(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const getOriginationFeeData = async () => {
-    try {
-      const res = await getOriginationFee(curToken, library, chainId);
-
-      setFee(res.toFixed(4));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getInterestData = async () => {
-    try {
-      const res = await getInterest(curToken, account, library, chainId);
-
-      setInterest(res.toFixed(4));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getPaymentDueDate = async () => {
-    try {
-      const isOverdue = await checkIsOverdue(
-        curToken,
-        account,
-        library,
-        chainId
-      );
-
-      if (isOverdue) {
-        setPaymentDueDate("Overdue");
-        return;
-      }
-
-      const lastRepay = await getLastRepay(curToken, account, library, chainId);
-
-      const overdueBlocks = await getOverdueBlocks(curToken, library, chainId);
-
-      const curBlock = await library.getBlockNumber();
-
-      if (lastRepay == 0) {
-        setPaymentDueDate(`-`);
-        return;
-      }
-
-      const days = (
-        ((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) /
-        86400
-      ).toFixed(2);
-
-      setPaymentDueDate(`in ${days} days`);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onBorrow = async (amount) => {
-    try {
-      await borrow(curToken, amount, signer, chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onRepay = async (amount) => {
-    try {
-      await repay(curToken, amount, signer, chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  });
 
   return (
     <div className="my-8 md:my-10">
