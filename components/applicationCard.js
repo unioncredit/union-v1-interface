@@ -14,7 +14,7 @@ const ApplicationCard = () => {
 
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
-  const curToken = useCurrentToken();
+  const curToken = useCurrentToken("UNION");
 
   const [trustCount, setTrustCount] = useState(0);
 
@@ -64,8 +64,6 @@ const ApplicationCard = () => {
             vouched for you
           </p>
         </div>
-
-        <Button onClick={toggleApplicationModal}>Become a member</Button>
 
         <Button
           className="mt-6 md:mt-0"
