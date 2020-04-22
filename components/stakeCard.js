@@ -6,11 +6,10 @@ import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
 import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
 import { getStakeAmount } from "@lib/contracts/getStakeAmount";
 import { stake } from "@lib/contracts/stake";
-import { TOKENS } from "@constants/";
 import { unstake } from "@lib/contracts/unstake";
+import { withdrawRewards } from "@lib/contracts/withdrawRewards";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import { withdrawRewards } from "@lib/contracts/withdrawRewards";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./depositModal";
@@ -23,6 +22,7 @@ const StakeCard = () => {
   const { account, library, chainId } = useWeb3React();
 
   const curToken = useCurrentToken();
+  const curUnionToken = useCurrentToken("UNION");
 
   const [totalStake, setTotalStake] = useState(0);
   const [utilizedStake, setUtilizedStake] = useState(0);
@@ -46,7 +46,7 @@ const StakeCard = () => {
   const getUnionBalance = async () => {
     try {
       const res = await getErc20Balance(
-        TOKENS[chainId]["UNION"],
+        curUnionToken,
         library.getSigner(),
         chainId
       );
