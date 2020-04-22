@@ -4,13 +4,15 @@ import DAI from "../svgs/DAI";
 const Input = forwardRef(
   (
     {
-      autoComplete = "off",
-      chip,
-      className,
       id,
-      label,
       tip,
+      chip,
       type = "text",
+      label,
+      setMax,
+      className,
+      setMaxValue,
+      autoComplete = "off",
       ...props
     },
     ref
@@ -18,10 +20,23 @@ const Input = forwardRef(
     return (
       <div className={className}>
         <div className="p-4 w-full rounded border bg-white focus-within:input transition-shadow transition-colors duration-150">
-          {label && (
-            <label className="block leading-none mb-2 text-sm" htmlFor={id}>
-              {label}
-            </label>
+          {(label || setMax) && (
+            <div className="flex items-center justify-between mb-2 text-type-light text-sm leading-none">
+              {label && (
+                <label className="block" htmlFor={id}>
+                  {label}
+                </label>
+              )}
+              {setMax && (
+                <button
+                  type="button"
+                  onClick={setMax}
+                  className="underline font-medium"
+                >
+                  Max: {Number(setMaxValue).toFixed(2)}
+                </button>
+              )}
+            </div>
           )}
 
           <div className="flex">

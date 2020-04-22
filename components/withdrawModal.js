@@ -9,7 +9,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, setValue } = useForm();
 
   const watchAmount = watch("depositAmount", 0);
 
@@ -37,6 +37,8 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
           id="amount"
           name="amount"
           max={totalStake}
+          setMax={() => setValue("amount", totalStake)}
+          setMaxValue={totalStake}
           label="Withdraw Amount"
           placeholder="0.00"
           ref={register}

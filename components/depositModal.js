@@ -1,4 +1,8 @@
 import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
+import useCurrentToken from "@hooks/useCurrentToken";
+import { useWeb3React } from "@web3-react/core";
+import { useAutoEffect } from "hooks.macro";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
@@ -6,12 +10,48 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const DepositModal = ({ totalStake, onDeposit }) => {
+  const { library, chainId, account } = useWeb3React();
+
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, setValue } = useForm();
 
   const watchAmount = watch("amount", 0);
+
+  const curToken = useCurrentToken("DAI");
+
+  const [daiBalance, setDaiBalance] = useState("0");
+
+  useAutoEffect(() => {
+    let isMounted = true;
+
+    const getDaiBalance = async () => {
+      try {
+        if (isMounted) {
+          if (library && account) {
+            const res = await getErc20Balance(
+              curToken,
+              library.getSigner(),
+              chainId
+            );
+
+            setDaiBalance(res);
+          }
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
+    };
+
+    getDaiBalance();
+
+    return () => {
+      isMounted = false;
+    };
+  });
 
   const onSubmit = (values) => {
     onDeposit(values.amount);
@@ -37,6 +77,9 @@ const DepositModal = ({ totalStake, onDeposit }) => {
           id="amount"
           label="Deposit Amount"
           placeholder="0.00"
+          max={daiBalance}
+          setMax={() => setValue("amount", daiBalance)}
+          setMaxValue={daiBalance}
           ref={register}
           required
           tip={`Increases your UPY by ${0} UNION`}

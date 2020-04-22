@@ -77,7 +77,7 @@ const CreditRequestModal = () => {
             Just share the link below or let them scan the QR code to access
             Union and have them vouch for you.
           </p>
-          <Input value={shareLink} readonly className="mb-4" />
+          <Input value={shareLink} readOnly className="mb-4" />
           <Button full onClick={() => copyToClipboard(shareLink)}>
             {copied ? "Copied!" : "Copy link"}
           </Button>
