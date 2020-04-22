@@ -1,4 +1,5 @@
 import Button from "@components/button";
+import LoggedOutCard from "@components/loggedOutCard";
 import StakeCard from "@components/stakeCard";
 import StakeTable from "@components/stakeTable";
 import TrustModal from "@components/trustModal";
@@ -15,6 +16,19 @@ import { parseCookies } from "nookies";
 
 export default function StakePage() {
   const { account, library, chainId } = useWeb3React();
+
+  if (!(account && library))
+    return (
+      <div className="my-8 md:my-10">
+        <Head>
+          <title>Stake | Union</title>
+          <meta property="og:title" content="Stake | Union" />
+          <meta name="twitter:title" content="Stake | Union" />
+        </Head>
+
+        <LoggedOutCard />
+      </div>
+    );
 
   const { query } = useRouter();
 
@@ -41,7 +55,7 @@ export default function StakePage() {
   const { trust: paramTrust, address: paramAddress } = query;
 
   useAutoEffect(() => {
-    if (library && account && paramTrust && paramAddress) {
+    if (paramTrust && paramAddress) {
       toggleTrustModal();
     }
   });

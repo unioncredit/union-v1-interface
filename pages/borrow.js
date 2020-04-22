@@ -3,6 +3,7 @@ import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
 import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
+import LoggedOutCard from "@components/loggedOutCard";
 import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
 import { blockSpeed } from "@constants";
@@ -32,6 +33,19 @@ const getPercentUtilized = (borrowed, creditLimit) =>
 export default function BorrowPage() {
   const { account, library, chainId } = useWeb3React();
 
+  if (!(account && library))
+    return (
+      <div className="my-8 md:my-10">
+        <Head>
+          <title>Borrow | Union</title>
+          <meta property="og:title" content="Borrow | Union" />
+          <meta name="twitter:title" content="Borrow | Union" />
+        </Head>
+
+        <LoggedOutCard />
+      </div>
+    );
+
   const curToken = useCurrentToken();
 
   const toggleBorrowModal = useBorrowModalToggle();
@@ -49,127 +63,149 @@ export default function BorrowPage() {
 
     const getTransactionsData = async () => {
       try {
-        const borrowTxs = await getBorrowTransactions(
-          curToken,
-          library.getSigner(),
-          chainId
-        );
+        if (isMounted) {
+          const borrowTxs = await getBorrowTransactions(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
 
-        const repayTxs = await getRepayTransactions(
-          curToken,
-          library.getSigner(),
-          chainId
-        );
+          const repayTxs = await getRepayTransactions(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
 
-        let txs = [].concat(borrowTxs, repayTxs);
+          let txs = [].concat(borrowTxs, repayTxs);
 
-        txs.sort((x, y) => {
-          if (x.blockNumber > y.blockNumber) return -1;
+          txs.sort((x, y) => {
+            if (x.blockNumber > y.blockNumber) return -1;
 
-          if (x.blockNumber < y.blockNumber) return 1;
+            if (x.blockNumber < y.blockNumber) return 1;
 
-          return 0;
-        });
+            return 0;
+          });
 
-        setTransactions(txs);
+          setTransactions(txs);
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getBorrowedData = async () => {
       try {
-        const res = await getBorrowed(account, curToken, library, chainId);
+        if (isMounted) {
+          const res = await getBorrowed(account, curToken, library, chainId);
 
-        setBorrowed(res.toFixed(4));
+          setBorrowed(res.toFixed(4));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getCreditData = async () => {
       try {
-        const res = await getCreditLimit(curToken, account, library, chainId);
+        if (isMounted) {
+          const res = await getCreditLimit(curToken, account, library, chainId);
 
-        setCreditLimit(res.toFixed(4));
+          setCreditLimit(res.toFixed(4));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getOriginationFeeData = async () => {
       try {
-        const res = await getOriginationFee(curToken, library, chainId);
+        if (isMounted) {
+          const res = await getOriginationFee(curToken, library, chainId);
 
-        setFee(res.toFixed(4));
+          setFee(res.toFixed(4));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getInterestData = async () => {
       try {
-        const res = await getInterest(curToken, account, library, chainId);
+        if (isMounted) {
+          const res = await getInterest(curToken, account, library, chainId);
 
-        setInterest(res.toFixed(4));
+          setInterest(res.toFixed(4));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getPaymentDueDate = async () => {
       try {
-        const isOverdue = await checkIsOverdue(
-          curToken,
-          account,
-          library,
-          chainId
-        );
+        if (isMounted) {
+          const isOverdue = await checkIsOverdue(
+            curToken,
+            account,
+            library,
+            chainId
+          );
 
-        if (isOverdue) {
-          setPaymentDueDate("Overdue");
-          return;
+          if (isOverdue) {
+            setPaymentDueDate("Overdue");
+            return;
+          }
+
+          const lastRepay = await getLastRepay(
+            curToken,
+            account,
+            library,
+            chainId
+          );
+
+          const overdueBlocks = await getOverdueBlocks(
+            curToken,
+            library,
+            chainId
+          );
+
+          const curBlock = await library.getBlockNumber();
+
+          if (lastRepay == 0) {
+            setPaymentDueDate(`-`);
+            return;
+          }
+
+          const days = (
+            ((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) /
+            86400
+          ).toFixed(2);
+
+          setPaymentDueDate(`in ${days} days`);
         }
-
-        const lastRepay = await getLastRepay(
-          curToken,
-          account,
-          library,
-          chainId
-        );
-
-        const overdueBlocks = await getOverdueBlocks(
-          curToken,
-          library,
-          chainId
-        );
-
-        const curBlock = await library.getBlockNumber();
-
-        if (lastRepay == 0) {
-          setPaymentDueDate(`-`);
-          return;
-        }
-
-        const days = (
-          ((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) /
-          86400
-        ).toFixed(2);
-
-        setPaymentDueDate(`in ${days} days`);
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
-    if (isMounted && library && account) {
-      getCreditData();
-      getBorrowedData();
-      getInterestData();
-      getPaymentDueDate();
-      getOriginationFeeData();
-      getTransactionsData();
-    }
+    getCreditData();
+    getBorrowedData();
+    getInterestData();
+    getPaymentDueDate();
+    getOriginationFeeData();
+    getTransactionsData();
 
     return () => {
       isMounted = false;

@@ -21,16 +21,18 @@ const StakeTable = () => {
 
     const getTrustData = async () => {
       try {
-        const res = await getTrust(account, curToken, library, chainId);
-        setData(res);
+        if (isMounted) {
+          const res = await getTrust(account, curToken, library, chainId);
+          setData(res);
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
-    if (isMounted && library && account) {
-      getTrustData();
-    }
+    getTrustData();
 
     return () => {
       isMounted = false;

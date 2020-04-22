@@ -3,43 +3,12 @@ import Button from "@components/button";
 import Snippet from "@components/snippet";
 import { useWalletModalToggle } from "@contexts/Application";
 import Head from "next/head";
-import { Fragment } from "react";
-
-const JoinCard = () => {
-  const toggleWalletModal = useWalletModalToggle();
-
-  return (
-    <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
-      <div
-        className="bg-border-pure mx-auto"
-        style={{ height: 130, width: "100%", maxWidth: 280 }}
-      />
-
-      <h1 className="mb-4 mt-6">Join Union</h1>
-      <p className="text-lg leading-6 text-grey-pure mb-8">
-        Borrow tokens with no collateral, vouch for other people and earn higher
-        interest when staking.
-      </p>
-
-      <Button onClick={toggleWalletModal} full>
-        Start now
-      </Button>
-
-      <p className="mt-4">
-        Already have an account?{" "}
-        <button className="underline font-medium" onClick={toggleWalletModal}>
-          Sign in
-        </button>
-      </p>
-    </div>
-  );
-};
 
 export default function HomePage() {
   const toggleWalletModal = useWalletModalToggle();
 
   return (
-    <Fragment>
+    <div>
       <Head>
         <title>Union</title>
         <meta property="og:title" content="Union" />
@@ -319,6 +288,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </Fragment>
+    </div>
   );
 }

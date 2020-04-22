@@ -2,6 +2,7 @@ import ApplicationCard from "@components/applicationCard";
 import Button from "@components/button";
 import CreditRequestModal from "@components/creditRequestModal";
 import LabelPair from "@components/labelPair";
+import LoggedOutCard from "@components/loggedOutCard";
 import VouchBar from "@components/vouchBar";
 import VouchTable from "@components/vouchTable";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
@@ -25,6 +26,19 @@ const getVouchBarData = (vouchData) =>
 export default function VouchPage() {
   const { account, library, chainId } = useWeb3React();
 
+  if (!(account && library))
+    return (
+      <div className="my-8 md:my-10">
+        <Head>
+          <title>Vouch | Union</title>
+          <meta property="og:title" content="Vouch | Union" />
+          <meta name="twitter:title" content="Vouch | Union" />
+        </Head>
+
+        <LoggedOutCard />
+      </div>
+    );
+
   const curToken = useCurrentToken();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
@@ -37,28 +51,34 @@ export default function VouchPage() {
 
     const getVouchData = async () => {
       try {
-        const res = await getVouched(account, curToken, library, chainId);
+        if (isMounted) {
+          const res = await getVouched(account, curToken, library, chainId);
 
-        setVouchData(res);
+          setVouchData(res);
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getCreditData = async () => {
       try {
-        const res = await getCreditLimit(curToken, account, library, chainId);
+        if (isMounted) {
+          const res = await getCreditLimit(curToken, account, library, chainId);
 
-        setCreditLimit(res.toFixed(4));
+          setCreditLimit(res.toFixed(4));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
-    if (isMounted && library && account) {
-      getVouchData();
-      getCreditData();
-    }
+    getVouchData();
+    getCreditData();
 
     return () => {
       isMounted = false;

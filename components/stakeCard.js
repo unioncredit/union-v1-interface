@@ -41,76 +41,94 @@ const StakeCard = () => {
 
     const getUnionBalance = async () => {
       try {
-        const res = await getErc20Balance(
-          curUnionToken,
-          library.getSigner(),
-          chainId
-        );
+        if (isMounted) {
+          const res = await getErc20Balance(
+            curUnionToken,
+            library.getSigner(),
+            chainId
+          );
 
-        setUnionBalance(res.toFixed(3));
+          setUnionBalance(res.toFixed(3));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getStakeData = async () => {
       try {
-        const res = await getStakeAmount(account, curToken, library, chainId);
+        if (isMounted) {
+          const res = await getStakeAmount(account, curToken, library, chainId);
 
-        setTotalStake(res.stakingAmount);
-        setUtilizedStake(res.creditUsed);
-        setDefaultedStake(res.freezeAmount);
-        setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
+          setTotalStake(res.stakingAmount);
+          setUtilizedStake(res.creditUsed);
+          setDefaultedStake(res.freezeAmount);
+          setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getRewardData = async () => {
       try {
-        const res = await getRewards(curToken, library.getSigner(), chainId);
+        if (isMounted) {
+          const res = await getRewards(curToken, library.getSigner(), chainId);
 
-        setRewards(res.toFixed(3));
+          setRewards(res.toFixed(3));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getUpyData = async () => {
       try {
-        const res = await getRewardsPerYear(
-          curToken,
-          library.getSigner(),
-          chainId
-        );
+        if (isMounted) {
+          const res = await getRewardsPerYear(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
 
-        setUpy(res.toFixed(2));
+          setUpy(res.toFixed(2));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
     const getRewardsMultiplierData = async () => {
       try {
-        const res = await getRewardsMultiplier(
-          curToken,
-          library.getSigner(),
-          chainId
-        );
+        if (isMounted) {
+          const res = await getRewardsMultiplier(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
 
-        setRewardsMultiplier(res.toFixed(2));
+          setRewardsMultiplier(res.toFixed(2));
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) {
+          console.error(err);
+        }
       }
     };
 
-    if (isMounted && library && account) {
-      getStakeData();
-      getRewardData();
-      getUpyData();
-      getUnionBalance();
-      getRewardsMultiplierData();
-    }
+    getStakeData();
+    getRewardData();
+    getUpyData();
+    getUnionBalance();
+    getRewardsMultiplierData();
 
     return () => {
       isMounted = false;
