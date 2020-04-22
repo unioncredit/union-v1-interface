@@ -71,6 +71,9 @@ module.exports = {
         lg: "1280px",
         xl: "1440px",
       },
+      lineHeight: {
+        "12": "3rem",
+      },
       fontSize: {
         "3xl": "2rem",
         "4xl": "2.5rem",
