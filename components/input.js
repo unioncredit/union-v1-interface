@@ -68,10 +68,10 @@ const Input = forwardRef(
             className="block text-xs leading-tight mt-2"
             id={`${id}InputTip`}
           >
+            {tip}{" "}
             <span role="img" aria-label="Information">
               ℹ️
-            </span>{" "}
-            {tip}
+            </span>
           </span>
         )}
       </div>
