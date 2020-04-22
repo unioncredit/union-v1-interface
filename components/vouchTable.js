@@ -110,7 +110,7 @@ const VouchTable = ({
 
       {rows.length === 0 && (
         <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
-          <div className="w-24 h-40 bg-border-pure" />
+          <img src="/images/table-empty.svg" alt="" />
           <p className="text-lg md:text-xl text-center mt-6  mb-4 md:mb-6 max-w-md">
             You need 3 people to vouch for you
           </p>

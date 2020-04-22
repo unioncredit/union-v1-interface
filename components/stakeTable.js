@@ -120,7 +120,7 @@ const StakeTable = () => {
 
       {rows.length === 0 && (
         <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
-          <div className="w-24 h-40 bg-border-pure" />
+          <img src="/images/table-empty.svg" alt="" />
           <p className="text-lg md:text-xl text-center my-6 max-w-md">
             Borrow without collateral and earn higher interest on your deposits
             if you are a member.

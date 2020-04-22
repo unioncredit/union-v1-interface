@@ -36,7 +36,7 @@ export default function Account() {
   };
 
   return (
-    <div className="mt-10">
+    <div className="my-8 md:my-10">
       <Head>
         <title>Account | Union</title>
         <meta property="og:title" content="Account | Union" />
