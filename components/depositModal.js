@@ -1,5 +1,6 @@
 import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
+import { getErc20Balance } from "@lib/contracts/getErc20Balance";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
