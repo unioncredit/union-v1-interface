@@ -22,15 +22,17 @@ export default function UnionApp({ Component, pageProps }) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ContextProviders>
-        <header>
-          <Navigation />
-        </header>
+        <div className="flex flex-col min-h-screen">
+          <header>
+            <Navigation />
+          </header>
 
-        <main>
-          <Component {...pageProps} />
-        </main>
+          <main className="flex-1">
+            <Component {...pageProps} />
+          </main>
 
-        <Footer />
+          <Footer />
+        </div>
       </ContextProviders>
     </Web3ReactProvider>
   );

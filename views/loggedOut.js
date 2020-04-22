@@ -5,7 +5,7 @@ export default function LoggedOutView() {
   const toggleWalletModal = useWalletModalToggle();
 
   return (
-    <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center mb-32 md:mb-64">
+    <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
       <div className="flex justify-center">
         <img src="/images/logged-out.svg" alt="" />
       </div>
