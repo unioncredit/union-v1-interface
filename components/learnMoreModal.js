@@ -28,7 +28,7 @@ const LearnMoreModal = () => {
   return (
     <Modal isOpen={open} onDismiss={toggle} className="fullscreen">
       <div className="container mt-10 sm:mt-20">
-        <div className="text-center mb-10 md:mb-12">
+        <div className="text-center mb-10">
           <CloseButton onClick={toggle} circle />
         </div>
 
