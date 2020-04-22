@@ -266,6 +266,8 @@ table td:not(:first-of-type) {
 
 [data-reach-dialog-content] {
   @apply bg-white w-full outline-none;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 [data-reach-dialog-content].fullscreen {

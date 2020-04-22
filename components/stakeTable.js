@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "@contexts/Application";
+import { useLearnMoreModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrust } from "@lib/contracts/getTrust";
 import { useWeb3React } from "@web3-react/core";
@@ -72,7 +72,7 @@ const StakeTable = () => {
     useSortBy
   );
 
-  const toggleGetInvitedModal = useGetInvitedModalToggle();
+  const toggleGetInvitedModal = useLearnMoreModalToggle();
 
   return (
     <div className="bg-white border rounded p-4 sm:p-6 h-full">

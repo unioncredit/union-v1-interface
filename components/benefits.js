@@ -2,8 +2,8 @@ import SegmentedControl from "@components/segmentedControl";
 import { useState } from "react";
 import Button from "@components/button";
 
-export const Solo = ({ hasButton = false }) => (
-  <div className="rounded bg-white w-full flex-1 flex flex-col border">
+export const Solo = ({ hasButton = false, onClick }) => (
+  <div className="rounded bg-white w-full h-full flex-1 flex flex-col border">
     <div className="px-6 pb-6 pt-20 relative">
       <p className="text-2xl font-semibold leading-tight">Solo</p>
       <div className="absolute bottom-0 right-0 mr-4 md:mr-8">
@@ -25,7 +25,7 @@ export const Solo = ({ hasButton = false }) => (
 
     {hasButton && (
       <div className="px-6 pb-6 mt-8">
-        <Button invert full>
+        <Button onClick={onClick} invert full>
           Start staking
         </Button>
       </div>
@@ -33,8 +33,8 @@ export const Solo = ({ hasButton = false }) => (
   </div>
 );
 
-export const Together = ({ hasButton = false }) => (
-  <div className="rounded bg-white w-full flex-1 flex flex-col border">
+export const Together = ({ hasButton = false, onClick }) => (
+  <div className="rounded bg-white w-full h-full flex-1 flex flex-col border">
     <div className="px-6 pb-6 pt-20 relative">
       <p className="text-2xl font-semibold leading-tight">Together</p>
       <div className="absolute bottom-0 right-0 mr-4 md:mr-8">
@@ -69,7 +69,9 @@ export const Together = ({ hasButton = false }) => (
 
     {hasButton && (
       <div className="px-6 pb-6 mt-8">
-        <Button full>Get invited</Button>
+        <Button onClick={onClick} full>
+          Get invited
+        </Button>
       </div>
     )}
   </div>

@@ -1,29 +1,51 @@
 import {
+  useGetInvitedModalToggle,
   useLearnMoreModalOpen,
   useLearnMoreModalToggle,
 } from "@contexts/Application";
-import Modal from "./modal";
+import { useRouter } from "next/router";
+import { Solo, Together } from "./benefits";
+import Modal, { CloseButton } from "./modal";
 
 const LearnMoreModal = () => {
   const open = useLearnMoreModalOpen();
   const toggle = useLearnMoreModalToggle();
 
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
+
+  const router = useRouter();
+
+  const handleStartStaking = async () => {
+    await router.push("/stake");
+    toggle();
+  };
+
+  const handleSwapModals = async () => {
+    await toggleGetInvitedModal();
+    toggle();
+  };
+
   return (
     <Modal isOpen={open} onDismiss={toggle} className="fullscreen">
-      <div className="max-w-lg mx-auto text-center mt-10 sm:mt-20">
-        <button
-          className="h-12 w-12 rounded-full bg-white text-type-lighter focus:outline-none"
-          style={{ boxShadow: "0px 8px 32px rgba(0, 0, 0, 0.13)" }}
-          onClick={toggle}
-        >
-          <span role="img" aria-label="Close">
-            ❌
-          </span>
-        </button>
+      <div className="container mt-10 sm:mt-20">
+        <div className="text-center mb-10 md:mb-12">
+          <CloseButton onClick={toggle} circle />
+        </div>
 
-        <h2 className="text-3xl mb-4 mt-10">
+        <h2 className="text-center text-3xl mb-10 hidden md:block">
           All the benefits of joining Union
         </h2>
+
+        <div className="mx-auto max-w-3xl">
+          <div className="md:flex md:-mx-2 ">
+            <div className="md:w-1/2 md:px-2 mb-6">
+              <Solo onClick={handleStartStaking} hasButton />
+            </div>
+            <div className="md:w-1/2 md:px-2 mb-6">
+              <Together onClick={handleSwapModals} hasButton />
+            </div>
+          </div>
+        </div>
       </div>
     </Modal>
   );
