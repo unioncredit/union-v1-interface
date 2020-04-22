@@ -25,15 +25,13 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     const getUnionBalance = async () => {
       try {
         if (isMounted) {
-          if (library && account) {
-            const res = await getErc20Balance(
-              UNION_ADDRESS,
-              library.getSigner(),
-              chainId
-            );
+          const res = await getErc20Balance(
+            UNION_ADDRESS,
+            library.getSigner(),
+            chainId
+          );
 
-            setUnionBalance(res.toFixed(3));
-          }
+          setUnionBalance(res.toFixed(3));
         }
       } catch (err) {
         if (isMounted) {

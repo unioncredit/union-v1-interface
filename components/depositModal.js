@@ -11,7 +11,7 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const DepositModal = ({ totalStake, onDeposit }) => {
-  const { library, chainId, account } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
@@ -30,15 +30,13 @@ const DepositModal = ({ totalStake, onDeposit }) => {
     const getDaiBalance = async () => {
       try {
         if (isMounted) {
-          if (library && account) {
-            const res = await getErc20Balance(
-              curToken,
-              library.getSigner(),
-              chainId
-            );
+          const res = await getErc20Balance(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
 
-            setDaiBalance(res);
-          }
+          setDaiBalance(res);
         }
       } catch (err) {
         if (isMounted) {
