@@ -28,17 +28,24 @@ const ApplicationCard = () => {
 
     const getTrustCountData = async () => {
       try {
-        const res = await getTrustCount(account, curToken, library, chainId);
+        if (isMounted) {
+          if (account && library) {
+            const res = await getTrustCount(
+              account,
+              curToken,
+              library,
+              chainId
+            );
 
-        setTrustCount(res);
+            setTrustCount(res);
+          }
+        }
       } catch (err) {
-        console.error(err);
+        if (isMounted) console.error(err);
       }
     };
 
-    if (isMounted && library && account) {
-      getTrustCountData();
-    }
+    getTrustCountData();
 
     return () => {
       isMounted = false;
