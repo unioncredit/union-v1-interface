@@ -271,8 +271,32 @@ table td:not(:first-of-type) {
 [data-reach-dialog-content].fullscreen {
 }
 
+[data-reach-dialog-content].uniswap {
+  @apply self-start mx-auto;
+  margin-top: 12vh;
+  border-radius: 1.25rem;
+  max-width: 32rem;
+  height: 660px;
+  overflow: hidden;
+}
+
+[data-reach-dialog-content].uniswap iframe {
+  border: 0;
+  display: block;
+  height: 660px;
+  min-width: 300px;
+}
+
+.centered {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (width >= 768px) {
-  [data-reach-dialog-content]:not(.fullscreen) {
+  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap) {
     @apply self-start rounded mx-auto;
     margin-top: 12vh;
     max-width: 24rem;

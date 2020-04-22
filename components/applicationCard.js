@@ -8,6 +8,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import Button from "./button";
+import UniswapModal from "./uniswapModal";
 
 const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -17,6 +18,10 @@ const ApplicationCard = () => {
   const curToken = useCurrentToken();
 
   const [trustCount, setTrustCount] = useState(0);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     const getTrustCountData = async () => {
@@ -37,9 +42,11 @@ const ApplicationCard = () => {
     if (library && account) getTrustCountData();
   }, [library, account, chainId]);
 
-  const onVerifyMembership = async () => {
+  const handleSubmitApplication = async () => {
     try {
-      await verifyMembership(account, curToken, library.getSigner(), chainId);
+      toggle();
+
+      // await verifyMembership(account, curToken, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
@@ -59,13 +66,15 @@ const ApplicationCard = () => {
           </p>
         </div>
 
+        <Button onClick={handleSubmitApplication}>Submit application</Button>
+
         <Button
           className="mt-6 md:mt-0"
           onClick={
-            trustCount === 3 ? onVerifyMembership : toggleGetInvitedModal
+            trustCount === 3 ? handleSubmitApplication : toggleGetInvitedModal
           }
         >
-          {trustCount === 3 ? "Verify Membership" : "Ask for a vouch"}
+          {trustCount === 3 ? "Submit application" : "Ask for a vouch"}
         </Button>
       </div>
 
@@ -90,6 +99,8 @@ const ApplicationCard = () => {
           </span>
         </span>
       </div>
+
+      <UniswapModal isOpen={isOpen} onDismiss={toggle} />
     </div>
   );
 };
