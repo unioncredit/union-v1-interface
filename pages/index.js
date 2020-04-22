@@ -36,6 +36,8 @@ const JoinCard = () => {
 };
 
 export default function HomePage() {
+  const toggleWalletModal = useWalletModalToggle();
+
   return (
     <Fragment>
       <Head>
@@ -57,9 +59,13 @@ export default function HomePage() {
                   revealing personal information on a public ledger.
                 </p>
 
-                <a href="#!" className="btn px-10 btn-primary btn-full-mobile">
+                <Button
+                  onClick={toggleWalletModal}
+                  className="btn-full-mobile"
+                  wide
+                >
                   Get started
-                </a>
+                </Button>
 
                 <div className="mt-12">
                   <img
@@ -113,9 +119,13 @@ export default function HomePage() {
                   join with the help of 3 friends vouching for you and enjoy all
                   the benefits of Union
                 </p>
-                <a href="#!" className="btn px-10 btn-primary btn-full-mobile">
+                <Button
+                  onClick={toggleWalletModal}
+                  className="btn-full-mobile"
+                  wide
+                >
                   Get started
-                </a>
+                </Button>
               </div>
             </div>
             <div className="w-full md:w-1/2 md:p-8 flex md:justify-end">
