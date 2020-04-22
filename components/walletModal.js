@@ -91,7 +91,9 @@ const WalletModal = () => {
         {walletView === WALLET_VIEWS.SIGN_IN ? (
           <Fragment>
             <div className="mb-10">
-              <p className="text-center text-xl mb-3">Sign in</p>
+              <p className="text-center text-xl mb-3">
+                {active ? "Change wallet" : "Sign in"}
+              </p>
               <div className="w-full h-1 bg-pink-pure" />
             </div>
 
@@ -148,7 +150,7 @@ const WalletModal = () => {
                     deactivate();
                   }}
                 >
-                  Disconnect
+                  Sign out
                 </Button>
               </div>
             ) : (
