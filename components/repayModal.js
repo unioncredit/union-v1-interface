@@ -44,6 +44,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
           placeholder="0.00"
           ref={register}
           required
+          min={0}
           type="number"
         />
 

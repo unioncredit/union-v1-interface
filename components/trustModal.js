@@ -46,6 +46,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           required
           tip="The amount you trust this address to borrow and be able to repay."
           type="number"
+          min={0}
         />
 
         <div className="mt-20">

@@ -121,6 +121,7 @@ const CreditRequestModal = () => {
             ref={register}
             tip="Tip: You can leave this amount input open"
             type="number"
+            min={0}
           />
 
           <div className="mt-20">

@@ -84,6 +84,7 @@ const DepositModal = ({ totalStake, onDeposit }) => {
           required
           tip={`Increases your UPY by ${0} UNION`}
           type="number"
+          min={0}
         />
 
         <div className="divider" />
