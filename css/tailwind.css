@@ -244,6 +244,15 @@ table td:not(:first-of-type) {
   color: #f4998e;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* purgecss end ignore */
 
 @tailwind utilities;
