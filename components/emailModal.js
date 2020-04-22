@@ -1,21 +1,39 @@
 import { useEmailModalOpen, useEmailModalToggle } from "@contexts/Application";
+import { useWeb3React } from "@web3-react/core";
 import { setCookie } from "nookies";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
 import Modal from "./modal";
 
+const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
+
 const EmailModal = () => {
   const open = useEmailModalOpen();
   const toggle = useEmailModalToggle();
 
+  const { library, account } = useWeb3React();
+
   const { handleSubmit, register } = useForm();
 
-  const onSubmit = (values) => {
-    setTimeout(() => {
-      console.log(values);
+  const onSubmit = async (values) => {
+    const { email } = values;
+
+    try {
+      if (!email) throw new Error("`email` is required");
+
+      const signer = library.getSigner();
+
+      const signature = await signer.signMessage(MESSAGE);
+
+      /**
+       * @todo Post email to DB here with a key / value pair of address / email
+       */
+
       handleToggle();
-    }, 1000);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleToggle = () => {
