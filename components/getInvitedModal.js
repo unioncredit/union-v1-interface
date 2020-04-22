@@ -3,9 +3,47 @@ import {
   useGetInvitedModalToggle,
   useLearnMoreModalToggle,
 } from "@contexts/Application";
+import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback, useAutoEffect } from "hooks.macro";
+import { useState } from "react";
+import { useCopyToClipboard } from "react-use";
+import Telegram from "svgs/Telegram";
+import Twitter from "svgs/Twitter";
+import Button from "./button";
+import Input from "./input";
 import Modal, { CloseButton } from "./modal";
 
+const generateLink = (address) => {
+  if (!address) throw new Error("`account` is required");
+  return `${window.location.origin}/stake?address=${address}`;
+};
+
+const generateTwitterLink = (shareLink) =>
+  `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}&via=unionprotocol`;
+
+const generateTelegramLink = (shareLink) =>
+  `https://telegram.me/share/url?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}`;
+
+const SHARE_MESSAGE = `Please vouch for me on Union!`;
+
 const GetInvitedModal = () => {
+  const { account } = useWeb3React();
+
+  const [shareLink, setShareLink] = useState(undefined);
+
+  useAutoEffect(() => {
+    if (account) {
+      setShareLink(generateLink(account));
+    }
+  });
+
+  const [{ value }, copyToClipboard] = useCopyToClipboard();
+  const [copied, setCopied] = useState(false);
+
   const open = useGetInvitedModalOpen();
   const toggle = useGetInvitedModalToggle();
 
@@ -15,6 +53,12 @@ const GetInvitedModal = () => {
     await toggleLearnMoreModal();
     toggle();
   };
+
+  const handleCopy = useAutoCallback(() => {
+    setCopied(true);
+    copyToClipboard(shareLink);
+    setTimeout(() => setCopied(false), 1000);
+  });
 
   return (
     <Modal isOpen={open} onDismiss={toggle} className="fullscreen">
@@ -44,14 +88,20 @@ const GetInvitedModal = () => {
               <div className="mb-8 mx-auto h-12 w-12 rounded-full border border-pink-pure text-xl font-semibold leading-12 text-center">
                 1
               </div>
-              <p>
+              <p className="mb-8">
                 Send this link as a <strong>private message</strong> to someone
                 you already know is a memeber.
               </p>
+              <Input value={shareLink} readOnly className="mb-4" />
+              <Button full onClick={handleCopy}>
+                {copied ? "Copied!" : "Copy link"}
+              </Button>
             </div>
+
             <div className="px-20">
               <div className="h-full w-px bg-pink-pure"></div>
             </div>
+
             <div className="md:flex-1 mb-8">
               <div className="mb-8 mx-auto h-12 w-12 rounded-full border border-pink-pure text-xl font-semibold leading-12 text-center">
                 2
@@ -61,6 +111,29 @@ const GetInvitedModal = () => {
                 <strong>social media</strong> asking your friends whether one of
                 them can vouch for you.
               </p>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={generateTwitterLink(shareLink)}
+                className="btn btn-invert w-full relative mt-4"
+              >
+                <div className="btn-icon">
+                  <Twitter />
+                </div>
+                Share to Twitter
+              </a>
+
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={generateTelegramLink(shareLink)}
+                className="btn btn-invert w-full relative mt-4"
+              >
+                <div className="btn-icon">
+                  <Telegram />
+                </div>
+                Share to Telegram
+              </a>
             </div>
           </div>
         </div>
