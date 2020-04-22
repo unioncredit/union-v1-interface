@@ -25,10 +25,11 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           autoFocus
           className="mb-4"
           defaultValue={initialAddress}
+          pattern="^0x[a-fA-F0-9]{40}"
           id="address"
-          label="Address or ENS Name"
+          label="Address"
           name="address"
-          placeholder="Enter address or ENS"
+          placeholder="Enter address"
           ref={register}
           required
         />
