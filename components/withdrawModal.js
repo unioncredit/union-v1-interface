@@ -9,7 +9,9 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, watch } = useForm();
+
+  const watchAmount = watch("depositAmount", 0);
 
   const onSubmit = (values) => {
     onWithdraw(values.amount);
@@ -34,6 +36,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
           className="mb-8"
           id="amount"
           name="amount"
+          max={totalStake}
           label="Withdraw Amount"
           placeholder="0.00"
           ref={register}
@@ -46,7 +49,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
         <LabelPair
           className="mb-6 mt-4"
           label="New total stake"
-          value={0}
+          value={Number(totalStake - watchAmount)}
           valueType="DAI"
         />
 

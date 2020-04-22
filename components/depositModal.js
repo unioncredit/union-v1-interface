@@ -9,10 +9,12 @@ const DepositModal = ({ totalStake, onDeposit }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, watch } = useForm();
+
+  const watchAmount = watch("amount", 0);
 
   const onSubmit = (values) => {
-    onDeposit(values.depositAmount);
+    onDeposit(values.amount);
   };
 
   return (
@@ -32,7 +34,7 @@ const DepositModal = ({ totalStake, onDeposit }) => {
           autoFocus
           chip="DAI"
           className="mb-8"
-          id="depositAmount"
+          id="amount"
           label="Deposit Amount"
           placeholder="0.00"
           ref={register}
@@ -46,7 +48,7 @@ const DepositModal = ({ totalStake, onDeposit }) => {
         <LabelPair
           className="mb-6 mt-4"
           label="New total stake"
-          value={0}
+          value={Number(totalStake + watchAmount)}
           valueType="DAI"
         />
 
