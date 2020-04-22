@@ -275,7 +275,7 @@ export default function BorrowView() {
                 <Link href="/vouch">
                   <a className="underline text-sm">See my breakdown</a>
                 </Link>
-                <Link href="/stake">
+                <Link href="/vouch">
                   <a className="underline text-sm">Increase my limit</a>
                 </Link>
               </div>
