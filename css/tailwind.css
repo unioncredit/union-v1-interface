@@ -274,7 +274,7 @@ input[type="number"] {
 }
 
 [data-reach-dialog-content] {
-  @apply bg-white w-full outline-none;
+  @apply bg-white w-full h-full outline-none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -308,7 +308,7 @@ input[type="number"] {
 
 @media (width >= 768px) {
   [data-reach-dialog-content]:not(.fullscreen):not(.uniswap) {
-    @apply self-start rounded mx-auto;
+    @apply self-start rounded mx-auto h-auto;
     margin-top: 12vh;
     max-width: 24rem;
   }
