@@ -1,6 +1,10 @@
+import { useWalletModalToggle } from "@contexts/Application";
+import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Fragment } from "react";
+import Button from "./button";
 import EmailModal from "./emailModal";
 import GetInvitedModal from "./getInvitedModal";
 import LearnMoreModal from "./learnMoreModal";
@@ -28,58 +32,99 @@ const NavigationLink = ({ href, children, ...rest }) => {
   );
 };
 
+const LogoLink = () => (
+  <li className="py-4 md:w-1/4 h-20 flex items-center justify-start">
+    <Link href="/">
+      <a>
+        <Logo />
+      </a>
+    </Link>
+  </li>
+);
+
 const Navigation = () => {
   const { pathname } = useRouter();
 
+  const { account, library } = useWeb3React();
+
   const isHomepage = pathname === "/" ? true : false;
+
+  const toggleWalletModal = useWalletModalToggle();
 
   return (
     <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
-        <ul className="flex items-center justify-between">
-          <li className="py-4 md:w-1/4 h-20 flex items-center justify-start">
-            <Link href="/">
-              <a>
-                <Logo />
-              </a>
-            </Link>
-          </li>
+        {isHomepage ? (
+          <ul className="flex items-center justify-between">
+            <LogoLink />
 
-          {!isHomepage && (
-            <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
-              <li>
-                <NavigationLink href="/stake">Stake</NavigationLink>
-              </li>
-              <li>
-                <NavigationLink href="/borrow">Borrow</NavigationLink>
-              </li>
-              <li>
-                <NavigationLink href="/vouch">Vouch</NavigationLink>
-              </li>
+            <ul className="flex md:w-1/4 justify-end items-center py-4">
+              {!!(account && library) ? (
+                <li>
+                  <Web3Status />
+                </li>
+              ) : (
+                <Fragment>
+                  <li className="mr-4">
+                    <button
+                      className="btn border-transparent font-medium px-4"
+                      onClick={toggleWalletModal}
+                    >
+                      Sign in
+                    </button>
+                  </li>
+                  <li>
+                    <Button secondary onClick={toggleWalletModal}>
+                      Start now
+                    </Button>
+                  </li>
+                </Fragment>
+              )}
             </ul>
-          )}
-
-          <ul className="flex md:w-1/4 justify-end py-4">
-            {/* <a href="#!" className="btn btn-secondary px-10">
-              Apply
-            </a> */}
-
-            <Web3Status />
           </ul>
-        </ul>
+        ) : (
+          <Fragment>
+            {/* Desktop */}
+            <ul className="flex items-center justify-between">
+              <LogoLink />
 
-        {!isHomepage && (
-          <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
-            <li>
-              <NavigationLink href="/stake">Stake</NavigationLink>
-            </li>
-            <li>
-              <NavigationLink href="/borrow">Borrow</NavigationLink>
-            </li>
-            <li>
-              <NavigationLink href="/vouch">Vouch</NavigationLink>
-            </li>
-          </ul>
+              {!!(account && library) && (
+                <Fragment>
+                  <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
+                    <li>
+                      <NavigationLink href="/stake">Stake</NavigationLink>
+                    </li>
+                    <li>
+                      <NavigationLink href="/borrow">Borrow</NavigationLink>
+                    </li>
+                    <li>
+                      <NavigationLink href="/vouch">Vouch</NavigationLink>
+                    </li>
+                  </ul>
+
+                  <ul className="flex md:w-1/4 justify-end py-4">
+                    <li>
+                      <Web3Status />
+                    </li>
+                  </ul>
+                </Fragment>
+              )}
+            </ul>
+
+            {!!(account && library) && (
+              <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
+                <li>
+                  <NavigationLink href="/stake">Stake</NavigationLink>
+                </li>
+                <li>
+                  <NavigationLink href="/borrow">Borrow</NavigationLink>
+                </li>
+                <li>
+                  <NavigationLink href="/vouch">Vouch</NavigationLink>
+                </li>
+              </ul>
+            )}
+          </Fragment>
         )}
       </div>
 
