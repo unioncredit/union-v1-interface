@@ -53,7 +53,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     try {
       await verifyMembership(
         account,
-        UNION_ADDRESS,
+        DAI_ADDRESS,
         library.getSigner(),
         chainId
       );

@@ -14,7 +14,7 @@ const ApplicationCard = () => {
 
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
-  const curToken = useCurrentToken("UNION");
+  const curToken = useCurrentToken("DAI");
 
   const [trustCount, setTrustCount] = useState(0);
 
