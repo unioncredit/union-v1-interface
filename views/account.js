@@ -1,27 +1,13 @@
 import Button from "@components/button";
 import Input from "@components/input";
 import { useWeb3React } from "@web3-react/core";
-import Head from "next/head";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
-import LoggedOutCard from "@components/loggedOutCard";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 
 export default function AccountView() {
-  const { library, account } = useWeb3React();
-
-  if (!(account && library))
-    return (
-      <div className="my-8 md:my-10">
-        <Head>
-          <title>Account | Union</title>
-          <meta property="og:title" content="Account | Union" />
-          <meta name="twitter:title" content="Account | Union" />
-        </Head>
-
-        <LoggedOutCard />
-      </div>
-    );
+  const { library } = useWeb3React();
 
   const { register, handleSubmit } = useForm();
 
@@ -44,13 +30,7 @@ export default function AccountView() {
   };
 
   return (
-    <div className="my-8 md:my-10">
-      <Head>
-        <title>Account | Union</title>
-        <meta property="og:title" content="Account | Union" />
-        <meta name="twitter:title" content="Account | Union" />
-      </Head>
-
+    <Fragment>
       <div className="container">
         <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8">
           <h1 className="mb-6">My account</h1>
@@ -74,6 +54,6 @@ export default function AccountView() {
           </form>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
