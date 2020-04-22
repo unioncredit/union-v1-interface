@@ -35,7 +35,7 @@ const JoinCard = () => {
   );
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
     <Fragment>
       <Head>

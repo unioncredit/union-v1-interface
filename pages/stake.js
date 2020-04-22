@@ -13,7 +13,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 
-export default function Stake() {
+export default function StakePage() {
   const { account, library, chainId } = useWeb3React();
 
   const { query } = useRouter();

@@ -22,7 +22,7 @@ const getVouchBarData = (vouchData) =>
     ? vouchData.map(({ vouched }) => parseFloat(vouched))
     : [];
 
-export default function Vouch() {
+export default function VouchPage() {
   const { account, library, chainId } = useWeb3React();
 
   const curToken = useCurrentToken();
@@ -62,6 +62,8 @@ export default function Vouch() {
 
     return () => {
       isMounted = false;
+
+      console.log({ isMounted });
     };
   });
 

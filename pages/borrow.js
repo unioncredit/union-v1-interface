@@ -29,7 +29,7 @@ import { placeholderTip } from "../text/tooltips";
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
 
-export default function Borrow() {
+export default function BorrowPage() {
   const { account, library, chainId } = useWeb3React();
 
   const curToken = useCurrentToken();

@@ -4,7 +4,7 @@ import useCurrentToken from "@hooks/useCurrentToken";
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
 
-export default function Faucet() {
+export default function FaucetPage() {
   const { library, chainId } = useWeb3React();
 
   const curToken = useCurrentToken();
