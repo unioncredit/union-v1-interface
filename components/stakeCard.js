@@ -37,6 +37,8 @@ const StakeCard = () => {
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
   useAutoEffect(() => {
+    let isMounted = true;
+
     const getUnionBalance = async () => {
       try {
         const res = await getErc20Balance(
@@ -102,13 +104,17 @@ const StakeCard = () => {
       }
     };
 
-    if (library && account) {
+    if (isMounted && library && account) {
       getStakeData();
       getRewardData();
       getUpyData();
       getUnionBalance();
       getRewardsMultiplierData();
     }
+
+    return () => {
+      isMounted = false;
+    };
   });
 
   const onDeposit = useAutoCallback(async (amount) => {

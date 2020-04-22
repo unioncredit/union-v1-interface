@@ -45,6 +45,8 @@ export default function Borrow() {
   const [transactions, setTransactions] = useState([]);
 
   useAutoEffect(() => {
+    let isMounted = true;
+
     const getTransactionsData = async () => {
       try {
         const borrowTxs = await getBorrowTransactions(
@@ -160,7 +162,7 @@ export default function Borrow() {
       }
     };
 
-    if (library && account) {
+    if (isMounted && library && account) {
       getCreditData();
       getBorrowedData();
       getInterestData();
@@ -168,6 +170,10 @@ export default function Borrow() {
       getOriginationFeeData();
       getTransactionsData();
     }
+
+    return () => {
+      isMounted = false;
+    };
   });
 
   const onBorrow = useAutoCallback(async (amount) => {

@@ -17,6 +17,8 @@ const StakeTable = () => {
   const [data, setData] = useState([]);
 
   useAutoEffect(() => {
+    let isMounted = true;
+
     const getTrustData = async () => {
       try {
         const res = await getTrust(account, curToken, library, chainId);
@@ -26,10 +28,14 @@ const StakeTable = () => {
       }
     };
 
-    if (library && account) {
+    if (isMounted && library && account) {
       getTrustData();
     }
-  }, [library, account, chainId]);
+
+    return () => {
+      isMounted = false;
+    };
+  });
 
   const memoizedColumns = useAutoMemo(() => [
     {

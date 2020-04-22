@@ -24,6 +24,8 @@ const ApplicationCard = () => {
   const toggleUniswapModal = () => setIsOpen(!isOpen);
 
   useAutoEffect(() => {
+    let isMounted = true;
+
     const getTrustCountData = async () => {
       try {
         const res = await getTrustCount(account, curToken, library, chainId);
@@ -34,7 +36,13 @@ const ApplicationCard = () => {
       }
     };
 
-    if (library && account) getTrustCountData();
+    if (isMounted && library && account) {
+      getTrustCountData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
   });
 
   const handleSubmitApplication = useAutoCallback(async () => {

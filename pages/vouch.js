@@ -33,6 +33,8 @@ export default function Vouch() {
   const [vouchData, setVouchData] = useState([]);
 
   useAutoEffect(() => {
+    let isMounted = true;
+
     const getVouchData = async () => {
       try {
         const res = await getVouched(account, curToken, library, chainId);
@@ -53,10 +55,14 @@ export default function Vouch() {
       }
     };
 
-    if (library && account) {
+    if (isMounted && library && account) {
       getVouchData();
       getCreditData();
     }
+
+    return () => {
+      isMounted = false;
+    };
   });
 
   const vouchTableData = useAutoMemo(vouchData);
