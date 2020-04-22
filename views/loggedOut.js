@@ -1,7 +1,7 @@
 import { useWalletModalToggle } from "@contexts/Application";
-import Button from "./button";
+import Button from "@components/button";
 
-const LoggedOutCard = () => {
+export default function LoggedOutView() {
   const toggleWalletModal = useWalletModalToggle();
 
   return (
@@ -28,6 +28,4 @@ const LoggedOutCard = () => {
       </p>
     </div>
   );
-};
-
-export default LoggedOutCard;
+}
