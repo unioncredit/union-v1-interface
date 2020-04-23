@@ -11,7 +11,7 @@ const WithdrawModal = ({ totalStake, onWithdraw }) => {
 
   const { handleSubmit, register, watch, setValue } = useForm();
 
-  const watchAmount = watch("depositAmount", 0);
+  const watchAmount = watch("amount", 0);
 
   const onSubmit = (values) => {
     onWithdraw(values.amount);
