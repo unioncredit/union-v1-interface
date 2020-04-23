@@ -1,7 +1,7 @@
 # Union Frontend
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![follow: @unionprotocol](https://badgen.net/twitter/follow/union)](https://twitter.com/unionprotocol)
+[![follow: @unionprotocol](https://badgen.net/twitter/follow/unionprotocol)](https://twitter.com/unionprotocol)
 
 The open source interface for Union.
 
