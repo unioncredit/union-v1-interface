@@ -152,6 +152,16 @@ const WalletModal = () => {
                 >
                   Sign out
                 </Button>
+
+                <button
+                  className="text-center w-full underline font-medium text-sm mt-4"
+                  onClick={() => {
+                    toggle();
+                    router.push("/faucet");
+                  }}
+                >
+                  DAI Faucet
+                </button>
               </div>
             ) : (
               <p className="text-sm text-center mt-6">

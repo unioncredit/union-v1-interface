@@ -20,10 +20,10 @@ export default function FaucetView() {
   return (
     <Fragment>
       <div className="container text-center">
-        <h1 className="mb-4">Testnet Faucet</h1>
+        <h1 className="mb-4">Testnet DAI Faucet</h1>
 
         <Button invert onClick={onGetToken}>
-          Get 10000 Test Tokens
+          Get 10000 Dai
         </Button>
       </div>
     </Fragment>
