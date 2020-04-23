@@ -1,13 +1,7 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
-import { getErc20Balance } from "@lib/contracts/getErc20Balance";
-import { getRewards } from "@lib/contracts/getRewards";
-import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
-import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
-import { getStakeAmount } from "@lib/contracts/getStakeAmount";
-import { stake } from "@lib/contracts/stake";
-import { unstake } from "@lib/contracts/unstake";
-import { withdrawRewards } from "@lib/contracts/withdrawRewards";
+import useStakingContract from "@hooks/useStakingContract";
+import useTokenBalance from "@hooks/useTokenBalance";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
@@ -17,118 +11,115 @@ import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 
+const parseRes = (res) => parseFloat((res / 1e18).toString());
+
+/**
+ * @name wrapper
+ * @param {Function} fn
+ *
+ * @note WIP
+ */
+const wrapper = (fn, isMounted) =>
+  async function () {
+    try {
+      if (isMounted) {
+        return await fn.apply(this, arguments);
+      }
+    } catch (err) {
+      if (isMounted) {
+        console.error(err);
+      }
+    }
+  };
+
 const StakeCard = () => {
   const { account, library, chainId } = useWeb3React();
 
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
 
-  const curToken = useCurrentToken();
-
-  const curUnionToken = useCurrentToken("UNION");
+  const DAI = useCurrentToken();
+  const UNION = useCurrentToken("UNION");
 
   const [totalStake, setTotalStake] = useState(0);
   const [utilizedStake, setUtilizedStake] = useState(0);
   const [defaultedStake, setDefaultedStake] = useState(0);
-  const [unionBalance, setUnionBalance] = useState(0);
+  const [balance, setBalance] = useState(0);
   const [withdrawableStake, setWithdrawableStake] = useState(0);
   const [rewards, setRewards] = useState(0);
   const [upy, setUpy] = useState(0);
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
+  const unionBalance = useTokenBalance(UNION);
+
+  const stakingContract = useStakingContract();
+
   useAutoEffect(() => {
     let isMounted = true;
 
-    const getUnionBalance = async () => {
+    async function fetchUnionBalance() {
       try {
         if (isMounted) {
-          const res = await getErc20Balance(
-            curUnionToken,
-            library.getSigner(),
-            chainId
+          const unionBalanceRes = await unionBalance;
+
+          setBalance(unionBalanceRes.toFixed(3));
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
+    }
+
+    async function fetchStakeData() {
+      try {
+        if (isMounted) {
+          const {
+            stakingAmount,
+            creditUsed,
+            freezeAmount,
+            vouchingAmount,
+          } = await stakingContract.getStakerBalance(account, DAI);
+
+          setTotalStake(parseRes(stakingAmount));
+          setUtilizedStake(parseRes(creditUsed));
+          setDefaultedStake(parseRes(freezeAmount));
+          setWithdrawableStake(
+            Number(parseRes(stakingAmount) - parseRes(vouchingAmount))
           );
-
-          setUnionBalance(res.toFixed(3));
         }
       } catch (err) {
         if (isMounted) {
           console.error(err);
         }
       }
-    };
+    }
 
-    const getStakeData = async () => {
+    async function fetchRewardsData() {
       try {
         if (isMounted) {
-          const res = await getStakeAmount(account, curToken, library, chainId);
-
-          setTotalStake(res.stakingAmount);
-          setUtilizedStake(res.creditUsed);
-          setDefaultedStake(res.freezeAmount);
-          setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getRewardData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getRewards(curToken, library.getSigner(), chainId);
-
-          setRewards(res.toFixed(3));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getUpyData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getRewardsPerYear(
-            curToken,
-            library.getSigner(),
-            chainId
+          const rewardsPerYearRes = await stakingContract.rewardsPerYearEst(
+            DAI
           );
-
-          setUpy(res.toFixed(2));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getRewardsMultiplierData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getRewardsMultiplier(
-            curToken,
-            library.getSigner(),
-            chainId
+          const getRewardsMultiplier = await stakingContract.getRewardsMultiplier(
+            DAI
           );
+          const calcRewards = await stakingContract.calculateRewards(DAI);
 
-          setRewardsMultiplier(res.toFixed(2));
+          setRewards(parseRes(calcRewards).toFixed(3));
+          setUpy(parseRes(rewardsPerYearRes).toFixed(2));
+          setRewardsMultiplier(parseRes(getRewardsMultiplier).toFixed(2));
         }
       } catch (err) {
         if (isMounted) {
           console.error(err);
         }
       }
-    };
+    }
 
-    getStakeData();
-    getRewardData();
-    getUpyData();
-    getUnionBalance();
-    getRewardsMultiplierData();
+    fetchUnionBalance();
+    fetchStakeData();
+    fetchRewardsData();
 
     return () => {
       isMounted = false;
@@ -137,7 +128,7 @@ const StakeCard = () => {
 
   const onDeposit = useAutoCallback(async (amount) => {
     try {
-      await stake(curToken, amount, library.getSigner(), chainId);
+      await stake(DAI, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
@@ -145,7 +136,7 @@ const StakeCard = () => {
 
   const onWithdraw = useAutoCallback(async (amount) => {
     try {
-      await unstake(curToken, amount, library.getSigner(), chainId);
+      await unstake(DAI, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
@@ -153,7 +144,7 @@ const StakeCard = () => {
 
   const onWithdrawRewards = useAutoCallback(async () => {
     try {
-      await withdrawRewards(curToken, library.getSigner(), chainId);
+      await withdrawRewards(DAI, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
@@ -168,7 +159,6 @@ const StakeCard = () => {
         value={totalStake}
         valueType="DAI"
       />
-
       <LabelPair
         labelColor="text-grey-pure"
         label="Utilized Stake"
@@ -190,14 +180,12 @@ const StakeCard = () => {
         value={withdrawableStake}
         valueType="DAI"
       />
-
       <LabelPair
         className="mb-4 mt-16"
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
       />
-
       <LabelPair
         labelColor="text-grey-pure"
         label="Rewards"
@@ -205,7 +193,6 @@ const StakeCard = () => {
         value={rewards}
         valueType="UNION"
       />
-
       <LabelPair
         labelColor="text-grey-pure"
         label="Earned Per Year"
@@ -213,12 +200,11 @@ const StakeCard = () => {
         value={upy}
         valueType="UNION"
       />
-
       <LabelPair
         labelColor="text-grey-pure"
         label="Wallet Balance"
         tooltip={placeholderTip}
-        value={unionBalance}
+        value={balance}
         valueType="UNION"
       />
 
