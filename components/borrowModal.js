@@ -4,6 +4,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { commify } from "@ethersproject/units";
 
 const BorrowModal = ({
   balanceOwed,
@@ -27,9 +28,9 @@ const BorrowModal = ({
     2
   );
 
-  const formatNewBalance = Number(
-    parseFloat(balanceOwed) + parseFloat(amount || 0)
-  ).toFixed(2);
+  const formatNewBalance = commify(
+    Number(parseFloat(balanceOwed) + parseFloat(amount || 0)).toFixed(2)
+  );
 
   const formatNewCredit = Number(
     parseFloat(creditLimit) > 0

@@ -1,5 +1,5 @@
 import ABI from "@constants/abis/erc20Detailed.json";
-import { formatUnits, parseUnits } from "@ethersproject/units";
+import { formatUnits } from "@ethersproject/units";
 import { getContract } from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
