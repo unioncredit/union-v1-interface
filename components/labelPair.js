@@ -15,16 +15,21 @@ import PropTypes from "prop-types";
 const LabelPair = ({
   className = "",
   label,
+  labelColor,
   tooltip,
   value,
   large = false,
   valueType,
   outline = false,
 }) => {
-  const cachedLabelClassNames = classNames("leading-tight whitespace-no-wrap", {
-    "text-lg mb-2": large,
-    "cursor-help": tooltip,
-  });
+  const cachedLabelClassNames = classNames(
+    labelColor,
+    "leading-tight whitespace-no-wrap",
+    {
+      "text-lg mb-2": large,
+      "cursor-help": tooltip,
+    }
+  );
 
   const cachedValueClassNames = classNames(
     `leading-tight whitespace-no-wrap font-semibold text-${

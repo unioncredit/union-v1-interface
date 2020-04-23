@@ -170,21 +170,21 @@ const StakeCard = () => {
       />
 
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Utilized Stake"
         tooltip={placeholderTip}
         value={utilizedStake}
         valueType="DAI"
       />
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Defaulted Stake"
         tooltip={placeholderTip}
         value={defaultedStake}
         valueType="DAI"
       />
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Withdrawable Stake"
         tooltip={placeholderTip}
         value={withdrawableStake}
@@ -199,7 +199,7 @@ const StakeCard = () => {
       />
 
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Rewards"
         tooltip={placeholderTip}
         value={rewards}
@@ -207,7 +207,7 @@ const StakeCard = () => {
       />
 
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Earned Per Year"
         tooltip={placeholderTip}
         value={upy}
@@ -215,7 +215,7 @@ const StakeCard = () => {
       />
 
       <LabelPair
-        className="text-grey-pure"
+        labelColor="text-grey-pure"
         label="Wallet Balance"
         tooltip={placeholderTip}
         value={unionBalance}
