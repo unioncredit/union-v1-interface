@@ -20,8 +20,6 @@ export default function useIsMember() {
 
       const isMember = await contract.isMember(account);
 
-      return true;
-
       return isMember;
     } catch {
       return false;
