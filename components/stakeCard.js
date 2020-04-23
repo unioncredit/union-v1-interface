@@ -1,5 +1,5 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
-import { formatUnits, parseUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits, commify } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
@@ -89,7 +89,7 @@ const StakeCard = () => {
           const calcRewards = await stakingContract.calculateRewards(DAI);
 
           setRewards(parseRes(calcRewards, 3));
-          setUpy(parseRes(rewardsPerYearRes));
+          setUpy(commify(parseRes(rewardsPerYearRes)));
           setRewardsMultiplier(parseRes(getRewardsMultiplier));
         }
       } catch (err) {
