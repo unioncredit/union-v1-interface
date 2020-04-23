@@ -1039,10 +1039,10 @@
   dependencies:
     "@ethersproject/bignumber" ">=5.0.0-beta.130"
 
-"@ethersproject/contracts@^5.0.0-beta.145":
-  version "5.0.0-beta.145"
-  resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.0-beta.145.tgz#e568ed2dd4edc003c0f44cedea833c5d7a279a05"
-  integrity sha512-N+kvW1Aq4EcSqLUXv9QLVX6gSeOHfs8HMnL4oITuKqXY+TU6Y16Z+0MwQsKYCh2wbUksvg9RduEFAKatLGrk2w==
+"@ethersproject/contracts@^5.0.0-beta.148":
+  version "5.0.0-beta.148"
+  resolved "https://registry.yarnpkg.com/@ethersproject/contracts/-/contracts-5.0.0-beta.148.tgz#30fa2fa192ee28210b45ec7bbd87c7ef89276717"
+  integrity sha512-SbNlBNY8/RCoMajF1r5aWkcGi9lh2YfQWTUFpc5Wt00+H22TiZbHBnHJyTINxIeo2485mlEUlEDriFVf2qfGWw==
   dependencies:
     "@ethersproject/abi" ">=5.0.0-beta.137"
     "@ethersproject/abstract-provider" ">=5.0.0-beta.131"
@@ -1092,10 +1092,10 @@
   dependencies:
     "@ethersproject/logger" ">=5.0.0-beta.129"
 
-"@ethersproject/providers@^5.0.0-beta.157":
-  version "5.0.0-beta.157"
-  resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.0.0-beta.157.tgz#c7d7ab0f11993db55b8940bda3666e04f09ac97c"
-  integrity sha512-nXhy2gtmjbxuPTcSeCXlkjk+mdsceMzpLr21k/XJbzaDQJMC6xH7N+7AGg/8IM/D9DpEu7jIl8j4/RdSCPig6A==
+"@ethersproject/providers@^5.0.0-beta.162":
+  version "5.0.0-beta.162"
+  resolved "https://registry.yarnpkg.com/@ethersproject/providers/-/providers-5.0.0-beta.162.tgz#cb4efbeea2c776d0ce97712e05ffaa3e0a8df215"
+  integrity sha512-mXT5pQLOmRkXP5pza6TuV9RitaI50b1O2r0og8VzUIHcjO9bq4yppVbWs0Zcxn4KQAiIrAd2xXbYE3q2KdfUYQ==
   dependencies:
     "@ethersproject/abstract-provider" ">=5.0.0-beta.131"
     "@ethersproject/abstract-signer" ">=5.0.0-beta.132"
