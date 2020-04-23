@@ -24,7 +24,7 @@ const NetworkIndicator = () => {
     <div className="indicator pointer-events-none">
       <div className="px-4 py-3 rounded-full font-semibold items-center text-sm bg-black-pure shadow-lg text-white flex">
         <NetworkDot color={NETWORKS[chainId].color} />
-        <p className="ml-2 leading-none">{NETWORKS[chainId].name}</p>
+        <p className="ml-3 leading-none">{NETWORKS[chainId].name}</p>
       </div>
     </div>
   );
