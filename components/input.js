@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import DAI from "../svgs/DAI";
+import Info from "svgs/Info";
 
 const Input = forwardRef(
   (
@@ -65,13 +66,13 @@ const Input = forwardRef(
 
         {tip && (
           <span
-            className="block text-xs leading-tight mt-2"
+            className="inline-flex items-start text-xs leading-tight mt-2"
             id={`${id}InputTip`}
           >
-            {tip}{" "}
-            <span role="img" aria-label="Information">
-              ℹ️
-            </span>
+            <div className="mr-2">
+              <Info />
+            </div>
+            {tip}
           </span>
         )}
       </div>

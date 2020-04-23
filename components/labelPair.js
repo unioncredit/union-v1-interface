@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import Info from "svgs/Info";
 
 /**
  * @name LabelPair
@@ -47,15 +48,9 @@ const LabelPair = ({
     <dl className={cachedClassNames}>
       <dt className={cachedLabelClassNames}>
         {tooltip ? (
-          <div className="flex items-center" title={tooltip}>
+          <div className="flex items-center cursor-help" title={tooltip}>
             <div className="mr-2">{label}</div>
-            <span
-              className="text-sm leading-none"
-              role="img"
-              aria-label="Information"
-            >
-              ℹ️
-            </span>
+            <Info />
           </div>
         ) : (
           label

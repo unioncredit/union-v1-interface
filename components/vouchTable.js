@@ -1,6 +1,9 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
 import { useAutoMemo } from "hooks.macro";
 import { useSortBy, useTable } from "react-table";
+import Chevron from "svgs/Chevron";
+import Info from "svgs/Info";
+import { placeholderTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
@@ -55,14 +58,32 @@ const VouchTable = ({ data }) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " 🔽"
-                        : " 🔼"
-                      : " ⏺"}
-                  </span>
+                  <div className="flex items-center">
+                    {column.Header === "Health" ? (
+                      <span
+                        className="flex items-center cursor-help"
+                        title={placeholderTip}
+                      >
+                        <div className="mr-2">
+                          <Info size={16} />
+                        </div>
+                        {column.render("Header")}
+                      </span>
+                    ) : (
+                      column.render("Header")
+                    )}
+                    <div className="ml-2">
+                      {column.isSorted ? (
+                        column.isSortedDesc ? (
+                          <Chevron.Down size={16} />
+                        ) : (
+                          <Chevron.Up size={16} />
+                        )
+                      ) : (
+                        <Chevron.Down size={16} color="transparent" />
+                      )}
+                    </div>
+                  </div>
                 </th>
               ))}
             </tr>

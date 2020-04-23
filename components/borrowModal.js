@@ -1,10 +1,12 @@
 import { useBorrowModalOpen, useBorrowModalToggle } from "@contexts/Borrow";
+import { commify } from "@ethersproject/units";
 import { useForm } from "react-hook-form";
+import Info from "svgs/Info";
+import { placeholderTip } from "text/tooltips";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { commify } from "@ethersproject/units";
 
 const BorrowModal = ({
   balanceOwed,
@@ -78,11 +80,16 @@ const BorrowModal = ({
           valueType="DAI"
         />
 
-        <div className="text-right text-xs mb-4">
-          <span role="img" aria-label="Information">
-            ℹ️
-          </span>{" "}
-          <span className="underline">Includes fee of {formatFee} DAI</span>
+        <div className="flex justify-end mb-4">
+          <span
+            className="inline-flex items-center text-xs cursor-help"
+            title={placeholderTip}
+          >
+            <div className="mr-2">
+              <Info />
+            </div>
+            <span className="underline">Includes fee of {formatFee} DAI</span>
+          </span>
         </div>
 
         <div className="divider" />

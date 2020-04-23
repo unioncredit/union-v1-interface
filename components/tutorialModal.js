@@ -3,6 +3,7 @@ import { useTutorialModalOpen, useTutorialModalToggle } from "@contexts/Stake";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
+import Chevron from "svgs/Chevron";
 import Button from "./button";
 import Modal, { CloseButton } from "./modal";
 
@@ -41,8 +42,8 @@ const TutorialModal = () => {
       </div>
 
       <div
-        className="flex flex-col px-4 sm:px-6 pb-4 sm:pb-6"
-        style={{ minHeight: 400 }}
+        className="flex flex-col px-4 sm:px-6 pb-4 sm:pb-8"
+        style={{ minHeight: 480 }}
       >
         {state === "FIRST" && (
           <article className="text-center">
@@ -86,7 +87,10 @@ const TutorialModal = () => {
         {state === "FOURTH" && (
           <Fragment>
             <article className="text-center">
-              <div className="h-24 w-48 mx-auto bg-border-pure" />
+              <div className="flex justify-center">
+                <img src="/images/logged-out.svg" className="w-56" alt="" />
+              </div>
+
               <h2 className="mt-8 mb-4 text-xl">Join Union</h2>
               <p className="leading-tight text-grey-pure">
                 Joining Union is invite only, it means that 3 people who are
@@ -110,23 +114,19 @@ const TutorialModal = () => {
             {state !== "FIRST" && (
               <div className="px-3">
                 <button
-                  className="h-12 bg-border-pure focus:outline-none focus:shadow-outline rounded-full w-12"
+                  className="h-12 w-12 flex items-center justify-center bg-border-pure focus:outline-none focus:shadow-outline rounded-full"
                   onClick={prev}
                 >
-                  <span role="img" aria-label="Arrow Left">
-                    ◀️
-                  </span>
+                  <Chevron.Left />
                 </button>
               </div>
             )}
             <div className="px-3">
               <button
-                className="h-12 bg-border-pure focus:outline-none focus:shadow-outline rounded-full w-12"
+                className="h-12 w-12 flex items-center justify-center bg-border-pure focus:outline-none focus:shadow-outline rounded-full"
                 onClick={next}
               >
-                <span role="img" aria-label="Arrow Right">
-                  ▶️
-                </span>
+                <Chevron.Right />
               </button>
             </div>
           </div>

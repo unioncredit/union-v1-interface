@@ -24,6 +24,7 @@ import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { placeholderTip } from "../text/tooltips";
+import Info from "svgs/Info";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
@@ -243,13 +244,7 @@ export default function BorrowView() {
                 <dt className="leading-tight whitespace-no-wrap cursor-help mb-4 md:mb-0">
                   <div className="flex items-center" title={placeholderTip}>
                     <div className="mr-2">Percent Utilization</div>
-                    <span
-                      className="text-sm leading-none"
-                      role="img"
-                      aria-label="Information"
-                    >
-                      ℹ️
-                    </span>
+                    <Info light />
                   </div>
                 </dt>
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">

@@ -8,6 +8,7 @@ import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
 import ApplicationModal from "./applicationModal";
 import Button from "./button";
+import Info from "svgs/Info";
 
 const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -77,16 +78,15 @@ const ApplicationCard = () => {
         ></div>
       </div>
 
-      <div className="mb-2">
-        <span className="cursor-help" title={placeholderTip}>
+      <div className="mb-2 md:mb-0">
+        <span
+          className="inline-flex items-center cursor-help"
+          title={placeholderTip}
+        >
           <span className="underline">What is vouching?</span>{" "}
-          <span
-            className="text-sm leading-none"
-            role="img"
-            aria-label="Information"
-          >
-            ℹ️
-          </span>
+          <div className="ml-2">
+            <Info />
+          </div>
         </span>
       </div>
 
