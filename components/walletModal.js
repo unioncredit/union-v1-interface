@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
+import Spinner from "./spinner";
 
 const isMetaMask =
   typeof window !== "undefined" &&
@@ -31,7 +32,7 @@ const WalletOption = ({ name, activating, disabled, onClick }) => (
   <div className="mt-4" key={name}>
     <Button
       full
-      icon={getWalletIcon(name)}
+      icon={activating ? <Spinner /> : getWalletIcon(name)}
       invert
       onClick={onClick}
       disabled={disabled}
