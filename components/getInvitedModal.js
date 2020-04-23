@@ -12,6 +12,7 @@ import Twitter from "svgs/Twitter";
 import Button from "./button";
 import Input from "./input";
 import Modal, { CloseButton } from "./modal";
+import useCopy from "@hooks/useCopy";
 
 const generateLink = (address) => {
   if (!address) throw new Error("`account` is required");
@@ -41,8 +42,7 @@ const GetInvitedModal = () => {
     }
   });
 
-  const [{ value }, copyToClipboard] = useCopyToClipboard();
-  const [copied, setCopied] = useState(false);
+  const [copied, copy] = useCopy();
 
   const open = useGetInvitedModalOpen();
   const toggle = useGetInvitedModalToggle();
@@ -53,12 +53,6 @@ const GetInvitedModal = () => {
     await toggleLearnMoreModal();
     toggle();
   };
-
-  const handleCopy = useAutoCallback(() => {
-    setCopied(true);
-    copyToClipboard(shareLink);
-    setTimeout(() => setCopied(false), 1000);
-  });
 
   return (
     <Modal isOpen={open} onDismiss={toggle} className="fullscreen">
@@ -93,7 +87,7 @@ const GetInvitedModal = () => {
                 you already know is a memeber.
               </p>
               <Input value={shareLink} readOnly className="mb-4" />
-              <Button full onClick={handleCopy}>
+              <Button full onClick={() => copy(shareLink)}>
                 {copied ? "Copied!" : "Copy link"}
               </Button>
             </div>

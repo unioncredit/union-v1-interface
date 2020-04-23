@@ -41,8 +41,8 @@ const CreditRequestModal = () => {
   const toggle = useCreditRequestModalToggle();
 
   const [shareLink, setShareLink] = useState(undefined);
-  const [{ value }, copyToClipboard] = useCopyToClipboard();
-  const [copied, setCopied] = useState(false);
+
+  const [copied, copy] = useCopy();
 
   const { account } = useWeb3React();
 
@@ -56,12 +56,6 @@ const CreditRequestModal = () => {
     } catch (err) {
       console.error(err);
     }
-  });
-
-  const handleCopy = useAutoCallback(() => {
-    setCopied(true);
-    copyToClipboard(shareLink);
-    setTimeout(() => setCopied(false), 1000);
   });
 
   useEffect(() => {
@@ -85,7 +79,7 @@ const CreditRequestModal = () => {
             Union and have them vouch for you.
           </p>
           <Input value={shareLink} readOnly className="mb-4" />
-          <Button full onClick={handleCopy}>
+          <Button full onClick={() => copy(shareLink)}>
             {copied ? "Copied!" : "Copy link"}
           </Button>
           <a
