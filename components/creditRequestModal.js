@@ -14,6 +14,7 @@ import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 import VouchLink from "./vouchLink";
+import VisuallyHidden from "@reach/visually-hidden";
 
 const QRCode = dyanmic(() => import("./shareQRCode"));
 
@@ -56,7 +57,7 @@ const CreditRequestModal = () => {
   }, [open]);
 
   return (
-    <Modal isOpen={open} onDismiss={toggle}>
+    <Modal isOpen={open} onDismiss={toggle} className="wide">
       <ModalHeader title="Ask for a vouch" onDismiss={toggle} />
 
       {shareLink ? (
@@ -70,29 +71,28 @@ const CreditRequestModal = () => {
             Union and have them vouch for you.
           </p>
           <VouchLink link={shareLink} />
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={generateTwitterLink(shareLink)}
-            className="btn btn-invert w-full relative mt-4"
-          >
-            <div className="btn-icon">
-              <Twitter />
-            </div>
-            Share to Twitter
-          </a>
 
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={generateTelegramLink(shareLink)}
-            className="btn btn-invert w-full relative mt-4"
-          >
-            <div className="btn-icon">
+          <div className="mt-8 mb-2 flex justify-center">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={generateTwitterLink(shareLink)}
+              className="focus:outline-none bg-white rounded focus:shadow-outline p-2 mx-4"
+            >
+              <VisuallyHidden>Twitter</VisuallyHidden>
+              <Twitter />
+            </a>
+
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={generateTelegramLink(shareLink)}
+              className="focus:outline-none bg-white rounded focus:shadow-outline p-2 mx-4"
+            >
+              <VisuallyHidden>Telegram</VisuallyHidden>
               <Telegram />
-            </div>
-            Share to Telegram
-          </a>
+            </a>
+          </div>
         </div>
       ) : (
         <form

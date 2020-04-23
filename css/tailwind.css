@@ -282,6 +282,20 @@ input[type="number"] {
   -webkit-overflow-scrolling: touch;
 }
 
+[data-reach-dialog-content].wide {
+  @apply bg-white w-full h-full outline-none;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (width >= 768px) {
+  [data-reach-dialog-content].wide {
+    @apply bg-white w-full h-full outline-none self-start rounded mx-auto h-auto;
+    margin-top: 12vh;
+    max-width: 32rem;
+  }
+}
+
 [data-reach-dialog-content].fullscreen {
 }
 
@@ -310,7 +324,7 @@ input[type="number"] {
 }
 
 @media (width >= 768px) {
-  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap) {
+  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
     @apply self-start rounded mx-auto h-auto;
     margin-top: 12vh;
     max-width: 24rem;
