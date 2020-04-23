@@ -2,29 +2,22 @@ import {
   useCreditRequestModalOpen,
   useCreditRequestModalToggle,
 } from "@contexts/Vouch";
+import generateLink from "@util/generateLink";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import dyanmic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useCopyToClipboard } from "react-use";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
+import VouchLink from "./vouchLink";
 
 const QRCode = dyanmic(() => import("./shareQRCode"));
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;
-
-const generateLink = (address, amount) => {
-  if (!address) throw new Error("`account` is required");
-
-  return `${window.location.origin}/stake?address=${address}${
-    amount && "&trust=" + amount
-  }`;
-};
 
 const generateTwitterLink = (shareLink) =>
   `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
@@ -41,8 +34,6 @@ const CreditRequestModal = () => {
   const toggle = useCreditRequestModalToggle();
 
   const [shareLink, setShareLink] = useState(undefined);
-
-  const [copied, copy] = useCopy();
 
   const { account } = useWeb3React();
 
@@ -78,10 +69,7 @@ const CreditRequestModal = () => {
             Just share the link below or let them scan the QR code to access
             Union and have them vouch for you.
           </p>
-          <Input value={shareLink} readOnly className="mb-4" />
-          <Button full onClick={() => copy(shareLink)}>
-            {copied ? "Copied!" : "Copy link"}
-          </Button>
+          <VouchLink link={shareLink} />
           <a
             target="_blank"
             rel="noopener noreferrer"

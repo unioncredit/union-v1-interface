@@ -3,21 +3,14 @@ import {
   useGetInvitedModalToggle,
   useLearnMoreModalToggle,
 } from "@contexts/Application";
+import generateLink from "@util/generateLink";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
+import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
-import { useCopyToClipboard } from "react-use";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
-import Button from "./button";
-import Input from "./input";
 import Modal, { CloseButton } from "./modal";
-import useCopy from "@hooks/useCopy";
-
-const generateLink = (address) => {
-  if (!address) throw new Error("`account` is required");
-  return `${window.location.origin}/stake?address=${address}`;
-};
+import VouchLink from "./vouchLink";
 
 const generateTwitterLink = (shareLink) =>
   `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
@@ -41,8 +34,6 @@ const GetInvitedModal = () => {
       setShareLink(generateLink(account));
     }
   });
-
-  const [copied, copy] = useCopy();
 
   const open = useGetInvitedModalOpen();
   const toggle = useGetInvitedModalToggle();
@@ -82,14 +73,13 @@ const GetInvitedModal = () => {
               <div className="mb-8 mx-auto h-12 w-12 rounded-full border border-pink-pure text-xl font-semibold leading-12 text-center">
                 1
               </div>
+
               <p className="mb-8">
                 Send this link as a <strong>private message</strong> to someone
                 you already know is a memeber.
               </p>
-              <Input value={shareLink} readOnly className="mb-4" />
-              <Button full onClick={() => copy(shareLink)}>
-                {copied ? "Copied!" : "Copy link"}
-              </Button>
+
+              <VouchLink link={shareLink} />
             </div>
 
             <div className="px-20">
@@ -100,11 +90,13 @@ const GetInvitedModal = () => {
               <div className="mb-8 mx-auto h-12 w-12 rounded-full border border-pink-pure text-xl font-semibold leading-12 text-center">
                 2
               </div>
+
               <p>
                 Or submit a <strong>post</strong> on{" "}
                 <strong>social media</strong> asking your friends whether one of
                 them can vouch for you.
               </p>
+
               <a
                 target="_blank"
                 rel="noopener noreferrer"

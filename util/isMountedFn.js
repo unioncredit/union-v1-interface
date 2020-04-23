@@ -4,8 +4,8 @@
  *
  * @note WIP
  */
-export default wrapper = (fn, isMounted) =>
-  async function () {
+export default function wrapper(fn, isMounted) {
+  return async function () {
     try {
       if (isMounted) {
         return await fn.apply(this, arguments);
@@ -16,3 +16,4 @@ export default wrapper = (fn, isMounted) =>
       }
     }
   };
+}
