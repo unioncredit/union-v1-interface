@@ -11,11 +11,7 @@ export default function useTokenBalance(tokenAddress) {
 
   return useAutoMemo(async () => {
     try {
-      const contract = await getContract(
-        tokenAddress,
-        ABI,
-        library.getSigner()
-      );
+      const contract = getContract(tokenAddress, ABI, library.getSigner());
 
       const decimals = await contract.decimals();
 
