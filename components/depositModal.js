@@ -9,13 +9,13 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const DepositModal = ({ totalStake, onDeposit }) => {
+const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
   const { handleSubmit, register, watch, setValue } = useForm();
 
-  const watchAmount = watch("amount", 0);
+  const amount = watch("amount", 0);
 
   const DAI = useCurrentToken("DAI");
 
@@ -43,6 +43,14 @@ const DepositModal = ({ totalStake, onDeposit }) => {
     onDeposit(values.amount);
   };
 
+  const formatIncreasesUPY = Number(
+    parseFloat(amount || 0) * (parseFloat(rewardsMultiplier) / 100)
+  ).toFixed(2);
+
+  const formatNewTotalStake = Number(
+    parseFloat(amount || 0) + parseFloat(totalStake)
+  );
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Deposit" onDismiss={toggle} />
@@ -68,7 +76,7 @@ const DepositModal = ({ totalStake, onDeposit }) => {
           setMaxValue={balance}
           ref={register}
           required
-          tip={`Increases your UPY by ${0} UNION`}
+          tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
           type="number"
           min={0}
         />
@@ -78,7 +86,7 @@ const DepositModal = ({ totalStake, onDeposit }) => {
         <LabelPair
           className="mb-6 mt-4"
           label="New total stake"
-          value={Number(totalStake + watchAmount)}
+          value={formatNewTotalStake}
           valueType="DAI"
         />
 

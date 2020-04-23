@@ -211,7 +211,11 @@ const StakeCard = () => {
         </Button>
       </div>
 
-      <DepositModal totalStake={totalStake} onDeposit={onDeposit} />
+      <DepositModal
+        totalStake={totalStake}
+        rewardsMultiplier={rewardsMultiplier}
+        onDeposit={onDeposit}
+      />
       <WithdrawModal totalStake={totalStake} onWithdraw={onWithdraw} />
     </div>
   );
