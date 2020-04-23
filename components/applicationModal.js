@@ -1,5 +1,5 @@
 import useCurrentToken from "@hooks/useCurrentToken";
-import { getErc20Balance } from "@lib/contracts/getErc20Balance";
+import useTokenBalance from "@hooks/useTokenBalance";
 import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -13,11 +13,12 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
   const FEE = 10;
 
-  const DAI_ADDRESS = useCurrentToken("DAI");
+  const DAI = useCurrentToken("DAI");
+  const UNION = useCurrentToken("UNION");
 
-  const UNION_ADDRESS = useCurrentToken("UNION");
+  const [balance, setBalance] = useState(0);
 
-  const [unionBalance, setUnionBalance] = useState(" ");
+  const unionBalance = useTokenBalance(UNION);
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -25,13 +26,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     const getUnionBalance = async () => {
       try {
         if (isMounted) {
-          const res = await getErc20Balance(
-            UNION_ADDRESS,
-            library.getSigner(),
-            chainId
-          );
-
-          setUnionBalance(res.toFixed(3));
+          setBalance(await unionBalance);
         }
       } catch (err) {
         if (isMounted) {
@@ -49,12 +44,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
   const submit = useAutoCallback(async () => {
     try {
-      await verifyMembership(
-        account,
-        DAI_ADDRESS,
-        library.getSigner(),
-        chainId
-      );
+      await verifyMembership(account, DAI, library.getSigner(), chainId);
     } catch (err) {}
   });
 
@@ -70,7 +60,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
         <LabelPair
           className="mt-4"
           label="Wallet Balance"
-          value={unionBalance}
+          value={balance}
           valueType="UNION"
         />
 

@@ -1,7 +1,6 @@
 import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
-import { getErc20Balance } from "@lib/contracts/getErc20Balance";
-import { useWeb3React } from "@web3-react/core";
+import useTokenBalance from "@hooks/useTokenBalance";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,8 +10,6 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const DepositModal = ({ totalStake, onDeposit }) => {
-  const { library, chainId } = useWeb3React();
-
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
@@ -20,28 +17,18 @@ const DepositModal = ({ totalStake, onDeposit }) => {
 
   const watchAmount = watch("amount", 0);
 
-  const curToken = useCurrentToken("DAI");
+  const DAI = useCurrentToken("DAI");
 
-  const [daiBalance, setDaiBalance] = useState("0");
+  const [balance, setBalance] = useState(0);
+
+  const daiBalance = useTokenBalance(DAI);
 
   useAutoEffect(() => {
     let isMounted = true;
 
     const getDaiBalance = async () => {
-      try {
-        if (isMounted) {
-          const res = await getErc20Balance(
-            curToken,
-            library.getSigner(),
-            chainId
-          );
-
-          setDaiBalance(res);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
+      if (isMounted) {
+        setBalance(await daiBalance);
       }
     };
 
@@ -76,9 +63,9 @@ const DepositModal = ({ totalStake, onDeposit }) => {
           id="amount"
           label="Deposit Amount"
           placeholder="0.00"
-          max={daiBalance}
-          setMax={() => setValue("amount", daiBalance)}
-          setMaxValue={daiBalance}
+          max={balance}
+          setMax={() => setValue("amount", balance)}
+          setMaxValue={balance}
           ref={register}
           required
           tip={`Increases your UPY by ${0} UNION`}
