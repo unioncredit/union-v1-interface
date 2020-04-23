@@ -9,14 +9,19 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register, watch, getValues } = useForm();
+  const { handleSubmit, register, watch } = useForm();
 
   const onSubmit = (values) => {
     onRepay(values.amount);
   };
 
-  let value = getValues();
-  watch("amount");
+  const amount = watch("amount", 0);
+
+  const formatNewBalance = Number(
+    parseFloat(balanceOwed) > 0
+      ? parseFloat(balanceOwed) - parseFloat(amount || 0)
+      : 0
+  ).toFixed(2);
 
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
@@ -33,28 +38,27 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
 
         <div className="divider" />
 
-        <p className="mt-6 mb-4">How much would you like to borrow?</p>
+        <p className="mt-6 mb-4">How much would you like to repay?</p>
 
         <Input
-          autoFocus
-          chip="DAI"
           id="amount"
-          name="amount"
-          label="Amount"
-          placeholder="0.00"
-          ref={register}
-          required
           min={0}
+          max={balanceOwed}
+          ref={register}
+          min={0}
+          chip="DAI"
+          name="amount"
           type="number"
+          label="Amount"
+          required
+          autoFocus
+          placeholder="0.00"
         />
 
         <LabelPair
           className="mt-4 mb-2"
           label="New balance owed"
-          value={(
-            parseFloat(balanceOwed) -
-            parseFloat(value.amount ? value.amount : 0)
-          ).toFixed(4)}
+          value={formatNewBalance}
           valueType="DAI"
         />
 

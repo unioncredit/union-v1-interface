@@ -15,14 +15,29 @@ const BorrowModal = ({
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
 
-  const { handleSubmit, watch, getValues, register } = useForm();
+  const { handleSubmit, watch, register } = useForm();
 
   const onSubmit = (values) => {
     onBorrow(values.amount);
   };
 
-  let value = getValues();
-  watch("amount");
+  const amount = watch("amount", 0);
+
+  const formatFee = Number(parseFloat(amount || 0) * parseFloat(fee)).toFixed(
+    2
+  );
+
+  const formatNewBalance = Number(
+    parseFloat(balanceOwed) + parseFloat(amount || 0)
+  ).toFixed(2);
+
+  const formatNewCredit = Number(
+    parseFloat(creditLimit) > 0
+      ? parseFloat(creditLimit) -
+          parseFloat(balanceOwed) -
+          parseFloat(amount || 0)
+      : 0
+  ).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -42,25 +57,23 @@ const BorrowModal = ({
         <p className="mt-6 mb-4">How much would you like to borrow?</p>
 
         <Input
-          autoFocus
-          chip="DAI"
           id="amount"
-          name="amount"
-          label="Amount"
-          placeholder="0.00"
+          max={creditLimit}
           ref={register}
-          required
           min={0}
+          chip="DAI"
+          name="amount"
           type="number"
+          label="Amount"
+          required
+          autoFocus
+          placeholder="0.00"
         />
 
         <LabelPair
           className="mt-4"
           label="New balance owed"
-          value={(
-            parseFloat(balanceOwed) +
-            parseFloat(value.amount ? value.amount : 0)
-          ).toFixed(4)}
+          value={formatNewBalance}
           valueType="DAI"
         />
 
@@ -68,31 +81,21 @@ const BorrowModal = ({
           <span role="img" aria-label="Information">
             ℹ️
           </span>{" "}
-          <span className="underline">
-            Includes fee of{" "}
-            {(
-              parseFloat(value.amount ? value.amount : 0) * parseFloat(fee)
-            ).toFixed(4)}{" "}
-            DAI
-          </span>
+          <span className="underline">Includes fee of {formatFee} DAI</span>
         </div>
 
         <div className="divider" />
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">New available credit</dt>
-          <dd className="text-right">{`${(
-            parseFloat(creditLimit) -
-            parseFloat(balanceOwed) -
-            parseFloat(value.amount ? value.amount : 0)
-          ).toFixed(4)} DAI`}</dd>
+          <dd className="text-right">{`${formatNewCredit} DAI`}</dd>
         </dl>
 
         <div className="divider" />
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">Next payment due</dt>
-          <dd className="text-right">{paymentDueDate}</dd>
+          <dd className="text-right">{paymentDueDate ?? `in 30 days`}</dd>
         </dl>
 
         <div className="divider" />

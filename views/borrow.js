@@ -39,7 +39,7 @@ export default function BorrowView() {
   const [borrowed, setBorrowed] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
-  const [paymentDueDate, setPaymentDueDate] = useState("N/A");
+  const [paymentDueDate, setPaymentDueDate] = useState("No Payment Due");
   const [fee, setFee] = useState(0);
   const [transactions, setTransactions] = useState([]);
 
@@ -85,7 +85,7 @@ export default function BorrowView() {
         if (isMounted) {
           const res = await getBorrowed(account, curToken, library, chainId);
 
-          setBorrowed(res.toFixed(4));
+          setBorrowed(res.toFixed(2));
         }
       } catch (err) {
         if (isMounted) {
@@ -99,7 +99,7 @@ export default function BorrowView() {
         if (isMounted) {
           const res = await getCreditLimit(curToken, account, library, chainId);
 
-          setCreditLimit(res.toFixed(4));
+          setCreditLimit(res.toFixed(2));
         }
       } catch (err) {
         if (isMounted) {
@@ -167,7 +167,7 @@ export default function BorrowView() {
           const curBlock = await library.getBlockNumber();
 
           if (lastRepay == 0) {
-            setPaymentDueDate(`-`);
+            setPaymentDueDate("No Payment Due");
             return;
           }
 
