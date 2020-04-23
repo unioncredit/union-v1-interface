@@ -24,6 +24,8 @@ export default function UnionApp({ Component, pageProps }) {
     <Web3ReactProvider getLibrary={getLibrary}>
       <ContextProviders>
         <div className="flex flex-col min-h-screen">
+          <NetworkIndicator />
+
           <header>
             <Navigation />
           </header>
@@ -33,8 +35,6 @@ export default function UnionApp({ Component, pageProps }) {
           </main>
 
           <Footer />
-
-          <NetworkIndicator />
         </div>
       </ContextProviders>
     </Web3ReactProvider>
