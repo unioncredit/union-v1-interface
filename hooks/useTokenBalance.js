@@ -21,10 +21,6 @@ export default function useTokenBalance(tokenAddress) {
 
       const balance = await contract.balanceOf(account);
 
-      console.log({
-        balance: parseBalance(balance, decimals),
-      });
-
       return parseBalance(balance, decimals);
     } catch {
       return null;
