@@ -33,7 +33,7 @@ const Input = forwardRef(
                   onClick={setMax}
                   className="underline focus:outline-none font-medium"
                 >
-                  Max: {Number(setMaxValue).toFixed(2)}
+                  Max: {setMaxValue}
                 </button>
               )}
             </div>

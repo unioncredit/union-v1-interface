@@ -1,9 +1,10 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
+import { stake } from "@lib/contracts/stake";
 import { useWeb3React } from "@web3-react/core";
-import BigNumber from "bignumber.js";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
@@ -11,9 +12,9 @@ import Button from "./button";
 import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
-import { parseUnits } from "@ethersproject/units";
 
-const parseRes = (res) => parseFloat((res / 1e18).toString());
+const parseRes = (res, decimals = 2) =>
+  Number(formatUnits(res, 18)).toFixed(decimals);
 
 const StakeCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -43,9 +44,7 @@ const StakeCard = () => {
     async function fetchUnionBalance() {
       try {
         if (isMounted) {
-          const unionBalanceRes = await unionBalance;
-
-          setBalance(unionBalanceRes.toFixed(3));
+          setBalance(await unionBalance);
         }
       } catch (err) {
         if (isMounted) {
@@ -64,9 +63,9 @@ const StakeCard = () => {
             vouchingAmount,
           } = await stakingContract.getStakerBalance(account, DAI);
 
-          setTotalStake(parseRes(stakingAmount));
-          setUtilizedStake(parseRes(creditUsed));
-          setDefaultedStake(parseRes(freezeAmount));
+          setTotalStake(parseRes(stakingAmount, 0));
+          setUtilizedStake(parseRes(creditUsed, 0));
+          setDefaultedStake(parseRes(freezeAmount, 0));
           setWithdrawableStake(
             Number(parseRes(stakingAmount) - parseRes(vouchingAmount))
           );
@@ -89,9 +88,9 @@ const StakeCard = () => {
           );
           const calcRewards = await stakingContract.calculateRewards(DAI);
 
-          setRewards(parseRes(calcRewards).toFixed(3));
-          setUpy(parseRes(rewardsPerYearRes).toFixed(2));
-          setRewardsMultiplier(parseRes(getRewardsMultiplier).toFixed(2));
+          setRewards(parseRes(calcRewards, 3));
+          setUpy(parseRes(rewardsPerYearRes));
+          setRewardsMultiplier(parseRes(getRewardsMultiplier));
         }
       } catch (err) {
         if (isMounted) {

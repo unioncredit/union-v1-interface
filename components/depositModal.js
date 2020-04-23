@@ -21,7 +21,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const [balance, setBalance] = useState(0);
 
-  const daiBalance = useTokenBalance(DAI);
+  const daiBalance = useTokenBalance(DAI, 2);
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -76,7 +76,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
           setMaxValue={balance}
           ref={register}
           required
-          tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
+          // tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
           type="number"
           min={0}
         />

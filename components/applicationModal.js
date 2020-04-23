@@ -18,7 +18,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
   const [balance, setBalance] = useState(0);
 
-  const unionBalance = useTokenBalance(UNION);
+  const unionBalance = useTokenBalance(UNION, 2);
 
   useAutoEffect(() => {
     let isMounted = true;
