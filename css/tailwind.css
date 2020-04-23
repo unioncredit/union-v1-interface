@@ -266,7 +266,7 @@ input[type="number"] {
 }
 
 [data-reach-dialog-overlay] {
-  background: hsla(0, 0%, 0%, 0.66);
+  background: #fff;
   position: fixed;
   top: 0;
   right: 0;
@@ -324,6 +324,10 @@ input[type="number"] {
 }
 
 @media (width >= 768px) {
+  [data-reach-dialog-overlay] {
+    background: hsla(0, 0%, 0%, 0.66);
+  }
+
   [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
     @apply self-start rounded mx-auto h-auto;
     margin-top: 12vh;
