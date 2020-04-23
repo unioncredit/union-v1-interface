@@ -1,5 +1,6 @@
 import Footer from "@components/footer";
 import Navigation from "@components/navigation";
+import NetworkIndicator from "@components/networkIndicator";
 import ApplicationContext from "@contexts/Application";
 import BorrowContext from "@contexts/Borrow";
 import StakeContext from "@contexts/Stake";
@@ -32,6 +33,8 @@ export default function UnionApp({ Component, pageProps }) {
           </main>
 
           <Footer />
+
+          <NetworkIndicator />
         </div>
       </ContextProviders>
     </Web3ReactProvider>

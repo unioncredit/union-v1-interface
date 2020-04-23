@@ -232,6 +232,13 @@ table td:not(:first-of-type) {
   }
 }
 
+.indicator {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .shadow-app {
   box-shadow: -35px 1.16px 74px rgba(207, 192, 192, 0.16);
   border-radius: 16.3277px;
@@ -245,6 +252,22 @@ table td:not(:first-of-type) {
 }
 .pl-c1 {
   color: #f4998e;
+}
+
+.bg-kovan {
+  background: #9064ff;
+}
+.bg-ropsten {
+  background: #ff4a8d;
+}
+.bg-mainnet {
+  background: #29b6af;
+}
+.bg-goerli {
+  background: #3099f2;
+}
+.bg-rinkeby {
+  background: #f6c343;
 }
 
 input::-webkit-outer-spin-button,
