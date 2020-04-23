@@ -58,7 +58,7 @@ const Navigation = () => {
           <ul className="flex items-center justify-between">
             <LogoLink />
 
-            <ul className="flex md:w-1/4 justify-end items-center py-4">
+            <ul className="flex justify-end items-center py-4">
               {!!(account && library) ? (
                 <li>
                   <Web3Status />
