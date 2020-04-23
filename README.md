@@ -11,7 +11,7 @@ The open source interface for Union.
 
 ## Develop Locally
 
-Always create a new branfch off of `develop`.
+Always create a new branch off of `develop`.
 
 _Note:_ If you want to use WalletConnect or Fortmatic to test while building make a copy of .env.local.example named .env.local, change INFURA_KEY to "{yourKey}", and change FORTMATIC_API_KEY to "{yourFortmaticTestKey}".
 
