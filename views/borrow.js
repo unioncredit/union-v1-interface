@@ -8,6 +8,7 @@ import Transaction from "@components/transaction";
 import { blockSpeed } from "@constants";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useIsMember from "@hooks/useIsMember";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
@@ -23,8 +24,8 @@ import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import { placeholderTip } from "../text/tooltips";
 import Info from "svgs/Info";
+import { placeholderTip } from "../text/tooltips";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
@@ -37,10 +38,12 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
+  const isMember = useIsMember();
+
   const [borrowed, setBorrowed] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
-  const [paymentDueDate, setPaymentDueDate] = useState("No Payment Due");
+  const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
   const [transactions, setTransactions] = useState([]);
 
@@ -49,7 +52,7 @@ export default function BorrowView() {
 
     const getTransactionsData = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const borrowTxs = await getBorrowTransactions(
             curToken,
             library.getSigner(),
@@ -83,7 +86,7 @@ export default function BorrowView() {
 
     const getBorrowedData = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const res = await getBorrowed(account, curToken, library, chainId);
 
           setBorrowed(res.toFixed(2));
@@ -97,7 +100,7 @@ export default function BorrowView() {
 
     const getCreditData = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const res = await getCreditLimit(curToken, account, library, chainId);
 
           setCreditLimit(res.toFixed(2));
@@ -111,7 +114,7 @@ export default function BorrowView() {
 
     const getOriginationFeeData = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const res = await getOriginationFee(curToken, library, chainId);
 
           setFee(res.toFixed(4));
@@ -125,7 +128,7 @@ export default function BorrowView() {
 
     const getInterestData = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const res = await getInterest(curToken, account, library, chainId);
 
           setInterest(res.toFixed(4));
@@ -139,7 +142,7 @@ export default function BorrowView() {
 
     const getPaymentDueDate = async () => {
       try {
-        if (isMounted) {
+        if (isMounted && isMember === true) {
           const isOverdue = await checkIsOverdue(
             curToken,
             account,
@@ -235,7 +238,11 @@ export default function BorrowView() {
                   outline={true}
                 />
 
-                <Button tertiary onClick={toggleBorrowModal}>
+                <Button
+                  tertiary
+                  disabled={isMember === true ? false : true}
+                  onClick={toggleBorrowModal}
+                >
                   Borrow
                 </Button>
               </div>
@@ -286,7 +293,12 @@ export default function BorrowView() {
                   large
                 />
 
-                <Button onClick={toggleRepayModal}>Repay</Button>
+                <Button
+                  disabled={isMember === true ? false : true}
+                  onClick={toggleRepayModal}
+                >
+                  Repay
+                </Button>
               </div>
 
               <LabelPair
@@ -307,11 +319,17 @@ export default function BorrowView() {
           </div>
         </div>
 
-        <div className="mb-5">
-          <h2>Transactions</h2>
-        </div>
-        {transactions.length > 0 &&
-          transactions.map((datum, i) => <Transaction key={i} data={datum} />)}
+        {isMember === true && (
+          <div>
+            <div className="mb-5">
+              <h2>Transactions</h2>
+            </div>
+            {transactions.length > 0 &&
+              transactions.map((datum, i) => (
+                <Transaction key={i} data={datum} />
+              ))}
+          </div>
+        )}
       </div>
 
       <BorrowModal

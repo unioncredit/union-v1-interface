@@ -6,6 +6,7 @@ import TutorialModal from "@components/tutorialModal";
 import { useEmailModalToggle } from "@contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useIsMember from "@hooks/useIsMember";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -25,6 +26,8 @@ export default function StakeView() {
   const curToken = useCurrentToken();
 
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
+
+  const isMember = useIsMember();
 
   useAutoEffect(() => {
     if (!email_modal_completed) {
@@ -63,7 +66,11 @@ export default function StakeView() {
               <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 md:mb-4">
                 <h2 className="mb-4 md:mb-0">Addresses You Trust</h2>
 
-                <Button invert onClick={toggleTrustModal}>
+                <Button
+                  disabled={isMember === true ? false : true}
+                  onClick={toggleTrustModal}
+                  invert
+                >
                   Trust a new member
                 </Button>
               </div>
