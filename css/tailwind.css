@@ -126,8 +126,7 @@ table td:not(:first-of-type) {
 }
 
 .focus-within\:input:focus-within {
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5),
-    0px 0px 12px rgba(19, 44, 106, 0.1);
+  box-shadow: 0px 0px 12px rgba(19, 44, 106, 0.1);
 }
 
 .active-nav-tab {
