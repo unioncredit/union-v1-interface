@@ -1,5 +1,5 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
-import { formatUnits, parseUnits, commify } from "@ethersproject/units";
+import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
@@ -7,7 +7,13 @@ import { stake } from "@lib/contracts/stake";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
-import { placeholderTip } from "../text/tooltips";
+import {
+  defaultedStakeTip,
+  rewardsTip,
+  unionPerYearTip,
+  utilizedStakeTip,
+  withdrawableStakeTip,
+} from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
@@ -146,21 +152,21 @@ const StakeCard = () => {
       <LabelPair
         labelColor="text-grey-pure"
         label="Utilized Stake"
-        tooltip={placeholderTip}
+        tooltip={utilizedStakeTip}
         value={utilizedStake}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Defaulted Stake"
-        tooltip={placeholderTip}
+        tooltip={defaultedStakeTip}
         value={defaultedStake}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Withdrawable Stake"
-        tooltip={placeholderTip}
+        tooltip={withdrawableStakeTip}
         value={withdrawableStake}
         valueType="DAI"
       />
@@ -173,21 +179,20 @@ const StakeCard = () => {
       <LabelPair
         labelColor="text-grey-pure"
         label="Rewards"
-        tooltip={placeholderTip}
+        tooltip={rewardsTip}
         value={rewards}
         valueType="UNION"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Earned Per Year"
-        tooltip={placeholderTip}
+        tooltip={unionPerYearTip}
         value={upy}
         valueType="UNION"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Wallet Balance"
-        tooltip={placeholderTip}
         value={balance}
         valueType="UNION"
       />

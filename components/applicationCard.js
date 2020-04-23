@@ -5,10 +5,10 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
-import { placeholderTip } from "../text/tooltips";
+import Info from "svgs/Info";
+import { vouchingTip } from "../text/tooltips";
 import ApplicationModal from "./applicationModal";
 import Button from "./button";
-import Info from "svgs/Info";
 
 const ApplicationCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -81,7 +81,7 @@ const ApplicationCard = () => {
       <div className="mb-2 md:mb-0">
         <span
           className="inline-flex items-center cursor-help"
-          title={placeholderTip}
+          title={vouchingTip}
         >
           <span className="underline">What is vouching?</span>{" "}
           <div className="ml-2">

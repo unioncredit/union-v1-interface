@@ -3,7 +3,7 @@ import { useAutoMemo } from "hooks.macro";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
-import { placeholderTip } from "text/tooltips";
+import { healthTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
@@ -62,7 +62,7 @@ const VouchTable = ({ data }) => {
                     {column.Header === "Health" ? (
                       <span
                         className="flex items-center cursor-help"
-                        title={placeholderTip}
+                        title={healthTip}
                       >
                         <div className="mr-2">
                           <Info size={16} />

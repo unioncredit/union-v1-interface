@@ -25,7 +25,7 @@ import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import Info from "svgs/Info";
-import { placeholderTip } from "../text/tooltips";
+import { minimumPaymentDueTip, utilizedStakeTip } from "../text/tooltips";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
@@ -249,7 +249,7 @@ export default function BorrowView() {
 
               <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
                 <dt className="leading-tight whitespace-no-wrap cursor-help mb-4 md:mb-0">
-                  <div className="flex items-center" title={placeholderTip}>
+                  <div className="flex items-center" title={utilizedStakeTip}>
                     <div className="mr-2">Percent Utilization</div>
                     <Info light />
                   </div>
@@ -303,7 +303,7 @@ export default function BorrowView() {
 
               <LabelPair
                 className="text-type-light"
-                tooltip={placeholderTip}
+                tooltip={minimumPaymentDueTip}
                 label="Minimum Payment Due"
                 valueType="DAI"
                 value={interest}
@@ -312,7 +312,6 @@ export default function BorrowView() {
               <LabelPair
                 className="text-type-light"
                 label="Payment Due Date"
-                tooltip={placeholderTip}
                 value={paymentDueDate}
               />
             </div>
