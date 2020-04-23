@@ -3,6 +3,7 @@ import useCurrentToken from "@hooks/useCurrentToken";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
 import { useWeb3React } from "@web3-react/core";
+import BigNumber from "bignumber.js";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import { placeholderTip } from "../text/tooltips";
@@ -10,27 +11,9 @@ import Button from "./button";
 import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
+import { parseUnits } from "@ethersproject/units";
 
 const parseRes = (res) => parseFloat((res / 1e18).toString());
-
-/**
- * @name wrapper
- * @param {Function} fn
- *
- * @note WIP
- */
-const wrapper = (fn, isMounted) =>
-  async function () {
-    try {
-      if (isMounted) {
-        return await fn.apply(this, arguments);
-      }
-    } catch (err) {
-      if (isMounted) {
-        console.error(err);
-      }
-    }
-  };
 
 const StakeCard = () => {
   const { account, library, chainId } = useWeb3React();
@@ -134,9 +117,11 @@ const StakeCard = () => {
     }
   });
 
-  const onWithdraw = useAutoCallback(async (amount) => {
+  const onWithdraw = useAutoCallback(async (input) => {
     try {
-      await unstake(DAI, amount, library.getSigner(), chainId);
+      const amount = parseUnits(input, 18).toString();
+
+      await stakingContract.unstake(DAI, amount);
     } catch (err) {
       console.error(err);
     }
@@ -144,7 +129,7 @@ const StakeCard = () => {
 
   const onWithdrawRewards = useAutoCallback(async () => {
     try {
-      await withdrawRewards(DAI, library.getSigner(), chainId);
+      await stakingContract.withdrawRewards(DAI);
     } catch (err) {
       console.error(err);
     }
