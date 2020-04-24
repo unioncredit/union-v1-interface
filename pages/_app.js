@@ -8,6 +8,8 @@ import VouchContext from "@contexts/Vouch";
 import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import "../css/tailwind.css";
+import ErrorBoundary from "@components/errorBoundary";
+import Error from "./_error";
 
 const ContextProviders = ({ children }) => (
   <ApplicationContext>
@@ -21,22 +23,24 @@ const ContextProviders = ({ children }) => (
 
 export default function UnionApp({ Component, pageProps }) {
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <ContextProviders>
-        <div className="flex flex-col min-h-screen">
-          <NetworkIndicator />
+    <ErrorBoundary fallback={<Error />}>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ContextProviders>
+          <div className="flex flex-col min-h-screen">
+            <NetworkIndicator />
 
-          <header>
-            <Navigation />
-          </header>
+            <header>
+              <Navigation />
+            </header>
 
-          <main className="flex-1">
-            <Component {...pageProps} />
-          </main>
+            <main className="flex-1">
+              <Component {...pageProps} />
+            </main>
 
-          <Footer />
-        </div>
-      </ContextProviders>
-    </Web3ReactProvider>
+            <Footer />
+          </div>
+        </ContextProviders>
+      </Web3ReactProvider>
+    </ErrorBoundary>
   );
 }
