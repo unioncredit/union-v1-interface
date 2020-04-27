@@ -12,7 +12,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 export default function StakeView() {
   const { library, chainId } = useWeb3React();
@@ -23,11 +23,18 @@ export default function StakeView() {
   const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
 
+  const [isMember, setIsMember] = useState(false);
+
   const curToken = useCurrentToken();
 
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
-  const isMember = useIsMember();
+  const isMemberPromise = useIsMember();
+  useAutoEffect(() => {
+    isMemberPromise.then((v) => {
+      setIsMember(v);
+    });
+  });
 
   useAutoEffect(() => {
     if (!email_modal_completed) {
