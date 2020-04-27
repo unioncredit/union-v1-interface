@@ -9,20 +9,20 @@
                 "type": "address"
             }
         ],
-        "name": "LogSetBasisToken",
+        "name": "LogAddStakingToken",
         "type": "event"
     },
     {
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "account",
                 "type": "address"
             },
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
@@ -41,13 +41,13 @@
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "account",
                 "type": "address"
             },
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
@@ -66,13 +66,13 @@
         "anonymous": false,
         "inputs": [
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "account",
                 "type": "address"
             },
             {
-                "indexed": false,
+                "indexed": true,
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
@@ -116,46 +116,10 @@
                 "type": "address"
             }
         ],
-        "name": "accrueInflation",
+        "name": "addStakingToken",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "basisToken",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "calculateRewards",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -182,7 +146,7 @@
                 "type": "address"
             }
         ],
-        "name": "getLoanableAmount",
+        "name": "getEffectiveTotalStaked",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -203,7 +167,7 @@
                 "type": "address"
             }
         ],
-        "name": "getRewardsMultiplier",
+        "name": "getLoanableAmount",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -257,24 +221,12 @@
         "type": "function"
     },
     {
-        "constant": true,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "getSupplyPerYear",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
+        "constant": false,
+        "inputs": [],
+        "name": "initialize",
+        "outputs": [],
         "payable": false,
-        "stateMutability": "view",
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -338,42 +290,6 @@
             }
         ],
         "name": "lending",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "rewardsPerYearEst",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "setBasisToken",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
@@ -444,16 +360,48 @@
                 "internalType": "uint256",
                 "name": "creditUsed",
                 "type": "uint256"
-            },
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
             {
                 "internalType": "uint256",
-                "name": "lastWithdrawBlock",
+                "name": "",
                 "type": "uint256"
-            },
+            }
+        ],
+        "name": "stakingTokens",
+        "outputs": [
             {
-                "internalType": "uint256",
-                "name": "lastInflationIndex",
-                "type": "uint256"
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "tokenIsSupport",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
             }
         ],
         "payable": false,
@@ -527,16 +475,21 @@
         "inputs": [
             {
                 "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
                 "name": "token",
                 "type": "address"
             },
             {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
+                "internalType": "bool",
+                "name": "isOverdue",
+                "type": "bool"
             }
         ],
-        "name": "updateTotalFreezeAmount",
+        "name": "updateOverdueInfo",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",

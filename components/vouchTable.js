@@ -70,18 +70,18 @@ const VouchTable = ({ data }) => {
                         {column.render("Header")}
                       </span>
                     ) : (
-                      column.render("Header")
-                    )}
+                        column.render("Header")
+                      )}
                     <div className="ml-2">
                       {column.isSorted ? (
                         column.isSortedDesc ? (
                           <Chevron.Down size={16} />
                         ) : (
-                          <Chevron.Up size={16} />
-                        )
+                            <Chevron.Up size={16} />
+                          )
                       ) : (
-                        <Chevron.Down size={16} color="transparent" />
-                      )}
+                          <Chevron.Down size={16} color="transparent" />
+                        )}
                     </div>
                   </div>
                 </th>

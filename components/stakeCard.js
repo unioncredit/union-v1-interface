@@ -1,8 +1,10 @@
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useUnionContract from "@hooks/useUnionContract";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
+import { BLOCKS_PER_YEAR } from "@constants/";
 import { stake } from "@lib/contracts/stake";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -41,6 +43,8 @@ const StakeCard = () => {
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
   const unionBalance = useTokenBalance(UNION);
+
+  const unionContract = useUnionContract();
 
   const stakingContract = useStakingContract();
 
@@ -85,14 +89,23 @@ const StakeCard = () => {
 
     async function fetchRewardsData() {
       try {
-        if (isMounted) {
-          const rewardsPerYearRes = await stakingContract.rewardsPerYearEst(
-            DAI
+        if (isMounted && account) {
+          const userBlockDelta = await unionContract.getUserBlockDelta(account, DAI);
+          let blocks;
+          if (userBlockDelta > BLOCKS_PER_YEAR[chainId]) {
+            blocks = userBlockDelta;
+          } else {
+            blocks = BLOCKS_PER_YEAR[chainId] - userBlockDelta;
+          }
+
+          const rewardsPerYearRes = await unionContract.calculateRewardsByBlocks(
+            account, DAI, blocks
           );
-          const getRewardsMultiplier = await stakingContract.getRewardsMultiplier(
-            DAI
+
+          const getRewardsMultiplier = await unionContract.getRewardsMultiplier(
+            account, DAI
           );
-          const calcRewards = await stakingContract.calculateRewards(DAI);
+          const calcRewards = await unionContract.calculateRewards(account, DAI);
 
           setRewards(parseRes(calcRewards, 3));
           setUpy(commify(parseRes(rewardsPerYearRes)));
@@ -134,7 +147,7 @@ const StakeCard = () => {
 
   const onWithdrawRewards = useAutoCallback(async () => {
     try {
-      await stakingContract.withdrawRewards(DAI);
+      await unionContract.withdrawRewards(DAI);
     } catch (err) {
       console.error(err);
     }

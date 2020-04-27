@@ -492,6 +492,15 @@
     },
     {
         "constant": false,
+        "inputs": [],
+        "name": "initialize",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
         "inputs": [
             {
                 "internalType": "address",
@@ -613,7 +622,7 @@
                 "type": "uint256"
             },
             {
-                "internalType": "enum LendingMarket.FundingStatus",
+                "internalType": "enum LendingMarket.LoanStatus",
                 "name": "lastStatus",
                 "type": "uint8"
             }

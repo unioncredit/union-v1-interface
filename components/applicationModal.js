@@ -1,4 +1,6 @@
+import { formatUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useMemberContract from "@hooks/useMemberContract";
 import useTokenBalance from "@hooks/useTokenBalance";
 import { verifyMembership } from "@lib/contracts/verifyMembership";
 import { useWeb3React } from "@web3-react/core";
@@ -7,18 +9,22 @@ import { useState } from "react";
 import Button from "./button";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { getOriginationFee } from "@lib/contracts/getOriginationFee";
+
+const parseRes = (res, decimals = 2) =>
+  Number(formatUnits(res, 18)).toFixed(decimals);
 
 const ApplicationModal = ({ isOpen, onDismiss }) => {
   const { account, library, chainId } = useWeb3React();
-
-  const FEE = 10;
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
 
   const [balance, setBalance] = useState(0);
+  const [FEE, setFee] = useState(0);
 
   const unionBalance = useTokenBalance(UNION, 2);
+  const memberContract = useMemberContract();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -35,7 +41,21 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       }
     };
 
+    const getMemberFee = async () => {
+      try {
+        if (isMounted) {
+          const fee = await memberContract.newMemberFee();
+          setFee(parseRes(fee, 2));
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
+    };
+
     getUnionBalance();
+    getMemberFee();
 
     return () => {
       isMounted = false;
@@ -45,7 +65,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const submit = useAutoCallback(async () => {
     try {
       await verifyMembership(account, DAI, library.getSigner(), chainId);
-    } catch (err) {}
+    } catch (err) { }
   });
 
   return (

@@ -30,7 +30,6 @@ export default function VouchView() {
       try {
         if (isMounted) {
           const res = await getVouched(account, curToken, library, chainId);
-
           setVouchData(res);
         }
       } catch (err) {
