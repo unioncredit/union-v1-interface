@@ -67,7 +67,7 @@ export default function StakeView() {
                 <h2 className="mb-4 md:mb-0">Addresses You Trust</h2>
 
                 <Button
-                  // disabled={isMember === true ? false : true}
+                  disabled={isMember === true ? false : true}
                   onClick={toggleTrustModal}
                   invert
                 >
