@@ -147,7 +147,7 @@ const StakeCard = () => {
 
   const onWithdrawRewards = useAutoCallback(async () => {
     try {
-      await unionContract.withdrawRewards(DAI);
+      await unionContract.withdrawRewards(account, DAI);
     } catch (err) {
       console.error(err);
     }
