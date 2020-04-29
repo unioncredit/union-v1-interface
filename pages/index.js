@@ -57,7 +57,10 @@ export default function Home() {
                   revealing personal information on a public ledger.
                 </p>
 
-                <a href="https://forms.gle/WhswhH2iQRHbFJ3j9" className="btn px-10 btn-primary btn-full-mobile">
+                <a
+                  href="https://forms.gle/WhswhH2iQRHbFJ3j9"
+                  className="btn px-10 btn-primary btn-full-mobile"
+                >
                   Get started
                 </a>
 
@@ -113,7 +116,10 @@ export default function Home() {
                   join with the help of 3 friends vouching for you and enjoy all
                   the benefits of Union
                 </p>
-                <a href="https://forms.gle/WhswhH2iQRHbFJ3j9" className="btn px-10 btn-primary btn-full-mobile">
+                <a
+                  href="https://forms.gle/WhswhH2iQRHbFJ3j9"
+                  className="btn px-10 btn-primary btn-full-mobile"
+                >
                   Get started
                 </a>
               </div>
@@ -201,7 +207,7 @@ export default function Home() {
                 Your circle of trust
               </h2>
               <p className="md:text-xl leading-tight font-normal max-w-md">
-                Union is all about trust. Create your own cirlce of trust where
+                Union is all about trust. Create your own circle of trust where
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
