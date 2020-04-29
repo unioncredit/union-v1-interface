@@ -60,7 +60,7 @@ const Navigation = () => {
           )}
 
           <ul className="flex md:w-1/4 justify-end py-4">
-            <a href="#!" className="btn btn-secondary px-10">
+            <a href="https://app.asana.com/0/1156322622401809/1173317538038115" className="btn btn-secondary px-10">
               Apply
             </a>
 
