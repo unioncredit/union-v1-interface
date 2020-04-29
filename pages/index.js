@@ -79,7 +79,7 @@ export default function Home() {
 
               <div className="ml-8 md:ml-16 mt-8 md:mt-16">
                 <p className="text-type-light mb-6">
-                  Trusted by industry lead companies
+                  Trusted by industry leading investors
                 </p>
                 <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
                   <div className="pb-4 pr-8 md:pr-16">
