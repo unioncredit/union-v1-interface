@@ -5,6 +5,7 @@ import ApplicationContext from "@contexts/Application";
 import BorrowContext from "@contexts/Borrow";
 import StakeContext from "@contexts/Stake";
 import VouchContext from "@contexts/Vouch";
+import AdminContext from "@contexts/Admin";
 import getLibrary from "@lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import "../css/tailwind.css";
@@ -15,7 +16,9 @@ const ContextProviders = ({ children }) => (
   <ApplicationContext>
     <BorrowContext>
       <VouchContext>
-        <StakeContext>{children}</StakeContext>
+        <StakeContext>
+          <AdminContext>{children}</AdminContext>
+        </StakeContext>
       </VouchContext>
     </BorrowContext>
   </ApplicationContext>

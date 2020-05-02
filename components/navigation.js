@@ -64,68 +64,71 @@ const Navigation = () => {
                   <Web3Status />
                 </li>
               ) : (
-                <Fragment>
-                  <li className="mr-4">
-                    <button
-                      className="btn border-transparent font-medium px-4"
-                      onClick={toggleWalletModal}
-                    >
-                      Sign in
+                  <Fragment>
+                    <li className="mr-4">
+                      <button
+                        className="btn border-transparent font-medium px-4"
+                        onClick={toggleWalletModal}
+                      >
+                        Sign in
                     </button>
-                  </li>
-                  <li>
-                    <Button secondary onClick={toggleWalletModal}>
-                      Start now
+                    </li>
+                    <li>
+                      <Button secondary onClick={toggleWalletModal}>
+                        Start now
                     </Button>
-                  </li>
-                </Fragment>
-              )}
+                    </li>
+                  </Fragment>
+                )}
             </ul>
           </ul>
         ) : (
-          <Fragment>
-            {/* Desktop */}
-            <ul className="flex items-center justify-between">
-              <LogoLink />
+            <Fragment>
+              {/* Desktop */}
+              <ul className="flex items-center justify-between">
+                <LogoLink />
+
+                {!!(account && library) && (
+                  <Fragment>
+                    <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
+                      <li>
+                        <NavigationLink href="/stake">Stake</NavigationLink>
+                      </li>
+                      <li>
+                        <NavigationLink href="/borrow">Borrow</NavigationLink>
+                      </li>
+                      <li>
+                        <NavigationLink href="/vouch">Vouch</NavigationLink>
+                      </li>
+                      <li>
+                        <NavigationLink href="/administrator">Administrator</NavigationLink>
+                      </li>
+                    </ul>
+
+                    <ul className="flex md:w-1/4 justify-end py-4">
+                      <li>
+                        <Web3Status />
+                      </li>
+                    </ul>
+                  </Fragment>
+                )}
+              </ul>
 
               {!!(account && library) && (
-                <Fragment>
-                  <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
-                    <li>
-                      <NavigationLink href="/stake">Stake</NavigationLink>
-                    </li>
-                    <li>
-                      <NavigationLink href="/borrow">Borrow</NavigationLink>
-                    </li>
-                    <li>
-                      <NavigationLink href="/vouch">Vouch</NavigationLink>
-                    </li>
-                  </ul>
-
-                  <ul className="flex md:w-1/4 justify-end py-4">
-                    <li>
-                      <Web3Status />
-                    </li>
-                  </ul>
-                </Fragment>
+                <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
+                  <li>
+                    <NavigationLink href="/stake">Stake</NavigationLink>
+                  </li>
+                  <li>
+                    <NavigationLink href="/borrow">Borrow</NavigationLink>
+                  </li>
+                  <li>
+                    <NavigationLink href="/vouch">Vouch</NavigationLink>
+                  </li>
+                </ul>
               )}
-            </ul>
-
-            {!!(account && library) && (
-              <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
-                <li>
-                  <NavigationLink href="/stake">Stake</NavigationLink>
-                </li>
-                <li>
-                  <NavigationLink href="/borrow">Borrow</NavigationLink>
-                </li>
-                <li>
-                  <NavigationLink href="/vouch">Vouch</NavigationLink>
-                </li>
-              </ul>
-            )}
-          </Fragment>
-        )}
+            </Fragment>
+          )}
       </div>
 
       <EmailModal />

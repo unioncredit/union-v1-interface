@@ -6,6 +6,12 @@ export const BLOCKS_PER_YEAR = {
   42: 2102400,
 }
 
+export const CONTROLLER_ADDRESSES = {
+  1: AddressZero,
+  4: "0xed1a2831171EE541DfAc036C8c2103aB91D8F040",
+  42: AddressZero
+}
+
 export const MARKET_REGISTRY_ADDRESSES = {
   1: AddressZero,
   4: "0x9300E877ac629FD40286F3079C8B5D6Df00D5dCC",
