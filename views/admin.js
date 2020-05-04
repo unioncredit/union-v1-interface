@@ -21,7 +21,7 @@ const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
 const WAD = 1e18;
 
-export default function BorrowView() {
+export default function AdminView() {
   const { account, library, chainId } = useWeb3React();
 
   const toggleMarketModal = useMarketModalToggle();
