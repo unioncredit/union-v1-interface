@@ -101,7 +101,10 @@ module.exports = {
   },
   variants: {},
   plugins: [],
-  purge: ["./**/*.jsx"],
+  purge: {
+    enabled: true,
+    content: ["./components/**/*.js", "./pages/**/*.js", "./views/**/*.js"],
+  },
   corePlugins: {
     float: false,
     container: false,
