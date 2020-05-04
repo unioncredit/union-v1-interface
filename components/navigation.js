@@ -100,11 +100,6 @@ const Navigation = () => {
                     <li>
                       <NavigationLink href="/vouch">Vouch</NavigationLink>
                     </li>
-                    <li>
-                      <NavigationLink href="/administrator">
-                        Administrator
-                      </NavigationLink>
-                    </li>
                   </ul>
 
                   <ul className="flex md:w-1/4 justify-end py-4">

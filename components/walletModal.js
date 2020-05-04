@@ -146,7 +146,6 @@ const WalletModal = () => {
                 <Button
                   full
                   invert
-                  className="mb-2"
                   onClick={() => {
                     if (connector === walletconnect) connector.close();
                     deactivate();
@@ -154,20 +153,10 @@ const WalletModal = () => {
                 >
                   Sign out
                 </Button>
-
-                <button
-                  className="text-center w-full focus:outline-none underline font-medium text-sm py-2"
-                  onClick={() => {
-                    toggle();
-                    router.push("/faucet");
-                  }}
-                >
-                  DAI Faucet
-                </button>
               </div>
             ) : (
               <Fragment>
-                <p className="text-sm text-center mt-6 mb-4">
+                <p className="text-sm text-center mt-6">
                   Don't have an account?{" "}
                   <button
                     onClick={() => setWalletView(WALLET_VIEWS.CREATE)}
@@ -176,12 +165,15 @@ const WalletModal = () => {
                     Sign up
                   </button>
                 </p>
-                <button
-                  className="text-center mx-auto block focus:outline-none underline font-medium text-sm"
-                  onClick={toggle}
-                >
-                  Close
-                </button>
+
+                {/* <p className="mt-4 text-center">
+              <button
+                className="focus:outline-none underline font-medium text-sm"
+                onClick={toggle}
+              >
+                Close
+              </button>
+            </p> */}
               </Fragment>
             )}
           </Fragment>
@@ -237,7 +229,7 @@ const WalletModal = () => {
 
             <div className="divider" />
 
-            <p className="text-sm text-center mt-6 mb-4">
+            <p className="text-sm text-center mt-6">
               Already have an account?{" "}
               <button
                 onClick={() => setWalletView(WALLET_VIEWS.SIGN_IN)}
@@ -247,12 +239,14 @@ const WalletModal = () => {
               </button>
             </p>
 
-            <button
-              className="text-center mx-auto block focus:outline-none underline font-medium text-sm"
-              onClick={toggle}
-            >
-              Close
-            </button>
+            {/* <p className="mt-4 text-center">
+              <button
+                className="focus:outline-none underline font-medium text-sm"
+                onClick={toggle}
+              >
+                Close
+              </button>
+            </p> */}
           </Fragment>
         )}
       </div>
