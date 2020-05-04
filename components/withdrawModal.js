@@ -17,6 +17,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
 
   const onSubmit = async (values) => {
     await onWithdraw(values.amount);
+
+    toggle();
   };
 
   return (
