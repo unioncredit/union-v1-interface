@@ -60,16 +60,13 @@ table thead {
 }
 
 table th {
-  @apply pb-8 pt-4 leading-none border-b text-right select-none font-medium;
+  @apply pb-8 pt-4 leading-none border-b select-none font-medium;
 }
-table th:first-of-type {
-  @apply text-left;
+table th:last-of-type > .flex {
+  @apply justify-end;
 }
 table td {
   @apply py-4 border-b;
-}
-table td:not(:first-of-type) {
-  @apply text-right;
 }
 
 /* purgecss end ignore */
