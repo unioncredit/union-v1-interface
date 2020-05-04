@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@ethersproject/address": "^5.0.0-beta.134",
+    "@ethersproject/bignumber": "^5.0.0-beta.138",
     "@ethersproject/contracts": "^5.0.0-beta.148",
     "@ethersproject/providers": "^5.0.0-beta.162",
     "@ethersproject/units": "^5.0.0-beta.132",
