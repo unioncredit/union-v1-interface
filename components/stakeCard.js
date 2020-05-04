@@ -138,9 +138,7 @@ const StakeCard = () => {
 
   const onDeposit = useAutoCallback(async (amount) => {
     try {
-      const tx = await stake(DAI, amount, library.getSigner(), chainId);
-
-      await tx.wait();
+      await stake(DAI, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
