@@ -15,7 +15,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const { handleSubmit, register, watch, setValue, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
   const amount = watch("amount", 0);
 
@@ -51,7 +51,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const formatNewTotalStake = Number(
     parseFloat(amount || 0) + parseFloat(totalStake)
-  );
+  ).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -94,7 +94,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
         />
 
         <Button full type="submit" disabled={!dirty}>
-          Confirm
+          {isSubmitting ? "Waiting for confirmation..." : "Confirm"}
         </Button>
       </form>
     </Modal>
