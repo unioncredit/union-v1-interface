@@ -71,10 +71,11 @@ const ApplicationCard = () => {
 
       <div className="mt-6 mb-4 h-5 bg-pink-2-light rounded-full w-full md:w-1/2 relative overflow-hidden">
         <div
-          className={classNames(
-            "absolute bg-pink-2-pure h-full",
-            `w-${trustCount >= 3 ? "full" : `${trustCount}/3`}`
-          )}
+          className={classNames("absolute bg-pink-2-pure h-full", {
+            "w-full": trustCount >= 3,
+            "w-2/3": trustCount === 2,
+            "w-1/3": trustCount === 1,
+          })}
         ></div>
       </div>
 

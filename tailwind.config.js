@@ -101,6 +101,7 @@ module.exports = {
   },
   variants: {},
   plugins: [],
+  purge: ["./**/*.jsx"],
   corePlugins: {
     float: false,
     container: false,

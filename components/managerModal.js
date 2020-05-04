@@ -1,7 +1,4 @@
 import { useManagerModalOpen, useManagerModalToggle } from "@contexts/Admin";
-import useCurrentToken from "@hooks/useCurrentToken";
-import { useAutoEffect } from "hooks.macro";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";

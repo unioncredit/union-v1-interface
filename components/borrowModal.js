@@ -71,7 +71,7 @@ const BorrowModal = ({
         <Input
           min={0}
           required
-          // autoFocus
+          autoFocus
           chip="DAI"
           id="amount"
           name="amount"
