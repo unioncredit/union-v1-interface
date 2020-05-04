@@ -31,20 +31,21 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
         </dl>
 
         <Input
+          min={0}
+          required
           autoFocus
           chip="DAI"
-          className="mb-8"
           id="amount"
+          step="0.01"
           name="amount"
-          max={withdrawableStake}
-          setMax={() => setValue("amount", withdrawableStake)}
-          setMaxValue={withdrawableStake}
-          label="Amount"
-          placeholder="0.00"
-          ref={register}
-          required
-          min={0}
           type="number"
+          label="Amount"
+          ref={register}
+          className="mb-8"
+          placeholder="0.00"
+          max={withdrawableStake}
+          setMaxValue={withdrawableStake}
+          setMax={() => setValue("amount", withdrawableStake)}
         />
 
         <div className="divider" />

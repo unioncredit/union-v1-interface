@@ -65,20 +65,21 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
         </dl>
 
         <Input
+          min={0}
+          required
           autoFocus
           chip="DAI"
-          className="mb-8"
           id="amount"
-          label="Amount"
-          placeholder="0.00"
+          step="0.01"
           max={balance}
-          setMax={() => setValue("amount", balance)}
-          setMaxValue={balance}
-          ref={register}
-          required
-          // tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
           type="number"
-          min={0}
+          label="Amount"
+          ref={register}
+          className="mb-8"
+          placeholder="0.00"
+          setMaxValue={balance}
+          setMax={() => setValue("amount", balance)}
+          // tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
         />
 
         <div className="divider" />
