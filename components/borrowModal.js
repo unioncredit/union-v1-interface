@@ -19,10 +19,10 @@ const BorrowModal = ({
 
   const { handleSubmit, watch, register, setValue, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
-  const onSubmit = (values) => {
-    onBorrow(values.amount);
+  const onSubmit = async (values) => {
+    await onBorrow(values.amount);
   };
 
   const amount = watch("amount", 0);
@@ -121,7 +121,12 @@ const BorrowModal = ({
         <div className="divider" />
 
         <div className="mt-6">
-          <Button full type="submit" disabled={!dirty}>
+          <Button
+            full
+            type="submit"
+            disabled={isSubmitting || !dirty}
+            submitting={isSubmitting}
+          >
             Confirm
           </Button>
         </div>

@@ -16,7 +16,7 @@ const EmailModal = () => {
 
   const { handleSubmit, register, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -70,7 +70,12 @@ const EmailModal = () => {
           />
 
           <div className="mt-6 mb-8">
-            <Button type="submit" full disabled={!dirty}>
+            <Button
+              full
+              type="submit"
+              disabled={isSubmitting || !dirty}
+              submitting={isSubmitting}
+            >
               Continue
             </Button>
           </div>

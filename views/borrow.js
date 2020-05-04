@@ -203,7 +203,9 @@ export default function BorrowView() {
 
   const onBorrow = useAutoCallback(async (amount) => {
     try {
-      await borrow(curToken, amount, library.getSigner(), chainId);
+      const tx = await borrow(curToken, amount, library.getSigner(), chainId);
+
+      await tx.wait();
     } catch (err) {
       console.error(err);
     }
@@ -211,7 +213,9 @@ export default function BorrowView() {
 
   const onRepay = useAutoCallback(async (amount) => {
     try {
-      await repay(curToken, amount, library.getSigner(), chainId);
+      const tx = await repay(curToken, amount, library.getSigner(), chainId);
+
+      await tx.wait();
     } catch (err) {
       console.error(err);
     }
@@ -332,11 +336,11 @@ export default function BorrowView() {
       </div>
 
       <BorrowModal
+        fee={fee}
+        onBorrow={onBorrow}
         balanceOwed={borrowed}
         creditLimit={creditLimit}
         paymentDueDate={paymentDueDate}
-        fee={fee}
-        onBorrow={onBorrow}
       />
       <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </Fragment>

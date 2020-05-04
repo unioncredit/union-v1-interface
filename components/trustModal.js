@@ -10,9 +10,11 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
 
   const { handleSubmit, register, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
-  const onSubmit = (values) => onTrust(values.address, values.trust);
+  const onSubmit = async (values) => {
+    await onTrust(values.address, values.trust);
+  };
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -52,7 +54,12 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
         />
 
         <div className="mt-20">
-          <Button full type="submit" disabled={!dirty}>
+          <Button
+            full
+            type="submit"
+            disabled={isSubmitting || !dirty}
+            submitting={isSubmitting}
+          >
             Confirm
           </Button>
         </div>

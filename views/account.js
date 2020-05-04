@@ -11,7 +11,7 @@ export default function AccountView() {
 
   const { register, handleSubmit, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -50,7 +50,12 @@ export default function AccountView() {
               type="email"
             />
 
-            <Button type="submit" full disabled={!dirty}>
+            <Button
+              full
+              type="submit"
+              disabled={isSubmitting || !dirty}
+              submitting={isSubmitting}
+            >
               Save changes
             </Button>
           </form>

@@ -11,10 +11,10 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
 
   const { handleSubmit, register, watch, setValue, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
-  const onSubmit = (values) => {
-    onRepay(values.amount);
+  const onSubmit = async (values) => {
+    await onRepay(values.amount);
   };
 
   const amount = watch("amount", 0);
@@ -77,7 +77,12 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <div className="divider" />
 
         <div className="mt-6">
-          <Button type="submit" full disabled={!dirty}>
+          <Button
+            full
+            type="submit"
+            disabled={isSubmitting || !dirty}
+            submitting={isSubmitting}
+          >
             Confirm
           </Button>
         </div>
