@@ -245,7 +245,10 @@ const StakeCard = () => {
         rewardsMultiplier={rewardsMultiplier}
         onDeposit={onDeposit}
       />
-      <WithdrawModal totalStake={totalStake} onWithdraw={onWithdraw} />
+      <WithdrawModal
+        withdrawableStake={withdrawableStake}
+        onWithdraw={onWithdraw}
+      />
     </div>
   );
 };

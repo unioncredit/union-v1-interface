@@ -69,7 +69,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
           chip="DAI"
           className="mb-8"
           id="amount"
-          label="Deposit Amount"
+          label="Amount"
           placeholder="0.00"
           max={balance}
           setMax={() => setValue("amount", balance)}
