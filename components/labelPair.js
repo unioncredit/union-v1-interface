@@ -37,7 +37,7 @@ const LabelPair = ({
   );
 
   const cachedValueClassNames = classNames(
-    `leading-tight whitespace-no-wrap font-semibold text-${
+    `leading-tight whitespace-no-wrap font-semibold font-sf text-${
       outline ? "white" : "black"
     }-pure`,
     `text-${large ? "xl" : "lg"}`,
