@@ -11,12 +11,12 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
 
   const { handleSubmit, register, watch, setValue, formState } = useForm();
 
-  const { dirty } = formState;
+  const { dirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount", 0);
 
-  const onSubmit = (values) => {
-    onWithdraw(values.amount);
+  const onSubmit = async (values) => {
+    await onWithdraw(values.amount);
   };
 
   return (
@@ -46,8 +46,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           className="mb-8"
           placeholder="0.00"
           max={withdrawableStake}
-          setMaxValue={withdrawableStake}
-          setMax={() => setValue("amount", withdrawableStake)}
+          setMaxValue={Number(withdrawableStake).toFixed(2)}
+          setMax={() => setValue("amount")}
         />
 
         <div className="divider" />
@@ -59,7 +59,12 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           valueType="DAI"
         />
 
-        <Button full type="submit" disabled={!dirty}>
+        <Button
+          full
+          type="submit"
+          submitting={isSubmitting}
+          disabled={isSubmitting || !dirty}
+        >
           Confirm
         </Button>
       </form>

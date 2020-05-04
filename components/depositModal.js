@@ -41,8 +41,8 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
     };
   });
 
-  const onSubmit = (values) => {
-    onDeposit(values.amount);
+  const onSubmit = async (values) => {
+    await onDeposit(values.amount);
   };
 
   const formatIncreasesUPY = Number(
@@ -93,8 +93,13 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
           valueType="DAI"
         />
 
-        <Button full type="submit" disabled={!dirty}>
-          {isSubmitting ? "Waiting for confirmation..." : "Confirm"}
+        <Button
+          full
+          type="submit"
+          submitting={isSubmitting}
+          disabled={isSubmitting || !dirty}
+        >
+          Confirm
         </Button>
       </form>
     </Modal>
