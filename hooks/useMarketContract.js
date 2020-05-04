@@ -15,6 +15,7 @@ export default function useMarketContract(tokenAddress) {
         library.getSigner(),
         chainId
       );
+
       return getContract(marketAddress, ABI, library.getSigner());
     } catch (err) {
       console.error(err);

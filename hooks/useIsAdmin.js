@@ -10,17 +10,19 @@ import { useAutoMemo } from "hooks.macro";
 export default function useIsAdmin() {
   const { library, chainId, account } = useWeb3React();
 
-  return useAutoMemo(async () => {
+  return useAutoMemo(() => {
     try {
+      let state = false;
+
       const contract = getContract(
         CONTROLLER_ADDRESSES[chainId],
         ABI,
         library.getSigner()
       );
 
-      const isAdmin = await contract.isAdmin(account);
+      contract.isAdmin(account).then((isAdmin) => (state = isAdmin));
 
-      return isAdmin;
+      return state;
     } catch {
       return false;
     }

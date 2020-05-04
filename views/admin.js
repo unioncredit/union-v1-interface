@@ -28,14 +28,15 @@ export default function AdminView() {
   const toggleManagerModal = useManagerModalToggle();
 
   const curToken = useCurrentToken();
-  const isAdminPromise = useIsAdmin();
+  const isAdmin = useIsAdmin();
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
   const unionContract = useUnionContract();
+
   const marketContractPromise = useMarketContract(curToken);
+
   let marketContract;
 
-  const [isAdmin, setIsAdmin] = useState(false);
   const [totalStake, setTotalStake] = useState(0);
   const [frozenStake, setFrozenStake] = useState(0);
   const [memberFee, setMemberFee] = useState(0);
@@ -50,13 +51,6 @@ export default function AdminView() {
 
   useAutoEffect(() => {
     let isMounted = true;
-    isAdminPromise.then((v) => {
-      setIsAdmin(v);
-      fetchStakingData();
-      fetchMemberData();
-      fetchUnionData();
-      fetchMarketData();
-    });
 
     function fetchMarketData() {
       marketContractPromise.then(async (res) => {
@@ -138,6 +132,15 @@ export default function AdminView() {
         }
       }
     }
+
+    fetchStakingData();
+    fetchMemberData();
+    fetchUnionData();
+    fetchMarketData();
+
+    return () => {
+      isMounted = false;
+    };
   });
 
   const onSetOriginationFee = useAutoCallback(async (amount, res) => {

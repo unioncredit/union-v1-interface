@@ -38,7 +38,7 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const isMemberPromise = useIsMember();
+  const isMember = useIsMember();
 
   const [borrowed, setBorrowed] = useState(0);
   const [creditLimit, setCreditLimit] = useState(0);
@@ -46,20 +46,9 @@ export default function BorrowView() {
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
   const [transactions, setTransactions] = useState([]);
-  const [isMember, setIsMember] = useState(false);
 
   useAutoEffect(() => {
     let isMounted = true;
-    isMemberPromise.then((v) => {
-      setIsMember(v);
-
-      getCreditData();
-      getBorrowedData();
-      getInterestData();
-      getPaymentDueDate();
-      getOriginationFeeData();
-      getTransactionsData();
-    });
 
     const getTransactionsData = async () => {
       try {
@@ -199,6 +188,13 @@ export default function BorrowView() {
         }
       }
     };
+
+    getCreditData();
+    getBorrowedData();
+    getInterestData();
+    getPaymentDueDate();
+    getOriginationFeeData();
+    getTransactionsData();
 
     return () => {
       isMounted = false;

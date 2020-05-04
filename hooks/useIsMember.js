@@ -4,23 +4,22 @@ import { getContract } from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
 
-/**
- * @returns {Boolean}
- */
 export default function useIsMember() {
   const { library, chainId, account } = useWeb3React();
 
-  return useAutoMemo(async () => {
+  return useAutoMemo(() => {
     try {
+      let state = false;
+
       const contract = getContract(
         MEMBER_MANAGER_ADDRESSES[chainId],
         ABI,
         library.getSigner()
       );
 
-      const isMember = await contract.isMember(account);
+      contract.isMember(account).then((isMember) => (state = isMember));
 
-      return isMember;
+      return state;
     } catch {
       return false;
     }
