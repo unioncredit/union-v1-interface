@@ -57,7 +57,7 @@ export default function StakeView() {
       <div className="container">
         <div className="flex flex-col md:flex-row -mx-2">
           <div className="w-full md:w-5/12 px-2 mb-12 md:mb-0">
-            <h1 className="hidden md:block mb-4 h-12">Stake</h1>
+            <h1 className="hidden md:block mb-4 h-12 leading-12">Stake</h1>
             <StakeCard />
           </div>
 
