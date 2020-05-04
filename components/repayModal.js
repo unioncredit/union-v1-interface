@@ -9,7 +9,9 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register, watch, setValue } = useForm();
+  const { handleSubmit, register, watch, setValue, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = (values) => {
     onRepay(values.amount);
@@ -75,7 +77,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <div className="divider" />
 
         <div className="mt-6">
-          <Button type="submit" full>
+          <Button type="submit" full disabled={!dirty}>
             Confirm
           </Button>
         </div>

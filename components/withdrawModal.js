@@ -9,7 +9,9 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
-  const { handleSubmit, register, watch, setValue } = useForm();
+  const { handleSubmit, register, watch, setValue, formState } = useForm();
+
+  const { dirty } = formState;
 
   const watchAmount = watch("amount", 0);
 
@@ -57,7 +59,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           valueType="DAI"
         />
 
-        <Button full type="submit">
+        <Button full type="submit" disabled={!dirty}>
           Confirm
         </Button>
       </form>

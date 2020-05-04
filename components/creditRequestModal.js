@@ -38,7 +38,9 @@ const CreditRequestModal = () => {
 
   const { account } = useWeb3React();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = useAutoCallback(async (values) => {
     const { amount } = values;
@@ -118,7 +120,7 @@ const CreditRequestModal = () => {
           />
 
           <div className="mt-20">
-            <Button full type="submit">
+            <Button full type="submit" disabled={!dirty}>
               Generate link
             </Button>
           </div>

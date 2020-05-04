@@ -13,7 +13,9 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
-  const { handleSubmit, register, watch, setValue } = useForm();
+  const { handleSubmit, register, watch, setValue, formState } = useForm();
+
+  const { dirty } = formState;
 
   const amount = watch("amount", 0);
 
@@ -91,7 +93,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
           valueType="DAI"
         />
 
-        <Button full type="submit">
+        <Button full type="submit" disabled={!dirty}>
           Confirm
         </Button>
       </form>

@@ -14,7 +14,9 @@ const EmailModal = () => {
 
   const { library, account } = useWeb3React();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -68,7 +70,7 @@ const EmailModal = () => {
           />
 
           <div className="mt-6 mb-8">
-            <Button type="submit" full>
+            <Button type="submit" full disabled={!dirty}>
               Continue
             </Button>
           </div>

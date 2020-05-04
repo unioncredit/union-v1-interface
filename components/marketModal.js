@@ -1,7 +1,4 @@
 import { useMarketModalOpen, useMarketModalToggle } from "@contexts/Admin";
-import useCurrentToken from "@hooks/useCurrentToken";
-import { useAutoEffect } from "hooks.macro";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
@@ -88,7 +85,11 @@ const MarketModal = ({
           required
           type="number"
         />
-        <Button full onClick={() => onSetOverdueBlocks(blocks)}>
+        <Button
+          full
+          onClick={() => onSetOverdueBlocks(blocks)}
+          disabled={!dirty}
+        >
           Confirm
         </Button>
       </div>

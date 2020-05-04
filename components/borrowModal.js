@@ -17,7 +17,9 @@ const BorrowModal = ({
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
 
-  const { handleSubmit, watch, register, setValue } = useForm();
+  const { handleSubmit, watch, register, setValue, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = (values) => {
     onBorrow(values.amount);
@@ -69,7 +71,7 @@ const BorrowModal = ({
         <Input
           min={0}
           required
-          autoFocus
+          // autoFocus
           chip="DAI"
           id="amount"
           name="amount"
@@ -119,7 +121,7 @@ const BorrowModal = ({
         <div className="divider" />
 
         <div className="mt-6">
-          <Button full type="submit">
+          <Button full type="submit" disabled={!dirty}>
             Confirm
           </Button>
         </div>

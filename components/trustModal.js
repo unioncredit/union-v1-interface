@@ -8,7 +8,9 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = (values) => onTrust(values.address, values.trust);
 
@@ -50,7 +52,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
         />
 
         <div className="mt-20">
-          <Button full type="submit">
+          <Button full type="submit" disabled={!dirty}>
             Confirm
           </Button>
         </div>

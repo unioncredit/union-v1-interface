@@ -9,7 +9,9 @@ const MESSAGE = `Hello from the Union team. Please verify your email and wallet 
 export default function AccountView() {
   const { library } = useWeb3React();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+
+  const { dirty } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -48,7 +50,7 @@ export default function AccountView() {
               type="email"
             />
 
-            <Button type="submit" full>
+            <Button type="submit" full disabled={!dirty}>
               Save changes
             </Button>
           </form>
