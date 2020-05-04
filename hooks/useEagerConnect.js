@@ -1,29 +1,25 @@
 import { injected } from "@lib/connectors";
 import { useWeb3React } from "@web3-react/core";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function useEagerConnect() {
   const { activate, active } = useWeb3React();
 
-  const { query, pathname } = useRouter();
-
   const [tried, setTried] = useState(false);
 
   useEffect(() => {
-    if (pathname.includes("/stake") && Object.keys(query).length > 0) {
-      injected.isAuthorized().then((isAuthorized) => {
-        if (isAuthorized) {
-          activate(injected, undefined, true).catch(() => {
-            setTried(true);
-          });
-        } else {
+    injected.isAuthorized().then((isAuthorized) => {
+      if (isAuthorized) {
+        activate(injected, undefined, true).catch(() => {
           setTried(true);
-        }
-      });
-    }
-  }, [query, pathname]);
+        });
+      } else {
+        setTried(true);
+      }
+    });
+  }, []); // intentionally only running on mount (make sure it's only mounted once :))
 
+  // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
     if (!tried && active) {
       setTried(true);
