@@ -23,7 +23,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const [balance, setBalance] = useState(0);
   const [FEE, setFee] = useState(0);
 
-  const unionBalance = useTokenBalance(UNION, 2);
+  const unionBalance = useTokenBalance(UNION);
   const memberContract = useMemberContract();
 
   useAutoEffect(() => {
@@ -32,7 +32,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     const getUnionBalance = async () => {
       try {
         if (isMounted) {
-          setBalance(await unionBalance);
+          setBalance(Number(await unionBalance).toFixed(2));
         }
       } catch (err) {
         if (isMounted) {

@@ -54,7 +54,7 @@ const StakeCard = () => {
     async function fetchUnionBalance() {
       try {
         if (isMounted) {
-          setBalance(await unionBalance);
+          setBalance(Number(await unionBalance).toFixed(3));
         }
       } catch (err) {
         if (isMounted) {

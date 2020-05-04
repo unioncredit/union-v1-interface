@@ -23,14 +23,14 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const [balance, setBalance] = useState(0);
 
-  const daiBalance = useTokenBalance(DAI, 2);
+  const daiBalance = useTokenBalance(DAI);
 
   useAutoEffect(() => {
     let isMounted = true;
 
     const getDaiBalance = async () => {
       if (isMounted) {
-        setBalance(await daiBalance);
+        setBalance(Math.floor((await daiBalance) * 100) / 100);
       }
     };
 

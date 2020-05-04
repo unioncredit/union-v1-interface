@@ -4,7 +4,7 @@ import { getContract } from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
 
-export default function useTokenBalance(tokenAddress, decimalsToDisplay = 3) {
+export default function useTokenBalance(tokenAddress) {
   const { library, account } = useWeb3React();
 
   return useAutoMemo(async () => {
@@ -15,9 +15,9 @@ export default function useTokenBalance(tokenAddress, decimalsToDisplay = 3) {
 
       const balance = await contract.balanceOf(account);
 
-      return Number(formatUnits(balance, decimals)).toFixed(decimalsToDisplay);
+      return formatUnits(balance, decimals);
     } catch {
-      return Number(0).toFixed(decimalsToDisplay);
+      return "0";
     }
   });
 }
