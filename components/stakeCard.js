@@ -197,6 +197,14 @@ const StakeCard = () => {
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
+        slot={
+          <button
+            onClick={onWithdrawRewards}
+            className="text-sm font-semibold underline focus:outline-none"
+          >
+            Withdraw Rewards
+          </button>
+        }
       />
       <LabelPair
         labelColor="text-grey-pure"
@@ -230,11 +238,6 @@ const StakeCard = () => {
             Withdraw
           </Button>
         </div>
-      </div>
-      <div className="mt-4">
-        <Button invert full onClick={onWithdrawRewards}>
-          Withdraw Rewards
-        </Button>
       </div>
 
       <DepositModal

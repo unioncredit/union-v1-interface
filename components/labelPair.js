@@ -12,6 +12,8 @@ import Info from "svgs/Info";
  * @param {String} value
  * @param {Boolean} large Changes the LabelPair to be stacked
  * @param {String} valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
+ * @param {Boolean} outline
+ * @param {any} slot
  */
 const LabelPair = ({
   className = "",
@@ -22,6 +24,7 @@ const LabelPair = ({
   large = false,
   valueType,
   outline = false,
+  slot,
 }) => {
   const cachedLabelClassNames = classNames(
     labelColor,
@@ -29,6 +32,7 @@ const LabelPair = ({
     {
       "text-lg mb-2": large,
       "cursor-help": tooltip,
+      "flex justify-between items-center": slot,
     }
   );
 
@@ -55,6 +59,7 @@ const LabelPair = ({
         ) : (
           label
         )}
+        {slot}
       </dt>
       <dd className={cachedValueClassNames}>
         {Boolean(valueType) ? `${value} ${valueType}` : value}
@@ -82,6 +87,8 @@ LabelPair.propTypes = {
    * A secondary piece of information to append to the value, either a currency type of unit of measurement
    */
   valueType: PropTypes.oneOf(["DAI", "UNION"]),
+  outline: PropTypes.bool,
+  slot: PropTypes.any,
 };
 
 export default LabelPair;
