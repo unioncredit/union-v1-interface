@@ -246,6 +246,7 @@ const StakeCard = () => {
         onDeposit={onDeposit}
       />
       <WithdrawModal
+        totalStake={totalStake}
         withdrawableStake={withdrawableStake}
         onWithdraw={onWithdraw}
       />
