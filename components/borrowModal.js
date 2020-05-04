@@ -45,7 +45,7 @@ const BorrowModal = ({
 
   const maxBorrowable = Number(
     parseFloat(creditLimit) > 0
-      ? parseFloat(creditLimit) - parseFloat(balanceOwed)
+      ? (parseFloat(creditLimit) - parseFloat(balanceOwed)) * (1 - fee)
       : 0
   ).toFixed(2);
 
