@@ -2,29 +2,44 @@ import { CONTROLLER_ADDRESSES } from "@constants/";
 import ABI from "@constants/abis/controller.json";
 import { getContract } from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoMemo } from "hooks.macro";
+import { useEffect, useState } from "react";
 
-/**
- * @returns {Boolean}
- */
 export default function useIsAdmin() {
   const { library, chainId, account } = useWeb3React();
 
-  return useAutoMemo(() => {
-    try {
-      let state;
+  const [isAdmin, setIsAdmin] = useState();
 
-      const contract = getContract(
-        CONTROLLER_ADDRESSES[chainId],
-        ABI,
-        library.getSigner()
-      );
+  useEffect(() => {
+    let stale = false;
 
-      contract.isAdmin(account).then((isAdmin) => (state = isAdmin));
+    const contract = getContract(
+      CONTROLLER_ADDRESSES[chainId],
+      ABI,
+      library.getSigner()
+    );
 
-      return state;
-    } catch {
-      return false;
-    }
-  });
+    contract
+      .isAdmin(account)
+      .then((state) => {
+        if (!stale) {
+          setIsAdmin(state);
+
+          return;
+        }
+
+        setIsAdmin(false);
+      })
+      .catch(() => {
+        if (!stale) {
+          setIsAdmin(false);
+        }
+      });
+
+    return () => {
+      stale = true;
+      setIsAdmin();
+    };
+  }, [library, account]);
+
+  return isAdmin;
 }

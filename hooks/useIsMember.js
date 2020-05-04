@@ -2,26 +2,43 @@ import { MEMBER_MANAGER_ADDRESSES } from "@constants/";
 import ABI from "@constants/abis/memberManager.json";
 import { getContract } from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoMemo } from "hooks.macro";
+import { useEffect, useState } from "react";
 
 export default function useIsMember() {
   const { library, chainId, account } = useWeb3React();
 
-  return useAutoMemo(() => {
-    try {
-      let state;
+  const [isMember, setIsMember] = useState();
 
-      const contract = getContract(
-        MEMBER_MANAGER_ADDRESSES[chainId],
-        ABI,
-        library.getSigner()
-      );
+  useEffect(() => {
+    let stale = false;
 
-      contract.isMember(account).then((isMember) => (state = isMember));
+    const contract = getContract(
+      MEMBER_MANAGER_ADDRESSES[chainId],
+      ABI,
+      library.getSigner()
+    );
 
-      return state;
-    } catch {
-      return false;
-    }
-  });
+    contract
+      .isMember(account)
+      .then((state) => {
+        if (!stale) {
+          setIsMember(state);
+          return;
+        }
+
+        setIsMember(false);
+      })
+      .catch(() => {
+        if (!stale) {
+          setIsMember(false);
+        }
+      });
+
+    return () => {
+      stale = true;
+      setIsMember();
+    };
+  }, [library, account]);
+
+  return isMember;
 }

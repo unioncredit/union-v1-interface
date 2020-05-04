@@ -17,7 +17,7 @@ export default function useTokenBalance(tokenAddress, decimalsToDisplay = 3) {
 
       return Number(formatUnits(balance, decimals)).toFixed(decimalsToDisplay);
     } catch {
-      return 0;
+      return Number(0).toFixed(decimalsToDisplay);
     }
   });
 }
