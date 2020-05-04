@@ -9,7 +9,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, setValue } = useForm();
 
   const onSubmit = (values) => {
     onRepay(values.amount);
@@ -41,17 +41,20 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <p className="mt-6 mb-4">How much would you like to repay?</p>
 
         <Input
-          id="amount"
           min={0}
-          max={balanceOwed}
-          ref={register}
           min={0}
-          chip="DAI"
-          name="amount"
-          type="number"
-          label="Amount"
           required
           autoFocus
+          chip="DAI"
+          id="amount"
+          step="0.01"
+          name="amount"
+          type="number"
+          ref={register}
+          label="Amount"
+          max={balanceOwed}
+          setMaxValue={balanceOwed}
+          setMax={() => setValue("amount", balanceOwed)}
           placeholder="0.00"
         />
 

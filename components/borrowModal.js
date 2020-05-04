@@ -17,7 +17,7 @@ const BorrowModal = ({
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
 
-  const { handleSubmit, watch, register } = useForm();
+  const { handleSubmit, watch, register, setValue } = useForm();
 
   const onSubmit = (values) => {
     onBorrow(values.amount);
@@ -43,6 +43,12 @@ const BorrowModal = ({
       : 0
   ).toFixed(2);
 
+  const maxBorrowable = Number(
+    parseFloat(creditLimit) > 0
+      ? parseFloat(creditLimit) - parseFloat(balanceOwed)
+      : 0
+  ).toFixed(2);
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Borrow" onDismiss={toggle} />
@@ -61,17 +67,20 @@ const BorrowModal = ({
         <p className="mt-6 mb-4">How much would you like to borrow?</p>
 
         <Input
-          id="amount"
-          max={creditLimit}
-          ref={register}
           min={0}
-          chip="DAI"
-          name="amount"
-          type="number"
-          label="Amount"
           required
           autoFocus
+          chip="DAI"
+          id="amount"
+          name="amount"
+          step="0.01"
+          type="number"
+          ref={register}
+          label="Amount"
           placeholder="0.00"
+          max={maxBorrowable}
+          setMaxValue={maxBorrowable}
+          setMax={() => setValue("amount", maxBorrowable)}
         />
 
         <LabelPair
