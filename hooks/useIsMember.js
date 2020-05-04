@@ -21,7 +21,7 @@ export default function useIsMember() {
 
       return state;
     } catch {
-      return false;
+      return null;
     }
   });
 }

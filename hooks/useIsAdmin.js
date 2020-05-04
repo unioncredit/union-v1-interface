@@ -24,7 +24,7 @@ export default function useIsAdmin() {
 
       return state;
     } catch {
-      return false;
+      return null;
     }
   });
 }
