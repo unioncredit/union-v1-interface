@@ -220,7 +220,7 @@ export default function BorrowView() {
   return (
     <Fragment>
       <div className="container">
-        <ApplicationCard />
+        {isMember === false && <ApplicationCard />}
 
         <div className="mb-5">
           <h1>Dashboard</h1>

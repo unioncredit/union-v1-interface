@@ -6,6 +6,7 @@ import VouchBar from "@components/vouchBar";
 import VouchTable from "@components/vouchTable";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useIsMember from "@hooks/useIsMember";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getVouched } from "@lib/contracts/getVouched";
 import getVouchBarData from "@util/getVouchBarData";
@@ -17,6 +18,8 @@ export default function VouchView() {
   const { account, library, chainId } = useWeb3React();
 
   const curToken = useCurrentToken();
+
+  const isMember = useIsMember();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
@@ -66,7 +69,7 @@ export default function VouchView() {
   return (
     <Fragment>
       <div className="container">
-        <ApplicationCard />
+        {isMember === false && <ApplicationCard />}
 
         <div className="flex justify-between mb-6">
           <LabelPair
