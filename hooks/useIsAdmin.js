@@ -12,7 +12,7 @@ export default function useIsAdmin() {
 
   return useAutoMemo(() => {
     try {
-      let state = false;
+      let state;
 
       const contract = getContract(
         CONTROLLER_ADDRESSES[chainId],
@@ -24,7 +24,7 @@ export default function useIsAdmin() {
 
       return state;
     } catch {
-      return null;
+      return false;
     }
   });
 }

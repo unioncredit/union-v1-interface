@@ -9,7 +9,7 @@ export default function useIsMember() {
 
   return useAutoMemo(() => {
     try {
-      let state = false;
+      let state;
 
       const contract = getContract(
         MEMBER_MANAGER_ADDRESSES[chainId],
@@ -21,7 +21,7 @@ export default function useIsMember() {
 
       return state;
     } catch {
-      return null;
+      return false;
     }
   });
 }
