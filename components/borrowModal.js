@@ -30,7 +30,9 @@ const BorrowModal = ({
   );
 
   const formatNewBalance = commify(
-    Number(parseFloat(balanceOwed) + parseFloat(amount || 0)).toFixed(2)
+    Number(
+      parseFloat(balanceOwed) + parseFloat(amount || 0) * parseFloat(fee)
+    ).toFixed(2)
   );
 
   const formatNewCredit = Number(
