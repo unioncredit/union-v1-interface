@@ -75,6 +75,12 @@ module.exports = {
       ],
     },
     extend: {
+      boxShadow: {
+        button: "0px 8px 32px rgba(0, 0, 0, 0.13)",
+        card: "0px 5px 13px rgba(207, 192, 192, 0.25)",
+        app: "-35px 1.16px 74px rgba(207, 192, 192, 0.16)",
+        input: "0px 0px 12px rgba(19, 44, 106, 0.1)",
+      },
       spacing: {
         "2px": "2px",
         "72": "18rem",
@@ -99,7 +105,9 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    boxShadow: ["responsive", "hover", "focus", "focus-within"],
+  },
   plugins: [],
   purge: {
     enabled: true,

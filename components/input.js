@@ -20,7 +20,7 @@ const Input = forwardRef(
   ) => {
     return (
       <div className={className}>
-        <div className="p-4 w-full rounded border bg-white focus-within:input transition-shadow transition-colors duration-150">
+        <div className="p-4 w-full rounded border bg-white focus-within:shadow-input transition-shadow transition-colors duration-150">
           {(label || setMax) && (
             <div className="flex items-center justify-between mb-2 text-type-light text-sm leading-none">
               {label && (

@@ -13,7 +13,7 @@ const VouchLink = ({ link }) => {
           type="text"
           value={link}
           readOnly
-          className="w-full pl-4 h-full rounded border border-pink-pure bg-white focus:input focus:outline-none transition-shadow transition-colors duration-150 text-lg leading-snug text-overflow-clip"
+          className="w-full pl-4 h-full rounded border border-pink-pure bg-white focus:shadow-input focus:outline-none transition-shadow transition-colors duration-150 text-lg leading-snug text-overflow-clip"
           spellCheck="false"
           autoCorrect="off"
           autoCapitalize="off"
