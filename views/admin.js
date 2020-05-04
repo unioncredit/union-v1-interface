@@ -19,6 +19,7 @@ import ManagerModal from "@components/managerModal";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
+
 const WAD = 1e18;
 
 export default function AdminView() {
