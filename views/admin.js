@@ -1,21 +1,19 @@
-import { commify, formatUnits, parseUnits } from "@ethersproject/units";
-import { useMarketModalToggle, useManagerModalToggle } from "@contexts/Admin";
 import Button from "@components/button";
-import { blockSpeed } from "@constants";
+import ManagerModal from "@components/managerModal";
+import MarketModal from "@components/marketModal";
+import { BLOCKS_PER_YEAR } from "@constants/";
+import { useManagerModalToggle, useMarketModalToggle } from "@contexts/Admin";
+import { formatUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsAdmin from "@hooks/useIsAdmin";
-import useStakingContract from "@hooks/useStakingContract";
-import useMemberContract from "@hooks/useMemberContract";
-import useUnionContract from "@hooks/useUnionContract";
 import useMarketContract from "@hooks/useMarketContract";
-import { useSortBy, useTable } from "react-table";
+import useMemberContract from "@hooks/useMemberContract";
+import useStakingContract from "@hooks/useStakingContract";
+import useUnionContract from "@hooks/useUnionContract";
 import { useWeb3React } from "@web3-react/core";
+import BigNumber from "bignumber.js/bignumber.mjs";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { Fragment, useState } from "react";
-import { BLOCKS_PER_YEAR } from "@constants/";
-import BigNumber from "bignumber.js/bignumber.mjs";
-import MarketModal from "@components/marketModal";
-import ManagerModal from "@components/managerModal";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
