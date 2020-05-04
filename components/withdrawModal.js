@@ -47,7 +47,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           placeholder="0.00"
           max={withdrawableStake}
           setMaxValue={Number(withdrawableStake).toFixed(2)}
-          setMax={() => setValue("amount")}
+          setMax={() => setValue("amount", withdrawableStake)}
         />
 
         <div className="divider" />
