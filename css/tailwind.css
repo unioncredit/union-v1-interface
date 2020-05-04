@@ -270,6 +270,12 @@ table td:not(:first-of-type) {
   background: #f6c343;
 }
 
+@media (width >= 896px) {
+  .md\:476px {
+    max-width: calc(460px + 1rem);
+  }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
