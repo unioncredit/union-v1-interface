@@ -1,9 +1,9 @@
 import {
-    createContext,
-    useCallback,
-    useContext,
-    useMemo,
-    useReducer,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useReducer,
 } from "react";
 
 const MARKET_MODAL_OPEN = "MARKET_MODAL_OPEN";
@@ -17,90 +17,86 @@ const AdminContext = createContext();
 AdminContext.displayName = "AdminContext";
 
 function useAdminContext() {
-    return useContext(AdminContext);
+  return useContext(AdminContext);
 }
 
 function reducer(state, { type, payload }) {
-    switch (type) {
-        case TOGGLE_MARKET_MODAL: {
-            return {
-                ...state,
-                [MARKET_MODAL_OPEN]: !state[MARKET_MODAL_OPEN],
-            };
-        }
-        case TOGGLE_MANAGER_MODAL: {
-            return {
-                ...state,
-                [MANAGER_MODAL_OPEN]: !state[MANAGER_MODAL_OPEN],
-            };
-        }
-
-        default: {
-            throw new Error(
-                `Unexpected action type in AdminContext reducer: '${type}'.`
-            );
-        }
+  switch (type) {
+    case TOGGLE_MARKET_MODAL: {
+      return {
+        ...state,
+        [MARKET_MODAL_OPEN]: !state[MARKET_MODAL_OPEN],
+      };
     }
+    case TOGGLE_MANAGER_MODAL: {
+      return {
+        ...state,
+        [MANAGER_MODAL_OPEN]: !state[MANAGER_MODAL_OPEN],
+      };
+    }
+
+    default: {
+      throw new Error(
+        `Unexpected action type in AdminContext reducer: '${type}'.`
+      );
+    }
+  }
 }
 
 export default function Provider({ children }) {
-    const [state, dispatch] = useReducer(reducer, {
-        [MARKET_MODAL_OPEN]: false,
-        [MANAGER_MODAL_OPEN]: false,
-    });
+  const [state, dispatch] = useReducer(reducer, {
+    [MARKET_MODAL_OPEN]: false,
+    [MANAGER_MODAL_OPEN]: false,
+  });
 
-    const toggleMarketModal = useCallback(() => {
-        dispatch({ type: TOGGLE_MARKET_MODAL });
-    }, []);
+  const toggleMarketModal = useCallback(() => {
+    dispatch({ type: TOGGLE_MARKET_MODAL });
+  }, []);
 
-    const toggleManagerModal = useCallback(() => {
-        dispatch({ type: TOGGLE_MANAGER_MODAL });
-    }, []);
+  const toggleManagerModal = useCallback(() => {
+    dispatch({ type: TOGGLE_MANAGER_MODAL });
+  }, []);
 
-    return (
-        <AdminContext.Provider
-            value={useMemo(
-                () => [
-                    state,
-                    {
-                        toggleMarketModal,
-                        toggleManagerModal,
-                    },
-                ],
-                [
-                    state,
-                    toggleMarketModal,
-                    toggleManagerModal,
-                ]
-            )}
-        >
-            {children}
-        </AdminContext.Provider>
-    );
+  return (
+    <AdminContext.Provider
+      value={useMemo(
+        () => [
+          state,
+          {
+            toggleMarketModal,
+            toggleManagerModal,
+          },
+        ],
+        [state, toggleMarketModal, toggleManagerModal]
+      )}
+    >
+      {children}
+    </AdminContext.Provider>
+  );
 }
 
 Provider.displayName = "MarketProvider";
 
 export function useMarketModalOpen() {
-    const [state] = useAdminContext();
+  const [state] = useAdminContext();
 
-    return state[MARKET_MODAL_OPEN];
+  return state[MARKET_MODAL_OPEN];
 }
 
 export function useMarketModalToggle() {
-    const [, { toggleMarketModal }] = useAdminContext();
+  const [, { toggleMarketModal }] = useAdminContext();
 
-    return toggleMarketModal;
+  return toggleMarketModal;
 }
 
 export function useManagerModalOpen() {
-    const [state] = useAdminContext();
+  const [state] = useAdminContext();
 
-    return state[MANAGER_MODAL_OPEN];
+  return state[MANAGER_MODAL_OPEN];
 }
 
 export function useManagerModalToggle() {
-    const [, { toggleManagerModal }] = useAdminContext();
+  const [, { toggleManagerModal }] = useAdminContext();
 
-    return toggleManagerModal;
+  return toggleManagerModal;
 }

@@ -5,17 +5,17 @@ import { useAutoMemo } from "hooks.macro";
 import { UNION_TOKEN_ADDRESSES } from "@constants/";
 
 export default function useUnionContract() {
-    const { library, chainId } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
-    return useAutoMemo(() => {
-        try {
-            return getContract(
-                UNION_TOKEN_ADDRESSES[chainId],
-                ABI,
-                library.getSigner()
-            );
-        } catch {
-            return null;
-        }
-    });
+  return useAutoMemo(() => {
+    try {
+      return getContract(
+        UNION_TOKEN_ADDRESSES[chainId],
+        ABI,
+        library.getSigner()
+      );
+    } catch {
+      return null;
+    }
+  });
 }

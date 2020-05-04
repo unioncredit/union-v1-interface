@@ -90,7 +90,10 @@ const StakeCard = () => {
     async function fetchRewardsData() {
       try {
         if (isMounted && account) {
-          const userBlockDelta = await unionContract.getUserBlockDelta(account, DAI);
+          const userBlockDelta = await unionContract.getUserBlockDelta(
+            account,
+            DAI
+          );
           let blocks;
           if (userBlockDelta > BLOCKS_PER_YEAR[chainId]) {
             blocks = userBlockDelta;
@@ -99,13 +102,19 @@ const StakeCard = () => {
           }
 
           const rewardsPerYearRes = await unionContract.calculateRewardsByBlocks(
-            account, DAI, blocks
+            account,
+            DAI,
+            blocks
           );
 
           const getRewardsMultiplier = await unionContract.getRewardsMultiplier(
-            account, DAI
+            account,
+            DAI
           );
-          const calcRewards = await unionContract.calculateRewards(account, DAI);
+          const calcRewards = await unionContract.calculateRewards(
+            account,
+            DAI
+          );
 
           setRewards(parseRes(calcRewards, 3));
           setUpy(commify(parseRes(rewardsPerYearRes)));

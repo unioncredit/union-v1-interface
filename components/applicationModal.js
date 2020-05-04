@@ -65,7 +65,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const submit = useAutoCallback(async () => {
     try {
       await verifyMembership(account, DAI, library.getSigner(), chainId);
-    } catch (err) { }
+    } catch (err) {}
   });
 
   return (
