@@ -325,7 +325,7 @@ export default function BorrowView() {
             </div>
             {transactions.length > 0 &&
               transactions.map((datum, i) => (
-                <Transaction key={i} data={datum} />
+                <Transaction key={i} {...datum} />
               ))}
           </div>
         )}
