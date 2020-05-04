@@ -266,7 +266,7 @@ export default function BorrowView() {
                       )}
                     </p>
                     <HealthBar
-                      health={getPercentUtilized(borrowed, creditLimit)}
+                      health={getPercentUtilized(borrowed, creditLimit) * 100}
                       dark
                     />
                   </div>
