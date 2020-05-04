@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function useIsAdmin() {
   const { library, chainId, account } = useWeb3React();
 
-  const [isAdmin, setIsAdmin] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     let stale = false;
@@ -37,7 +37,7 @@ export default function useIsAdmin() {
 
     return () => {
       stale = true;
-      setIsAdmin();
+      setIsAdmin(false);
     };
   }, [library, account]);
 

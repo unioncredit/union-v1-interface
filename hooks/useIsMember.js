@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function useIsMember() {
   const { library, chainId, account } = useWeb3React();
 
-  const [isMember, setIsMember] = useState();
+  const [isMember, setIsMember] = useState(false);
 
   useEffect(() => {
     let stale = false;
@@ -36,7 +36,7 @@ export default function useIsMember() {
 
     return () => {
       stale = true;
-      setIsMember();
+      setIsMember(false);
     };
   }, [library, account]);
 
