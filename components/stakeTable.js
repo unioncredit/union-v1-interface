@@ -22,7 +22,7 @@ const StakeTable = () => {
   const isMember = useIsMember();
 
   const toggleAddressModal = useAddressModalToggle();
-  const [activeRow, activeRowSet] = useState({});
+  const [activeRow, activeRowSet] = useState();
 
   const handleRowClick = (row) => () => {
     activeRowSet(row.values);
@@ -114,7 +114,12 @@ const StakeTable = () => {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} onClick={handleRowClick(row)}>
+              <tr
+                {...row.getRowProps()}
+                onClick={handleRowClick(row)}
+                className="hover:bg-border-light focus:outline-none focus:bg-border-light cursor-pointer"
+                tabIndex={0}
+              >
                 {row.cells.map(
                   ({ getCellProps, render, value, column: { Header } }) => {
                     let cellRenderer = render("Cell");
@@ -158,7 +163,7 @@ const StakeTable = () => {
           </div>
         ))}
 
-      <AddressModal {...activeRow} />
+      {activeRow && <AddressModal {...activeRow} />}
     </div>
   );
 };
