@@ -42,6 +42,8 @@ const StakeCard = () => {
   const [upy, setUpy] = useState(0);
   const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
 
+  const [withdrawing, setWithdrawing] = useState(false);
+
   const unionBalance = useTokenBalance(UNION);
 
   const unionContract = useUnionContract();
@@ -159,10 +161,17 @@ const StakeCard = () => {
   });
 
   const onWithdrawRewards = useAutoCallback(async () => {
+    setWithdrawing(true);
+
     try {
-      await unionContract.withdrawRewards(account, DAI);
+      const tx = await unionContract.withdrawRewards(account, DAI);
+
+      await tx.wait();
+
+      setWithdrawing(false);
     } catch (err) {
       console.error(err);
+      setWithdrawing(false);
     }
   });
 
@@ -205,8 +214,9 @@ const StakeCard = () => {
           <button
             onClick={onWithdrawRewards}
             className="text-sm font-semibold underline focus:outline-none"
+            disabled={withdrawing}
           >
-            Withdraw Rewards
+            {withdrawing ? "Withdrawing Rewards..." : "Withdraw Rewards"}
           </button>
         }
       />
