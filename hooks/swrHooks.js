@@ -1,3 +1,4 @@
+import { isAddress } from "@ethersproject/address";
 import fetcher from "@lib/fetcher";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
@@ -8,8 +9,16 @@ export function useTrustData() {
 
   const curToken = useCurrentToken();
 
+  const shouldFetch =
+    typeof chainId === "number" &&
+    typeof account === "string" &&
+    isAddress(curToken) &&
+    !!library
+      ? true
+      : false;
+
   return useSWR(
-    ["trust", account, curToken, library, chainId],
+    shouldFetch ? ["trust", account, curToken, library, chainId] : null,
     (key, account, curToken, library, chainId) =>
       fetcher(key, { account, curToken, library, chainId })
   );
@@ -20,8 +29,16 @@ export function useVouchData() {
 
   const curToken = useCurrentToken();
 
+  const shouldFetch =
+    typeof chainId === "number" &&
+    typeof account === "string" &&
+    isAddress(curToken) &&
+    !!library
+      ? true
+      : false;
+
   return useSWR(
-    ["vouch", account, curToken, library, chainId],
+    shouldFetch ? ["vouch", account, curToken, library, chainId] : null,
     (key, account, curToken, library, chainId) =>
       fetcher(key, { account, curToken, library, chainId })
   );
@@ -32,8 +49,13 @@ export function useTransactions() {
 
   const curToken = useCurrentToken();
 
+  const shouldFetch =
+    typeof chainId === "number" && isAddress(curToken) && !!library
+      ? true
+      : false;
+
   return useSWR(
-    ["transactions", curToken, library, chainId],
+    shouldFetch ? ["transactions", curToken, library, chainId] : null,
     (key, curToken, library, chainId) =>
       fetcher(key, { curToken, library, chainId })
   );
