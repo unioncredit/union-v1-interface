@@ -136,10 +136,6 @@ table td {
   background-color: #f4dbd8;
 }
 
-.cursor-help {
-  cursor: help;
-}
-
 .text-overflow-clip {
   text-overflow: ellipsis;
 }

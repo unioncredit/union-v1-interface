@@ -5,6 +5,7 @@ import truncateAddress from "@util/truncateAddress";
 import { useAutoCallback } from "hooks.macro";
 import { Fragment, useEffect, useState } from "react";
 import Address from "./address";
+import AdjustTrustForm from "./adjustTrustForm";
 import Button from "./button";
 import HealthBar from "./healthBar";
 import Identicon from "./identicon";
@@ -108,7 +109,7 @@ const AddressModal = ({ address, vouched, used, health }) => {
               <p>Edit this member's trust</p>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 cursor-text">
               <Address address={address} large />
             </div>
 
@@ -117,7 +118,10 @@ const AddressModal = ({ address, vouched, used, health }) => {
             </div>
 
             <div className="mt-4">
-              <p>Current Trust</p>
+              <dl className="flex justify-between items-center leading-tight">
+                <dt>Current Trust</dt>
+                <dd className="text-right">{`${vouched} DAI`}</dd>
+              </dl>
             </div>
 
             <div className="mt-4">
@@ -125,12 +129,12 @@ const AddressModal = ({ address, vouched, used, health }) => {
             </div>
 
             <div className="mt-6">
-              <p className="text-type-light">
-                How would you like to adjust this members trust?
-              </p>
+              <AdjustTrustForm
+                address={address}
+                vouched={vouched}
+                onComplete={toggle}
+              />
             </div>
-
-            <div className="mt-4">SEGMENTED CONTROL</div>
           </Fragment>
         )}
       </div>

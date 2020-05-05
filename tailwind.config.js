@@ -98,6 +98,10 @@ module.exports = {
         "3xl": "2rem",
         "4xl": "2.5rem",
       },
+      cursor: {
+        inherit: "inherit",
+        help: "help",
+      },
       maxWidth: {
         "screen-md-gutter": "calc(912px + 1.5rem * 2)",
         "screen-lg-gutter": "calc(1080px + 1.5rem * 2)",
