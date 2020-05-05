@@ -1,8 +1,8 @@
 import { useLearnMoreModalToggle } from "@contexts/Application";
-import { useTrustModalToggle } from "@contexts/Stake";
+import { useTrustModalToggle, useAddressModalToggle } from "@contexts/Stake";
 import { useTrustData } from "@hooks/swrHooks";
 import useIsMember from "@hooks/useIsMember";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
@@ -10,6 +10,7 @@ import { healthTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
+import AddressModal from "./addressModal";
 
 const StakeTable = () => {
   const { data } = useTrustData();
@@ -19,6 +20,15 @@ const StakeTable = () => {
   const toggleTrustModal = useTrustModalToggle();
 
   const isMember = useIsMember();
+
+  const toggleAddressModal = useAddressModalToggle();
+  const [activeRow, activeRowSet] = useState({});
+
+  const handleRowClick = (row) => () => {
+    activeRowSet(row.values);
+
+    toggleAddressModal();
+  };
 
   const memoizedColumns = useMemo(
     () => [
@@ -104,7 +114,7 @@ const StakeTable = () => {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} onClick={handleRowClick(row)}>
                 {row.cells.map(
                   ({ getCellProps, render, value, column: { Header } }) => {
                     let cellRenderer = render("Cell");
@@ -147,6 +157,8 @@ const StakeTable = () => {
             <Button onClick={toggleLearnMoreModal}>Become a member</Button>
           </div>
         ))}
+
+      <AddressModal data={activeRow} />
     </div>
   );
 };

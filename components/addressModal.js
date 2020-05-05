@@ -1,17 +1,15 @@
+import { useAddressModalOpen, useAddressModalToggle } from "@contexts/Stake";
 import Modal from "./modal";
 
-const AddressModal = () => {
-  const onDismiss = () => false;
-  const isOpen = false;
+const AddressModal = ({ data }) => {
+  const isOpen = useAddressModalOpen();
+  const toggle = useAddressModalToggle();
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss}>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit ea
-        fugiat itaque. Repudiandae, laboriosam similique! Saepe voluptas
-        temporibus eos porro, veniam, non ipsum voluptatem quisquam illum
-        tempore quos voluptatum autem.
-      </p>
+    <Modal isOpen={isOpen} onDismiss={toggle}>
+      <pre>
+        <code>{JSON.stringify(data, null, 2)}</code>
+      </pre>
     </Modal>
   );
 };

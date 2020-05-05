@@ -18,6 +18,9 @@ const TOGGLE_WITHDRAW_MODAL = "TOGGLE_WITHDRAW_MODAL";
 const TUTORIAL_MODAL_OPEN = "TUTORIAL_MODAL_OPEN";
 const TOGGLE_TUTORIAL_MODAL = "TOGGLE_TUTORIAL_MODAL";
 
+const ADDRESS_MODAL_OPEN = "ADDRESS_MODAL_OPEN";
+const TOGGLE_ADDRESS_MODAL = "TOGGLE_ADDRESS_MODAL";
+
 const StakeContext = createContext();
 
 StakeContext.displayName = "StakeContext";
@@ -52,6 +55,12 @@ function reducer(state, { type, payload }) {
         [TUTORIAL_MODAL_OPEN]: !state[TUTORIAL_MODAL_OPEN],
       };
     }
+    case TOGGLE_ADDRESS_MODAL: {
+      return {
+        ...state,
+        [ADDRESS_MODAL_OPEN]: !state[ADDRESS_MODAL_OPEN],
+      };
+    }
     default: {
       throw new Error(
         `Unexpected action type in StakeContext reducer: '${type}'.`
@@ -66,6 +75,7 @@ export default function Provider({ children }) {
     [DEPOSIT_MODAL_OPEN]: false,
     [WITHDRAW_MODAL_OPEN]: false,
     [TUTORIAL_MODAL_OPEN]: false,
+    [ADDRESS_MODAL_OPEN]: false,
   });
 
   const toggleTrustModal = useCallback(() => {
@@ -84,6 +94,10 @@ export default function Provider({ children }) {
     dispatch({ type: TOGGLE_TUTORIAL_MODAL });
   }, []);
 
+  const toggleAddressModal = useCallback(() => {
+    dispatch({ type: TOGGLE_ADDRESS_MODAL });
+  }, []);
+
   return (
     <StakeContext.Provider
       value={useMemo(
@@ -94,6 +108,7 @@ export default function Provider({ children }) {
             toggleDepositModal,
             toggleWithdrawModal,
             toggleTutorialModal,
+            toggleAddressModal,
           },
         ],
         [
@@ -102,6 +117,7 @@ export default function Provider({ children }) {
           toggleDepositModal,
           toggleWithdrawModal,
           toggleTutorialModal,
+          toggleAddressModal,
         ]
       )}
     >
@@ -158,4 +174,16 @@ export function useTutorialModalToggle() {
   const [, { toggleTutorialModal }] = useStakeContext();
 
   return toggleTutorialModal;
+}
+
+export function useAddressModalOpen() {
+  const [state] = useStakeContext();
+
+  return state[ADDRESS_MODAL_OPEN];
+}
+
+export function useAddressModalToggle() {
+  const [, { toggleAddressModal }] = useStakeContext();
+
+  return toggleAddressModal;
 }
