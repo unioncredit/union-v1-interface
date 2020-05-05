@@ -1,11 +1,8 @@
 import { useLearnMoreModalToggle } from "@contexts/Application";
 import { useTrustModalToggle } from "@contexts/Stake";
-import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
-import { getTrust } from "@lib/contracts/getTrust";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoEffect } from "hooks.macro";
-import { useMemo, useState } from "react";
+import useTrustData from "@hooks/useTrustData";
+import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
@@ -15,40 +12,13 @@ import Button from "./button";
 import HealthBar from "./healthBar";
 
 const StakeTable = () => {
-  const { library, account, chainId } = useWeb3React();
-
-  const curToken = useCurrentToken();
-
-  const [data, setData] = useState([]);
+  const { data } = useTrustData();
 
   const toggleLearnMoreModal = useLearnMoreModalToggle();
 
   const toggleTrustModal = useTrustModalToggle();
 
   const isMember = useIsMember();
-
-  useAutoEffect(() => {
-    let isMounted = true;
-
-    const getTrustData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getTrust(account, curToken, library, chainId);
-          setData(res);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    getTrustData();
-
-    return () => {
-      isMounted = false;
-    };
-  });
 
   const memoizedColumns = useMemo(
     () => [
@@ -72,7 +42,10 @@ const StakeTable = () => {
     []
   );
 
-  const memoizedData = useMemo(() => data, [data]);
+  const memoizedData = useMemo(() => {
+    if (!!(data && data.length > 0)) return data;
+    return [];
+  }, [data]);
 
   const {
     getTableProps,
