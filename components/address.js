@@ -1,6 +1,7 @@
-import Identicon from "./identicon";
 import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
+import { memo } from "react";
+import Identicon from "./identicon";
 
 const Address = ({ address }) => {
   const ENSName = useENSName(address);
@@ -15,4 +16,4 @@ const Address = ({ address }) => {
   );
 };
 
-export default Address;
+export default memo(Address);
