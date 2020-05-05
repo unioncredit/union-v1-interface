@@ -5,13 +5,13 @@ import LabelPair from "@components/labelPair";
 import VouchBar from "@components/vouchBar";
 import VouchTable from "@components/vouchTable";
 import { useCreditRequestModalToggle } from "@contexts/Vouch";
+import { useVouchData } from "@hooks/swrHooks";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
-import { getVouched } from "@lib/contracts/getVouched";
 import getVouchBarData from "@util/getVouchBarData";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoEffect, useAutoMemo } from "hooks.macro";
+import { useAutoEffect } from "hooks.macro";
 import { Fragment, useState } from "react";
 
 export default function VouchView() {
@@ -24,23 +24,11 @@ export default function VouchView() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
   const [creditLimit, setCreditLimit] = useState(0);
-  const [vouchData, setVouchData] = useState([]);
+
+  const { data: vouchData } = useVouchData();
 
   useAutoEffect(() => {
     let isMounted = true;
-
-    const getVouchData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getVouched(account, curToken, library, chainId);
-          setVouchData(res);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
 
     const getCreditData = async () => {
       try {
@@ -56,15 +44,12 @@ export default function VouchView() {
       }
     };
 
-    getVouchData();
     getCreditData();
 
     return () => {
       isMounted = false;
     };
   });
-
-  const vouchTableData = useAutoMemo(vouchData);
 
   return (
     <Fragment>
@@ -101,7 +86,7 @@ export default function VouchView() {
           </Button>
         </div>
 
-        <VouchTable data={vouchTableData} />
+        <VouchTable data={vouchData} />
       </div>
 
       <CreditRequestModal />

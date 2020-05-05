@@ -1,5 +1,5 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
-import { useAutoMemo } from "hooks.macro";
+import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
@@ -11,30 +11,36 @@ import HealthBar from "./healthBar";
 const VouchTable = ({ data }) => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
-  const memoizedColumns = useAutoMemo(() => [
-    {
-      Header: "Address",
-      accessor: "address",
-    },
-    {
-      Header: "Percentage",
-      accessor: "percentage",
-    },
-    {
-      Header: "Vouched",
-      accessor: "vouched",
-    },
-    {
-      Header: "Used",
-      accessor: "used",
-    },
-    {
-      Header: "Health",
-      accessor: "health",
-    },
-  ]);
+  const memoizedColumns = useMemo(
+    () => [
+      {
+        Header: "Address",
+        accessor: "address",
+      },
+      {
+        Header: "Percentage",
+        accessor: "percentage",
+      },
+      {
+        Header: "Vouched",
+        accessor: "vouched",
+      },
+      {
+        Header: "Used",
+        accessor: "used",
+      },
+      {
+        Header: "Health",
+        accessor: "health",
+      },
+    ],
+    []
+  );
 
-  const memoizedData = useAutoMemo(data);
+  const memoizedData = useMemo(() => {
+    if (!!(data && data.length > 0)) return data;
+    return [];
+  }, [data]);
 
   const {
     getTableProps,
