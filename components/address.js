@@ -14,7 +14,7 @@ const Address = ({ address, copyable = false }) => {
 
   const cachedClassNames = classNames(
     "font-medium focus:outline-none flex items-center align-middle w-40",
-    copyable ? "" : "cursor-default"
+    copyable ? "" : "cursor-inherit"
   );
 
   return (
