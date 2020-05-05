@@ -42,6 +42,7 @@ const GetInvitedModal = () => {
 
   const handleSwapModals = async () => {
     await toggleLearnMoreModal();
+
     toggle();
   };
 

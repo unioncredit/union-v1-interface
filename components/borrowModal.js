@@ -23,6 +23,8 @@ const BorrowModal = ({
 
   const onSubmit = async (values) => {
     await onBorrow(values.amount);
+
+    toggle();
   };
 
   const amount = watch("amount", 0);

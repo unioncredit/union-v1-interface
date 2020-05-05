@@ -15,6 +15,8 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
 
   const onSubmit = async (values) => {
     await onRepay(values.amount);
+
+    toggle();
   };
 
   const amount = watch("amount", 0);

@@ -17,11 +17,13 @@ const LearnMoreModal = () => {
 
   const handleStartStaking = async () => {
     await router.push("/stake");
+
     toggle();
   };
 
   const handleSwapModals = async () => {
     await toggleGetInvitedModal();
+
     toggle();
   };
 

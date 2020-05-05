@@ -14,6 +14,8 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
 
   const onSubmit = async (values) => {
     await onTrust(values.address, values.trust);
+
+    toggle();
   };
 
   return (

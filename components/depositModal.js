@@ -43,6 +43,8 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const onSubmit = async (values) => {
     await onDeposit(values.amount);
+
+    toggle();
   };
 
   const formatIncreasesUPY = Number(
