@@ -7,18 +7,17 @@ import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
 import { blockSpeed } from "@constants";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
+import { useTransactions } from "@hooks/swrHooks";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
-import { getBorrowTransactions } from "@lib/contracts/getBorrowTransactions";
 import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "@lib/contracts/getOverdueBlocks";
-import { getRepayTransactions } from "@lib/contracts/getRepayTransactions";
 import { repay } from "@lib/contracts/repay";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -45,44 +44,11 @@ export default function BorrowView() {
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
-  const [transactions, setTransactions] = useState([]);
+
+  const { data: transactions } = useTransactions();
 
   useAutoEffect(() => {
     let isMounted = true;
-
-    const getTransactionsData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const borrowTxs = await getBorrowTransactions(
-            curToken,
-            library.getSigner(),
-            chainId
-          );
-
-          const repayTxs = await getRepayTransactions(
-            curToken,
-            library.getSigner(),
-            chainId
-          );
-
-          let txs = [].concat(borrowTxs, repayTxs);
-
-          txs.sort((x, y) => {
-            if (x.blockNumber > y.blockNumber) return -1;
-
-            if (x.blockNumber < y.blockNumber) return 1;
-
-            return 0;
-          });
-
-          setTransactions(txs);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
 
     const getBorrowedData = async () => {
       try {
@@ -194,7 +160,6 @@ export default function BorrowView() {
     getInterestData();
     getPaymentDueDate();
     getOriginationFeeData();
-    getTransactionsData();
 
     return () => {
       isMounted = false;
@@ -327,7 +292,8 @@ export default function BorrowView() {
             <div className="mb-5">
               <h2>Transactions</h2>
             </div>
-            {transactions.length > 0 &&
+            {transactions &&
+              transactions.length > 0 &&
               transactions.map((datum, i) => (
                 <Transaction key={i} {...datum} />
               ))}
