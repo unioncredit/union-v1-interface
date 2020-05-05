@@ -9,7 +9,7 @@ import { AddressZero } from "@constants/";
  * @param {import("@ethersproject/contracts").ContractInterface} ABI The ABI itself
  * @param {import("@ethersproject/abstract-signer").Signer} signer The Web3 Provider's Signer
  */
-export function getContract(address, ABI, signer) {
+export default function getContract(address, ABI, signer) {
   if (!isAddress(address) || address === AddressZero) {
     throw new Error(`Invalid 'address' parameter '${address}'.`);
   }
