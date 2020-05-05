@@ -2,8 +2,8 @@ import { useLearnMoreModalToggle } from "@contexts/Application";
 import useCurrentToken from "@hooks/useCurrentToken";
 import { getTrust } from "@lib/contracts/getTrust";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoEffect, useAutoMemo } from "hooks.macro";
-import { useState } from "react";
+import { useAutoEffect } from "hooks.macro";
+import { useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
@@ -44,26 +44,29 @@ const StakeTable = () => {
     };
   });
 
-  const memoizedColumns = useAutoMemo(() => [
-    {
-      Header: "Address",
-      accessor: "address",
-    },
-    {
-      Header: "Vouched",
-      accessor: "vouched",
-    },
-    {
-      Header: "Used",
-      accessor: "used",
-    },
-    {
-      Header: "Health",
-      accessor: "health",
-    },
-  ]);
+  const memoizedColumns = useMemo(
+    () => [
+      {
+        Header: "Address",
+        accessor: "address",
+      },
+      {
+        Header: "Vouched",
+        accessor: "vouched",
+      },
+      {
+        Header: "Used",
+        accessor: "used",
+      },
+      {
+        Header: "Health",
+        accessor: "health",
+      },
+    ],
+    []
+  );
 
-  const memoizedData = useAutoMemo(data);
+  const memoizedData = useMemo(() => data, [data]);
 
   const {
     getTableProps,

@@ -51,7 +51,7 @@ table thead {
   display: none;
 }
 
-@media (width >= 896px) {
+@media (width >= 600px) {
   table thead {
     display: table-header-group;
   }
