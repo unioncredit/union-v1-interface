@@ -1,5 +1,7 @@
 import { useLearnMoreModalToggle } from "@contexts/Application";
+import { useTrustModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
+import useIsMember from "@hooks/useIsMember";
 import { getTrust } from "@lib/contracts/getTrust";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
@@ -20,6 +22,10 @@ const StakeTable = () => {
   const [data, setData] = useState([]);
 
   const toggleLearnMoreModal = useLearnMoreModalToggle();
+
+  const toggleTrustModal = useTrustModalToggle();
+
+  const isMember = useIsMember();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -148,16 +154,26 @@ const StakeTable = () => {
         </tbody>
       </table>
 
-      {rows.length === 0 && (
-        <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
-          <img src="/images/table-empty.svg" alt="" />
-          <p className="text-lg md:text-xl text-center my-6 max-w-md">
-            Borrow without collateral and earn higher interest on your deposits
-            if you are a member.
-          </p>
-          <Button onClick={toggleLearnMoreModal}>Become a member</Button>
-        </div>
-      )}
+      {rows.length === 0 &&
+        (isMember ? (
+          <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
+            <img src="/images/table-empty.svg" alt="" />
+            <p className="text-lg md:text-xl text-center my-6 max-w-md">
+              Now that you’re a member, pay it forward and vouch for someone you
+              trust
+            </p>
+            <Button onClick={toggleTrustModal}>Trust a friend</Button>
+          </div>
+        ) : (
+          <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
+            <img src="/images/table-empty.svg" alt="" />
+            <p className="text-lg md:text-xl text-center my-6 max-w-md">
+              Borrow without collateral and earn higher interest on your
+              deposits if you are a member.
+            </p>
+            <Button onClick={toggleLearnMoreModal}>Become a member</Button>
+          </div>
+        ))}
     </div>
   );
 };
