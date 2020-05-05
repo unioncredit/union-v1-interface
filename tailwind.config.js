@@ -109,10 +109,7 @@ module.exports = {
     boxShadow: ["responsive", "hover", "focus", "focus-within"],
   },
   plugins: [],
-  purge: {
-    enabled: true,
-    content: ["./components/**/*.js", "./pages/**/*.js", "./views/**/*.js"],
-  },
+  purge: ["./components/**/*.js", "./pages/**/*.js", "./views/**/*.js"],
   corePlugins: {
     float: false,
     container: false,
