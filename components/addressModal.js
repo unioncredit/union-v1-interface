@@ -5,10 +5,15 @@ import { useState } from "react";
 import Button from "./button";
 import Identicon from "./identicon";
 import Modal, { ModalHeader } from "./modal";
+import truncateAddress from "@util/truncateAddress";
+import useENSName from "@hooks/useENSName";
+import HealthBar from "./healthBar";
 
 const AddressModal = ({ address, vouched, used, health }) => {
   const isOpen = useAddressModalOpen();
   const toggle = useAddressModalToggle();
+
+  const ENSName = useENSName(address);
 
   const [removingAddress, removingAddressSet] = useState(false);
 
@@ -32,9 +37,32 @@ const AddressModal = ({ address, vouched, used, health }) => {
     <Modal isOpen={isOpen} onDismiss={toggle}>
       <ModalHeader title="&nbsp;" onDismiss={toggle} />
 
-      <div className="px-4 pb-6 pt-4">
+      <div className="px-4 sm:px-6 pb-6 pt-4">
         <div className="flex justify-center">
           <Identicon address={address} extraLarge />
+        </div>
+
+        <div className="mt-4">
+          <p className="text-center text-lg font-semibold" title={address}>
+            {ENSName ?? truncateAddress(address)}
+          </p>
+        </div>
+
+        <div className="mt-16">
+          <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
+            <dt className="text-type-light">Vouched</dt>
+            <dd className="text-right">{`${vouched} DAI`}</dd>
+          </dl>
+          <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
+            <dt className="text-type-light">Used stake</dt>
+            <dd className="text-right">{`${used} DAI`}</dd>
+          </dl>
+          <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
+            <dt className="text-type-light">Health</dt>
+            <dd className="text-right">
+              <HealthBar health={health} />
+            </dd>
+          </dl>
         </div>
 
         <div className="mt-24">
