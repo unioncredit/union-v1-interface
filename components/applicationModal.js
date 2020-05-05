@@ -9,7 +9,6 @@ import { useState } from "react";
 import Button from "./button";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { getOriginationFee } from "@lib/contracts/getOriginationFee";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
@@ -20,32 +19,20 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
 
-  const [balance, setBalance] = useState(0);
-  const [FEE, setFee] = useState(0);
+  const [fee, setFee] = useState(0);
 
   const unionBalance = useTokenBalance(UNION);
+
   const memberContract = useMemberContract();
 
   useAutoEffect(() => {
     let isMounted = true;
 
-    const getUnionBalance = async () => {
-      try {
-        if (isMounted) {
-          setBalance(Number(await unionBalance).toFixed(2));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
     const getMemberFee = async () => {
       try {
         if (isMounted) {
-          const fee = await memberContract.newMemberFee();
-          setFee(parseRes(fee, 2));
+          const res = await memberContract.newMemberFee();
+          setFee(parseRes(res, 2));
         }
       } catch (err) {
         if (isMounted) {
@@ -54,7 +41,6 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       }
     };
 
-    getUnionBalance();
     getMemberFee();
 
     return () => {
@@ -65,7 +51,9 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const submit = useAutoCallback(async () => {
     try {
       await verifyMembership(account, DAI, library.getSigner(), chainId);
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   });
 
   return (
@@ -80,14 +68,14 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
         <LabelPair
           className="mt-4"
           label="Wallet Balance"
-          value={balance}
+          value={Number(unionBalance).toFixed(2)}
           valueType="UNION"
         />
 
         <LabelPair
           className="mt-8 mb-4"
           label="Membership Fee"
-          value={FEE}
+          value={fee}
           valueType="UNION"
         />
 

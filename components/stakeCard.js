@@ -1,10 +1,10 @@
+import { BLOCKS_PER_YEAR } from "@constants/";
 import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
-import useUnionContract from "@hooks/useUnionContract";
 import useStakingContract from "@hooks/useStakingContract";
 import useTokenBalance from "@hooks/useTokenBalance";
-import { BLOCKS_PER_YEAR } from "@constants/";
+import useUnionContract from "@hooks/useUnionContract";
 import { stake } from "@lib/contracts/stake";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -36,7 +36,6 @@ const StakeCard = () => {
   const [totalStake, setTotalStake] = useState(0);
   const [utilizedStake, setUtilizedStake] = useState(0);
   const [defaultedStake, setDefaultedStake] = useState(0);
-  const [balance, setBalance] = useState(0);
   const [withdrawableStake, setWithdrawableStake] = useState(0);
   const [rewards, setRewards] = useState(0);
   const [upy, setUpy] = useState(0);
@@ -52,18 +51,6 @@ const StakeCard = () => {
 
   useAutoEffect(() => {
     let isMounted = true;
-
-    async function fetchUnionBalance() {
-      try {
-        if (isMounted) {
-          setBalance(Number(await unionBalance).toFixed(3));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    }
 
     async function fetchStakeData() {
       try {
@@ -129,7 +116,6 @@ const StakeCard = () => {
       }
     }
 
-    fetchUnionBalance();
     fetchStakeData();
     fetchRewardsData();
 
@@ -235,7 +221,7 @@ const StakeCard = () => {
       <LabelPair
         labelColor="text-grey-pure"
         label="Wallet Balance"
-        value={balance}
+        value={Number(unionBalance).toFixed(3)}
         valueType="UNION"
       />
 

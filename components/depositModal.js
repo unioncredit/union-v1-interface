@@ -1,7 +1,7 @@
 import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useTokenBalance from "@hooks/useTokenBalance";
-import { useAutoEffect } from "hooks.macro";
+import { useAutoEffect, useAutoMemo } from "hooks.macro";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "./button";
@@ -21,25 +21,11 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const [balance, setBalance] = useState(0);
-
   const daiBalance = useTokenBalance(DAI);
 
-  useAutoEffect(() => {
-    let isMounted = true;
-
-    const getDaiBalance = async () => {
-      if (isMounted) {
-        setBalance(Math.floor((await daiBalance) * 100) / 100);
-      }
-    };
-
-    getDaiBalance();
-
-    return () => {
-      isMounted = false;
-    };
-  });
+  const flooredDaiBalance = useAutoMemo(
+    () => Math.floor(daiBalance * 100) / 100
+  );
 
   const onSubmit = async (values) => {
     await onDeposit(values.amount);
@@ -75,14 +61,14 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
           chip="DAI"
           id="amount"
           step="0.01"
-          max={balance}
+          max={flooredDaiBalance}
           type="number"
           label="Amount"
           ref={register}
           className="mb-8"
           placeholder="0.00"
-          setMaxValue={balance}
-          setMax={() => setValue("amount", balance)}
+          setMaxValue={flooredDaiBalance}
+          setMax={() => setValue("amount", flooredDaiBalance)}
           // tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
         />
 
