@@ -105,7 +105,7 @@ const VouchTable = ({ data }) => {
                     let cellRenderer = render("Cell");
 
                     if (Header === "Address")
-                      cellRenderer = <Address address={value} />;
+                      cellRenderer = <Address address={value} copyable />;
 
                     if (Header === "Percentage")
                       cellRenderer = (

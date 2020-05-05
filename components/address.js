@@ -1,20 +1,26 @@
 import useCopy from "@hooks/useCopy";
 import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
+import classNames from "classnames";
 import { memo } from "react";
 import Identicon from "./identicon";
 
-const Address = ({ address }) => {
+const Address = ({ address, copyable = false }) => {
   const ENSName = useENSName(address);
 
   const [copied, copy] = useCopy();
 
   const handleCopyAddress = () => copy(address);
 
+  const cachedClassNames = classNames(
+    "font-medium focus:outline-none flex items-center align-middle w-40",
+    copyable ? "" : "cursor-default"
+  );
+
   return (
     <button
-      onClick={handleCopyAddress}
-      className="font-medium focus:outline-none flex items-center align-middle w-40"
+      onClick={copyable ? handleCopyAddress : undefined}
+      className={cachedClassNames}
       title={address}
     >
       <Identicon large address={address} />
