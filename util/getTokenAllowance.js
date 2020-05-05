@@ -2,7 +2,7 @@ import ABI from "@constants/abis/erc20Detailed.json";
 import { isAddress } from "@ethersproject/address";
 import getContract from "@util/getContract";
 
-export async function getTokenAllowance(
+export default async function getTokenAllowance(
   address,
   tokenAddress,
   spenderAddress,
