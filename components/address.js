@@ -8,7 +8,7 @@ const Address = ({ address }) => {
   return (
     <div className="inline-flex items-center align-middle">
       <Identicon large address={address} />
-      <p className="leading-loose ml-4">
+      <p className="leading-loose ml-4" title={address}>
         {ENSName ?? truncateAddress(address)}
       </p>
     </div>
