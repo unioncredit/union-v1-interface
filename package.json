@@ -35,6 +35,7 @@
     "react-jazzicon-custom-colors": "^0.1.7",
     "react-table": "^7.0.4",
     "react-use": "^14.2.0",
+    "swr": "^0.2.0",
     "tailwindcss": "^1.4.4"
   },
   "devDependencies": {
