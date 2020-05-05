@@ -26,3 +26,15 @@ export function useVouchData() {
       fetcher(key, { account, curToken, library, chainId })
   );
 }
+
+export function useTransactions() {
+  const { library, chainId } = useWeb3React();
+
+  const curToken = useCurrentToken();
+
+  return useSWR(
+    ["transactions", curToken, library, chainId],
+    (key, curToken, library, chainId) =>
+      fetcher(key, { curToken, library, chainId })
+  );
+}
