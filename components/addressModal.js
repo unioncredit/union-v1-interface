@@ -1,13 +1,13 @@
 import { useAddressModalOpen, useAddressModalToggle } from "@contexts/Stake";
+import useENSName from "@hooks/useENSName";
 import delay from "@lib/delay";
+import truncateAddress from "@util/truncateAddress";
 import { useAutoCallback } from "hooks.macro";
 import { useState } from "react";
 import Button from "./button";
-import Identicon from "./identicon";
-import Modal, { ModalHeader } from "./modal";
-import truncateAddress from "@util/truncateAddress";
-import useENSName from "@hooks/useENSName";
 import HealthBar from "./healthBar";
+import Identicon from "./identicon";
+import Modal, { CloseButton } from "./modal";
 
 const AddressModal = ({ address, vouched, used, health }) => {
   const isOpen = useAddressModalOpen();
@@ -35,10 +35,12 @@ const AddressModal = ({ address, vouched, used, health }) => {
 
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
-      <ModalHeader title="&nbsp;" onDismiss={toggle} />
+      <div className="px-4 sm:px-6 pb-6 pt-4 relative">
+        <div className="absolute right-0 top-0 mr-6 mt-6">
+          <CloseButton onClick={toggle} />
+        </div>
 
-      <div className="px-4 sm:px-6 pb-6 pt-4">
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <Identicon address={address} extraLarge />
         </div>
 
