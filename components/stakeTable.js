@@ -158,7 +158,7 @@ const StakeTable = () => {
           </div>
         ))}
 
-      <AddressModal data={activeRow} />
+      <AddressModal {...activeRow} />
     </div>
   );
 };
