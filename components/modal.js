@@ -2,9 +2,10 @@ import { DialogContent, DialogOverlay } from "@reach/dialog";
 import VisuallyHidden from "@reach/visually-hidden";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import Close from "svgs/Close";
+import Back from "svgs/Back";
+import Close, { CloseLarge } from "svgs/Close";
 
-export const CloseButton = ({ circle = false, ...rest }) => {
+export const CloseButton = ({ circle = false, large = false, ...rest }) => {
   const cachedClassNames = classNames(
     "focus:outline-none focus:shadow-outline bg-white items-center justify-center inline-flex text-type-light",
     circle ? "h-12 w-12 rounded-full shadow-button" : "h-6 w-6 rounded"
@@ -13,7 +14,21 @@ export const CloseButton = ({ circle = false, ...rest }) => {
   return (
     <button className={cachedClassNames} {...rest}>
       <VisuallyHidden>Close</VisuallyHidden>
-      <Close />
+      {large ? <CloseLarge /> : <Close />}
+    </button>
+  );
+};
+
+export const BackButton = ({ circle = false, ...rest }) => {
+  const cachedClassNames = classNames(
+    "focus:outline-none focus:shadow-outline bg-white items-center justify-center inline-flex text-type-light",
+    circle ? "h-12 w-12 rounded-full shadow-button" : "h-6 w-6 rounded"
+  );
+
+  return (
+    <button className={cachedClassNames} {...rest}>
+      <VisuallyHidden>Back</VisuallyHidden>
+      <Back />
     </button>
   );
 };
