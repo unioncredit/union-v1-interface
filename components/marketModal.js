@@ -88,7 +88,6 @@ const MarketModal = ({
         <Button
           full
           onClick={() => onSetOverdueBlocks(blocks)}
-          disabled={!dirty}
         >
           Confirm
         </Button>

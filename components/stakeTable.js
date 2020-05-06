@@ -91,18 +91,18 @@ const StakeTable = () => {
                         {column.render("Header")}
                       </span>
                     ) : (
-                      column.render("Header")
-                    )}
+                        column.render("Header")
+                      )}
                     <div className="ml-2">
                       {column.isSorted ? (
                         column.isSortedDesc ? (
                           <Chevron.Down size={16} />
                         ) : (
-                          <Chevron.Up size={16} />
-                        )
+                            <Chevron.Up size={16} />
+                          )
                       ) : (
-                        <Chevron.Down size={16} color="transparent" />
-                      )}
+                          <Chevron.Down size={16} color="transparent" />
+                        )}
                     </div>
                   </div>
                 </th>
@@ -153,15 +153,15 @@ const StakeTable = () => {
             <Button onClick={toggleTrustModal}>Trust a friend</Button>
           </div>
         ) : (
-          <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
-            <img src="/images/table-empty.svg" alt="" />
-            <p className="text-lg md:text-xl text-center my-6 max-w-md">
-              Borrow without collateral and earn higher interest on your
-              deposits if you are a member.
+            <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
+              <img src="/images/table-empty.svg" alt="" />
+              <p className="text-lg md:text-xl text-center my-6 max-w-md">
+                Borrow without collateral and earn higher interest on your
+                deposits if you are a member.
             </p>
-            <Button onClick={toggleLearnMoreModal}>Become a member</Button>
-          </div>
-        ))}
+              <Button onClick={toggleLearnMoreModal}>Become a member</Button>
+            </div>
+          ))}
 
       {activeRow && <AddressModal {...activeRow} />}
     </div>

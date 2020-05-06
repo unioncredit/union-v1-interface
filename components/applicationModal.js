@@ -2,7 +2,7 @@ import { formatUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useMemberContract from "@hooks/useMemberContract";
 import useTokenBalance from "@hooks/useTokenBalance";
-import { verifyMembership } from "@lib/contracts/verifyMembership";
+import { applyMember } from "@lib/contracts/applyMember";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
@@ -50,7 +50,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
   const submit = useAutoCallback(async () => {
     try {
-      await verifyMembership(account, DAI, library.getSigner(), chainId);
+      await applyMember(account, DAI, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }

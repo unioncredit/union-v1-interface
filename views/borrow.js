@@ -13,7 +13,7 @@ import useIsMember from "@hooks/useIsMember";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
-import { getCreditLimit } from "@lib/contracts/getCreditLimit";
+import { getRemainingCreditLimit } from "@lib/contracts/getRemainingCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
@@ -67,7 +67,7 @@ export default function BorrowView() {
     const getCreditData = async () => {
       try {
         if (isMounted && isMember === true) {
-          const res = await getCreditLimit(curToken, account, library, chainId);
+          const res = await getRemainingCreditLimit(curToken, account, library, chainId);
 
           setCreditLimit(res.toFixed(2));
         }
@@ -96,7 +96,6 @@ export default function BorrowView() {
       try {
         if (isMounted && isMember === true) {
           const res = await getInterest(curToken, account, library, chainId);
-
           setInterest(res.toFixed(4));
         }
       } catch (err) {
@@ -226,7 +225,7 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {getPercentUtilized(borrowed, creditLimit).toLocaleString(
+                      {getPercentUtilized(borrowed, parseFloat(creditLimit) + parseFloat(borrowed)).toLocaleString(
                         undefined,
                         {
                           style: "percent",
@@ -235,7 +234,7 @@ export default function BorrowView() {
                       )}
                     </p>
                     <HealthBar
-                      health={getPercentUtilized(borrowed, creditLimit) * 100}
+                      health={getPercentUtilized(borrowed, parseFloat(creditLimit) + parseFloat(borrowed)) * 100}
                       dark
                     />
                   </div>

@@ -76,6 +76,12 @@
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
             }
         ],
         "name": "LogWithdrawRewards",
@@ -197,22 +203,7 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "stakingAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "vouchingAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "creditUsed",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "freezeAmount",
+                "name": "",
                 "type": "uint256"
             }
         ],
@@ -275,31 +266,6 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "lending",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "address",
                 "name": "_controller",
                 "type": "address"
             }
@@ -348,17 +314,7 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "stakingAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "vouchingAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "creditUsed",
+                "name": "",
                 "type": "uint256"
             }
         ],
@@ -490,31 +446,6 @@
             }
         ],
         "name": "updateOverdueInfo",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "amount",
-                "type": "uint256"
-            }
-        ],
-        "name": "vouching",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",

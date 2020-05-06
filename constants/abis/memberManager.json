@@ -36,7 +36,7 @@
             {
                 "indexed": false,
                 "internalType": "uint256",
-                "name": "creditLimit",
+                "name": "trustAmount",
                 "type": "uint256"
             }
         ],
@@ -50,6 +50,18 @@
                 "indexed": true,
                 "internalType": "address",
                 "name": "account",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "token",
                 "type": "address"
             }
         ],
@@ -78,32 +90,7 @@
                 "type": "address"
             }
         ],
-        "name": "LogCancelConnection",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "borrower",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "LogVerifyMembership",
+        "name": "LogCancelVouch",
         "type": "event"
     },
     {
@@ -130,11 +117,11 @@
             {
                 "indexed": false,
                 "internalType": "uint256",
-                "name": "creditLimit",
+                "name": "trustAmount",
                 "type": "uint256"
             }
         ],
-        "name": "LogVouch",
+        "name": "LogTrust",
         "type": "event"
     },
     {
@@ -206,7 +193,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "creditLimit",
+                "name": "trustAmount",
                 "type": "uint256"
             }
         ],
@@ -220,24 +207,14 @@
         "constant": false,
         "inputs": [
             {
-                "internalType": "uint8[]",
-                "name": "sigV",
-                "type": "uint8[]"
+                "internalType": "address",
+                "name": "newMember",
+                "type": "address"
             },
             {
-                "internalType": "bytes32[]",
-                "name": "sigR",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "bytes32[]",
-                "name": "sigS",
-                "type": "bytes32[]"
-            },
-            {
-                "internalType": "bytes",
-                "name": "message",
-                "type": "bytes"
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
             }
         ],
         "name": "applyMember",
@@ -285,10 +262,41 @@
                 "type": "address"
             }
         ],
-        "name": "cancelConnection",
+        "name": "cancelVouch",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "staker",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "checkAssetIsActive",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -323,6 +331,21 @@
     },
     {
         "constant": true,
+        "inputs": [],
+        "name": "effectiveNumber",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
         "inputs": [
             {
                 "internalType": "address",
@@ -335,7 +358,7 @@
                 "type": "address"
             }
         ],
-        "name": "findTotalVouchForBorrower",
+        "name": "findTotalCreditUsedForBorrower",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -396,12 +419,17 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "vouch",
+                "name": "trustAmount",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "lending",
+                "name": "vouchingAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "creditUsed",
                 "type": "uint256"
             }
         ],
@@ -416,9 +444,14 @@
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
             }
         ],
-        "name": "getLoanableAmount",
+        "name": "getCreditLimit",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -437,14 +470,9 @@
                 "internalType": "address",
                 "name": "token",
                 "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "account",
-                "type": "address"
             }
         ],
-        "name": "getMemberLimit",
+        "name": "getLoanableAmount",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -505,12 +533,100 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "vouch",
+                "name": "trustAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "vouchingAmount",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
                 "name": "creditUsed",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "staker",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "getTotalCreditUsed",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "totalCreditUsed",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "staker",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "getTotalFrozenAmount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "totalFrozenAmount",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "staker",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            }
+        ],
+        "name": "getVouchingAmount",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
                 "type": "uint256"
             }
         ],
@@ -562,9 +678,9 @@
                 "type": "address"
             },
             {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
+                "internalType": "uint256",
+                "name": "trustAmount",
+                "type": "uint256"
             }
         ],
         "name": "isEffectiveStaker",
@@ -700,7 +816,47 @@
                 "type": "uint256"
             }
         ],
+        "name": "setEffectiveNumber",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
         "name": "setNewMemberFee",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "token",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "trustAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "trust",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
@@ -730,51 +886,6 @@
         ],
         "payable": false,
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "newMember",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            }
-        ],
-        "name": "verifyMembership",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "borrower",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "token",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "creditLimit",
-                "type": "uint256"
-            }
-        ],
-        "name": "vouch",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
         "type": "function"
     }
 ]

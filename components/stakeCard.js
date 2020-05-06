@@ -3,6 +3,7 @@ import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
 import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useStakingContract from "@hooks/useStakingContract";
+import useMemberContract from "@hooks/useMemberContract";
 import useTokenBalance from "@hooks/useTokenBalance";
 import useUnionContract from "@hooks/useUnionContract";
 import { stake } from "@lib/contracts/stake";
@@ -48,6 +49,7 @@ const StakeCard = () => {
   const unionContract = useUnionContract();
 
   const stakingContract = useStakingContract();
+  const memberContract = useMemberContract();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -55,18 +57,14 @@ const StakeCard = () => {
     async function fetchStakeData() {
       try {
         if (isMounted) {
-          const {
-            stakingAmount,
-            creditUsed,
-            freezeAmount,
-            vouchingAmount,
-          } = await stakingContract.getStakerBalance(account, DAI);
-
+          const stakingAmount = await stakingContract.getStakerBalance(account, DAI);
+          const creditUsed = await memberContract.getTotalCreditUsed(account, DAI);
+          const freezeAmount = await memberContract.getTotalFrozenAmount(account, DAI);
           setTotalStake(parseRes(stakingAmount, 0));
           setUtilizedStake(parseRes(creditUsed, 0));
           setDefaultedStake(parseRes(freezeAmount, 0));
           setWithdrawableStake(
-            Number(parseRes(stakingAmount) - parseRes(vouchingAmount))
+            Number(parseRes(stakingAmount) - parseRes(creditUsed))
           );
         }
       } catch (err) {
