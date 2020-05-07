@@ -13,6 +13,7 @@ import useIsMember from "@hooks/useIsMember";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
+import { getBorrowRate } from "@lib/contracts/getBorrowRate";
 import { getRemainingCreditLimit } from "@lib/contracts/getRemainingCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
@@ -44,11 +45,25 @@ export default function BorrowView() {
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
+  const [apr, setApr] = useState(0);
 
   const { data: transactions } = useTransactions();
 
   useAutoEffect(() => {
     let isMounted = true;
+
+    const getAprData = async () => {
+      try {
+        if (isMounted && isMember === true) {
+          const res = await getBorrowRate(curToken, library, chainId);
+          setApr(res.toFixed(4));
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
+    };
 
     const getBorrowedData = async () => {
       try {
@@ -159,6 +174,7 @@ export default function BorrowView() {
     getInterestData();
     getPaymentDueDate();
     getOriginationFeeData();
+    getAprData();
 
     return () => {
       isMounted = false;
@@ -242,6 +258,9 @@ export default function BorrowView() {
               </dl>
 
               <div className="flex justify-between py-2">
+                <Link href="/vouch">
+                  <a className="underline text-sm">Current Rate: {apr * 100}% APR</a>
+                </Link>
                 <Link href="/vouch">
                   <a className="underline text-sm">See my breakdown</a>
                 </Link>
