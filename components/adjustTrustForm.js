@@ -1,5 +1,7 @@
 import SegmentedControl from "@components/segmentedControl";
 import delay from "@lib/delay";
+import { adjustTrust } from "@lib/contracts/adjustTrust";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -13,6 +15,7 @@ const ADJUST_TYPES = {
 
 const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const { library, chainId } = useWeb3React();
+  const curToken = useCurrentToken("DAI");
 
   const { register, handleSubmit, watch, formState } = useForm();
 
@@ -24,7 +27,6 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const onSubmit = async (data, e) => {
     const { amount } = data;
-
     try {
       if (adjustType === ADJUST_TYPES.INCREASE) {
         /**
@@ -37,7 +39,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
          */
         await delay();
 
-        onComplete();
+        //onComplete();
       }
 
       if (adjustType === ADJUST_TYPES.DECREASE) {
@@ -51,8 +53,14 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
          */
         await delay();
 
+        //onComplete();
+      }
+
+      if (formatNewTrust >= 0) {
+        await adjustTrust(address, curToken, formatNewTrust, library.getSigner(), chainId);
         onComplete();
       }
+
     } catch (err) {
       console.error(err);
     }

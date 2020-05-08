@@ -2,7 +2,10 @@ import { useAddressModalOpen, useAddressModalToggle } from "@contexts/Stake";
 import useENSName from "@hooks/useENSName";
 import delay from "@lib/delay";
 import truncateAddress from "@util/truncateAddress";
+import { cancelVouch } from "@lib/contracts/cancelVouch";
+import useCurrentToken from "@hooks/useCurrentToken";
 import { useAutoCallback } from "hooks.macro";
+import { useWeb3React } from "@web3-react/core";
 import { Fragment, useEffect, useState } from "react";
 import Address from "./address";
 import AdjustTrustForm from "./adjustTrustForm";
@@ -17,6 +20,9 @@ const ADDRESS_VIEWS = {
 };
 
 const AddressModal = ({ address, vouched, used, health }) => {
+  const { account, library, chainId } = useWeb3React();
+  const curToken = useCurrentToken("DAI");
+
   const isOpen = useAddressModalOpen();
   const toggle = useAddressModalToggle();
 
@@ -37,8 +43,8 @@ const AddressModal = ({ address, vouched, used, health }) => {
       /**
        * Simulate tx to remove address
        */
-      await delay();
-
+      //await delay();
+      await cancelVouch(account, address, curToken, library.getSigner(), chainId);
       removingAddressSet(false);
     } catch (err) {
       console.error(err);
@@ -101,42 +107,42 @@ const AddressModal = ({ address, vouched, used, health }) => {
             </div>
           </Fragment>
         ) : (
-          <Fragment>
-            <div className="absolute left-0 top-0 ml-6 mt-6">
-              <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
-            </div>
-            <div className="mt-20">
-              <p>Edit this member's trust</p>
-            </div>
+            <Fragment>
+              <div className="absolute left-0 top-0 ml-6 mt-6">
+                <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
+              </div>
+              <div className="mt-20">
+                <p>Edit this member's trust</p>
+              </div>
 
-            <div className="mt-4 cursor-text">
-              <Address address={address} large />
-            </div>
+              <div className="mt-4 cursor-text">
+                <Address address={address} large />
+              </div>
 
-            <div className="mt-4">
-              <div className="divider" />
-            </div>
+              <div className="mt-4">
+                <div className="divider" />
+              </div>
 
-            <div className="mt-4">
-              <dl className="flex justify-between items-center leading-tight">
-                <dt>Current Trust</dt>
-                <dd className="text-right">{`${vouched} DAI`}</dd>
-              </dl>
-            </div>
+              <div className="mt-4">
+                <dl className="flex justify-between items-center leading-tight">
+                  <dt>Current Trust</dt>
+                  <dd className="text-right">{`${vouched} DAI`}</dd>
+                </dl>
+              </div>
 
-            <div className="mt-4">
-              <div className="divider" />
-            </div>
+              <div className="mt-4">
+                <div className="divider" />
+              </div>
 
-            <div className="mt-6">
-              <AdjustTrustForm
-                address={address}
-                vouched={vouched}
-                onComplete={toggle}
-              />
-            </div>
-          </Fragment>
-        )}
+              <div className="mt-6">
+                <AdjustTrustForm
+                  address={address}
+                  vouched={vouched}
+                  onComplete={toggle}
+                />
+              </div>
+            </Fragment>
+          )}
       </div>
     </Modal>
   );

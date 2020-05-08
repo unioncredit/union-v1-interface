@@ -74,13 +74,13 @@
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "borrower",
+                "name": "staker",
                 "type": "address"
             },
             {
                 "indexed": true,
                 "internalType": "address",
-                "name": "staker",
+                "name": "borrower",
                 "type": "address"
             },
             {
@@ -254,6 +254,11 @@
             {
                 "internalType": "address",
                 "name": "staker",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "borrower",
                 "type": "address"
             },
             {
