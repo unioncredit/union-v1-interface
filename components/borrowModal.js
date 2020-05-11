@@ -41,15 +41,12 @@ const BorrowModal = ({
 
   const formatNewCredit = Number(
     parseFloat(creditLimit) > 0
-      ? parseFloat(creditLimit) -
-      parseFloat(amount || 0)
+      ? parseFloat(creditLimit) - parseFloat(amount || 0)
       : 0
   ).toFixed(2);
 
   const maxBorrowable = Number(
-    parseFloat(creditLimit) > 0
-      ? parseFloat(creditLimit)
-      : 0
+    parseFloat(creditLimit) > 0 ? parseFloat(creditLimit) : 0
   ).toFixed(2);
 
   return (

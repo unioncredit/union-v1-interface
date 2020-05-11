@@ -23,7 +23,8 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const amount = watch("amount", 0);
 
   const formatNewBalance = Number(
-    (parseFloat(balanceOwed) > 0 && parseFloat(balanceOwed) - parseFloat(amount || 0) > 0)
+    parseFloat(balanceOwed) > 0 &&
+      parseFloat(balanceOwed) - parseFloat(amount || 0) > 0
       ? parseFloat(balanceOwed) - parseFloat(amount || 0)
       : 0
   ).toFixed(2);

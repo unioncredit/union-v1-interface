@@ -33,7 +33,11 @@ export default function VouchView() {
     const getCreditData = async () => {
       try {
         if (isMounted) {
-          const res = await getTotalVouchedForYou(curToken, library.getSigner(), chainId);
+          const res = await getTotalVouchedForYou(
+            curToken,
+            library.getSigner(),
+            chainId
+          );
           setTotalVouched(res.toFixed(4));
         }
       } catch (err) {
