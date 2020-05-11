@@ -52,7 +52,7 @@ export default function StakeView() {
       await vouch(address, curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 0 });
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
