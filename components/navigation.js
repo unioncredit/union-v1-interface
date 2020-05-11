@@ -1,4 +1,7 @@
-import { useWalletModalToggle } from "@contexts/Application";
+import {
+  useToggleCreateModal,
+  useToggleSignInModal,
+} from "@contexts/Application";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import Link from "next/link";
@@ -49,7 +52,8 @@ const Navigation = () => {
 
   const isHomepage = pathname === "/" ? true : false;
 
-  const toggleWalletModal = useWalletModalToggle();
+  const toggleSignInModal = useToggleSignInModal();
+  const toggleCreateModal = useToggleCreateModal();
 
   return (
     <nav className="border-b bg-white">
@@ -68,13 +72,13 @@ const Navigation = () => {
                   <li className="mr-4">
                     <button
                       className="btn border-transparent font-medium px-4"
-                      onClick={toggleWalletModal}
+                      onClick={toggleSignInModal}
                     >
                       Sign in
                     </button>
                   </li>
                   <li>
-                    <Button secondary onClick={toggleWalletModal}>
+                    <Button secondary onClick={toggleCreateModal}>
                       Start now
                     </Button>
                   </li>

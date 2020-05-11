@@ -1,8 +1,12 @@
-import { useWalletModalToggle } from "@contexts/Application";
 import Button from "@components/button";
+import {
+  useToggleCreateModal,
+  useToggleSignInModal,
+} from "@contexts/Application";
 
 export default function LoggedOutView() {
-  const toggleWalletModal = useWalletModalToggle();
+  const toggleSignInModal = useToggleSignInModal();
+  const toggleCreateModal = useToggleCreateModal();
 
   return (
     <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8 text-center">
@@ -16,13 +20,13 @@ export default function LoggedOutView() {
         interest when staking.
       </p>
 
-      <Button onClick={toggleWalletModal} full>
+      <Button onClick={toggleCreateModal} full>
         Start now
       </Button>
 
       <p className="mt-4">
         Already have an account?{" "}
-        <button className="underline font-medium" onClick={toggleWalletModal}>
+        <button className="underline font-medium" onClick={toggleSignInModal}>
           Sign in
         </button>
       </p>

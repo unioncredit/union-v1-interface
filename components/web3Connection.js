@@ -1,4 +1,4 @@
-import { useWalletModalToggle } from "@contexts/Application";
+import { useToggleSignInModal } from "@contexts/Application";
 import useENSName from "@hooks/useENSName";
 import truncateAddress from "@util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
@@ -11,7 +11,7 @@ const Web3Connection = () => {
 
   const ENSName = useENSName(account);
 
-  const toggleWalletModal = useWalletModalToggle();
+  const toggleSignInModal = useToggleSignInModal();
 
   return (
     <ul className="flex items-center">
@@ -19,7 +19,7 @@ const Web3Connection = () => {
         <Activity />
       </li>
       <li className="ml-6 md:ml-8">
-        <Web3Button onClick={toggleWalletModal} error={Boolean(error)}>
+        <Web3Button onClick={toggleSignInModal} error={Boolean(error)}>
           {Boolean(error) ? (
             error instanceof UnsupportedChainIdError ? (
               "Wrong Network"

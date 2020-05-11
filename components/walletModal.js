@@ -1,6 +1,8 @@
 import {
   useWalletModalOpen,
   useWalletModalToggle,
+  useWalletModalView,
+  useUpdateWalletModalView,
 } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
 import useToast from "@hooks/useToast";
@@ -44,22 +46,15 @@ const WalletOption = ({ name, activating, disabled, onClick }) => (
   </div>
 );
 
-const WALLET_VIEWS = {
-  SIGN_IN: "SIGN_IN",
-  CREATE: "CREATE",
-};
-
 const WalletModal = () => {
-  const {
-    error,
-    active,
-    account,
-    activate,
-    connector,
-    deactivate,
-  } = useWeb3React();
+  const { error, active, activate, connector, deactivate } = useWeb3React();
 
-  const [walletView, setWalletView] = useState(WALLET_VIEWS.CREATE);
+  const walletView = useWalletModalView();
+
+  const {
+    setWalletViewCreate,
+    setWalletViewSignIn,
+  } = useUpdateWalletModalView();
 
   const router = useRouter();
 
@@ -69,15 +64,6 @@ const WalletModal = () => {
   const addToast = useToast();
 
   const [activatingConnector, setActivatingConnector] = useState();
-
-  /**
-   * Auto set the initial view to Create account, set to Sign
-   *  in if there is an active connection or an account
-   */
-  useAutoEffect(() => {
-    if (open) setWalletView(WALLET_VIEWS.CREATE);
-    if (open && active && account) setWalletView(WALLET_VIEWS.SIGN_IN);
-  });
 
   useAutoEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
@@ -114,7 +100,7 @@ const WalletModal = () => {
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
-        {walletView === WALLET_VIEWS.SIGN_IN ? (
+        {walletView === "SIGN_IN" ? (
           <Fragment>
             <div className="mb-10">
               <p className="text-center text-xl mb-3">
@@ -138,8 +124,8 @@ const WalletModal = () => {
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
                       await activate(CONNECTORS[name]);
-                      await toggle();
-                      router.push("/stake");
+                      toggle();
+                      if (router.pathname === "/") router.push("/stake");
                     }}
                     disabled={disabled}
                     activating={activating}
@@ -179,7 +165,7 @@ const WalletModal = () => {
                 <p className="text-sm text-center mt-6">
                   Don't have an account?{" "}
                   <button
-                    onClick={() => setWalletView(WALLET_VIEWS.CREATE)}
+                    onClick={setWalletViewCreate}
                     className="underline font-medium"
                   >
                     Sign up
@@ -209,8 +195,8 @@ const WalletModal = () => {
                     onClick={async () => {
                       setActivatingConnector(currentConnector);
                       await activate(CONNECTORS[name]);
-                      await toggle();
-                      router.push("/stake");
+                      toggle();
+                      if (router.pathname === "/") router.push("/stake");
                     }}
                     disabled={disabled}
                     activating={activating}
@@ -243,7 +229,7 @@ const WalletModal = () => {
             <p className="text-sm text-center mt-6">
               Already have an account?{" "}
               <button
-                onClick={() => setWalletView(WALLET_VIEWS.SIGN_IN)}
+                onClick={setWalletViewSignIn}
                 className="underline font-medium"
               >
                 Sign in
