@@ -28,7 +28,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
         className="px-4 py-6 sm:px-6 sm:py-8"
       >
         <Input
-          autoFocus
+          autoFocus={!initialAddress}
           className="mb-4"
           defaultValue={initialAddress}
           pattern="^0x[a-fA-F0-9]{40}"
@@ -41,6 +41,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
         />
 
         <Input
+          autoFocus={!!initialAddress}
           chip="DAI"
           className="mb-4"
           defaultValue={initialTrust > 0 ? initialTrust : undefined}
