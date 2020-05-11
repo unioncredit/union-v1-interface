@@ -22,7 +22,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const amount = watch("amount", 0);
 
   const formatNewBalance = Number(
-    parseFloat(balanceOwed) > 0
+    (parseFloat(balanceOwed) > 0 && parseFloat(balanceOwed) - parseFloat(amount || 0) > 0)
       ? parseFloat(balanceOwed) - parseFloat(amount || 0)
       : 0
   ).toFixed(2);
@@ -46,7 +46,6 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
 
         <Input
           min={0}
-          min={0}
           required
           autoFocus
           chip="DAI"
@@ -56,7 +55,6 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
           type="number"
           ref={register}
           label="Amount"
-          max={balanceOwed}
           setMaxValue={balanceOwed}
           setMax={() => setValue("amount", balanceOwed)}
           placeholder="0.00"
