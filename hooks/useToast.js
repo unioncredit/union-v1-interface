@@ -26,6 +26,9 @@ const ToastBody = ({ body, onDismiss }) => (
   </div>
 );
 
+/**
+ * @todo Add proper icons
+ */
 const TOAST_ICONS = {
   error: () => (
     <div className="h-10 w-10 bg-alert-error bg-opacity-10 rounded-full" />
