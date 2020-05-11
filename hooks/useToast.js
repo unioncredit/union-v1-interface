@@ -1,5 +1,6 @@
 import cogoToast from "cogo-toast";
 import { useCallback } from "react";
+import { Failure, Loading, Pending, Success } from "svgs/Alerts";
 
 const ToastBody = ({ body, onDismiss }) => (
   <div className="flex justify-between" style={{ width: 360 }}>
@@ -26,25 +27,12 @@ const ToastBody = ({ body, onDismiss }) => (
   </div>
 );
 
-/**
- * @todo Add proper icons
- */
 const TOAST_ICONS = {
-  error: () => (
-    <div className="h-10 w-10 bg-alert-error bg-opacity-10 rounded-full" />
-  ),
-  info: () => (
-    <div className="h-10 w-10 bg-alert-loading  bg-opacity-10 rounded-full" />
-  ),
-  loading: () => (
-    <div className="h-10 w-10 bg-alert-loading bg-opacity-10 rounded-full" />
-  ),
-  success: () => (
-    <div className="h-10 w-10 bg-alert-success bg-opacity-10 rounded-full" />
-  ),
-  warn: () => (
-    <div className="h-10 w-10 bg-alert-pending bg-opacity-10 rounded-full" />
-  ),
+  error: () => <Failure />,
+  info: () => <Loading />,
+  loading: () => <Loading />,
+  success: () => <Success />,
+  warn: () => <Pending />,
 };
 
 export default function useToast() {
