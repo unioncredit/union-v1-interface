@@ -1,24 +1,18 @@
-import { MEMBER_MANAGER_ADDRESSES } from "@constants/";
-import ABI from "@constants/abis/memberManager.json";
-import getContract from "@util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
+import useMemberContract from "./useMemberContract";
 
 export default function useIsMember() {
-  const { library, chainId, account } = useWeb3React();
+  const { account } = useWeb3React();
 
   const [isMember, setIsMember] = useState();
+
+  const memberContract = useMemberContract();
 
   useEffect(() => {
     let stale = false;
 
-    const contract = getContract(
-      MEMBER_MANAGER_ADDRESSES[chainId],
-      ABI,
-      library.getSigner()
-    );
-
-    contract
+    memberContract
       .isMember(account)
       .then((state) => {
         if (!stale) {
@@ -38,7 +32,7 @@ export default function useIsMember() {
       stale = true;
       setIsMember();
     };
-  }, [library, account]);
+  }, [account]);
 
   return isMember;
 }
