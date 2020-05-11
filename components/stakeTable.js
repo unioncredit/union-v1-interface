@@ -117,7 +117,7 @@ const StakeTable = () => {
               <tr
                 {...row.getRowProps()}
                 onClick={handleRowClick(row)}
-                className="hover:bg-border-light focus:outline-none focus:bg-border-light cursor-pointer"
+                className="focus:outline-none focus:bg-border-light cursor-pointer"
                 tabIndex={0}
               >
                 {row.cells.map(
