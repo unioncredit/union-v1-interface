@@ -85,10 +85,7 @@ const MarketModal = ({
           required
           type="number"
         />
-        <Button
-          full
-          onClick={() => onSetOverdueBlocks(blocks)}
-        >
+        <Button full onClick={() => onSetOverdueBlocks(blocks)}>
           Confirm
         </Button>
       </div>

@@ -57,10 +57,15 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
       }
 
       if (formatNewTrust >= 0) {
-        await adjustTrust(address, curToken, formatNewTrust, library.getSigner(), chainId);
+        await adjustTrust(
+          address,
+          curToken,
+          formatNewTrust,
+          library.getSigner(),
+          chainId
+        );
         onComplete();
       }
-
     } catch (err) {
       console.error(err);
     }

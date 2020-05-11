@@ -82,7 +82,12 @@ export default function BorrowView() {
     const getCreditData = async () => {
       try {
         if (isMounted && isMember === true) {
-          const res = await getRemainingCreditLimit(curToken, account, library, chainId);
+          const res = await getRemainingCreditLimit(
+            curToken,
+            account,
+            library,
+            chainId
+          );
 
           setCreditLimit(res.toFixed(2));
         }
@@ -241,16 +246,21 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {getPercentUtilized(borrowed, parseFloat(creditLimit) + parseFloat(borrowed)).toLocaleString(
-                        undefined,
-                        {
-                          style: "percent",
-                          maximumFractionDigits: 0,
-                        }
-                      )}
+                      {getPercentUtilized(
+                        borrowed,
+                        parseFloat(creditLimit) + parseFloat(borrowed)
+                      ).toLocaleString(undefined, {
+                        style: "percent",
+                        maximumFractionDigits: 0,
+                      })}
                     </p>
                     <HealthBar
-                      health={getPercentUtilized(borrowed, parseFloat(creditLimit) + parseFloat(borrowed)) * 100}
+                      health={
+                        getPercentUtilized(
+                          borrowed,
+                          parseFloat(creditLimit) + parseFloat(borrowed)
+                        ) * 100
+                      }
                       dark
                     />
                   </div>
@@ -259,7 +269,9 @@ export default function BorrowView() {
 
               <div className="flex justify-between py-2">
                 <Link href="/vouch">
-                  <a className="underline text-sm">Current Rate: {apr * 100}% APR</a>
+                  <a className="underline text-sm">
+                    Current Rate: {apr * 100}% APR
+                  </a>
                 </Link>
                 <Link href="/vouch">
                   <a className="underline text-sm">See my breakdown</a>

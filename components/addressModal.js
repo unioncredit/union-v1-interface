@@ -44,7 +44,13 @@ const AddressModal = ({ address, vouched, used, health }) => {
        * Simulate tx to remove address
        */
       //await delay();
-      await cancelVouch(account, address, curToken, library.getSigner(), chainId);
+      await cancelVouch(
+        account,
+        address,
+        curToken,
+        library.getSigner(),
+        chainId
+      );
       removingAddressSet(false);
     } catch (err) {
       console.error(err);
@@ -107,42 +113,42 @@ const AddressModal = ({ address, vouched, used, health }) => {
             </div>
           </Fragment>
         ) : (
-            <Fragment>
-              <div className="absolute left-0 top-0 ml-6 mt-6">
-                <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
-              </div>
-              <div className="mt-20">
-                <p>Edit this member's trust</p>
-              </div>
+          <Fragment>
+            <div className="absolute left-0 top-0 ml-6 mt-6">
+              <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
+            </div>
+            <div className="mt-20">
+              <p>Edit this member's trust</p>
+            </div>
 
-              <div className="mt-4 cursor-text">
-                <Address address={address} large />
-              </div>
+            <div className="mt-4 cursor-text">
+              <Address address={address} large />
+            </div>
 
-              <div className="mt-4">
-                <div className="divider" />
-              </div>
+            <div className="mt-4">
+              <div className="divider" />
+            </div>
 
-              <div className="mt-4">
-                <dl className="flex justify-between items-center leading-tight">
-                  <dt>Current Trust</dt>
-                  <dd className="text-right">{`${vouched} DAI`}</dd>
-                </dl>
-              </div>
+            <div className="mt-4">
+              <dl className="flex justify-between items-center leading-tight">
+                <dt>Current Trust</dt>
+                <dd className="text-right">{`${vouched} DAI`}</dd>
+              </dl>
+            </div>
 
-              <div className="mt-4">
-                <div className="divider" />
-              </div>
+            <div className="mt-4">
+              <div className="divider" />
+            </div>
 
-              <div className="mt-6">
-                <AdjustTrustForm
-                  address={address}
-                  vouched={vouched}
-                  onComplete={toggle}
-                />
-              </div>
-            </Fragment>
-          )}
+            <div className="mt-6">
+              <AdjustTrustForm
+                address={address}
+                vouched={vouched}
+                onComplete={toggle}
+              />
+            </div>
+          </Fragment>
+        )}
       </div>
     </Modal>
   );

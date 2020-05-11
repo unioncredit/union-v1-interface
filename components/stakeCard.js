@@ -57,9 +57,18 @@ const StakeCard = () => {
     async function fetchStakeData() {
       try {
         if (isMounted) {
-          const stakingAmount = await stakingContract.getStakerBalance(account, DAI);
-          const creditUsed = await memberContract.getTotalCreditUsed(account, DAI);
-          const freezeAmount = await memberContract.getTotalFrozenAmount(account, DAI);
+          const stakingAmount = await stakingContract.getStakerBalance(
+            account,
+            DAI
+          );
+          const creditUsed = await memberContract.getTotalCreditUsed(
+            account,
+            DAI
+          );
+          const freezeAmount = await memberContract.getTotalFrozenAmount(
+            account,
+            DAI
+          );
           setTotalStake(parseRes(stakingAmount, 2));
           setUtilizedStake(parseRes(creditUsed, 2));
           setDefaultedStake(parseRes(freezeAmount, 2));
