@@ -60,11 +60,11 @@ const StakeCard = () => {
           const stakingAmount = await stakingContract.getStakerBalance(account, DAI);
           const creditUsed = await memberContract.getTotalCreditUsed(account, DAI);
           const freezeAmount = await memberContract.getTotalFrozenAmount(account, DAI);
-          setTotalStake(parseRes(stakingAmount, 0));
-          setUtilizedStake(parseRes(creditUsed, 0));
-          setDefaultedStake(parseRes(freezeAmount, 0));
+          setTotalStake(parseRes(stakingAmount, 2));
+          setUtilizedStake(parseRes(creditUsed, 2));
+          setDefaultedStake(parseRes(freezeAmount, 2));
           setWithdrawableStake(
-            Number(parseRes(stakingAmount) - parseRes(creditUsed))
+            Number(parseRes(stakingAmount) - parseRes(creditUsed)).toFixed(2)
           );
         }
       } catch (err) {
