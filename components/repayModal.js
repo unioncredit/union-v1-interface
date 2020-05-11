@@ -1,6 +1,6 @@
 import { useRepayModalOpen, useRepayModalToggle } from "@contexts/Borrow";
 import { useForm } from "react-hook-form";
-import { REPAY_MARGIN } from "@constants/";
+import { REPAY_MARGIN } from "@constants/index";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -69,10 +69,6 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
-            max: {
-              value: formatBalanceOwed,
-              message: `Value must be less than or equal to ${formatBalanceOwed}`,
-            },
             min: {
               value: 0,
               message: "Value must be greater than 0",
