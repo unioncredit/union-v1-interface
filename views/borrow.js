@@ -10,6 +10,7 @@ import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import { useTransactions } from "@hooks/swrHooks";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
+import useToast from "@hooks/useToast";
 import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
@@ -46,6 +47,8 @@ export default function BorrowView() {
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
   const [apr, setApr] = useState(0);
+
+  const addToast = useToast();
 
   const { data: transactions } = useTransactions();
 
@@ -185,6 +188,7 @@ export default function BorrowView() {
       await borrow(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
@@ -193,6 +197,7 @@ export default function BorrowView() {
       await repay(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 

@@ -1,6 +1,7 @@
 import { formatUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useMemberContract from "@hooks/useMemberContract";
+import useToast from "@hooks/useToast";
 import useTokenBalance from "@hooks/useTokenBalance";
 import { applyMember } from "@lib/contracts/applyMember";
 import { useWeb3React } from "@web3-react/core";
@@ -25,6 +26,8 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const unionBalance = useTokenBalance(UNION);
 
   const memberContract = useMemberContract();
+
+  const addToast = useToast();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -58,6 +61,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       isSubmittingSet(false);
     } catch (err) {
       isSubmittingSet(false);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
       console.error(err);
     }
   });

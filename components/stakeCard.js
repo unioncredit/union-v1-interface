@@ -4,6 +4,7 @@ import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useMemberContract from "@hooks/useMemberContract";
 import useStakingContract from "@hooks/useStakingContract";
+import useToast from "@hooks/useToast";
 import useTokenBalance from "@hooks/useTokenBalance";
 import useUnionContract from "@hooks/useUnionContract";
 import { stake } from "@lib/contracts/stake";
@@ -45,6 +46,8 @@ const StakeCard = () => {
   const [withdrawing, setWithdrawing] = useState(false);
 
   const unionBalance = useTokenBalance(UNION);
+
+  const addToast = useToast();
 
   const unionContract = useUnionContract();
   const stakingContract = useStakingContract();
@@ -132,9 +135,10 @@ const StakeCard = () => {
 
   const onDeposit = useAutoCallback(async (amount) => {
     try {
-      const tx = await stake(DAI, amount, library.getSigner(), chainId);
+      await stake(DAI, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
@@ -147,6 +151,7 @@ const StakeCard = () => {
       await tx.wait();
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
@@ -161,6 +166,7 @@ const StakeCard = () => {
       setWithdrawing(false);
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
       setWithdrawing(false);
     }
   });
