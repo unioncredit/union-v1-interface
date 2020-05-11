@@ -8,7 +8,7 @@ import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import { useVouchData } from "@hooks/swrHooks";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
-import { getCreditLimit } from "@lib/contracts/getCreditLimit";
+import { getTotalVouchedForYou } from "@lib/contracts/getTotalVouchedForYou";
 import getVouchBarData from "@util/getVouchBarData";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
@@ -23,7 +23,7 @@ export default function VouchView() {
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-  const [creditLimit, setCreditLimit] = useState(0);
+  const [totalVouched, setTotalVouched] = useState(0);
 
   const { data: vouchData } = useVouchData();
 
@@ -33,9 +33,8 @@ export default function VouchView() {
     const getCreditData = async () => {
       try {
         if (isMounted) {
-          const res = await getCreditLimit(curToken, account, library, chainId);
-
-          setCreditLimit(res.toFixed(4));
+          const res = await getTotalVouchedForYou(curToken, library.getSigner(), chainId);
+          setTotalVouched(res.toFixed(4));
         }
       } catch (err) {
         if (isMounted) {
@@ -59,7 +58,7 @@ export default function VouchView() {
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Total credit vouched for you"
-            value={creditLimit}
+            value={totalVouched}
             valueType="DAI"
             large
           />
