@@ -60,3 +60,23 @@ export function useTransactions() {
       fetcher(key, { curToken, library, chainId })
   );
 }
+
+export function useTrustCountData() {
+  const { library, account, chainId } = useWeb3React();
+
+  const curToken = useCurrentToken();
+
+  const shouldFetch =
+    typeof chainId === "number" &&
+    typeof account === "string" &&
+    isAddress(curToken) &&
+    !!library
+      ? true
+      : false;
+
+  return useSWR(
+    shouldFetch ? ["trustcount", account, curToken, library, chainId] : null,
+    (key, account, curToken, library, chainId) =>
+      fetcher(key, { account, curToken, library, chainId })
+  );
+}

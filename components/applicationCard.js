@@ -1,9 +1,6 @@
 import { useGetInvitedModalToggle } from "@contexts/Application";
-import useCurrentToken from "@hooks/useCurrentToken";
-import { getTrustCount } from "@lib/contracts/getTrustCount";
-import { useWeb3React } from "@web3-react/core";
+import { useTrustCountData } from "@hooks/swrHooks";
 import classNames from "classnames";
-import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
@@ -11,39 +8,13 @@ import ApplicationModal from "./applicationModal";
 import Button from "./button";
 
 const ApplicationCard = () => {
-  const { account, library, chainId } = useWeb3React();
-
   const toggleGetInvitedModal = useGetInvitedModalToggle();
-
-  const curToken = useCurrentToken("DAI");
-
-  const [trustCount, setTrustCount] = useState(0);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleApplicationModal = () => setIsOpen(!isOpen);
 
-  useAutoEffect(() => {
-    let isMounted = true;
-
-    const getTrustCountData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getTrustCount(account, curToken, library, chainId);
-
-          setTrustCount(res);
-        }
-      } catch (err) {
-        if (isMounted) console.error(err);
-      }
-    };
-
-    getTrustCountData();
-
-    return () => {
-      isMounted = false;
-    };
-  });
+  const { data: trustCount } = useTrustCountData();
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
