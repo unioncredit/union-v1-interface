@@ -25,55 +25,29 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const amount = watch("amount", 0);
 
+  const formatNewTrust = Number(
+    vouched + ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
+  );
+
   const onSubmit = async (data, e) => {
-    const { amount } = data;
     try {
-      if (adjustType === ADJUST_TYPES.INCREASE) {
-        /**
-         * Variables presumed needed for the calls
-         */
-        console.log({ address, amount, library, chainId });
-
-        /**
-         * Simulate contract call
-         */
-        await delay();
-
-        //onComplete();
-      }
-
-      if (adjustType === ADJUST_TYPES.DECREASE) {
-        /**
-         * Variables presumed needed for the calls
-         */
-        console.log({ address, amount, library, chainId });
-
-        /**
-         * Simulate contract call
-         */
-        await delay();
-
-        //onComplete();
-      }
-
       if (formatNewTrust >= 0) {
-        await adjustTrust(
+        const tx = await adjustTrust(
           address,
           curToken,
           formatNewTrust,
           library.getSigner(),
           chainId
         );
+
+        await tx.wait();
+
         onComplete();
       }
     } catch (err) {
       console.error(err);
     }
   };
-
-  const formatNewTrust = Number(
-    vouched + ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
-  );
 
   return (
     <form method="POST" onSubmit={handleSubmit(onSubmit)}>
