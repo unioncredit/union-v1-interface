@@ -1,7 +1,6 @@
 import SegmentedControl from "@components/segmentedControl";
-import delay from "@lib/delay";
-import { adjustTrust } from "@lib/contracts/adjustTrust";
 import useCurrentToken from "@hooks/useCurrentToken";
+import { adjustTrust } from "@lib/contracts/adjustTrust";
 import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

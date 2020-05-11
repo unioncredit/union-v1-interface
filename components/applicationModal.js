@@ -20,6 +20,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const UNION = useCurrentToken("UNION");
 
   const [fee, setFee] = useState(0);
+  const [isSubmitting, isSubmittingSet] = useState(false);
 
   const unionBalance = useTokenBalance(UNION);
 
@@ -49,9 +50,14 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   });
 
   const submit = useAutoCallback(async () => {
+    isSubmittingSet(true);
+
     try {
       await applyMember(account, DAI, library.getSigner(), chainId);
+
+      isSubmittingSet(false);
     } catch (err) {
+      isSubmittingSet(false);
       console.error(err);
     }
   });
@@ -82,7 +88,12 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
         <div className="divider"></div>
 
         <div className="mt-6">
-          <Button full onClick={submit}>
+          <Button
+            full
+            onClick={submit}
+            submitting={isSubmitting}
+            disabled={isSubmitting}
+          >
             Submit application
           </Button>
         </div>
