@@ -26,7 +26,7 @@ const Input = forwardRef(
     );
 
     const errorClassNames = classNames(
-      "text-sm whitespace-no-wrap text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 leading-none text-overflow-clip overflow-hidden",
+      "text-sm text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 leading-none error-triangle",
       error ? "block" : "hidden"
     );
 
@@ -81,7 +81,7 @@ const Input = forwardRef(
             title={error?.message}
             id={`${id}Error`}
           >
-            {error?.message}
+            <div className="truncate">{error?.message}</div>
           </div>
         </div>
 

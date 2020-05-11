@@ -57,6 +57,22 @@ table thead {
   }
 }
 
+.error-triangle {
+  position: relative;
+}
+.error-triangle::before {
+  position: absolute;
+  top: -8px;
+  left: 1.5rem;
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent rgba(247, 120, 73, 0.1) transparent;
+}
+
 table th {
   @apply pb-8 pt-4 leading-none border-b select-none font-medium;
 }
