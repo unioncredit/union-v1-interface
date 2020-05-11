@@ -7,6 +7,7 @@ import { useEmailModalToggle } from "@contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "@contexts/Stake";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
+import useToast from "@hooks/useToast";
 import { vouch } from "@lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
@@ -29,6 +30,8 @@ export default function StakeView() {
 
   const isMember = useIsMember();
 
+  const addToast = useToast();
+
   useAutoEffect(() => {
     if (!email_modal_completed) {
       toggleEmailModal();
@@ -49,6 +52,7 @@ export default function StakeView() {
       await vouch(address, curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 0 });
     }
   });
 
