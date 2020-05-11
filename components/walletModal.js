@@ -138,6 +138,7 @@ const WalletModal = () => {
               <div className="mt-6">
                 <Button
                   full
+                  autoFocus
                   className="mb-2"
                   onClick={() => {
                     toggle();
