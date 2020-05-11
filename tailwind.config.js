@@ -40,6 +40,12 @@ module.exports = {
         lighter: "#A7B2C2",
         lightest: "#A4A8AD",
       },
+      alert: {
+        error: "#E61744",
+        loading: "#068DFE",
+        pending: "#FE9F7C",
+        success: "#5DCE8D",
+      },
       white: "#fff",
       "true-black": "#000",
       transparent: "transparent",
@@ -90,6 +96,9 @@ module.exports = {
         md: "896px",
         lg: "1280px",
         xl: "1440px",
+      },
+      backgroundOpacity: {
+        "10": "0.1",
       },
       lineHeight: {
         "12": "3rem",
