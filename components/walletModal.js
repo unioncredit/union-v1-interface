@@ -66,6 +66,8 @@ const WalletModal = () => {
   const open = useWalletModalOpen();
   const toggle = useWalletModalToggle();
 
+  const addToast = useToast();
+
   const [activatingConnector, setActivatingConnector] = useState();
 
   useAutoEffect(() => {
@@ -79,6 +81,9 @@ const WalletModal = () => {
     }
   });
 
+  /**
+   * Handle disconnecting from the wallet if an error occurs
+   */
   useAutoEffect(() => {
     if (!!error) {
       window.alert(getErrorMessage(error));
@@ -89,8 +94,6 @@ const WalletModal = () => {
   });
 
   const triedEager = useEagerConnect();
-
-  const addToast = useToast();
 
   const handleSignOut = () => {
     if (connector === walletconnect) connector.close();
@@ -178,15 +181,6 @@ const WalletModal = () => {
                     Sign up
                   </button>
                 </p>
-
-                {/* <p className="mt-4 text-center">
-              <button
-                className="focus:outline-none underline font-medium text-sm"
-                onClick={toggle}
-              >
-                Close
-              </button>
-            </p> */}
               </Fragment>
             )}
           </Fragment>
@@ -251,15 +245,6 @@ const WalletModal = () => {
                 Sign in
               </button>
             </p>
-
-            {/* <p className="mt-4 text-center">
-              <button
-                className="focus:outline-none underline font-medium text-sm"
-                onClick={toggle}
-              >
-                Close
-              </button>
-            </p> */}
           </Fragment>
         )}
       </div>
