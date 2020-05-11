@@ -179,6 +179,9 @@ export function useWalletModalOpen() {
   return state[WALLET_MODAL_OPEN];
 }
 
+/**
+ * @returns {VoidFunction}
+ */
 export function useWalletModalToggle() {
   const [, { toggleWalletModal }] = useApplicationContext();
 
@@ -191,6 +194,9 @@ export function useEmailModalOpen() {
   return state[EMAIL_MODAL_OPEN];
 }
 
+/**
+ * @returns {VoidFunction}
+ */
 export function useEmailModalToggle() {
   const [, { toggleEmailModal }] = useApplicationContext();
 
@@ -203,6 +209,9 @@ export function useGetInvitedModalOpen() {
   return state[GET_INVITED_MODAL];
 }
 
+/**
+ * @returns {VoidFunction}
+ */
 export function useGetInvitedModalToggle() {
   const [, { toggleGetInvitedModal }] = useApplicationContext();
 
@@ -215,6 +224,9 @@ export function useLearnMoreModalOpen() {
   return state[LEARN_MORE_MODAL];
 }
 
+/**
+ * @returns {VoidFunction}
+ */
 export function useLearnMoreModalToggle() {
   const [, { toggleLearnMoreModal }] = useApplicationContext();
 
