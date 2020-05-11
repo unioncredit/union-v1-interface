@@ -17,7 +17,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const { library, chainId } = useWeb3React();
   const curToken = useCurrentToken("DAI");
 
-  const { register, handleSubmit, watch, formState } = useForm();
+  const { register, handleSubmit, watch, formState, errors } = useForm();
 
   const { isSubmitting, dirty } = formState;
 
@@ -72,16 +72,21 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
       <div className="mt-4">
         <Input
-          min={0}
-          required
           autoFocus
           chip="DAI"
           id="amount"
           step="0.01"
           type="number"
           label="Amount"
-          ref={register}
           placeholder="0.00"
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            min: {
+              value: 0,
+              message: "Value must be greater than 0",
+            },
+          })}
         />
       </div>
 

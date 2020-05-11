@@ -8,7 +8,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
-  const { handleSubmit, register, formState } = useForm();
+  const { handleSubmit, register, formState, errors } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
@@ -36,8 +36,10 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           label="Address"
           name="address"
           placeholder="Enter address"
-          ref={register}
-          required
+          error={errors.address}
+          ref={register({
+            required: "Please fill out this field",
+          })}
         />
 
         <Input
@@ -49,11 +51,16 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           label="Trust amount"
           name="trust"
           placeholder="0.00"
-          ref={register}
-          required
           tip="The amount you trust this address to borrow and be able to repay."
           type="number"
-          min={0}
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            min: {
+              value: 0,
+              message: "Value must be greater than 0",
+            },
+          })}
         />
 
         <div className="mt-20">

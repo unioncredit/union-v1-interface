@@ -10,7 +10,14 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const isOpen = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
-  const { handleSubmit, register, watch, setValue, formState } = useForm();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState,
+    errors,
+  } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
@@ -29,6 +36,8 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
       : 0
   ).toFixed(2);
 
+  const formatBalanceOwed = Number(balanceOwed * REPAY_MARGIN).toFixed(2);
+
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
       <ModalHeader title="Repay" onDismiss={toggle} />
@@ -39,7 +48,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
       >
         <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
           <dt>Balance owed</dt>
-          <dd className="text-right">{`${balanceOwed} DAI`}</dd>
+          <dd className="text-right">{`${formatBalanceOwed} DAI`}</dd>
         </dl>
 
         <div className="divider" />
@@ -47,19 +56,28 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
         <p className="mt-6 mb-4">How much would you like to repay?</p>
 
         <Input
-          min={0}
-          required
           autoFocus
           chip="DAI"
           id="amount"
           step="0.01"
           name="amount"
           type="number"
-          ref={register}
           label="Amount"
-          setMaxValue={balanceOwed.toFixed(2)}
-          setMax={() => setValue("amount", balanceOwed * REPAY_MARGIN)}
+          setMaxValue={formatBalanceOwed}
+          setMax={() => setValue("amount", formatBalanceOwed)}
           placeholder="0.00"
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            max: {
+              value: formatBalanceOwed,
+              message: `Value must be less than or equal to ${formatBalanceOwed}`,
+            },
+            min: {
+              value: 0,
+              message: "Value must be greater than 0",
+            },
+          })}
         />
 
         <LabelPair

@@ -1,5 +1,6 @@
 import Button from "@components/button";
 import Input from "@components/input";
+import EMAIL_REGEX from "@util/emailRegex";
 import { useWeb3React } from "@web3-react/core";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
@@ -9,7 +10,7 @@ const MESSAGE = `Hello from the Union team. Please verify your email and wallet 
 export default function AccountView() {
   const { library } = useWeb3React();
 
-  const { register, handleSubmit, formState } = useForm();
+  const { register, handleSubmit, formState, errors } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
@@ -44,10 +45,16 @@ export default function AccountView() {
               id="email"
               label="Your email"
               name="email"
-              required
-              placeholder="name@email.com"
-              ref={register}
               type="email"
+              placeholder="name@email.com"
+              error={errors.email}
+              ref={register({
+                required: "Please fill out this field",
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: "Please enter a valid email",
+                },
+              })}
             />
 
             <Button

@@ -38,7 +38,7 @@ const CreditRequestModal = () => {
 
   const { account } = useWeb3React();
 
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = useAutoCallback(async (values) => {
     const { amount } = values;
@@ -111,10 +111,15 @@ const CreditRequestModal = () => {
             label="Amount"
             name="amount"
             placeholder="0.00"
-            ref={register}
             tip="Tip: You can leave this amount input open"
             type="number"
-            min={0}
+            error={errors.amount}
+            ref={register({
+              min: {
+                value: 0,
+                message: "Value must be greater than 0",
+              },
+            })}
           />
 
           <div className="mt-20">

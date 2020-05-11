@@ -9,17 +9,32 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
-  const { handleSubmit, register, watch, setValue, formState } = useForm();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState,
+    errors,
+  } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
-  const watchAmount = watch("amount", 0);
+  const amount = watch("amount", 0);
 
   const onSubmit = async (values) => {
     await onWithdraw(values.amount);
 
     toggle();
   };
+
+  const formatNewTotalStake = Number(
+    parseFloat(amount || 0) + parseFloat(totalStake)
+  ).toFixed(2);
+
+  const flooredWithdrawableStake = Number(
+    Math.floor(withdrawableStake * 100) / 100
+  );
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -35,8 +50,6 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
         </dl>
 
         <Input
-          min={0}
-          required
           autoFocus
           chip="DAI"
           id="amount"
@@ -44,12 +57,22 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           name="amount"
           type="number"
           label="Amount"
-          ref={register}
           className="mb-8"
           placeholder="0.00"
-          max={withdrawableStake}
-          setMaxValue={Number(withdrawableStake).toFixed(2)}
-          setMax={() => setValue("amount", withdrawableStake)}
+          setMaxValue={flooredWithdrawableStake}
+          setMax={() => setValue("amount", flooredWithdrawableStake)}
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            max: {
+              value: flooredWithdrawableStake,
+              message: `Value must be less than or equal to ${flooredWithdrawableStake}`,
+            },
+            min: {
+              value: 0,
+              message: "Value must be greater than 0",
+            },
+          })}
         />
 
         <div className="divider" />
@@ -57,7 +80,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
         <LabelPair
           className="mb-6 mt-4"
           label="New total stake"
-          value={Number(totalStake - watchAmount)}
+          value={formatNewTotalStake}
           valueType="DAI"
         />
 

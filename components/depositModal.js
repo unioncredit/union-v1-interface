@@ -13,7 +13,14 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
-  const { handleSubmit, register, watch, setValue, formState } = useForm();
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    errors,
+    formState,
+  } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
@@ -55,21 +62,28 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
         </dl>
 
         <Input
-          min={0}
-          required
           autoFocus
           chip="DAI"
           id="amount"
           step="0.01"
-          max={flooredDaiBalance}
           type="number"
           label="Amount"
-          ref={register}
           className="mb-8"
           placeholder="0.00"
           setMaxValue={flooredDaiBalance}
           setMax={() => setValue("amount", flooredDaiBalance)}
-          // tip={`Increases your UPY by ${formatIncreasesUPY} UNION`}
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            max: {
+              value: flooredDaiBalance,
+              message: `Value must be less than or equal to ${flooredDaiBalance}`,
+            },
+            min: {
+              value: 0,
+              message: "Value must be greater than 0",
+            },
+          })}
         />
 
         <div className="divider" />

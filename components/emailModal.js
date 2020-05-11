@@ -1,4 +1,5 @@
 import { useEmailModalOpen, useEmailModalToggle } from "@contexts/Application";
+import EMAIL_REGEX from "@util/emailRegex";
 import { useWeb3React } from "@web3-react/core";
 import { setCookie } from "nookies";
 import { useForm } from "react-hook-form";
@@ -14,7 +15,7 @@ const EmailModal = () => {
 
   const { library, account } = useWeb3React();
 
-  const { handleSubmit, register, formState } = useForm();
+  const { handleSubmit, register, formState, errors } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
@@ -64,9 +65,17 @@ const EmailModal = () => {
             autoComplete="email"
             placeholder="Your email address"
             id="email"
-            ref={register}
+            name="email"
             required
             type="email"
+            error={errors.email}
+            ref={register({
+              required: "Please fill out this field",
+              pattern: {
+                value: EMAIL_REGEX,
+                message: "Please enter a valid email",
+              },
+            })}
           />
 
           <div className="mt-6 mb-8">
