@@ -4,7 +4,7 @@ import { Failure, Loading, Pending, Success } from "svgs/Alerts";
 
 const ToastBody = ({ body, onDismiss }) => (
   <div className="flex justify-between" style={{ width: 360 }}>
-    <p className="mr-16 text-sm whitespace-no-wrap">{body}</p>
+    <p className="mr-16 text-sm truncate">{body}</p>
     <button
       className="text-sm font-medium underline focus:outline-none"
       onClick={onDismiss}
