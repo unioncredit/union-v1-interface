@@ -117,7 +117,8 @@ const AddressModal = ({ address, vouched, used, health }) => {
             <div className="absolute left-0 top-0 ml-6 mt-6">
               <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
             </div>
-            <div className="mt-20">
+
+            <div className="mt-6">
               <p>Edit this member's trust</p>
             </div>
 
