@@ -26,7 +26,7 @@ const Input = forwardRef(
     );
 
     const errorClassNames = classNames(
-      "text-sm whitespace-nowrap text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 leading-none",
+      "text-sm whitespace-no-wrap text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 leading-none text-overflow-clip overflow-hidden",
       error ? "block" : "hidden"
     );
 
@@ -76,7 +76,11 @@ const Input = forwardRef(
             )}
           </div>
 
-          <div className={errorClassNames} id={`${id}Error`}>
+          <div
+            className={errorClassNames}
+            title={error?.message}
+            id={`${id}Error`}
+          >
             {error?.message}
           </div>
         </div>
