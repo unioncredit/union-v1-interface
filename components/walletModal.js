@@ -70,6 +70,10 @@ const WalletModal = () => {
 
   const [activatingConnector, setActivatingConnector] = useState();
 
+  /**
+   * Auto set the initial view to Create account, set to Sign
+   *  in if there is an active connection or an account
+   */
   useAutoEffect(() => {
     if (open) setWalletView(WALLET_VIEWS.CREATE);
     if (open && active && account) setWalletView(WALLET_VIEWS.SIGN_IN);
