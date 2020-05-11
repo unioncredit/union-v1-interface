@@ -3,6 +3,7 @@ import { useTrustModalOpen, useTrustModalToggle } from "@contexts/Stake";
 import Button from "./button";
 import Input from "./input";
 import { useForm } from "react-hook-form";
+import { isAddress } from "@ethersproject/address";
 
 const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
@@ -31,7 +32,6 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           autoFocus={!initialAddress}
           className="mb-4"
           defaultValue={initialAddress}
-          pattern="^0x[a-fA-F0-9]{40}"
           id="address"
           label="Address"
           name="address"
@@ -39,6 +39,8 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           error={errors.address}
           ref={register({
             required: "Please fill out this field",
+            validate: (value) =>
+              isAddress(value) ? true : "Please input a valid Ethereum address",
           })}
         />
 
