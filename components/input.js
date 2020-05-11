@@ -1,6 +1,7 @@
+import classNames from "classnames";
 import { forwardRef } from "react";
-import DAI from "../svgs/DAI";
 import Info from "svgs/Info";
+import DAI from "../svgs/DAI";
 
 const Input = forwardRef(
   (
@@ -14,13 +15,24 @@ const Input = forwardRef(
       className,
       setMaxValue,
       autoComplete = "off",
+      error,
       ...props
     },
     ref
   ) => {
+    const wrapperClassNames = classNames(
+      "p-4 w-full rounded border bg-white focus-within:shadow-input transition duration-150",
+      error && "border-error-dark"
+    );
+
+    const errorClassNames = classNames(
+      "text-sm whitespace-nowrap text-error-pure bg-error-pure bg-opacity-10 py-2 px-4 -mx-4 -mb-4 mt-2 leading-none",
+      error ? "block" : "hidden"
+    );
+
     return (
       <div className={className}>
-        <div className="p-4 w-full rounded border bg-white focus-within:shadow-input transition-shadow transition-colors duration-150">
+        <div className={wrapperClassNames}>
           {(label || setMax) && (
             <div className="flex items-center justify-between mb-2 text-type-light text-sm leading-none">
               {label && (
@@ -51,8 +63,9 @@ const Input = forwardRef(
               autoCapitalize="off"
               spellCheck="false"
               type={type}
+              aria-describedby={`${id}Error`}
+              aria-invalid={error ? "true" : "false"}
               {...props}
-              {...(tip && { "aria-describedby": `${id}InputTip` })}
             />
 
             {chip && (
@@ -62,13 +75,14 @@ const Input = forwardRef(
               </div>
             )}
           </div>
+
+          <div className={errorClassNames} id={`${id}Error`}>
+            {error?.message}
+          </div>
         </div>
 
         {tip && (
-          <span
-            className="inline-flex items-start text-xs leading-tight mt-2"
-            id={`${id}InputTip`}
-          >
+          <span className="inline-flex items-start text-xs leading-tight mt-2">
             <div className="mr-2">
               <Info />
             </div>
