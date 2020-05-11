@@ -52,10 +52,9 @@ const BorrowModal = ({
       : 0
   ).toFixed(2);
 
-  const maxBorrowable =
-    Math.floor(
-      Number(parseFloat(creditLimit) > 0 ? parseFloat(creditLimit) : 0) * 100
-    ) / 100;
+  const maxBorrowable = Number(
+    parseFloat(creditLimit) > 0 ? parseFloat(creditLimit) : 0
+  ).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>

@@ -32,9 +32,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
     parseFloat(amount || 0) + parseFloat(totalStake)
   ).toFixed(2);
 
-  const flooredWithdrawableStake = Number(
-    Math.floor(withdrawableStake * 100) / 100
-  );
+  const formatWithdrawableStake = Number(withdrawableStake).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -59,14 +57,14 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
           label="Amount"
           className="mb-8"
           placeholder="0.00"
-          setMaxValue={flooredWithdrawableStake}
-          setMax={() => setValue("amount", flooredWithdrawableStake)}
+          setMaxValue={formatWithdrawableStake}
+          setMax={() => setValue("amount", formatWithdrawableStake)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: flooredWithdrawableStake,
-              message: `Value must be less than or equal to ${flooredWithdrawableStake}`,
+              value: formatWithdrawableStake,
+              message: `Value must be less than or equal to ${formatWithdrawableStake}`,
             },
             min: {
               value: 0,
