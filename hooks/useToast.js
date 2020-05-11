@@ -47,7 +47,7 @@ const TOAST_ICONS = {
 export default function useToast() {
   const addToast = useCallback(
     /**
-     * @name popToast
+     * @name addToast
      * @param {any} body
      * @param {Object} options
      * @param {("success"|"info"|"loading"|"warn"|"error")} options.type
