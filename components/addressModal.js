@@ -1,11 +1,10 @@
 import { useAddressModalOpen, useAddressModalToggle } from "@contexts/Stake";
-import useENSName from "@hooks/useENSName";
-import delay from "@lib/delay";
-import truncateAddress from "@util/truncateAddress";
-import { cancelVouch } from "@lib/contracts/cancelVouch";
 import useCurrentToken from "@hooks/useCurrentToken";
-import { useAutoCallback } from "hooks.macro";
+import useENSName from "@hooks/useENSName";
+import { cancelVouch } from "@lib/contracts/cancelVouch";
+import truncateAddress from "@util/truncateAddress";
 import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback } from "hooks.macro";
 import { Fragment, useEffect, useState } from "react";
 import Address from "./address";
 import AdjustTrustForm from "./adjustTrustForm";
@@ -40,17 +39,16 @@ const AddressModal = ({ address, vouched, used, health }) => {
     try {
       removingAddressSet(true);
 
-      /**
-       * Simulate tx to remove address
-       */
-      //await delay();
-      await cancelVouch(
+      const tx = await cancelVouch(
         account,
         address,
         curToken,
         library.getSigner(),
         chainId
       );
+
+      await tx.wait();
+
       removingAddressSet(false);
     } catch (err) {
       console.error(err);
