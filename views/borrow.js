@@ -1,10 +1,10 @@
 import ApplicationCard from "@components/applicationCard";
 import BorrowModal from "@components/borrowModal";
 import Button from "@components/button";
-import HealthBar from "@components/healthBar";
 import LabelPair from "@components/labelPair";
 import RepayModal from "@components/repayModal";
 import Transaction from "@components/transaction";
+import UtilizationBar from "@components/utilizationBar";
 import { blockSpeed } from "@constants";
 import { useBorrowModalToggle, useRepayModalToggle } from "@contexts/Borrow";
 import { useTransactions } from "@hooks/swrHooks";
@@ -56,7 +56,7 @@ export default function BorrowView() {
       try {
         if (isMounted && isMember === true) {
           const res = await getBorrowRate(curToken, library, chainId);
-          setApr(res.toFixed(4));
+          setApr(res);
         }
       } catch (err) {
         if (isMounted) {
@@ -196,7 +196,7 @@ export default function BorrowView() {
     }
   });
 
-  const formatApr = Number(apr * 100).toLocaleString(undefined, {
+  const formatApr = Number(apr).toLocaleString(undefined, {
     style: "percent",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -250,14 +250,13 @@ export default function BorrowView() {
                         maximumFractionDigits: 0,
                       })}
                     </p>
-                    <HealthBar
-                      health={
+                    <UtilizationBar
+                      usage={
                         getPercentUtilized(
                           borrowed,
                           parseFloat(creditLimit) + parseFloat(borrowed)
                         ) * 100
                       }
-                      dark
                     />
                   </div>
                 </dd>
