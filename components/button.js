@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import Spinner from "./spinner";
+import Spinner from "../svgs/Spinner";
 
 /**
  * @name Button
@@ -65,9 +65,9 @@ const Button = ({
   if (submitting)
     return (
       <button className={cachedClassNames} {...props}>
-        {/* <div className="btn-icon">
+        <div className="btn-icon">
           <Spinner />
-        </div> */}
+        </div>
         Waiting for confirmation...
       </button>
     );
