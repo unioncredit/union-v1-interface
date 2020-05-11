@@ -110,7 +110,7 @@ export default function BorrowView() {
       try {
         if (isMounted && isMember === true) {
           const res = await getInterest(curToken, account, library, chainId);
-          setInterest(res.toFixed(4));
+          setInterest(Math.ceil(parseFloat(res.toFixed(18)) * 10000) / 10000);
         }
       } catch (err) {
         if (isMounted) {
