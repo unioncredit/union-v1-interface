@@ -53,6 +53,7 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
           label="Trust amount"
           name="trust"
           placeholder="0.00"
+          step={0.01}
           tip="The amount you trust this address to borrow and be able to repay."
           type="number"
           error={errors.amount}
