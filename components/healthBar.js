@@ -15,15 +15,30 @@ const HealthBar = ({ health, width = 96, dark }) => {
       <span className="block" />
       <style jsx>{`
         div {
-          background-color: ${dark ? "rgba(255, 255, 255,0.1)" : "#ecf9f1"};
+          --fill: ${health >= 85
+            ? "#3fc37c"
+            : health >= 55
+            ? "#F77849"
+            : "#E61744"};
+          --track: ${health >= 85
+            ? "#ecf9f1"
+            : health >= 55
+            ? "#FCDFDF"
+            : "#FAD1DA"};
+        }
+      `}</style>
+      <style jsx>{`
+        div {
+          background-color: ${dark
+            ? "rgba(255, 255, 255,0.1)"
+            : "var(--track)"};
           min-width: ${width}px;
           max-width: 128px;
           border-radius: 1px;
           height: 14px;
         }
         span {
-          background-color: #3fc37c;
-          box-shadow: 10px 4px 23px rgba(93, 206, 141, 0.15);
+          background-color: var(--fill);
           width: ${inner}%;
           height: 14px;
         }
