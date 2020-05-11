@@ -3,6 +3,7 @@ import {
   useWalletModalToggle,
 } from "@contexts/Application";
 import useEagerConnect from "@hooks/useEagerConnect";
+import useToast from "@hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
 import getErrorMessage from "@lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
@@ -89,6 +90,20 @@ const WalletModal = () => {
 
   const triedEager = useEagerConnect();
 
+  const addToast = useToast();
+
+  const handleSignOut = () => {
+    if (connector === walletconnect) connector.close();
+
+    deactivate();
+
+    addToast("You’ve succesfully logged out", {
+      type: "success",
+    });
+
+    toggle();
+  };
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <div className="px-4 py-6 sm:px-6 sm:py-8">
@@ -148,14 +163,7 @@ const WalletModal = () => {
                   My account
                 </Button>
 
-                <Button
-                  full
-                  invert
-                  onClick={() => {
-                    if (connector === walletconnect) connector.close();
-                    deactivate();
-                  }}
-                >
+                <Button full invert onClick={handleSignOut}>
                   Sign out
                 </Button>
               </div>
