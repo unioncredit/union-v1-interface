@@ -31,15 +31,13 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const onSubmit = async (data, e) => {
     try {
       if (formatNewTrust >= 0) {
-        const tx = await adjustTrust(
+        await adjustTrust(
           address,
           curToken,
           formatNewTrust,
           library.getSigner(),
           chainId
         );
-
-        await tx.wait();
 
         onComplete();
       }

@@ -39,15 +39,13 @@ const AddressModal = ({ address, vouched, used, health }) => {
     try {
       removingAddressSet(true);
 
-      const tx = await cancelVouch(
+      await cancelVouch(
         account,
         address,
         curToken,
         library.getSigner(),
         chainId
       );
-
-      await tx.wait();
 
       removingAddressSet(false);
     } catch (err) {

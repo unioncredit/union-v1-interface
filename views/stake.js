@@ -46,15 +46,7 @@ export default function StakeView() {
 
   const onTrust = useAutoCallback(async (address, amount) => {
     try {
-      const tx = await vouch(
-        address,
-        curToken,
-        amount,
-        library.getSigner(),
-        chainId
-      );
-
-      await tx.wait();
+      await vouch(address, curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }

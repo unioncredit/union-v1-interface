@@ -182,9 +182,7 @@ export default function BorrowView() {
 
   const onBorrow = useAutoCallback(async (amount) => {
     try {
-      const tx = await borrow(curToken, amount, library.getSigner(), chainId);
-
-      await tx.wait();
+      await borrow(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }
@@ -192,9 +190,7 @@ export default function BorrowView() {
 
   const onRepay = useAutoCallback(async (amount) => {
     try {
-      const tx = await repay(curToken, amount, library.getSigner(), chainId);
-
-      await tx.wait();
+      await repay(curToken, amount, library.getSigner(), chainId);
     } catch (err) {
       console.error(err);
     }

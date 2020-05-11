@@ -47,7 +47,6 @@ const StakeCard = () => {
   const unionBalance = useTokenBalance(UNION);
 
   const unionContract = useUnionContract();
-
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
 
