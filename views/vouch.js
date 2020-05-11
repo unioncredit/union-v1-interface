@@ -38,7 +38,7 @@ export default function VouchView() {
             library.getSigner(),
             chainId
           );
-          setTotalVouched(res.toFixed(4));
+          setTotalVouched(res.toFixed(2));
         }
       } catch (err) {
         if (isMounted) {
@@ -61,9 +61,10 @@ export default function VouchView() {
 
         <div className="flex justify-between mb-6">
           <LabelPair
-            label="Total credit vouched for you"
+            label="Real-time available credit"
             value={totalVouched}
             valueType="DAI"
+            tooltip={"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
             large
           />
 
