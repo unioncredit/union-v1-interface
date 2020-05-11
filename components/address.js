@@ -13,7 +13,7 @@ const Address = ({ address, copyable = false }) => {
   const handleCopyAddress = () => copy(address);
 
   const cachedClassNames = classNames(
-    "font-medium focus:outline-none flex items-center align-middle w-40",
+    "font-medium focus:outline-none flex h-8 items-center align-middle w-40",
     copyable ? "" : "cursor-inherit"
   );
 
@@ -23,7 +23,9 @@ const Address = ({ address, copyable = false }) => {
       className={cachedClassNames}
       title={address}
     >
-      <Identicon large address={address} />
+      <div>
+        <Identicon large address={address} />
+      </div>
       <p className="leading-loose ml-4">
         {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
       </p>
