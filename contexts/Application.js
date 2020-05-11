@@ -24,6 +24,14 @@ const TOGGLE_GET_INVITED_MODAL = "TOGGLE_GET_INVITED_MODAL";
 const LEARN_MORE_MODAL = "LEARN_MORE_MODAL";
 const TOGGLE_LEARN_MORE_MODAL = "TOGGLE_LEARN_MORE_MODAL";
 
+const WALLET_VIEWS = {
+  SIGN_IN: "SIGN_IN",
+  CREATE: "CREATE",
+};
+
+const WALLET_MODAL_VIEW = "WALLET_MODAL_VIEW";
+const UPDATE_WALLET_MODAL_VIEW = "UPDATE_WALLET_MODAL_VIEW";
+
 const ApplicationContext = createContext();
 
 ApplicationContext.displayName = "ApplicationContext";
@@ -56,6 +64,13 @@ function reducer(state, { type, payload }) {
     case TOGGLE_LEARN_MORE_MODAL: {
       return { ...state, [LEARN_MORE_MODAL]: !state[LEARN_MORE_MODAL] };
     }
+    case UPDATE_WALLET_MODAL_VIEW: {
+      const { view } = payload;
+      return {
+        ...state,
+        [WALLET_MODAL_VIEW]: WALLET_VIEWS[view],
+      };
+    }
     default: {
       throw new Error(
         `Unexpected action type in ApplicationContext reducer: '${type}'.`
@@ -71,6 +86,7 @@ export default function Provider({ children }) {
     [EMAIL_MODAL_OPEN]: false,
     [GET_INVITED_MODAL]: false,
     [LEARN_MORE_MODAL]: false,
+    [WALLET_MODAL_VIEW]: WALLET_VIEWS.CREATE,
   });
 
   const updateBlockNumber = useCallback((networkId, blockNumber) => {
@@ -96,6 +112,13 @@ export default function Provider({ children }) {
     dispatch({ type: TOGGLE_LEARN_MORE_MODAL });
   }, []);
 
+  const updateWalletModalView = useCallback((view) => {
+    dispatch({
+      type: UPDATE_WALLET_MODAL_VIEW,
+      payload: { view },
+    });
+  }, []);
+
   return (
     <ApplicationContext.Provider
       value={useMemo(
@@ -107,6 +130,7 @@ export default function Provider({ children }) {
             toggleEmailModal,
             toggleGetInvitedModal,
             toggleLearnMoreModal,
+            updateWalletModalView,
           },
         ],
         [
@@ -116,6 +140,7 @@ export default function Provider({ children }) {
           toggleEmailModal,
           toggleGetInvitedModal,
           toggleLearnMoreModal,
+          updateWalletModalView,
         ]
       )}
     >
@@ -231,4 +256,55 @@ export function useLearnMoreModalToggle() {
   const [, { toggleLearnMoreModal }] = useApplicationContext();
 
   return toggleLearnMoreModal;
+}
+
+export function useWalletModalView() {
+  const [state] = useApplicationContext();
+
+  return state[WALLET_MODAL_VIEW];
+}
+
+export function useUpdateWalletModalView() {
+  const [, { updateWalletModalView }] = useApplicationContext();
+
+  const setWalletViewCreate = useCallback(() => {
+    updateWalletModalView(WALLET_VIEWS.CREATE);
+  }, []);
+
+  const setWalletViewSignIn = useCallback(() => {
+    updateWalletModalView(WALLET_VIEWS.SIGN_IN);
+  }, []);
+
+  return {
+    setWalletViewCreate,
+    setWalletViewSignIn,
+  };
+}
+
+export function useToggleSignInModal() {
+  const [
+    ,
+    { updateWalletModalView, toggleWalletModal },
+  ] = useApplicationContext();
+
+  const toggle = useCallback(() => {
+    updateWalletModalView(WALLET_VIEWS.SIGN_IN);
+    toggleWalletModal();
+  }, []);
+
+  return toggle;
+}
+
+export function useToggleCreateModal() {
+  const [
+    ,
+    { updateWalletModalView, toggleWalletModal },
+  ] = useApplicationContext();
+
+  const toggle = useCallback(() => {
+    updateWalletModalView(WALLET_VIEWS.CREATE);
+    toggleWalletModal();
+  }, []);
+
+  return toggle;
 }
