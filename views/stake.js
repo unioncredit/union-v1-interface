@@ -39,7 +39,7 @@ export default function StakeView() {
   });
 
   useAutoEffect(() => {
-    if (query.trust && query.address) {
+    if (query.address || query.trust) {
       toggleTrustModal();
     }
   });
