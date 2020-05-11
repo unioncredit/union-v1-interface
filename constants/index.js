@@ -54,3 +54,5 @@ export const TOKENS = {
     UNION: "0x9A95B5D7227e933B00eACA51eC7C9887Ca6A684a",
   },
 };
+
+export const REPAY_MARGIN = 1.000011;

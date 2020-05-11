@@ -69,8 +69,7 @@ export default function BorrowView() {
       try {
         if (isMounted && isMember === true) {
           const res = await getBorrowed(account, curToken, library, chainId);
-
-          setBorrowed(res.toFixed(2));
+          setBorrowed(Math.ceil(parseFloat(res.toFixed(18)) * 10000) / 10000);
         }
       } catch (err) {
         if (isMounted) {

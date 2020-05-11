@@ -1,5 +1,6 @@
 import { useRepayModalOpen, useRepayModalToggle } from "@contexts/Borrow";
 import { useForm } from "react-hook-form";
+import { REPAY_MARGIN } from "@constants/";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -55,8 +56,8 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
           type="number"
           ref={register}
           label="Amount"
-          setMaxValue={balanceOwed}
-          setMax={() => setValue("amount", balanceOwed)}
+          setMaxValue={balanceOwed.toFixed(2)}
+          setMax={() => setValue("amount", balanceOwed * REPAY_MARGIN)}
           placeholder="0.00"
         />
 
