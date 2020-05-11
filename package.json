@@ -24,6 +24,7 @@
     "@web3-react/walletconnect-connector": "^6.0.9",
     "bignumber.js": "^9.0.0",
     "classnames": "^2.2.6",
+    "cogo-toast": "^4.2.3",
     "dayjs": "^1.8.26",
     "next": "^9.3.6",
     "nookies": "^2.2.4",
