@@ -14,7 +14,7 @@ import { borrow } from "@lib/contracts/borrow";
 import { checkIsOverdue } from "@lib/contracts/checkIsOverdue";
 import { getBorrowed } from "@lib/contracts/getBorrowed";
 import { getBorrowRate } from "@lib/contracts/getBorrowRate";
-import { getRemainingCreditLimit } from "@lib/contracts/getRemainingCreditLimit";
+import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import { getInterest } from "@lib/contracts/getInterest";
 import { getLastRepay } from "@lib/contracts/getLastRepay";
 import { getOriginationFee } from "@lib/contracts/getOriginationFee";
@@ -82,7 +82,7 @@ export default function BorrowView() {
     const getCreditData = async () => {
       try {
         if (isMounted && isMember === true) {
-          const res = await getRemainingCreditLimit(
+          const res = await getCreditLimit(
             curToken,
             account,
             library,
