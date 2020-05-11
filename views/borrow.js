@@ -82,12 +82,7 @@ export default function BorrowView() {
     const getCreditData = async () => {
       try {
         if (isMounted && isMember === true) {
-          const res = await getCreditLimit(
-            curToken,
-            account,
-            library,
-            chainId
-          );
+          const res = await getCreditLimit(curToken, account, library, chainId);
 
           setCreditLimit(res.toFixed(2));
         }
@@ -206,6 +201,12 @@ export default function BorrowView() {
     }
   });
 
+  const formatApr = Number(apr * 100).toLocaleString(undefined, {
+    style: "percent",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   return (
     <Fragment>
       <div className="container">
@@ -268,14 +269,8 @@ export default function BorrowView() {
               </dl>
 
               <div className="flex justify-between py-2">
-                <Link href="/vouch">
-                  <a className="underline text-sm">
-                    Current Rate: {apr * 100}% APR
-                  </a>
-                </Link>
-                <Link href="/vouch">
-                  <a className="underline text-sm">See my breakdown</a>
-                </Link>
+                <p className="text-sm">Current Rate: {formatApr} APR</p>
+
                 <Link href="/vouch">
                   <a className="underline text-sm">Increase my limit</a>
                 </Link>
