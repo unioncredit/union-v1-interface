@@ -24,6 +24,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import Info from "svgs/Info";
 import { minimumPaymentDueTip, utilizedStakeTip } from "../text/tooltips";
+import roundUp from "util/roundUp";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
@@ -262,7 +263,7 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
-                  value={borrowed}
+                  value={roundUp(borrowed)}
                   valueType="DAI"
                   large
                 />
