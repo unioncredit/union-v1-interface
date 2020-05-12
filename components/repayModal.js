@@ -6,6 +6,7 @@ import useToast from "hooks/useToast";
 import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
+import roundUp from "util/roundUp";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -34,8 +35,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
   const onSubmit = async (values) => {
     const { amount } = values;
 
+    const amountToRepay = Number(amount * REPAY_MARGIN);
+
     try {
-      await repay(curToken, amount, library.getSigner(), chainId);
+      await repay(curToken, amountToRepay, library.getSigner(), chainId);
 
       toggle();
 
@@ -51,14 +54,14 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const amount = watch("amount", 0);
 
-  const formatNewBalance = Number(
-    parseFloat(balanceOwed) > 0 &&
-      parseFloat(balanceOwed) - parseFloat(amount || 0) > 0
-      ? parseFloat(balanceOwed) - parseFloat(amount || 0)
+  const calculateBalanceOwed = roundUp(balanceOwed);
+
+  const calculateNewBalance = Number(
+    calculateBalanceOwed > 0 &&
+      calculateBalanceOwed - parseFloat(amount || 0) > 0
+      ? calculateBalanceOwed - parseFloat(amount || 0)
       : 0
   ).toFixed(2);
-
-  const formatBalanceOwed = Number(balanceOwed * REPAY_MARGIN).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -70,7 +73,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       >
         <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
           <dt>Balance owed</dt>
-          <dd className="text-right">{`${formatBalanceOwed} DAI`}</dd>
+          <dd className="text-right">{`${calculateBalanceOwed} DAI`}</dd>
         </dl>
 
         <div className="divider" />
@@ -85,15 +88,15 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           name="amount"
           type="number"
           label="Amount"
-          setMaxValue={formatBalanceOwed}
-          setMax={() => setValue("amount", formatBalanceOwed)}
+          setMaxValue={calculateBalanceOwed}
+          setMax={() => setValue("amount", calculateBalanceOwed)}
           placeholder="0.00"
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             min: {
-              value: 0,
-              message: "Value must be greater than 0",
+              value: 0.01,
+              message: "Value must be greater than 0.01",
             },
           })}
         />
@@ -101,7 +104,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         <LabelPair
           className="mt-4 mb-2"
           label="New balance owed"
-          value={formatNewBalance}
+          value={calculateNewBalance}
           valueType="DAI"
         />
 

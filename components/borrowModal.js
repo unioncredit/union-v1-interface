@@ -13,6 +13,7 @@ import { borrow } from "lib/contracts/borrow";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
+import roundUp from "util/roundUp";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -94,19 +95,21 @@ const BorrowModal = ({
 
   const calculateFee = Number(parseFloat(amount || 0) * parseFloat(fee));
 
+  const calculateBalanceOwed = roundUp(balanceOwed);
+
   const formatNewBalance = Number(
-    parseFloat(balanceOwed) + parseFloat(amount || 0) + parseFloat(calculateFee)
+    calculateBalanceOwed + parseFloat(amount || 0) + parseFloat(calculateFee)
   ).toFixed(2);
 
   const formatNewCredit = Number(
     parseFloat(creditLimit) > 0
-      ? parseFloat(creditLimit) - parseFloat(amount || 0)
+      ? parseFloat(creditLimit) -
+          parseFloat(amount || 0) -
+          parseFloat(calculateFee)
       : 0
   ).toFixed(2);
 
-  const maxBorrowable = Number(
-    parseFloat(creditLimit) > 0 ? parseFloat(creditLimit) : 0
-  ).toFixed(2);
+  const maxBorrowable = Number(creditLimit).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -118,7 +121,7 @@ const BorrowModal = ({
       >
         <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
           <dt>Balance owed</dt>
-          <dd className="text-right">{`${balanceOwed} DAI`}</dd>
+          <dd className="text-right">{`${calculateBalanceOwed} DAI`}</dd>
         </dl>
 
         <div className="divider" />
@@ -144,8 +147,8 @@ const BorrowModal = ({
               message: `Value must be less than or equal to ${maxBorrowable}`,
             },
             min: {
-              value: 1,
-              message: "Value must be greater than 1.00",
+              value: 1.0,
+              message: "Value must be greater than or equal to 1.00",
             },
           })}
         />
