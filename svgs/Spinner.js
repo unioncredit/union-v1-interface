@@ -11,6 +11,15 @@ export default ({ size = 24 }) => (
       clipRule="evenodd"
       d="M22 12c0 5.523-4.477 10-10 10v-2.143A7.857 7.857 0 104.143 12H2C2 6.477 6.477 2 12 2s10 4.477 10 10z"
       fill="#A2AFB8"
-    />
+    >
+      <animateTransform
+        attributeName="transform"
+        dur="1s"
+        from="0 12 12"
+        repeatCount="indefinite"
+        to="360 12 12"
+        type="rotate"
+      />
+    </path>
   </svg>
 );
