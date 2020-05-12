@@ -19,7 +19,6 @@ const getPaymentDue = async (account, chainId, contract, library) => {
   let due;
 
   const isOverdue = await contract.checkIsOverdue(account);
-  console.log({ isOverdue });
 
   if (isOverdue) {
     due = "Overdue";
@@ -28,11 +27,9 @@ const getPaymentDue = async (account, chainId, contract, library) => {
 
   const lastRepayRes = await contract.getLastRepay(account);
   const lastRepay = parseInt(lastRepayRes.toString());
-  console.log({ lastRepay });
 
   const overdueBlocksRes = await contract.overdueBlocks();
   const overdueBlocks = parseInt(overdueBlocksRes.toString());
-  console.log({ overdueBlocks });
 
   const curBlock = await library.getBlockNumber();
 
