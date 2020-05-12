@@ -1,20 +1,19 @@
+import { useWeb3React } from "@web3-react/core";
 import {
+  useUpdateWalletModalView,
   useWalletModalOpen,
   useWalletModalToggle,
   useWalletModalView,
-  useUpdateWalletModalView,
 } from "contexts/Application";
+import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
 import useToast from "hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import Button from "./button";
 import Modal from "./modal";
-import Spinner from "./spinner";
 
 const isMetaMask =
   typeof window !== "undefined" &&
@@ -36,12 +35,13 @@ const WalletOption = ({ name, activating, disabled, onClick }) => (
   <div className="mt-4" key={name}>
     <Button
       full
-      icon={activating ? <Spinner /> : getWalletIcon(name)}
+      icon={getWalletIcon(name)}
       invert
       onClick={onClick}
       disabled={disabled}
+      submitting={activating}
     >
-      {activating ? "Waiting for confirmation..." : getWalletName(name)}
+      {getWalletName(name)}
     </Button>
   </div>
 );
