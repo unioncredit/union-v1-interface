@@ -38,7 +38,7 @@ export const UNION_TOKEN_ADDRESSES = {
 
 export const SCALE = 10 ** 18;
 
-export const blockSpeed = {
+export const BLOCK_SPEED = {
   1: 12,
   4: 12,
   42: 4,
