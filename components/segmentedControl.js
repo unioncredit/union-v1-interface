@@ -2,7 +2,7 @@ import classNames from "classnames";
 
 const SegmentedControlButton = ({ active, onClick, label, small }) => {
   const cachedClassNames = classNames(
-    "py-2 rounded w-full  focus:outline-none transition-colors duration-200",
+    "py-2 rounded w-full  focus:outline-none transition-colors duration-150",
     small ? "font-medium text-sm" : "font-semibold",
     active ? "bg-black-pure text-white" : "bg-transparent"
   );

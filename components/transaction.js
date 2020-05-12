@@ -1,11 +1,29 @@
+import { useWeb3React } from "@web3-react/core";
+import getEtherscanLink from "util/getEtherscanLink";
+
 const TRANSACTION_TYPES = {
   BORROW: "You borrowed",
   REPAY: "You repayed",
 };
 
-const Transaction = ({ type, date, amount, blocknumber, account, fee }) => {
+const Transaction = ({
+  account,
+  amount,
+  blocknumber,
+  date,
+  fee,
+  hash,
+  type,
+}) => {
+  const { chainId } = useWeb3React();
+
   return (
-    <div className="mt-4 bg-white border rounded p-6 flex items-center">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+      className="mt-4 bg-white border rounded p-6 flex items-center focus:shadow-outline focus:outline-none hover:bg-border-light transition-colors duration-150"
+    >
       <div className="h-12 w-12 rounded-full bg-border-pure" />
 
       <div className="flex-1 mx-4">
@@ -19,7 +37,7 @@ const Transaction = ({ type, date, amount, blocknumber, account, fee }) => {
       <div>
         <p>{amount.toFixed(2)} DAI</p>
       </div>
-    </div>
+    </a>
   );
 };
 export default Transaction;
