@@ -58,14 +58,14 @@ const Footer = () => {
           </div>
           <ul className="flex w-1/4 justify-end text-type-lightest">
             <li className="ml-4">
-              <a href="https://github.com/unioncredit">
+              <a href="https://github.com/unioncredit" aria-label="Github">
                 <div className="p-2px">
                   <GitHub size={20} />
                 </div>
               </a>
             </li>
             <li className="ml-4">
-              <a href="https://twitter.com/unionprotocol">
+              <a href="https://twitter.com/unionprotocol" aria-label="Twitter">
                 <div className="p-2px">
                   <Twitter size={20} color="currentColor" />
                 </div>
