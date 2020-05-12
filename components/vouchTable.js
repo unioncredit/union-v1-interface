@@ -22,12 +22,12 @@ const VouchTable = ({ data }) => {
         accessor: "percentage",
       },
       {
-        Header: "Vouched",
+        Header: "Set Vouch",
         accessor: "vouched",
       },
       {
-        Header: "Used",
-        accessor: "used",
+        Header: "Available Vouch",
+        accessor: "available",
       },
       {
         Header: "Health",
@@ -118,7 +118,7 @@ const VouchTable = ({ data }) => {
                         </span>
                       );
 
-                    if (Header === "Used" || Header === "Vouched")
+                    if (Header === "Available Vouch" || Header === "Set Vouch")
                       cellRenderer = <span>{value} DAI</span>;
 
                     if (Header === "Health")
