@@ -3,6 +3,7 @@ import { REPAY_MARGIN } from "constants/variables";
 import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast from "hooks/useToast";
+import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import Button from "./button";
