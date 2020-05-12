@@ -4,6 +4,8 @@ import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
 import useMemberContract from "./useMemberContract";
+// import useMarketRegistryContract from "./useMarketRegistryContract";
+// import { formatUnits } from "@ethersproject/units";
 
 export function useTrustData() {
   const { library, account, chainId } = useWeb3React();
@@ -84,3 +86,22 @@ export function useTrustCountData() {
     }
   );
 }
+
+// const getCreditLimit = (
+//   lendingMarketContract,
+//   marketRegistryContract
+// ) => async (account, tokenAddress) => {
+//   const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+
+//   const res = await lendingMarketContract.getCreditLimit(account);
+
+//   return Number(formatUnits(res, 18));
+// };
+
+// function useCreditLimitData() {
+//   const { account } = useWeb3React();
+
+//   const curToken = useCurrentToken();
+
+//   const marketRegistryContract = useMarketRegistryContract();
+// }
