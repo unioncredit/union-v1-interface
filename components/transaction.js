@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import Tx from "svgs/Tx";
 import getEtherscanLink from "util/getEtherscanLink";
 
 const TRANSACTION_TYPES = {
@@ -24,7 +25,7 @@ const Transaction = ({
       href={getEtherscanLink(chainId, hash, "TRANSACTION")}
       className="mt-4 bg-white border rounded p-6 flex items-center focus:shadow-outline focus:outline-none hover:bg-border-light transition-colors duration-150"
     >
-      <div className="h-12 w-12 rounded-full bg-border-pure" />
+      <Tx />
 
       <div className="flex-1 mx-4">
         <p className="mb-2 leading-none">
