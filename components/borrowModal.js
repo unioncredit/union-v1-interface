@@ -93,23 +93,25 @@ const BorrowModal = ({
 
   const amount = watch("amount", 0);
 
-  const calculateFee = Number(parseFloat(amount || 0) * parseFloat(fee));
+  const calculateBalanceOwed = balanceOwed > 0 ? roundUp(balanceOwed) : 0;
 
-  const calculateBalanceOwed = roundUp(balanceOwed);
+  const calculateFee = Number(amount || 0) * Number(fee);
+
+  const calculateNewBalance =
+    calculateBalanceOwed + Number(amount || 0) + calculateFee;
 
   const formatNewBalance = Number(
-    calculateBalanceOwed + parseFloat(amount || 0) + parseFloat(calculateFee)
+    calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
+
+  const calculateNewCredit =
+    Number(creditLimit) - Number(amount || 0) - calculateFee;
 
   const formatNewCredit = Number(
-    parseFloat(creditLimit) > 0
-      ? parseFloat(creditLimit) -
-          parseFloat(amount || 0) -
-          parseFloat(calculateFee)
-      : 0
+    calculateNewCredit > 0 ? calculateNewCredit : 0
   ).toFixed(2);
 
-  const maxBorrowable = Number(creditLimit).toFixed(2);
+  const formatCreditLimit = Number(creditLimit).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -137,14 +139,14 @@ const BorrowModal = ({
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={maxBorrowable}
-          setMax={() => setValue("amount", maxBorrowable)}
+          setMaxValue={formatCreditLimit}
+          setMax={() => setValue("amount", formatCreditLimit)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: maxBorrowable,
-              message: `Value must be less than or equal to ${maxBorrowable}`,
+              value: formatCreditLimit,
+              message: `Value must be less than or equal to ${formatCreditLimit}`,
             },
             min: {
               value: 1.0,

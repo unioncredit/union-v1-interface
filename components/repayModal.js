@@ -54,13 +54,14 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const amount = watch("amount", 0);
 
-  const calculateBalanceOwed = roundUp(balanceOwed);
+  const calculateBalanceOwed = balanceOwed > 0 ? roundUp(balanceOwed) : 0;
 
   const calculateNewBalance = Number(
-    calculateBalanceOwed > 0 &&
-      calculateBalanceOwed - parseFloat(amount || 0) > 0
-      ? calculateBalanceOwed - parseFloat(amount || 0)
-      : 0
+    calculateBalanceOwed - Number(amount || 0)
+  );
+
+  const formatNewBalance = Number(
+    calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
 
   return (
@@ -104,7 +105,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         <LabelPair
           className="mt-4 mb-2"
           label="New balance owed"
-          value={calculateNewBalance}
+          value={formatNewBalance}
           valueType="DAI"
         />
 
