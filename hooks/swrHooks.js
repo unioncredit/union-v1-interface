@@ -64,7 +64,7 @@ export function useTransactions() {
   );
 }
 
-const getTrustCount = (contract) => async (account, tokenAddress) =>
+const getTrustCount = (contract) => async (_, account, tokenAddress) =>
   contract
     .trustList(account, tokenAddress)
     .then((res) => parseInt(res.toString()));
@@ -78,7 +78,7 @@ export function useTrustCountData() {
     !!memberContract && typeof account === "string" && isAddress(curToken);
 
   return useSWR(
-    shouldFetch ? [account, curToken] : null,
+    shouldFetch ? ["TrustCount", account, curToken] : null,
     getTrustCount(memberContract),
     {
       dedupingInterval: 15 * 1000,
