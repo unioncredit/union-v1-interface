@@ -35,7 +35,7 @@ const Footer = () => {
       <div className="container">
         <div className="flex">
           <div className="w-3/4">
-            <ul className="flex flex-col sm:flex-row sm:flex-wrap text-type-lightest text-sm -mr-4 -mb-2">
+            <ul className="flex flex-col sm:flex-row sm:flex-wrap text-type-footer text-sm -mr-4 -mb-2">
               <li className="pb-2 pr-4">
                 <Link href="/administrator">
                   <a className="hover:underline">Admin</a>
@@ -56,7 +56,7 @@ const Footer = () => {
               <li className="pb-2 pr-4">© 2020 Union.Finance</li>
             </ul>
           </div>
-          <ul className="flex w-1/4 justify-end text-type-lightest">
+          <ul className="flex w-1/4 justify-end text-type-footer">
             <li className="ml-4">
               <a href="https://github.com/unioncredit" aria-label="Github">
                 <div className="p-2px">

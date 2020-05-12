@@ -40,6 +40,7 @@ module.exports = {
         light: "#657794",
         lighter: "#A7B2C2",
         lightest: "#A4A8AD",
+        footer: "#6d7278",
       },
       alert: {
         error: "#E61744",
