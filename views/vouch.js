@@ -5,55 +5,19 @@ import LabelPair from "components/labelPair";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
 import { useCreditRequestModalToggle } from "contexts/Vouch";
-import { useVouchData } from "hooks/swrHooks";
-import useCurrentToken from "hooks/useCurrentToken";
+import { useCreditLimitData, useVouchData } from "hooks/swrHooks";
 import useIsMember from "hooks/useIsMember";
-import { getCreditLimit } from "lib/contracts/getCreditLimit";
+import { Fragment } from "react";
 import getVouchBarData from "util/getVouchBarData";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoEffect } from "hooks.macro";
-import { Fragment, useState } from "react";
 
 export default function VouchView() {
-  const { account, library, chainId } = useWeb3React();
-
-  const curToken = useCurrentToken();
-
   const isMember = useIsMember();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-  const [totalVouched, setTotalVouched] = useState(0);
-
   const { data: vouchData } = useVouchData();
 
-  useAutoEffect(() => {
-    let isMounted = true;
-
-    const getCreditData = async () => {
-      try {
-        if (isMounted) {
-          const res = await getCreditLimit(
-            curToken,
-            account,
-            library.getSigner(),
-            chainId
-          );
-          setTotalVouched(res.toFixed(2));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    getCreditData();
-
-    return () => {
-      isMounted = false;
-    };
-  });
+  const { data: creditLimit = 0 } = useCreditLimitData();
 
   return (
     <Fragment>
@@ -63,7 +27,7 @@ export default function VouchView() {
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Real-time available credit"
-            value={totalVouched}
+            value={creditLimit.toFixed(2)}
             valueType="DAI"
             tooltip={"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
             large

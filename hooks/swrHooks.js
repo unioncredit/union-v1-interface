@@ -1,16 +1,17 @@
 import { isAddress } from "@ethersproject/address";
-import fetcher from "lib/fetcher";
+import { Contract } from "@ethersproject/contracts";
+import { commify, formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
+import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import { BLOCKS_PER_YEAR } from "constants/variables";
+import fetcher from "lib/fetcher";
 import useSWR from "swr";
+import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
+import useMarketRegistryContract from "./useMarketRegistryContract";
 import useMemberContract from "./useMemberContract";
 import useStakingContract from "./useStakingContract";
-import parseRes from "util/parseRes";
-import { BLOCKS_PER_YEAR } from "constants/variables";
-import { commify } from "@ethersproject/units";
 import useUnionContract from "./useUnionContract";
-// import useMarketRegistryContract from "./useMarketRegistryContract";
-// import { formatUnits } from "@ethersproject/units";
 
 export function useTrustData() {
   const { library, account, chainId } = useWeb3React();
@@ -196,21 +197,39 @@ export function useRewardsData() {
   );
 }
 
-// const getCreditLimit = (
-//   lendingMarketContract,
-//   marketRegistryContract
-// ) => async (account, tokenAddress) => {
-//   const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+const getCreditLimit = (marketRegistryContract) => async (
+  _,
+  account,
+  tokenAddress,
+  library
+) => {
+  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
-//   const res = await lendingMarketContract.getCreditLimit(account);
+  const lendingMarketContract = new Contract(
+    marketAddress,
+    LENDING_MARKET_ABI,
+    library.getSigner()
+  );
 
-//   return Number(formatUnits(res, 18));
-// };
+  const res = await lendingMarketContract.getCreditLimit(account);
 
-// function useCreditLimitData() {
-//   const { account } = useWeb3React();
+  return parseInt(formatUnits(res, 18));
+};
 
-//   const curToken = useCurrentToken();
+export function useCreditLimitData() {
+  const { account, library } = useWeb3React();
+  const curToken = useCurrentToken();
 
-//   const marketRegistryContract = useMarketRegistryContract();
-// }
+  const marketRegistryContract = useMarketRegistryContract();
+
+  const shouldFetch =
+    !!marketRegistryContract &&
+    typeof account === "string" &&
+    isAddress(curToken) &&
+    !!library;
+
+  return useSWR(
+    shouldFetch ? ["CreditLimit", account, curToken, library] : null,
+    getCreditLimit(marketRegistryContract)
+  );
+}
