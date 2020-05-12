@@ -79,7 +79,7 @@ const BorrowModal = ({
     try {
       await borrow(curToken, amount, library.getSigner(), chainId);
 
-      toggle();
+      if (open) toggle();
 
       onComplete();
     } catch (err) {
@@ -87,7 +87,7 @@ const BorrowModal = ({
 
       addToast(message, { type: "error", hideAfter: 20 });
 
-      toggle();
+      if (open) toggle();
     }
   };
 

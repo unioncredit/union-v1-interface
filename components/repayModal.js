@@ -45,7 +45,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     try {
       await repay(curToken, amountToRepay, library.getSigner(), chainId);
 
-      toggle();
+      if (open) toggle();
 
       onComplete();
     } catch (err) {
@@ -53,7 +53,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
       addToast(message, { type: "error", hideAfter: 20 });
 
-      toggle();
+      if (open) toggle();
     }
   };
 
@@ -94,9 +94,9 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           name="amount"
           type="number"
           label="Amount"
+          placeholder="0.00"
           setMaxValue={calculateBalanceOwed}
           setMax={() => setValue("amount", calculateBalanceOwed)}
-          placeholder="0.00"
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
