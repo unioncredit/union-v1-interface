@@ -28,7 +28,7 @@ export default function StakeView() {
 
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
-  const isMember = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
   const addToast = useToast();
 

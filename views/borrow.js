@@ -23,7 +23,7 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const isMember = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
   const {
     data: transactionsData,

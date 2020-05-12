@@ -12,7 +12,7 @@ import { Fragment } from "react";
 import getVouchBarData from "util/getVouchBarData";
 
 export default function VouchView() {
-  const isMember = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 

@@ -19,7 +19,7 @@ const StakeTable = () => {
 
   const toggleTrustModal = useTrustModalToggle();
 
-  const isMember = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
   const toggleAddressModal = useAddressModalToggle();
   const [activeRow, activeRowSet] = useState();

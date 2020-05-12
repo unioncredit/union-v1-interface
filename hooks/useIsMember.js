@@ -1,38 +1,23 @@
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import useMemberContract from "./useMemberContract";
+
+const getIsMember = (contract) => async (_, account) =>
+  contract.isMember(account);
 
 export default function useIsMember() {
   const { account } = useWeb3React();
 
-  const [isMember, setIsMember] = useState();
+  const contract = useMemberContract();
 
-  const memberContract = useMemberContract();
+  const shouldFetch = !!contract && typeof account === "string";
 
-  useEffect(() => {
-    let stale = false;
-
-    memberContract
-      .isMember(account)
-      .then((state) => {
-        if (!stale) {
-          setIsMember(state);
-          return;
-        }
-
-        setIsMember(false);
-      })
-      .catch(() => {
-        if (!stale) {
-          setIsMember(false);
-        }
-      });
-
-    return () => {
-      stale = true;
-      setIsMember();
-    };
-  }, [account]);
-
-  return isMember;
+  return useSWR(
+    shouldFetch ? ["IsMember", account] : null,
+    getIsMember(contract),
+    {
+      dedupingInterval: 15 * 1000,
+      refreshInterval: 30 * 1000,
+    }
+  );
 }
