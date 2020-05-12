@@ -23,8 +23,8 @@ import { getOverdueBlocks } from "lib/contracts/getOverdueBlocks";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import Info from "svgs/Info";
+import { roundUp } from "util/numbers";
 import { minimumPaymentDueTip, utilizedStakeTip } from "../text/tooltips";
-import roundUp from "util/roundUp";
 
 const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;

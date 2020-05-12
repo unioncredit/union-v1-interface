@@ -6,7 +6,7 @@ import useToast from "hooks/useToast";
 import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
-import roundUp from "util/roundUp";
+import { roundUp } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -52,13 +52,13 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     }
   };
 
-  const amount = watch("amount", 0);
+  const watchAmount = watch("amount", "0");
+  const amount = Number(watchAmount || 0);
 
-  const calculateBalanceOwed = balanceOwed > 0 ? roundUp(balanceOwed) : 0;
+  const calculateBalanceOwed =
+    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
 
-  const calculateNewBalance = Number(
-    calculateBalanceOwed - Number(amount || 0)
-  );
+  const calculateNewBalance = calculateBalanceOwed - amount;
 
   const formatNewBalance = Number(
     calculateNewBalance > 0 ? calculateNewBalance : 0

@@ -13,7 +13,7 @@ import { borrow } from "lib/contracts/borrow";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
-import roundUp from "util/roundUp";
+import { roundUp } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -91,21 +91,21 @@ const BorrowModal = ({
     }
   };
 
-  const amount = watch("amount", 0);
+  const watchAmount = watch("amount", "0");
+  const amount = Number(watchAmount || 0);
 
-  const calculateBalanceOwed = balanceOwed > 0 ? roundUp(balanceOwed) : 0;
+  const calculateBalanceOwed =
+    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
 
-  const calculateFee = Number(amount || 0) * Number(fee);
+  const calculateFee = amount * Number(fee);
 
-  const calculateNewBalance =
-    calculateBalanceOwed + Number(amount || 0) + calculateFee;
+  const calculateNewBalance = calculateBalanceOwed + amount + calculateFee;
 
   const formatNewBalance = Number(
     calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
 
-  const calculateNewCredit =
-    Number(creditLimit) - Number(amount || 0) - calculateFee;
+  const calculateNewCredit = Number(creditLimit) - amount - calculateFee;
 
   const formatNewCredit = Number(
     calculateNewCredit > 0 ? calculateNewCredit : 0
