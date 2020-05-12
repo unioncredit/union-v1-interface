@@ -36,24 +36,31 @@ const Footer = () => {
         <div className="flex">
           <div className="w-3/4">
             <ul className="flex flex-col sm:flex-row sm:flex-wrap text-type-footer text-sm -mr-4 -mb-2">
-              <li className="pb-2 pr-4 mb-1 sm:mb-0">
+              <li className="mb-2 sm:mb-0">
                 <Link href="/administrator">
-                  <a className="hover:underline">Admin</a>
+                  <a className="inline-block pb-2 pr-4 hover:underline">
+                    Admin
+                  </a>
                 </Link>
               </li>
-              <li className="pb-2 pr-4 mb-1 sm:mb-0">
+              <li className="mb-2 sm:mb-0">
                 <Link href="/faucet">
-                  <a className="hover:underline">Faucet</a>
+                  <a className="inline-block pb-2 pr-4 hover:underline">
+                    Faucet
+                  </a>
                 </Link>
               </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (
-                <li key={i} className="pb-2 pr-4 mb-1 sm:mb-0">
-                  <a className="hover:underline" href={href}>
+                <li key={i} className="mb-2 sm:mb-0">
+                  <a
+                    className="inline-block pb-2 pr-4 hover:underline"
+                    href={href}
+                  >
                     {label}
                   </a>
                 </li>
               ))}
-              <li className="pb-2 pr-4 sm:mb-0">© 2020 Union.Finance</li>
+              <li className="sm:mb-0">© 2020 Union.Finance</li>
             </ul>
           </div>
           <ul className="flex w-1/4 justify-end text-type-footer">
