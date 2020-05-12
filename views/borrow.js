@@ -13,11 +13,11 @@ import useIsMember from "hooks/useIsMember";
 import Link from "next/link";
 import { Fragment } from "react";
 import Info from "svgs/Info";
-import { roundUp } from "util/numbers";
-import { minimumPaymentDueTip, utilizedStakeTip } from "../text/tooltips";
+import { roundUp, toPercent } from "util/numbers";
+import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
 
-const getPercentUtilized = (borrowed, creditLimit) =>
-  creditLimit > 0 ? borrowed / creditLimit : 0;
+const getPctUsed = (borrowed, creditLimit) =>
+  creditLimit > 0 ? borrowed / (creditLimit + borrowed) : 0;
 
 export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
@@ -81,7 +81,7 @@ export default function BorrowView() {
 
               <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
                 <dt className="leading-tight whitespace-no-wrap cursor-help mb-4 md:mb-0">
-                  <div className="flex items-center" title={utilizedStakeTip}>
+                  <div className="flex items-center" title={percentUtilizedTip}>
                     <div className="mr-2">Percent Utilization</div>
                     <Info light />
                   </div>
@@ -89,21 +89,10 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {getPercentUtilized(
-                        borrowed,
-                        parseFloat(creditLimit) + parseFloat(borrowed)
-                      ).toLocaleString(undefined, {
-                        style: "percent",
-                        maximumFractionDigits: 0,
-                      })}
+                      {toPercent(getPctUsed(borrowed, creditLimit))}
                     </p>
                     <UtilizationBar
-                      usage={
-                        getPercentUtilized(
-                          borrowed,
-                          parseFloat(creditLimit) + parseFloat(borrowed)
-                        ) * 100
-                      }
+                      usage={Number(getPctUsed(borrowed, creditLimit) * 100)}
                     />
                   </div>
                 </dd>
