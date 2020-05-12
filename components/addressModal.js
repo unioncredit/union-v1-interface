@@ -56,14 +56,14 @@ const AddressModal = ({ address, vouched, used, health }) => {
 
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
-      <div className="px-4 sm:px-6 pb-6 pt-4 relative">
+      <div className="p-4 sm:p-6 relative">
         {addressView === ADDRESS_VIEWS.HOME ? (
           <Fragment>
             <div className="absolute right-0 top-0 mr-6 mt-6">
               <CloseButton onClick={toggle} large />
             </div>
 
-            <div className="flex justify-center mt-10">
+            <div className="flex justify-center mt-4">
               <Identicon address={address} extraLarge />
             </div>
 
@@ -114,7 +114,7 @@ const AddressModal = ({ address, vouched, used, health }) => {
               <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
             </div>
 
-            <div className="mt-6">
+            <div className="mt-12">
               <p>Edit this member's trust</p>
             </div>
 
