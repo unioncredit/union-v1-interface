@@ -106,6 +106,7 @@ const CreditRequestModal = () => {
         >
           <p className="mb-4">Ask someone to vouch for you</p>
           <Input
+            autoFocus
             chip="DAI"
             id="amount"
             label="Amount"
