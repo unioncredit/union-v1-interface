@@ -1,30 +1,51 @@
-import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
-import { useForm } from "react-hook-form";
+import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
+import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
+import useCurrentToken from "hooks/useCurrentToken";
+import useToast from "hooks/useToast";
+import { useForm } from "react-hook-form";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const RepayModal = ({ balanceOwed, onRepay }) => {
-  const isOpen = useRepayModalOpen();
+const RepayModal = ({ balanceOwed, onComplete }) => {
+  const { library, chainId } = useWeb3React();
+  const curToken = useCurrentToken();
+
+  const open = useRepayModalOpen();
   const toggle = useRepayModalToggle();
 
   const {
+    errors,
+    formState,
     handleSubmit,
     register,
-    watch,
     setValue,
-    formState,
-    errors,
+    watch,
   } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
-  const onSubmit = async (values) => {
-    await onRepay(values.amount);
+  const addToast = useToast();
 
-    toggle();
+  const onSubmit = async (values) => {
+    const { amount } = values;
+
+    try {
+      await repay(curToken, amount, library.getSigner(), chainId);
+
+      toggle();
+
+      onComplete();
+    } catch (err) {
+      const message = handleTxError(err);
+
+      addToast(message, { type: "error", hideAfter: 20 });
+
+      toggle();
+    }
   };
 
   const amount = watch("amount", 0);
@@ -39,7 +60,7 @@ const RepayModal = ({ balanceOwed, onRepay }) => {
   const formatBalanceOwed = Number(balanceOwed * REPAY_MARGIN).toFixed(2);
 
   return (
-    <Modal isOpen={isOpen} onDismiss={toggle}>
+    <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Repay" onDismiss={toggle} />
       <form
         method="POST"

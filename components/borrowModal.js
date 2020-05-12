@@ -9,13 +9,14 @@ import { useAutoCallback } from "hooks.macro";
 import useContract from "hooks/useContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast from "hooks/useToast";
+import { borrow } from "lib/contracts/borrow";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { borrow } from "lib/contracts/borrow";
 
 function useBorrow() {
   const { library, chainId } = useWeb3React();
@@ -45,15 +46,6 @@ function useBorrow() {
   });
 }
 
-function getErrorMessage(err) {
-  console.error(err);
-
-  if (err.code && err.code === 4001) return "Denied transaction signature";
-  if (err.code && err.code === -32000) return "Transaction failed";
-
-  return "Something went wrong";
-}
-
 const BorrowModal = ({
   balanceOwed,
   creditLimit,
@@ -62,27 +54,23 @@ const BorrowModal = ({
   paymentDueDate,
 }) => {
   const { library, chainId } = useWeb3React();
-
   const curToken = useCurrentToken();
 
   const open = useBorrowModalOpen();
-
   const toggle = useBorrowModalToggle();
 
   const {
+    errors,
+    formState,
     handleSubmit,
-    watch,
     register,
     setValue,
-    formState,
-    errors,
+    watch,
   } = useForm();
 
   const { dirty, isSubmitting } = formState;
 
   const addToast = useToast();
-
-  // const borrow = useBorrow();
 
   const onSubmit = async (values) => {
     const { amount } = values;
@@ -94,7 +82,7 @@ const BorrowModal = ({
 
       onComplete();
     } catch (err) {
-      const message = getErrorMessage(err);
+      const message = handleTxError(err);
 
       addToast(message, { type: "error", hideAfter: 20 });
 
