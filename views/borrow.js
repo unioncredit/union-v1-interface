@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import ApplicationCard from "components/applicationCard";
 import BorrowModal from "components/borrowModal";
 import Button from "components/button";
@@ -6,22 +5,13 @@ import LabelPair from "components/labelPair";
 import RepayModal from "components/repayModal";
 import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
-import { blockSpeed } from "constants/variables";
 import { useBorrowModalToggle, useRepayModalToggle } from "contexts/Borrow";
-import { useAutoEffect } from "hooks.macro";
 import { useTransactions } from "hooks/swrHooks";
+import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
-import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import { checkIsOverdue } from "lib/contracts/checkIsOverdue";
-import { getBorrowed } from "lib/contracts/getBorrowed";
-import { getBorrowRate } from "lib/contracts/getBorrowRate";
-import { getInterest } from "lib/contracts/getInterest";
-import { getLastRepay } from "lib/contracts/getLastRepay";
-import { getOriginationFee } from "lib/contracts/getOriginationFee";
-import { getOverdueBlocks } from "lib/contracts/getOverdueBlocks";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Info from "svgs/Info";
 import { roundUp } from "util/numbers";
 import { minimumPaymentDueTip, utilizedStakeTip } from "../text/tooltips";
@@ -30,20 +20,10 @@ const getPercentUtilized = (borrowed, creditLimit) =>
   creditLimit > 0 ? borrowed / creditLimit : 0;
 
 export default function BorrowView() {
-  const { account, library, chainId } = useWeb3React();
-
-  const curToken = useCurrentToken();
-
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
   const isMember = useIsMember();
-
-  const [borrowed, setBorrowed] = useState(0);
-  const [interest, setInterest] = useState(0);
-  const [paymentDueDate, setPaymentDueDate] = useState("-");
-  const [fee, setFee] = useState(0);
-  const [apr, setApr] = useState(0);
 
   const {
     data: transactionsData,
@@ -52,121 +32,10 @@ export default function BorrowView() {
 
   const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
 
-  useAutoEffect(() => {
-    let isMounted = true;
+  const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
 
-    const getAprData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const res = await getBorrowRate(curToken, library, chainId);
-          setApr(res);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getBorrowedData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const res = await getBorrowed(account, curToken, library, chainId);
-          setBorrowed(Math.ceil(parseFloat(res.toFixed(18)) * 10000) / 10000);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getOriginationFeeData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const res = await getOriginationFee(curToken, library, chainId);
-
-          setFee(res.toFixed(4));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getInterestData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const res = await getInterest(curToken, account, library, chainId);
-          setInterest(Math.ceil(parseFloat(res.toFixed(18)) * 10000) / 10000);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getPaymentDueDate = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const isOverdue = await checkIsOverdue(
-            curToken,
-            account,
-            library,
-            chainId
-          );
-
-          if (isOverdue) {
-            setPaymentDueDate("Overdue");
-            return;
-          }
-
-          const lastRepay = await getLastRepay(
-            curToken,
-            account,
-            library,
-            chainId
-          );
-
-          const overdueBlocks = await getOverdueBlocks(
-            curToken,
-            library,
-            chainId
-          );
-
-          const curBlock = await library.getBlockNumber();
-
-          if (lastRepay == 0) {
-            setPaymentDueDate("No Payment Due");
-            return;
-          }
-
-          const days = (
-            ((lastRepay + overdueBlocks - curBlock) * blockSpeed[chainId]) /
-            86400
-          ).toFixed(2);
-
-          setPaymentDueDate(`in ${days} days`);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    getBorrowedData();
-    getInterestData();
-    getPaymentDueDate();
-    getOriginationFeeData();
-    getAprData();
-
-    return () => {
-      isMounted = false;
-    };
-  });
+  const { borrowed = 0, interest = 0, paymentDueDate = "-", fee = 0, apr = 0 } =
+    !!borrowData && borrowData;
 
   const formatApr = Number(apr).toLocaleString(undefined, {
     style: "percent",
@@ -177,6 +46,7 @@ export default function BorrowView() {
   const onComplete = () => {
     updateTransactionsData();
     updateCreditLimit();
+    updateBorrowData();
   };
 
   return (
