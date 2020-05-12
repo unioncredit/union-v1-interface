@@ -10,12 +10,12 @@ import { blockSpeed } from "constants/variables";
 import { useBorrowModalToggle, useRepayModalToggle } from "contexts/Borrow";
 import { useAutoEffect } from "hooks.macro";
 import { useTransactions } from "hooks/swrHooks";
+import useCreditLimit from "hooks/useCreditLimit";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import { checkIsOverdue } from "lib/contracts/checkIsOverdue";
 import { getBorrowed } from "lib/contracts/getBorrowed";
 import { getBorrowRate } from "lib/contracts/getBorrowRate";
-import { getCreditLimit } from "lib/contracts/getCreditLimit";
 import { getInterest } from "lib/contracts/getInterest";
 import { getLastRepay } from "lib/contracts/getLastRepay";
 import { getOriginationFee } from "lib/contracts/getOriginationFee";
@@ -40,7 +40,6 @@ export default function BorrowView() {
   const isMember = useIsMember();
 
   const [borrowed, setBorrowed] = useState(0);
-  const [creditLimit, setCreditLimit] = useState(0);
   const [interest, setInterest] = useState(0);
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
@@ -48,8 +47,10 @@ export default function BorrowView() {
 
   const {
     data: transactionsData,
-    revalidate: updateTransactionsData,
+    mutate: updateTransactionsData,
   } = useTransactions();
+
+  const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -72,20 +73,6 @@ export default function BorrowView() {
         if (isMounted && isMember === true) {
           const res = await getBorrowed(account, curToken, library, chainId);
           setBorrowed(Math.ceil(parseFloat(res.toFixed(18)) * 10000) / 10000);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    const getCreditData = async () => {
-      try {
-        if (isMounted && isMember === true) {
-          const res = await getCreditLimit(curToken, account, library, chainId);
-
-          setCreditLimit(res.toFixed(2));
         }
       } catch (err) {
         if (isMounted) {
@@ -170,7 +157,6 @@ export default function BorrowView() {
       }
     };
 
-    getCreditData();
     getBorrowedData();
     getInterestData();
     getPaymentDueDate();
@@ -190,6 +176,7 @@ export default function BorrowView() {
 
   const onComplete = () => {
     updateTransactionsData();
+    updateCreditLimit();
   };
 
   return (
@@ -207,7 +194,7 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={creditLimit}
+                  value={creditLimit.toFixed(2)}
                   valueType="DAI"
                   large
                   outline={true}
