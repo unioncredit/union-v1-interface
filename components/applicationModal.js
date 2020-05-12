@@ -1,18 +1,14 @@
-import { formatUnits } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/useMemberContract";
+import useMemberFee from "hooks/useMemberFee";
 import useToast from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { applyMember } from "lib/contracts/applyMember";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Button from "./button";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-
-const parseRes = (res, decimals = 2) =>
-  Number(formatUnits(res, 18)).toFixed(decimals);
 
 const ApplicationModal = ({ isOpen, onDismiss }) => {
   const { account, library, chainId } = useWeb3React();
@@ -20,37 +16,12 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
 
-  const [fee, setFee] = useState(0);
   const [isSubmitting, isSubmittingSet] = useState(false);
 
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-
-  const memberContract = useMemberContract();
+  const { data: fee } = useMemberFee();
 
   const addToast = useToast();
-
-  useAutoEffect(() => {
-    let isMounted = true;
-
-    const getMemberFee = async () => {
-      try {
-        if (isMounted) {
-          const res = await memberContract.newMemberFee();
-          setFee(parseRes(res, 2));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    };
-
-    getMemberFee();
-
-    return () => {
-      isMounted = false;
-    };
-  });
 
   const submit = useAutoCallback(async () => {
     isSubmittingSet(true);
