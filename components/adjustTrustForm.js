@@ -25,7 +25,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const amount = watch("amount", 0);
 
   const formatNewTrust = Number(
-    vouched + ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
+    parseFloat(vouched) + ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
   );
 
   const onSubmit = async (data, e) => {
