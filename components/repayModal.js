@@ -1,8 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
 import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
+import { useAutoMemo } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast from "hooks/useToast";
+import useTokenBalance from "hooks/useTokenBalance";
 import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
@@ -31,6 +33,12 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
   const { dirty, isSubmitting } = formState;
 
   const addToast = useToast();
+
+  const daiBalance = useTokenBalance(curToken);
+
+  const flooredDaiBalance = useAutoMemo(
+    () => Math.floor(daiBalance * 100) / 100
+  );
 
   const onSubmit = async (values) => {
     const { amount } = values;
@@ -95,6 +103,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
+            max: {
+              value: flooredDaiBalance,
+              message: `Value must be less than or equal to ${flooredDaiBalance}`,
+            },
             min: {
               value: 0.01,
               message: "Value must be greater than 0.01",
