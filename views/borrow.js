@@ -46,7 +46,10 @@ export default function BorrowView() {
   const [fee, setFee] = useState(0);
   const [apr, setApr] = useState(0);
 
-  const { data: transactions, revalidate: updateTxData } = useTransactions();
+  const {
+    data: transactionsData,
+    revalidate: updateTransactionsData,
+  } = useTransactions();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -186,7 +189,7 @@ export default function BorrowView() {
   });
 
   const onComplete = () => {
-    updateTxData();
+    updateTransactionsData();
   };
 
   return (
@@ -298,9 +301,9 @@ export default function BorrowView() {
             <div className="mb-5">
               <h2>Transactions</h2>
             </div>
-            {transactions &&
-              transactions.length > 0 &&
-              transactions.map((datum, i) => (
+            {transactionsData &&
+              transactionsData.length > 0 &&
+              transactionsData.map((datum, i) => (
                 <Transaction key={i} {...datum} />
               ))}
           </div>

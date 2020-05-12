@@ -1,15 +1,14 @@
-import { BLOCKS_PER_YEAR } from "constants/variables";
+import { parseUnits } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import { useDepositModalToggle, useWithdrawModalToggle } from "contexts/Stake";
-import { commify, formatUnits, parseUnits } from "@ethersproject/units";
+import { useAutoCallback } from "hooks.macro";
+import { useRewardsData, useStakeData } from "hooks/swrHooks";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
 import useToast from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import useUnionContract from "hooks/useUnionContract";
 import { stake } from "lib/contracts/stake";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import {
   defaultedStakeTip,
@@ -23,9 +22,6 @@ import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 
-const parseRes = (res, decimals = 2) =>
-  Number(formatUnits(res, 18)).toFixed(decimals);
-
 const StakeCard = () => {
   const { account, library, chainId } = useWeb3React();
 
@@ -35,13 +31,9 @@ const StakeCard = () => {
   const DAI = useCurrentToken();
   const UNION = useCurrentToken("UNION");
 
-  const [totalStake, setTotalStake] = useState(0);
-  const [utilizedStake, setUtilizedStake] = useState(0);
-  const [defaultedStake, setDefaultedStake] = useState(0);
-  const [withdrawableStake, setWithdrawableStake] = useState(0);
-  const [rewards, setRewards] = useState(0);
-  const [upy, setUpy] = useState(0);
-  const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
+  const { data: stakeData, mutate: updateStakeData } = useStakeData();
+
+  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
   const [withdrawing, setWithdrawing] = useState(false);
 
@@ -51,91 +43,27 @@ const StakeCard = () => {
 
   const unionContract = useUnionContract();
   const stakingContract = useStakingContract();
-  const memberContract = useMemberContract();
 
-  useAutoEffect(() => {
-    let isMounted = true;
+  const {
+    totalStake = 0,
+    utilizedStake = 0,
+    defaultedStake = 0,
+    withdrawableStake = 0,
+  } = !!stakeData && stakeData;
 
-    async function fetchStakeData() {
-      try {
-        if (isMounted) {
-          const stakingAmount = await stakingContract.getStakerBalance(
-            account,
-            DAI
-          );
-          const creditUsed = await memberContract.getTotalCreditUsed(
-            account,
-            DAI
-          );
-          const freezeAmount = await memberContract.getTotalFrozenAmount(
-            account,
-            DAI
-          );
-          setTotalStake(parseRes(stakingAmount, 2));
-          setUtilizedStake(parseRes(creditUsed, 2));
-          setDefaultedStake(parseRes(freezeAmount, 2));
-          setWithdrawableStake(
-            Number(parseRes(stakingAmount) - parseRes(creditUsed)).toFixed(2)
-          );
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    }
+  const { upy = 0, rewards = 0, rewardsMultiplier = "0.00" } =
+    !!rewardsData && rewardsData;
 
-    async function fetchRewardsData() {
-      try {
-        if (isMounted && account) {
-          const userBlockDelta = await unionContract.getUserBlockDelta(
-            account,
-            DAI
-          );
-          let blocks;
-          if (userBlockDelta > BLOCKS_PER_YEAR[chainId]) {
-            blocks = userBlockDelta;
-          } else {
-            blocks = BLOCKS_PER_YEAR[chainId] - userBlockDelta;
-          }
-
-          const rewardsPerYearRes = await unionContract.calculateRewardsByBlocks(
-            account,
-            DAI,
-            blocks
-          );
-
-          const getRewardsMultiplier = await unionContract.getRewardsMultiplier(
-            account,
-            DAI
-          );
-          const calcRewards = await unionContract.calculateRewards(
-            account,
-            DAI
-          );
-
-          setRewards(parseRes(calcRewards, 3));
-          setUpy(commify(parseRes(rewardsPerYearRes)));
-          setRewardsMultiplier(parseRes(getRewardsMultiplier));
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
-    }
-
-    fetchStakeData();
-    fetchRewardsData();
-
-    return () => {
-      isMounted = false;
-    };
-  });
+  const onComplete = () => {
+    updateStakeData();
+    updateRewardsData();
+  };
 
   const onDeposit = useAutoCallback(async (amount) => {
     try {
       await stake(DAI, amount, library.getSigner(), chainId);
+
+      onComplete();
     } catch (err) {
       console.error(err);
       addToast("Transaction failed", { type: "error", hideAfter: 20 });
@@ -149,6 +77,8 @@ const StakeCard = () => {
       const tx = await stakingContract.unstake(DAI, amount);
 
       await tx.wait();
+
+      onComplete();
     } catch (err) {
       console.error(err);
       addToast("Transaction failed", { type: "error", hideAfter: 20 });
@@ -164,6 +94,8 @@ const StakeCard = () => {
       await tx.wait();
 
       setWithdrawing(false);
+
+      onComplete();
     } catch (err) {
       console.error(err);
       addToast("Transaction failed", { type: "error", hideAfter: 20 });
