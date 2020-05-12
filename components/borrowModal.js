@@ -91,7 +91,7 @@ const BorrowModal = ({
     }
   };
 
-  const watchAmount = watch("amount", "0");
+  const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
   const calculateBalanceOwed =

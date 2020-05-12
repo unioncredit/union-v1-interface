@@ -20,7 +20,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
 
   const { dirty, isSubmitting } = formState;
 
-  const amount = watch("amount", 0);
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
 
   const onSubmit = async (values) => {
     await onWithdraw(values.amount);
@@ -28,8 +29,10 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
     toggle();
   };
 
+  const calculateNewTotalStake = Number(totalStake) - amount;
+
   const formatNewTotalStake = Number(
-    parseFloat(totalStake) - parseFloat(amount || 0)
+    calculateNewTotalStake > 0 ? calculateNewTotalStake : 0
   ).toFixed(2);
 
   const formatWithdrawableStake = Number(withdrawableStake).toFixed(2);
