@@ -8,6 +8,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { roundDown } from "util/numbers";
 
 const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
   const open = useDepositModalOpen();
@@ -28,11 +29,9 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const { data: daiBalance } = useTokenBalance(DAI);
+  const { data: daiBalance = 0.0 } = useTokenBalance(DAI);
 
-  const flooredDaiBalance = useAutoMemo(
-    () => Math.floor(daiBalance * 100) / 100
-  );
+  const flooredDaiBalance = roundDown(daiBalance);
 
   const onSubmit = async (values) => {
     await onDeposit(values.amount);

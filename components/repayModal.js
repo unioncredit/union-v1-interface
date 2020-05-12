@@ -1,14 +1,13 @@
 import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
 import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
-import { useAutoMemo } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
-import { roundUp } from "util/numbers";
+import { roundDown, roundUp } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -34,11 +33,9 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const addToast = useToast();
 
-  const { data: daiBalance } = useTokenBalance(curToken);
+  const { data: daiBalance = 0.0 } = useTokenBalance(curToken);
 
-  const flooredDaiBalance = useAutoMemo(
-    () => Math.floor(daiBalance * 100) / 100
-  );
+  const flooredDaiBalance = roundDown(daiBalance);
 
   const onSubmit = async (values) => {
     const { amount } = values;

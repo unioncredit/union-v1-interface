@@ -34,7 +34,7 @@ const StakeCard = () => {
 
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
-  const { data: unionBalance } = useTokenBalance(UNION);
+  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
   const addToast = useToast();
 

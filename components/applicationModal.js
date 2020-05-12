@@ -23,7 +23,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const [fee, setFee] = useState(0);
   const [isSubmitting, isSubmittingSet] = useState(false);
 
-  const { data: unionBalance } = useTokenBalance(UNION);
+  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
   const memberContract = useMemberContract();
 
