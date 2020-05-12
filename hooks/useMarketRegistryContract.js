@@ -1,6 +1,6 @@
-import ABI from "@constants/abis/marketRegistry.json";
+import ABI from "constants/abis/marketRegistry.json";
 import { useWeb3React } from "@web3-react/core";
-import { MARKET_REGISTRY_ADDRESSES } from "@constants/index";
+import { MARKET_REGISTRY_ADDRESSES } from "constants/variables";
 import { useAutoMemo } from "hooks.macro";
 import getContract from "util/getContract";
 
