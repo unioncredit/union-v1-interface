@@ -1,5 +1,6 @@
-import { AddressZero, TOKENS } from "constants/variables";
 import { useWeb3React } from "@web3-react/core";
+import { AddressZero, TOKENS } from "constants/variables";
+import { useAutoMemo } from "hooks.macro";
 
 /**
  * @name useCurrentToken
@@ -14,7 +15,7 @@ export default function useCurrentToken(symbol = "DAI") {
     TOKENS.hasOwnProperty(chainId) &&
     TOKENS[chainId].hasOwnProperty(symbol)
   ) {
-    return TOKENS[chainId][symbol];
+    return useAutoMemo(() => TOKENS[chainId][symbol]);
   }
 
   return AddressZero;
