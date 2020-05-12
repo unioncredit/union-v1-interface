@@ -7,9 +7,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useStakingContract from "hooks/useStakingContract";
 import useToast from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
-import useUnionContract from "hooks/useUnionContract";
 import { stake } from "lib/contracts/stake";
-import { useState } from "react";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -21,9 +19,10 @@ import Button from "./button";
 import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
+import WithdrawRewards from "./withdrawRewards";
 
 const StakeCard = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
@@ -35,13 +34,10 @@ const StakeCard = () => {
 
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
-  const [withdrawing, setWithdrawing] = useState(false);
-
   const unionBalance = useTokenBalance(UNION);
 
   const addToast = useToast();
 
-  const unionContract = useUnionContract();
   const stakingContract = useStakingContract();
 
   const {
@@ -85,24 +81,6 @@ const StakeCard = () => {
     }
   });
 
-  const onWithdrawRewards = useAutoCallback(async () => {
-    setWithdrawing(true);
-
-    try {
-      const tx = await unionContract.withdrawRewards(account, DAI);
-
-      await tx.wait();
-
-      setWithdrawing(false);
-
-      onComplete();
-    } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
-      setWithdrawing(false);
-    }
-  });
-
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6">
       <LabelPair
@@ -138,15 +116,7 @@ const StakeCard = () => {
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
-        slot={
-          <button
-            onClick={onWithdrawRewards}
-            className="text-sm font-semibold underline focus:outline-none"
-            disabled={withdrawing}
-          >
-            {withdrawing ? "Withdrawing Rewards..." : "Withdraw Rewards"}
-          </button>
-        }
+        slot={<WithdrawRewards onComplete={onComplete} />}
       />
       <LabelPair
         labelColor="text-grey-pure"
