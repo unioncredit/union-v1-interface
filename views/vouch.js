@@ -5,7 +5,8 @@ import LabelPair from "components/labelPair";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
 import { useCreditRequestModalToggle } from "contexts/Vouch";
-import { useCreditLimitData, useVouchData } from "hooks/swrHooks";
+import { useVouchData } from "hooks/swrHooks";
+import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import { Fragment } from "react";
 import getVouchBarData from "util/getVouchBarData";
@@ -17,7 +18,7 @@ export default function VouchView() {
 
   const { data: vouchData } = useVouchData();
 
-  const { data: creditLimit = 0 } = useCreditLimitData();
+  const { data: creditLimit = 0 } = useCreditLimit();
 
   return (
     <Fragment>
