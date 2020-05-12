@@ -37,11 +37,7 @@ export default function BorrowView() {
   const { borrowed = 0, interest = 0, paymentDueDate = "-", fee = 0, apr = 0 } =
     !!borrowData && borrowData;
 
-  const formatApr = Number(apr).toLocaleString(undefined, {
-    style: "percent",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const formatApr = toPercent(apr, 2);
 
   const onComplete = () => {
     updateTransactionsData();

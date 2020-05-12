@@ -4,6 +4,7 @@ import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
+import { toPercent } from "util/numbers";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
@@ -108,15 +109,7 @@ const VouchTable = ({ data }) => {
                       cellRenderer = <Address address={value} copyable />;
 
                     if (Header === "Percentage")
-                      cellRenderer = (
-                        <span>
-                          {Number(value).toLocaleString(undefined, {
-                            style: "percent",
-                            maximumFractionDigits: 2,
-                            minimumFractionDigits: 2,
-                          })}
-                        </span>
-                      );
+                      cellRenderer = <span>{toPercent(value, 2)}</span>;
 
                     if (Header === "Available Vouch" || Header === "Set Vouch")
                       cellRenderer = <span>{value} DAI</span>;
