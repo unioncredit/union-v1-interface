@@ -8,7 +8,7 @@ import { useCreditRequestModalToggle } from "@contexts/Vouch";
 import { useVouchData } from "@hooks/swrHooks";
 import useCurrentToken from "@hooks/useCurrentToken";
 import useIsMember from "@hooks/useIsMember";
-import { getTotalVouchedForYou } from "@lib/contracts/getTotalVouchedForYou";
+import { getCreditLimit } from "@lib/contracts/getCreditLimit";
 import getVouchBarData from "@util/getVouchBarData";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
@@ -33,8 +33,9 @@ export default function VouchView() {
     const getCreditData = async () => {
       try {
         if (isMounted) {
-          const res = await getTotalVouchedForYou(
+          const res = await getCreditLimit(
             curToken,
+            account,
             library.getSigner(),
             chainId
           );
