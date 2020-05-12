@@ -3,6 +3,7 @@ import fetcher from "@lib/fetcher";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
+import useMemberContract from "./useMemberContract";
 
 export function useTrustData() {
   const { library, account, chainId } = useWeb3React();
@@ -61,22 +62,25 @@ export function useTransactions() {
   );
 }
 
-export function useTrustCountData() {
-  const { library, account, chainId } = useWeb3React();
+const getTrustCount = (contract) => async (account, tokenAddress) =>
+  contract
+    .trustList(account, tokenAddress)
+    .then((res) => parseInt(res.toString()));
 
+export function useTrustCountData() {
+  const { account } = useWeb3React();
+  const memberContract = useMemberContract();
   const curToken = useCurrentToken();
 
   const shouldFetch =
-    typeof chainId === "number" &&
-    typeof account === "string" &&
-    isAddress(curToken) &&
-    !!library
-      ? true
-      : false;
+    !!memberContract && typeof account === "string" && isAddress(curToken);
 
   return useSWR(
-    shouldFetch ? ["trustcount", account, curToken, library, chainId] : null,
-    (key, account, curToken, library, chainId) =>
-      fetcher(key, { account, curToken, library, chainId })
+    shouldFetch ? [account, curToken] : null,
+    getTrustCount(memberContract),
+    {
+      dedupingInterval: 15 * 1000,
+      refreshInterval: 30 * 1000,
+    }
   );
 }
