@@ -1,19 +1,4 @@
 {
   "presets": ["next/babel"],
-  "plugins": [
-    "macros",
-    [
-      "module-resolver",
-      {
-        "alias": {
-          "@components": "./components",
-          "@constants": "./constants",
-          "@contexts": "./contexts",
-          "@hooks": "./hooks",
-          "@lib": "./lib",
-          "@util": "./util"
-        }
-      }
-    ]
-  ]
+  "plugins": ["macros"]
 }
