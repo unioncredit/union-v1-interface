@@ -8,11 +8,10 @@ import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import { blockSpeed } from "constants/variables";
 import { useBorrowModalToggle, useRepayModalToggle } from "contexts/Borrow";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
+import { useAutoEffect } from "hooks.macro";
 import { useTransactions } from "hooks/swrHooks";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import useToast from "hooks/useToast";
 import { checkIsOverdue } from "lib/contracts/checkIsOverdue";
 import { getBorrowed } from "lib/contracts/getBorrowed";
 import { getBorrowRate } from "lib/contracts/getBorrowRate";
@@ -21,7 +20,6 @@ import { getInterest } from "lib/contracts/getInterest";
 import { getLastRepay } from "lib/contracts/getLastRepay";
 import { getOriginationFee } from "lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "lib/contracts/getOverdueBlocks";
-import { repay } from "lib/contracts/repay";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import Info from "svgs/Info";
@@ -46,8 +44,6 @@ export default function BorrowView() {
   const [paymentDueDate, setPaymentDueDate] = useState("-");
   const [fee, setFee] = useState(0);
   const [apr, setApr] = useState(0);
-
-  const addToast = useToast();
 
   const { data: transactions, revalidate: updateTxData } = useTransactions();
 
@@ -182,20 +178,15 @@ export default function BorrowView() {
     };
   });
 
-  const onRepay = useAutoCallback(async (amount) => {
-    try {
-      await repay(curToken, amount, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
-    }
-  });
-
   const formatApr = Number(apr).toLocaleString(undefined, {
     style: "percent",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
+
+  const onComplete = () => {
+    updateTxData();
+  };
 
   return (
     <Fragment>
@@ -316,15 +307,14 @@ export default function BorrowView() {
       </div>
 
       <BorrowModal
-        fee={fee}
         balanceOwed={borrowed}
         creditLimit={creditLimit}
+        fee={fee}
+        onComplete={onComplete}
         paymentDueDate={paymentDueDate}
-        onComplete={() => {
-          updateTxData();
-        }}
       />
-      <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
+
+      <RepayModal balanceOwed={borrowed} onComplete={onComplete} />
     </Fragment>
   );
 }
