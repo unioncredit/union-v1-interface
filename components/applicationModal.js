@@ -19,7 +19,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const [isSubmitting, isSubmittingSet] = useState(false);
 
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-  const { data: fee } = useMemberFee();
+  const { data: fee = 0.0 } = useMemberFee();
 
   const addToast = useToast();
 
