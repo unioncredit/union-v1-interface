@@ -24,3 +24,5 @@ export const minimumPaymentDueTip =
 
 export const unionPerYearTip =
   'UNION Per Year.\n\nThis is the token that the staking contract returns to the user that is based on the DAI staked and reward multiplier algorithm. Each block inflates based on the total amount of DAI staked.\n\nYour share of the inflation is:\n\n"Your not defaulted DAI stake" times "your reward multiplier" divided by "Sum of everyone elses above number"';
+
+export const percentUtilizedTip = "Percent Utilized\n\n";
