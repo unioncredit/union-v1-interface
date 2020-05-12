@@ -1,5 +1,5 @@
 import { isAddress } from "@ethersproject/address";
-import fetcher from "@lib/fetcher";
+import fetcher from "lib/fetcher";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";

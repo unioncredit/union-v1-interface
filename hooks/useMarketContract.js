@@ -1,6 +1,6 @@
-import ABI from "@constants/abis/lendingMarket.json";
-import { getMarketAddress } from "@lib/contracts/getMarketAddress";
-import getContract from "@util/getContract";
+import ABI from "constants/abis/lendingMarket.json";
+import { getMarketAddress } from "lib/contracts/getMarketAddress";
+import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
 

@@ -1,4 +1,4 @@
-import safeAccess from "@util/safeAccess";
+import safeAccess from "util/safeAccess";
 import { useWeb3React } from "@web3-react/core";
 import {
   createContext,

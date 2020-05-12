@@ -1,5 +1,5 @@
-import { useLearnMoreModalToggle } from "@contexts/Application";
-import { useTutorialModalOpen, useTutorialModalToggle } from "@contexts/Stake";
+import { useLearnMoreModalToggle } from "contexts/Application";
+import { useTutorialModalOpen, useTutorialModalToggle } from "contexts/Stake";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";

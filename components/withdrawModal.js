@@ -1,4 +1,4 @@
-import { useWithdrawModalOpen, useWithdrawModalToggle } from "@contexts/Stake";
+import { useWithdrawModalOpen, useWithdrawModalToggle } from "contexts/Stake";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";

@@ -1,6 +1,6 @@
-import SegmentedControl from "@components/segmentedControl";
+import SegmentedControl from "components/segmentedControl";
 import { useState } from "react";
-import Button from "@components/button";
+import Button from "components/button";
 
 export const Solo = ({ hasButton = false, onClick }) => (
   <div className="rounded bg-white w-full h-full flex-1 flex flex-col border">

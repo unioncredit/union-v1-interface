@@ -1,6 +1,6 @@
-import useCopy from "@hooks/useCopy";
-import useENSName from "@hooks/useENSName";
-import truncateAddress from "@util/truncateAddress";
+import useCopy from "hooks/useCopy";
+import useENSName from "hooks/useENSName";
+import truncateAddress from "util/truncateAddress";
 import classNames from "classnames";
 import { memo } from "react";
 import Identicon from "./identicon";

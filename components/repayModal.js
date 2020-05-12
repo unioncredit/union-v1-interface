@@ -1,6 +1,6 @@
-import { useRepayModalOpen, useRepayModalToggle } from "@contexts/Borrow";
+import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
 import { useForm } from "react-hook-form";
-import { REPAY_MARGIN } from "@constants/index";
+import { REPAY_MARGIN } from "constants/variables";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";

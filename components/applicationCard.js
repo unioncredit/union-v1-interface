@@ -1,5 +1,5 @@
-import { useGetInvitedModalToggle } from "@contexts/Application";
-import { useTrustCountData } from "@hooks/swrHooks";
+import { useGetInvitedModalToggle } from "contexts/Application";
+import { useTrustCountData } from "hooks/swrHooks";
 import classNames from "classnames";
 import { useState } from "react";
 import Info from "svgs/Info";

@@ -1,17 +1,17 @@
-import Footer from "@components/footer";
-import Navigation from "@components/navigation";
-import NetworkIndicator from "@components/networkIndicator";
+import Footer from "components/footer";
+import Navigation from "components/navigation";
+import NetworkIndicator from "components/networkIndicator";
 import ApplicationContext, {
   Updater as ApplicationContextUpdater,
-} from "@contexts/Application";
-import BorrowContext from "@contexts/Borrow";
-import StakeContext from "@contexts/Stake";
-import VouchContext from "@contexts/Vouch";
-import AdminContext from "@contexts/Admin";
-import getLibrary from "@lib/getLibrary";
+} from "contexts/Application";
+import BorrowContext from "contexts/Borrow";
+import StakeContext from "contexts/Stake";
+import VouchContext from "contexts/Vouch";
+import AdminContext from "contexts/Admin";
+import getLibrary from "lib/getLibrary";
 import { Web3ReactProvider } from "@web3-react/core";
 import "../css/tailwind.css";
-import ErrorBoundary from "@components/errorBoundary";
+import ErrorBoundary from "components/errorBoundary";
 import Error from "./_error";
 import { Fragment } from "react";
 

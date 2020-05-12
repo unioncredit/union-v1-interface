@@ -1,4 +1,4 @@
-import useCopy from "@hooks/useCopy";
+import useCopy from "hooks/useCopy";
 import Button from "./button";
 
 const VouchLink = ({ link }) => {

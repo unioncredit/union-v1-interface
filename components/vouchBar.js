@@ -1,4 +1,4 @@
-import pastels from "@lib/pastels";
+import pastels from "lib/pastels";
 
 const Vouch = ({ width, index }) => {
   return (

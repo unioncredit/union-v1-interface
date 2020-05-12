@@ -1,5 +1,5 @@
 import Modal, { ModalHeader } from "./modal";
-import { useTrustModalOpen, useTrustModalToggle } from "@contexts/Stake";
+import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
 import Button from "./button";
 import Input from "./input";
 import { useForm } from "react-hook-form";
