@@ -1,4 +1,4 @@
-import { useBorrowModalOpen, useBorrowModalToggle } from "@contexts/Borrow";
+import { useBorrowModalOpen, useBorrowModalToggle } from "contexts/Borrow";
 import { commify } from "@ethersproject/units";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";

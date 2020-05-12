@@ -1,4 +1,4 @@
-import { AddressZero, TOKENS } from "@constants/index";
+import { AddressZero, TOKENS } from "constants/variables";
 import { useWeb3React } from "@web3-react/core";
 
 /**

@@ -3,11 +3,11 @@ import {
   useWalletModalToggle,
   useWalletModalView,
   useUpdateWalletModalView,
-} from "@contexts/Application";
-import useEagerConnect from "@hooks/useEagerConnect";
-import useToast from "@hooks/useToast";
-import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "@lib/connectors";
-import getErrorMessage from "@lib/getErrorMessage";
+} from "contexts/Application";
+import useEagerConnect from "hooks/useEagerConnect";
+import useToast from "hooks/useToast";
+import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
+import getErrorMessage from "lib/getErrorMessage";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";

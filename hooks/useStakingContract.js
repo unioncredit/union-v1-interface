@@ -1,8 +1,8 @@
-import ABI from "@constants/abis/stakingManager.json";
-import getContract from "@util/getContract";
+import ABI from "constants/abis/stakingManager.json";
+import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
-import { STAKING_MANAGER_ADDRESSES } from "@constants/";
+import { STAKING_MANAGER_ADDRESSES } from "constants/variables";
 
 export default function useStakingContract() {
   const { library, chainId } = useWeb3React();

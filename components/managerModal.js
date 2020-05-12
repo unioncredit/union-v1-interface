@@ -1,4 +1,4 @@
-import { useManagerModalOpen, useManagerModalToggle } from "@contexts/Admin";
+import { useManagerModalOpen, useManagerModalToggle } from "contexts/Admin";
 import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";

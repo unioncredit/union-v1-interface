@@ -1,9 +1,9 @@
 import { formatUnits } from "@ethersproject/units";
-import useCurrentToken from "@hooks/useCurrentToken";
-import useMemberContract from "@hooks/useMemberContract";
-import useToast from "@hooks/useToast";
-import useTokenBalance from "@hooks/useTokenBalance";
-import { applyMember } from "@lib/contracts/applyMember";
+import useCurrentToken from "hooks/useCurrentToken";
+import useMemberContract from "hooks/useMemberContract";
+import useToast from "hooks/useToast";
+import useTokenBalance from "hooks/useTokenBalance";
+import { applyMember } from "lib/contracts/applyMember";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useState } from "react";

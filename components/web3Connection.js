@@ -1,6 +1,6 @@
-import { useToggleSignInModal } from "@contexts/Application";
-import useENSName from "@hooks/useENSName";
-import truncateAddress from "@util/truncateAddress";
+import { useToggleSignInModal } from "contexts/Application";
+import useENSName from "hooks/useENSName";
+import truncateAddress from "util/truncateAddress";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import Activity from "./activity";
 import Identicon from "./identicon";

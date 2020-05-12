@@ -1,6 +1,6 @@
-import { CONTROLLER_ADDRESSES } from "@constants/";
-import ABI from "@constants/abis/controller.json";
-import getContract from "@util/getContract";
+import { CONTROLLER_ADDRESSES } from "constants/variables";
+import ABI from "constants/abis/controller.json";
+import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 

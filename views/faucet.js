@@ -1,6 +1,6 @@
-import Button from "@components/button";
-import useCurrentToken from "@hooks/useCurrentToken";
-import { getTestToken } from "@lib/contracts/getTestToken";
+import Button from "components/button";
+import useCurrentToken from "hooks/useCurrentToken";
+import { getTestToken } from "lib/contracts/getTestToken";
 import { useWeb3React } from "@web3-react/core";
 import { Fragment } from "react";
 

@@ -1,6 +1,6 @@
-import { useDepositModalOpen, useDepositModalToggle } from "@contexts/Stake";
-import useCurrentToken from "@hooks/useCurrentToken";
-import useTokenBalance from "@hooks/useTokenBalance";
+import { useDepositModalOpen, useDepositModalToggle } from "contexts/Stake";
+import useCurrentToken from "hooks/useCurrentToken";
+import useTokenBalance from "hooks/useTokenBalance";
 import { useAutoEffect, useAutoMemo } from "hooks.macro";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

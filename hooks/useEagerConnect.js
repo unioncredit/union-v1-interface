@@ -1,4 +1,4 @@
-import { injected } from "@lib/connectors";
+import { injected } from "lib/connectors";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 

@@ -1,5 +1,5 @@
 import { DialogContent, DialogOverlay } from "@reach/dialog";
-import useCurrentToken from "@hooks/useCurrentToken";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useState, useEffect } from "react";
 import Spinner from "./spinner";
 

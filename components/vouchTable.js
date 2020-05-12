@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "@contexts/Application";
+import { useGetInvitedModalToggle } from "contexts/Application";
 import { useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";

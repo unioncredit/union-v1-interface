@@ -2,8 +2,8 @@ import {
   useGetInvitedModalOpen,
   useGetInvitedModalToggle,
   useLearnMoreModalToggle,
-} from "@contexts/Application";
-import generateLink from "@util/generateLink";
+} from "contexts/Application";
+import generateLink from "util/generateLink";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";

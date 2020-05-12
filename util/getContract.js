@@ -1,6 +1,6 @@
 import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
-import { AddressZero } from "@constants/";
+import { AddressZero } from "constants/variables";
 
 /**
  * @name getContract

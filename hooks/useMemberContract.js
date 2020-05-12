@@ -1,6 +1,6 @@
-import { MEMBER_MANAGER_ADDRESSES } from "@constants/";
-import ABI from "@constants/abis/memberManager.json";
-import getContract from "@util/getContract";
+import { MEMBER_MANAGER_ADDRESSES } from "constants/variables";
+import ABI from "constants/abis/memberManager.json";
+import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoMemo } from "hooks.macro";
 

@@ -1,8 +1,8 @@
-import { useAddressModalOpen, useAddressModalToggle } from "@contexts/Stake";
-import useCurrentToken from "@hooks/useCurrentToken";
-import useENSName from "@hooks/useENSName";
-import { cancelVouch } from "@lib/contracts/cancelVouch";
-import truncateAddress from "@util/truncateAddress";
+import { useAddressModalOpen, useAddressModalToggle } from "contexts/Stake";
+import useCurrentToken from "hooks/useCurrentToken";
+import useENSName from "hooks/useENSName";
+import { cancelVouch } from "lib/contracts/cancelVouch";
+import truncateAddress from "util/truncateAddress";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import { Fragment, useEffect, useState } from "react";

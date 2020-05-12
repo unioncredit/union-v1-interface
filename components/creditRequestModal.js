@@ -1,8 +1,8 @@
 import {
   useCreditRequestModalOpen,
   useCreditRequestModalToggle,
-} from "@contexts/Vouch";
-import generateLink from "@util/generateLink";
+} from "contexts/Vouch";
+import generateLink from "util/generateLink";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import dyanmic from "next/dynamic";
