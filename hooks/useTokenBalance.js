@@ -1,51 +1,34 @@
-import ABI from "constants/abis/erc20Detailed.json";
-import { useBlockNumber } from "contexts/Application";
+import { isAddress } from "@ethersproject/address";
 import { formatUnits } from "@ethersproject/units";
-import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
-import { usePrevious } from "react-use";
+import ABI from "constants/abis/erc20Detailed.json";
+import useSWR from "swr";
+import useContract from "./useContract";
+
+const getTokenBalance = (contract) => async (_, __, account) => {
+  const decimals = await contract.decimals();
+
+  const balanceOf = await contract.balanceOf(account);
+
+  const balance = formatUnits(balanceOf, decimals);
+
+  return parseFloat(balance);
+};
 
 export default function useTokenBalance(tokenAddress) {
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
 
-  const globalBlockNumber = useBlockNumber();
+  const contract = useContract(tokenAddress, ABI);
 
-  const [balance, setBalance] = useState("0");
-  const prevBalance = usePrevious(balance);
+  const shouldFetch =
+    !!contract && isAddress(tokenAddress) && typeof account === "string";
 
-  useEffect(() => {
-    let stale = false;
-
-    async function fetchBalance() {
-      try {
-        const contract = getContract(tokenAddress, ABI, library.getSigner());
-
-        const decimals = await contract.decimals();
-
-        const balanceOf = await contract.balanceOf(account);
-
-        if (!stale) {
-          setBalance(formatUnits(balanceOf, decimals));
-          return;
-        }
-
-        setBalance(prevBalance ?? "0");
-      } catch (error) {
-        console.error(error);
-        if (!stale) {
-          setBalance(prevBalance ?? "0");
-        }
-      }
+  return useSWR(
+    shouldFetch ? ["TokenBalance", tokenAddress, account] : null,
+    getTokenBalance(contract),
+    {
+      dedupingInterval: 15 * 1000,
+      refreshInterval: 30 * 1000,
     }
-
-    fetchBalance();
-
-    return () => {
-      stale = true;
-      setBalance(prevBalance ?? "0");
-    };
-  }, [library, account, globalBlockNumber]);
-
-  return balance;
+  );
 }

@@ -34,7 +34,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const addToast = useToast();
 
-  const daiBalance = useTokenBalance(curToken);
+  const { data: daiBalance } = useTokenBalance(curToken);
 
   const flooredDaiBalance = useAutoMemo(
     () => Math.floor(daiBalance * 100) / 100

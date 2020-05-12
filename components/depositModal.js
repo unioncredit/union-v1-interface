@@ -28,7 +28,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const daiBalance = useTokenBalance(DAI);
+  const { data: daiBalance } = useTokenBalance(DAI);
 
   const flooredDaiBalance = useAutoMemo(
     () => Math.floor(daiBalance * 100) / 100
