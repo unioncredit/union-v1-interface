@@ -29,7 +29,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
   };
 
   const formatNewTotalStake = Number(
-    parseFloat(totalStake) - parseFloat(amount || 0) 
+    parseFloat(totalStake) - parseFloat(amount || 0)
   ).toFixed(2);
 
   const formatWithdrawableStake = Number(withdrawableStake).toFixed(2);
