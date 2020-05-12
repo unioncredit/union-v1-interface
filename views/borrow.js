@@ -1,3 +1,4 @@
+import { useWeb3React } from "@web3-react/core";
 import ApplicationCard from "components/applicationCard";
 import BorrowModal from "components/borrowModal";
 import Button from "components/button";
@@ -7,11 +8,11 @@ import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import { blockSpeed } from "constants/variables";
 import { useBorrowModalToggle, useRepayModalToggle } from "contexts/Borrow";
+import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useTransactions } from "hooks/swrHooks";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import useToast from "hooks/useToast";
-import { borrow } from "lib/contracts/borrow";
 import { checkIsOverdue } from "lib/contracts/checkIsOverdue";
 import { getBorrowed } from "lib/contracts/getBorrowed";
 import { getBorrowRate } from "lib/contracts/getBorrowRate";
@@ -21,8 +22,6 @@ import { getLastRepay } from "lib/contracts/getLastRepay";
 import { getOriginationFee } from "lib/contracts/getOriginationFee";
 import { getOverdueBlocks } from "lib/contracts/getOverdueBlocks";
 import { repay } from "lib/contracts/repay";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import Info from "svgs/Info";
@@ -50,7 +49,7 @@ export default function BorrowView() {
 
   const addToast = useToast();
 
-  const { data: transactions } = useTransactions();
+  const { data: transactions, revalidate: updateTxData } = useTransactions();
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -181,15 +180,6 @@ export default function BorrowView() {
     return () => {
       isMounted = false;
     };
-  });
-
-  const onBorrow = useAutoCallback(async (amount) => {
-    try {
-      await borrow(curToken, amount, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
-    }
   });
 
   const onRepay = useAutoCallback(async (amount) => {
@@ -327,10 +317,12 @@ export default function BorrowView() {
 
       <BorrowModal
         fee={fee}
-        onBorrow={onBorrow}
         balanceOwed={borrowed}
         creditLimit={creditLimit}
         paymentDueDate={paymentDueDate}
+        onComplete={() => {
+          updateTxData();
+        }}
       />
       <RepayModal balanceOwed={borrowed} onRepay={onRepay} />
     </Fragment>
