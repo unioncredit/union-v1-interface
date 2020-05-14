@@ -126,7 +126,7 @@ export default function BorrowView() {
                 tooltip={minimumPaymentDueTip}
                 label="Minimum Payment Due"
                 valueType="DAI"
-                value={interest}
+                value={roundUp(interest)}
               />
 
               <LabelPair
