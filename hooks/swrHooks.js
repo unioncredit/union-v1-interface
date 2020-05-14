@@ -99,7 +99,7 @@ const getStakeData = (memberContract, stakingContract) => async (
     tokenAddress
   );
 
-  const utilizedStake = await memberContract.getTotalCreditUsed(
+  const utilizedStake = await memberContract.getTotalLockedStake(
     account,
     tokenAddress
   );
