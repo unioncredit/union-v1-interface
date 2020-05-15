@@ -53,7 +53,7 @@ export default function AdminView() {
   const [debtCeiling, setDebtCeiling] = useState(0);
   const [minLoan, setMinLoan] = useState(0);
   const [apr, setApr] = useState(0);
-  const [assetBalance, setAssetBalance] = useState(0);
+  const [lendingPoolBalance, setLendingPoolBalance] = useState(0);
   const [compoundBalance, setCompoundBalance] = useState(0);
 
   useAutoEffect(() => {
@@ -158,8 +158,10 @@ export default function AdminView() {
     async function fetchFundsData() {
       try {
         if (isMounted) {
-          const assetBalance = await assetContract.getPoolBalance(curToken);
-          setAssetBalance(parseRes(assetBalance, 2));
+          const lendingPoolBalance = await stakingContract.getLoanableAmount(
+            curToken
+          );
+          setLendingPoolBalance(parseRes(lendingPoolBalance, 2));
 
           const compoundBalance = await compoundContract.getSupplyView(
             curToken
@@ -418,7 +420,7 @@ export default function AdminView() {
             </thead>
             <tbody>
               <tr>
-                <td>{assetBalance}</td>
+                <td>{lendingPoolBalance}</td>
                 <td>{compoundBalance}</td>
               </tr>
             </tbody>
