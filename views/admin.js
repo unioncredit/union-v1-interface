@@ -6,6 +6,8 @@ import { useManagerModalToggle, useMarketModalToggle } from "contexts/Admin";
 import { formatUnits } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsAdmin from "hooks/useIsAdmin";
+import useAssetContract from "hooks/useAssetContract";
+import useCompoundContract from "hooks/useCompoundContract";
 import useMarketContract from "hooks/useMarketContract";
 import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
@@ -14,6 +16,8 @@ import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js/bignumber.mjs";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { Fragment, useState } from "react";
+import ABI from "constants/abis/IInterestRateModel.json";
+import getContract from "util/getContract";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
@@ -28,13 +32,14 @@ export default function AdminView() {
 
   const curToken = useCurrentToken();
   const isAdmin = useIsAdmin();
+  const assetContract = useAssetContract();
+  const compoundContract = useCompoundContract();
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
   const unionContract = useUnionContract();
-
   const marketContractPromise = useMarketContract(curToken);
 
-  let marketContract;
+  let marketContract, interestRateContract;
 
   const [totalStake, setTotalStake] = useState(0);
   const [frozenStake, setFrozenStake] = useState(0);
@@ -47,6 +52,9 @@ export default function AdminView() {
   const [totalBorrows, setTotalBorrows] = useState(0);
   const [debtCeiling, setDebtCeiling] = useState(0);
   const [minLoan, setMinLoan] = useState(0);
+  const [apr, setApr] = useState(0);
+  const [assetBalance, setAssetBalance] = useState(0);
+  const [compoundBalance, setCompoundBalance] = useState(0);
 
   useAutoEffect(() => {
     let isMounted = true;
@@ -56,11 +64,26 @@ export default function AdminView() {
         marketContract = res;
         try {
           if (isMounted) {
+            const interestRateAddress = await marketContract.interestRateModel();
+            interestRateContract = getContract(
+              interestRateAddress,
+              ABI,
+              library.getSigner()
+            );
             const overdueBlocksRes = await marketContract.overdueBlocks();
             const originationFeeRes = await marketContract.originationFee();
             const totalBorrowsRes = await marketContract.totalBorrows();
             const debtCeilingRes = await marketContract.debtCeiling();
             const minLoanRes = await marketContract.minLoan();
+            const ratePreBlock = await marketContract.borrowRatePerBlock();
+
+            setApr(
+              (
+                parseRes(ratePreBlock, 18) *
+                BLOCKS_PER_YEAR[chainId] *
+                100
+              ).toFixed(2)
+            );
             setOverdueBlocks(overdueBlocksRes.toString());
             setOriginationFee(parseRes(originationFeeRes, 2) * 100);
             setTotalBorrows(parseRes(totalBorrowsRes, 2));
@@ -132,10 +155,29 @@ export default function AdminView() {
       }
     }
 
+    async function fetchFundsData() {
+      try {
+        if (isMounted) {
+          const assetBalance = await assetContract.getPoolBalance(curToken);
+          setAssetBalance(parseRes(assetBalance, 2));
+
+          const compoundBalance = await compoundContract.getSupplyView(
+            curToken
+          );
+          setCompoundBalance(parseRes(compoundBalance, 2));
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
+    }
+
     fetchStakingData();
     fetchMemberData();
     fetchUnionData();
     fetchMarketData();
+    fetchFundsData();
 
     return () => {
       isMounted = false;
@@ -206,6 +248,16 @@ export default function AdminView() {
     }
   });
 
+  const onSetBorrowApr = useAutoCallback(async (rate) => {
+    try {
+      await interestRateContract.setInterestRate(
+        parseInt((rate * 10 ** 18) / (100 * BLOCKS_PER_YEAR[chainId]))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
   const onSetDefaultInflation = useAutoCallback(async (amount) => {
     try {
       await unionContract.setDefaultInflationPerBlock(
@@ -260,6 +312,9 @@ export default function AdminView() {
                   <div className="flex items-center">Origination Fee(%)</div>
                 </th>
                 <th>
+                  <div className="flex items-center">Borrow Apr(%)</div>
+                </th>
+                <th>
                   <div className="flex items-center">Min Loan(DAI)</div>
                 </th>
                 <th>
@@ -275,6 +330,7 @@ export default function AdminView() {
                 <td>{totalBorrows}</td>
                 <td>{debtCeiling}</td>
                 <td>{originationFee}</td>
+                <td>{apr}</td>
                 <td>{minLoan}</td>
                 <td>{overdueBlocks}</td>
                 <td>
@@ -334,72 +390,47 @@ export default function AdminView() {
             </tbody>
           </table>
         </div>
-        {/* <div className="mb-5">
-                    <h1>UnionToken</h1>
-                </div>
-                <div className="flex mb-6">
 
-                </div>
-                <div className="mb-5">
-                    <h1>MemberManager</h1>
-                </div>
-                <div className="flex mb-6">
-
-                </div>
-                <div className="mb-5">
-                    <h1>LendingMarket</h1>
-                </div>
-                <div className="flex mb-6">
-
-                </div>
-                <div className="mb-5">
-                    <h1>CreditLimitByMedian</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>SumOfTrust</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>AssetManager</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>CompoundAdapterManager</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>MarketRegistry</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>FixedInterestRateModel</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div>
-                <div className="mb-5">
-                    <h1>Controller</h1>
-                </div>
-                <div className="flex mb-6">
-                    
-                </div> */}
+        <div className="mb-5">
+          <h1>Funds</h1>
+        </div>
+        <div className="flex mb-6">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <div
+                    className="flex items-center"
+                    style={{ justifyContent: "flex-start" }}
+                  >
+                    Lending Pool Balance(DAI)
+                  </div>
+                </th>
+                <th>
+                  <div
+                    className="flex items-center"
+                    style={{ justifyContent: "flex-start" }}
+                  >
+                    Compound Balance(DAI)
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{assetBalance}</td>
+                <td>{compoundBalance}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <MarketModal
         onSetOriginationFee={onSetOriginationFee}
         onSetDebtCeiling={onSetDebtCeiling}
         onSetMinLoan={onSetMinLoan}
         onSetOverdueBlocks={onSetOverdueBlocks}
+        onSetBorrowApr={onSetBorrowApr}
       />
       <ManagerModal
         onSetNewMemberFee={onSetNewMemberFee}

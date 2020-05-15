@@ -9,6 +9,7 @@ const MarketModal = ({
   onSetDebtCeiling,
   onSetMinLoan,
   onSetOverdueBlocks,
+  onSetBorrowApr,
 }) => {
   const open = useMarketModalOpen();
   const toggle = useMarketModalToggle();
@@ -19,6 +20,7 @@ const MarketModal = ({
   const debtCeiling = watch("debtCeiling", 0);
   const minLoan = watch("minLoan", 0);
   const blocks = watch("blocks", 0);
+  const apr = watch("apr", 0);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -86,6 +88,22 @@ const MarketModal = ({
           type="number"
         />
         <Button full onClick={() => onSetOverdueBlocks(blocks)}>
+          Confirm
+        </Button>
+        <div className="divider mb-8" />
+        <Input
+          autoFocus
+          chip=""
+          className="mb-8"
+          id="apr"
+          label="Borrow Apr"
+          placeholder="%"
+          min={0}
+          ref={register}
+          required
+          type="number"
+        />
+        <Button full onClick={() => onSetBorrowApr(apr)}>
           Confirm
         </Button>
       </div>

@@ -6,6 +6,18 @@ export const BLOCKS_PER_YEAR = {
   42: 2102400,
 };
 
+export const ASSET_MANAGER_ADDRESSES = {
+  1: AddressZero,
+  4: "0x701e41b7e3498DC9ea43915A5a0BDA5E14bdD8A8",
+  42: AddressZero,
+};
+
+export const COMPOUND_ADAPTER_ADDRESSES = {
+  1: AddressZero,
+  4: "0xDd04574Cc718d349Da4a26A4d0A51De2E2851a6D",
+  42: AddressZero,
+};
+
 export const CONTROLLER_ADDRESSES = {
   1: AddressZero,
   4: "0x77A29f034798f3952E5f1F5fDB791E433BDdFEb6",
