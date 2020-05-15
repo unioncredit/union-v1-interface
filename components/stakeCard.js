@@ -71,7 +71,7 @@ const StakeCard = () => {
       const amount = parseUnits(input, 18).toString();
 
       const tx = await stakingContract.unstake(DAI, amount, {
-        gasLimit: 2000000,
+        gasLimit: 1600000,
       });
 
       await tx.wait();
