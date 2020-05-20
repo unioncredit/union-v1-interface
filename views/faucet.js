@@ -1,31 +1,31 @@
-import Button from "components/button";
-import useCurrentToken from "hooks/useCurrentToken";
-import { getTestToken } from "lib/contracts/getTestToken";
-import { useWeb3React } from "@web3-react/core";
 import { Fragment } from "react";
 
 export default function FaucetView() {
-  const { library, chainId } = useWeb3React();
-
-  const curToken = useCurrentToken();
-
-  const onGetToken = async () => {
-    try {
-      await getTestToken(curToken, 10000, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  return (
-    <Fragment>
-      <div className="container text-center">
-        <h1 className="mb-4">Testnet DAI Faucet</h1>
-
-        <Button invert onClick={onGetToken}>
-          Get 10000 Dai
-        </Button>
-      </div>
-    </Fragment>
-  );
+    return (
+        <Fragment>
+            <div className="container">
+                <div className="flex flex-col md:flex-row mb-10">
+                    <h1 className="mb-5">Step 1: Get Rinkeby Ether </h1>
+                    <a
+                        href="https://faucet.rinkeby.io/"
+                        className="inline-block pb-2 pr-4 hover:underline"
+                    >
+                        https://faucet.rinkeby.io/
+                    </a>
+                </div>
+                <div className="flex flex-col md:flex-row mb-10">
+                    <h1 className="mb-5">
+                        Step 2: Supply Ether on the rinkeby version of Compound
+                        and borrow Dai to get rinkebyDai{" "}
+                    </h1>
+                    <a
+                        href="https://app.compound.finance/"
+                        className="inline-block pb-2 pr-4 hover:underline"
+                    >
+                        https://app.compound.finance/
+                    </a>
+                </div>
+            </div>
+        </Fragment>
+    );
 }
