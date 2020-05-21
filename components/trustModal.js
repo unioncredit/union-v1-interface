@@ -1,12 +1,16 @@
 import { isAddress } from "@ethersproject/address";
 import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
+import useCurrentToken from "hooks/useCurrentToken";
+import useToast, { FLAVORS } from "hooks/useToast";
+import { vouch } from "lib/contracts/vouch";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 
-const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
+const TrustModal = ({ initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
@@ -16,10 +20,36 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
 
   const { dirty, isSubmitting } = formState;
 
-  const onSubmit = async (values) => {
-    await onTrust(values.address, values.trust);
+  const curToken = useCurrentToken();
 
-    toggle();
+  const addToast = useToast();
+
+  const onSubmit = async (values) => {
+    try {
+      const tx = await vouch(
+        values.address,
+        curToken,
+        values.amount,
+        library.getSigner(),
+        chainId
+      );
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      if (open) toggle();
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+    } catch (err) {
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
+    }
   };
 
   return (

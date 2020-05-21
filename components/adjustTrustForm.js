@@ -1,9 +1,11 @@
+import { useWeb3React } from "@web3-react/core";
 import SegmentedControl from "components/segmentedControl";
 import useCurrentToken from "hooks/useCurrentToken";
+import useToast, { FLAVORS } from "hooks/useToast";
 import { adjustTrust } from "lib/contracts/adjustTrust";
-import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 
@@ -29,10 +31,12 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
       ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
   );
 
+  const addToast = useToast();
+
   const onSubmit = async (data, e) => {
     try {
       if (formatNewTrust >= 0) {
-        await adjustTrust(
+        const tx = await adjustTrust(
           address,
           curToken,
           formatNewTrust,
@@ -40,10 +44,22 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
           chainId
         );
 
+        const { hide: hidePending } = addToast(
+          FLAVORS.TX_PENDING(tx.hash, chainId)
+        );
+
+        await tx.wait();
+
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS);
+
         onComplete();
       }
     } catch (err) {
-      console.error(err);
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
     }
   };
 

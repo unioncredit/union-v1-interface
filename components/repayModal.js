@@ -47,8 +47,6 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         ? Number(values.amount * REPAY_MARGIN)
         : values.amount;
 
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
     try {
       const tx = await repay(
         curToken,
@@ -61,18 +59,16 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
 
+      if (open) toggle();
+
       await tx.wait();
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS);
-
-      if (open) toggle();
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
       onComplete();
     } catch (err) {
-      hideWaiting();
-
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

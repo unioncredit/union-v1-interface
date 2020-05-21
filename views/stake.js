@@ -5,33 +5,22 @@ import TrustModal from "components/trustModal";
 import TutorialModal from "components/tutorialModal";
 import { useEmailModalToggle } from "contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "contexts/Stake";
-import useCurrentToken from "hooks/useCurrentToken";
+import { useAutoEffect } from "hooks.macro";
 import useIsMember from "hooks/useIsMember";
-import useToast, { FLAVORS } from "hooks/useToast";
-import { vouch } from "lib/contracts/vouch";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { Fragment } from "react";
-import handleTxError from "util/handleTxError";
 
 export default function StakeView() {
-  const { library, chainId } = useWeb3React();
-
   const { query } = useRouter();
 
   const toggleTrustModal = useTrustModalToggle();
   const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
 
-  const curToken = useCurrentToken();
-
   const { email_modal_completed, tutorial_modal_completed } = parseCookies();
 
   const { data: isMember = false } = useIsMember();
-
-  const addToast = useToast();
 
   useAutoEffect(() => {
     if (!email_modal_completed) {
@@ -45,16 +34,6 @@ export default function StakeView() {
   useAutoEffect(() => {
     if (query.address || query.trust) {
       toggleTrustModal();
-    }
-  });
-
-  const onTrust = useAutoCallback(async (address, amount) => {
-    try {
-      await vouch(address, curToken, amount, library.getSigner(), chainId);
-    } catch (err) {
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message));
     }
   });
 
@@ -89,7 +68,6 @@ export default function StakeView() {
       </div>
 
       <TrustModal
-        onTrust={onTrust}
         initialAddress={query.address ?? undefined}
         initialTrust={query.trust ?? undefined}
       />

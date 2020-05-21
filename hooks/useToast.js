@@ -49,16 +49,46 @@ export const FLAVORS = {
     type: "loading",
     hideAfter: 0,
   }),
-  TX_SUCCESS: {
-    body: "Transaction successful",
+  TX_SUCCESS: (hash, chainId) => ({
+    body: (
+      <Fragment>
+        Transaction successful.
+        <br />
+        {hash && chainId && (
+          <a
+            className="underline"
+            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Etherscan
+          </a>
+        )}
+      </Fragment>
+    ),
     type: "success",
     hideAfter: 20,
-  },
-  TX_SUCCESS_ENABLED: {
-    body: "Token enabled successfully",
+  }),
+  TX_SUCCESS_ENABLED: (hash, chainId) => ({
+    body: (
+      <Fragment>
+        Token enabled successfully.
+        <br />
+        {hash && chainId && (
+          <a
+            className="underline"
+            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Etherscan
+          </a>
+        )}
+      </Fragment>
+    ),
     type: "success",
     hideAfter: 20,
-  },
+  }),
   TX_ERROR: (message = "Transaction failed") => ({
     body: message,
     type: "error",

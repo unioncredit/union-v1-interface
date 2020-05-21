@@ -41,31 +41,25 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const stakingContract = useStakingContract();
 
   const onSubmit = async (values) => {
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
     try {
       const amount = parseUnits(values.amount, 18).toString();
 
       const tx = await stakingContract.unstake(DAI, amount);
 
-      hideWaiting();
-
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      if (open) toggle();
 
       await tx.wait();
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS);
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
       onComplete();
-
-      toggle();
     } catch (err) {
-      hideWaiting();
-
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

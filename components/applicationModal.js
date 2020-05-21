@@ -54,16 +54,14 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const submit = useAutoCallback(async () => {
     isSubmittingSet(true);
 
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
     try {
       const tx = await memberManagerContract.applyMember(account, DAI);
-
-      hideWaiting();
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      if (isOpen) onDismiss();
 
       await tx.wait();
 
@@ -72,11 +70,8 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       addToast(FLAVORS.TX_SUCCESS);
 
       isSubmittingSet(false);
-
-      if (isOpen) onDismiss();
     } catch (err) {
       isSubmittingSet(false);
-      hideWaiting();
 
       const message = handleTxError(err);
 
