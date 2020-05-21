@@ -193,6 +193,10 @@ export function useRewardsData() {
 
   return useSWR(
     shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
-    getRewardsData(unionContract)
+    getRewardsData(unionContract),
+    {
+      refreshInterval: 30 * 1000,
+      dedupingInterval: 30 * 1000,
+    }
   );
 }
