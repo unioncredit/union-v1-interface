@@ -10,6 +10,7 @@ import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import { Fragment } from "react";
 import getVouchBarData from "util/getVouchBarData";
+import { roundDown } from "util/numbers";
 
 export default function VouchView() {
   const { data: isMember = false } = useIsMember();
@@ -34,7 +35,7 @@ export default function VouchView() {
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Real-time available credit"
-            value={creditLimit.toFixed(2)}
+            value={roundDown(creditLimit)}
             valueType="DAI"
             tooltip={"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
             large
