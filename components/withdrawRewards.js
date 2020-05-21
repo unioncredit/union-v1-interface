@@ -40,13 +40,13 @@ const WithdrawRewards = ({ onComplete }) => {
 
       onComplete();
     } catch (err) {
+      setWithdrawing(false);
+      hideWaiting();
+      hidePending();
+
       const message = handleTxError(err);
 
-      hideWaiting();
-
       addToast(FLAVORS.TX_ERROR(message));
-
-      setWithdrawing(false);
     }
   });
 

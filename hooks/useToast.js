@@ -12,7 +12,8 @@ export const FLAVORS = {
   TX_PENDING: (hash, chainId) => ({
     body: (
       <Fragment>
-        Transaction is pending.{" "}
+        Transaction is pending.
+        <br />
         {hash && chainId && (
           <a
             className="underline"
@@ -20,7 +21,7 @@ export const FLAVORS = {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Etherscan
+            View on Etherscan
           </a>
         )}
       </Fragment>
