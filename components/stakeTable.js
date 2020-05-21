@@ -36,6 +36,10 @@ const StakeTable = () => {
         accessor: "address",
       },
       {
+        Header: "Vouched",
+        accessor: "vouched",
+      },
+      {
         Header: "Trust",
         accessor: "trust",
       },
