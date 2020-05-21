@@ -19,8 +19,6 @@ import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
 const getPctUsed = (borrowed, creditLimit) => {
   if (creditLimit === 0 && borrowed === 0) return 0;
 
-  if (borrowed >= creditLimit) return 1;
-
   return borrowed / (creditLimit + borrowed);
 };
 
