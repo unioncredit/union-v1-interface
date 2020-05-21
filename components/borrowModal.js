@@ -124,7 +124,7 @@ const BorrowModal = ({
     calculateNewCredit > 0 ? calculateNewCredit : 0
   ).toFixed(2);
 
-  const formatCreditLimit = roundDown(creditLimit);
+  const formatMax = roundDown(creditLimit * (1 - fee));
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -152,14 +152,14 @@ const BorrowModal = ({
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={formatCreditLimit}
-          setMax={() => setValue("amount", formatCreditLimit)}
+          setMaxValue={formatMax}
+          setMax={() => setValue("amount", formatMax)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: formatCreditLimit,
-              message: `Value must be less than or equal to ${formatCreditLimit}`,
+              value: formatMax,
+              message: `Value must be less than or equal to ${formatMax}`,
             },
             min: {
               value: 1.0,
