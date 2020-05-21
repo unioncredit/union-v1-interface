@@ -191,7 +191,9 @@ const BorrowModal = ({
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">Next payment due</dt>
-          <dd className="text-right">{paymentDueDate ?? `in 30 days`}</dd>
+          <dd className="text-right">
+            {paymentDueDate !== "-" ? paymentDueDate : `in 30 days`}
+          </dd>
         </dl>
 
         <div className="divider" />
