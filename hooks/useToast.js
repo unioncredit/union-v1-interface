@@ -32,6 +32,7 @@ export const FLAVORS = {
   TX_SUCCESS: {
     body: "Transaction successful",
     type: "success",
+    hideAfter: 20,
   },
   TX_ERROR: (message = "Transaction failed") => ({
     body: message,
