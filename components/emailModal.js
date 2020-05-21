@@ -1,8 +1,9 @@
-import { useEmailModalOpen, useEmailModalToggle } from "contexts/Application";
-import EMAIL_REGEX from "util/emailRegex";
 import { useWeb3React } from "@web3-react/core";
+import { useEmailModalOpen, useEmailModalToggle } from "contexts/Application";
 import { setCookie } from "nookies";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import EMAIL_REGEX from "util/emailRegex";
 import Button from "./button";
 import Input from "./input";
 import Modal from "./modal";

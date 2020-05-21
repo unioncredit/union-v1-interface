@@ -10,6 +10,7 @@ import useContract from "hooks/useContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { borrow } from "lib/contracts/borrow";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";

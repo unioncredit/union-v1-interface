@@ -1,9 +1,9 @@
+import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input from "components/input";
-import EMAIL_REGEX from "util/emailRegex";
-import { useWeb3React } from "@web3-react/core";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import EMAIL_REGEX from "util/emailRegex";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 

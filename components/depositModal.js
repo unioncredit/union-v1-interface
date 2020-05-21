@@ -1,14 +1,13 @@
 import { useDepositModalOpen, useDepositModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/useTokenBalance";
-import { useAutoEffect, useAutoMemo } from "hooks.macro";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { roundDown } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { roundDown } from "util/numbers";
 
 const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
   const open = useDepositModalOpen();

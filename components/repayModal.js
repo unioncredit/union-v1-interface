@@ -5,6 +5,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { repay } from "lib/contracts/repay";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import { roundDown, roundUp } from "util/numbers";

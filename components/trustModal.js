@@ -1,9 +1,10 @@
-import Modal, { ModalHeader } from "./modal";
+import { isAddress } from "@ethersproject/address";
 import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import Button from "./button";
 import Input from "./input";
-import { useForm } from "react-hook-form";
-import { isAddress } from "@ethersproject/address";
+import Modal, { ModalHeader } from "./modal";
 
 const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
