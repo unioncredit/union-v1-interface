@@ -14,7 +14,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
-import { roundUp } from "util/numbers";
+import { roundUp, roundDown } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
@@ -117,13 +117,14 @@ const BorrowModal = ({
     calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
 
-  const calculateNewCredit = Number(creditLimit) - amount - calculateFee;
+  const calculateNewCredit =
+    Number(roundDown(creditLimit)) - amount - calculateFee;
 
   const formatNewCredit = Number(
     calculateNewCredit > 0 ? calculateNewCredit : 0
   ).toFixed(2);
 
-  const formatCreditLimit = Number(creditLimit).toFixed(2);
+  const formatCreditLimit = roundDown(creditLimit);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>

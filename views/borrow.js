@@ -13,7 +13,7 @@ import useIsMember from "hooks/useIsMember";
 import Link from "next/link";
 import { Fragment } from "react";
 import Info from "svgs/Info";
-import { roundUp, toPercent } from "util/numbers";
+import { roundUp, toPercent, roundDown } from "util/numbers";
 import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
 
 const getPctUsed = (borrowed, creditLimit) => {
@@ -65,7 +65,7 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={creditLimit.toFixed(2)}
+                  value={roundDown(creditLimit)}
                   valueType="DAI"
                   large
                   outline={true}
@@ -90,10 +90,12 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {toPercent(getPctUsed(borrowed, creditLimit))}
+                      {toPercent(getPctUsed(borrowed, roundDown(creditLimit)))}
                     </p>
                     <UtilizationBar
-                      usage={Number(getPctUsed(borrowed, creditLimit) * 100)}
+                      usage={Number(
+                        getPctUsed(borrowed, roundDown(creditLimit)) * 100
+                      )}
                     />
                   </div>
                 </dd>
