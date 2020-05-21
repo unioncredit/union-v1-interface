@@ -76,6 +76,11 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
   const formatWithdrawableStake = roundDown(withdrawableStake);
 
+  console.log({
+    withdrawableStake,
+    formatWithdrawableStake,
+  });
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Withdraw" onDismiss={toggle} />
