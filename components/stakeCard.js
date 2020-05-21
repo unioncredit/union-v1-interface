@@ -6,7 +6,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useStakingContract from "hooks/useStakingContract";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { stake } from "lib/contracts/stake";
 import {
@@ -21,6 +21,7 @@ import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 import WithdrawRewards from "./withdrawRewards";
+import handleTxError from "util/handleTxError";
 
 const StakeCard = () => {
   const { library, chainId } = useWeb3React();
@@ -57,28 +58,62 @@ const StakeCard = () => {
   };
 
   const onDeposit = useAutoCallback(async (amount) => {
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
-      await stake(DAI, amount, library.getSigner(), chainId);
+      const tx = await stake(DAI, amount, library.getSigner(), chainId);
+
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       onComplete();
     } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
+      hideWaiting();
+      hidePending();
+
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
     }
   });
 
   const onWithdraw = useAutoCallback(async (input) => {
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
       const amount = parseUnits(input, 18).toString();
 
       const tx = await stakingContract.unstake(DAI, amount);
 
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
       await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       onComplete();
     } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
+      hideWaiting();
+      hidePending();
+
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
     }
   });
 
