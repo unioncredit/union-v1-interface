@@ -42,9 +42,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
   const flooredDaiBalance = roundDown(daiBalance);
 
   const onSubmit = async (values) => {
-    const { amount } = values;
-
-    const amountToRepay = Number(amount * REPAY_MARGIN);
+    const amountToRepay =
+      values.amount === calculateMaxValue
+        ? Number(values.amount * REPAY_MARGIN)
+        : values.amount;
 
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
@@ -90,10 +91,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
 
-  const calculateMaxValue = (flooredDaiBalance <= calculateBalanceOwed
-    ? flooredDaiBalance
-    : calculateBalanceOwed
-  ).toFixed(2);
+  const calculateMaxValue =
+    flooredDaiBalance <= calculateBalanceOwed
+      ? flooredDaiBalance
+      : calculateBalanceOwed;
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -121,8 +122,8 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={calculateMaxValue}
-          setMax={() => setValue("amount", calculateMaxValue)}
+          setMaxValue={calculateMaxValue.toFixed(2)}
+          setMax={() => setValue("amount", calculateMaxValue.toFixed(2))}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
