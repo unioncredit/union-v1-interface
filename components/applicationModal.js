@@ -1,10 +1,13 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
+import useMemberContract from "hooks/useMemberContract";
 import useMemberFee from "hooks/useMemberFee";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
-import { applyMember } from "lib/contracts/applyMember";
+import useUnionAllowance, {
+  useIncreaseUnionAllowance,
+} from "hooks/useUnionAllowance";
 import { useState } from "react";
 import handleTxError from "util/handleTxError";
 import Button from "./button";
@@ -12,17 +15,41 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const ApplicationModal = ({ isOpen, onDismiss }) => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, chainId } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
 
   const [isSubmitting, isSubmittingSet] = useState(false);
 
+  const {
+    data: unionAllowance = "0.00",
+    mutate: updateUnionAllowance,
+  } = useUnionAllowance();
+
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-  const { data: fee = 0.0 } = useMemberFee();
+
+  const { data: fee = "0.00" } = useMemberFee();
+
+  const memberManagerContract = useMemberContract();
 
   const addToast = useToast();
+
+  const increaseUnionAllowance = useIncreaseUnionAllowance();
+
+  const enableUNION = useAutoCallback(async () => {
+    isSubmittingSet(true);
+
+    try {
+      await increaseUnionAllowance(fee);
+
+      updateUnionAllowance();
+
+      isSubmittingSet(false);
+    } catch (err) {
+      isSubmittingSet(false);
+    }
+  });
 
   const submit = useAutoCallback(async () => {
     isSubmittingSet(true);
@@ -30,7 +57,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
     try {
-      const tx = await applyMember(account, DAI, library.getSigner(), chainId);
+      const tx = await memberManagerContract.applyMember(account, DAI);
 
       hideWaiting();
 
@@ -83,11 +110,11 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
         <div className="mt-6">
           <Button
             full
-            onClick={submit}
+            onClick={unionAllowance < fee ? enableUNION : submit}
             submitting={isSubmitting}
             disabled={isSubmitting}
           >
-            Submit application
+            {unionAllowance < fee ? "Enable UNION" : "Submit application"}
           </Button>
         </div>
       </div>
