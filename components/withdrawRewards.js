@@ -7,7 +7,7 @@ import { useState } from "react";
 import handleTxError from "util/handleTxError";
 
 const WithdrawRewards = ({ onComplete }) => {
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const curToken = useCurrentToken();
 
   const [withdrawing, setWithdrawing] = useState(false);
@@ -26,7 +26,9 @@ const WithdrawRewards = ({ onComplete }) => {
 
       hideWaiting();
 
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING);
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
 
       await tx.wait();
 

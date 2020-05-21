@@ -34,7 +34,9 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
       hideWaiting();
 
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING);
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
 
       await tx.wait();
 
