@@ -9,6 +9,7 @@ import useStakingContract from "hooks/useStakingContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { stake } from "lib/contracts/stake";
+import handleTxError from "util/handleTxError";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -21,7 +22,6 @@ import DepositModal from "./depositModal";
 import LabelPair from "./labelPair";
 import WithdrawModal from "./withdrawModal";
 import WithdrawRewards from "./withdrawRewards";
-import handleTxError from "util/handleTxError";
 
 const StakeCard = () => {
   const { library, chainId } = useWeb3React();
