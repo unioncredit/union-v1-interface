@@ -111,8 +111,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
           ref={register({
             required: "Please fill out this field",
             min: {
-              value: 0.01,
-              message: "Value must be greater than 0.01",
+              value: 1.0,
+              message: "Value must be greater than or equal to 1.00",
             },
           })}
         />
