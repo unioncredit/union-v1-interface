@@ -21,7 +21,10 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
     setValue,
     errors,
     formState,
+    reset,
   } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

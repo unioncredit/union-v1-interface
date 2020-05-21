@@ -9,7 +9,9 @@ const TrustModal = ({ onTrust, initialAddress, initialTrust }) => {
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
-  const { handleSubmit, register, formState, errors } = useForm();
+  const { handleSubmit, register, formState, errors, reset } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

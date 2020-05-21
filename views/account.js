@@ -10,7 +10,9 @@ const MESSAGE = `Hello from the Union team. Please verify your email and wallet 
 export default function AccountView() {
   const { library } = useWeb3React();
 
-  const { register, handleSubmit, formState, errors } = useForm();
+  const { register, handleSubmit, formState, errors, reset } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

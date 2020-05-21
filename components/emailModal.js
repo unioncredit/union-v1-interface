@@ -15,7 +15,9 @@ const EmailModal = () => {
 
   const { library, account } = useWeb3React();
 
-  const { handleSubmit, register, formState, errors } = useForm();
+  const { handleSubmit, register, formState, errors, reset } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

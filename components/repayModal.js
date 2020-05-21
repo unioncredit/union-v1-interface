@@ -27,7 +27,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     register,
     setValue,
     watch,
+    reset,
   } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

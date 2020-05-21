@@ -4,6 +4,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { useEffect } from "react";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
   const open = useWithdrawModalOpen();
@@ -16,7 +17,10 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
     setValue,
     formState,
     errors,
+    reset,
   } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
 

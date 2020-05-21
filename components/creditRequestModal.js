@@ -38,7 +38,9 @@ const CreditRequestModal = () => {
 
   const { account } = useWeb3React();
 
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors, reset } = useForm();
+
+  useEffect(() => reset(), [open]);
 
   const onSubmit = useAutoCallback(async (values) => {
     const { amount } = values;
