@@ -16,7 +16,7 @@ export default function FaucetView() {
         <div className="flex flex-col md:flex-row mb-10">
           <h1 className="mb-5">
             Step 2: Supply Ether on the rinkeby version of Compound and borrow
-            Dai to get rinkebyDai{" "}
+            DAI to get rinkeby DAI{" "}
           </h1>
           <a
             href="https://app.compound.finance/"

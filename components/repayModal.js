@@ -73,6 +73,11 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     calculateNewBalance > 0 ? calculateNewBalance : 0
   ).toFixed(2);
 
+  const calculateMaxValue = (flooredDaiBalance <= calculateBalanceOwed
+    ? flooredDaiBalance
+    : calculateBalanceOwed
+  ).toFixed(2);
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Repay" onDismiss={toggle} />
@@ -99,14 +104,14 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={calculateBalanceOwed}
-          setMax={() => setValue("amount", calculateBalanceOwed)}
+          setMaxValue={calculateMaxValue}
+          setMax={() => setValue("amount", calculateMaxValue)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
               value: flooredDaiBalance,
-              message: `You have ${roundUp(daiBalance)} Dai in your wallet`,
+              message: `You have ${flooredDaiBalance} DAI in your wallet`,
             },
             min: {
               value: 0.01,
