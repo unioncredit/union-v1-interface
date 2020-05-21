@@ -1,3 +1,4 @@
+import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useWithdrawModalOpen, useWithdrawModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
