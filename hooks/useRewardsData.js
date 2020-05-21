@@ -1,0 +1,70 @@
+import { isAddress } from "@ethersproject/address";
+import { commify } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
+import { BLOCKS_PER_YEAR } from "constants/variables";
+import useSWR from "swr";
+import parseRes from "util/parseRes";
+import useCurrentToken from "./useCurrentToken";
+import useUnionContract from "./useUnionContract";
+
+const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
+  const delta = Number(await contract.getUserBlockDelta(account, tokenAddress));
+
+  return delta > BLOCKS_PER_YEAR[chainId]
+    ? delta
+    : BLOCKS_PER_YEAR[chainId] - delta;
+};
+
+const getRewardsData = (contract) => async (
+  _,
+  account,
+  tokenAddress,
+  chainId
+) => {
+  const blocksPerYear = await getBlocksPerYear(
+    contract,
+    account,
+    tokenAddress,
+    chainId
+  );
+
+  const upy = await contract.calculateRewardsByBlocks(
+    account,
+    tokenAddress,
+    blocksPerYear
+  );
+
+  const rewardsMultiplier = await contract.getRewardsMultiplier(
+    account,
+    tokenAddress
+  );
+
+  const rewards = await contract.calculateRewards(account, tokenAddress);
+
+  return {
+    upy: commify(parseRes(upy)),
+    rewards: parseRes(rewards, 3),
+    rewardsMultiplier: parseRes(rewardsMultiplier),
+  };
+};
+
+export default function useRewardsData() {
+  const { account, chainId } = useWeb3React();
+  const unionContract = useUnionContract();
+  const curToken = useCurrentToken();
+
+  const shouldFetch =
+    !!unionContract &&
+    typeof chainId === "number" &&
+    typeof account === "string" &&
+    isAddress(curToken);
+
+  return useSWR(
+    shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
+    getRewardsData(unionContract),
+    {
+      refreshInterval: 30 * 1000,
+      dedupingInterval: 30 * 1000,
+    }
+  );
+}

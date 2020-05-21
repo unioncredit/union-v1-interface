@@ -1,6 +1,6 @@
-import { useGetInvitedModalToggle } from "contexts/Application";
-import { useTrustCountData } from "hooks/swrHooks";
 import classNames from "classnames";
+import { useGetInvitedModalToggle } from "contexts/Application";
+import useTrustCountData from "hooks/useTrustCountData";
 import { useState } from "react";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
