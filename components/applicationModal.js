@@ -27,12 +27,26 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
   const submit = useAutoCallback(async () => {
     isSubmittingSet(true);
 
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
-      await applyMember(account, DAI, library.getSigner(), chainId);
+      const tx = await applyMember(account, DAI, library.getSigner(), chainId);
+
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING);
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       isSubmittingSet(false);
     } catch (err) {
       isSubmittingSet(false);
+
+      hideWaiting();
 
       const message = handleTxError(err);
 
