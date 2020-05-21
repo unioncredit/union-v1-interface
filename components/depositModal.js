@@ -1,6 +1,9 @@
+import { useWeb3React } from "@web3-react/core";
 import { useDepositModalOpen, useDepositModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
+import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
+import { stake } from "lib/contracts/stake";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { roundDown } from "util/numbers";
@@ -9,7 +12,9 @@ import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
+const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
+  const { library, chainId } = useWeb3React();
+
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
@@ -27,7 +32,8 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const { dirty, isSubmitting } = formState;
 
-  const amount = watch("amount", 0);
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
 
   const DAI = useCurrentToken("DAI");
 
@@ -35,15 +41,37 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onDeposit }) => {
 
   const flooredDaiBalance = roundDown(daiBalance);
 
+  const addToast = useToast();
+
   const onSubmit = async (values) => {
-    await onDeposit(values.amount);
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
-    toggle();
+    try {
+      const tx = await stake(DAI, values.amount, library.getSigner(), chainId);
+
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
+
+      onComplete();
+
+      toggle();
+    } catch (err) {
+      hideWaiting();
+
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
+    }
   };
-
-  const formatIncreasesUPY = Number(
-    parseFloat(amount || 0) * (parseFloat(rewardsMultiplier) / 100)
-  ).toFixed(2);
 
   const formatNewTotalStake = Number(
     parseFloat(amount || 0) + parseFloat(totalStake)

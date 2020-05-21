@@ -1,12 +1,19 @@
+import { useWeb3React } from "@web3-react/core";
 import { useWithdrawModalOpen, useWithdrawModalToggle } from "contexts/Stake";
+import useCurrentToken from "hooks/useCurrentToken";
+import useStakingContract from "hooks/useStakingContract";
+import useToast, { FLAVORS } from "hooks/useToast";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { useEffect } from "react";
 
-const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
+const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
+  const { chainId } = useWeb3React();
+
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
@@ -27,10 +34,42 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onWithdraw }) => {
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const onSubmit = async (values) => {
-    await onWithdraw(values.amount);
+  const DAI = useCurrentToken("DAI");
 
-    toggle();
+  const addToast = useToast();
+
+  const stakingContract = useStakingContract();
+
+  const onSubmit = async (values) => {
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
+    try {
+      const amount = parseUnits(values.amount, 18).toString();
+
+      const tx = await stakingContract.unstake(DAI, amount);
+
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
+
+      onComplete();
+
+      toggle();
+    } catch (err) {
+      hideWaiting();
+
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
+    }
   };
 
   const calculateNewTotalStake = Number(totalStake) - amount;

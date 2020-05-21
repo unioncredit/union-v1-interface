@@ -1,15 +1,8 @@
-import { parseUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
 import { useDepositModalToggle, useWithdrawModalToggle } from "contexts/Stake";
-import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
-import useStakingContract from "hooks/useStakingContract";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
-import { stake } from "lib/contracts/stake";
-import handleTxError from "util/handleTxError";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -24,23 +17,16 @@ import WithdrawModal from "./withdrawModal";
 import WithdrawRewards from "./withdrawRewards";
 
 const StakeCard = () => {
-  const { library, chainId } = useWeb3React();
-
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
 
-  const DAI = useCurrentToken();
   const UNION = useCurrentToken("UNION");
+
+  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
 
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
-
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-
-  const addToast = useToast();
-
-  const stakingContract = useStakingContract();
 
   const {
     totalStake = 0,
@@ -56,64 +42,6 @@ const StakeCard = () => {
     updateStakeData();
     updateRewardsData();
   };
-
-  const onDeposit = useAutoCallback(async (amount) => {
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
-    try {
-      const tx = await stake(DAI, amount, library.getSigner(), chainId);
-
-      hideWaiting();
-
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
-
-      await tx.wait();
-
-      hidePending();
-
-      addToast(FLAVORS.TX_SUCCESS);
-
-      onComplete();
-    } catch (err) {
-      hideWaiting();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message));
-    }
-  });
-
-  const onWithdraw = useAutoCallback(async (input) => {
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
-    try {
-      const amount = parseUnits(input, 18).toString();
-
-      const tx = await stakingContract.unstake(DAI, amount);
-
-      hideWaiting();
-
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
-
-      await tx.wait();
-
-      hidePending();
-
-      addToast(FLAVORS.TX_SUCCESS);
-
-      onComplete();
-    } catch (err) {
-      hideWaiting();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message));
-    }
-  });
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6">
@@ -189,12 +117,12 @@ const StakeCard = () => {
       <DepositModal
         totalStake={totalStake}
         rewardsMultiplier={rewardsMultiplier}
-        onDeposit={onDeposit}
+        onComplete={onComplete}
       />
       <WithdrawModal
         totalStake={totalStake}
         withdrawableStake={withdrawableStake}
-        onWithdraw={onWithdraw}
+        onComplete={onComplete}
       />
     </div>
   );
