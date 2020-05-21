@@ -63,7 +63,7 @@ export function useIncreaseUnionAllowance() {
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS_ENABLED);
+      addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash, chainId));
     } catch (err) {
       hideWaiting();
 

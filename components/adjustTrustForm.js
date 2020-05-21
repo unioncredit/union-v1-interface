@@ -52,7 +52,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS);
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
         onComplete();
       }

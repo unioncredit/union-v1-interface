@@ -67,7 +67,7 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS);
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
       isSubmittingSet(false);
     } catch (err) {
