@@ -19,7 +19,16 @@ export const Loading = ({ size = 40 }) => (
       clipRule="evenodd"
       d="M28.333 20A8.333 8.333 0 0120 28.333v-1.785A6.548 6.548 0 1013.453 20h-1.786a8.333 8.333 0 0116.666 0z"
       fill="#418CFC"
-    />
+    >
+      <animateTransform
+        attributeName="transform"
+        dur="1s"
+        from="0 20 20"
+        repeatCount="indefinite"
+        to="360 20 20"
+        type="rotate"
+      />
+    </path>
   </svg>
 );
 
