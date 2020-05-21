@@ -26,11 +26,11 @@ const WithdrawRewards = ({ onComplete }) => {
 
       hideWaiting();
 
-      const { hide: hideBroadcasting } = addToast(FLAVORS.TX_BROADCASTING);
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING);
 
       await tx.wait();
 
-      hideBroadcasting();
+      hidePending();
 
       addToast(FLAVORS.TX_SUCCESS);
 

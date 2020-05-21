@@ -8,8 +8,8 @@ export const FLAVORS = {
     type: "loading",
     hideAfter: 0,
   },
-  TX_BROADCASTING: {
-    body: "Transaction broadcasting",
+  TX_PENDING: {
+    body: "Transaction is pending",
     type: "loading",
     hideAfter: 0,
   },
