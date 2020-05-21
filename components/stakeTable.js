@@ -1,5 +1,5 @@
 import { useLearnMoreModalToggle } from "contexts/Application";
-import { useTrustModalToggle, useAddressModalToggle } from "contexts/Stake";
+import { useAddressModalToggle, useTrustModalToggle } from "contexts/Stake";
 import { useTrustData } from "hooks/swrHooks";
 import useIsMember from "hooks/useIsMember";
 import { useMemo, useState } from "react";
@@ -8,9 +8,9 @@ import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import Address from "./address";
+import AddressModal from "./addressModal";
 import Button from "./button";
 import HealthBar from "./healthBar";
-import AddressModal from "./addressModal";
 
 const StakeTable = () => {
   const { data } = useTrustData();
@@ -25,9 +25,7 @@ const StakeTable = () => {
   const [activeRow, activeRowSet] = useState();
 
   const handleRowClick = (row) => () => {
-    console.log(row.values);
     activeRowSet(row.values);
-
     toggleAddressModal();
   };
 
