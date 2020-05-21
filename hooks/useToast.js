@@ -29,8 +29,33 @@ export const FLAVORS = {
     type: "loading",
     hideAfter: 0,
   }),
+  TX_PENDING_TOKEN: (hash, chainId) => ({
+    body: (
+      <Fragment>
+        Enabling token.
+        <br />
+        {hash && chainId && (
+          <a
+            className="underline"
+            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View on Etherscan
+          </a>
+        )}
+      </Fragment>
+    ),
+    type: "loading",
+    hideAfter: 0,
+  }),
   TX_SUCCESS: {
     body: "Transaction successful",
+    type: "success",
+    hideAfter: 20,
+  },
+  TX_SUCCESS_ENABLED: {
+    body: "Token enabled successfully",
     type: "success",
     hideAfter: 20,
   },

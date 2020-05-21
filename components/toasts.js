@@ -12,14 +12,22 @@ export const ToastBody = ({ body, onDismiss }) => (
 
     <style jsx global>{`
       .ct-toast {
+        justify-content: flex-start;
         padding: calc(1.5rem - 1px);
         border-radius: 0.5rem;
         box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.04);
         border: 1px solid #f3f4f7;
       }
 
+      @media screen and (min-width: 40em) {
+        .ct-toast {
+          min-width: 440px;
+        }
+      }
+
       .ct-text-group {
         margin-left: 1.5rem;
+        flex: 1;
       }
     `}</style>
   </div>
