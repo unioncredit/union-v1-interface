@@ -22,6 +22,7 @@ const getCreditLimit = (marketRegistryContract) => async (
   );
 
   const res = await lendingMarketContract.getCreditLimit(account);
+
   return Number(formatUnits(res, 18));
 };
 
