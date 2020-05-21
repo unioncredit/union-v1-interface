@@ -154,7 +154,7 @@ const BorrowModal = ({
             },
             min: {
               value: 1.0,
-              message: "Value must be greater than or equal to 1.00",
+              message: "The minimum borrow is 1.00 DAI",
             },
           })}
         />
