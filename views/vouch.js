@@ -20,6 +20,12 @@ export default function VouchView() {
 
   const { data: creditLimit = 0 } = useCreditLimit();
 
+  const vouchTotal =
+    !!vouchData &&
+    vouchData
+      .map(({ vouched }) => Number(vouched))
+      .reduce((acc, cur) => acc + cur);
+
   return (
     <Fragment>
       <div className="container">
@@ -56,7 +62,7 @@ export default function VouchView() {
           </Button>
         </div>
 
-        <VouchTable data={vouchData} />
+        <VouchTable data={vouchData} sum={vouchTotal} />
       </div>
 
       <CreditRequestModal />
