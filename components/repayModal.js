@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
 import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
 import useCurrentToken from "hooks/useCurrentToken";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { repay } from "lib/contracts/repay";
 import { useForm } from "react-hook-form";
@@ -51,7 +51,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     } catch (err) {
       const message = handleTxError(err);
 
-      addToast(message, { type: "error", hideAfter: 20 });
+      addToast(FLAVORS.TX_ERROR(message));
 
       if (open) toggle();
     }

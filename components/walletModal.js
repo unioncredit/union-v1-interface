@@ -7,7 +7,7 @@ import {
 } from "contexts/Application";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
@@ -90,9 +90,7 @@ const WalletModal = () => {
 
     deactivate();
 
-    addToast("You’ve succesfully logged out", {
-      type: "success",
-    });
+    addToast(FLAVORS.LOGGED_OUT);
 
     toggle();
   };

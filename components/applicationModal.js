@@ -2,10 +2,11 @@ import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMemberFee from "hooks/useMemberFee";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { applyMember } from "lib/contracts/applyMember";
 import { useState } from "react";
+import handleTxError from "util/handleTxError";
 import Button from "./button";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
@@ -32,8 +33,10 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       isSubmittingSet(false);
     } catch (err) {
       isSubmittingSet(false);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
-      console.error(err);
+
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
     }
   });
 

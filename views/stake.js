@@ -7,13 +7,14 @@ import { useEmailModalToggle } from "contexts/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import { vouch } from "lib/contracts/vouch";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { Fragment } from "react";
+import handleTxError from "util/handleTxError";
 
 export default function StakeView() {
   const { library, chainId } = useWeb3React();
@@ -51,8 +52,9 @@ export default function StakeView() {
     try {
       await vouch(address, curToken, amount, library.getSigner(), chainId);
     } catch (err) {
-      console.error(err);
-      addToast("Transaction failed", { type: "error", hideAfter: 20 });
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
     }
   });
 

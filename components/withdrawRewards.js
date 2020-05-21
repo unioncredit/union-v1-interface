@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import useUnionContract from "hooks/useUnionContract";
 import { useState } from "react";
 import handleTxError from "util/handleTxError";
@@ -19,10 +19,20 @@ const WithdrawRewards = ({ onComplete }) => {
   const onWithdrawRewards = useAutoCallback(async () => {
     setWithdrawing(true);
 
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
       const tx = await unionContract.withdrawRewards(account, curToken);
 
+      hideWaiting();
+
+      const { hide: hideBroadcasting } = addToast(FLAVORS.TX_BROADCASTING);
+
       await tx.wait();
+
+      hideBroadcasting();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       setWithdrawing(false);
 
@@ -30,7 +40,9 @@ const WithdrawRewards = ({ onComplete }) => {
     } catch (err) {
       const message = handleTxError(err);
 
-      addToast(message, { type: "error", hideAfter: 20 });
+      hideWaiting();
+
+      addToast(FLAVORS.TX_ERROR(message));
 
       setWithdrawing(false);
     }

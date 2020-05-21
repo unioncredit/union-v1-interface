@@ -8,7 +8,7 @@ import { useBorrowModalOpen, useBorrowModalToggle } from "contexts/Borrow";
 import { useAutoCallback } from "hooks.macro";
 import useContract from "hooks/useContract";
 import useCurrentToken from "hooks/useCurrentToken";
-import useToast from "hooks/useToast";
+import useToast, { FLAVORS } from "hooks/useToast";
 import { borrow } from "lib/contracts/borrow";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
@@ -85,7 +85,7 @@ const BorrowModal = ({
     } catch (err) {
       const message = handleTxError(err);
 
-      addToast(message, { type: "error", hideAfter: 20 });
+      addToast(FLAVORS.TX_ERROR(message));
 
       if (open) toggle();
     }
