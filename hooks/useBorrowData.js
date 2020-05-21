@@ -13,100 +13,96 @@ import useMarketRegistryContract from "./useMarketRegistryContract";
 dayjs.extend(relativeTime);
 
 const formatDueDate = (secondsUntilDue) =>
-    dayjs().add(secondsUntilDue, "second").fromNow();
+  dayjs().add(secondsUntilDue, "second").fromNow();
 
 const getPaymentDue = async (account, chainId, contract, library) => {
-    let due;
+  let due;
 
-    const isOverdue = await contract.checkIsOverdue(account);
+  const isOverdue = await contract.checkIsOverdue(account);
 
-    if (isOverdue) {
-        due = "Overdue";
-        return;
-    }
+  if (isOverdue) {
+    due = "Overdue";
+    return;
+  }
 
-    const lastRepayRes = await contract.getLastRepay(account);
-    const lastRepay = parseInt(lastRepayRes.toString());
+  const lastRepayRes = await contract.getLastRepay(account);
+  const lastRepay = parseInt(lastRepayRes.toString());
 
-    const overdueBlocksRes = await contract.overdueBlocks();
-    const overdueBlocks = parseInt(overdueBlocksRes.toString());
+  const overdueBlocksRes = await contract.overdueBlocks();
+  const overdueBlocks = parseInt(overdueBlocksRes.toString());
 
-    const curBlock = await library.getBlockNumber();
+  const curBlock = await library.getBlockNumber();
 
-    if (lastRepay === 0) {
-        due = "No Payment Due";
-        return;
-    }
+  if (lastRepay === 0) {
+    due = "No Payment Due";
+    return;
+  }
 
-    const seconds =
-        (lastRepay + overdueBlocks - curBlock) * BLOCK_SPEED[chainId];
+  const seconds = (lastRepay + overdueBlocks - curBlock) * BLOCK_SPEED[chainId];
 
-    due = formatDueDate(seconds);
+  due = formatDueDate(seconds);
 
-    return due;
+  return due;
 };
 
 const getCreditLimit = (contract) => async (
-    _,
-    account,
-    tokenAddress,
-    chainId,
-    library
+  _,
+  account,
+  tokenAddress,
+  chainId,
+  library
 ) => {
-    const marketAddress = await contract.tokens(tokenAddress);
+  const marketAddress = await contract.tokens(tokenAddress);
 
-    const marketContract = new Contract(
-        marketAddress,
-        LENDING_MARKET_ABI,
-        library.getSigner()
-    );
+  const marketContract = new Contract(
+    marketAddress,
+    LENDING_MARKET_ABI,
+    library.getSigner()
+  );
 
-    const apr = await marketContract.borrowRatePerBlock();
+  const apr = await marketContract.borrowRatePerBlock();
 
-    const borrowed = await marketContract.getBorrowed(account);
+  const borrowed = await marketContract.getBorrowed(account);
 
-    const fee = await marketContract.originationFee();
+  const fee = await marketContract.originationFee();
 
-    const interest = await marketContract.calculatingInterest(account);
+  const interest = await marketContract.calculatingInterest(account);
 
-    const paymentDueDate = await getPaymentDue(
-        account,
-        chainId,
-        marketContract,
-        library
-    );
+  const paymentDueDate = await getPaymentDue(
+    account,
+    chainId,
+    marketContract,
+    library
+  );
 
-    return {
-        apr: Number(formatUnits(apr, 18)) * BLOCKS_PER_YEAR[chainId],
-        borrowed: Number(
-            (
-                Number(formatUnits(borrowed, 18)) +
-                Number(formatUnits(interest, 18))
-            ).toFixed(2)
-        ),
-        fee: Number(formatUnits(fee, 18)),
-        interest: Number(formatUnits(interest, 18)),
-        paymentDueDate,
-    };
+  return {
+    apr: Number(formatUnits(apr, 18)) * BLOCKS_PER_YEAR[chainId],
+    borrowed: Number(
+      (
+        Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
+      ).toFixed(2)
+    ),
+    fee: Number(formatUnits(fee, 18)),
+    interest: Number(formatUnits(interest, 18)),
+    paymentDueDate,
+  };
 };
 
 export default function useBorrowData() {
-    const { account, library, chainId } = useWeb3React();
-    const curToken = useCurrentToken();
+  const { account, library, chainId } = useWeb3React();
+  const curToken = useCurrentToken();
 
-    const marketRegistryContract = useMarketRegistryContract();
+  const marketRegistryContract = useMarketRegistryContract();
 
-    const shouldFetch =
-        !!marketRegistryContract &&
-        typeof account === "string" &&
-        typeof chainId === "number" &&
-        isAddress(curToken) &&
-        !!library;
+  const shouldFetch =
+    !!marketRegistryContract &&
+    typeof account === "string" &&
+    typeof chainId === "number" &&
+    isAddress(curToken) &&
+    !!library;
 
-    return useSWR(
-        shouldFetch
-            ? ["CreditLimit", account, curToken, chainId, library]
-            : null,
-        getCreditLimit(marketRegistryContract)
-    );
+  return useSWR(
+    shouldFetch ? ["CreditLimit", account, curToken, chainId, library] : null,
+    getCreditLimit(marketRegistryContract)
+  );
 }
