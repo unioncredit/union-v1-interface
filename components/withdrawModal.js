@@ -11,6 +11,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { roundDown } from "util/numbers";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const { chainId } = useWeb3React();
@@ -73,7 +74,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
     calculateNewTotalStake > 0 ? calculateNewTotalStake : 0
   ).toFixed(2);
 
-  const formatWithdrawableStake = Number(withdrawableStake).toFixed(2);
+  const formatWithdrawableStake = roundDown(withdrawableStake);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
@@ -108,8 +109,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
               message: `Value must be less than or equal to ${formatWithdrawableStake}`,
             },
             min: {
-              value: 0,
-              message: "Value must be greater than 0",
+              value: 0.01,
+              message: "Value must be greater than 0.01",
             },
           })}
         />

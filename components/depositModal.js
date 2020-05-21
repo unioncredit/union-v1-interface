@@ -103,8 +103,8 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
               message: `Value must be less than or equal to ${flooredDaiBalance}`,
             },
             min: {
-              value: 0,
-              message: "Value must be greater than 0",
+              value: 0.01,
+              message: "Value must be greater than 0.01",
             },
           })}
         />
