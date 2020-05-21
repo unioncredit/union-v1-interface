@@ -72,6 +72,8 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       addToast(FLAVORS.TX_SUCCESS);
 
       isSubmittingSet(false);
+
+      if (isOpen) onDismiss();
     } catch (err) {
       isSubmittingSet(false);
       hideWaiting();

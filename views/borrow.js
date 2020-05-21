@@ -45,9 +45,9 @@ export default function BorrowView() {
   const formatApr = toPercent(apr, 2);
 
   const onComplete = () => {
-    updateTransactionsData();
-    updateCreditLimit();
     updateBorrowData();
+    updateCreditLimit();
+    updateTransactionsData();
   };
 
   return (
