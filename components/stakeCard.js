@@ -78,7 +78,6 @@ const StakeCard = () => {
       onComplete();
     } catch (err) {
       hideWaiting();
-      hidePending();
 
       const message = handleTxError(err);
 
@@ -109,7 +108,6 @@ const StakeCard = () => {
       onComplete();
     } catch (err) {
       hideWaiting();
-      hidePending();
 
       const message = handleTxError(err);
 

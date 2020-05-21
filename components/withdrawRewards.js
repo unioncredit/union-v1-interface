@@ -42,7 +42,6 @@ const WithdrawRewards = ({ onComplete }) => {
     } catch (err) {
       setWithdrawing(false);
       hideWaiting();
-      hidePending();
 
       const message = handleTxError(err);
 

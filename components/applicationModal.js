@@ -48,7 +48,6 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
     } catch (err) {
       isSubmittingSet(false);
       hideWaiting();
-      hidePending();
 
       const message = handleTxError(err);
 
