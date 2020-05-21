@@ -22,10 +22,15 @@ const StakeTable = () => {
   const { data: isMember = false } = useIsMember();
 
   const toggleAddressModal = useAddressModalToggle();
+
   const [activeRow, activeRowSet] = useState();
 
   const handleRowClick = (row) => () => {
-    activeRowSet(row.values);
+    const rowData = memoizedData
+      .filter(({ address }) => address === row.values.address)
+      .pop();
+
+    activeRowSet(rowData);
     toggleAddressModal();
   };
 
@@ -34,10 +39,6 @@ const StakeTable = () => {
       {
         Header: "Address",
         accessor: "address",
-      },
-      {
-        Header: "Vouched",
-        accessor: "vouched",
       },
       {
         Header: "Trust",
