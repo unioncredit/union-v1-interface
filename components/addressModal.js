@@ -75,6 +75,10 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
             <div className="mt-16">
               <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
+                <dt className="text-type-light">Trust</dt>
+                <dd className="text-right">{`${trust} DAI`}</dd>
+              </dl>
+              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
                 <dt className="text-type-light">Vouched</dt>
                 <dd className="text-right">{`${vouched} DAI`}</dd>
               </dl>
