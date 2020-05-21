@@ -80,18 +80,32 @@ const BorrowModal = ({
   const onSubmit = async (values) => {
     const { amount } = values;
 
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
-      await borrow(curToken, amount, library.getSigner(), chainId);
+      const tx = await borrow(curToken, amount, library.getSigner(), chainId);
+
+      hideWaiting();
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       if (open) toggle();
 
       onComplete();
     } catch (err) {
+      hideWaiting();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));
-
-      if (open) toggle();
     }
   };
 

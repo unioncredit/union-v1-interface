@@ -46,18 +46,35 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
     const amountToRepay = Number(amount * REPAY_MARGIN);
 
+    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+
     try {
-      await repay(curToken, amountToRepay, library.getSigner(), chainId);
+      const tx = await repay(
+        curToken,
+        amountToRepay,
+        library.getSigner(),
+        chainId
+      );
+
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS);
 
       if (open) toggle();
 
       onComplete();
     } catch (err) {
+      hideWaiting();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));
-
-      if (open) toggle();
     }
   };
 
