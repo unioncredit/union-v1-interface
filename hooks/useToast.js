@@ -1,6 +1,7 @@
 import cogoToast from "cogo-toast";
 import { ToastBody, TOAST_ICONS } from "components/toasts";
-import { useCallback } from "react";
+import { Fragment, useCallback } from "react";
+import getEtherscanLink from "util/getEtherscanLink";
 
 export const FLAVORS = {
   TX_WAITING: {
@@ -8,11 +9,25 @@ export const FLAVORS = {
     type: "loading",
     hideAfter: 0,
   },
-  TX_PENDING: {
-    body: "Transaction is pending",
+  TX_PENDING: (hash, chainId) => ({
+    body: (
+      <Fragment>
+        Transaction is pending.{" "}
+        {hash && chainId && (
+          <a
+            className="underline"
+            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Etherscan
+          </a>
+        )}
+      </Fragment>
+    ),
     type: "loading",
     hideAfter: 0,
-  },
+  }),
   TX_SUCCESS: {
     body: "Transaction successful",
     type: "success",

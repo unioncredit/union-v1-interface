@@ -9,7 +9,7 @@ const ETHERSCAN_PREFIXES = {
 /**
  * @name getEtherscanLink
  *
- * @param {Number} networkId The chain id of the network to link to
+ * @param {(1|3|4|5|42)} networkId The chain id of the network to link to
  * @param {String} data The hash of the transaction or address
  * @param {("TRANSACTION"|"ADDRESS")} type
  *
