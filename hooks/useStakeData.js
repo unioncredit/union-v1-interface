@@ -5,6 +5,8 @@ import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
 import useMemberContract from "./useMemberContract";
 import useStakingContract from "./useStakingContract";
+import { formatUnits } from "@ethersproject/units";
+import { roundDown } from "util/numbers";
 
 const getStakeData = (memberContract, stakingContract) => async (
   _,
@@ -26,9 +28,9 @@ const getStakeData = (memberContract, stakingContract) => async (
     tokenAddress
   );
 
-  const withdrawableStake = Number(
-    parseRes(totalStake) - parseRes(utilizedStake)
-  ).toFixed(2);
+  const withdrawableStake = roundDown(
+    Number(formatUnits(totalStake, 18)) - Number(formatUnits(utilizedStake, 18))
+  );
 
   return {
     totalStake: parseRes(totalStake),

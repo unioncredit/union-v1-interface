@@ -74,13 +74,6 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
     calculateNewTotalStake > 0 ? calculateNewTotalStake : 0
   ).toFixed(2);
 
-  const formatWithdrawableStake = roundDown(withdrawableStake);
-
-  console.log({
-    withdrawableStake,
-    formatWithdrawableStake,
-  });
-
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Withdraw" onDismiss={toggle} />
@@ -104,14 +97,14 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           label="Amount"
           className="mb-8"
           placeholder="0.00"
-          setMaxValue={formatWithdrawableStake}
-          setMax={() => setValue("amount", formatWithdrawableStake)}
+          setMaxValue={withdrawableStake}
+          setMax={() => setValue("amount", withdrawableStake)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: formatWithdrawableStake,
-              message: `Value must be less than or equal to ${formatWithdrawableStake}`,
+              value: withdrawableStake,
+              message: `Value must be less than or equal to ${withdrawableStake}`,
             },
             min: {
               value: 0.01,
