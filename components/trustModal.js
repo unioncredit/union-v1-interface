@@ -1,8 +1,11 @@
 import { isAddress } from "@ethersproject/address";
+import { parseUnits } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
+import useIsMember from "hooks/useIsMember";
+import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { vouch } from "lib/contracts/vouch";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
@@ -11,6 +14,8 @@ import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
+  const { chainId } = useWeb3React();
+
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
 
@@ -24,15 +29,28 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const addToast = useToast();
 
-  const onSubmit = async (values) => {
+  const isMember = useIsMember();
+
+  const memberContract = useMemberContract();
+
+  const onSubmit = async (data, e) => {
+    const { address, amount: rawAmount } = data;
+
+    console.log({
+      address,
+      rawAmount,
+    });
+
+    const amount = parseUnits(rawAmount, 18).toString();
+
     try {
-      const tx = await vouch(
-        values.address,
-        curToken,
-        values.amount,
-        library.getSigner(),
-        chainId
-      );
+      let tx;
+
+      if (isMember === true) {
+        tx = await memberContract.trust(address, curToken, amount);
+      } else {
+        tx = await memberContract.addTrust(address, curToken, amount);
+      }
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
@@ -82,9 +100,9 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
           chip="DAI"
           className="mb-4"
           defaultValue={initialTrust > 0 ? initialTrust : undefined}
-          id="trust"
+          id="amount"
           label="Trust amount"
-          name="trust"
+          name="amount"
           placeholder="0.00"
           step={0.01}
           tip="The amount you trust this address to borrow and be able to repay."
@@ -93,8 +111,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
           ref={register({
             required: "Please fill out this field",
             min: {
-              value: 0,
-              message: "Value must be greater than 0",
+              value: 0.01,
+              message: "Value must be greater than 0.01",
             },
           })}
         />
