@@ -6,10 +6,9 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useStakingContract from "hooks/useStakingContract";
-import useToast, { FLAVORS } from "hooks/useToast";
+import useToast from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { stake } from "lib/contracts/stake";
-import handleTxError from "util/handleTxError";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -63,9 +62,8 @@ const StakeCard = () => {
 
       onComplete();
     } catch (err) {
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message));
+      console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
@@ -73,17 +71,14 @@ const StakeCard = () => {
     try {
       const amount = parseUnits(input, 18).toString();
 
-      const tx = await stakingContract.unstake(DAI, amount, {
-        gasLimit: 1600000,
-      });
+      const tx = await stakingContract.unstake(DAI, amount);
 
       await tx.wait();
 
       onComplete();
     } catch (err) {
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message));
+      console.error(err);
+      addToast("Transaction failed", { type: "error", hideAfter: 20 });
     }
   });
 
