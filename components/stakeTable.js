@@ -40,10 +40,6 @@ const StakeTable = () => {
         accessor: "trust",
       },
       {
-        Header: "Vouched",
-        accessor: "vouched",
-      },
-      {
         Header: "Used",
         accessor: "used",
       },
@@ -133,11 +129,7 @@ const StakeTable = () => {
                     if (Header === "Address")
                       cellRenderer = <Address address={value} />;
 
-                    if (
-                      Header === "Used" ||
-                      Header === "Vouched" ||
-                      Header === "Trust"
-                    )
+                    if (Header === "Used" || Header === "Trust")
                       cellRenderer = <span>{value} DAI</span>;
 
                     return <td {...getCellProps()}>{cellRenderer}</td>;
