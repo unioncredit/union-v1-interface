@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
  * @param {Number} width The width of the HealthBar
  */
 const UtilizationBar = ({ usage, width = 96 }) => {
-  const inner = usage > 100 ? 100 : usage < 0 ? 0 : usage;
+  const inner = usage >= 100 ? 100 : usage <= 0 ? 0 : usage;
 
   return (
     <div className="w-full relative md:ml-auto">

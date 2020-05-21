@@ -16,8 +16,8 @@ import Info from "svgs/Info";
 import { roundUp, toPercent } from "util/numbers";
 import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
 
-const getPctUsed = (borrowed, creditLimit) =>
-  creditLimit > 0 ? borrowed / (creditLimit + borrowed) : 0;
+const getPctUsed = (borrowed, creditLimit = 0) =>
+  borrowed / (creditLimit + borrowed);
 
 export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
