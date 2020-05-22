@@ -23,6 +23,7 @@ export default function VouchView() {
     console.log({ vouchData });
     const vouchTotal =
         !!vouchData &&
+        vouchData.length > 0 &&
         vouchData
             .map(({ vouched }) => Number(vouched))
             .reduce((acc, cur) => acc + cur);
