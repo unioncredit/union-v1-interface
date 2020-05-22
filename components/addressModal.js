@@ -4,8 +4,11 @@ import { useAutoCallback } from "hooks.macro";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
-import { cancelVouch } from "lib/contracts/cancelVouch";
+import useMemberContract from "hooks/useMemberContract";
+import useToast, { FLAVORS } from "hooks/useToast";
 import { Fragment, useEffect, useState } from "react";
+import { mutate } from "swr";
+import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "./address";
 import AdjustTrustForm from "./adjustTrustForm";
@@ -40,21 +43,46 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const [removingAddress, removingAddressSet] = useState(false);
 
+  const addToast = useToast();
+
+  const memberManagerContract = useMemberContract();
+
   const removeAddress = useAutoCallback(async () => {
     try {
       removingAddressSet(true);
 
-      await cancelVouch(
+      const tx = await memberManagerContract.cancelVouch(
         account,
         address,
         curToken,
-        library.getSigner(),
-        chainId
+        {
+          gasLimit: 200000,
+        }
       );
 
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
+
+      if (open) toggle();
+
+      await tx.wait();
+
+      hidePending();
+
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
       removingAddressSet(false);
+
+      /**
+       * @note Temp fix to update trust data after updating for now
+       */
+      mutate(["trust", account, curToken, library, chainId]);
     } catch (err) {
-      console.error(err);
+      const message = handleTxError(err);
+
+      addToast(FLAVORS.TX_ERROR(message));
+
       removingAddressSet(false);
     }
   });
