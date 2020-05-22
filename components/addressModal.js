@@ -1,11 +1,12 @@
+import { useWeb3React } from "@web3-react/core";
 import { useAddressModalOpen, useAddressModalToggle } from "contexts/Stake";
+import { useAutoCallback } from "hooks.macro";
+import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
 import { cancelVouch } from "lib/contracts/cancelVouch";
-import truncateAddress from "util/truncateAddress";
-import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback } from "hooks.macro";
 import { Fragment, useEffect, useState } from "react";
+import truncateAddress from "util/truncateAddress";
 import Address from "./address";
 import AdjustTrustForm from "./adjustTrustForm";
 import Button from "./button";
@@ -32,6 +33,10 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   }, [isOpen]);
 
   const ENSName = useENSName(address);
+
+  const [copied, copy] = useCopy();
+
+  const handleCopyAddress = () => copy(address);
 
   const [removingAddress, removingAddressSet] = useState(false);
 
@@ -67,10 +72,14 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               <Identicon address={address} extraLarge />
             </div>
 
-            <div className="mt-4">
-              <p className="text-center text-lg font-semibold" title={address}>
-                {ENSName ?? truncateAddress(address)}
-              </p>
+            <div className="mt-4 text-center">
+              <button
+                onClick={handleCopyAddress}
+                className="focus:outline-none text-lg font-semibold"
+                title={address}
+              >
+                {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
+              </button>
             </div>
 
             <div className="mt-16">
