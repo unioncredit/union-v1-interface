@@ -17,13 +17,19 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "oldBalance",
+          "name": "amount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "newBalance",
+          "name": "oldPoolBalance",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newPoolBalance",
           "type": "uint256"
         }
       ],
@@ -67,13 +73,13 @@
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "oldBalance",
+          "name": "amount",
           "type": "uint256"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "newBalance",
+          "name": "remaining",
           "type": "uint256"
         }
       ],
@@ -296,13 +302,34 @@
       "name": "getBestMoneyMarket",
       "outputs": [
         {
-          "internalType": "contract IMarketAdapter",
+          "internalType": "address",
           "name": "bestMoneyMarket",
           "type": "address"
         },
         {
           "internalType": "uint256",
           "name": "bestRate",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokenAddress",
+          "type": "address"
+        }
+      ],
+      "name": "getLoanableAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
           "type": "uint256"
         }
       ],
@@ -502,7 +529,7 @@
     {
       "constant": true,
       "inputs": [],
-      "name": "supportedMarketsCount",
+      "name": "supportedTokensCount",
       "outputs": [
         {
           "internalType": "uint256",
@@ -523,7 +550,7 @@
           "type": "uint256"
         }
       ],
-      "name": "supportedMarketsList",
+      "name": "supportedTokensList",
       "outputs": [
         {
           "internalType": "address",
