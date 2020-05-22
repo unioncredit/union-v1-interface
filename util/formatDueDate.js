@@ -29,11 +29,7 @@ export const formatDueDate = (secondsUntilDue) => {
     return `in ${days} days`;
   }
 
-  
-
-
-
   if (days > 14) {
-    return dayjs().add(ms, "millisecond").format("[on] MMM D");
+    return dayjs().add(ms, "millisecond").format();
   }
 };

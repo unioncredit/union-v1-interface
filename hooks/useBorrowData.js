@@ -4,16 +4,10 @@ import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import useSWR from "swr";
+import { formatDueDate } from "util/formatDueDate";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
-
-dayjs.extend(relativeTime);
-
-const formatDueDate = (secondsUntilDue) =>
-  dayjs().add(secondsUntilDue, "second").fromNow();
 
 const getPaymentDue = async (account, chainId, contract, library) => {
   let due;
@@ -40,9 +34,7 @@ const getPaymentDue = async (account, chainId, contract, library) => {
 
   const seconds = (lastRepay + overdueBlocks - curBlock) * BLOCK_SPEED[chainId];
 
-  due = formatDueDate(seconds);
-
-  return due;
+  return formatDueDate(seconds);
 };
 
 const getCreditLimit = (contract) => async (
