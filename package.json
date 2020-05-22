@@ -10,6 +10,9 @@
     "start": "next start",
     "format": "prettier --write \"**/*.js\""
   },
+  "git": {
+    "pre-commit": "format"
+  },
   "dependencies": {
     "@ethersproject/address": "^5.0.0-beta.135",
     "@ethersproject/bignumber": "^5.0.0-beta.139",
@@ -40,6 +43,7 @@
     "tailwindcss": "^1.4.6"
   },
   "devDependencies": {
+    "@zeit/git-hooks": "^0.1.4",
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "hooks.macro": "^1.1.1",
