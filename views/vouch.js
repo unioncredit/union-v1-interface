@@ -9,7 +9,7 @@ import { useVouchData } from "hooks/swrHooks";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import { Fragment } from "react";
-import getVouchBarData from "util/getVouchBarData";
+import getVouchBarData, { getVouchTotal } from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
 export default function VouchView() {
@@ -20,13 +20,10 @@ export default function VouchView() {
   const { data: vouchData } = useVouchData();
 
   const { data: creditLimit = 0 } = useCreditLimit();
-  console.log({ vouchData });
-  const vouchTotal =
-    !!vouchData &&
-    vouchData.length > 0 &&
-    vouchData
-      .map(({ vouched }) => Number(vouched))
-      .reduce((acc, cur) => acc + cur);
+
+  const vouchTotal = getVouchTotal(vouchData);
+
+  const vouchBarSlices = getVouchBarData(vouchData);
 
   return (
     <Fragment>
@@ -49,7 +46,7 @@ export default function VouchView() {
           </div>
         </div>
 
-        <VouchBar className="mb-10" slices={getVouchBarData(vouchData)} />
+        <VouchBar className="mb-10" slices={vouchBarSlices} />
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
