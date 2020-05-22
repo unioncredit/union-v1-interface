@@ -6,7 +6,7 @@ import {
   useWalletModalView,
 } from "contexts/Application";
 import { useAutoEffect } from "hooks.macro";
-import useEagerConnect from "hooks/useEagerConnect";
+import useEagerConnect, { useLogout, useLogin } from "hooks/useEagerConnect";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
@@ -85,12 +85,18 @@ const WalletModal = () => {
 
   const triedEager = useEagerConnect();
 
+  const logout = useLogout();
+
+  const login = useLogin();
+
   const handleSignOut = () => {
     if (connector === walletconnect) connector.close();
 
     deactivate();
 
     addToast(FLAVORS.LOGGED_OUT);
+
+    logout();
 
     toggle();
   };
@@ -123,6 +129,7 @@ const WalletModal = () => {
                       setActivatingConnector(currentConnector);
                       await activate(CONNECTORS[name]);
                       toggle();
+                      login();
                       if (router.pathname === "/") router.push("/stake");
                     }}
                     disabled={disabled}
@@ -194,6 +201,7 @@ const WalletModal = () => {
                       setActivatingConnector(currentConnector);
                       await activate(CONNECTORS[name]);
                       toggle();
+                      login();
                       if (router.pathname === "/") router.push("/stake");
                     }}
                     disabled={disabled}
