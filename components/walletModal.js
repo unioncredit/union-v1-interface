@@ -228,13 +228,22 @@ const WalletModal = () => {
               Already have an account?{" "}
               <button
                 onClick={setWalletViewSignIn}
-                className="underline font-medium"
+                className="underline focus:outline-none font-medium"
               >
                 Sign in
               </button>
             </p>
           </Fragment>
         )}
+
+        <p className="sm:hidden text-sm text-center mt-12">
+          <button
+            onClick={toggle}
+            className="underline focus:outline-none font-medium px-2 py-1"
+          >
+            Close
+          </button>
+        </p>
       </div>
     </Modal>
   );
