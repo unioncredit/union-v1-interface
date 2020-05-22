@@ -14,129 +14,126 @@ import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-    const { chainId } = useWeb3React();
+  const { chainId } = useWeb3React();
 
-    const open = useTrustModalOpen();
-    const toggle = useTrustModalToggle();
+  const open = useTrustModalOpen();
+  const toggle = useTrustModalToggle();
 
-    const { handleSubmit, register, formState, errors, reset } = useForm();
+  const { handleSubmit, register, formState, errors, reset } = useForm();
 
-    useEffect(() => reset(), [open]);
+  useEffect(() => reset(), [open]);
 
-    const { dirty, isSubmitting } = formState;
+  const { dirty, isSubmitting } = formState;
 
-    const curToken = useCurrentToken();
+  const curToken = useCurrentToken();
 
-    const addToast = useToast();
+  const addToast = useToast();
 
-    const isMember = useIsMember();
+  const isMember = useIsMember();
 
-    const memberContract = useMemberContract();
+  const memberContract = useMemberContract();
 
-    const onSubmit = async (data, e) => {
-        const { address, amount: rawAmount } = data;
+  const onSubmit = async (data, e) => {
+    const { address, amount: rawAmount } = data;
 
-        console.log({
-            address,
-            rawAmount,
+    console.log({
+      address,
+      rawAmount,
+    });
+
+    const amount = parseUnits(rawAmount, 18).toString();
+
+    try {
+      let tx;
+
+      if (isMember === true) {
+        tx = await memberContract.trust(address, curToken, amount, {
+          gasLimit: 200000,
         });
+      } else {
+        tx = await memberContract.addTrust(address, curToken, amount, {
+          gasLimit: 500000,
+        });
+      }
 
-        const amount = parseUnits(rawAmount, 18).toString();
+      const { hide: hidePending } = addToast(
+        FLAVORS.TX_PENDING(tx.hash, chainId)
+      );
 
-        try {
-            let tx;
+      if (open) toggle();
 
-            if (isMember === true) {
-                tx = await memberContract.trust(address, curToken, amount, {
-                    gasLimit: 200000,
-                });
-            } else {
-                tx = await memberContract.addTrust(address, curToken, amount, {
-                    gasLimit: 500000,
-                });
-            }
+      await tx.wait();
 
-            const { hide: hidePending } = addToast(
-                FLAVORS.TX_PENDING(tx.hash, chainId)
-            );
+      hidePending();
 
-            if (open) toggle();
+      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+    } catch (err) {
+      const message = handleTxError(err);
 
-            await tx.wait();
+      addToast(FLAVORS.TX_ERROR(message));
+    }
+  };
 
-            hidePending();
+  return (
+    <Modal isOpen={open} onDismiss={toggle}>
+      <ModalHeader title="Vouch for a member" onDismiss={toggle} />
 
-            addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-        } catch (err) {
-            const message = handleTxError(err);
+      <form
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-4 py-6 sm:px-6 sm:py-8"
+      >
+        <Input
+          autoFocus={!initialAddress}
+          className="mb-4"
+          defaultValue={initialAddress}
+          id="address"
+          label="Address"
+          name="address"
+          placeholder="Enter address"
+          error={errors.address}
+          ref={register({
+            required: "Please fill out this field",
+            validate: (value) =>
+              isAddress(value) ? true : "Please input a valid Ethereum address",
+          })}
+        />
 
-            addToast(FLAVORS.TX_ERROR(message));
-        }
-    };
+        <Input
+          autoFocus={!!initialAddress}
+          chip="DAI"
+          className="mb-4"
+          defaultValue={initialTrust > 0 ? initialTrust : undefined}
+          id="amount"
+          label="Trust amount"
+          name="amount"
+          placeholder="0.00"
+          step={0.01}
+          tip="The amount you trust this address to borrow and be able to repay."
+          type="number"
+          error={errors.amount}
+          ref={register({
+            required: "Please fill out this field",
+            min: {
+              value: 1.0,
+              message: "Value must be greater than or equal to 1.00",
+            },
+          })}
+        />
 
-    return (
-        <Modal isOpen={open} onDismiss={toggle}>
-            <ModalHeader title="Vouch for a member" onDismiss={toggle} />
-
-            <form
-                method="POST"
-                onSubmit={handleSubmit(onSubmit)}
-                className="px-4 py-6 sm:px-6 sm:py-8"
-            >
-                <Input
-                    autoFocus={!initialAddress}
-                    className="mb-4"
-                    defaultValue={initialAddress}
-                    id="address"
-                    label="Address"
-                    name="address"
-                    placeholder="Enter address"
-                    error={errors.address}
-                    ref={register({
-                        required: "Please fill out this field",
-                        validate: (value) =>
-                            isAddress(value)
-                                ? true
-                                : "Please input a valid Ethereum address",
-                    })}
-                />
-
-                <Input
-                    autoFocus={!!initialAddress}
-                    chip="DAI"
-                    className="mb-4"
-                    defaultValue={initialTrust > 0 ? initialTrust : undefined}
-                    id="amount"
-                    label="Trust amount"
-                    name="amount"
-                    placeholder="0.00"
-                    step={0.01}
-                    tip="The amount you trust this address to borrow and be able to repay."
-                    type="number"
-                    error={errors.amount}
-                    ref={register({
-                        required: "Please fill out this field",
-                        min: {
-                            value: 1.0,
-                            message:
-                                "Value must be greater than or equal to 1.00",
-                        },
-                    })}
-                />
-
-                <div className="mt-20">
-                    <Button
-                        full
-                        type="submit"
-                        disabled={isSubmitting || !dirty}
-                        submitting={isSubmitting}
-                    >
-                        Confirm
-                    </Button>
-                </div>
-            </form>
-        </Modal>
-    );
+        <div className="mt-20">
+          <Button
+            full
+            type="submit"
+            disabled={isSubmitting || !dirty}
+            submitting={isSubmitting}
+          >
+            Confirm
+          </Button>
+        </div>
+      </form>
+    </Modal>
+  );
 };
 
 export default TrustModal;

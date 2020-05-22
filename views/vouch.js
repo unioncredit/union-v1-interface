@@ -13,66 +13,61 @@ import getVouchBarData from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
 export default function VouchView() {
-    const { data: isMember = false } = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
-    const toggleCreditRequestModal = useCreditRequestModalToggle();
+  const toggleCreditRequestModal = useCreditRequestModalToggle();
 
-    const { data: vouchData } = useVouchData();
+  const { data: vouchData } = useVouchData();
 
-    const { data: creditLimit = 0 } = useCreditLimit();
-    console.log({ vouchData });
-    const vouchTotal =
-        !!vouchData &&
-        vouchData.length > 0 &&
-        vouchData
-            .map(({ vouched }) => Number(vouched))
-            .reduce((acc, cur) => acc + cur);
+  const { data: creditLimit = 0 } = useCreditLimit();
+  console.log({ vouchData });
+  const vouchTotal =
+    !!vouchData &&
+    vouchData.length > 0 &&
+    vouchData
+      .map(({ vouched }) => Number(vouched))
+      .reduce((acc, cur) => acc + cur);
 
-    return (
-        <Fragment>
-            <div className="container">
-                {isMember === false && <ApplicationCard />}
+  return (
+    <Fragment>
+      <div className="container">
+        {isMember === false && <ApplicationCard />}
 
-                <div className="flex justify-between mb-6">
-                    <LabelPair
-                        label="Real-time available credit"
-                        value={roundDown(creditLimit)}
-                        valueType="DAI"
-                        tooltip={
-                            "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                        }
-                        large
-                    />
+        <div className="flex justify-between mb-6">
+          <LabelPair
+            label="Real-time available credit"
+            value={roundDown(creditLimit)}
+            valueType="DAI"
+            tooltip={"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
+            large
+          />
 
-                    <div className="hidden md:block">
-                        <Button invert onClick={toggleCreditRequestModal}>
-                            Open request for credit
-                        </Button>
-                    </div>
-                </div>
+          <div className="hidden md:block">
+            <Button invert onClick={toggleCreditRequestModal}>
+              Open request for credit
+            </Button>
+          </div>
+        </div>
 
-                <VouchBar
-                    className="mb-10"
-                    slices={getVouchBarData(vouchData)}
-                />
+        <VouchBar className="mb-10" slices={getVouchBarData(vouchData)} />
 
-                <div className="mb-6">
-                    <h1>Addresses who vouched for you</h1>
+        <div className="mb-6">
+          <h1>Addresses who vouched for you</h1>
 
-                    <Button
-                        full
-                        invert
-                        onClick={toggleCreditRequestModal}
-                        className="mt-6 inline-block md:hidden"
-                    >
-                        Open request for credit
-                    </Button>
-                </div>
+          <Button
+            full
+            invert
+            onClick={toggleCreditRequestModal}
+            className="mt-6 inline-block md:hidden"
+          >
+            Open request for credit
+          </Button>
+        </div>
 
-                <VouchTable data={vouchData} sum={vouchTotal} />
-            </div>
+        <VouchTable data={vouchData} sum={vouchTotal} />
+      </div>
 
-            <CreditRequestModal />
-        </Fragment>
-    );
+      <CreditRequestModal />
+    </Fragment>
+  );
 }
