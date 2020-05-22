@@ -12,9 +12,10 @@ import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
+import { mutate } from "swr";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-  const { chainId } = useWeb3React();
+  const { chainId, account, library } = useWeb3React();
 
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
@@ -62,6 +63,11 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
       hidePending();
 
       addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+      /**
+       * @note Temp fix to update trust data after updating for now
+       */
+      mutate(["trust", account, curToken, library, chainId]);
     } catch (err) {
       const message = handleTxError(err);
 
