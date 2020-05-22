@@ -36,11 +36,6 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   const onSubmit = async (data, e) => {
     const { address, amount: rawAmount } = data;
 
-    console.log({
-      address,
-      rawAmount,
-    });
-
     const amount = parseUnits(rawAmount, 18).toString();
 
     try {

@@ -31,13 +31,18 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     reset,
   } = useForm();
 
-  useEffect(() => reset(), [open]);
+  useEffect(() => {
+    reset();
+    updateDaiBalance();
+  }, [open]);
 
   const { dirty, isSubmitting } = formState;
 
   const addToast = useToast();
 
-  const { data: daiBalance = 0.0 } = useTokenBalance(curToken);
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
+    curToken
+  );
 
   const flooredDaiBalance = roundDown(daiBalance);
 

@@ -28,7 +28,10 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     reset,
   } = useForm();
 
-  useEffect(() => reset(), [open]);
+  useEffect(() => {
+    reset();
+    updateDaiBalance();
+  }, [open]);
 
   const { dirty, isSubmitting } = formState;
 
@@ -37,7 +40,9 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const { data: daiBalance = 0.0 } = useTokenBalance(DAI);
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
+    DAI
+  );
 
   const flooredDaiBalance = roundDown(daiBalance);
 

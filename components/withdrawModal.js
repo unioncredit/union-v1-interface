@@ -11,7 +11,6 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { roundDown } from "util/numbers";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const { chainId } = useWeb3React();

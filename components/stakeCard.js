@@ -22,7 +22,10 @@ const StakeCard = () => {
 
   const UNION = useCurrentToken("UNION");
 
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const {
+    data: unionBalance = 0.0,
+    mutate: updateUnionBalance,
+  } = useTokenBalance(UNION);
 
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
 
@@ -39,6 +42,7 @@ const StakeCard = () => {
     !!rewardsData && rewardsData;
 
   const onComplete = () => {
+    updateUnionBalance();
     updateStakeData();
     updateRewardsData();
   };

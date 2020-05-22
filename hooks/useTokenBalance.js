@@ -27,8 +27,8 @@ export default function useTokenBalance(tokenAddress) {
     shouldFetch ? ["TokenBalance", tokenAddress, account] : null,
     getTokenBalance(contract),
     {
-      dedupingInterval: 15 * 1000,
-      refreshInterval: 30 * 1000,
+      dedupingInterval: 10 * 1000,
+      refreshInterval: 10 * 1000,
     }
   );
 }
