@@ -446,7 +446,7 @@
       "name": "moneyMarkets",
       "outputs": [
         {
-          "internalType": "contract IMarketAdapter",
+          "internalType": "contract IMoneyMarketAdapter",
           "name": "",
           "type": "address"
         }

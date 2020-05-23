@@ -142,7 +142,7 @@
           "type": "address"
         }
       ],
-      "name": "borrowBalanceCurrent",
+      "name": "borrowBalance",
       "outputs": [
         {
           "internalType": "uint256",
@@ -163,28 +163,7 @@
           "type": "address"
         }
       ],
-      "name": "borrowBalanceStored",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "account",
-          "type": "address"
-        }
-      ],
-      "name": "borrowBalanceStoredInternal",
+      "name": "borrowBalanceView",
       "outputs": [
         {
           "internalType": "uint256",

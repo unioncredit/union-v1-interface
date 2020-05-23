@@ -43,7 +43,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
       let tx;
 
       if (isMember === true) {
-        tx = await memberContract.trust(address, curToken, amount, {
+        tx = await memberContract.updateTrust(address, curToken, amount, {
           gasLimit: 200000,
         });
       } else {
