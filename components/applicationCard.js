@@ -17,6 +17,10 @@ const ApplicationCard = () => {
 
   const { data: trustCount } = useTrustCountData();
 
+  const onComplete = () => {
+    successModalToggle();
+  };
+
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
       <div className="flex flex-col md:flex-row justify-between items-start">
@@ -66,6 +70,7 @@ const ApplicationCard = () => {
       <ApplicationModal
         isOpen={applicationModalOpen}
         onDismiss={applicationModalToggle}
+        onComplete={onComplete}
       />
 
       <SuccessModal isOpen={successModalOpen} onDismiss={successModalToggle} />

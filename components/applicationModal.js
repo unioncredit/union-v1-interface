@@ -14,7 +14,7 @@ import Button from "./button";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-const ApplicationModal = ({ isOpen, onDismiss }) => {
+const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   const { account, chainId } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
@@ -70,6 +70,8 @@ const ApplicationModal = ({ isOpen, onDismiss }) => {
       addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
       isSubmittingSet(false);
+
+      onComplete();
     } catch (err) {
       isSubmittingSet(false);
 
