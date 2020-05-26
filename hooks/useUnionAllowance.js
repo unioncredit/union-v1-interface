@@ -59,11 +59,19 @@ export function useIncreaseUnionAllowance() {
         FLAVORS.TX_PENDING_TOKEN(tx.hash, chainId)
       );
 
-      await tx.wait();
+      const receipt = await library.waitForTransaction(tx.hash);
+
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash, chainId));
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash, chainId));
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       hideWaiting();
 

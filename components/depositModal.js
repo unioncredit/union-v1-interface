@@ -6,6 +6,7 @@ import useTokenBalance from "hooks/useTokenBalance";
 import { stake } from "lib/contracts/stake";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
@@ -58,13 +59,21 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
       if (open) toggle();
 
-      await tx.wait();
+      const receipt = await library.waitForTransaction(tx.hash);
+
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+        onComplete();
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-
-      onComplete();
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       const message = handleTxError(err);
 

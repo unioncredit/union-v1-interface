@@ -53,13 +53,21 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
       if (open) toggle();
 
-      await tx.wait();
+      const receipt = await library.waitForTransaction(tx.hash);
+
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+        onComplete();
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-
-      onComplete();
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       const message = handleTxError(err);
 

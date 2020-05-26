@@ -130,20 +130,26 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
 
-      if (open) toggle();
+      const receipt = await library.waitForTransaction(tx.hash);
 
-      await tx.wait();
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+        removingAddressSet(false);
+
+        /**
+         * @note Temp fix to update trust data after updating for now
+         */
+        mutate(["trust", account, curToken, library, chainId]);
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-
-      removingAddressSet(false);
-
-      /**
-       * @note Temp fix to update trust data after updating for now
-       */
-      mutate(["trust", account, curToken, library, chainId]);
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       const message = handleTxError(err);
 

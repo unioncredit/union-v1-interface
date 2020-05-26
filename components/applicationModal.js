@@ -63,15 +63,23 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
 
       if (isOpen) onDismiss();
 
-      await tx.wait();
+      const receipt = await library.waitForTransaction(tx.hash);
+
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+        isSubmittingSet(false);
+
+        onComplete();
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-
-      isSubmittingSet(false);
-
-      onComplete();
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       isSubmittingSet(false);
 

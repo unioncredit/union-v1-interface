@@ -65,16 +65,24 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       if (open) toggle();
 
-      await tx.wait();
+      const receipt = await library.waitForTransaction(tx.hash);
+
+      if (receipt.status === 1) {
+        hidePending();
+
+        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+
+        /**
+         * @note Temp fix to update trust data after updating for now
+         */
+        mutate(["trust", account, curToken, library, chainId]);
+
+        return;
+      }
 
       hidePending();
 
-      addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
-
-      /**
-       * @note Temp fix to update trust data after updating for now
-       */
-      mutate(["trust", account, curToken, library, chainId]);
+      throw new Error(receipt.logs[0]);
     } catch (err) {
       const message = handleTxError(err);
 
