@@ -132,7 +132,7 @@ const StakeTable = () => {
                       cellRenderer = <HealthBar health={value} />;
 
                     if (Header === "Address")
-                      cellRenderer = <Address address={value} />;
+                      cellRenderer = <Address address={value} withLabel />;
 
                     if (Header === "Used" || Header === "Trust")
                       cellRenderer = <span>{value} DAI</span>;

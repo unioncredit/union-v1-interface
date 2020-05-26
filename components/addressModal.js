@@ -16,6 +16,7 @@ import Button from "./button";
 import HealthBar from "./healthBar";
 import Identicon from "./identicon";
 import Modal, { BackButton, CloseButton } from "./modal";
+import useAddressLabels from "hooks/useAddressLabels";
 
 const ADDRESS_VIEWS = {
   HOME: "HOME",
@@ -36,6 +37,10 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   }, [isOpen]);
 
   const ENSName = useENSName(address);
+
+  const { setLabel, getLabel } = useAddressLabels();
+
+  const label = getLabel(address);
 
   const [copied, copy] = useCopy();
 
@@ -101,13 +106,28 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="mt-4 text-center">
-              <button
-                onClick={handleCopyAddress}
-                className="focus:outline-none text-lg font-semibold"
-                title={address}
-              >
-                {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
-              </button>
+              {Boolean(label) ? (
+                <Fragment>
+                  <p className="text-lg font-semibold">{label}</p>
+                  <button
+                    onClick={handleCopyAddress}
+                    className="focus:outline-none font-medium text-type-light"
+                    title={address}
+                  >
+                    {copied
+                      ? "Copied!"
+                      : ENSName ?? truncateAddress(address, 6)}
+                  </button>
+                </Fragment>
+              ) : (
+                <button
+                  onClick={handleCopyAddress}
+                  className="focus:outline-none text-lg font-semibold"
+                  title={address}
+                >
+                  {copied ? "Copied!" : ENSName ?? truncateAddress(address, 6)}
+                </button>
+              )}
             </div>
 
             <div className="mt-16">
@@ -160,7 +180,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="mt-4 cursor-text">
-              <Address address={address} large copyable />
+              <Address address={address} large copyable withLabel />
             </div>
 
             <div className="mt-4">
