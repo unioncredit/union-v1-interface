@@ -51,6 +51,7 @@ const InlineLabelEditor = ({ label, ENSName, address }) => {
           className="text-lg font-semibold text-center w-auto bg-transparent rounded-none focus:outline-none"
           name="label"
           autoCapitalize="off"
+          placeholder="Add a label"
           autoCorrect="off"
           autoComplete="off"
           ref={register}
@@ -166,21 +167,11 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="mt-4 text-center">
-              {Boolean(label) ? (
-                <InlineLabelEditor
-                  address={address}
-                  ENSName={ENSName}
-                  label={label}
-                />
-              ) : (
-                <button
-                  onClick={handleCopyAddress}
-                  className="focus:outline-none text-lg font-semibold"
-                  title={address}
-                >
-                  {copied ? "Copied!" : ENSName ?? truncateAddress(address, 6)}
-                </button>
-              )}
+              <InlineLabelEditor
+                address={address}
+                ENSName={ENSName}
+                label={label}
+              />
             </div>
 
             <div className="mt-16">
