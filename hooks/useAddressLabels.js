@@ -1,17 +1,27 @@
 import { useLocalStorage } from "react-use";
+import useSWR from "swr";
+
+const fetcher = () => {
+  const raw = localStorage.getItem("labels");
+  return JSON.parse(raw);
+};
 
 export default function useAddressLabels() {
-  const [value, setValue] = useLocalStorage("labels", {});
+  const { data, mutate, revalidate } = useSWR("labels", fetcher);
+
+  const [, setValue] = useLocalStorage("labels", {});
 
   /**
    * @name setLabel
    * @param {String} address
    * @param {String} label
    */
-  const setLabel = (address, label) => {
+  const setLabel = async (address, label) => {
     const key = address.toLowerCase();
 
     setValue((current) => ({ ...current, [key]: label }));
+
+    await mutate({ ...data, [key]: label });
   };
 
   /**
@@ -21,9 +31,8 @@ export default function useAddressLabels() {
    */
   const getLabel = (address) => {
     const key = address.toLowerCase();
-
-    return value[key];
+    return data[key];
   };
 
-  return { labels: value, setLabel, getLabel };
+  return { labels: data, setLabel, getLabel, revalidate };
 }
