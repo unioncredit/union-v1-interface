@@ -31,7 +31,8 @@ export default function useAddressLabels() {
    */
   const getLabel = (address) => {
     const key = address.toLowerCase();
-    return data[key];
+    if (data && data.hasOwnProperty(key)) return data[key];
+    return undefined;
   };
 
   return { labels: data, setLabel, getLabel, revalidate };
