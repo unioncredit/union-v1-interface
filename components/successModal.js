@@ -53,13 +53,7 @@ const SuccessModal = ({ isOpen, onDismiss }) => {
               🎊
             </span>
           </h2>
-          <p className="text-xl mb-2">
-            You're now a Union{" "}
-            <span role="img" aria-label="Nail polish">
-              💅
-            </span>{" "}
-            member.
-          </p>
+          <p className="text-xl mb-2">You're now a Union member.</p>
           <p>Don't worry though, no dues here from here on.</p>
         </div>
 
