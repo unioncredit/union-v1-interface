@@ -1,12 +1,15 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAddressModalOpen, useAddressModalToggle } from "contexts/Stake";
 import { useAutoCallback } from "hooks.macro";
+import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
 import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
+import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
@@ -16,7 +19,64 @@ import Button from "./button";
 import HealthBar from "./healthBar";
 import Identicon from "./identicon";
 import Modal, { BackButton, CloseButton } from "./modal";
-import useAddressLabels from "hooks/useAddressLabels";
+
+const InlineLabelEditor = ({ label, ENSName, address }) => {
+  const { setLabel } = useAddressLabels();
+
+  const { register, handleSubmit, formState, reset } = useForm({
+    defaultValues: {
+      label,
+    },
+  });
+
+  const { isSubmitting, dirty } = formState;
+
+  const [copied, copy] = useCopy();
+
+  const handleCopyAddress = () => copy(address);
+
+  const onSubmit = async (data, e) => {
+    await setLabel(address, data.label);
+
+    await delay(1000);
+
+    reset({ label: data.label });
+  };
+
+  return (
+    <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col items-center">
+        <input
+          type="text"
+          className="text-lg font-semibold text-center w-auto bg-transparent rounded-none focus:outline-none"
+          name="label"
+          autoCapitalize="off"
+          autoCorrect="off"
+          autoComplete="off"
+          ref={register}
+          id="label"
+        />
+      </div>
+      {dirty ? (
+        <button
+          type="submit"
+          className="focus:outline-none leading-none font-medium text-type-light underline"
+        >
+          {isSubmitting ? "Saving..." : "Save"}
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={handleCopyAddress}
+          className="focus:outline-none leading-none font-medium text-type-light"
+          title={address}
+        >
+          {copied ? "Copied!" : ENSName ?? truncateAddress(address, 6)}
+        </button>
+      )}
+    </form>
+  );
+};
 
 const ADDRESS_VIEWS = {
   HOME: "HOME",
@@ -38,7 +98,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const ENSName = useENSName(address);
 
-  const { setLabel, getLabel } = useAddressLabels();
+  const { getLabel } = useAddressLabels();
 
   const label = getLabel(address);
 
@@ -107,18 +167,11 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
             <div className="mt-4 text-center">
               {Boolean(label) ? (
-                <Fragment>
-                  <p className="text-lg font-semibold">{label}</p>
-                  <button
-                    onClick={handleCopyAddress}
-                    className="focus:outline-none font-medium text-type-light"
-                    title={address}
-                  >
-                    {copied
-                      ? "Copied!"
-                      : ENSName ?? truncateAddress(address, 6)}
-                  </button>
-                </Fragment>
+                <InlineLabelEditor
+                  address={address}
+                  ENSName={ENSName}
+                  label={label}
+                />
               ) : (
                 <button
                   onClick={handleCopyAddress}
