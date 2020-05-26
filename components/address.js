@@ -28,17 +28,21 @@ const Address = ({ address, withLabel, copyable = false }) => {
       className={cachedClassNames}
       title={address}
     >
-      <Identicon large address={address} />
+      <div className="flex-grow-0 h-8">
+        <Identicon large address={address} />
+      </div>
 
       {withLabel && Boolean(label) ? (
-        <p className="ml-4 leading-none">
-          <div className="font-semibold">{getLabel(address)}</div>
+        <p className="ml-4 flex-auto leading-none">
+          <span className="block text-sm mb-2px font-semibold whitespace-no-wrap">
+            {getLabel(address)}
+          </span>
           <span className="text-xs text-type-light">
             {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
           </span>
         </p>
       ) : (
-        <p className="leading-loose ml-4">
+        <p className="flex-auto leading-loose ml-4">
           {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
         </p>
       )}
