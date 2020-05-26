@@ -2,17 +2,18 @@ import { isAddress } from "@ethersproject/address";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
+import useAddressLabels from "hooks/useAddressLabels";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
 import Modal, { ModalHeader } from "./modal";
-import { mutate } from "swr";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
   const { chainId, account, library } = useWeb3React();
@@ -34,10 +35,16 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const memberContract = useMemberContract();
 
+  const { setLabel } = useAddressLabels();
+
   const onSubmit = async (data, e) => {
     const { address, amount: rawAmount } = data;
 
     const amount = parseUnits(rawAmount, 18).toString();
+
+    if (data.label) {
+      setLabel(address, data.label);
+    }
 
     try {
       let tx;
@@ -98,6 +105,17 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             validate: (value) =>
               isAddress(value) ? true : "Please input a valid Ethereum address",
           })}
+        />
+
+        <Input
+          className="mb-4"
+          id="label"
+          label="Label (Optional)"
+          name="label"
+          placeholder="Label this address"
+          error={errors.label}
+          tip="Labels are always stored locally on your device"
+          ref={register}
         />
 
         <Input
