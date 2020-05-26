@@ -9,7 +9,7 @@ import { useVouchData } from "hooks/swrHooks";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import { Fragment } from "react";
-import getVouchBarData, { getVouchTotal } from "util/getVouchBarData";
+import getVouchBarData from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
 export default function VouchView() {

@@ -1,18 +1,19 @@
 import classNames from "classnames";
 import { useGetInvitedModalToggle } from "contexts/Application";
 import useTrustCountData from "hooks/useTrustCountData";
-import { useState } from "react";
+import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
 import ApplicationModal from "./applicationModal";
 import Button from "./button";
+import SuccessModal from "./successModal";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [applicationModalOpen, applicationModalToggle] = useToggle(false);
 
-  const toggleApplicationModal = () => setIsOpen(!isOpen);
+  const [successModalOpen, successModalToggle] = useToggle(false);
 
   const { data: trustCount } = useTrustCountData();
 
@@ -33,7 +34,7 @@ const ApplicationCard = () => {
         <Button
           className="mt-6 md:mt-0"
           onClick={
-            trustCount === 3 ? toggleApplicationModal : toggleGetInvitedModal
+            trustCount === 3 ? applicationModalToggle : toggleGetInvitedModal
           }
         >
           {trustCount === 3 ? "Become a member" : "Ask for a vouch"}
@@ -62,7 +63,12 @@ const ApplicationCard = () => {
         </span>
       </div>
 
-      <ApplicationModal isOpen={isOpen} onDismiss={toggleApplicationModal} />
+      <ApplicationModal
+        isOpen={applicationModalOpen}
+        onDismiss={applicationModalToggle}
+      />
+
+      <SuccessModal isOpen={successModalOpen} onDismiss={successModalToggle} />
     </div>
   );
 };
