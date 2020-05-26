@@ -28,6 +28,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.0.9",
     "bignumber.js": "^9.0.0",
+    "canvas-confetti": "^1.2.0",
     "classnames": "^2.2.6",
     "cogo-toast": "^4.2.3",
     "dayjs": "^1.8.26",
