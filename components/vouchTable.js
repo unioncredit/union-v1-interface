@@ -9,7 +9,7 @@ import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 
-const VouchTable = ({ data, sum }) => {
+const VouchTable = ({ data }) => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
   const memoizedColumns = useMemo(
@@ -109,7 +109,7 @@ const VouchTable = ({ data, sum }) => {
                       cellRenderer = <Address address={value} copyable />;
 
                     if (Header === "Percentage")
-                      cellRenderer = <span>{toPercent(value / sum, 2)}</span>;
+                      cellRenderer = <span>{toPercent(value)}</span>;
 
                     if (Header === "Available Vouch" || Header === "Set Vouch")
                       cellRenderer = <span>{value} DAI</span>;

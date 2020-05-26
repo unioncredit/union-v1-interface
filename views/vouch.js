@@ -21,8 +21,6 @@ export default function VouchView() {
 
   const { data: creditLimit = 0 } = useCreditLimit();
 
-  const vouchTotal = getVouchTotal(vouchData);
-
   const vouchBarSlices = getVouchBarData(vouchData);
 
   return (
@@ -61,7 +59,7 @@ export default function VouchView() {
           </Button>
         </div>
 
-        <VouchTable data={vouchData} sum={vouchTotal} />
+        <VouchTable data={vouchData} />
       </div>
 
       <CreditRequestModal />
