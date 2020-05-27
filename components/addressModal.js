@@ -116,13 +116,22 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const removeAddress = useAutoCallback(async () => {
     try {
       removingAddressSet(true);
-
+      let estimate;
+      try {
+        estimate = await memberManagerContract.estimateGas.cancelVouch(
+          account,
+          address,
+          curToken
+        );
+      } catch (error) {
+        estimate = 300000;
+      }
       const tx = await memberManagerContract.cancelVouch(
         account,
         address,
         curToken,
         {
-          gasLimit: 200000,
+          gasLimit: estimate,
         }
       );
 

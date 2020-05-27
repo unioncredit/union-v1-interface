@@ -47,15 +47,33 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
     }
 
     try {
-      let tx;
+      let tx, estimate;
 
       if (isMember === true) {
+        try {
+          estimate = await memberContract.estimateGas.updateTrust(
+            address,
+            curToken,
+            amount
+          );
+        } catch (error) {
+          estimate = 300000;
+        }
         tx = await memberContract.updateTrust(address, curToken, amount, {
-          gasLimit: 200000,
+          gasLimit: estimate,
         });
       } else {
+        try {
+          estimate = await memberContract.estimateGas.addTrust(
+            address,
+            curToken,
+            amount
+          );
+        } catch (error) {
+          estimate = 500000;
+        }
         tx = await memberContract.addTrust(address, curToken, amount, {
-          gasLimit: 500000,
+          gasLimit: estimate,
         });
       }
 
