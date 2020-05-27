@@ -13,7 +13,7 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
-  const { chainId } = useWeb3React();
+  const { chainId, library } = useWeb3React();
 
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();

@@ -44,9 +44,6 @@ export default function AdminView() {
   const [totalStake, setTotalStake] = useState(0);
   const [frozenStake, setFrozenStake] = useState(0);
   const [memberFee, setMemberFee] = useState(0);
-  const [minInflation, setMinInflation] = useState(0);
-  const [maxInflation, setMaxInflation] = useState(0);
-  const [defaultInflation, setDefaultInflation] = useState(0);
   const [overdueBlocks, setOverdueBlocks] = useState(0);
   const [originationFee, setOriginationFee] = useState(0);
   const [totalBorrows, setTotalBorrows] = useState(0);
@@ -96,35 +93,6 @@ export default function AdminView() {
           }
         }
       });
-    }
-
-    async function fetchUnionData() {
-      try {
-        if (isMounted) {
-          const minInflationPerBlockRes = await unionContract.minInflationPerBlock();
-          const maxInflationPerBlockRes = await unionContract.maxInflationPerBlock();
-          const defaultInflationPerBlockRes = await unionContract.defaultInflationPerBlock();
-          setMinInflation(
-            (
-              parseRes(minInflationPerBlockRes, 18) *
-              BLOCKS_PER_YEAR[chainId] *
-              100
-            ).toFixed(2)
-          );
-          setMaxInflation(
-            (
-              parseRes(maxInflationPerBlockRes, 18) *
-              BLOCKS_PER_YEAR[chainId] *
-              100
-            ).toFixed(2)
-          );
-          setDefaultInflation(parseRes(defaultInflationPerBlockRes, 2) * 100);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error(err);
-        }
-      }
     }
 
     async function fetchStakingData() {
@@ -177,7 +145,6 @@ export default function AdminView() {
 
     fetchStakingData();
     fetchMemberData();
-    fetchUnionData();
     fetchMarketData();
     fetchFundsData();
 
@@ -260,40 +227,6 @@ export default function AdminView() {
     }
   });
 
-  const onSetDefaultInflation = useAutoCallback(async (amount) => {
-    try {
-      await unionContract.setDefaultInflationPerBlock(
-        new BigNumber(amount / 100).times(WAD).toFixed()
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
-  const onSetMaxInflation = useAutoCallback(async (amount) => {
-    try {
-      await unionContract.setMaxInflationPerBlock(
-        new BigNumber(amount / (100 * BLOCKS_PER_YEAR[chainId]))
-          .times(WAD)
-          .toFixed(0)
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
-  const onSetMinInflation = useAutoCallback(async (amount) => {
-    try {
-      await unionContract.setMinInflationPerBlock(
-        new BigNumber(amount / (100 * BLOCKS_PER_YEAR[chainId]))
-          .times(WAD)
-          .toFixed(0)
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
   return (
     <Fragment>
       <div className="container">
@@ -362,15 +295,6 @@ export default function AdminView() {
                   <div className="flex items-center">Member Fee(Union)</div>
                 </th>
                 <th>
-                  <div className="flex items-center">Max Inflation(%)</div>
-                </th>
-                <th>
-                  <div className="flex items-center">Min Inflation(%)</div>
-                </th>
-                <th>
-                  <div className="flex items-center">Default Inflation(%)</div>
-                </th>
-                <th>
                   <div className="flex items-center">Action</div>
                 </th>
               </tr>
@@ -380,9 +304,6 @@ export default function AdminView() {
                 <td>{totalStake}</td>
                 <td>{frozenStake}</td>
                 <td>{memberFee}</td>
-                <td>{maxInflation}</td>
-                <td>{minInflation}</td>
-                <td>{defaultInflation}</td>
                 <td>
                   <Button disabled={!isAdmin} onClick={toggleManagerModal}>
                     Edit
@@ -436,9 +357,6 @@ export default function AdminView() {
       />
       <ManagerModal
         onSetNewMemberFee={onSetNewMemberFee}
-        onSetDefaultInflation={onSetDefaultInflation}
-        onSetMaxInflation={onSetMaxInflation}
-        onSetMinInflation={onSetMinInflation}
         onAddMember={onAddMember}
       />
     </Fragment>

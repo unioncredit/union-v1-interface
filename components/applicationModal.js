@@ -15,7 +15,7 @@ import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
 const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
-  const { account, chainId } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
