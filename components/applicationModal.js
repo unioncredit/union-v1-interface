@@ -54,8 +54,20 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   const submit = useAutoCallback(async () => {
     isSubmittingSet(true);
 
+    let estimate;
     try {
-      const tx = await memberManagerContract.applyMember(account, DAI);
+      estimate = await memberManagerContract.estimateGas.applyMember(
+        account,
+        DAI
+      );
+    } catch (error) {
+      estimate = 150000;
+    }
+
+    try {
+      const tx = await memberManagerContract.applyMember(account, DAI, {
+        gasLimit: estimate,
+      });
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)

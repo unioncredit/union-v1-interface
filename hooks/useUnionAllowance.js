@@ -38,7 +38,7 @@ export default function useUnionAllowance() {
 }
 
 export function useIncreaseUnionAllowance() {
-  const { chainId } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const addToast = useToast();
 
