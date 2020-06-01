@@ -4,17 +4,22 @@ import Input from "components/input";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
+import useCopy from "hooks/useCopy";
 
 const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 
 export default function AccountView() {
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
 
   const { register, handleSubmit, formState, errors, reset } = useForm();
 
   useEffect(() => reset(), [open]);
 
   const { dirty, isSubmitting } = formState;
+
+  const [isCopied, copy] = useCopy();
+
+  const handleCopy = () => copy(account);
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -43,7 +48,7 @@ export default function AccountView() {
           <form method="POST" onSubmit={handleSubmit(onSubmit)}>
             <Input
               autoComplete="email"
-              className="mb-16"
+              className="mb-10"
               id="email"
               label="Your email"
               name="email"
@@ -58,6 +63,18 @@ export default function AccountView() {
                 },
               })}
             />
+
+            <div className="mb-16">
+              <p className="mb-2 text-type-light">Your address</p>
+              <button
+                className="font-medium py-1 w-full truncate text-sm text-left focus:outline-none hover:underline"
+                onClick={handleCopy}
+                title={account}
+                type="button"
+              >
+                {isCopied ? "Copied!" : account}
+              </button>
+            </div>
 
             <Button
               full
