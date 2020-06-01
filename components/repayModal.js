@@ -46,6 +46,23 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const flooredDaiBalance = roundDown(daiBalance);
 
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
+
+  const calculateBalanceOwed =
+    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
+
+  const calculateNewBalance = calculateBalanceOwed - amount;
+
+  const formatNewBalance = Number(
+    calculateNewBalance > 0 ? calculateNewBalance : 0
+  ).toFixed(2);
+
+  const calculateMaxValue =
+    flooredDaiBalance <= calculateBalanceOwed
+      ? flooredDaiBalance
+      : calculateBalanceOwed;
+
   const onSubmit = async (values) => {
     let hidePendingToast;
 
@@ -93,23 +110,6 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       addToast(FLAVORS.TX_ERROR(message));
     }
   };
-
-  const watchAmount = watch("amount", 0);
-  const amount = Number(watchAmount || 0);
-
-  const calculateBalanceOwed =
-    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
-
-  const calculateNewBalance = calculateBalanceOwed - amount;
-
-  const formatNewBalance = Number(
-    calculateNewBalance > 0 ? calculateNewBalance : 0
-  ).toFixed(2);
-
-  const calculateMaxValue =
-    flooredDaiBalance <= calculateBalanceOwed
-      ? flooredDaiBalance
-      : calculateBalanceOwed;
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
