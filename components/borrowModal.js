@@ -78,6 +78,8 @@ const BorrowModal = ({
   const addToast = useToast();
 
   const onSubmit = async (values) => {
+    let hidePendingToast;
+
     const { amount } = values;
 
     try {
@@ -86,6 +88,8 @@ const BorrowModal = ({
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending;
 
       if (open) toggle();
 
@@ -105,6 +109,8 @@ const BorrowModal = ({
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

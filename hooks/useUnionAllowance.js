@@ -45,6 +45,8 @@ export function useIncreaseUnionAllowance() {
   const contract = useUnionContract();
 
   const increase = useAutoCallback(async (amount) => {
+    let hidePendingToast;
+
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
     try {
@@ -58,6 +60,8 @@ export function useIncreaseUnionAllowance() {
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING_TOKEN(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending();
 
       const receipt = await library.waitForTransaction(tx.hash);
 
@@ -74,6 +78,8 @@ export function useIncreaseUnionAllowance() {
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hideWaiting();
+
+      hidePendingToast();
 
       const message = handleTxError(err);
 

@@ -114,6 +114,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const memberManagerContract = useMemberContract();
 
   const removeAddress = useAutoCallback(async () => {
+    let hidePendingToast;
+
     try {
       removingAddressSet(true);
       let estimate;
@@ -139,6 +141,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
 
+      hidePendingToast = hidePending;
+
       const receipt = await library.waitForTransaction(tx.hash);
 
       if (receipt.status === 1) {
@@ -160,6 +164,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

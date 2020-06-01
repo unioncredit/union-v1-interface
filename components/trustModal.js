@@ -38,6 +38,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   const { setLabel } = useAddressLabels();
 
   const onSubmit = async (data, e) => {
+    let hidePendingToast;
+
     const { address, amount: rawAmount } = data;
 
     const amount = parseUnits(rawAmount, 18).toString();
@@ -81,6 +83,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
 
+      hidePendingToast = hidePending;
+
       if (open) toggle();
 
       const receipt = await library.waitForTransaction(tx.hash);
@@ -102,6 +106,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

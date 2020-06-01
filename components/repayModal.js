@@ -47,6 +47,8 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
   const flooredDaiBalance = roundDown(daiBalance);
 
   const onSubmit = async (values) => {
+    let hidePendingToast;
+
     const amountToRepay =
       values.amount === calculateMaxValue
         ? Number(values.amount * REPAY_MARGIN)
@@ -63,6 +65,8 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending;
 
       if (open) toggle();
 
@@ -82,6 +86,8 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

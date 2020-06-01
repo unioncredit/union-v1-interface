@@ -50,12 +50,16 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
   const addToast = useToast();
 
   const onSubmit = async (values) => {
+    let hidePendingToast;
+
     try {
       const tx = await stake(DAI, values.amount, library.getSigner(), chainId);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending;
 
       if (open) toggle();
 
@@ -75,6 +79,8 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

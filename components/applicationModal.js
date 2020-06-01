@@ -52,6 +52,8 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   });
 
   const submit = useAutoCallback(async () => {
+    let hidePendingToast;
+
     isSubmittingSet(true);
 
     let estimate;
@@ -73,6 +75,8 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
 
+      hidePendingToast = hidePending;
+
       if (isOpen) onDismiss();
 
       const receipt = await library.waitForTransaction(tx.hash);
@@ -93,6 +97,8 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       isSubmittingSet(false);
 
       const message = handleTxError(err);

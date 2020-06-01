@@ -34,6 +34,8 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const addToast = useToast();
 
   const onSubmit = async (data, e) => {
+    let hidePendingToast;
+
     try {
       if (formatNewTrust >= 0) {
         const tx = await adjustTrust(
@@ -47,6 +49,8 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
         const { hide: hidePending } = addToast(
           FLAVORS.TX_PENDING(tx.hash, chainId)
         );
+
+        hidePendingToast = hidePending;
 
         const receipt = await library.waitForTransaction(tx.hash);
 
@@ -65,6 +69,8 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
         throw new Error(receipt.logs[0]);
       }
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));

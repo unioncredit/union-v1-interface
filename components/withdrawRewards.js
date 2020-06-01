@@ -17,6 +17,8 @@ const WithdrawRewards = ({ onComplete }) => {
   const addToast = useToast();
 
   const onWithdrawRewards = useAutoCallback(async () => {
+    let hidePendingToast;
+
     setWithdrawing(true);
 
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
@@ -29,6 +31,8 @@ const WithdrawRewards = ({ onComplete }) => {
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending;
 
       const receipt = await library.waitForTransaction(tx.hash);
 
@@ -49,7 +53,10 @@ const WithdrawRewards = ({ onComplete }) => {
       throw new Error(receipt.logs[0]);
     } catch (err) {
       setWithdrawing(false);
+
       hideWaiting();
+
+      hidePendingToast();
 
       const message = handleTxError(err);
 

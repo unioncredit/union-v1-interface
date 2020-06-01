@@ -42,6 +42,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const stakingContract = useStakingContract();
 
   const onSubmit = async (values) => {
+    let hidePendingToast;
+
     try {
       const amount = parseUnits(values.amount, 18).toString();
 
@@ -50,6 +52,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
       );
+
+      hidePendingToast = hidePending;
 
       if (open) toggle();
 
@@ -69,6 +73,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
       throw new Error(receipt.logs[0]);
     } catch (err) {
+      hidePendingToast();
+
       const message = handleTxError(err);
 
       addToast(FLAVORS.TX_ERROR(message));
