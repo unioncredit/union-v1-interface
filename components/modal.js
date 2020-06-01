@@ -7,8 +7,10 @@ import Close, { CloseLarge } from "svgs/Close";
 
 export const CloseButton = ({ circle = false, large = false, ...rest }) => {
   const cachedClassNames = classNames(
-    "focus:outline-none focus:shadow-outline bg-white items-center justify-center inline-flex text-type-light",
-    circle ? "h-12 w-12 rounded-full shadow-button" : "h-6 w-6 rounded"
+    "focus:outline-none bg-white items-center justify-center inline-flex text-type-light",
+    circle
+      ? "h-12 w-12 rounded-full shadow-button focus:shadow-button-focus"
+      : "h-6 w-6 rounded focus:shadow-outline"
   );
 
   return (
