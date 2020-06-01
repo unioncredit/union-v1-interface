@@ -52,7 +52,7 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   });
 
   const submit = useAutoCallback(async () => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     isSubmittingSet(true);
 

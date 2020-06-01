@@ -34,7 +34,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const addToast = useToast();
 
   const onSubmit = async (data, e) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     try {
       if (formatNewTrust >= 0) {

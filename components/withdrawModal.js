@@ -42,7 +42,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const stakingContract = useStakingContract();
 
   const onSubmit = async (values) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     try {
       const amount = parseUnits(values.amount, 18).toString();

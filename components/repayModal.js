@@ -64,7 +64,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       : calculateBalanceOwed;
 
   const onSubmit = async (values) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     const amountToRepay =
       values.amount === calculateMaxValue

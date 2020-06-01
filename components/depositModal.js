@@ -50,7 +50,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
   const addToast = useToast();
 
   const onSubmit = async (values) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     try {
       const tx = await stake(DAI, values.amount, library.getSigner(), chainId);

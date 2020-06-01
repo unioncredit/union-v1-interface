@@ -38,7 +38,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   const { setLabel } = useAddressLabels();
 
   const onSubmit = async (data, e) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     const { address, amount: rawAmount } = data;
 

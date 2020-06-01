@@ -78,7 +78,7 @@ const BorrowModal = ({
   const addToast = useToast();
 
   const onSubmit = async (values) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     const { amount } = values;
 

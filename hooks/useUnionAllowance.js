@@ -45,7 +45,7 @@ export function useIncreaseUnionAllowance() {
   const contract = useUnionContract();
 
   const increase = useAutoCallback(async (amount) => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 

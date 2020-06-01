@@ -17,7 +17,7 @@ const WithdrawRewards = ({ onComplete }) => {
   const addToast = useToast();
 
   const onWithdrawRewards = useAutoCallback(async () => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     setWithdrawing(true);
 

@@ -114,7 +114,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const memberManagerContract = useMemberContract();
 
   const removeAddress = useAutoCallback(async () => {
-    let hidePendingToast;
+    let hidePendingToast = () => {};
 
     try {
       removingAddressSet(true);
