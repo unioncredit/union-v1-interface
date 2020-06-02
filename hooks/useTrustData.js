@@ -1,4 +1,5 @@
 import { isAddress } from "@ethersproject/address";
+import { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
@@ -36,9 +37,9 @@ const getTrust = (marketRegistryContract, memberContract) => async (
 
       const vouched = parseRes(res.vouchingAmount);
 
-      const used = parseRes(res.lockedStake, 18);
+      const used = parseRes(res.lockedStake);
 
-      const trust = parseRes(res.trustAmount, 18);
+      const trust = parseRes(res.trustAmount);
 
       const percentage =
         res.vouchingAmount > 0
