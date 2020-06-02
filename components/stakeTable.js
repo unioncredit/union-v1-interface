@@ -1,9 +1,10 @@
 import { useLearnMoreModalToggle } from "contexts/Application";
 import { useAddressModalToggle, useTrustModalToggle } from "contexts/Stake";
+import { useAutoCallback } from "hooks.macro";
 import useIsMember from "hooks/useIsMember";
 import useTrustData from "hooks/useTrustData";
 import { Fragment, useMemo, useState } from "react";
-import { useSortBy, useTable } from "react-table";
+import { useExpanded, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
@@ -66,7 +67,17 @@ const renderSortIcons = (column) => (
  * @param {import("react-table").ColumnInstance} column
  */
 const renderTheadColumns = (column) => {
-  const { Header } = column;
+  const { Header, id } = column;
+
+  if (id === "expander")
+    return (
+      <th
+        className="sm:hidden"
+        {...column.getHeaderProps(column.getSortByToggleProps())}
+      >
+        {column.render("Header")}
+      </th>
+    );
 
   if (Header === "Health")
     return (
@@ -123,6 +134,13 @@ const renderTbodyCells = (cell) => {
       </td>
     );
 
+  if (cell.column.id === "expander")
+    return (
+      <td className="w-8 sm:hidden" {...cell.getCellProps()}>
+        {cell.render("Cell")}
+      </td>
+    );
+
   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
 };
 
@@ -144,6 +162,22 @@ const StakeTable = () => {
 
   const memoizedColumns = useMemo(
     () => [
+      {
+        Header: () => null,
+        id: "expander",
+        Cell: ({ row }) => (
+          <button
+            className="h-6 w-6 ml-0 my-1 mr-3 flex items-center justify-center focus:outline-none focus:shadow-outline rounded"
+            {...row.getToggleRowExpandedProps()}
+          >
+            {row.isExpanded ? (
+              <Chevron.Down size={16} />
+            ) : (
+              <Chevron.Right size={16} />
+            )}
+          </button>
+        ),
+      },
       {
         Header: "Address",
         accessor: "address",
@@ -169,19 +203,55 @@ const StakeTable = () => {
     return [];
   }, [data]);
 
+  const memoizedSortBy = useMemo(
+    () => [
+      { id: "expander", desc: true },
+      { id: "address", desc: true },
+      { id: "trust", desc: true },
+      { id: "used", desc: true },
+      { id: "health", desc: true },
+    ],
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
+    visibleColumns,
   } = useTable(
     {
       columns: memoizedColumns,
       data: memoizedData,
+      initialState: {
+        sortBy: memoizedSortBy,
+      },
+      disableSortRemove: true,
     },
-    useSortBy
+    useSortBy,
+    useExpanded
   );
+
+  const renderRowSubComponent = useAutoCallback((row) => {
+    const { vouched, used } = row.values;
+
+    return (
+      <div className="bg-border-light text-type-light -m-4 px-4 py-3">
+        <ul className="ml-10">
+          <li className="h-5 leading-tight flex justify-between items-center mb-3">
+            <p className="text-sm">Vouched</p>
+            <p>{Number(vouched).toFixed()} DAI</p>
+          </li>
+          <li className="h-5 leading-tight flex justify-between items-center">
+            <p className="text-sm">Used</p>
+            <p>{Number(used).toFixed()} DAI</p>
+          </li>
+        </ul>
+      </div>
+    );
+  });
 
   return (
     <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full">
@@ -197,14 +267,22 @@ const StakeTable = () => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr
-                {...row.getRowProps()}
-                className="focus:outline-none cursor-pointer"
-                onClick={handleRowClick(row)}
-                tabIndex={0}
-              >
-                {row.cells.map(renderTbodyCells)}
-              </tr>
+              <Fragment {...row.getRowProps()}>
+                <tr
+                  className="focus:outline-none cursor-pointer"
+                  onClick={handleRowClick(row)}
+                  tabIndex={0}
+                >
+                  {row.cells.map(renderTbodyCells)}
+                </tr>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      {renderRowSubComponent(row)}
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             );
           })}
         </tbody>

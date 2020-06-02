@@ -1,6 +1,7 @@
 import { useGetInvitedModalToggle } from "contexts/Application";
+import { useAutoCallback } from "hooks.macro";
 import { Fragment, useMemo } from "react";
-import { useSortBy, useTable, useExpanded } from "react-table";
+import { useExpanded, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
@@ -8,7 +9,6 @@ import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
-import { useAutoCallback } from "hooks.macro";
 
 const VouchTableEmptyState = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
@@ -180,6 +180,18 @@ const VouchTable = ({ data }) => {
     return [];
   }, [data]);
 
+  const memoizedSortBy = useMemo(
+    () => [
+      { id: "expander", desc: true },
+      { id: "address", desc: true },
+      { id: "percentage", desc: true },
+      { id: "vouched", desc: true },
+      { id: "available", desc: true },
+      { id: "health", desc: true },
+    ],
+    []
+  );
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -191,6 +203,10 @@ const VouchTable = ({ data }) => {
     {
       columns: memoizedColumns,
       data: memoizedData,
+      initialState: {
+        sortBy: memoizedSortBy,
+      },
+      disableSortRemove: true,
     },
     useSortBy,
     useExpanded
