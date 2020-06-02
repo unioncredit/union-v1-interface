@@ -1,3 +1,4 @@
+import { commify } from "@ethersproject/units";
 import { useDepositModalToggle, useWithdrawModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
@@ -101,7 +102,7 @@ const StakeCard = () => {
       <LabelPair
         labelColor="text-grey-pure"
         label="Wallet Balance"
-        value={Number(unionBalance).toFixed(3)}
+        value={commify(Number(unionBalance).toFixed(3))}
         valueType="UNION"
       />
 
