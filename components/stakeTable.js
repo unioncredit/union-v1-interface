@@ -76,9 +76,9 @@ const StakeTable = () => {
   );
 
   return (
-    <div className="bg-white border rounded p-4 sm:p-6 h-full">
-      <table {...getTableProps()}>
-        <thead>
+    <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full">
+      <table className="w-full border-none" {...getTableProps()}>
+        <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
