@@ -3,7 +3,6 @@ import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import { getTrust } from "./contracts/getTrust";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
 import useMemberContract from "./useMemberContract";
