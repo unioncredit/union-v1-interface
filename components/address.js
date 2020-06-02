@@ -14,8 +14,8 @@ const Address = ({ address, withLabel, copyable = false }) => {
   const handleCopyAddress = () => copy(address);
 
   const cachedClassNames = classNames(
-    "font-medium focus:outline-none focus:underline flex text-left",
-    copyable ? "" : "cursor-inherit"
+    "font-medium focus:outline-none flex text-left",
+    copyable ? "focus:underline" : "cursor-inherit"
   );
 
   const { getLabel } = useAddressLabels();
