@@ -43,20 +43,6 @@ strong {
   @apply font-semibold;
 }
 
-table {
-  @apply w-full border-none;
-}
-
-table thead {
-  display: none;
-}
-
-@media (width >= 600px) {
-  table thead {
-    display: table-header-group;
-  }
-}
-
 .error-triangle {
   position: relative;
 }
@@ -157,7 +143,13 @@ table td {
 }
 
 .container {
-  @apply w-full px-6 mx-auto max-w-screen-lg-gutter;
+  @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
+}
+
+@media (width >= 768px) {
+  .container {
+    @apply px-6;
+  }
 }
 
 .container-sm {
