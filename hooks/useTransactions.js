@@ -40,8 +40,6 @@ const getTransactions = (marketRegistryContract) => async (
 
       const logData = marketContract.interface.parseLog(log);
 
-      console.log(logData);
-
       const [account, amount] = logData.args;
 
       return {
@@ -57,8 +55,6 @@ const getTransactions = (marketRegistryContract) => async (
       const block = await signer.provider.getBlock(log.blockNumber);
 
       const logData = marketContract.interface.parseLog(log);
-
-      console.log(logData);
 
       const [account, amount, fee] = logData.args;
 
