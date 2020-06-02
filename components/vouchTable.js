@@ -9,6 +9,20 @@ import Button from "./button";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 
+const VouchTableEmptyState = () => {
+  const toggleGetInvitedModal = useGetInvitedModalToggle();
+
+  return (
+    <div className="flex items-center flex-col my-6 sm:mt-16 sm:mb-12">
+      <img src="/images/table-empty.svg" alt="" />
+      <p className="text-lg sm:text-xl text-center mt-6  mb-4 sm:mb-6 max-w-md">
+        You need 3 people to vouch for you
+      </p>
+      <Button onClick={toggleGetInvitedModal}>Get invited</Button>
+    </div>
+  );
+};
+
 /**
  * @name renderHeadRowSorting
  * @param {import("react-table").ColumnInstance} column
@@ -101,8 +115,6 @@ const renderTbodyCells = (cell) => {
 };
 
 const VouchTable = ({ data }) => {
-  const toggleGetInvitedModal = useGetInvitedModalToggle();
-
   const memoizedColumns = useMemo(
     () => [
       {
@@ -159,7 +171,7 @@ const VouchTable = ({ data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {rows.map((row) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>{row.cells.map(renderTbodyCells)}</tr>
@@ -168,15 +180,7 @@ const VouchTable = ({ data }) => {
         </tbody>
       </table>
 
-      {rows.length === 0 && (
-        <div className="flex items-center flex-col my-6 sm:mt-16 sm:mb-12">
-          <img src="/images/table-empty.svg" alt="" />
-          <p className="text-lg sm:text-xl text-center mt-6  mb-4 sm:mb-6 max-w-md">
-            You need 3 people to vouch for you
-          </p>
-          <Button onClick={toggleGetInvitedModal}>Get invited</Button>
-        </div>
-      )}
+      {rows.length === 0 && <VouchTableEmptyState />}
     </div>
   );
 };
