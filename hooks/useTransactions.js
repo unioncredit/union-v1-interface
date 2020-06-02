@@ -1,4 +1,5 @@
 import { isAddress } from "@ethersproject/address";
+import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
