@@ -76,7 +76,7 @@ const renderTbodyCells = ({
 
   if (Header === "Percentage")
     return (
-      <td className="hidden sm:table-cell" {...getCellProps()}>
+      <td {...getCellProps()}>
         <span>{toPercent(value)}</span>
       </td>
     );
@@ -90,7 +90,7 @@ const renderTbodyCells = ({
 
   if (Header === "Health")
     return (
-      <td {...getCellProps()}>
+      <td className="hidden sm:table-cell" {...getCellProps()}>
         <HealthBar health={value} />
       </td>
     );
