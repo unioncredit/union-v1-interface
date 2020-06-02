@@ -1,25 +1,87 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
-import fetcher from "lib/fetcher";
+import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
+import parseRes from "util/parseRes";
+import { getTrust } from "./contracts/getTrust";
 import useCurrentToken from "./useCurrentToken";
+import useMarketRegistryContract from "./useMarketRegistryContract";
+import useMemberContract from "./useMemberContract";
+
+const getTrust = (marketRegistryContract, memberContract) => async (
+  _,
+  account,
+  tokenAddress,
+  library
+) => {
+  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+
+  const marketContract = new Contract(
+    marketAddress,
+    LENDING_MARKET_ABI,
+    library.getSigner()
+  );
+
+  const addresses = await memberContract.getBorrowerAddresses(
+    account,
+    tokenAddress
+  );
+
+  const data = await Promise.all(
+    addresses.map(async (address) => {
+      const res = await memberContract.getBorrowerAsset(
+        account,
+        address,
+        tokenAddress
+      );
+
+      const vouched = parseRes(res.vouchingAmount);
+
+      const used = parseRes(res.lockedStake, 18);
+
+      const trust = parseRes(res.trustAmount, 18);
+
+      const percentage =
+        res.vouchingAmount > 0
+          ? parseFloat(res.lockedStake / res.vouchingAmount)
+          : 0;
+
+      const isOverdue = await marketContract.checkIsOverdue(account);
+
+      const health = isOverdue ? 0 : ((vouched - used) / vouched) * 100;
+
+      return {
+        address,
+        health,
+        percentage,
+        trust,
+        used,
+        vouched,
+      };
+    })
+  );
+
+  return data;
+};
 
 export default function useTrustData() {
-  const { library, account, chainId } = useWeb3React();
+  const { library, account } = useWeb3React();
 
   const curToken = useCurrentToken();
 
+  const marketRegistryContract = useMarketRegistryContract();
+
+  const memberContract = useMemberContract();
+
   const shouldFetch =
-    typeof chainId === "number" &&
+    !!marketRegistryContract &&
+    !!memberContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
-    !!library
-      ? true
-      : false;
+    !!library;
 
   return useSWR(
-    shouldFetch ? ["trust", account, curToken, library, chainId] : null,
-    (key, account, curToken, library, chainId) =>
-      fetcher(key, { account, curToken, library, chainId })
+    shouldFetch ? ["Trust", account, curToken, library] : null,
+    getTrust(marketRegistryContract, memberContract)
   );
 }

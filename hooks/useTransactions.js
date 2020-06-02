@@ -85,6 +85,7 @@ const getTransactions = (contract) => async (
 
 export default function useTransactions() {
   const { account, library } = useWeb3React();
+
   const curToken = useCurrentToken();
 
   const marketRegistryContract = useMarketRegistryContract();
