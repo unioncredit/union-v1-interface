@@ -8,7 +8,7 @@ import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
 
-const getTransactions = (contract) => async (
+const getTransactions = (marketRegistryContract) => async (
   _,
   account,
   tokenAddress,
@@ -16,7 +16,7 @@ const getTransactions = (contract) => async (
 ) => {
   const signer = library.getSigner();
 
-  const marketAddress = await contract.tokens(tokenAddress);
+  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
   const marketContract = new Contract(
     marketAddress,
