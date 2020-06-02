@@ -14,7 +14,12 @@ const PercentageBar = ({ value, index }) => {
           background: ${pastels[index]};
           min-width: 1rem;
           width: ${value * 100}px;
-          max-width: 100px;
+          max-width: 72px;
+        }
+        @media screen and (min-width: 768px) {
+          .bar {
+            max-width: 96px;
+          }
         }
       `}</style>
     </div>

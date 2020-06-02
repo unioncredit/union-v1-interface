@@ -66,7 +66,7 @@ table th:last-of-type > .flex {
   @apply justify-end;
 }
 table td {
-  @apply py-4 border-b;
+  @apply py-4 px-0 border-b;
 }
 
 @tailwind components;

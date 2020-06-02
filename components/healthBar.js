@@ -30,14 +30,22 @@ const HealthBar = ({ health, width = 96 }) => {
         div {
           background-color: var(--track);
           min-width: ${width}px;
-          max-width: 128px;
-          border-radius: 1px;
-          height: 14px;
+          max-width: 96px;
+          border-radius: 2px;
+          overflow: hidden;
+          height: 16px;
         }
+
+        @media screen and (min-width: 768px) {
+          div {
+            max-width: 128px;
+          }
+        }
+
         span {
           background-color: var(--fill);
           width: ${inner}%;
-          height: 14px;
+          height: 16px;
         }
       `}</style>
     </div>

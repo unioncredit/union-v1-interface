@@ -1,6 +1,6 @@
 import { useGetInvitedModalToggle } from "contexts/Application";
 import { Fragment, useMemo } from "react";
-import { useSortBy, useTable } from "react-table";
+import { useSortBy, useTable, useExpanded } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
@@ -8,6 +8,7 @@ import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
+import { useAutoCallback } from "hooks.macro";
 
 const VouchTableEmptyState = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
@@ -46,7 +47,17 @@ const renderSortIcons = (column) => (
  * @param {import("react-table").ColumnInstance} column
  */
 const renderTheadColumns = (column) => {
-  const { Header } = column;
+  const { Header, id } = column;
+
+  if (id === "expander")
+    return (
+      <th
+        className="sm:hidden"
+        {...column.getHeaderProps(column.getSortByToggleProps())}
+      >
+        {column.render("Header")}
+      </th>
+    );
 
   if (Header === "Health")
     return (
@@ -111,12 +122,35 @@ const renderTbodyCells = (cell) => {
       </td>
     );
 
+  if (cell.column.id === "expander")
+    return (
+      <td className="w-8 sm:hidden" {...cell.getCellProps()}>
+        {cell.render("Cell")}
+      </td>
+    );
+
   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
 };
 
 const VouchTable = ({ data }) => {
   const memoizedColumns = useMemo(
     () => [
+      {
+        Header: () => null,
+        id: "expander",
+        Cell: ({ row }) => (
+          <button
+            className="h-6 w-6 ml-0 my-1 mr-3 flex items-center justify-center focus:outline-none focus:shadow-outline rounded"
+            {...row.getToggleRowExpandedProps()}
+          >
+            {row.isExpanded ? (
+              <Chevron.Down size={16} />
+            ) : (
+              <Chevron.Right size={16} />
+            )}
+          </button>
+        ),
+      },
       {
         Header: "Address",
         accessor: "address",
@@ -152,13 +186,38 @@ const VouchTable = ({ data }) => {
     headerGroups,
     rows,
     prepareRow,
+    visibleColumns,
   } = useTable(
     {
       columns: memoizedColumns,
       data: memoizedData,
     },
-    useSortBy
+    useSortBy,
+    useExpanded
   );
+
+  const renderRowSubComponent = useAutoCallback((row) => {
+    const { vouched, available, health } = row.values;
+
+    return (
+      <div className="bg-border-light text-type-light -m-4 px-4 py-3">
+        <ul className="ml-10">
+          <li className="h-5 leading-tight flex justify-between items-center mb-3">
+            <p className="text-sm">Vouched</p>
+            <p>{Number(vouched).toFixed()} DAI</p>
+          </li>
+          <li className="h-5 leading-tight flex justify-between items-center mb-3">
+            <p className="text-sm">Available</p>
+            <p>{Number(available).toFixed()} DAI</p>
+          </li>
+          <li className="h-5 leading-tight flex justify-between items-center">
+            <p className="text-sm">Health</p>
+            <HealthBar health={health} />
+          </li>
+        </ul>
+      </div>
+    );
+  });
 
   return (
     <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full">
@@ -174,7 +233,16 @@ const VouchTable = ({ data }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>{row.cells.map(renderTbodyCells)}</tr>
+              <Fragment {...row.getRowProps()}>
+                <tr>{row.cells.map(renderTbodyCells)}</tr>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns.length}>
+                      {renderRowSubComponent(row)}
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             );
           })}
         </tbody>
