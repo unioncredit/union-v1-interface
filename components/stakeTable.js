@@ -1,7 +1,7 @@
 import { useLearnMoreModalToggle } from "contexts/Application";
 import { useAddressModalToggle, useTrustModalToggle } from "contexts/Stake";
-import { useTrustData } from "hooks/swrHooks";
 import useIsMember from "hooks/useIsMember";
+import useTrustData from "hooks/useTrustData";
 import { useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
