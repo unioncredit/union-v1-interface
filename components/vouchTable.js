@@ -1,13 +1,13 @@
 import { useGetInvitedModalToggle } from "contexts/Application";
-import { useMemo, Fragment } from "react";
+import { Fragment, useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
-import { toPercent } from "util/numbers";
 import Address from "./address";
 import Button from "./button";
 import HealthBar from "./healthBar";
+import PercentageBar from "./percentageBar";
 
 /**
  * @name renderHeadRowSorting
@@ -32,7 +32,9 @@ const renderSortIcons = (column) => (
  * @param {import("react-table").ColumnInstance} column
  */
 const renderTheadColumns = (column) => {
-  if (column.Header === "Health")
+  const { Header } = column;
+
+  if (Header === "Health")
     return (
       <th {...column.getHeaderProps(column.getSortByToggleProps())}>
         <div className="flex items-center">
@@ -61,41 +63,41 @@ const renderTheadColumns = (column) => {
  * @name renderTbodyCells
  * @param {import("react-table").Cell} cell
  */
-const renderTbodyCells = ({
-  getCellProps,
-  render,
-  value,
-  column: { Header },
-}) => {
+const renderTbodyCells = (cell) => {
+  const {
+    column: { Header },
+    row: { index },
+  } = cell;
+
   if (Header === "Address")
     return (
-      <td {...getCellProps()}>
-        <Address address={value} copyable />
+      <td {...cell.getCellProps()}>
+        <Address address={cell.value} copyable />
       </td>
     );
 
   if (Header === "Percentage")
     return (
-      <td {...getCellProps()}>
-        <span>{toPercent(value)}</span>
+      <td {...cell.getCellProps()}>
+        <PercentageBar value={cell.value} index={index} />
       </td>
     );
 
   if (Header === "Available Vouch" || Header === "Set Vouch")
     return (
-      <td className="hidden sm:table-cell" {...getCellProps()}>
-        <span>{value} DAI</span>
+      <td className="hidden sm:table-cell" {...cell.getCellProps()}>
+        <span>{cell.value} DAI</span>
       </td>
     );
 
   if (Header === "Health")
     return (
-      <td className="hidden sm:table-cell" {...getCellProps()}>
-        <HealthBar health={value} />
+      <td className="hidden sm:table-cell" {...cell.getCellProps()}>
+        <HealthBar health={cell.value} />
       </td>
     );
 
-  return <td {...getCellProps()}>{render("Cell")}</td>;
+  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
 };
 
 const VouchTable = ({ data }) => {
