@@ -6,9 +6,7 @@ import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import Address from "./address";
-import AddressModal, {
-  useAddressModalToggle,
-} from "./AddressModal/addressModal";
+import AddressModal, { useAddressModalToggle } from "./AddressModal";
 import Button from "./button";
 import HealthBar from "./healthBar";
 import { useLearnMoreModalToggle } from "./LearnMoreModal";
