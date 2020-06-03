@@ -1,16 +1,10 @@
-import safeAccess from "util/safeAccess";
-import { useWeb3React } from "@web3-react/core";
 import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useReducer,
 } from "react";
-
-const BLOCK_NUMBER = "BLOCK_NUMBER";
-const UPDATE_BLOCK_NUMBER = "UPDATE_BLOCK_NUMBER";
 
 const WALLET_MODAL_OPEN = "WALLET_MODAL_OPEN";
 const TOGGLE_WALLET_MODAL = "TOGGLE_WALLET_MODAL";
@@ -42,16 +36,6 @@ function useApplicationContext() {
 
 function reducer(state, { type, payload }) {
   switch (type) {
-    case UPDATE_BLOCK_NUMBER: {
-      const { networkId, blockNumber } = payload;
-      return {
-        ...state,
-        [BLOCK_NUMBER]: {
-          ...(safeAccess(state, [BLOCK_NUMBER]) || {}),
-          [networkId]: blockNumber,
-        },
-      };
-    }
     case TOGGLE_WALLET_MODAL: {
       return { ...state, [WALLET_MODAL_OPEN]: !state[WALLET_MODAL_OPEN] };
     }
@@ -81,20 +65,12 @@ function reducer(state, { type, payload }) {
 
 export default function Provider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    [BLOCK_NUMBER]: {},
     [WALLET_MODAL_OPEN]: false,
     [EMAIL_MODAL_OPEN]: false,
     [GET_INVITED_MODAL]: false,
     [LEARN_MORE_MODAL]: false,
     [WALLET_MODAL_VIEW]: WALLET_VIEWS.CREATE,
   });
-
-  const updateBlockNumber = useCallback((networkId, blockNumber) => {
-    dispatch({
-      type: UPDATE_BLOCK_NUMBER,
-      payload: { networkId, blockNumber },
-    });
-  }, []);
 
   const toggleWalletModal = useCallback(() => {
     dispatch({ type: TOGGLE_WALLET_MODAL });
@@ -125,7 +101,6 @@ export default function Provider({ children }) {
         () => [
           state,
           {
-            updateBlockNumber,
             toggleWalletModal,
             toggleEmailModal,
             toggleGetInvitedModal,
@@ -135,7 +110,6 @@ export default function Provider({ children }) {
         ],
         [
           state,
-          updateBlockNumber,
           toggleWalletModal,
           toggleEmailModal,
           toggleGetInvitedModal,
@@ -150,53 +124,6 @@ export default function Provider({ children }) {
 }
 
 Provider.displayName = "ApplicationProvider";
-
-export function Updater() {
-  const { library, chainId } = useWeb3React();
-
-  const [, { updateBlockNumber }] = useApplicationContext();
-
-  // update block number
-  useEffect(() => {
-    if (library) {
-      let stale = false;
-
-      function update() {
-        library
-          .getBlockNumber()
-          .then((blockNumber) => {
-            if (!stale) {
-              updateBlockNumber(chainId, blockNumber);
-            }
-          })
-          .catch(() => {
-            if (!stale) {
-              updateBlockNumber(chainId, null);
-            }
-          });
-      }
-
-      update();
-
-      library.on("block", update);
-
-      return () => {
-        stale = true;
-        library.removeListener("block", update);
-      };
-    }
-  }, [chainId, library, updateBlockNumber]);
-
-  return null;
-}
-
-export function useBlockNumber() {
-  const { chainId } = useWeb3React();
-
-  const [state] = useApplicationContext();
-
-  return safeAccess(state, [BLOCK_NUMBER, chainId]);
-}
 
 export function useWalletModalOpen() {
   const [state] = useApplicationContext();
