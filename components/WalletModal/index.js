@@ -6,14 +6,16 @@ import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
+import Button from "./button";
+import Modal from "./modal";
 import {
+  useToggleCreateModal,
+  useToggleSignInModal,
   useUpdateWalletModalView,
   useWalletModalOpen,
   useWalletModalToggle,
   useWalletModalView,
-} from "states/Application";
-import Button from "./button";
-import Modal from "./modal";
+} from "./state";
 
 const isMetaMask =
   typeof window !== "undefined" &&
@@ -258,3 +260,12 @@ const WalletModal = () => {
 };
 
 export default WalletModal;
+
+export {
+  useUpdateWalletModalView,
+  useWalletModalOpen,
+  useWalletModalToggle,
+  useWalletModalView,
+  useToggleCreateModal,
+  useToggleSignInModal,
+};

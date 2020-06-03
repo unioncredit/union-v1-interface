@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import { useGetInvitedModalToggle } from "states/Application";
 import useTrustCountData from "hooks/useTrustCountData";
 import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
 import ApplicationModal from "./applicationModal";
 import Button from "./button";
+import { useGetInvitedModalToggle } from "./GetInvitedModal";
 import SuccessModal from "./successModal";
 
 const ApplicationCard = () => {

@@ -1,9 +1,8 @@
-import {
-  getInvitedModalState,
-  learnMoreModalState,
-  walletModalState,
-  walletModalViewState,
-} from "./states";
+import { newRidgeState } from "react-ridge-state";
+
+const walletModalViewState = newRidgeState("CREATE");
+
+const walletModalState = newRidgeState(false);
 
 /**
  * @name useWalletModalView
@@ -15,9 +14,6 @@ export function useWalletModalView() {
   return state;
 }
 
-/**
- * @name useUpdateWalletModalView
- */
 export function useUpdateWalletModalView() {
   const [, setState] = walletModalViewState.use();
 
@@ -35,18 +31,12 @@ export function useUpdateWalletModalView() {
   };
 }
 
-/**
- * @name useWalletModalOpen
- */
 export function useWalletModalOpen() {
   const state = walletModalState.useValue();
 
   return state;
 }
 
-/**
- * @name useWalletModalToggle
- */
 export function useWalletModalToggle() {
   const [state, setState] = walletModalState.use();
 
@@ -57,9 +47,6 @@ export function useWalletModalToggle() {
   return toggle;
 }
 
-/**
- * @name useToggleSignInModal
- */
 export function useToggleSignInModal() {
   const toggleWalletModal = useWalletModalToggle();
   const { setWalletViewSignIn } = useUpdateWalletModalView();
@@ -72,9 +59,6 @@ export function useToggleSignInModal() {
   return toggle;
 }
 
-/**
- * @name useToggleCreateModal
- */
 export function useToggleCreateModal() {
   const toggleWalletModal = useWalletModalToggle();
   const { setWalletViewCreate } = useUpdateWalletModalView();
@@ -82,50 +66,6 @@ export function useToggleCreateModal() {
   const toggle = () => {
     setWalletViewCreate();
     toggleWalletModal();
-  };
-
-  return toggle;
-}
-
-/**
- * @name useGetInvitedModalOpen
- */
-export function useGetInvitedModalOpen() {
-  const state = getInvitedModalState.useValue();
-
-  return state;
-}
-
-/**
- * @name useGetInvitedModalToggle
- */
-export function useGetInvitedModalToggle() {
-  const [state, setState] = getInvitedModalState.use();
-
-  const toggle = () => {
-    setState(!state);
-  };
-
-  return toggle;
-}
-
-/**
- * @name useLearnMoreModalOpen
- */
-export function useLearnMoreModalOpen() {
-  const state = learnMoreModalState.useValue();
-
-  return state;
-}
-
-/**
- * @name useLearnMoreModalToggle
- */
-export function useLearnMoreModalToggle() {
-  const [state, setState] = learnMoreModalState.use();
-
-  const toggle = () => {
-    setState(!state);
   };
 
   return toggle;

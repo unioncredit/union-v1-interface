@@ -1,9 +1,9 @@
-import { useToggleSignInModal } from "states/Application";
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import useENSName from "hooks/useENSName";
 import truncateAddress from "util/truncateAddress";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import Activity from "./activity";
 import Identicon from "./identicon";
+import { useToggleSignInModal } from "./walletModal";
 import Web3Button from "./web3Button";
 
 const Web3Connection = () => {

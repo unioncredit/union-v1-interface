@@ -1,4 +1,3 @@
-import { useToggleCreateModal, useToggleSignInModal } from "states/Application";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import Link from "next/link";
@@ -6,10 +5,13 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
 import EmailModal from "./EmailModal";
-import GetInvitedModal from "./getInvitedModal";
-import LearnMoreModal from "./learnMoreModal";
+import GetInvitedModal from "./GetInvitedModal";
+import LearnMoreModal from "./LearnMoreModal";
 import Logo from "./logo";
-import WalletModal from "./walletModal";
+import WalletModal, {
+  useToggleCreateModal,
+  useToggleSignInModal,
+} from "./walletModal";
 import Web3Status from "./web3Connection";
 
 const NavigationLink = ({ href, children, ...rest }) => {

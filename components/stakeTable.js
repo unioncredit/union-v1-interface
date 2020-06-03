@@ -2,7 +2,6 @@ import useIsMember from "hooks/useIsMember";
 import useTrustData from "hooks/useTrustData";
 import { Fragment, useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
-import { useLearnMoreModalToggle } from "states/Application";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
@@ -12,6 +11,7 @@ import AddressModal, {
 } from "./AddressModal/addressModal";
 import Button from "./button";
 import HealthBar from "./healthBar";
+import { useLearnMoreModalToggle } from "./LearnMoreModal";
 import { useTrustModalToggle } from "./TrustModal";
 
 const StakeTableEmptyState = () => {

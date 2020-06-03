@@ -1,15 +1,12 @@
-import {
-  useGetInvitedModalOpen,
-  useGetInvitedModalToggle,
-  useLearnMoreModalToggle,
-} from "states/Application";
-import generateLink from "util/generateLink";
 import { useWeb3React } from "@web3-react/core";
+import { useLearnMoreModalToggle } from "components/LearnMoreModal";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
+import generateLink from "util/generateLink";
 import Modal, { CloseButton } from "./modal";
+import { useGetInvitedModalOpen, useGetInvitedModalToggle } from "./state";
 import VouchLink from "./vouchLink";
 
 const generateTwitterLink = (shareLink) =>
@@ -130,3 +127,5 @@ const GetInvitedModal = () => {
 };
 
 export default GetInvitedModal;
+
+export { useGetInvitedModalOpen, useGetInvitedModalToggle };

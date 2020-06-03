@@ -1,7 +1,7 @@
+import { useLearnMoreModalToggle } from "components/LearnMoreModal";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
-import { useLearnMoreModalToggle } from "states/Application";
 import Chevron from "svgs/Chevron";
 import Button from "../button";
 import Modal, { CloseButton } from "../modal";
