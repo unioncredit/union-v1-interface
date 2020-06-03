@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import { useEmailModalOpen, useEmailModalToggle } from "contexts/Application";
+import { useEmailModalOpen, useEmailModalToggle } from "states/Application";
 import { setCookie } from "nookies";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

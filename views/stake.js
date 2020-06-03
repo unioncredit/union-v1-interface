@@ -3,7 +3,7 @@ import StakeCard from "components/stakeCard";
 import StakeTable from "components/stakeTable";
 import TrustModal from "components/trustModal";
 import TutorialModal from "components/tutorialModal";
-import { useEmailModalToggle } from "contexts/Application";
+import { useEmailModalToggle } from "states/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "contexts/Stake";
 import { useAutoEffect } from "hooks.macro";
 import useIsMember from "hooks/useIsMember";

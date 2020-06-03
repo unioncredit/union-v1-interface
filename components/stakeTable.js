@@ -1,4 +1,4 @@
-import { useLearnMoreModalToggle } from "contexts/Application";
+import { useLearnMoreModalToggle } from "states/Application";
 import { useAddressModalToggle, useTrustModalToggle } from "contexts/Stake";
 import useIsMember from "hooks/useIsMember";
 import useTrustData from "hooks/useTrustData";

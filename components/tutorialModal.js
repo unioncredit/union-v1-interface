@@ -1,4 +1,4 @@
-import { useLearnMoreModalToggle } from "contexts/Application";
+import { useLearnMoreModalToggle } from "states/Application";
 import { useTutorialModalOpen, useTutorialModalToggle } from "contexts/Stake";
 import { setCookie } from "nookies";
 import { Fragment } from "react";

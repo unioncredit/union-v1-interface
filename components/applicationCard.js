@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useGetInvitedModalToggle } from "contexts/Application";
+import { useGetInvitedModalToggle } from "states/Application";
 import useTrustCountData from "hooks/useTrustCountData";
 import { useToggle } from "react-use";
 import Info from "svgs/Info";

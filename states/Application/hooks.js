@@ -1,4 +1,10 @@
-import { walletModalState, walletModalViewState } from "./states";
+import {
+  emailModalState,
+  getInvitedModalState,
+  learnMoreModalState,
+  walletModalState,
+  walletModalViewState,
+} from "./states";
 
 /**
  * @name useWalletModalView
@@ -77,6 +83,72 @@ export function useToggleCreateModal() {
   const toggle = () => {
     setWalletViewCreate();
     toggleWalletModal();
+  };
+
+  return toggle;
+}
+
+/**
+ * @name useEmailModalOpen
+ */
+export function useEmailModalOpen() {
+  const state = emailModalState.useValue();
+
+  return state;
+}
+
+/**
+ * @name useEmailModalToggle
+ */
+export function useEmailModalToggle() {
+  const [state, setState] = emailModalState.use();
+
+  const toggle = () => {
+    setState(!state);
+  };
+
+  return toggle;
+}
+
+/**
+ * @name useGetInvitedModalOpen
+ */
+export function useGetInvitedModalOpen() {
+  const state = getInvitedModalState.useValue();
+
+  return state;
+}
+
+/**
+ * @name useGetInvitedModalToggle
+ */
+export function useGetInvitedModalToggle() {
+  const [state, setState] = getInvitedModalState.use();
+
+  const toggle = () => {
+    setState(!state);
+  };
+
+  return toggle;
+}
+
+/**
+ * @name useLearnMoreModalOpen
+ */
+export function useLearnMoreModalOpen() {
+  const state = learnMoreModalState.useValue();
+
+  return state;
+}
+
+/**
+ * @name useLearnMoreModalToggle
+ */
+export function useLearnMoreModalToggle() {
+  const [state, setState] = learnMoreModalState.use();
+
+  const toggle = () => {
+    setState(!state);
   };
 
   return toggle;

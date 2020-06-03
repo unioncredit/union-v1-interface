@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "contexts/Application";
+import { useGetInvitedModalToggle } from "states/Application";
 import { useAutoCallback } from "hooks.macro";
 import { Fragment, useMemo } from "react";
 import { useExpanded, useSortBy, useTable } from "react-table";
