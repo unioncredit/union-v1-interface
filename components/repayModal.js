@@ -13,6 +13,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
+import { parseUnits } from "@ethersproject/units";
 
 const RepayModal = ({ balanceOwed, onComplete }) => {
   const { library, chainId } = useWeb3React();
@@ -67,7 +68,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     let hidePendingToast = () => {};
 
     const amountToRepay =
-      values.amount === calculateMaxValue
+      Number(values.amount) === calculateMaxValue
         ? Number(values.amount * REPAY_MARGIN)
         : values.amount;
 
