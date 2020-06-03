@@ -1,7 +1,7 @@
 import VisuallyHidden from "@reach/visually-hidden";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
-import dyanmic from "next/dynamic";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Telegram from "svgs/Telegram";
@@ -16,7 +16,7 @@ import {
   useCreditRequestModalToggle,
 } from "./state";
 
-const QRCode = dyanmic(() => import("../shareQRCode"));
+const QRCode = dynamic(() => import("../shareQRCode"));
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;
 
