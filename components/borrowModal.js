@@ -1,53 +1,28 @@
-import { Contract } from "@ethersproject/contracts";
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
-import MARKET_REGISTRY_ABI from "constants/abis/marketRegistry.json";
-import { MARKET_REGISTRY_ADDRESSES } from "constants/variables";
 import { useBorrowModalOpen, useBorrowModalToggle } from "contexts/Borrow";
-import { useAutoCallback } from "hooks.macro";
-import useContract from "hooks/useContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { borrow } from "lib/contracts/borrow";
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
-import { roundUp, roundDown } from "util/numbers";
+import { roundDown, roundUp } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
 
-function useBorrow() {
-  const { library, chainId } = useWeb3React();
-  const curToken = useCurrentToken();
-
-  const marketRegistryContract = useContract(
-    MARKET_REGISTRY_ADDRESSES[chainId],
-    MARKET_REGISTRY_ABI
-  );
-
-  const addToast = useToast();
-
-  return useAutoCallback(async (amount) => {
-    const marketAddress = await marketRegistryContract.tokens(curToken);
-
-    const lendingMarketContract = new Contract(
-      marketAddress,
-      LENDING_MARKET_ABI,
-      library.getSigner()
-    );
-
-    const amountToBorrow = parseUnits(amount, 18).toString();
-
-    const tx = await lendingMarketContract.borrow(amountToBorrow);
-
-    await tx.wait();
-  });
-}
-
+/**
+ * @name BorrowModal
+ * @param {Object} props
+ * @param {Number} props.balanceOwed
+ * @param {Number} props.creditLimit
+ * @param {Number} props.fee
+ * @param {String} props.paymentDueDate
+ * @param {Promise<Void>} props.onComplete
+ */
 const BorrowModal = ({
   balanceOwed,
   creditLimit,
@@ -100,7 +75,7 @@ const BorrowModal = ({
 
         addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
-        onComplete();
+        await onComplete();
 
         return;
       }
@@ -234,6 +209,14 @@ const BorrowModal = ({
       </form>
     </Modal>
   );
+};
+
+BorrowModal.propTypes = {
+  balanceOwed: PropTypes.number.isRequired,
+  creditLimit: PropTypes.number.isRequired,
+  fee: PropTypes.number.isRequired,
+  onComplete: PropTypes.func.isRequired,
+  paymentDueDate: PropTypes.string.isRequired,
 };
 
 export default BorrowModal;

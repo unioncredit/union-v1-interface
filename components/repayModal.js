@@ -5,16 +5,22 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { repay } from "lib/contracts/repay";
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
-import { roundDown, roundUp } from "util/numbers";
+import { roundDown } from "util/numbers";
 import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 import Modal, { ModalHeader } from "./modal";
-import { parseUnits } from "@ethersproject/units";
 
+/**
+ * @name RepayModal
+ * @param {Object} props
+ * @param {Number} props.balanceOwed
+ * @param {Promise<Void>} props.onComplete
+ */
 const RepayModal = ({ balanceOwed, onComplete }) => {
   const { library, chainId } = useWeb3React();
   const curToken = useCurrentToken();
@@ -50,8 +56,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const calculateBalanceOwed =
-    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
+  const calculateBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
 
   const calculateNewBalance = calculateBalanceOwed - amount;
 
@@ -95,7 +100,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
         addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
-        onComplete();
+        await onComplete();
 
         return;
       }
@@ -183,6 +188,11 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       </form>
     </Modal>
   );
+};
+
+RepayModal.propTypes = {
+  balanceOwed: PropTypes.number.isRequired,
+  onComplete: PropTypes.func.isRequired,
 };
 
 export default RepayModal;

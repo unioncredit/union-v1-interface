@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { formatDueDate } from "util/formatDueDate";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
+import { roundUp } from "util/numbers";
 
 const getPaymentDue = async (account, chainId, contract, library) => {
   let due;
@@ -69,10 +70,8 @@ const getCreditLimit = (contract) => async (
 
   return {
     apr: Number(formatUnits(apr, 18)) * BLOCKS_PER_YEAR[chainId],
-    borrowed: Number(
-      (
-        Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
-      ).toFixed(2)
+    borrowed: roundUp(
+      Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
     ),
     fee: Number(formatUnits(fee, 18)),
     interest: Number(formatUnits(interest, 18)),
