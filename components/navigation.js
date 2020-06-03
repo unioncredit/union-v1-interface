@@ -1,18 +1,22 @@
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
-import EmailModal from "./EmailModal";
-import GetInvitedModal from "./GetInvitedModal";
-import LearnMoreModal from "./LearnMoreModal";
 import Logo from "./logo";
 import WalletModal, {
   useToggleCreateModal,
   useToggleSignInModal,
 } from "./WalletModal";
 import Web3Status from "./web3Connection";
+
+const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
+
+const LearnMoreModal = dynamic(() => import("./LearnMoreModal"));
+
+const EmailModal = dynamic(() => import("./EmailModal"));
 
 const NavigationLink = ({ href, children, ...rest }) => {
   const { pathname } = useRouter();
