@@ -1,20 +1,19 @@
 import { useWeb3React } from "@web3-react/core";
-import { useEmailModalOpen, useEmailModalToggle } from "states/Application";
+import { MESSAGE } from "constants/variables";
 import { setCookie } from "nookies";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
-import Button from "./button";
-import Input from "./input";
-import Modal from "./modal";
-
-const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
+import Button from "../button";
+import Input from "../input";
+import Modal from "../modal";
+import { useEmailModalOpen, useEmailModalToggle } from "./state";
 
 const EmailModal = () => {
   const open = useEmailModalOpen();
   const toggle = useEmailModalToggle();
 
-  const { library, account } = useWeb3React();
+  const { library } = useWeb3React();
 
   const { handleSubmit, register, formState, errors, reset } = useForm();
 
@@ -107,3 +106,4 @@ const EmailModal = () => {
 };
 
 export default EmailModal;
+export { useEmailModalOpen, useEmailModalToggle };

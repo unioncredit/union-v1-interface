@@ -1,5 +1,4 @@
 import {
-  emailModalState,
   getInvitedModalState,
   learnMoreModalState,
   walletModalState,
@@ -83,28 +82,6 @@ export function useToggleCreateModal() {
   const toggle = () => {
     setWalletViewCreate();
     toggleWalletModal();
-  };
-
-  return toggle;
-}
-
-/**
- * @name useEmailModalOpen
- */
-export function useEmailModalOpen() {
-  const state = emailModalState.useValue();
-
-  return state;
-}
-
-/**
- * @name useEmailModalToggle
- */
-export function useEmailModalToggle() {
-  const [state, setState] = emailModalState.use();
-
-  const toggle = () => {
-    setState(!state);
   };
 
   return toggle;

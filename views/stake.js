@@ -1,15 +1,14 @@
 import Button from "components/button";
+import { useEmailModalToggle } from "components/EmailModal";
 import StakeCard from "components/stakeCard";
 import StakeTable from "components/stakeTable";
 import TrustModal from "components/trustModal";
 import TutorialModal from "components/tutorialModal";
-import { useEmailModalToggle } from "states/Application";
 import { useTrustModalToggle, useTutorialModalToggle } from "contexts/Stake";
-import { useAutoEffect } from "hooks.macro";
 import useIsMember from "hooks/useIsMember";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 export default function StakeView() {
   const { query } = useRouter();
@@ -22,20 +21,20 @@ export default function StakeView() {
 
   const { data: isMember = false } = useIsMember();
 
-  useAutoEffect(() => {
+  useEffect(() => {
     if (!email_modal_completed) {
       toggleEmailModal();
     }
     if (!!email_modal_completed && !tutorial_modal_completed) {
       toggleTutorialModal();
     }
-  });
+  }, [email_modal_completed, tutorial_modal_completed]);
 
-  useAutoEffect(() => {
+  useEffect(() => {
     if (query.address || query.trust) {
       toggleTrustModal();
     }
-  });
+  }, [query]);
 
   return (
     <Fragment>

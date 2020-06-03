@@ -1,6 +1,4 @@
 export {
-  useEmailModalOpen,
-  useEmailModalToggle,
   useGetInvitedModalOpen,
   useGetInvitedModalToggle,
   useLearnMoreModalOpen,

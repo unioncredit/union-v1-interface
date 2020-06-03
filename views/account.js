@@ -1,12 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input from "components/input";
+import { MESSAGE } from "constants/variables";
+import useCopy from "hooks/useCopy";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
-import useCopy from "hooks/useCopy";
-
-const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 
 export default function AccountView() {
   const { library, account } = useWeb3React();

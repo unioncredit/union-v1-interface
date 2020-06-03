@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
-import EmailModal from "./emailModal";
+import EmailModal from "./EmailModal";
 import GetInvitedModal from "./getInvitedModal";
 import LearnMoreModal from "./learnMoreModal";
 import Logo from "./logo";
