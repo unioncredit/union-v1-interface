@@ -103,10 +103,6 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const label = getLabel(address);
 
-  const [copied, copy] = useCopy();
-
-  const handleCopyAddress = () => copy(address);
-
   const [removingAddress, removingAddressSet] = useState(false);
 
   const addToast = useToast();
