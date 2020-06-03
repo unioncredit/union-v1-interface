@@ -150,7 +150,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
             required: "Please fill out this field",
             max: {
               value: flooredDaiBalance,
-              message: `You have ${flooredDaiBalance} DAI in your wallet`,
+              message: "Not enough DAI in your wallet",
             },
             min: {
               value: 0.01,

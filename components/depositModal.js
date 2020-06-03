@@ -120,7 +120,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
             required: "Please fill out this field",
             max: {
               value: flooredDaiBalance,
-              message: `Value must be less than or equal to ${flooredDaiBalance}`,
+              message: "Not enough DAI in your wallet",
             },
             min: {
               value: 0.01,

@@ -117,7 +117,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
             required: "Please fill out this field",
             max: {
               value: withdrawableStake,
-              message: `Value must be less than or equal to ${withdrawableStake}`,
+              message: "Insuficient withdrawable stake",
             },
             min: {
               value: 0.01,

@@ -148,7 +148,7 @@ const BorrowModal = ({
             required: "Please fill out this field",
             max: {
               value: formatMax,
-              message: `Value must be less than or equal to ${formatMax}`,
+              message: "Not enough available credit",
             },
             min: {
               value: 1.0,
