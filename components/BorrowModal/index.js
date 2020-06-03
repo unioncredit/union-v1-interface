@@ -9,10 +9,10 @@ import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
 import { roundDown, roundUp } from "util/numbers";
-import Button from "./button";
-import Input from "./input";
-import LabelPair from "./labelPair";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import LabelPair from "../labelPair";
+import Modal, { ModalHeader } from "../modal";
 
 /**
  * @name BorrowModal

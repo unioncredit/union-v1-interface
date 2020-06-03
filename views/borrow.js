@@ -1,8 +1,8 @@
 import ApplicationCard from "components/applicationCard";
-import BorrowModal from "components/borrowModal";
+import BorrowModal from "components/BorrowModal";
 import Button from "components/button";
 import LabelPair from "components/labelPair";
-import RepayModal from "components/repayModal";
+import RepayModal from "components/RepayModal";
 import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import { useBorrowModalToggle, useRepayModalToggle } from "contexts/Borrow";

@@ -10,10 +10,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
-import Button from "./button";
-import Input from "./input";
-import LabelPair from "./labelPair";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import LabelPair from "../labelPair";
+import Modal, { ModalHeader } from "../modal";
 
 /**
  * @name RepayModal
