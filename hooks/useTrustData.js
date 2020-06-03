@@ -46,7 +46,7 @@ const getTrust = (marketRegistryContract, memberContract) => async (
           ? parseFloat(res.lockedStake / res.vouchingAmount)
           : 0;
 
-      const isOverdue = await marketContract.checkIsOverdue(account);
+      const isOverdue = await marketContract.checkIsOverdue(address);
 
       const health = isOverdue ? 0 : ((vouched - used) / vouched) * 100;
 
