@@ -1,14 +1,18 @@
 import { walletModalState, walletModalViewState } from "./states";
 
+/**
+ * @name useWalletModalView
+ * @returns {("SIGN_IN"|"CREATE")}
+ */
 export function useWalletModalView() {
-  /**
-   * @type {("SIGN_IN"|"CREATE")}
-   */
   const state = walletModalViewState.useValue();
 
   return state;
 }
 
+/**
+ * @name useUpdateWalletModalView
+ */
 export function useUpdateWalletModalView() {
   const [, setState] = walletModalViewState.use();
 
@@ -26,12 +30,18 @@ export function useUpdateWalletModalView() {
   };
 }
 
+/**
+ * @name useWalletModalOpen
+ */
 export function useWalletModalOpen() {
   const state = walletModalState.useValue();
 
   return state;
 }
 
+/**
+ * @name useWalletModalToggle
+ */
 export function useWalletModalToggle() {
   const [state, setState] = walletModalState.use();
 
@@ -42,6 +52,9 @@ export function useWalletModalToggle() {
   return toggle;
 }
 
+/**
+ * @name useToggleSignInModal
+ */
 export function useToggleSignInModal() {
   const toggleWalletModal = useWalletModalToggle();
   const { setWalletViewSignIn } = useUpdateWalletModalView();
@@ -54,6 +67,9 @@ export function useToggleSignInModal() {
   return toggle;
 }
 
+/**
+ * @name useToggleCreateModal
+ */
 export function useToggleCreateModal() {
   const toggleWalletModal = useWalletModalToggle();
   const { setWalletViewCreate } = useUpdateWalletModalView();
