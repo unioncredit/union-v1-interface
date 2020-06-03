@@ -106,4 +106,5 @@ const EmailModal = () => {
 };
 
 export default EmailModal;
+
 export { useEmailModalOpen, useEmailModalToggle };

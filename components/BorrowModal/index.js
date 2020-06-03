@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import { useBorrowModalOpen, useBorrowModalToggle } from "contexts/Borrow";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { borrow } from "lib/contracts/borrow";
@@ -13,6 +12,7 @@ import Button from "../button";
 import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
+import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
 
 /**
  * @name BorrowModal
@@ -220,3 +220,5 @@ BorrowModal.propTypes = {
 };
 
 export default BorrowModal;
+
+export { useBorrowModalOpen, useBorrowModalToggle };

@@ -4,7 +4,6 @@ import Footer from "components/footer";
 import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
 import AdminContext from "contexts/Admin";
-import BorrowContext from "contexts/Borrow";
 import StakeContext from "contexts/Stake";
 import VouchContext from "contexts/Vouch";
 import getLibrary from "lib/getLibrary";
@@ -12,13 +11,11 @@ import "../css/tailwind.css";
 import Error from "./_error";
 
 const ContextProviders = ({ children }) => (
-  <BorrowContext>
-    <VouchContext>
-      <StakeContext>
-        <AdminContext>{children}</AdminContext>
-      </StakeContext>
-    </VouchContext>
-  </BorrowContext>
+  <VouchContext>
+    <StakeContext>
+      <AdminContext>{children}</AdminContext>
+    </StakeContext>
+  </VouchContext>
 );
 
 export default function UnionApp({ Component, pageProps }) {

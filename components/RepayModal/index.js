@@ -1,6 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
-import { useRepayModalOpen, useRepayModalToggle } from "contexts/Borrow";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
@@ -14,6 +13,7 @@ import Button from "../button";
 import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
+import { useRepayModalOpen, useRepayModalToggle } from "./state";
 
 /**
  * @name RepayModal
@@ -196,3 +196,5 @@ RepayModal.propTypes = {
 };
 
 export default RepayModal;
+
+export { useRepayModalOpen, useRepayModalToggle };
