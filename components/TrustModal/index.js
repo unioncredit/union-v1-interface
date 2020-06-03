@@ -1,7 +1,6 @@
 import { isAddress } from "@ethersproject/address";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { useTrustModalOpen, useTrustModalToggle } from "contexts/Stake";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
@@ -11,9 +10,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
-import Button from "./button";
-import Input from "./input";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import Modal, { ModalHeader } from "../modal";
+import { useTrustModalOpen, useTrustModalToggle } from "./state";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
   const { chainId, account, library } = useWeb3React();
@@ -188,3 +188,5 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 };
 
 export default TrustModal;
+
+export { useTrustModalOpen, useTrustModalToggle };

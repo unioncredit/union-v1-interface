@@ -2,9 +2,10 @@ import Button from "components/button";
 import { useEmailModalToggle } from "components/EmailModal";
 import StakeCard from "components/stakeCard";
 import StakeTable from "components/stakeTable";
-import TrustModal from "components/trustModal";
-import TutorialModal from "components/tutorialModal";
-import { useTrustModalToggle, useTutorialModalToggle } from "contexts/Stake";
+import TrustModal, { useTrustModalToggle } from "components/TrustModal";
+import TutorialModal, {
+  useTutorialModalToggle,
+} from "components/TutorialModal";
 import useIsMember from "hooks/useIsMember";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
