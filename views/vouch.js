@@ -1,10 +1,11 @@
 import ApplicationCard from "components/applicationCard";
 import Button from "components/button";
-import CreditRequestModal from "components/creditRequestModal";
+import CreditRequestModal, {
+  useCreditRequestModalToggle,
+} from "components/CreditRequestModal";
 import LabelPair from "components/labelPair";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
-import { useCreditRequestModalToggle } from "contexts/Vouch";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useVouchData from "hooks/useVouchData";

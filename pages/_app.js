@@ -5,17 +5,14 @@ import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
 import AdminContext from "contexts/Admin";
 import StakeContext from "contexts/Stake";
-import VouchContext from "contexts/Vouch";
 import getLibrary from "lib/getLibrary";
 import "../css/tailwind.css";
 import Error from "./_error";
 
 const ContextProviders = ({ children }) => (
-  <VouchContext>
-    <StakeContext>
-      <AdminContext>{children}</AdminContext>
-    </StakeContext>
-  </VouchContext>
+  <StakeContext>
+    <AdminContext>{children}</AdminContext>
+  </StakeContext>
 );
 
 export default function UnionApp({ Component, pageProps }) {

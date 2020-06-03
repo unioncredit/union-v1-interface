@@ -1,8 +1,4 @@
-import {
-  useCreditRequestModalOpen,
-  useCreditRequestModalToggle,
-} from "contexts/Vouch";
-import generateLink from "util/generateLink";
+import VisuallyHidden from "@reach/visually-hidden";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import dyanmic from "next/dynamic";
@@ -10,13 +6,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
-import Button from "./button";
-import Input from "./input";
-import Modal, { ModalHeader } from "./modal";
-import VouchLink from "./vouchLink";
-import VisuallyHidden from "@reach/visually-hidden";
+import generateLink from "util/generateLink";
+import Button from "../button";
+import Input from "../input";
+import Modal, { ModalHeader } from "../modal";
+import VouchLink from "../vouchLink";
+import {
+  useCreditRequestModalOpen,
+  useCreditRequestModalToggle,
+} from "./state";
 
-const QRCode = dyanmic(() => import("./shareQRCode"));
+const QRCode = dyanmic(() => import("../shareQRCode"));
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;
 
@@ -137,3 +137,5 @@ const CreditRequestModal = () => {
 };
 
 export default CreditRequestModal;
+
+export { useCreditRequestModalOpen, useCreditRequestModalToggle };
