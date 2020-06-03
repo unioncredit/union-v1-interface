@@ -3,7 +3,7 @@ import useENSName from "hooks/useENSName";
 import truncateAddress from "util/truncateAddress";
 import Activity from "./activity";
 import Identicon from "./identicon";
-import { useToggleSignInModal } from "./walletModal";
+import { useToggleSignInModal } from "./WalletModal";
 import Web3Button from "./web3Button";
 
 const Web3Connection = () => {

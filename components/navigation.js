@@ -11,7 +11,7 @@ import Logo from "./logo";
 import WalletModal, {
   useToggleCreateModal,
   useToggleSignInModal,
-} from "./walletModal";
+} from "./WalletModal";
 import Web3Status from "./web3Connection";
 
 const NavigationLink = ({ href, children, ...rest }) => {
