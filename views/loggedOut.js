@@ -1,8 +1,5 @@
 import Button from "components/button";
-import {
-  useToggleCreateModal,
-  useToggleSignInModal,
-} from "contexts/Application";
+import { useToggleCreateModal, useToggleSignInModal } from "states/Application";
 
 export default function LoggedOutView() {
   const toggleSignInModal = useToggleSignInModal();

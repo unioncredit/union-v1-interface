@@ -1,7 +1,4 @@
-import {
-  useToggleCreateModal,
-  useToggleSignInModal,
-} from "contexts/Application";
+import { useToggleCreateModal, useToggleSignInModal } from "states/Application";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import Link from "next/link";
