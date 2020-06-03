@@ -43,7 +43,7 @@ const WithdrawRewards = ({ onComplete }) => {
 
         setWithdrawing(false);
 
-        onComplete();
+        await onComplete();
 
         return;
       }

@@ -88,7 +88,7 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
 
         isSubmittingSet(false);
 
-        onComplete();
+        await onComplete();
 
         return;
       }

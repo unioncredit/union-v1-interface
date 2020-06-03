@@ -42,10 +42,10 @@ const StakeCard = () => {
   const { upy = 0, rewards = 0, rewardsMultiplier = "0.00" } =
     !!rewardsData && rewardsData;
 
-  const onComplete = () => {
-    updateUnionBalance();
-    updateStakeData();
-    updateRewardsData();
+  const onComplete = async () => {
+    await updateUnionBalance();
+    await updateStakeData();
+    await updateRewardsData();
   };
 
   return (

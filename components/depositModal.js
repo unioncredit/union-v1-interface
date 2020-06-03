@@ -70,7 +70,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
         addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
-        onComplete();
+        await onComplete();
 
         return;
       }

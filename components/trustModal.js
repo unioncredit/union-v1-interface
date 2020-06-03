@@ -97,7 +97,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
         /**
          * @note Temp fix to update trust data after updating for now
          */
-        mutate(["trust", account, curToken, library, chainId]);
+        await mutate(["Trust", account, curToken, library]);
 
         return;
       }
