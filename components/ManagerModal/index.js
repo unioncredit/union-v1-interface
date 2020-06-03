@@ -1,8 +1,8 @@
-import { useManagerModalOpen, useManagerModalToggle } from "contexts/Admin";
 import { useForm } from "react-hook-form";
-import Button from "./button";
-import Input from "./input";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import Modal, { ModalHeader } from "../modal";
+import { useManagerModalOpen, useManagerModalToggle } from "./state";
 
 const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
   const open = useManagerModalOpen();
@@ -53,3 +53,5 @@ const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
 };
 
 export default ManagerModal;
+
+export { useManagerModalOpen, useManagerModalToggle };

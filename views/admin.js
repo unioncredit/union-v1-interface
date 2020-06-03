@@ -1,22 +1,21 @@
-import Button from "components/button";
-import ManagerModal from "components/managerModal";
-import MarketModal from "components/marketModal";
-import { BLOCKS_PER_YEAR } from "constants/variables";
-import { useManagerModalToggle, useMarketModalToggle } from "contexts/Admin";
 import { formatUnits } from "@ethersproject/units";
-import useCurrentToken from "hooks/useCurrentToken";
-import useIsAdmin from "hooks/useIsAdmin";
+import { useWeb3React } from "@web3-react/core";
+import BigNumber from "bignumber.js/bignumber.mjs";
+import Button from "components/button";
+import ManagerModal, { useManagerModalToggle } from "components/ManagerModal";
+import MarketModal, { useMarketModalToggle } from "components/MarketModal";
+import ABI from "constants/abis/IInterestRateModel.json";
+import { BLOCKS_PER_YEAR } from "constants/variables";
+import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import useAssetContract from "hooks/useAssetContract";
 import useCompoundContract from "hooks/useCompoundContract";
+import useCurrentToken from "hooks/useCurrentToken";
+import useIsAdmin from "hooks/useIsAdmin";
 import useMarketContract from "hooks/useMarketContract";
 import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
 import useUnionContract from "hooks/useUnionContract";
-import { useWeb3React } from "@web3-react/core";
-import BigNumber from "bignumber.js/bignumber.mjs";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import { Fragment, useState } from "react";
-import ABI from "constants/abis/IInterestRateModel.json";
 import getContract from "util/getContract";
 
 const parseRes = (res, decimals = 2) =>

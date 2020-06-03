@@ -3,16 +3,13 @@ import ErrorBoundary from "components/errorBoundary";
 import Footer from "components/footer";
 import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
-import AdminContext from "contexts/Admin";
 import StakeContext from "contexts/Stake";
 import getLibrary from "lib/getLibrary";
 import "../css/tailwind.css";
 import Error from "./_error";
 
 const ContextProviders = ({ children }) => (
-  <StakeContext>
-    <AdminContext>{children}</AdminContext>
-  </StakeContext>
+  <StakeContext>{children}</StakeContext>
 );
 
 export default function UnionApp({ Component, pageProps }) {
