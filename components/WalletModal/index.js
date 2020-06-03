@@ -6,8 +6,8 @@ import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import Button from "./button";
-import Modal from "./modal";
+import Button from "../button";
+import Modal from "../modal";
 import {
   useToggleCreateModal,
   useToggleSignInModal,
