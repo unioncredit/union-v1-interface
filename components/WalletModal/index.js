@@ -1,19 +1,21 @@
 import { useWeb3React } from "@web3-react/core";
-import {
-  useUpdateWalletModalView,
-  useWalletModalOpen,
-  useWalletModalToggle,
-  useWalletModalView,
-} from "contexts/Application";
 import { useAutoEffect } from "hooks.macro";
-import useEagerConnect, { useLogout, useLogin } from "hooks/useEagerConnect";
+import useEagerConnect, { useLogin, useLogout } from "hooks/useEagerConnect";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
-import Button from "./button";
-import Modal from "./modal";
+import Button from "../button";
+import Modal from "../modal";
+import {
+  useToggleCreateModal,
+  useToggleSignInModal,
+  useUpdateWalletModalView,
+  useWalletModalOpen,
+  useWalletModalToggle,
+  useWalletModalView,
+} from "./state";
 
 const isMetaMask =
   typeof window !== "undefined" &&
@@ -258,3 +260,12 @@ const WalletModal = () => {
 };
 
 export default WalletModal;
+
+export {
+  useUpdateWalletModalView,
+  useWalletModalOpen,
+  useWalletModalToggle,
+  useWalletModalView,
+  useToggleCreateModal,
+  useToggleSignInModal,
+};

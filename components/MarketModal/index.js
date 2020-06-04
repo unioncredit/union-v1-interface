@@ -1,8 +1,8 @@
-import { useMarketModalOpen, useMarketModalToggle } from "contexts/Admin";
 import { useForm } from "react-hook-form";
-import Button from "./button";
-import Input from "./input";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import Modal, { ModalHeader } from "../modal";
+import { useMarketModalOpen, useMarketModalToggle } from "./state";
 
 const MarketModal = ({
   onSetOriginationFee,
@@ -112,3 +112,5 @@ const MarketModal = ({
 };
 
 export default MarketModal;
+
+export { useMarketModalOpen, useMarketModalToggle };

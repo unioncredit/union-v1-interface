@@ -7006,6 +7006,11 @@ react-remove-scroll@^2.3.0:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
+react-ridge-state@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-ridge-state/-/react-ridge-state-4.0.0.tgz#63ec8943cb99b852dbf933d7a1a44e43af9eb307"
+  integrity sha512-hptuARpVa8M4v0h9tkC5DRvxi1gHd3aEpR45gmBQB2zVxbDySEyOyl8V/B6XwPQ/ZU+/vtM0KX+e4SAocCO/+g==
+
 react-style-singleton@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.1.0.tgz#7396885332e9729957f9df51f08cadbfc164e1c4"

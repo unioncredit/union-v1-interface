@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import { useBorrowModalOpen, useBorrowModalToggle } from "contexts/Borrow";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { borrow } from "lib/contracts/borrow";
@@ -9,10 +8,11 @@ import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import handleTxError from "util/handleTxError";
 import { roundDown, roundUp } from "util/numbers";
-import Button from "./button";
-import Input from "./input";
-import LabelPair from "./labelPair";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import Input from "../input";
+import LabelPair from "../labelPair";
+import Modal, { ModalHeader } from "../modal";
+import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
 
 /**
  * @name BorrowModal
@@ -220,3 +220,5 @@ BorrowModal.propTypes = {
 };
 
 export default BorrowModal;
+
+export { useBorrowModalOpen, useBorrowModalToggle };

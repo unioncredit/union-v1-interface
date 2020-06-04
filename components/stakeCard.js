@@ -1,5 +1,4 @@
 import { commify } from "@ethersproject/units";
-import { useDepositModalToggle, useWithdrawModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
@@ -12,9 +11,9 @@ import {
   withdrawableStakeTip,
 } from "../text/tooltips";
 import Button from "./button";
-import DepositModal from "./depositModal";
+import DepositModal, { useDepositModalToggle } from "./DepositModal";
 import LabelPair from "./labelPair";
-import WithdrawModal from "./withdrawModal";
+import WithdrawModal, { useWithdrawModalToggle } from "./WithdrawModal";
 import WithdrawRewards from "./withdrawRewards";
 
 const StakeCard = () => {

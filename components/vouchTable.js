@@ -1,4 +1,3 @@
-import { useGetInvitedModalToggle } from "contexts/Application";
 import { useAutoCallback } from "hooks.macro";
 import { Fragment, useMemo } from "react";
 import { useExpanded, useSortBy, useTable } from "react-table";
@@ -7,6 +6,7 @@ import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
+import { useGetInvitedModalToggle } from "./GetInvitedModal";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 

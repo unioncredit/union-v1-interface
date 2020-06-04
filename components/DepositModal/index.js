@@ -1,34 +1,38 @@
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { useWithdrawModalOpen, useWithdrawModalToggle } from "contexts/Stake";
 import useCurrentToken from "hooks/useCurrentToken";
-import useStakingContract from "hooks/useStakingContract";
 import useToast, { FLAVORS } from "hooks/useToast";
+import useTokenBalance from "hooks/useTokenBalance";
+import { stake } from "lib/contracts/stake";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
-import Button from "./button";
-import Input from "./input";
-import LabelPair from "./labelPair";
-import Modal, { ModalHeader } from "./modal";
+import { roundDown } from "util/numbers";
+import Button from "../button";
+import Input from "../input";
+import LabelPair from "../labelPair";
+import Modal, { ModalHeader } from "../modal";
+import { useDepositModalOpen, useDepositModalToggle } from "./state";
 
-const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
-  const { chainId, library } = useWeb3React();
+const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
+  const { library, chainId } = useWeb3React();
 
-  const open = useWithdrawModalOpen();
-  const toggle = useWithdrawModalToggle();
+  const open = useDepositModalOpen();
+  const toggle = useDepositModalToggle();
 
   const {
     handleSubmit,
     register,
     watch,
     setValue,
-    formState,
     errors,
+    formState,
     reset,
   } = useForm();
 
-  useEffect(() => reset(), [open]);
+  useEffect(() => {
+    reset();
+    updateDaiBalance();
+  }, [open]);
 
   const { dirty, isSubmitting } = formState;
 
@@ -37,17 +41,19 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const addToast = useToast();
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
+    DAI
+  );
 
-  const stakingContract = useStakingContract();
+  const flooredDaiBalance = roundDown(daiBalance);
+
+  const addToast = useToast();
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
 
     try {
-      const amount = parseUnits(values.amount, 18).toString();
-
-      const tx = await stakingContract.unstake(DAI, amount);
+      const tx = await stake(DAI, values.amount, library.getSigner(), chainId);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
@@ -81,15 +87,13 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
     }
   };
 
-  const calculateNewTotalStake = Number(totalStake) - amount;
-
   const formatNewTotalStake = Number(
-    calculateNewTotalStake > 0 ? calculateNewTotalStake : 0
+    parseFloat(amount || 0) + parseFloat(totalStake)
   ).toFixed(2);
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
-      <ModalHeader title="Withdraw" onDismiss={toggle} />
+      <ModalHeader title="Deposit" onDismiss={toggle} />
       <form
         method="POST"
         onSubmit={handleSubmit(onSubmit)}
@@ -105,19 +109,18 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           chip="DAI"
           id="amount"
           step="0.01"
-          name="amount"
           type="number"
           label="Amount"
           className="mb-8"
           placeholder="0.00"
-          setMaxValue={withdrawableStake}
-          setMax={() => setValue("amount", withdrawableStake)}
+          setMaxValue={flooredDaiBalance}
+          setMax={() => setValue("amount", flooredDaiBalance)}
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: withdrawableStake,
-              message: "Insuficient withdrawable stake",
+              value: flooredDaiBalance,
+              message: "Not enough DAI in your wallet",
             },
             min: {
               value: 0.01,
@@ -148,4 +151,6 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   );
 };
 
-export default WithdrawModal;
+export default DepositModal;
+
+export { useDepositModalOpen, useDepositModalToggle };

@@ -1,11 +1,11 @@
-import { useLearnMoreModalToggle } from "contexts/Application";
-import { useTutorialModalOpen, useTutorialModalToggle } from "contexts/Stake";
+import { useLearnMoreModalToggle } from "components/LearnMoreModal";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
 import Chevron from "svgs/Chevron";
-import Button from "./button";
-import Modal, { CloseButton } from "./modal";
+import Button from "../button";
+import Modal, { CloseButton } from "../modal";
+import { useTutorialModalOpen, useTutorialModalToggle } from "./state";
 
 const TUTORIAL_VIEWS = ["FIRST", "SECOND", "THIRD", "FOURTH"];
 
@@ -137,3 +137,5 @@ const TutorialModal = () => {
 };
 
 export default TutorialModal;
+
+export { useTutorialModalOpen, useTutorialModalToggle };

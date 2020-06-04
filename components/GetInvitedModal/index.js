@@ -1,16 +1,13 @@
-import {
-  useGetInvitedModalOpen,
-  useGetInvitedModalToggle,
-  useLearnMoreModalToggle,
-} from "contexts/Application";
-import generateLink from "util/generateLink";
 import { useWeb3React } from "@web3-react/core";
+import { useLearnMoreModalToggle } from "components/LearnMoreModal";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
-import Modal, { CloseButton } from "./modal";
-import VouchLink from "./vouchLink";
+import generateLink from "util/generateLink";
+import Modal, { CloseButton } from "../modal";
+import VouchLink from "../vouchLink";
+import { useGetInvitedModalOpen, useGetInvitedModalToggle } from "./state";
 
 const generateTwitterLink = (shareLink) =>
   `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
@@ -130,3 +127,5 @@ const GetInvitedModal = () => {
 };
 
 export default GetInvitedModal;
+
+export { useGetInvitedModalOpen, useGetInvitedModalToggle };

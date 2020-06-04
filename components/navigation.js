@@ -1,19 +1,22 @@
-import {
-  useToggleCreateModal,
-  useToggleSignInModal,
-} from "contexts/Application";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
-import EmailModal from "./emailModal";
-import GetInvitedModal from "./getInvitedModal";
-import LearnMoreModal from "./learnMoreModal";
 import Logo from "./logo";
-import WalletModal from "./walletModal";
+import WalletModal, {
+  useToggleCreateModal,
+  useToggleSignInModal,
+} from "./WalletModal";
 import Web3Status from "./web3Connection";
+
+const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
+
+const LearnMoreModal = dynamic(() => import("./LearnMoreModal"));
+
+const EmailModal = dynamic(() => import("./EmailModal"));
 
 const NavigationLink = ({ href, children, ...rest }) => {
   const { pathname } = useRouter();
@@ -62,29 +65,31 @@ const Navigation = () => {
           <ul className="flex items-center justify-between">
             <LogoLink />
 
-            <ul className="flex justify-end items-center py-4">
-              {!!(account && library) ? (
-                <li>
-                  <Web3Status />
-                </li>
-              ) : (
-                <Fragment>
-                  <li className="mr-4">
-                    <button
-                      className="btn border-transparent font-medium px-4"
-                      onClick={toggleSignInModal}
-                    >
-                      Sign in
-                    </button>
-                  </li>
+            <li className="py-4">
+              <ul className="flex justify-end items-center">
+                {!!(account && library) ? (
                   <li>
-                    <Button secondary onClick={toggleCreateModal}>
-                      Start now
-                    </Button>
+                    <Web3Status />
                   </li>
-                </Fragment>
-              )}
-            </ul>
+                ) : (
+                  <Fragment>
+                    <li className="mr-4">
+                      <button
+                        className="btn border-transparent font-medium px-4"
+                        onClick={toggleSignInModal}
+                      >
+                        Sign in
+                      </button>
+                    </li>
+                    <li>
+                      <Button secondary onClick={toggleCreateModal}>
+                        Start now
+                      </Button>
+                    </li>
+                  </Fragment>
+                )}
+              </ul>
+            </li>
           </ul>
         ) : (
           <Fragment>
@@ -94,23 +99,23 @@ const Navigation = () => {
 
               {!!(account && library) && (
                 <Fragment>
-                  <ul className="hidden md:flex flex-1 justify-center items-center py-4 h-20">
-                    <li>
-                      <NavigationLink href="/stake">Stake</NavigationLink>
-                    </li>
-                    <li>
-                      <NavigationLink href="/borrow">Borrow</NavigationLink>
-                    </li>
-                    <li>
-                      <NavigationLink href="/vouch">Vouch</NavigationLink>
-                    </li>
-                  </ul>
+                  <li className="py-4 h-20 hidden md:flex flex-1 justify-center">
+                    <ul className="flex justify-center items-center">
+                      <li>
+                        <NavigationLink href="/stake">Stake</NavigationLink>
+                      </li>
+                      <li>
+                        <NavigationLink href="/borrow">Borrow</NavigationLink>
+                      </li>
+                      <li>
+                        <NavigationLink href="/vouch">Vouch</NavigationLink>
+                      </li>
+                    </ul>
+                  </li>
 
-                  <ul className="flex md:w-1/4 justify-end py-4">
-                    <li>
-                      <Web3Status />
-                    </li>
-                  </ul>
+                  <li className="flex md:w-1/4 justify-end py-4">
+                    <Web3Status />
+                  </li>
                 </Fragment>
               )}
             </ul>

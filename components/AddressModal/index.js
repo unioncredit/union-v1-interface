@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import { useAddressModalOpen, useAddressModalToggle } from "contexts/Stake";
 import { useAutoCallback } from "hooks.macro";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
@@ -13,12 +12,13 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
-import Address from "./address";
-import AdjustTrustForm from "./adjustTrustForm";
-import Button from "./button";
-import HealthBar from "./healthBar";
-import Identicon from "./identicon";
-import Modal, { BackButton, CloseButton } from "./modal";
+import Address from "../address";
+import AdjustTrustForm from "../adjustTrustForm";
+import Button from "../button";
+import HealthBar from "../healthBar";
+import Identicon from "../identicon";
+import Modal, { BackButton, CloseButton } from "../modal";
+import { useAddressModalOpen, useAddressModalToggle } from "./state";
 
 const InlineLabelEditor = ({ label, ENSName, address }) => {
   const { setLabel } = useAddressLabels();
@@ -274,3 +274,5 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 };
 
 export default AddressModal;
+
+export { useAddressModalOpen, useAddressModalToggle };
