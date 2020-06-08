@@ -18,7 +18,7 @@ export const Solo = ({ hasButton = false, onClick }) => (
         <strong>Stake</strong>
       </p>
       <p>
-        Staking with <strong>0.9x reward</strong> multiplier
+        Staking with <strong>0.75x reward</strong> multiplier
       </p>
       <div className="divider my-4"></div>
     </div>
