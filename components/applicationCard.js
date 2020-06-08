@@ -38,10 +38,10 @@ const ApplicationCard = () => {
         <Button
           className="mt-6 md:mt-0"
           onClick={
-            trustCount === 3 ? applicationModalToggle : toggleGetInvitedModal
+            trustCount >= 3 ? applicationModalToggle : toggleGetInvitedModal
           }
         >
-          {trustCount === 3 ? "Become a member" : "Ask for a vouch"}
+          {trustCount >= 3 ? "Become a member" : "Ask for a vouch"}
         </Button>
       </div>
 
