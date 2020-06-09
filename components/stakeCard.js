@@ -16,6 +16,9 @@ import LabelPair from "./labelPair";
 import WithdrawModal, { useWithdrawModalToggle } from "./WithdrawModal";
 import WithdrawRewards from "./withdrawRewards";
 
+const format = (number, decimals = 2) =>
+  commify(Number(number).toFixed(decimals));
+
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
@@ -38,7 +41,7 @@ const StakeCard = () => {
     withdrawableStake = 0,
   } = !!stakeData && stakeData;
 
-  const { upy = 0, rewards = 0, rewardsMultiplier = "0.00" } =
+  const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "0.00" } =
     !!rewardsData && rewardsData;
 
   const onComplete = async () => {
@@ -53,28 +56,28 @@ const StakeCard = () => {
         className="mb-4"
         label="Your total stake"
         large
-        value={commify(totalStake)}
+        value={format(totalStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Utilized Stake"
         tooltip={utilizedStakeTip}
-        value={commify(utilizedStake)}
+        value={format(utilizedStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Defaulted Stake"
         tooltip={defaultedStakeTip}
-        value={commify(defaultedStake)}
+        value={format(defaultedStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Withdrawable Stake"
         tooltip={withdrawableStakeTip}
-        value={commify(withdrawableStake)}
+        value={format(withdrawableStake)}
         valueType="DAI"
       />
       <LabelPair
@@ -101,7 +104,7 @@ const StakeCard = () => {
       <LabelPair
         labelColor="text-grey-pure"
         label="Wallet Balance"
-        value={commify(Number(unionBalance).toFixed(3))}
+        value={format(unionBalance, 3)}
         valueType="UNION"
       />
 
