@@ -15,7 +15,7 @@ const ApplicationCard = () => {
 
   const [successModalOpen, successModalToggle] = useToggle(false);
 
-  const { data: trustCount } = useTrustCountData();
+  const { data: trustCount = 0 } = useTrustCountData();
 
   const onComplete = async () => {
     successModalToggle(true);
