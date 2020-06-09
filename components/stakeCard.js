@@ -53,28 +53,28 @@ const StakeCard = () => {
         className="mb-4"
         label="Your total stake"
         large
-        value={totalStake}
+        value={commify(totalStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Utilized Stake"
         tooltip={utilizedStakeTip}
-        value={utilizedStake}
+        value={commify(utilizedStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Defaulted Stake"
         tooltip={defaultedStakeTip}
-        value={defaultedStake}
+        value={commify(defaultedStake)}
         valueType="DAI"
       />
       <LabelPair
         labelColor="text-grey-pure"
         label="Withdrawable Stake"
         tooltip={withdrawableStakeTip}
-        value={withdrawableStake}
+        value={commify(withdrawableStake)}
         valueType="DAI"
       />
       <LabelPair
