@@ -137,7 +137,7 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
             full
             onClick={unionAllowance < fee ? enableUNION : submit}
             submitting={isSubmitting}
-            disabled={isSubmitting}
+            disabled={unionBalance < fee || isSubmitting}
           >
             {unionAllowance < fee ? "Enable UNION" : "Submit application"}
           </Button>
