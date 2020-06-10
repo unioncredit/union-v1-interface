@@ -172,7 +172,11 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const onComplete = async () => {
     toggle();
-    await mutate(["vouch", account, curToken, library, chainId]);
+
+    /**
+     * @note Temp fix to update trust data after updating for now
+     */
+    await mutate(["Trust", account, curToken, library]);
   };
 
   return (
