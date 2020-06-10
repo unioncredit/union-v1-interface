@@ -3,10 +3,10 @@ import useTrustCountData from "hooks/useTrustCountData";
 import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
-import ApplicationModal from "./applicationModal";
+import ApplicationModal from "./ApplicationModal";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal";
-import SuccessModal from "./successModal";
+import SuccessModal from "./SuccessModal";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();

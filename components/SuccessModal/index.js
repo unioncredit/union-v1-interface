@@ -1,7 +1,7 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
-import Modal from "./modal";
-import Button from "./button";
+import Modal from "../modal";
+import Button from "../button";
 import { useRouter } from "next/router";
 
 const SuccessModal = ({ isOpen, onDismiss }) => {

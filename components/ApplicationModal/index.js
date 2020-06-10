@@ -10,9 +10,9 @@ import useUnionAllowance, {
 } from "hooks/useUnionAllowance";
 import { useState } from "react";
 import handleTxError from "util/handleTxError";
-import Button from "./button";
-import LabelPair from "./labelPair";
-import Modal, { ModalHeader } from "./modal";
+import Button from "../button";
+import LabelPair from "../labelPair";
+import Modal, { ModalHeader } from "../modal";
 
 const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   const { account, library, chainId } = useWeb3React();
