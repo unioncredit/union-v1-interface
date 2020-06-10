@@ -91,7 +91,7 @@ const StakeCard = () => {
         labelColor="text-grey-pure"
         label="Rewards"
         tooltip={rewardsTip}
-        value={rewards}
+        value={format(rewards, 3)}
         valueType="UNION"
       />
       <LabelPair
