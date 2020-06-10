@@ -1,5 +1,4 @@
 import Button from "components/button";
-import { useEmailModalToggle } from "components/EmailModal";
 import StakeCard from "components/stakeCard";
 import StakeTable from "components/stakeTable";
 import TrustModal, { useTrustModalToggle } from "components/TrustModal";
@@ -15,21 +14,17 @@ export default function StakeView() {
   const { query } = useRouter();
 
   const toggleTrustModal = useTrustModalToggle();
-  const toggleEmailModal = useEmailModalToggle();
   const toggleTutorialModal = useTutorialModalToggle();
 
-  const { email_modal_completed, tutorial_modal_completed } = parseCookies();
+  const { tutorial_modal_completed } = parseCookies();
 
   const { data: isMember = false } = useIsMember();
 
   useEffect(() => {
-    if (!email_modal_completed) {
-      toggleEmailModal();
-    }
-    if (!!email_modal_completed && !tutorial_modal_completed) {
+    if (!tutorial_modal_completed) {
       toggleTutorialModal();
     }
-  }, [email_modal_completed, tutorial_modal_completed]);
+  }, [tutorial_modal_completed]);
 
   useEffect(() => {
     if (query.address || query.trust) {
