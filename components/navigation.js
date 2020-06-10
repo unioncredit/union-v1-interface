@@ -16,6 +16,8 @@ const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
 
 const LearnMoreModal = dynamic(() => import("./LearnMoreModal"));
 
+const SuccessModal = dynamic(() => import("./SuccessModal"));
+
 const NavigationLink = ({ href, children, ...rest }) => {
   const { pathname } = useRouter();
 
@@ -121,6 +123,7 @@ const Navigation = () => {
       <WalletModal />
       <GetInvitedModal />
       <LearnMoreModal />
+      <SuccessModal />
     </nav>
   );
 };

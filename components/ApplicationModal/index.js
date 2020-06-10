@@ -13,12 +13,16 @@ import handleTxError from "util/handleTxError";
 import Button from "../button";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
+import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
 
-const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
+const ApplicationModal = ({ onComplete }) => {
   const { account, library, chainId } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
+
+  const open = useApplicationModalOpen();
+  const toggle = useApplicationModalToggle();
 
   const [isSubmitting, isSubmittingSet] = useState(false);
 
@@ -77,7 +81,7 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
 
       hidePendingToast = hidePending;
 
-      if (isOpen) onDismiss();
+      if (open) toggle();
 
       const receipt = await library.waitForTransaction(tx.hash);
 
@@ -108,8 +112,8 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
   });
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss}>
-      <ModalHeader title="Become a member" onDismiss={onDismiss} />
+    <Modal isOpen={open} onDismiss={toggle}>
+      <ModalHeader title="Become a member" onDismiss={toggle} />
 
       <div className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6">
         <p>
@@ -148,3 +152,5 @@ const ApplicationModal = ({ isOpen, onDismiss, onComplete }) => {
 };
 
 export default ApplicationModal;
+
+export { useApplicationModalToggle, useApplicationModalOpen };
