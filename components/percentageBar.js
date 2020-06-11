@@ -2,7 +2,7 @@ import pastels from "lib/pastels";
 import { toPercent } from "util/numbers";
 
 const PercentageBar = ({ value, index }) => {
-  const pct = toPercent(value);
+  const pct = toPercent(value || 0);
 
   return (
     <div className="flex justify-end sm:justify-start">
