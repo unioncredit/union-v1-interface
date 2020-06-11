@@ -20,7 +20,7 @@ const ApplicationCard = () => {
   const { data: trustCount = 0 } = useTrustCountData();
 
   const onComplete = async () => {
-    successModalToggle(true);
+    toggleSuccessModal();
   };
 
   return (
