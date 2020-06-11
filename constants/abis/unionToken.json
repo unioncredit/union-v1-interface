@@ -93,21 +93,6 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "CIRCULATING",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
     "name": "HALF_DECAY_AMOUNT",
     "outputs": [
       {
@@ -139,6 +124,21 @@
     "constant": true,
     "inputs": [],
     "name": "INFLATION_RATE_SCALING_RATIO",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "INIT_CIRCULATING",
     "outputs": [
       {
         "internalType": "uint256",
@@ -292,6 +292,27 @@
     "constant": true,
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "effectiveTotalStake",
+        "type": "uint256"
+      }
+    ],
+    "name": "calculateInflation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
         "internalType": "address",
         "name": "account",
         "type": "address"
@@ -334,27 +355,6 @@
       }
     ],
     "name": "calculateRewardsByBlocks",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "effectiveTotalStake",
-        "type": "uint256"
-      }
-    ],
-    "name": "calculationInflation",
     "outputs": [
       {
         "internalType": "uint256",
