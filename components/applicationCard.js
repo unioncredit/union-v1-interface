@@ -3,22 +3,24 @@ import useTrustCountData from "hooks/useTrustCountData";
 import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
-import ApplicationModal from "./applicationModal";
+import ApplicationModal, {
+  useApplicationModalToggle,
+} from "./ApplicationModal";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal";
-import SuccessModal from "./successModal";
+import { useSuccessModalToggle } from "./SuccessModal";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
-  const [applicationModalOpen, applicationModalToggle] = useToggle(false);
+  const toggleApplicationModal = useApplicationModalToggle();
 
-  const [successModalOpen, successModalToggle] = useToggle(false);
+  const toggleSuccessModal = useSuccessModalToggle();
 
   const { data: trustCount = 0 } = useTrustCountData();
 
   const onComplete = async () => {
-    successModalToggle(true);
+    toggleSuccessModal();
   };
 
   return (
@@ -38,7 +40,7 @@ const ApplicationCard = () => {
         <Button
           className="mt-6 md:mt-0"
           onClick={
-            trustCount >= 3 ? applicationModalToggle : toggleGetInvitedModal
+            trustCount >= 3 ? toggleApplicationModal : toggleGetInvitedModal
           }
         >
           {trustCount >= 3 ? "Become a member" : "Ask for a vouch"}
@@ -67,13 +69,7 @@ const ApplicationCard = () => {
         </span>
       </div>
 
-      <ApplicationModal
-        isOpen={applicationModalOpen}
-        onDismiss={applicationModalToggle}
-        onComplete={onComplete}
-      />
-
-      <SuccessModal isOpen={successModalOpen} onDismiss={successModalToggle} />
+      <ApplicationModal onComplete={onComplete} />
     </div>
   );
 };

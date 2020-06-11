@@ -170,6 +170,15 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
     }
   });
 
+  const onComplete = async () => {
+    toggle();
+
+    /**
+     * @note Temp fix to update trust data after updating for now
+     */
+    await mutate(["Trust", account, curToken, library]);
+  };
+
   return (
     <Modal isOpen={isOpen} onDismiss={toggle}>
       <div className="p-4 sm:p-6 relative">
@@ -263,7 +272,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               <AdjustTrustForm
                 address={address}
                 vouched={trust}
-                onComplete={toggle}
+                onComplete={onComplete}
               />
             </div>
           </Fragment>

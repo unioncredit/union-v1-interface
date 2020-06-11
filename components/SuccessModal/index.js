@@ -1,15 +1,19 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
-import Modal from "./modal";
-import Button from "./button";
+import Modal from "../modal";
+import Button from "../button";
 import { useRouter } from "next/router";
+import { useSuccessModalOpen, useSuccessModalToggle } from "./state";
 
-const SuccessModal = ({ isOpen, onDismiss }) => {
+const SuccessModal = () => {
   const router = useRouter();
+
+  const open = useSuccessModalOpen();
+  const toggle = useSuccessModalToggle();
 
   useEffect(() => {
     (async function () {
-      if (isOpen) {
+      if (open) {
         const end = Date.now() + 1.5 * 1000;
 
         (function frame() {
@@ -33,15 +37,15 @@ const SuccessModal = ({ isOpen, onDismiss }) => {
         })();
       }
     })();
-  }, [isOpen]);
+  }, [open]);
 
   const startBorrowing = () => {
-    onDismiss();
+    toggle();
     router.push("/borrow");
   };
 
   return (
-    <Modal className="wide" isOpen={isOpen} onDismiss={onDismiss}>
+    <Modal className="wide" isOpen={open} onDismiss={toggle}>
       <div className="p-4 sm:p-6 text-center">
         <div className="mb-12">
           <h2 className="text-3xl mt-6 mb-8">
@@ -66,3 +70,5 @@ const SuccessModal = ({ isOpen, onDismiss }) => {
 };
 
 export default SuccessModal;
+
+export { useSuccessModalToggle, useSuccessModalOpen };
