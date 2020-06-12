@@ -14,7 +14,7 @@ import useIsAdmin from "hooks/useIsAdmin";
 import useMarketContract from "hooks/useMarketContract";
 import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
-import useUnionContract from "hooks/useUnionContract";
+import useTotalMemberCount from "hooks/useTotalMemberCount";
 import { Fragment, useState } from "react";
 import getContract from "util/getContract";
 
@@ -35,8 +35,8 @@ export default function AdminView() {
   const compoundContract = useCompoundContract();
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
-  const unionContract = useUnionContract();
   const marketContractPromise = useMarketContract(curToken);
+  const totalMemberCountPromise = useTotalMemberCount();
 
   let marketContract, interestRateContract;
 
@@ -51,9 +51,24 @@ export default function AdminView() {
   const [apr, setApr] = useState(0);
   const [lendingPoolBalance, setLendingPoolBalance] = useState(0);
   const [compoundBalance, setCompoundBalance] = useState(0);
+  const [totalMemberCount, setTotalMemberCount] = useState("-");
 
   useAutoEffect(() => {
     let isMounted = true;
+
+    function fetchMemberCountData() {
+      totalMemberCountPromise.then(async (res) => {
+        try {
+          if (isMounted) {
+            setTotalMemberCount(res);
+          }
+        } catch (err) {
+          if (isMounted) {
+            console.error(err);
+          }
+        }
+      });
+    }
 
     function fetchMarketData() {
       marketContractPromise.then(async (res) => {
@@ -146,6 +161,7 @@ export default function AdminView() {
     fetchMemberData();
     fetchMarketData();
     fetchFundsData();
+    fetchMemberCountData();
 
     return () => {
       isMounted = false;
@@ -230,10 +246,13 @@ export default function AdminView() {
     <Fragment>
       <div className="container">
         <div className="mb-5">
+          <h1>Total member: {totalMemberCount}</h1>
+        </div>
+        <div className="mb-5">
           <h1>Market</h1>
         </div>
-        <div className="flex mb-6">
-          <table>
+        <div className="mb-6">
+          <table style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>
@@ -267,7 +286,7 @@ export default function AdminView() {
                 <td>{apr}</td>
                 <td>{minLoan}</td>
                 <td>{overdueBlocks}</td>
-                <td>
+                <td style={{ textAlign: "right" }}>
                   <Button disabled={!isAdmin} onClick={toggleMarketModal}>
                     Edit
                   </Button>
@@ -280,8 +299,8 @@ export default function AdminView() {
         <div className="mb-5">
           <h1>Manager</h1>
         </div>
-        <div className="flex mb-6">
-          <table>
+        <div className="mb-6">
+          <table style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>
@@ -303,7 +322,7 @@ export default function AdminView() {
                 <td>{totalStake}</td>
                 <td>{frozenStake}</td>
                 <td>{memberFee}</td>
-                <td>
+                <td style={{ textAlign: "right" }}>
                   <Button disabled={!isAdmin} onClick={toggleManagerModal}>
                     Edit
                   </Button>
@@ -316,8 +335,8 @@ export default function AdminView() {
         <div className="mb-5">
           <h1>Funds</h1>
         </div>
-        <div className="flex mb-6">
-          <table>
+        <div className="mb-6">
+          <table style={{ width: "100%" }}>
             <thead>
               <tr>
                 <th>
