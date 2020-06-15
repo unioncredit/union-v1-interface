@@ -1,9 +1,14 @@
 import { OFAC_SANCTIONED } from "../constants/variables";
-import uswSWR from "swr";
+import useSWR from "swr";
 
 const API_KEY = process.env.NEXT_PUBLIC_IPAPI_KEY;
 
 const ENDPOINT = `http://api.ipapi.com/check?access_key=${API_KEY}&fields=country_code`;
+
+const fetcher = async (...args) => {
+  const res = await fetch(...args);
+  return res.json();
+};
 
 /*
  * @name useIsSanctioned
@@ -11,7 +16,7 @@ const ENDPOINT = `http://api.ipapi.com/check?access_key=${API_KEY}&fields=countr
  *   user's IP is located in an OFAC sanctioned country.
  */
 export default function useIsSanctioned() {
-  const { data } = useSWR(ENDPOINT);
+  const { data } = useSWR(ENDPOINT, fetcher);
 
   const country = data?.country_code;
 
