@@ -14,7 +14,6 @@ import useIsAdmin from "hooks/useIsAdmin";
 import useMarketContract from "hooks/useMarketContract";
 import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
-import useTotalMemberCount from "hooks/useTotalMemberCount";
 import { Fragment, useState } from "react";
 import getContract from "util/getContract";
 
@@ -36,7 +35,6 @@ export default function AdminView() {
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
   const marketContractPromise = useMarketContract(curToken);
-  const totalMemberCountPromise = useTotalMemberCount();
 
   let marketContract, interestRateContract;
 
@@ -51,24 +49,9 @@ export default function AdminView() {
   const [apr, setApr] = useState(0);
   const [lendingPoolBalance, setLendingPoolBalance] = useState(0);
   const [compoundBalance, setCompoundBalance] = useState(0);
-  const [totalMemberCount, setTotalMemberCount] = useState("-");
 
   useAutoEffect(() => {
     let isMounted = true;
-
-    function fetchMemberCountData() {
-      totalMemberCountPromise.then(async (res) => {
-        try {
-          if (isMounted) {
-            setTotalMemberCount(res);
-          }
-        } catch (err) {
-          if (isMounted) {
-            console.error(err);
-          }
-        }
-      });
-    }
 
     function fetchMarketData() {
       marketContractPromise.then(async (res) => {
@@ -161,7 +144,6 @@ export default function AdminView() {
     fetchMemberData();
     fetchMarketData();
     fetchFundsData();
-    fetchMemberCountData();
 
     return () => {
       isMounted = false;
@@ -245,9 +227,6 @@ export default function AdminView() {
   return (
     <Fragment>
       <div className="container">
-        <div className="mb-5">
-          <h1>Total member: {totalMemberCount}</h1>
-        </div>
         <div className="mb-5">
           <h1>Market</h1>
         </div>
