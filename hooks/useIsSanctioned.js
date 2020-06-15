@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_IPAPI_KEY;
 
-const ENDPOINT = `http://api.ipapi.com/check?access_key=${API_KEY}&fields=country_code`;
+const ENDPOINT = `https://api.ipapi.com/check?access_key=${API_KEY}&fields=country_code`;
 
 const fetcher = async (...args) => {
   const res = await fetch(...args);
