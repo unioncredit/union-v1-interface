@@ -1,6 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect, { useLogin, useLogout } from "hooks/useEagerConnect";
+import useIsSanctioned from "hooks/useIsSanctioned";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
@@ -49,6 +50,8 @@ const WalletOption = ({ name, activating, disabled, onClick }) => (
 );
 
 const WalletModal = () => {
+  const isSanctioned = useIsSanctioned();
+
   const { error, active, activate, connector, deactivate } = useWeb3React();
 
   const walletView = useWalletModalView();
@@ -121,7 +124,11 @@ const WalletModal = () => {
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
                 const disabled =
-                  !triedEager || !!activatingConnector || connected || !!error;
+                  !triedEager ||
+                  !!activatingConnector ||
+                  connected ||
+                  !!error ||
+                  isSanctioned;
 
                 return (
                   <WalletOption
@@ -193,7 +200,8 @@ const WalletModal = () => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
                 const connected = currentConnector === connector;
-                const disabled = !!activatingConnector || connected || !!error;
+                const disabled =
+                  !!activatingConnector || connected || !!error || isSanctioned;
 
                 return (
                   <WalletOption
