@@ -1,5 +1,5 @@
 import { HEAP_APP_ID } from "lib/heap";
-import { HOTJAR_ID } from "lib/hotjar";
+import { HOTJAR_APP_ID } from "lib/hotjar";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 
 const META_TAGS = {
