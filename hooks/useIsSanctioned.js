@@ -20,6 +20,8 @@ export default function useIsSanctioned() {
 
   const country = data?.country_code;
 
+  typeof window !== "undefined" && window.alert(country);
+
   typeof window !== "undefined" &&
     window.alert(
       OFAC_SANCTIONED.includes(country)
