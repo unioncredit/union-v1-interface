@@ -17,7 +17,9 @@ const fetcher = async (...args) => {
  *   user's IP is located in an OFAC sanctioned country.
  */
 export default function useIsSanctioned() {
-  const { data } = useSWR(ENDPOINT, fetcher);
+  const { data, error } = useSWR(ENDPOINT, fetcher);
+
+  error && console.error(error);
 
   console.log(typeof data);
 
