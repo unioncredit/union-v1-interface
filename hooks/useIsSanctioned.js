@@ -19,6 +19,8 @@ const fetcher = async (...args) => {
 export default function useIsSanctioned() {
   const { data } = useSWR(ENDPOINT, fetcher);
 
+  typeof window !== "undefined" && window.alert(API_KEY);
+
   if (data && data.country_code) {
     const country = data.country_code;
 
