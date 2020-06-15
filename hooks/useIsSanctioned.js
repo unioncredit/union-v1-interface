@@ -20,14 +20,15 @@ export default function useIsSanctioned() {
 
   const country = data?.country_code;
 
-  window.alert(
-    OFAC_SANCTIONED.includes(country)
-      ? "Is Sanctioned Country"
-      : "Isn't A Sanctiond Country"
-  );
+  typeof window !== "undefined" &&
+    window.alert(
+      OFAC_SANCTIONED.includes(country)
+        ? "Is Sanctioned Country"
+        : "Isn't A Sanctiond Country"
+    );
 
   if (OFAC_SANCTIONED.includes(country)) {
-    window.alert("Your IP is Sanctioned!");
+    typeof window !== "undefined" && window.alert("Your IP is Sanctioned!");
     return true;
   }
 
