@@ -1,5 +1,6 @@
 import { OFAC_SANCTIONED } from "../constants/variables";
 import useSWR from "swr";
+import { useMemo } from "react";
 
 const API_KEY = process.env.NEXT_PUBLIC_IPAPI_KEY;
 
@@ -18,20 +19,15 @@ const fetcher = async (...args) => {
 export default function useIsSanctioned() {
   const { data } = useSWR(ENDPOINT, fetcher);
 
-  const country = data?.country_code;
+  if (data && data.country_code) {
+    const country = data.country_code;
 
-  typeof window !== "undefined" && window.alert(country);
+    if (OFAC_SANCTIONED.includes(country)) {
+      typeof window !== "undefined" &&
+        window.alert("Your country is sanctioned. Sorry.");
 
-  typeof window !== "undefined" &&
-    window.alert(
-      OFAC_SANCTIONED.includes(country)
-        ? "Is Sanctioned Country"
-        : "Isn't A Sanctiond Country"
-    );
-
-  if (OFAC_SANCTIONED.includes(country)) {
-    typeof window !== "undefined" && window.alert("Your IP is Sanctioned!");
-    return true;
+      return true;
+    }
   }
 
   return false;
