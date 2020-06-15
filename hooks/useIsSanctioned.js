@@ -31,13 +31,7 @@ export default function useIsSanctioned() {
   if (!!data) {
     const { loc } = keyValueToJSON(data);
 
-    console.log(loc);
-
-    if (OFAC_SANCTIONED.includes(loc)) {
-      console.log("SANCTIONED");
-
-      isSanctioned = true;
-    }
+    if (OFAC_SANCTIONED.includes(loc)) isSanctioned = true;
   }
 
   return isSanctioned;
