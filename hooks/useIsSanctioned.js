@@ -19,18 +19,15 @@ const fetcher = async (...args) => {
 export default function useIsSanctioned() {
   const { data } = useSWR(ENDPOINT, fetcher);
 
-  typeof window !== "undefined" && window.alert(API_KEY);
+  let isSanctioned = false;
 
-  if (data && data.country_code) {
-    const country = data.country_code;
+  if (!!data) {
+    typeof window !== "undefined" && window.alert(data.country_code);
 
-    if (OFAC_SANCTIONED.includes(country)) {
-      typeof window !== "undefined" &&
-        window.alert("Your country is sanctioned. Sorry.");
-
-      return true;
+    if (OFAC_SANCTIONED.includes(data.country_code)) {
+      isSanctioned = true;
     }
   }
 
-  return false;
+  return isSanctioned;
 }
