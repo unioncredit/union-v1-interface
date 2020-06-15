@@ -32,21 +32,6 @@ const renderSortIcons = (column) => (
 const renderTheadColumns = (column) => {
   const { Header } = column;
 
-  if (Header === "Health")
-    return (
-      <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-        <div className="flex items-center">
-          <span className="flex items-center cursor-help" title={healthTip}>
-            <div className="mr-2">
-              <Info size={16} />
-            </div>
-            {column.render("Header")}
-          </span>
-          <div className="ml-2">{renderSortIcons(column)}</div>
-        </div>
-      </th>
-    );
-
   return (
     <th {...column.getHeaderProps(column.getSortByToggleProps())}>
       <div className="flex items-center">
@@ -92,6 +77,10 @@ export default function AdminView() {
       {
         Header: "AvailableCreditLimit",
         accessor: "availableCreditLimit",
+      },
+      {
+        Header: "",
+        accessor: "action",
       },
     ],
     []
