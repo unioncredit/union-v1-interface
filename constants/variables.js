@@ -66,3 +66,32 @@ export const TOKENS = {
 export const REPAY_MARGIN = 1.000011;
 
 export const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
+
+export const OFAC_SANCTIONED = [
+  /* Belarus */
+  "BY",
+  /* Code D'Ivoire */
+  "CI",
+  /* Cuba */
+  "CU",
+  /* Congo */
+  "CD",
+  /* Iran */
+  "IR",
+  /* Iraq */
+  "IQ",
+  /* Liberia */
+  "LR",
+  /* Myanmar (Burma) */
+  "MM",
+  /* North Korea */
+  "KP",
+  /* Sudan */
+  "SD",
+  /* South Sudan */
+  "SS",
+  /* Syria */
+  "SY",
+  /* Zimbabwe */
+  "ZW",
+];

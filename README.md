@@ -13,7 +13,7 @@ The open source interface for Union.
 
 Always create a new branch off of `develop`.
 
-_Note:_ If you want to use WalletConnect or Fortmatic to test while building make a copy of .env.local.example named .env.local, change INFURA_KEY to "{yourKey}", and change FORTMATIC_API_KEY to "{yourFortmaticTestKey}".
+_Note:_ If you want to use WalletConnect or Fortmatic to test while building make a copy of .env.local.example named .env.local, change NEXT_PUBLIC_INFURA_KEY to "{yourKey}", and change NEXT_PUBLIC_FORTMATIC_API_KEY to "{yourFortmaticTestKey}".
 
 ### Install dependencies
 
