@@ -102,16 +102,12 @@ const BorrowModal = ({
 
   const calculateNewBalance = calculateBalanceOwed + amount + calculateFee;
 
-  const formatNewBalance = Number(
-    calculateNewBalance > 0 ? calculateNewBalance : 0
-  ).toFixed(2);
+  const formatNewBalance = calculateNewBalance.toFixed(2);
 
   const calculateNewCredit =
     Number(roundDown(creditLimit)) - amount - calculateFee;
 
-  const formatNewCredit = Number(
-    calculateNewCredit > 0 ? calculateNewCredit : 0
-  ).toFixed(2);
+  const formatNewCredit = calculateNewCredit.toFixed(2);
 
   const formatMax = roundDown(creditLimit * (1 - fee));
 
