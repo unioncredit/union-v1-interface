@@ -60,9 +60,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const calculateNewBalance = calculateBalanceOwed - amount;
 
-  const formatNewBalance = Number(
-    calculateNewBalance > 0 ? calculateNewBalance : 0
-  ).toFixed(2);
+  const formatNewBalance = calculateNewBalance.toFixed(2);
 
   const calculateMaxValue =
     flooredDaiBalance <= calculateBalanceOwed
