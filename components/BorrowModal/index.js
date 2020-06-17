@@ -119,14 +119,7 @@ const BorrowModal = ({
         onSubmit={handleSubmit(onSubmit)}
         className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
       >
-        <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-          <dt>Balance owed</dt>
-          <dd className="text-right">{`${calculateBalanceOwed} DAI`}</dd>
-        </dl>
-
-        <div className="divider" />
-
-        <p className="mt-6 mb-4">How much would you like to borrow?</p>
+        <p className="mb-4">How much would you like to borrow?</p>
 
         <Input
           autoFocus
