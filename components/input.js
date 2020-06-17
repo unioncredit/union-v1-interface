@@ -55,7 +55,7 @@ const Input = forwardRef(
           <div className="flex">
             <input
               autoComplete={autoComplete}
-              className="focus:outline-none text-lg leading-snug flex-1 text-overflow-clip"
+              className="focus:outline-none text-lg leading-snug w-full text-overflow-clip"
               id={id}
               name={id}
               ref={ref}
