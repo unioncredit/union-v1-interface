@@ -126,7 +126,8 @@ const Navigation = () => {
       <GetInvitedModal />
       <LearnMoreModal />
       <SuccessModal />
-      <ApplicationModal />
+
+      {!!(account && library) && <ApplicationModal />}
     </nav>
   );
 };
