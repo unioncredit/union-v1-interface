@@ -1,5 +1,6 @@
 import useIsMember from "hooks/useIsMember";
 import useTrustData from "hooks/useTrustData";
+import useTrustCountData from "hooks/useTrustCountData";
 import { Fragment, useMemo, useState } from "react";
 import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
@@ -11,13 +12,16 @@ import Button from "./button";
 import HealthBar from "./healthBar";
 import { useLearnMoreModalToggle } from "./LearnMoreModal";
 import { useTrustModalToggle } from "./TrustModal";
+import { useApplicationModalToggle } from "./ApplicationModal";
 
 const StakeTableEmptyState = () => {
   const toggleLearnMoreModal = useLearnMoreModalToggle();
-
   const toggleTrustModal = useTrustModalToggle();
+  const toggleApplicationModal = useApplicationModalToggle();
 
   const { data: isMember = false } = useIsMember();
+
+  const { data: trustCount = 0 } = useTrustCountData();
 
   if (isMember)
     return (
@@ -28,6 +32,18 @@ const StakeTableEmptyState = () => {
           trust
         </p>
         <Button onClick={toggleTrustModal}>Trust a friend</Button>
+      </div>
+    );
+
+  if (trustCount >= 3)
+    return (
+      <div className="flex items-center flex-col my-6 md:mt-16 md:mb-12">
+        <img src="/images/table-empty.svg" alt="" />
+        <p className="text-lg md:text-xl text-center my-6 max-w-md">
+          Borrow without collateral and earn higher interest on your deposits if
+          you are a member.
+        </p>
+        <Button onClick={toggleApplicationModal}>Become a member</Button>
       </div>
     );
 
