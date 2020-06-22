@@ -54,7 +54,7 @@ const StakeTableEmptyState = () => {
         Borrow without collateral and earn higher interest on your deposits if
         you are a member.
       </p>
-      <Button onClick={toggleLearnMoreModal}>Become a member</Button>
+      <Button onClick={toggleLearnMoreModal}>Learn more</Button>
     </div>
   );
 };
