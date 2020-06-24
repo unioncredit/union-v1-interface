@@ -5639,10 +5639,10 @@ node-releases@^1.1.53:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.53.tgz#2d821bfa499ed7c5dffc5e2f28c88e78a08ee3f4"
   integrity sha512-wp8zyQVwef2hpZ/dJH7SfSrIPD6YoJz6BDQDpGEkcA0s3LpAQoxBIYmfIq6QAhC1DhwsyCgTaTTcONwX8qzCuQ==
 
-nookies@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.3.0.tgz#56726ff10a6455820e4ff0d11602c3af2b21a0cb"
-  integrity sha512-qet6azxnYVeojj4O9qmm0pL8yp8QWrnPQZxS8aZED5s1vGQmhLhoWK4iYS1NDL6ajhpgHzCMPYjqsWSH83xvQw==
+nookies@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.3.2.tgz#5a6111dc8f7247d3b532f35a073fe4e408c8f027"
+  integrity sha512-iV0aRpJhpmf3Ri7q0tulK5epR8sYvYuifphVwSMlm/SIt0gVII+R6lSDYNgLJLFMCK+9gvJC6H87vSCA4CtKcA==
   dependencies:
     cookie "^0.4.0"
     set-cookie-parser "^2.4.3"
@@ -7037,10 +7037,10 @@ react-remove-scroll@^2.3.0:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
-react-ridge-state@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-ridge-state/-/react-ridge-state-4.0.0.tgz#63ec8943cb99b852dbf933d7a1a44e43af9eb307"
-  integrity sha512-hptuARpVa8M4v0h9tkC5DRvxi1gHd3aEpR45gmBQB2zVxbDySEyOyl8V/B6XwPQ/ZU+/vtM0KX+e4SAocCO/+g==
+react-ridge-state@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-ridge-state/-/react-ridge-state-4.0.1.tgz#a93e88e16c2982370f0d05dfb79d21f88e88e712"
+  integrity sha512-+WCGEhrlc4LXUSvVYPu+QU6O92jAq4s6mEzsDGCswtJ3LrYpgWUERjzyHMIVIN+KYHeJDHplxhfWBPcg+BlvZA==
 
 react-style-singleton@^2.1.0:
   version "2.1.0"
