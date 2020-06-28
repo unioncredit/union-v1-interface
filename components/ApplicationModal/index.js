@@ -14,8 +14,9 @@ import Button from "../button";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
+import { useSuccessModalToggle } from "../SuccessModal";
 
-const ApplicationModal = ({ onComplete }) => {
+const ApplicationModal = () => {
   const { account, library, chainId } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
@@ -23,6 +24,8 @@ const ApplicationModal = ({ onComplete }) => {
 
   const open = useApplicationModalOpen();
   const toggle = useApplicationModalToggle();
+
+  const toggleSuccessModal = useSuccessModalToggle();
 
   const [isSubmitting, isSubmittingSet] = useState(false);
 
@@ -92,7 +95,7 @@ const ApplicationModal = ({ onComplete }) => {
 
         isSubmittingSet(false);
 
-        await onComplete();
+        toggleSuccessModal();
 
         return;
       }

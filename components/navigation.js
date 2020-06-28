@@ -16,6 +16,8 @@ const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
 
 const LearnMoreModal = dynamic(() => import("./LearnMoreModal"));
 
+const ApplicationModal = dynamic(() => import("./ApplicationModal"));
+
 const SuccessModal = dynamic(() => import("./SuccessModal"));
 
 const NavigationLink = ({ href, children, ...rest }) => {
@@ -124,6 +126,8 @@ const Navigation = () => {
       <GetInvitedModal />
       <LearnMoreModal />
       <SuccessModal />
+
+      {!!(account && library) && <ApplicationModal />}
     </nav>
   );
 };

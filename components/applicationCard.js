@@ -3,25 +3,15 @@ import useTrustCountData from "hooks/useTrustCountData";
 import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
-import ApplicationModal, {
-  useApplicationModalToggle,
-} from "./ApplicationModal";
+import { useApplicationModalToggle } from "./ApplicationModal";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal";
-import { useSuccessModalToggle } from "./SuccessModal";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
-
   const toggleApplicationModal = useApplicationModalToggle();
 
-  const toggleSuccessModal = useSuccessModalToggle();
-
   const { data: trustCount = 0 } = useTrustCountData();
-
-  const onComplete = async () => {
-    toggleSuccessModal();
-  };
 
   return (
     <div className="bg-pink-light border border-pink-pure rounded p-6 mb-10">
@@ -68,8 +58,6 @@ const ApplicationCard = () => {
           </div>
         </span>
       </div>
-
-      <ApplicationModal onComplete={onComplete} />
     </div>
   );
 };
