@@ -149,5 +149,3 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 };
 
 export default WithdrawModal;
-
-export { useWithdrawModalOpen, useWithdrawModalToggle };

@@ -53,5 +53,3 @@ const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
 };
 
 export default ManagerModal;
-
-export { useManagerModalOpen, useManagerModalToggle };

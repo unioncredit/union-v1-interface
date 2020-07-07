@@ -283,5 +283,3 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 };
 
 export default AddressModal;
-
-export { useAddressModalOpen, useAddressModalToggle };

@@ -1,4 +1,4 @@
-import { useLearnMoreModalToggle } from "components/LearnMoreModal";
+import { useLearnMoreModalToggle } from "components/LearnMoreModal/state";
 import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
@@ -137,5 +137,3 @@ const TutorialModal = () => {
 };
 
 export default TutorialModal;
-
-export { useTutorialModalOpen, useTutorialModalToggle };

@@ -1,4 +1,4 @@
-import { useGetInvitedModalToggle } from "components/GetInvitedModal";
+import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
 import { useRouter } from "next/router";
 import { Solo, Together } from "../benefits";
 import Modal, { CloseButton } from "../modal";
@@ -51,5 +51,3 @@ const LearnMoreModal = () => {
 };
 
 export default LearnMoreModal;
-
-export { useLearnMoreModalOpen, useLearnMoreModalToggle };

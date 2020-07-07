@@ -112,5 +112,3 @@ const MarketModal = ({
 };
 
 export default MarketModal;
-
-export { useMarketModalOpen, useMarketModalToggle };
