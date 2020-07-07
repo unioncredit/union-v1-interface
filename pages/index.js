@@ -75,7 +75,7 @@ export default function HomePage() {
         <div className="skew" />
       </section>
 
-      <section className="pt-16 pb-0 pt-16 md:py-20 lg:pb-20 lg:pt-40">
+      <section className="pt-16 pb-0 md:py-20 lg:pb-20 lg:pt-40">
         <div className="container-sm">
           <div className="flex flex-col md:flex-row md:-mx-6">
             <div className="w-full md:w-1/2 md:p-8 mb-12 md:mb-0">
