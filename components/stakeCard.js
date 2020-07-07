@@ -11,9 +11,11 @@ import {
   withdrawableStakeTip,
 } from "../text/tooltips";
 import Button from "./button";
-import DepositModal, { useDepositModalToggle } from "./DepositModal";
+import DepositModal from "./DepositModal";
+import { useDepositModalToggle } from "./DepositModal/state";
 import LabelPair from "./labelPair";
-import WithdrawModal, { useWithdrawModalToggle } from "./WithdrawModal";
+import WithdrawModal from "./WithdrawModal";
+import { useWithdrawModalToggle } from "./WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
 
 const format = (number, decimals = 2) =>

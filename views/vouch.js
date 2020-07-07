@@ -1,8 +1,7 @@
 import ApplicationCard from "components/applicationCard";
 import Button from "components/button";
-import CreditRequestModal, {
-  useCreditRequestModalToggle,
-} from "components/CreditRequestModal";
+import CreditRequestModal from "components/CreditRequestModal";
+import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
 import LabelPair from "components/labelPair";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
