@@ -199,7 +199,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row-reverse md:-mx-6">
             <div className="w-full md:w-1/2 md:p-8 mb-8 md:mb-0">
               <div className="max-w-md">
-                <h2 className="text-2xl md:text-3xl md:mt-4 md:mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl md:mt-4 mb-6 md:mb-8">
                   Check what you can build with Union
                 </h2>
                 <p className="md:text-xl leading-tight font-normal mb-6 md:mb-8">
