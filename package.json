@@ -16,11 +16,11 @@
     }
   },
   "dependencies": {
-    "@ethersproject/address": "^5.0.0-beta.135",
-    "@ethersproject/bignumber": "^5.0.0-beta.139",
-    "@ethersproject/contracts": "^5.0.0-beta.152",
-    "@ethersproject/providers": "^5.0.0-beta.166",
-    "@ethersproject/units": "^5.0.0-beta.133",
+    "@ethersproject/address": "^5.0.1",
+    "@ethersproject/bignumber": "^5.0.3",
+    "@ethersproject/contracts": "^5.0.1",
+    "@ethersproject/providers": "^5.0.4",
+    "@ethersproject/units": "^5.0.1",
     "@reach/dialog": "^0.10.3",
     "@reach/visually-hidden": "^0.10.2",
     "@web3-react/core": "^6.0.9",
