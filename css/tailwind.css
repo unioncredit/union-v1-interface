@@ -32,7 +32,7 @@ h1,
 h2 {
   @apply text-xl font-semibold leading-tight;
 }
-@media (width >= 768px) {
+@screen sm {
   h1,
   h2 {
     @apply text-2xl;
@@ -146,7 +146,7 @@ table td {
   @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
 }
 
-@media (width >= 768px) {
+@screen sm {
   .container {
     @apply px-6;
   }
@@ -209,7 +209,7 @@ table td {
   border-radius: 16.3277px;
 }
 
-@media (width <= 768px) {
+@screen sm {
   .app {
     max-width: 100%;
   }
@@ -248,7 +248,7 @@ table td {
   background: #f6c343;
 }
 
-@media (width >= 896px) {
+@screen md {
   .md\:476px {
     max-width: calc(460px + 1rem);
   }
@@ -292,7 +292,7 @@ input[type="number"] {
   -webkit-overflow-scrolling: touch;
 }
 
-@media (width >= 768px) {
+@screen sm {
   [data-reach-dialog-content].wide {
     @apply bg-white w-full h-full outline-none self-start rounded mx-auto h-auto;
     margin-top: 12vh;
@@ -327,7 +327,7 @@ input[type="number"] {
   justify-content: center;
 }
 
-@media (width >= 768px) {
+@screen sm {
   [data-reach-dialog-overlay] {
     background: hsla(0, 0%, 0%, 0.66);
   }
