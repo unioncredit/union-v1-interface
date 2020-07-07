@@ -268,12 +268,3 @@ const WalletModal = () => {
 };
 
 export default WalletModal;
-
-export {
-  useUpdateWalletModalView,
-  useWalletModalOpen,
-  useWalletModalToggle,
-  useWalletModalView,
-  useToggleCreateModal,
-  useToggleSignInModal,
-};

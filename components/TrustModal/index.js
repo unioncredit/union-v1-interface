@@ -188,5 +188,3 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 };
 
 export default TrustModal;
-
-export { useTrustModalOpen, useTrustModalToggle };

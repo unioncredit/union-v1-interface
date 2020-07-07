@@ -211,5 +211,3 @@ BorrowModal.propTypes = {
 };
 
 export default BorrowModal;
-
-export { useBorrowModalOpen, useBorrowModalToggle };
