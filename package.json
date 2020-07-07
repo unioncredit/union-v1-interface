@@ -39,12 +39,12 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^5.7.2",
+    "react-hook-form": "^6.0.1",
     "react-jazzicon-custom-colors": "^0.1.7",
-    "react-ridge-state": "^4.0.0",
-    "react-table": "^7.1.0",
-    "react-use": "^15.1.1",
-    "swr": "^0.2.2",
+    "react-ridge-state": "^4.1.4",
+    "react-table": "^7.2.2",
+    "react-use": "^15.3.2",
+    "swr": "^0.2.3",
     "tailwindcss": "^1.4.6"
   },
   "devDependencies": {
