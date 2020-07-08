@@ -18,7 +18,7 @@ const TicketGate = ({ children }) => {
         amet natus consectetur.
       </p>
 
-      <Button full href="https://opensea.io">
+      <Button full href="/waitlist">
         Learn how to win one
       </Button>
     </div>
