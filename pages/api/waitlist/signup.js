@@ -1,6 +1,6 @@
 import { graphql } from "lib/fauna/client";
 
-export default async (req, res) => {
+export default async function signup(req, res) {
   const { email } = req.body;
 
   try {
@@ -42,4 +42,4 @@ export default async (req, res) => {
       error: e.message,
     });
   }
-};
+}
