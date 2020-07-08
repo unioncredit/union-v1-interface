@@ -1,7 +1,7 @@
 import { graphql } from "lib/fauna/client";
 
 export default async (req, res) => {
-  const { email } = JSON.parse(req.body);
+  const { email } = req.body;
 
   try {
     if (!email) throw new Error("'email' is Required");
@@ -21,14 +21,25 @@ export default async (req, res) => {
 
     const data = await graphql.request(query, variables);
 
-    /**
-     * @todo Handle already signed up error state gracefully
-     */
-
-    res.status(200).json(data);
+    res.status(200).json({
+      success: true,
+      result: {
+        timestamp: data.createSignup.timestamp,
+      },
+    });
   } catch (e) {
-    console.error(e);
+    if (e.message.includes("Instance is not unique")) {
+      res.status(422).json({
+        success: false,
+        error: "You're already signed up",
+      });
 
-    res.status(404).send(e.message);
+      return;
+    }
+
+    res.status(404).json({
+      success: false,
+      error: e.message,
+    });
   }
 };

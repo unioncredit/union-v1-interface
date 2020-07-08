@@ -1,7 +1,7 @@
 import { graphql } from "lib/fauna/client";
 
 export default async (req, res) => {
-  const { email } = JSON.parse(req.body);
+  const { email } = req.body;
 
   try {
     if (!email) throw new Error("'email' is Required");
@@ -22,10 +22,8 @@ export default async (req, res) => {
 
     const data = await graphql.request(query, variables);
 
-    res.status(200).json(data);
+    res.status(200).json({ success: true, result: data.findPlaceInLine });
   } catch (e) {
-    console.error(e);
-
-    res.status(404).send(e.message);
+    res.status(400).json({ success: false, error: e.message });
   }
 };

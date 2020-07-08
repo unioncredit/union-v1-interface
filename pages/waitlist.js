@@ -14,14 +14,30 @@ const WaitlistSignup = () => {
     const { email } = data;
 
     try {
-      await delay();
-      console.log(email);
-    } catch (err) {
-      console.error(err);
+      const res = await fetch("/api/waitlist/signup", {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      if (res.status > 200) {
+        const { error } = await res.json();
+        throw new Error(error);
+      }
+
+      const data = await res.json();
+
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+      window.alert(e.message);
     }
   };
 
-  if (isSubmitted) return null;
+  // if (isSubmitted) return null;
 
   return (
     <form className="max-w-sm" onSubmit={handleSubmit(onSubmit)} method="POST">
