@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import TicketGate from "components/TicketGate";
 import Head from "next/head";
 import BorrowView from "views/borrow";
 import LoggedOutView from "views/loggedOut";
@@ -14,7 +15,13 @@ export default function BorrowPage() {
         <meta name="twitter:title" content="Borrow | Union" />
       </Head>
 
-      {account && library ? <BorrowView /> : <LoggedOutView />}
+      {account && library ? (
+        <TicketGate>
+          <BorrowView />
+        </TicketGate>
+      ) : (
+        <LoggedOutView />
+      )}
     </div>
   );
 }
