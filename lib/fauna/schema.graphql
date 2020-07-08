@@ -16,8 +16,6 @@ type Query {
   allSignupsBySentGoldenTicketFlag(sentGoldenTicket: Boolean!): [Signup!]
     @index(name: "all_signups_by_sentGoldenTicket_flag")
 
-  # allSignupsTs: [Int] @index(name: "all_signups_ts")
-
   findSignupByEmail(email: String!): Signup!
     @index(name: "find_signup_by_email")
 

@@ -4,14 +4,19 @@ Documentation for the custom Index and UDF for FaunaDB usage. Paired with the `s
 
 ## Custom Index
 
-##### `all_signups_ts`
+##### `all_signups_ts_by_sentGoldenTicket_flag`
 
 Needed to find the index of the signup in the User-Defined Function `find_place_in_line`.
 
 ```js
 CreateIndex({
-  name: "all_signups_ts",
+  name: "all_signups_ts_by_sentGoldenTicket_flag",
   source: Collection("Signup"),
+  terms: [
+    {
+      field: ["data", "sentGoldenTicket"],
+    },
+  ],
   values: [
     {
       field: ["ts"],
@@ -43,7 +48,11 @@ Query(
       },
       {
         position: Count(
-          Range(Match(Index("all_signups_ts"), []), 0, Var("ts"))
+          Range(
+            Match(Index("all_signups_ts_by_sentGoldenTicket_flag"), false),
+            0,
+            Var("ts")
+          )
         ),
         total: Count(
           Match(Index("all_signups_by_sentGoldenTicket_flag"), false)
