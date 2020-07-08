@@ -1,11 +1,49 @@
 import Button from "components/button";
 import Input from "components/input";
-import delay from "lib/delay";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
+import { useState } from "react";
+import { commify } from "@ethersproject/units";
+
+const waitlistPlaceCheck = async (email) => {
+  const res = await fetch("/api/waitlist/place", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  if (res.status > 200) {
+    const { error } = await res.json();
+    return error;
+  }
+
+  const { result } = await res.json();
+
+  return result;
+};
+
+const waitlistSignup = async (email) => {
+  const res = await fetch("/api/waitlist/signup", {
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+};
 
 const WaitlistSignup = () => {
+  const [placeData, placeDataSet] = useState(null);
+
   const { handleSubmit, register, errors, formState } = useForm();
 
   const { isSubmitting, isSubmitted } = formState;
@@ -14,61 +52,79 @@ const WaitlistSignup = () => {
     const { email } = data;
 
     try {
-      const res = await fetch("/api/waitlist/signup", {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
+      await waitlistSignup(email);
 
-      if (res.status > 200) {
-        const { error } = await res.json();
-        throw new Error(error);
-      }
+      const data = await waitlistPlaceCheck(email);
 
-      const data = await res.json();
-
-      console.log(data);
+      placeDataSet(data);
     } catch (e) {
       console.error(e);
-      window.alert(e.message);
     }
   };
 
-  // if (isSubmitted) return null;
+  if (isSubmitted && placeData)
+    return (
+      <div className="max-w-md">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl leading-none mb-6 md:mb-8 font-semibold">
+          {"#" + commify(placeData.position)}
+        </h2>
+        <p className="text-lg md:text-xl leading-tight font-normal mb-6 md:mb-8 md:max-w-md">
+          You're on the waitlist. We'll let you know when your invite to sign up
+          is ready.
+        </p>
+
+        <Button
+          href="https://twitter.com/unionprotocol"
+          target="_blank"
+          rel="noopener"
+          secondary
+          wide
+        >
+          Spread the word
+        </Button>
+      </div>
+    );
 
   return (
-    <form className="max-w-sm" onSubmit={handleSubmit(onSubmit)} method="POST">
-      <Input
-        type="email"
-        label="Email"
-        name="email"
-        autoComplete="email"
-        placeholder="Your email address"
-        className="mb-4"
-        id="email"
-        ref={register({
-          required: "Please fill out this field",
-          pattern: {
-            value: EMAIL_REGEX,
-            message: "Please enter a valid email",
-          },
-        })}
-        error={errors.email}
-      />
+    <div className="">
+      <h2 className="text-2xl md:text-3xl mb-6">Union Alpha</h2>
 
-      <Button
-        full
-        type="submit"
-        disabled={isSubmitting}
-        submitting={isSubmitting}
-        submittingText={"Signing up..."}
+      <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-sm">
+        Secure a spot on the waitlist for the Alpha program.
+      </p>
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        method="POST"
+        className="max-w-sm"
       >
-        Submit
-      </Button>
-    </form>
+        <Input
+          type="email"
+          name="email"
+          className="mb-4"
+          autoComplete="email"
+          placeholder="name@email.com"
+          id="email"
+          ref={register({
+            required: "Please fill out this field",
+            pattern: {
+              value: EMAIL_REGEX,
+              message: "Please enter a valid email",
+            },
+          })}
+        />
+
+        <Button
+          full
+          type="submit"
+          disabled={isSubmitting}
+          submitting={isSubmitting}
+          submittingText={"Join Waitlist"}
+        >
+          Join Waitlist
+        </Button>
+      </form>
+    </div>
   );
 };
 
@@ -82,8 +138,6 @@ export default function WaitlistPage() {
       </Head>
 
       <div className="container">
-        <h1 className="mb-8">Waitlist</h1>
-
         <WaitlistSignup />
       </div>
     </div>
