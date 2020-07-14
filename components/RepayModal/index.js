@@ -72,8 +72,10 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
     const amountToRepay =
       Number(values.amount) === calculateMaxValue
-        ? Number(values.amount * REPAY_MARGIN)
-        : values.amount;
+        ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
+          ? flooredDaiBalance
+          : Number(values.amount * REPAY_MARGIN)
+        : Number(values.amount);
 
     try {
       const tx = await repay(
