@@ -90,7 +90,8 @@ const WaitlistSignup = () => {
       <h2 className="text-2xl md:text-3xl mb-6">Union Alpha</h2>
 
       <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-sm">
-        Secure a spot on the waitlist for the Alpha program.
+        Secure a spot on the waitlist for the Alpha program, or collect a{" "}
+        <strong>Golden Ticket</strong> to get early access.
       </p>
 
       <form
@@ -158,6 +159,23 @@ export default function WaitlistPage() {
 
       <section className="container-sm">
         <div className="divider"></div>
+      </section>
+
+      <section className="pb-10 pt-72">
+        <div className="container-sm">
+          <div className="flex justify-center">
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://app.rarible.com/"
+              className="text-3xl leading-none"
+            >
+              <span role="image" aria-label="Golden Ticket">
+                🎟
+              </span>
+            </a>
+          </div>
+        </div>
       </section>
     </div>
   );
