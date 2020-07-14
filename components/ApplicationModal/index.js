@@ -14,7 +14,7 @@ import Button from "../button";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
-import { useSuccessModalToggle } from "../SuccessModal";
+import { useSuccessModalToggle } from "../SuccessModal/state";
 
 const ApplicationModal = () => {
   const { account, library, chainId } = useWeb3React();
@@ -155,5 +155,3 @@ const ApplicationModal = () => {
 };
 
 export default ApplicationModal;
-
-export { useApplicationModalToggle, useApplicationModalOpen };

@@ -187,5 +187,3 @@ RepayModal.propTypes = {
 };
 
 export default RepayModal;
-
-export { useRepayModalOpen, useRepayModalToggle };

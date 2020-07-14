@@ -1,8 +1,10 @@
 import ApplicationCard from "components/applicationCard";
-import BorrowModal, { useBorrowModalToggle } from "components/BorrowModal";
+import BorrowModal from "components/BorrowModal";
+import { useBorrowModalToggle } from "components/BorrowModal/state";
 import Button from "components/button";
 import LabelPair from "components/labelPair";
-import RepayModal, { useRepayModalToggle } from "components/RepayModal";
+import RepayModal from "components/RepayModal";
+import { useRepayModalToggle } from "components/RepayModal/state";
 import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";

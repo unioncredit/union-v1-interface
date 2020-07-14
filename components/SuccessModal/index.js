@@ -70,5 +70,3 @@ const SuccessModal = () => {
 };
 
 export default SuccessModal;
-
-export { useSuccessModalToggle, useSuccessModalOpen };

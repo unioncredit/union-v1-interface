@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import { useLearnMoreModalToggle } from "components/LearnMoreModal";
+import { useLearnMoreModalToggle } from "components/LearnMoreModal/state";
 import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Telegram from "svgs/Telegram";
@@ -127,5 +127,3 @@ const GetInvitedModal = () => {
 };
 
 export default GetInvitedModal;
-
-export { useGetInvitedModalOpen, useGetInvitedModalToggle };

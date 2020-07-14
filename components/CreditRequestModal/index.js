@@ -137,5 +137,3 @@ const CreditRequestModal = () => {
 };
 
 export default CreditRequestModal;
-
-export { useCreditRequestModalOpen, useCreditRequestModalToggle };

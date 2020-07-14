@@ -152,5 +152,3 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 };
 
 export default DepositModal;
-
-export { useDepositModalOpen, useDepositModalToggle };

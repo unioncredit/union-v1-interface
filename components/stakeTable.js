@@ -7,12 +7,13 @@ import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import Address from "./address";
-import AddressModal, { useAddressModalToggle } from "./AddressModal";
+import AddressModal from "./AddressModal";
+import { useAddressModalToggle } from "./AddressModal/state";
 import Button from "./button";
 import HealthBar from "./healthBar";
-import { useLearnMoreModalToggle } from "./LearnMoreModal";
-import { useTrustModalToggle } from "./TrustModal";
-import { useApplicationModalToggle } from "./ApplicationModal";
+import { useLearnMoreModalToggle } from "./LearnMoreModal/state";
+import { useTrustModalToggle } from "./TrustModal/state";
+import { useApplicationModalToggle } from "./ApplicationModal/state";
 
 const StakeTableEmptyState = () => {
   const toggleLearnMoreModal = useLearnMoreModalToggle();
