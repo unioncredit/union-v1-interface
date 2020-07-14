@@ -25,7 +25,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const curToken = useCurrentToken();
 
@@ -176,7 +176,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm

@@ -20,7 +20,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const { register, handleSubmit, watch, formState, errors } = useForm();
 
-  const { isSubmitting, dirty } = formState;
+  const { isSubmitting, isDirty } = formState;
 
   const [adjustType, setAdjustType] = useState(ADJUST_TYPES.INCREASE);
 
@@ -134,7 +134,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
           full
           type="submit"
           submitting={isSubmitting}
-          disabled={isSubmitting || !dirty}
+          disabled={isSubmitting || !isDirty}
         >
           Confirm
         </Button>
