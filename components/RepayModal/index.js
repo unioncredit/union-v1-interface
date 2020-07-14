@@ -43,7 +43,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     updateDaiBalance();
   }, [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const addToast = useToast();
 
@@ -170,7 +170,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm

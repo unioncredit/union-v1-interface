@@ -34,7 +34,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     updateDaiBalance();
   }, [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
@@ -142,7 +142,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
           full
           type="submit"
           submitting={isSubmitting}
-          disabled={isSubmitting || !dirty}
+          disabled={isSubmitting || !isDirty}
         >
           Confirm
         </Button>

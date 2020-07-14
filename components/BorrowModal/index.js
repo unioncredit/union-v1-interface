@@ -48,7 +48,7 @@ const BorrowModal = ({
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const addToast = useToast();
 
@@ -191,7 +191,7 @@ const BorrowModal = ({
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm

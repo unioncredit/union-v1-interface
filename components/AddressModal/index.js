@@ -29,7 +29,7 @@ const InlineLabelEditor = ({ label, ENSName, address }) => {
     },
   });
 
-  const { isSubmitting, dirty } = formState;
+  const { isSubmitting, isDirty } = formState;
 
   const [copied, copy] = useCopy();
 
@@ -58,7 +58,7 @@ const InlineLabelEditor = ({ label, ENSName, address }) => {
           id="label"
         />
       </div>
-      {dirty ? (
+      {isDirty ? (
         <button
           type="submit"
           className="focus:outline-none leading-none font-medium text-type-light underline"
