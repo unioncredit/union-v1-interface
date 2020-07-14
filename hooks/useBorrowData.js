@@ -73,7 +73,7 @@ const getCreditLimit = (contract) => async (
     borrowedRounded: roundUp(
       Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
     ),
-    borrowed:
+    borrowedRaw:
       Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18)),
     fee: Number(formatUnits(fee, 18)),
     interest: Number(formatUnits(interest, 18)),

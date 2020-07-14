@@ -39,7 +39,6 @@ export default function BorrowView() {
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
 
   const {
-    borrowed = 0,
     borrowedRounded = 0,
     interest = 0,
     paymentDueDate = "-",
@@ -168,14 +167,14 @@ export default function BorrowView() {
       </div>
 
       <BorrowModal
-        balanceOwed={borrowed}
+        balanceOwed={borrowedRounded}
         creditLimit={creditLimit}
         fee={fee}
         onComplete={onComplete}
         paymentDueDate={paymentDueDate}
       />
 
-      <RepayModal balanceOwed={borrowed} onComplete={onComplete} />
+      <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />
     </Fragment>
   );
 }
