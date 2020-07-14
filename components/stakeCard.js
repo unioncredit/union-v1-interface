@@ -100,7 +100,7 @@ const StakeCard = () => {
         labelColor="text-grey-pure"
         label="Earned Per Year"
         tooltip={unionPerYearTip}
-        value={upy}
+        value={format(upy, 3)}
         valueType="UNION"
       />
       <LabelPair
