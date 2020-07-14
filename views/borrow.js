@@ -38,8 +38,14 @@ export default function BorrowView() {
 
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
 
-  const { borrowed = 0, interest = 0, paymentDueDate = "-", fee = 0, apr = 0 } =
-    !!borrowData && borrowData;
+  const {
+    borrowed = 0,
+    borrowedRounded = 0,
+    interest = 0,
+    paymentDueDate = "-",
+    fee = 0,
+    apr = 0,
+  } = !!borrowData && borrowData;
 
   const formatApr = toPercent(apr, 2);
 
