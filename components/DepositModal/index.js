@@ -114,7 +114,12 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={flooredDaiBalance}
-          setMax={() => setValue("amount", flooredDaiBalance)}
+          setMax={() =>
+            setValue("amount", flooredDaiBalance, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",

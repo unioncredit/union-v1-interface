@@ -131,7 +131,12 @@ const BorrowModal = ({
           label="Amount"
           placeholder="0.00"
           setMaxValue={formatMax}
-          setMax={() => setValue("amount", formatMax)}
+          setMax={() =>
+            setValue("amount", formatMax, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
