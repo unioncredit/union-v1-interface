@@ -96,7 +96,7 @@ const WaitlistSignup = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="POST"
-        className="max-w-sm"
+        className="sm:max-w-sm"
       >
         <Input
           type="email"
@@ -130,16 +130,31 @@ const WaitlistSignup = () => {
 
 export default function WaitlistPage() {
   return (
-    <div className="my-8 md:my-10">
+    <div>
       <Head>
         <title>Waitlist | Union</title>
         <meta property="og:title" content="Waitlist | Union" />
         <meta name="twitter:title" content="Waitlist | Union" />
       </Head>
 
-      <div className="container">
-        <WaitlistSignup />
-      </div>
+      <section className="pt-10 pb-4 sm:pb-10 sm:pt-20 lg:pt-32">
+        <div className="container-sm">
+          <div className="flex flex-col sm:flex-row sm:-mx-6">
+            <div className="w-full sm:w-1/2 sm:p-8 mb-12 sm:mb-0">
+              <div className="w-full">
+                <WaitlistSignup />
+              </div>
+            </div>
+            <div className="w-full self-end sm:w-1/2 sm:p-8 flex justify-end">
+              <img
+                className="w-56 sm:w-72"
+                src="/images/learn-more.svg"
+                alt="Learn more about Union"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
