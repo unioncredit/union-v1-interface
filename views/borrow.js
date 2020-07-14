@@ -95,11 +95,14 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {toPercent(getPctUsed(borrowed, roundDown(creditLimit)))}
+                      {toPercent(
+                        getPctUsed(borrowedRounded, roundDown(creditLimit))
+                      )}
                     </p>
                     <UtilizationBar
                       usage={Number(
-                        getPctUsed(borrowed, roundDown(creditLimit)) * 100
+                        getPctUsed(borrowedRounded, roundDown(creditLimit)) *
+                          100
                       )}
                     />
                   </div>
@@ -120,7 +123,7 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
-                  value={borrowed}
+                  value={borrowedRounded}
                   valueType="DAI"
                   large
                 />
