@@ -111,7 +111,12 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={withdrawableStake}
-          setMax={() => setValue("amount", withdrawableStake)}
+          setMax={() =>
+            setValue("amount", withdrawableStake, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",

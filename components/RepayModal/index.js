@@ -137,7 +137,12 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           label="Amount"
           placeholder="0.00"
           setMaxValue={calculateMaxValue.toFixed(2)}
-          setMax={() => setValue("amount", calculateMaxValue.toFixed(2))}
+          setMax={() =>
+            setValue("amount", calculateMaxValue.toFixed(2), {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
