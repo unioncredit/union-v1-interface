@@ -137,7 +137,7 @@ export default function WaitlistPage() {
         <meta name="twitter:title" content="Waitlist | Union" />
       </Head>
 
-      <section className="pt-10 pb-4 sm:pb-10 sm:pt-20 lg:pt-32">
+      <section className="pt-8 pb-10 sm:pt-12 sm:pb-16 md:pt-24 md:pb-32">
         <div className="container-sm">
           <div className="flex flex-col sm:flex-row sm:-mx-6">
             <div className="w-full sm:w-1/2 sm:p-8 mb-12 sm:mb-0">
@@ -154,6 +154,10 @@ export default function WaitlistPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="container-sm">
+        <div className="divider"></div>
       </section>
     </div>
   );
