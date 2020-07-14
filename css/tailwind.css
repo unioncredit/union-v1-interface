@@ -313,13 +313,10 @@ input[type="number"] {
 
 @screen sm {
   [data-reach-dialog-content].wide {
-    @apply bg-white w-full h-full outline-none self-start rounded mx-auto h-auto;
+    @apply bg-white w-full h-full outline-none self-start rounded mx-auto;
     margin-top: 12vh;
     max-width: 32rem;
   }
-}
-
-[data-reach-dialog-content].fullscreen {
 }
 
 [data-reach-dialog-content].uniswap {
