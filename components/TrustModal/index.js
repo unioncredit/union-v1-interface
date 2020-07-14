@@ -39,6 +39,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const onSubmit = async (data, e) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const { address, amount: rawAmount } = data;
 
@@ -104,13 +105,15 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 

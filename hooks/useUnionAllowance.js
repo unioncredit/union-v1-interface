@@ -46,6 +46,7 @@ export function useIncreaseUnionAllowance() {
 
   const increase = useAutoCallback(async (amount) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
@@ -75,6 +76,8 @@ export function useIncreaseUnionAllowance() {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hideWaiting();
@@ -83,7 +86,7 @@ export function useIncreaseUnionAllowance() {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   });
 

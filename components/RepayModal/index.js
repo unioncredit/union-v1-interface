@@ -69,6 +69,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const amountToRepay =
       Number(values.amount) === calculateMaxValue
@@ -107,13 +108,15 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 

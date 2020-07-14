@@ -60,6 +60,7 @@ const ApplicationModal = () => {
 
   const submit = useAutoCallback(async () => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     isSubmittingSet(true);
 
@@ -102,6 +103,8 @@ const ApplicationModal = () => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
@@ -110,7 +113,7 @@ const ApplicationModal = () => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   });
 

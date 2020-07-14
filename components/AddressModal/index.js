@@ -111,6 +111,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const removeAddress = useAutoCallback(async () => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     try {
       removingAddressSet(true);
@@ -158,13 +159,15 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
 
       removingAddressSet(false);
     }

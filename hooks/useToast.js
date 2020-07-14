@@ -13,16 +13,18 @@ export const FLAVORS = {
     body: (
       <Fragment>
         Transaction is pending.
-        <br />
         {hash && chainId && (
-          <a
-            className="underline"
-            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View on Etherscan
-          </a>
+          <Fragment>
+            <br />
+            <a
+              className="underline"
+              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </Fragment>
         )}
       </Fragment>
     ),
@@ -33,16 +35,18 @@ export const FLAVORS = {
     body: (
       <Fragment>
         Enabling token.
-        <br />
         {hash && chainId && (
-          <a
-            className="underline"
-            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View on Etherscan
-          </a>
+          <Fragment>
+            <br />
+            <a
+              className="underline"
+              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </Fragment>
         )}
       </Fragment>
     ),
@@ -53,16 +57,18 @@ export const FLAVORS = {
     body: (
       <Fragment>
         Transaction successful.
-        <br />
         {hash && chainId && (
-          <a
-            className="underline"
-            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View on Etherscan
-          </a>
+          <Fragment>
+            <br />
+            <a
+              className="underline"
+              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </Fragment>
         )}
       </Fragment>
     ),
@@ -73,24 +79,44 @@ export const FLAVORS = {
     body: (
       <Fragment>
         Token enabled successfully.
-        <br />
         {hash && chainId && (
-          <a
-            className="underline"
-            href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View on Etherscan
-          </a>
+          <Fragment>
+            <br />
+            <a
+              className="underline"
+              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </Fragment>
         )}
       </Fragment>
     ),
     type: "success",
     hideAfter: 20,
   }),
-  TX_ERROR: (message = "Transaction failed") => ({
-    body: message,
+  TX_ERROR: (message = "Transaction failed", hash, chainId) => ({
+    body: (
+      <Fragment>
+        {message}
+
+        {hash && chainId && (
+          <Fragment>
+            <br />
+            <a
+              className="underline"
+              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </Fragment>
+        )}
+      </Fragment>
+    ),
     type: "error",
     hideAfter: 20,
   }),
