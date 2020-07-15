@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
-import useAddressLabels from "hooks/useAddressLabels";
+import use3BoxLabels from "hooks/3box/use3BoxLabels";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
@@ -21,7 +21,7 @@ import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
 
 const InlineLabelEditor = ({ label, ENSName, address }) => {
-  const { setLabel } = useAddressLabels();
+  const { setLabel } = use3BoxLabels();
 
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
@@ -99,7 +99,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const ENSName = useENSName(address);
 
-  const { getLabel } = useAddressLabels();
+  const { getLabel } = use3BoxLabels();
 
   const label = getLabel(address);
 

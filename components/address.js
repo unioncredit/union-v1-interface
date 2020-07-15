@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import useAddressLabels from "hooks/useAddressLabels";
+import use3BoxLabels from "hooks/3box/use3BoxLabels";
 import useCopy from "hooks/useCopy";
 import useENSName from "hooks/useENSName";
 import { memo } from "react";
@@ -18,7 +18,7 @@ const Address = ({ address, withLabel, copyable = false }) => {
     copyable ? "focus:underline" : "cursor-inherit"
   );
 
-  const { getLabel } = useAddressLabels();
+  const { getLabel } = use3BoxLabels();
 
   const label = getLabel(address);
 

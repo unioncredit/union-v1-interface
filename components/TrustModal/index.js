@@ -2,7 +2,7 @@ import { isAddress } from "@ethersproject/address";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
-import useAddressLabels from "hooks/useAddressLabels";
+import use3BoxLabels from "hooks/3box/use3BoxLabels";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import useMemberContract from "hooks/useMemberContract";
@@ -38,7 +38,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const memberContract = useMemberContract();
 
-  const { setLabel } = useAddressLabels();
+  const { setLabel } = use3BoxLabels();
 
   const onSubmit = async (data, e) => {
     let hidePendingToast = () => {};
