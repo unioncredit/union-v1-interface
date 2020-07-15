@@ -30,7 +30,7 @@ const getStakeData = (memberContract, stakingContract) => async (
 
   return {
     totalStake: parseRes(totalStake),
-    utilizedStake: parseRes(totalFrozen.sub(totalLocked)),
+    utilizedStake: parseRes(totalLocked.sub(totalFrozen)),
     withdrawableStake: roundDown(formatUnits(totalStake.sub(totalLocked), 18)),
     defaultedStake: parseRes(totalFrozen),
   };
