@@ -10,8 +10,6 @@ import { Fragment, useState } from "react";
 import Button from "../button";
 import Modal from "../modal";
 import {
-  useToggleCreateModal,
-  useToggleSignInModal,
   useUpdateWalletModalView,
   useWalletModalOpen,
   useWalletModalToggle,
@@ -268,12 +266,3 @@ const WalletModal = () => {
 };
 
 export default WalletModal;
-
-export {
-  useUpdateWalletModalView,
-  useWalletModalOpen,
-  useWalletModalToggle,
-  useWalletModalView,
-  useToggleCreateModal,
-  useToggleSignInModal,
-};

@@ -6,7 +6,7 @@ import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
-import { useGetInvitedModalToggle } from "./GetInvitedModal";
+import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 

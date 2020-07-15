@@ -25,7 +25,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const curToken = useCurrentToken();
 
@@ -39,6 +39,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const onSubmit = async (data, e) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const { address, amount: rawAmount } = data;
 
@@ -104,13 +105,15 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -176,7 +179,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm
@@ -188,5 +191,3 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 };
 
 export default TrustModal;
-
-export { useTrustModalOpen, useTrustModalToggle };

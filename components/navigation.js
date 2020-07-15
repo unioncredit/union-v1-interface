@@ -6,10 +6,11 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
 import Logo from "./logo";
-import WalletModal, {
+import WalletModal from "./WalletModal";
+import {
   useToggleCreateModal,
   useToggleSignInModal,
-} from "./WalletModal";
+} from "./WalletModal/state";
 import Web3Status from "./web3Connection";
 
 const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));

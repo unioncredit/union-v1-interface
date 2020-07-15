@@ -1,8 +1,10 @@
 import ApplicationCard from "components/applicationCard";
-import BorrowModal, { useBorrowModalToggle } from "components/BorrowModal";
+import BorrowModal from "components/BorrowModal";
+import { useBorrowModalToggle } from "components/BorrowModal/state";
 import Button from "components/button";
 import LabelPair from "components/labelPair";
-import RepayModal, { useRepayModalToggle } from "components/RepayModal";
+import RepayModal from "components/RepayModal";
+import { useRepayModalToggle } from "components/RepayModal/state";
 import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
@@ -36,8 +38,13 @@ export default function BorrowView() {
 
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
 
-  const { borrowed = 0, interest = 0, paymentDueDate = "-", fee = 0, apr = 0 } =
-    !!borrowData && borrowData;
+  const {
+    borrowedRounded = 0,
+    interest = 0,
+    paymentDueDate = "-",
+    fee = 0,
+    apr = 0,
+  } = !!borrowData && borrowData;
 
   const formatApr = toPercent(apr, 2);
 
@@ -87,11 +94,14 @@ export default function BorrowView() {
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
                     <p className="mr-4 text-white">
-                      {toPercent(getPctUsed(borrowed, roundDown(creditLimit)))}
+                      {toPercent(
+                        getPctUsed(borrowedRounded, roundDown(creditLimit))
+                      )}
                     </p>
                     <UtilizationBar
                       usage={Number(
-                        getPctUsed(borrowed, roundDown(creditLimit)) * 100
+                        getPctUsed(borrowedRounded, roundDown(creditLimit)) *
+                          100
                       )}
                     />
                   </div>
@@ -112,7 +122,7 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
-                  value={borrowed}
+                  value={borrowedRounded}
                   valueType="DAI"
                   large
                 />
@@ -157,14 +167,14 @@ export default function BorrowView() {
       </div>
 
       <BorrowModal
-        balanceOwed={borrowed}
+        balanceOwed={borrowedRounded}
         creditLimit={creditLimit}
         fee={fee}
         onComplete={onComplete}
         paymentDueDate={paymentDueDate}
       />
 
-      <RepayModal balanceOwed={borrowed} onComplete={onComplete} />
+      <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />
     </Fragment>
   );
 }

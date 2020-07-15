@@ -30,7 +30,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
@@ -43,6 +43,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     try {
       const amount = parseUnits(values.amount, 18).toString();
@@ -71,13 +72,15 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -111,7 +114,12 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={withdrawableStake}
-          setMax={() => setValue("amount", withdrawableStake)}
+          setMax={() =>
+            setValue("amount", withdrawableStake, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
@@ -139,7 +147,7 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           full
           type="submit"
           submitting={isSubmitting}
-          disabled={isSubmitting || !dirty}
+          disabled={isSubmitting || !isDirty}
         >
           Confirm
         </Button>
@@ -149,5 +157,3 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 };
 
 export default WithdrawModal;
-
-export { useWithdrawModalOpen, useWithdrawModalToggle };

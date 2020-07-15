@@ -43,7 +43,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     updateDaiBalance();
   }, [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const addToast = useToast();
 
@@ -69,11 +69,14 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const amountToRepay =
       Number(values.amount) === calculateMaxValue
-        ? Number(values.amount * REPAY_MARGIN)
-        : values.amount;
+        ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
+          ? flooredDaiBalance
+          : Number(values.amount * REPAY_MARGIN)
+        : Number(values.amount);
 
     try {
       const tx = await repay(
@@ -105,13 +108,15 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -135,7 +140,12 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           label="Amount"
           placeholder="0.00"
           setMaxValue={calculateMaxValue.toFixed(2)}
-          setMax={() => setValue("amount", calculateMaxValue.toFixed(2))}
+          setMax={() =>
+            setValue("amount", calculateMaxValue.toFixed(2), {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
@@ -170,7 +180,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm
@@ -187,5 +197,3 @@ RepayModal.propTypes = {
 };
 
 export default RepayModal;
-
-export { useRepayModalOpen, useRepayModalToggle };

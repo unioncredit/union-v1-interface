@@ -48,12 +48,13 @@ const BorrowModal = ({
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const addToast = useToast();
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     const { amount } = values;
 
@@ -82,13 +83,15 @@ const BorrowModal = ({
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -131,7 +134,12 @@ const BorrowModal = ({
           label="Amount"
           placeholder="0.00"
           setMaxValue={formatMax}
-          setMax={() => setValue("amount", formatMax)}
+          setMax={() =>
+            setValue("amount", formatMax, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
@@ -191,7 +199,7 @@ const BorrowModal = ({
           <Button
             full
             type="submit"
-            disabled={isSubmitting || !dirty}
+            disabled={isSubmitting || !isDirty}
             submitting={isSubmitting}
           >
             Confirm
@@ -211,5 +219,3 @@ BorrowModal.propTypes = {
 };
 
 export default BorrowModal;
-
-export { useBorrowModalOpen, useBorrowModalToggle };

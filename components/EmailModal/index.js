@@ -19,7 +19,7 @@ const EmailModal = () => {
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -84,7 +84,7 @@ const EmailModal = () => {
             <Button
               full
               type="submit"
-              disabled={isSubmitting || !dirty}
+              disabled={isSubmitting || !isDirty}
               submitting={isSubmitting}
             >
               Continue
@@ -106,5 +106,3 @@ const EmailModal = () => {
 };
 
 export default EmailModal;
-
-export { useEmailModalOpen, useEmailModalToggle };

@@ -20,7 +20,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const { register, handleSubmit, watch, formState, errors } = useForm();
 
-  const { isSubmitting, dirty } = formState;
+  const { isSubmitting, isDirty } = formState;
 
   const [adjustType, setAdjustType] = useState(ADJUST_TYPES.INCREASE);
 
@@ -35,6 +35,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const onSubmit = async (data, e) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     try {
       if (formatNewTrust >= 0) {
@@ -66,6 +67,8 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
         hidePending();
 
+        txReceipt = receipt;
+
         throw new Error(receipt.logs[0]);
       }
     } catch (err) {
@@ -73,7 +76,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -134,7 +137,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
           full
           type="submit"
           submitting={isSubmitting}
-          disabled={isSubmitting || !dirty}
+          disabled={isSubmitting || !isDirty}
         >
           Confirm
         </Button>

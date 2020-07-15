@@ -29,7 +29,7 @@ const InlineLabelEditor = ({ label, ENSName, address }) => {
     },
   });
 
-  const { isSubmitting, dirty } = formState;
+  const { isSubmitting, isDirty } = formState;
 
   const [copied, copy] = useCopy();
 
@@ -58,7 +58,7 @@ const InlineLabelEditor = ({ label, ENSName, address }) => {
           id="label"
         />
       </div>
-      {dirty ? (
+      {isDirty ? (
         <button
           type="submit"
           className="focus:outline-none leading-none font-medium text-type-light underline"
@@ -111,6 +111,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const removeAddress = useAutoCallback(async () => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     try {
       removingAddressSet(true);
@@ -158,13 +159,15 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
 
       removingAddressSet(false);
     }
@@ -283,5 +286,3 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 };
 
 export default AddressModal;
-
-export { useAddressModalOpen, useAddressModalToggle };

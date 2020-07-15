@@ -42,7 +42,7 @@ const getRewardsData = (contract) => async (
   const rewards = await contract.calculateRewards(account, tokenAddress);
 
   return {
-    upy: commify(parseRes(upy)),
+    upy: parseRes(upy),
     rewards: parseRes(rewards, 3),
     rewardsMultiplier: parseRes(rewardsMultiplier),
   };

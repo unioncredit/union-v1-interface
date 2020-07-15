@@ -14,7 +14,7 @@ export default function AccountView() {
 
   useEffect(() => reset(), [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const [isCopied, copy] = useCopy();
 
@@ -78,7 +78,7 @@ export default function AccountView() {
             <Button
               full
               type="submit"
-              disabled={isSubmitting || !dirty}
+              disabled={isSubmitting || !isDirty}
               submitting={isSubmitting}
             >
               Save changes

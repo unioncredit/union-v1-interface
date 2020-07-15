@@ -14,7 +14,7 @@ import Button from "../button";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
-import { useSuccessModalToggle } from "../SuccessModal";
+import { useSuccessModalToggle } from "../SuccessModal/state";
 
 const ApplicationModal = () => {
   const { account, library, chainId } = useWeb3React();
@@ -60,6 +60,7 @@ const ApplicationModal = () => {
 
   const submit = useAutoCallback(async () => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     isSubmittingSet(true);
 
@@ -102,6 +103,8 @@ const ApplicationModal = () => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
@@ -110,7 +113,7 @@ const ApplicationModal = () => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   });
 
@@ -155,5 +158,3 @@ const ApplicationModal = () => {
 };
 
 export default ApplicationModal;
-
-export { useApplicationModalToggle, useApplicationModalOpen };

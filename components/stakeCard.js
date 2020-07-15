@@ -11,9 +11,11 @@ import {
   withdrawableStakeTip,
 } from "../text/tooltips";
 import Button from "./button";
-import DepositModal, { useDepositModalToggle } from "./DepositModal";
+import DepositModal from "./DepositModal";
+import { useDepositModalToggle } from "./DepositModal/state";
 import LabelPair from "./labelPair";
-import WithdrawModal, { useWithdrawModalToggle } from "./WithdrawModal";
+import WithdrawModal from "./WithdrawModal";
+import { useWithdrawModalToggle } from "./WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
 
 const format = (number, decimals = 2) =>
@@ -85,7 +87,7 @@ const StakeCard = () => {
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
-        slot={<WithdrawRewards onComplete={onComplete} />}
+        slot={rewards > 0 ? <WithdrawRewards onComplete={onComplete} /> : null}
       />
       <LabelPair
         labelColor="text-grey-pure"
@@ -98,7 +100,7 @@ const StakeCard = () => {
         labelColor="text-grey-pure"
         label="Earned Per Year"
         tooltip={unionPerYearTip}
-        value={upy}
+        value={format(upy, 3)}
         valueType="UNION"
       />
       <LabelPair

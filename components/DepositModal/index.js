@@ -34,7 +34,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     updateDaiBalance();
   }, [open]);
 
-  const { dirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
@@ -51,6 +51,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
+    let txReceipt = {};
 
     try {
       const tx = await stake(DAI, values.amount, library.getSigner(), chainId);
@@ -77,13 +78,15 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
       hidePending();
 
+      txReceipt = receipt;
+
       throw new Error(receipt.logs[0]);
     } catch (err) {
       hidePendingToast();
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
     }
   };
 
@@ -114,7 +117,12 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={flooredDaiBalance}
-          setMax={() => setValue("amount", flooredDaiBalance)}
+          setMax={() =>
+            setValue("amount", flooredDaiBalance, {
+              shouldDirty: true,
+              shouldValidate: true,
+            })
+          }
           error={errors.amount}
           ref={register({
             required: "Please fill out this field",
@@ -142,7 +150,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
           full
           type="submit"
           submitting={isSubmitting}
-          disabled={isSubmitting || !dirty}
+          disabled={isSubmitting || !isDirty}
         >
           Confirm
         </Button>
@@ -152,5 +160,3 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 };
 
 export default DepositModal;
-
-export { useDepositModalOpen, useDepositModalToggle };
