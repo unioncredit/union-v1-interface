@@ -1,12 +1,12 @@
 import { isAddress } from "@ethersproject/address";
+import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
+import { roundDown } from "util/numbers";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
 import useMemberContract from "./useMemberContract";
 import useStakingContract from "./useStakingContract";
-import { formatUnits } from "@ethersproject/units";
-import { roundDown } from "util/numbers";
 
 const getStakeData = (memberContract, stakingContract) => async (
   _,
@@ -18,25 +18,21 @@ const getStakeData = (memberContract, stakingContract) => async (
     tokenAddress
   );
 
-  const utilizedStake = await memberContract.getTotalLockedStake(
+  const totalLocked = await memberContract.getTotalLockedStake(
     account,
     tokenAddress
   );
 
-  const defaultedStake = await memberContract.getTotalFrozenAmount(
+  const totalFrozen = await memberContract.getTotalFrozenAmount(
     account,
     tokenAddress
-  );
-
-  const withdrawableStake = roundDown(
-    Number(formatUnits(totalStake, 18)) - Number(formatUnits(utilizedStake, 18))
   );
 
   return {
     totalStake: parseRes(totalStake),
-    utilizedStake: parseRes(utilizedStake),
-    defaultedStake: parseRes(defaultedStake),
-    withdrawableStake,
+    utilizedStake: parseRes(totalFrozen.sub(totalLocked)),
+    withdrawableStake: roundDown(formatUnits(totalStake.sub(totalLocked), 18)),
+    defaultedStake: parseRes(totalFrozen),
   };
 };
 
