@@ -1,23 +1,59 @@
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 
-let box = null;
+const getBox = async (_, account, library) => {
+  let box;
 
-async function openBox(address, provider) {
   const Box = (await import("3box")).default;
-  if (!Box) throw new Error("Box library is not available");
 
-  box = await Box.openBox(address, provider);
+  box = await Box.openBox(account, library);
+
   await box.syncDone;
+
+  return box;
+};
+
+export function useBox() {
+  const { account, library } = useWeb3React();
+
+  const shouldFetch = typeof account === "string" && !!library;
+
+  const { data = null } = useSWR(
+    shouldFetch ? ["Box", account, library] : null,
+    getBox,
+    {
+      dedupingInterval: 15 * 1000,
+      refreshInterval: 30 * 1000,
+      refreshWhenHidden: false,
+      revalidateOnFocus: false,
+      refreshWhenOffline: false,
+      revalidateOnReconnect: false,
+    }
+  );
+
+  return data;
+}
+
+const getSpace = (box) => async (key) => await box.openSpace(key);
+
+export function useSpace() {
+  const box = useBox();
+
+  const shouldFetch = !!box;
+
+  const { data = null } = useSWR(shouldFetch ? "union" : null, getSpace(box), {
+    dedupingInterval: 15 * 1000,
+    refreshInterval: 30 * 1000,
+    refreshWhenHidden: false,
+    revalidateOnFocus: false,
+    refreshWhenOffline: false,
+    revalidateOnReconnect: false,
+  });
+
+  return data;
 }
 
 let space = null;
-
-export async function openSpace() {
-  if (!box) throw new Error("Box is not open yet");
-
-  space = await box.openSpace("union");
-}
 
 export async function setSpacePrivate(key, value) {
   if (!space) throw new Error("Space is not open yet");
