@@ -21,6 +21,10 @@ export const formatDueDate = (secondsUntilDue) => {
     return `in ${hours} hours`;
   }
 
+  if (days <= 7 && hours >= 22) {
+    return `in ${days + 1} days`;
+  }
+
   if (days <= 7) {
     return `in ${days}d ${hours}h`;
   }
