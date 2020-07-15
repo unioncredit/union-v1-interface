@@ -61,11 +61,17 @@ const getCreditLimit = (contract) => async (
 
   const interest = await marketContract.calculatingInterest(account);
 
+  const overdueBlocks = await marketContract.overdueBlocks();
+
   const paymentDueDate = await getPaymentDue(
     account,
     chainId,
     marketContract,
     library
+  );
+
+  const paymentPeriod = formatDueDate(
+    overdueBlocks.mul(BLOCK_SPEED[chainId]).toNumber()
   );
 
   return {
@@ -78,6 +84,7 @@ const getCreditLimit = (contract) => async (
     fee: Number(formatUnits(fee, 18)),
     interest: Number(formatUnits(interest, 18)),
     paymentDueDate,
+    paymentPeriod,
   };
 };
 

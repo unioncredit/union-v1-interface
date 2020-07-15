@@ -29,6 +29,7 @@ const BorrowModal = ({
   fee,
   onComplete,
   paymentDueDate,
+  paymentPeriod,
 }) => {
   const { library, chainId } = useWeb3React();
   const curToken = useCurrentToken();
@@ -189,7 +190,7 @@ const BorrowModal = ({
           <dd className="text-right">
             {paymentDueDate !== "-" && calculateBalanceOwed > "0"
               ? paymentDueDate
-              : `in 30 days`}
+              : paymentPeriod}
           </dd>
         </dl>
 

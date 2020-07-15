@@ -42,6 +42,7 @@ export default function BorrowView() {
     borrowedRounded = 0,
     interest = 0,
     paymentDueDate = "-",
+    paymentPeriod = "-",
     fee = 0,
     apr = 0,
   } = !!borrowData && borrowData;
@@ -172,6 +173,7 @@ export default function BorrowView() {
         fee={fee}
         onComplete={onComplete}
         paymentDueDate={paymentDueDate}
+        paymentPeriod={paymentPeriod}
       />
 
       <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />
