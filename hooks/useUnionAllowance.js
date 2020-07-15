@@ -6,7 +6,7 @@ import useSWR from "swr";
 import handleTxError from "util/handleTxError";
 import parseRes from "util/parseRes";
 import useToast, { FLAVORS } from "./useToast";
-import useUnionContract from "./contracts/useUnionContract";
+import useUnionContract from "./useUnionContract";
 
 const getUnionAllowance = (contract) => async (_, account, chainId) => {
   const res = await contract.allowance(

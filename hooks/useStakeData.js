@@ -5,8 +5,8 @@ import useSWR from "swr";
 import { roundDown } from "util/numbers";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useMemberContract from "./contracts/useMemberContract";
-import useStakingContract from "./contracts/useStakingContract";
+import useMemberContract from "./useMemberContract";
+import useStakingContract from "./useStakingContract";
 
 const getStakeData = (memberContract, stakingContract) => async (
   _,

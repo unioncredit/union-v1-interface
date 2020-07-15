@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/contracts/useMemberContract";
+import useMemberContract from "hooks/useMemberContract";
 import useMemberFee from "hooks/useMemberFee";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";

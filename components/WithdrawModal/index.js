@@ -1,7 +1,7 @@
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
-import useStakingContract from "hooks/contracts/useStakingContract";
+import useStakingContract from "hooks/useStakingContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

@@ -7,7 +7,7 @@ import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 import useSWR from "swr";
 import { formatDueDate } from "util/formatDueDate";
 import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
+import useMarketRegistryContract from "./useMarketRegistryContract";
 import { roundUp } from "util/numbers";
 
 const getPaymentDue = async (account, chainId, contract, library) => {

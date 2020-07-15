@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
+import useMarketRegistryContract from "./useMarketRegistryContract";
 
 const getCreditLimit = (marketRegistryContract) => async (
   _,

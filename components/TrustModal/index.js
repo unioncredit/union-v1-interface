@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import useMemberContract from "hooks/contracts/useMemberContract";
+import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
