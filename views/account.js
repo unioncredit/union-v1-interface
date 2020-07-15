@@ -44,10 +44,16 @@ export default function AccountView() {
         <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8">
           <h1 className="mb-6">My account</h1>
 
-          <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+          <Button secondary>Connect 3Box</Button>
+
+          <form
+            method="POST"
+            className="mt-8"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Input
               autoComplete="email"
-              className="mb-10"
+              className="mb-4"
               id="email"
               label="Your email"
               name="email"
@@ -63,17 +69,15 @@ export default function AccountView() {
               })}
             />
 
-            <div className="mb-16">
-              <p className="mb-2 text-type-light">Your address</p>
-              <button
-                className="font-medium py-1 w-full truncate text-sm text-left focus:outline-none hover:underline"
-                onClick={handleCopy}
-                title={account}
-                type="button"
-              >
-                {isCopied ? "Copied!" : account}
-              </button>
-            </div>
+            <Input
+              className="mb-16"
+              label="Your address"
+              readOnly
+              setMax={handleCopy}
+              setMaxLabel=""
+              setMaxValue={isCopied ? "Copied!" : "Copy"}
+              value={account}
+            />
 
             <Button
               full

@@ -14,6 +14,7 @@ const Input = forwardRef(
       setMax,
       className,
       setMaxValue,
+      setMaxLabel = "Max:",
       autoComplete = "off",
       error,
       ...props
@@ -46,7 +47,7 @@ const Input = forwardRef(
                   onClick={setMax}
                   className="underline focus:outline-none font-medium"
                 >
-                  Max: {setMaxValue}
+                  {`${setMaxLabel} ${setMaxValue}`}
                 </button>
               )}
             </div>
