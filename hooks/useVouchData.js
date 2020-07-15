@@ -6,9 +6,9 @@ import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./useMarketRegistryContract";
-import useMemberContract from "./useMemberContract";
-import useStakingContract from "./useStakingContract";
+import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
+import useMemberContract from "./contracts/useMemberContract";
+import useStakingContract from "./contracts/useStakingContract";
 
 const getVouch = (
   marketRegistryContract,

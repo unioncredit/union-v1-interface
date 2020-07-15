@@ -5,7 +5,7 @@ import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useUnionContract from "./useUnionContract";
+import useUnionContract from "./contracts/useUnionContract";
 
 const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
   const delta = Number(await contract.getUserBlockDelta(account, tokenAddress));

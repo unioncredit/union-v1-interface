@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
-import useUnionContract from "hooks/useUnionContract";
+import useUnionContract from "hooks/contracts/useUnionContract";
 import { useState } from "react";
 import handleTxError from "util/handleTxError";
 

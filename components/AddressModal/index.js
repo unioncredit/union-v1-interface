@@ -4,7 +4,7 @@ import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
-import useMemberContract from "hooks/useMemberContract";
+import useMemberContract from "hooks/contracts/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";

@@ -9,13 +9,13 @@ import { useMarketModalToggle } from "components/MarketModal/state";
 import ABI from "constants/abis/IInterestRateModel.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
-import useAssetContract from "hooks/useAssetContract";
-import useCompoundContract from "hooks/useCompoundContract";
+import useAssetContract from "hooks/contracts/useAssetContract";
+import useCompoundContract from "hooks/contracts/useCompoundContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsAdmin from "hooks/useIsAdmin";
-import useMarketContract from "hooks/useMarketContract";
-import useMemberContract from "hooks/useMemberContract";
-import useStakingContract from "hooks/useStakingContract";
+import useMarketContract from "hooks/contracts/useMarketContract";
+import useMemberContract from "hooks/contracts/useMemberContract";
+import useStakingContract from "hooks/contracts/useStakingContract";
 import { Fragment, useState } from "react";
 import getContract from "util/getContract";
 
