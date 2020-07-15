@@ -1,45 +1,23 @@
-import { CONTROLLER_ADDRESSES } from "constants/variables";
-import ABI from "constants/abis/controller.json";
-import getContract from "util/getContract";
 import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
+import useControllerContract from "./useControllerContract";
+
+const getIsAdmin = (contract) => async (_, account) =>
+  contract.isAdmin(account);
 
 export default function useIsAdmin() {
-  const { library, chainId, account } = useWeb3React();
+  const { account } = useWeb3React();
 
-  const [isAdmin, setIsAdmin] = useState();
+  const contract = useControllerContract();
 
-  useEffect(() => {
-    let stale = false;
+  const shouldFetch = !!contract && typeof account === "string";
 
-    const contract = getContract(
-      CONTROLLER_ADDRESSES[chainId],
-      ABI,
-      library.getSigner()
-    );
-
-    contract
-      .isAdmin(account)
-      .then((state) => {
-        if (!stale) {
-          setIsAdmin(state);
-
-          return;
-        }
-
-        setIsAdmin(false);
-      })
-      .catch(() => {
-        if (!stale) {
-          setIsAdmin(false);
-        }
-      });
-
-    return () => {
-      stale = true;
-      setIsAdmin();
-    };
-  }, [library, account]);
-
-  return isAdmin;
+  return useSWR(
+    shouldFetch ? ["IsAdmin", account] : null,
+    getIsAdmin(contract),
+    {
+      dedupingInterval: 15 * 1000,
+      refreshInterval: 30 * 1000,
+    }
+  );
 }
