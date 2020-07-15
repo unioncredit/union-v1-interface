@@ -47,6 +47,7 @@ export default function AdminView() {
   const [originationFee, setOriginationFee] = useState(0);
   const [totalBorrows, setTotalBorrows] = useState(0);
   const [debtCeiling, setDebtCeiling] = useState(0);
+  const [maxBorrow, setMaxBorrow] = useState(0);
   const [minLoan, setMinLoan] = useState(0);
   const [apr, setApr] = useState(0);
   const [lendingPoolBalance, setLendingPoolBalance] = useState(0);
@@ -71,6 +72,7 @@ export default function AdminView() {
             const totalBorrowsRes = await marketContract.totalBorrows();
             const debtCeilingRes = await marketContract.debtCeiling();
             const minLoanRes = await marketContract.minLoan();
+            const maxBorrowRes = await marketContract.maxBorrow();
             const ratePreBlock = await marketContract.borrowRatePerBlock();
 
             setApr(
@@ -85,6 +87,7 @@ export default function AdminView() {
             setTotalBorrows(parseRes(totalBorrowsRes, 2));
             setDebtCeiling(parseRes(debtCeilingRes, 2));
             setMinLoan(parseRes(minLoanRes, 2));
+            setMaxBorrow(parseRes(maxBorrowRes, 2));
           }
         } catch (err) {
           if (isMounted) {
@@ -172,6 +175,16 @@ export default function AdminView() {
     }
   });
 
+  const onSetMaxBorrow = useAutoCallback(async (amount) => {
+    try {
+      await marketContract.setMaxBorrow(
+        new BigNumber(amount).times(WAD).toFixed()
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  });
+
   const onSetMinLoan = useAutoCallback(async (amount) => {
     try {
       await marketContract.setMinLoan(
@@ -249,6 +262,9 @@ export default function AdminView() {
                   <div className="flex items-center">Borrow Apr(%)</div>
                 </th>
                 <th>
+                  <div className="flex items-center">Max Borrow(DAI)</div>
+                </th>
+                <th>
                   <div className="flex items-center">Min Loan(DAI)</div>
                 </th>
                 <th>
@@ -265,6 +281,7 @@ export default function AdminView() {
                 <td>{debtCeiling}</td>
                 <td>{originationFee}</td>
                 <td>{apr}</td>
+                <td>{maxBorrow}</td>
                 <td>{minLoan}</td>
                 <td>{overdueBlocks}</td>
                 <td style={{ textAlign: "right" }}>
@@ -350,6 +367,7 @@ export default function AdminView() {
       <MarketModal
         onSetOriginationFee={onSetOriginationFee}
         onSetDebtCeiling={onSetDebtCeiling}
+        onSetMaxBorrow={onSetMaxBorrow}
         onSetMinLoan={onSetMinLoan}
         onSetOverdueBlocks={onSetOverdueBlocks}
         onSetBorrowApr={onSetBorrowApr}
