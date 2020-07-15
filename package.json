@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "3box": "^1.20.3",
     "@ethersproject/address": "^5.0.1",
     "@ethersproject/bignumber": "^5.0.3",
     "@ethersproject/contracts": "^5.0.1",

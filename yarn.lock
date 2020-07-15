@@ -16,7 +16,7 @@
     orbit-db-io "^0.2.0"
     safe-buffer "^5.1.2"
 
-"3box@^1.17.1":
+"3box@^1.17.1", "3box@^1.20.3":
   version "1.20.3"
   resolved "https://registry.yarnpkg.com/3box/-/3box-1.20.3.tgz#9e29329ab2e25a718723570f585b40525c2239e5"
   integrity sha512-aa8cJT4F/x75JL0prcFtdbhtaLslwzb8riqFXDHVitKeVXCsES9KSwyXkP9oo5wi93ACryhmwN1gkLzZ8FuCNg==
