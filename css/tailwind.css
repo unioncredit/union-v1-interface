@@ -209,7 +209,7 @@ table td {
   border-radius: 16.3277px;
 }
 
-@screen sm {
+@media (width <= 768px) {
   .app {
     max-width: 100%;
   }
