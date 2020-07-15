@@ -7,6 +7,7 @@ import { useMarketModalOpen, useMarketModalToggle } from "./state";
 const MarketModal = ({
   onSetOriginationFee,
   onSetDebtCeiling,
+  onSetMaxBorrow,
   onSetMinLoan,
   onSetOverdueBlocks,
   onSetBorrowApr,
@@ -18,6 +19,7 @@ const MarketModal = ({
 
   const fee = watch("fee", 0);
   const debtCeiling = watch("debtCeiling", 0);
+  const maxBorrow = watch("maxBorrow", 0);
   const minLoan = watch("minLoan", 0);
   const blocks = watch("blocks", 0);
   const apr = watch("apr", 0);
@@ -56,6 +58,22 @@ const MarketModal = ({
           type="number"
         />
         <Button full onClick={() => onSetDebtCeiling(debtCeiling)}>
+          Confirm
+        </Button>
+        <div className="divider mb-8" />
+        <Input
+          autoFocus
+          chip="DAI"
+          className="mb-8"
+          id="maxBorrow"
+          label="Max Borrow"
+          placeholder="DAI"
+          min={0}
+          ref={register}
+          required
+          type="number"
+        />
+        <Button full onClick={() => onSetMaxBorrow(maxBorrow)}>
           Confirm
         </Button>
         <div className="divider mb-8" />
