@@ -36,6 +36,7 @@
     "next": "^9.4.4",
     "nookies": "^2.3.2",
     "parse-ms": "^2.1.0",
+    "profile-hover": "^1.1.2",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",

@@ -19,6 +19,17 @@ import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
+import dynamic from "next/dynamic";
+
+const Profile = dynamic(() => import("../Profile"), {
+  ssr: false,
+  loading: () => (
+    <div
+      style={{ height: 72, width: 72 }}
+      className="rounded-full border border-border-pure bg-border-light"
+    />
+  ),
+});
 
 const InlineLabelEditor = ({ label, ENSName, address }) => {
   const { setLabel } = useAddressLabels();
@@ -192,7 +203,9 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="flex justify-center mt-4">
-              <Identicon address={address} extraLarge />
+              <Profile address={address}>
+                <Identicon address={address} extraLarge />
+              </Profile>
             </div>
 
             <div className="mt-4 text-center">
