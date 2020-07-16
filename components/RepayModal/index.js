@@ -1,9 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
+import useRepay from "hooks/payables/useRepay";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
-import { repay } from "lib/contracts/repay";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +27,8 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
   const open = useRepayModalOpen();
   const toggle = useRepayModalToggle();
+
+  const repay = useRepay();
 
   const {
     errors,
@@ -79,12 +81,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         : Number(values.amount);
 
     try {
-      const tx = await repay(
-        curToken,
-        amountToRepay,
-        library.getSigner(),
-        chainId
-      );
+      const tx = await repay(amountToRepay);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
