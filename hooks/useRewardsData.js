@@ -1,5 +1,4 @@
 import { isAddress } from "@ethersproject/address";
-import { commify } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
