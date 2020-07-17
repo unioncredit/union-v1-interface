@@ -38,8 +38,6 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   const { setLabel } = useAddressLabels();
 
   const onSubmit = async (data, e) => {
-    if (isMember === false) return;
-
     let hidePendingToast = () => {};
     let txReceipt = {};
 
@@ -52,21 +50,35 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
     }
 
     try {
-      let gasLimit;
+      let tx, estimate;
 
-      try {
-        gasLimit = await memberContract.estimateGas.updateTrust(
-          address,
-          curToken,
-          amount
-        );
-      } catch (error) {
-        gasLimit = 300000;
+      if (isMember === true) {
+        try {
+          estimate = await memberContract.estimateGas.updateTrust(
+            address,
+            curToken,
+            amount
+          );
+        } catch (error) {
+          estimate = 300000;
+        }
+        tx = await memberContract.updateTrust(address, curToken, amount, {
+          gasLimit: estimate,
+        });
+      } else {
+        try {
+          estimate = await memberContract.estimateGas.addTrust(
+            address,
+            curToken,
+            amount
+          );
+        } catch (error) {
+          estimate = 500000;
+        }
+        tx = await memberContract.addTrust(address, curToken, amount, {
+          gasLimit: estimate,
+        });
       }
-
-      const tx = await memberContract.updateTrust(address, curToken, amount, {
-        gasLimit,
-      });
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
