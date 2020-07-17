@@ -4,33 +4,22 @@ import StakeTable from "components/stakeTable";
 import TrustModal from "components/TrustModal";
 import { useTrustModalToggle } from "components/TrustModal/state";
 import TutorialModal from "components/TutorialModal";
-import { useTutorialModalToggle } from "components/TutorialModal/state";
 import useIsMember from "hooks/useIsMember";
+import usePopTrustModal from "hooks/usePopTrustModal";
+import usePopTutorialModal from "hooks/usePopTutorialModal";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 
 export default function StakeView() {
   const { query } = useRouter();
 
   const toggleTrustModal = useTrustModalToggle();
-  const toggleTutorialModal = useTutorialModalToggle();
-
-  const { tutorial_modal_completed } = parseCookies();
 
   const { data: isMember = false } = useIsMember();
 
-  useEffect(() => {
-    if (!tutorial_modal_completed) {
-      toggleTutorialModal();
-    }
-  }, [tutorial_modal_completed]);
+  usePopTutorialModal();
 
-  useEffect(() => {
-    if (isMember === true && (query.address || query.trust)) {
-      toggleTrustModal();
-    }
-  }, [query]);
+  usePopTrustModal();
 
   return (
     <Fragment>
