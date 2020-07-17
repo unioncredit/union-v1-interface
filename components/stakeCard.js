@@ -43,7 +43,7 @@ const StakeCard = () => {
     withdrawableStake = 0,
   } = !!stakeData && stakeData;
 
-  const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "1.00" } =
+  const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "0.00" } =
     !!rewardsData && rewardsData;
 
   const onComplete = async () => {
