@@ -27,7 +27,7 @@ export default function StakeView() {
   }, [tutorial_modal_completed]);
 
   useEffect(() => {
-    if (query.address || query.trust) {
+    if (isMember === true && (query.address || query.trust)) {
       toggleTrustModal();
     }
   }, [query]);
