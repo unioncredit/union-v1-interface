@@ -9,8 +9,6 @@ import useSWR from "swr";
  * @param {import("@ethersproject/providers").Web3Provider} library
  */
 const openBoxGetSpace = async (key, account, library) => {
-  console.log("Ran openBoxGetSpace");
-
   const provider = library.provider;
 
   let box;
