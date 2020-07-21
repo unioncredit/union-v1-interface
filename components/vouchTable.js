@@ -208,7 +208,8 @@ const VouchTable = ({ data }) => {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0)) return data;
+    if (!!(data && data.length > 0))
+      return data.sort((a, b) => b.vouched - a.vouched);
     return [];
   }, [data]);
 
