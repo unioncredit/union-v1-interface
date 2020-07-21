@@ -47,6 +47,7 @@ const getTransactions = (marketRegistryContract) => async (
         amount: Number(formatUnits(amount, 18)),
         blockNumber: log.blockNumber,
         date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
+        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
         hash: log.transactionHash,
         type: "REPAY",
       };
@@ -63,6 +64,7 @@ const getTransactions = (marketRegistryContract) => async (
         amount: Number(formatUnits(amount, 18)),
         blockNumber: log.blockNumber,
         date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
+        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
         fee: Number(formatUnits(fee, 18)),
         hash: log.transactionHash,
         type: "BORROW",
