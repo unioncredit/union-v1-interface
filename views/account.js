@@ -3,12 +3,13 @@ import Button from "components/button";
 import Input from "components/input";
 import { MESSAGE } from "constants/variables";
 import useCopy from "hooks/useCopy";
+import usePersonalSign from "hooks/usePersonalSign";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
 
 export default function AccountView() {
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
 
   const { register, handleSubmit, formState, errors, reset } = useForm();
 
@@ -18,17 +19,19 @@ export default function AccountView() {
 
   const [isCopied, copy] = useCopy();
 
+  const sign = usePersonalSign();
+
   const handleCopy = () => copy(account);
 
   const onSubmit = async (values) => {
+    return;
+
     const { email } = values;
 
     try {
       if (!email) throw new Error("`email` is required");
 
-      const signer = library.getSigner();
-
-      const signature = await signer.signMessage(MESSAGE);
+      await sign(MESSAGE);
 
       /**
        * @todo Post email to DB here with a key / value pair of address / email
