@@ -186,15 +186,7 @@ const StakeTable = () => {
     return [];
   }, [data]);
 
-  const memoizedSortBy = useMemo(
-    () => [
-      { id: "address", desc: true },
-      { id: "trust", desc: true },
-      { id: "used", desc: true },
-      { id: "health", desc: true },
-    ],
-    []
-  );
+  const memoizedSortBy = useMemo(() => [{ id: "health", desc: true }], []);
 
   const {
     getTableProps,
@@ -230,9 +222,8 @@ const StakeTable = () => {
             return (
               <tr
                 {...row.getRowProps()}
-                className="focus:outline-none cursor-pointer"
+                className="cursor-pointer"
                 onClick={handleRowClick(row)}
-                tabIndex={0}
               >
                 {row.cells.map(renderTbodyCells)}
               </tr>

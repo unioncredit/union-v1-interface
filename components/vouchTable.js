@@ -10,6 +10,35 @@ import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 
+const TableLoading = ({ count = 3, cellCount = 5 }) => {
+  const rows = new Array(count).fill("");
+  const cells = new Array(cellCount).fill("");
+
+  return (
+    <Fragment>
+      {rows.map((_, i) => (
+        <tr key={i}>
+          {cells.map((_, i) => {
+            if (i === 0)
+              return (
+                <td>
+                  <div className="font-medium focus:outline-none flex text-left">
+                    <div className="flex-grow-0 h-8">
+                      <div className="w-8 h-8 rounded-full bg-border-light" />
+                    </div>
+                    <p className="ml-4 flex-auto leading-loose">...</p>
+                  </div>
+                </td>
+              );
+
+            return <td key={i}>...</td>;
+          })}
+        </tr>
+      ))}
+    </Fragment>
+  );
+};
+
 const VouchTableEmptyState = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
 
@@ -180,17 +209,7 @@ const VouchTable = ({ data }) => {
     return [];
   }, [data]);
 
-  const memoizedSortBy = useMemo(
-    () => [
-      { id: "expander", desc: true },
-      { id: "address", desc: true },
-      { id: "percentage", desc: true },
-      { id: "vouched", desc: true },
-      { id: "available", desc: true },
-      { id: "health", desc: true },
-    ],
-    []
-  );
+  const memoizedSortBy = useMemo(() => [{ id: "health", desc: true }], []);
 
   const {
     getTableProps,
