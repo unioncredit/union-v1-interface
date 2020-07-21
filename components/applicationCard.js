@@ -6,6 +6,7 @@ import { vouchingTip } from "../text/tooltips";
 import { useApplicationModalToggle } from "./ApplicationModal/state";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
+import Tooltip from "@reach/tooltip";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
@@ -48,15 +49,14 @@ const ApplicationCard = () => {
       </div>
 
       <div className="mb-2 md:mb-0">
-        <span
-          className="inline-flex items-center cursor-help"
-          title={vouchingTip}
-        >
-          <span className="underline">What is vouching?</span>{" "}
-          <div className="ml-2">
-            <Info />
-          </div>
-        </span>
+        <Tooltip label={vouchingTip}>
+          <span className="inline-flex items-center cursor-help">
+            <span className="underline">What is vouching?</span>{" "}
+            <div className="ml-2">
+              <Info />
+            </div>
+          </span>
+        </Tooltip>
       </div>
     </div>
   );

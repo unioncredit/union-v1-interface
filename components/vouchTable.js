@@ -9,6 +9,7 @@ import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
+import Tooltip from "@reach/tooltip";
 
 const TableLoading = ({ count = 3, cellCount = 5 }) => {
   const rows = new Array(count).fill("");
@@ -92,12 +93,14 @@ const renderTheadColumns = (column) => {
     return (
       <th {...column.getHeaderProps(column.getSortByToggleProps())}>
         <div className="flex items-center">
-          <span className="flex items-center cursor-help" title={healthTip}>
-            <div className="mr-2">
-              <Info size={16} />
-            </div>
-            {column.render("Header")}
-          </span>
+          <Tooltip label={healthTip}>
+            <span className="flex items-center cursor-help">
+              <div className="mr-2">
+                <Info size={16} />
+              </div>
+              {column.render("Header")}
+            </span>
+          </Tooltip>
           <div className="ml-2">{renderSortIcons(column)}</div>
         </div>
       </th>
