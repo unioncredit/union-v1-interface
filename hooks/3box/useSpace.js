@@ -44,16 +44,8 @@ export default function useSpace() {
 
   const shouldFetch = typeof account === "string" && !!library;
 
-  const { data = null } = useSWR(
+  return useSWR(
     shouldFetch ? ["Union", account, library] : null,
-    openBoxGetSpace,
-    {
-      refreshWhenHidden: false,
-      revalidateOnFocus: false,
-      refreshWhenOffline: false,
-      revalidateOnReconnect: false,
-    }
+    openBoxGetSpace
   );
-
-  return data;
 }

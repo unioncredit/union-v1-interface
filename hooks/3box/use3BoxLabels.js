@@ -6,7 +6,7 @@ const getLabels = (space) => async (key) => {
 };
 
 export default function use3BoxLabels() {
-  const space = useSpace();
+  const { data: space } = useSpace();
 
   const shouldFetch = !!space;
 
