@@ -1,3 +1,4 @@
+import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js/bignumber.mjs";
@@ -6,18 +7,18 @@ import ManagerModal from "components/ManagerModal";
 import { useManagerModalToggle } from "components/ManagerModal/state";
 import MarketModal from "components/MarketModal";
 import { useMarketModalToggle } from "components/MarketModal/state";
-import ABI from "constants/abis/IInterestRateModel.json";
+import INTEREST_RATE_ABI from "constants/abis/IInterestRateModel.json";
+import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import useAssetContract from "hooks/useAssetContract";
 import useCompoundContract from "hooks/useCompoundContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsAdmin from "hooks/useIsAdmin";
-import useMarketContract from "hooks/useMarketContract";
+import useMarketRegistryContract from "hooks/useMarketRegistryContract";
 import useMemberContract from "hooks/useMemberContract";
 import useStakingContract from "hooks/useStakingContract";
 import { Fragment, useState } from "react";
-import getContract from "util/getContract";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
@@ -25,7 +26,7 @@ const parseRes = (res, decimals = 2) =>
 const WAD = 1e18;
 
 export default function AdminView() {
-  const { account, library, chainId } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const toggleMarketModal = useMarketModalToggle();
   const toggleManagerModal = useManagerModalToggle();
@@ -36,9 +37,10 @@ export default function AdminView() {
   const compoundContract = useCompoundContract();
   const stakingContract = useStakingContract();
   const memberContract = useMemberContract();
-  const marketContractPromise = useMarketContract(curToken);
+  const marketRegistryContract = useMarketRegistryContract();
 
-  let marketContract, interestRateContract;
+  let marketContract;
+  let interestRateContract;
 
   const [totalStake, setTotalStake] = useState(0);
   const [frozenStake, setFrozenStake] = useState(0);
@@ -56,45 +58,52 @@ export default function AdminView() {
   useAutoEffect(() => {
     let isMounted = true;
 
-    function fetchMarketData() {
-      marketContractPromise.then(async (res) => {
-        marketContract = res;
-        try {
-          if (isMounted) {
-            const interestRateAddress = await marketContract.interestRateModel();
-            interestRateContract = getContract(
-              interestRateAddress,
-              ABI,
-              library.getSigner()
-            );
-            const overdueBlocksRes = await marketContract.overdueBlocks();
-            const originationFeeRes = await marketContract.originationFee();
-            const totalBorrowsRes = await marketContract.totalBorrows();
-            const debtCeilingRes = await marketContract.debtCeiling();
-            const minLoanRes = await marketContract.minLoan();
-            const maxBorrowRes = await marketContract.maxBorrow();
-            const ratePreBlock = await marketContract.borrowRatePerBlock();
+    async function fetchMarketData() {
+      try {
+        if (isMounted) {
+          const marketAddress = await marketRegistryContract.tokens(curToken);
 
-            setApr(
-              (
-                parseRes(ratePreBlock, 18) *
-                BLOCKS_PER_YEAR[chainId] *
-                100
-              ).toFixed(2)
-            );
-            setOverdueBlocks(overdueBlocksRes.toString());
-            setOriginationFee(parseRes(originationFeeRes, 2) * 100);
-            setTotalBorrows(parseRes(totalBorrowsRes, 2));
-            setDebtCeiling(parseRes(debtCeilingRes, 2));
-            setMinLoan(parseRes(minLoanRes, 2));
-            setMaxBorrow(parseRes(maxBorrowRes, 2));
-          }
-        } catch (err) {
-          if (isMounted) {
-            console.error(err);
-          }
+          marketContract = new Contract(
+            marketAddress,
+            LENDING_MARKET_ABI,
+            library.getSigner()
+          );
+
+          const interestRateAddress = await marketContract.interestRateModel();
+
+          interestRateContract = new Contract(
+            interestRateAddress,
+            INTEREST_RATE_ABI,
+            library.getSigner()
+          );
+
+          const overdueBlocksRes = await marketContract.overdueBlocks();
+          const originationFeeRes = await marketContract.originationFee();
+          const totalBorrowsRes = await marketContract.totalBorrows();
+          const debtCeilingRes = await marketContract.debtCeiling();
+          const minLoanRes = await marketContract.minLoan();
+          const maxBorrowRes = await marketContract.maxBorrow();
+          const ratePreBlock = await marketContract.borrowRatePerBlock();
+
+          setApr(
+            (
+              parseRes(ratePreBlock, 18) *
+              BLOCKS_PER_YEAR[chainId] *
+              100
+            ).toFixed(2)
+          );
+          setOverdueBlocks(overdueBlocksRes.toString());
+          setOriginationFee(parseRes(originationFeeRes, 2) * 100);
+          setTotalBorrows(parseRes(totalBorrowsRes, 2));
+          setDebtCeiling(parseRes(debtCeilingRes, 2));
+          setMinLoan(parseRes(minLoanRes, 2));
+          setMaxBorrow(parseRes(maxBorrowRes, 2));
         }
-      });
+      } catch (err) {
+        if (isMounted) {
+          console.error(err);
+        }
+      }
     }
 
     async function fetchStakingData() {
