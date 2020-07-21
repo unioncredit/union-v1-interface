@@ -11,7 +11,6 @@ export default function useMemberFee() {
   const shouldFetch = !!contract;
 
   return useSWR(shouldFetch ? ["MemberFee"] : null, getMemberFee(contract), {
-    dedupingInterval: 15 * 1000,
-    refreshInterval: 30 * 1000,
+    refreshInterval: 10 * 1000,
   });
 }

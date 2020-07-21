@@ -16,8 +16,7 @@ export default function useIsAdmin() {
     shouldFetch ? ["IsAdmin", account] : null,
     getIsAdmin(contract),
     {
-      dedupingInterval: 15 * 1000,
-      refreshInterval: 30 * 1000,
+      refreshInterval: 10 * 1000,
     }
   );
 }

@@ -16,8 +16,7 @@ export default function useIsMember() {
     shouldFetch ? ["IsMember", account] : null,
     getIsMember(contract),
     {
-      dedupingInterval: 15 * 1000,
-      refreshInterval: 30 * 1000,
+      refreshInterval: 10 * 1000,
     }
   );
 }
