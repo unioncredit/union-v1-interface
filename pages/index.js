@@ -41,6 +41,8 @@ export default function HomePage() {
                     src="/images/credit-backed-by-trust.svg"
                     alt="Credit backed by trust"
                     className="relative"
+                    loading="eager"
+                    importance="high"
                     style={{ zIndex: -2 }}
                   />
                 </div>
@@ -49,7 +51,13 @@ export default function HomePage() {
 
             <div className="w-full md:w-1/2 md:p-8">
               <div className="sm:ml-8 pt-20 md:pt-0 md:ml-0 -mr-8">
-                <img className="app shadow-app" src="/images/app.svg" alt="" />
+                <img
+                  className="app shadow-app"
+                  src="/images/app.svg"
+                  alt=""
+                  loading="eager"
+                  importance="high"
+                />
               </div>
 
               <div className="sm:ml-8 md:ml-16 mt-8 md:mt-16">
@@ -58,13 +66,28 @@ export default function HomePage() {
                 </p>
                 <div className="flex flex-wrap items-center -mb-4 -mr-8 md:-mr-16">
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="/images/1kx.svg" alt="1kx" />
+                    <img
+                      src="/images/1kx.svg"
+                      loading="eager"
+                      importance="high"
+                      alt="1kx"
+                    />
                   </div>
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="/images/kr1.svg" alt="KR1" />
+                    <img
+                      src="/images/kr1.svg"
+                      loading="eager"
+                      importance="high"
+                      alt="KR1"
+                    />
                   </div>
                   <div className="pb-4 pr-8 md:pr-16">
-                    <img src="/images/coinfund.svg" alt="CoinFund" />
+                    <img
+                      src="/images/coinfund.svg"
+                      loading="eager"
+                      importance="high"
+                      alt="CoinFund"
+                    />
                   </div>
                 </div>
               </div>
@@ -121,6 +144,9 @@ export default function HomePage() {
                   <img
                     src="/images/become-your-own-bank.svg"
                     alt="Become your own bank"
+                    loading="lazy"
+                    importance="low"
+                    decoding="async"
                     className="-mb-6 -ml-4"
                   />
                 </div>
@@ -165,6 +191,9 @@ export default function HomePage() {
               <img
                 src="/images/become-your-own-bank.svg"
                 alt="Become your own bank"
+                loading="lazy"
+                importance="low"
+                decoding="async"
                 className="-mb-10 -ml-6"
               />
             </div>
@@ -187,6 +216,9 @@ export default function HomePage() {
             <div className="w-full md:w-1/2 md:p-8 flex justify-center md:justify-end">
               <img
                 src="/images/circle-of-trust.svg"
+                loading="lazy"
+                importance="low"
+                decoding="async"
                 alt="Your circle of trust"
               />
             </div>
@@ -283,6 +315,9 @@ export default function HomePage() {
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"
                 alt="Learn more about Union"
+                loading="lazy"
+                importance="low"
+                decoding="async"
               />
             </div>
           </div>
