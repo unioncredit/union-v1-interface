@@ -33,7 +33,6 @@ export default function VouchView() {
             label="Real-time available credit"
             value={roundDown(creditLimit)}
             valueType="DAI"
-            tooltip={"Lorem ipsum dolor sit amet consectetur adipisicing elit."}
             large
           />
 
