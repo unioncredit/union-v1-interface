@@ -104,13 +104,16 @@ export default function BorrowView() {
                         getPctUsed(borrowedRounded, roundDown(creditLimit)) *
                           100
                       )}
+                      short
                     />
                   </div>
                 </dd>
               </dl>
 
-              <div className="flex justify-between py-2">
-                <p className="text-sm">Current Rate: {formatApr} APR</p>
+              <div className="md:flex justify-between py-2">
+                <p className="text-sm mb-4 md:mb-0">
+                  Current Rate: {formatApr} APR
+                </p>
 
                 <Link href="/vouch">
                   <a className="underline text-sm">Increase my limit</a>

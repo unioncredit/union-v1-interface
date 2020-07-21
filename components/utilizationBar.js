@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
  * @param {Number} health The health of the user, between 0 - 100
  * @param {Number} width The width of the HealthBar
  */
-const UtilizationBar = ({ usage, width = 96 }) => {
+const UtilizationBar = ({ usage, width = 96, short }) => {
   const inner = usage >= 100 ? 100 : usage <= 0 ? 0 : usage;
 
   return (
@@ -16,7 +16,7 @@ const UtilizationBar = ({ usage, width = 96 }) => {
         div {
           background-color: rgba(255, 255, 255, 0.1);
           min-width: ${width}px;
-          max-width: 128px;
+          max-width: ${short ? 96 : 128}px;
           border-radius: 1px;
           height: 14px;
         }
