@@ -2,6 +2,16 @@ import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 
 /**
+ * 3Box Box
+ */
+let box = null;
+
+/**
+ * 3Box Space
+ */
+let space = null;
+
+/**
  * @name openBoxGetSpace
  *
  * @param {String} _
@@ -11,15 +21,22 @@ import useSWR from "swr";
 const openBoxGetSpace = async (key, account, library) => {
   const provider = library.provider;
 
-  let box;
-
+  /**
+   * Dynamic 3Box Import
+   */
   const Box = (await import("3box")).default;
 
-  box = await Box.openBox(account, provider);
+  if (!box) {
+    box = await Box.openBox(account, provider);
 
-  await box.syncDone;
+    await box.syncDone;
+  }
 
-  return box.openSpace(key);
+  if (!!box && !space) {
+    space = await box.openSpace(key);
+  }
+
+  return space;
 };
 
 export default function useSpace() {
