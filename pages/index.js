@@ -48,11 +48,11 @@ export default function HomePage() {
             </div>
 
             <div className="w-full md:w-1/2 md:p-8">
-              <div className="ml-8 pt-20 md:pt-0 md:ml-0 -mr-8">
+              <div className="sm:ml-8 pt-20 md:pt-0 md:ml-0 -mr-8">
                 <img className="app shadow-app" src="/images/app.svg" alt="" />
               </div>
 
-              <div className="ml-8 md:ml-16 mt-8 md:mt-16">
+              <div className="sm:ml-8 md:ml-16 mt-8 md:mt-16">
                 <p className="text-type-light mb-6">
                   Trusted by industry leading investors
                 </p>

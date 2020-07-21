@@ -205,13 +205,14 @@ table td {
 
 .app {
   @apply shadow-app;
-  max-width: unset;
   border-radius: 16.3277px;
+  max-width: 150%;
 }
 
-@media (width <= 768px) {
+@screen sm {
   .app {
-    max-width: 100%;
+    height: unset;
+    max-width: unset;
   }
 }
 
