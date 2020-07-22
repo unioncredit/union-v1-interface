@@ -1,8 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
+import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
-import { stake } from "lib/contracts/stake";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
@@ -15,6 +15,8 @@ import { useDepositModalOpen, useDepositModalToggle } from "./state";
 
 const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
   const { library, chainId } = useWeb3React();
+
+  const stake = useStakeDeposit();
 
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
@@ -54,7 +56,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     let txReceipt = {};
 
     try {
-      const tx = await stake(DAI, values.amount, library.getSigner(), chainId);
+      const tx = await stake(values.amount);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)

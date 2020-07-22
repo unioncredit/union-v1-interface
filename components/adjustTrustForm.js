@@ -1,8 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import SegmentedControl from "components/segmentedControl";
-import useCurrentToken from "hooks/useCurrentToken";
+import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { adjustTrust } from "lib/contracts/adjustTrust";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
@@ -16,7 +15,6 @@ const ADJUST_TYPES = {
 
 const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const { library, chainId } = useWeb3React();
-  const curToken = useCurrentToken("DAI");
 
   const { register, handleSubmit, watch, formState, errors } = useForm();
 
@@ -25,6 +23,8 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const [adjustType, setAdjustType] = useState(ADJUST_TYPES.INCREASE);
 
   const amount = watch("amount", 0);
+
+  const adjustTrust = useAdjustTrust();
 
   const formatNewTrust = Number(
     parseFloat(vouched) +
@@ -39,13 +39,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
     try {
       if (formatNewTrust >= 0) {
-        const tx = await adjustTrust(
-          address,
-          curToken,
-          formatNewTrust,
-          library.getSigner(),
-          chainId
-        );
+        const tx = await adjustTrust(address, formatNewTrust);
 
         const { hide: hidePending } = addToast(
           FLAVORS.TX_PENDING(tx.hash, chainId)

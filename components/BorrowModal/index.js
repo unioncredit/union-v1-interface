@@ -1,8 +1,7 @@
 import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
-import useCurrentToken from "hooks/useCurrentToken";
+import useBorrow from "hooks/payables/useBorrow";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { borrow } from "lib/contracts/borrow";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -34,10 +33,11 @@ const BorrowModal = ({
   paymentPeriod,
 }) => {
   const { library, chainId } = useWeb3React();
-  const curToken = useCurrentToken();
 
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
+
+  const borrow = useBorrow();
 
   const {
     errors,
@@ -62,7 +62,7 @@ const BorrowModal = ({
     const { amount } = values;
 
     try {
-      const tx = await borrow(curToken, amount, library.getSigner(), chainId);
+      const tx = await borrow(amount);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
