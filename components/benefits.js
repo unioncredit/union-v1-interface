@@ -50,14 +50,14 @@ export const Together = ({ hasButton = false, onClick }) => (
       </p>
       <p>
         Staking with <strong>1x reward multiplier</strong> +{" "}
-        <strong>additional percentage</strong> from utlizied stake
+        <strong>additional percentage</strong> from utilized stake
       </p>
       <div className="divider my-4" />
       <p className="mb-2">
         <strong>Borrow</strong>
       </p>
       <p>
-        Borrrow with <strong>no collateral</strong> from people who vouched for
+        Borrow with <strong>no collateral</strong> from people who vouched for
         you
       </p>
       <div className="divider my-4" />

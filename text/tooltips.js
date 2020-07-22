@@ -8,7 +8,7 @@ export const withdrawableStakeTip =
   'Withdrawable Stake.\n\nThis is the stake you can actually withdraw. It is "Your total stake” minus “Your utilized stake"';
 
 export const vouchingTip =
-  "Vouching.\n\nVouching for someone is similiar to cosigning, you are signalling to Union that they can be trusted to borrow and repay. Only UNION members are able to vouch.";
+  "Vouching.\n\nVouching for someone is similar to cosigning, you are signalling to Union that they can be trusted to borrow and repay. Only UNION members are able to vouch.";
 
 export const rewardsTip =
   "Rewards.\n\nThis is the total number of Union Tokens you’ve accumulated so far.";

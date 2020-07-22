@@ -209,7 +209,7 @@ export default function HomePage() {
                 Your circle of trust
               </h2>
               <p className="md:text-xl leading-tight font-normal max-w-md">
-                Union is all about trust. Create your own cirlce of trust where
+                Union is all about trust. Create your own circle of trust where
                 you, your friends and family can borrow funds whenever needed.
               </p>
             </div>
