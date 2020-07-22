@@ -34,14 +34,12 @@ export default async function signup(req, res) {
           success: false,
           error: "You're already signed up",
         });
-
-        return;
+      } else {
+        res.status(404).json({
+          success: false,
+          error: e.message,
+        });
       }
-
-      res.status(404).json({
-        success: false,
-        error: e.message,
-      });
     }
   } else {
     res.status(405).send("Method Not Allowed");
