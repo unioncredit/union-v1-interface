@@ -36,6 +36,13 @@ const Footer = () => {
         <div className="flex">
           <div className="w-3/4">
             <ul className="flex flex-col sm:flex-row sm:flex-wrap text-type-footer text-sm -mr-4 -mb-2">
+              <li className="mb-2 sm:mb-0">
+                <Link href="/faucet">
+                  <a className="inline-block pb-2 pr-4 hover:underline">
+                    Faucet
+                  </a>
+                </Link>
+              </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (
                 <li key={i} className="mb-2 sm:mb-0">
                   <a
