@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import TicketGate from "components/TicketGate";
 import Head from "next/head";
 import LoggedOutView from "views/loggedOut";
 import VouchView from "views/vouch";
@@ -15,13 +14,7 @@ export default function VouchPage() {
         <meta name="twitter:title" content="Vouch | Union" />
       </Head>
 
-      {account && library ? (
-        <TicketGate>
-          <VouchView />
-        </TicketGate>
-      ) : (
-        <LoggedOutView />
-      )}
+      {account && library ? <VouchView /> : <LoggedOutView />}
     </div>
   );
 }

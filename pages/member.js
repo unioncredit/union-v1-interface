@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import TicketGate from "components/TicketGate";
 import Head from "next/head";
 import LoggedOutView from "views/loggedOut";
 import MemberView from "views/member";
@@ -15,13 +14,7 @@ export default function MemberPage() {
         <meta name="twitter:title" content="Member | Union" />
       </Head>
 
-      {account && library ? (
-        <TicketGate>
-          <MemberView />
-        </TicketGate>
-      ) : (
-        <LoggedOutView />
-      )}
+      {account && library ? <MemberView /> : <LoggedOutView />}
     </div>
   );
 }
