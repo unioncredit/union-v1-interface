@@ -339,3 +339,43 @@ input[type="number"] {
     max-width: 24rem;
   }
 }
+
+:root {
+  --reach-tooltip: 1;
+}
+
+[data-reach-tooltip] {
+  @apply bg-white text-sm p-4 absolute text-type-light;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0px 0px 12px rgba(19, 44, 106, 0.12);
+  max-width: 256px;
+  border-radius: 4px;
+}
+
+/*
+ * Styles to crop text to X-height
+ */
+[data-reach-tooltip] p {
+  line-height: 1.5;
+}
+[data-reach-tooltip] p::before,
+[data-reach-tooltip] p::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+[data-reach-tooltip] p::before {
+  margin-top: calc((1 - 1.5) * 0.5em);
+}
+[data-reach-tooltip] p::after {
+  margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
+/*
+ * Tooltip Title Styles
+ */
+[data-reach-tooltip] p:first-of-type {
+  @apply font-semibold mb-2 text-type-base;
+}

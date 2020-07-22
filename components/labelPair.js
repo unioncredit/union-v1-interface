@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import Info from "svgs/Info";
+import Tooltip from "@reach/tooltip";
 
 /**
  * @name LabelPair
@@ -51,10 +52,12 @@ const LabelPair = ({
     <dl className={cachedClassNames}>
       <dt className={cachedLabelClassNames}>
         {tooltip ? (
-          <div className="flex items-center cursor-help" title={tooltip}>
-            <div className="mr-2">{label}</div>
-            <Info />
-          </div>
+          <Tooltip label={tooltip}>
+            <div className="flex items-center cursor-help">
+              <div className="mr-2">{label}</div>
+              <Info />
+            </div>
+          </Tooltip>
         ) : (
           label
         )}

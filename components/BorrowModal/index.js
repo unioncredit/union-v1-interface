@@ -1,3 +1,4 @@
+import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
@@ -6,6 +7,7 @@ import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
+import { feeTip } from "text/tooltips";
 import handleTxError from "util/handleTxError";
 import { roundDown, roundUp } from "util/numbers";
 import Button from "../button";
@@ -163,17 +165,16 @@ const BorrowModal = ({
         />
 
         <div className="flex justify-end mb-4">
-          <span
-            className="inline-flex items-center text-xs cursor-help"
-            title={""}
-          >
-            <div className="mr-2">
-              <Info />
-            </div>
-            <span className="underline">
-              Includes fee of {calculateFee.toFixed(2)} DAI
+          <Tooltip label={feeTip}>
+            <span className="inline-flex items-center text-xs cursor-help">
+              <div className="mr-2">
+                <Info />
+              </div>
+              <span className="underline">
+                Includes fee of {calculateFee.toFixed(2)} DAI
+              </span>
             </span>
-          </span>
+          </Tooltip>
         </div>
 
         <div className="divider" />

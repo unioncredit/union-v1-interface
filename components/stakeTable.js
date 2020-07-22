@@ -14,6 +14,7 @@ import HealthBar from "./healthBar";
 import { useLearnMoreModalToggle } from "./LearnMoreModal/state";
 import { useTrustModalToggle } from "./TrustModal/state";
 import { useApplicationModalToggle } from "./ApplicationModal/state";
+import Tooltip from "@reach/tooltip";
 
 const StakeTableEmptyState = () => {
   const toggleLearnMoreModal = useLearnMoreModalToggle();
@@ -89,12 +90,14 @@ const renderTheadColumns = (column) => {
     return (
       <th {...column.getHeaderProps(column.getSortByToggleProps())}>
         <div className="flex items-center">
-          <span className="flex items-center cursor-help" title={healthTip}>
-            <div className="mr-2">
-              <Info size={16} />
-            </div>
-            {column.render("Header")}
-          </span>
+          <Tooltip label={healthTip}>
+            <span className="flex items-center cursor-help">
+              <div className="mr-2">
+                <Info size={16} />
+              </div>
+              {column.render("Header")}
+            </span>
+          </Tooltip>
           <div className="ml-2">{renderSortIcons(column)}</div>
         </div>
       </th>

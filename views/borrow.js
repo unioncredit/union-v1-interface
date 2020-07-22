@@ -16,6 +16,7 @@ import { Fragment } from "react";
 import Info from "svgs/Info";
 import { roundDown, roundUp, toPercent } from "util/numbers";
 import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
+import Tooltip from "@reach/tooltip";
 
 const getPctUsed = (borrowed, creditLimit) => {
   if (creditLimit === 0 && borrowed === 0) return 0;
@@ -86,11 +87,13 @@ export default function BorrowView() {
               </div>
 
               <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
-                <dt className="leading-tight whitespace-no-wrap cursor-help mb-4 md:mb-0">
-                  <div className="flex items-center" title={percentUtilizedTip}>
-                    <div className="mr-2">Percent Utilization</div>
-                    <Info light />
-                  </div>
+                <dt className="leading-tight whitespace-no-wrap mb-4 md:mb-0">
+                  <Tooltip label={percentUtilizedTip}>
+                    <div className="flex items-center cursor-help">
+                      <div className="mr-2">Percent Utilization</div>
+                      <Info light />
+                    </div>
+                  </Tooltip>
                 </dt>
                 <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
                   <div className="flex items-center">
