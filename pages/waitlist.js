@@ -1,10 +1,10 @@
+import { commify } from "@ethersproject/units";
 import Button from "components/button";
 import Input from "components/input";
 import Head from "next/head";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
-import { useState } from "react";
-import { commify } from "@ethersproject/units";
 
 const waitlistPlaceCheck = async (email) => {
   const res = await fetch("/api/waitlist/place", {
@@ -162,7 +162,7 @@ export default function WaitlistPage() {
       </section>
 
       <section className="pb-10 pt-72">
-        <div className="container-sm">
+        {/* <div className="container-sm">
           <div className="flex justify-center">
             <a
               rel="noopener noreferrer"
@@ -175,7 +175,7 @@ export default function WaitlistPage() {
               </span>
             </a>
           </div>
-        </div>
+        </div> */}
       </section>
     </div>
   );
