@@ -56,7 +56,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
       let gasLimit;
 
       try {
-        gasLimit = await memberContract.estimateGas.addTrust(
+        gasLimit = await memberContract.estimateGas.updateTrust(
           address,
           curToken,
           amount
@@ -65,7 +65,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
         gasLimit = 300000;
       }
 
-      const tx = await memberContract.addTrust(address, curToken, amount, {
+      const tx = await memberContract.updateTrust(address, curToken, amount, {
         gasLimit,
       });
 
