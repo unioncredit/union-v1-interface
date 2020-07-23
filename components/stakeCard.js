@@ -87,7 +87,7 @@ const StakeCard = () => {
         label="Rewards multiplier"
         large
         value={`${rewardsMultiplier}x`}
-        slot={rewards > 0 ? <WithdrawRewards onComplete={onComplete} /> : null}
+        slot={<WithdrawRewards onComplete={onComplete} />}
       />
       <LabelPair
         labelColor="text-grey-pure"
