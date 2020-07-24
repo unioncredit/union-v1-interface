@@ -4,10 +4,19 @@ import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
 import useMemberContract from "./useMemberContract";
 
-const getTrustCount = (contract) => async (_, account, tokenAddress) =>
-  contract
-    .trustList(account, tokenAddress)
-    .then((res) => parseInt(res.toString()));
+const getTrustCount = (contract) => async (_, account, tokenAddress) => {
+  let count = 0;
+  const addresses = await contract.getStakerAddresses(account, tokenAddress);
+  const promises = addresses.map(async (stakerAddress) => {
+    const isEffective = await contract.isEffectiveStaker(
+      stakerAddress,
+      tokenAddress
+    );
+    if (isEffective) count++;
+  });
+  await Promise.all(promises);
+  return count;
+};
 
 export default function useTrustCountData() {
   const { account } = useWeb3React();
