@@ -603,13 +603,18 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "account",
+          "name": "staker",
           "type": "address"
         },
         {
-          "internalType": "uint256",
-          "name": "trustAmount",
-          "type": "uint256"
+          "internalType": "address",
+          "name": "newMember",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "token",
+          "type": "address"
         }
       ],
       "name": "isEffectiveStaker",

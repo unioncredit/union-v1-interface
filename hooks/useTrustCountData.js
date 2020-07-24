@@ -10,6 +10,7 @@ const getTrustCount = (contract) => async (_, account, tokenAddress) => {
   const promises = addresses.map(async (stakerAddress) => {
     const isEffective = await contract.isEffectiveStaker(
       stakerAddress,
+      account,
       tokenAddress
     );
     if (isEffective) count++;
