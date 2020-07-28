@@ -2,7 +2,7 @@
 
 :root {
   --skeleton-base-color: hsl(210deg 9% 96%);
-  --skeleton-highlight-color: hsl(210deg 9% 98%);
+  --skeleton-highlight-color: hsl(210deg 9% 97%);
 }
 
 @font-face {
@@ -314,6 +314,14 @@ input[type="number"] {
   -webkit-overflow-scrolling: touch;
 }
 
+@screen sm {
+  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
+    @apply self-start rounded mx-auto h-auto;
+    margin-top: 12vh;
+    max-width: 24rem;
+  }
+}
+
 [data-reach-dialog-content].wide {
   @apply bg-white w-full h-full outline-none;
   overflow-y: scroll;
@@ -350,18 +358,6 @@ input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-@screen sm {
-  [data-reach-dialog-overlay] {
-    background: hsla(0, 0%, 0%, 0.66);
-  }
-
-  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
-    @apply self-start rounded mx-auto h-auto;
-    margin-top: 12vh;
-    max-width: 24rem;
-  }
 }
 
 :root {
