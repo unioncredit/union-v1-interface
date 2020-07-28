@@ -3,6 +3,7 @@ import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
 import LabelPair from "components/labelPair";
+import Skeleton from "styled-jsx-loading-skeleton";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
 import useCreditLimit from "hooks/useCreditLimit";
@@ -18,10 +19,9 @@ export default function VouchView() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
   const { data: vouchData } = useVouchData();
-
-  const { data: creditLimit = 0 } = useCreditLimit();
-
   const vouchBarSlices = getVouchBarData(vouchData);
+
+  const { data: creditLimit } = useCreditLimit();
 
   return (
     <Fragment>
@@ -31,8 +31,9 @@ export default function VouchView() {
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Real-time available credit"
-            value={roundDown(creditLimit)}
-            valueType="DAI"
+            {...(creditLimit
+              ? { value: roundDown(creditLimit), valueType: "DAI" }
+              : { value: <Skeleton width={72} /> })}
             large
           />
 
@@ -43,7 +44,13 @@ export default function VouchView() {
           </div>
         </div>
 
-        <VouchBar className="mb-10" slices={vouchBarSlices} />
+        <div className="mb-10">
+          {vouchData ? (
+            <VouchBar slices={vouchBarSlices} />
+          ) : (
+            <Skeleton height={64} style={{ display: "block" }} />
+          )}
+        </div>
 
         <div className="mb-6">
           <h1>Addresses who vouched for you</h1>
