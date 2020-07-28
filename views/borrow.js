@@ -6,23 +6,14 @@ import LabelPair from "components/labelPair";
 import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import Transaction from "components/transaction";
-import UtilizationBar from "components/utilizationBar";
+import { UtilizationBarWithPercentage } from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useTransactions from "hooks/useTransactions";
 import Link from "next/link";
 import { Fragment } from "react";
-import Info from "svgs/Info";
 import { roundDown, roundUp, toPercent } from "util/numbers";
-import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
-import Tooltip from "@reach/tooltip";
-
-const getPctUsed = (borrowed, creditLimit) => {
-  if (creditLimit === 0 && borrowed === 0) return 0;
-
-  return borrowed / (creditLimit + borrowed);
-};
 
 export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
@@ -88,32 +79,16 @@ export default function BorrowView() {
                 </Button>
               </div>
 
-              <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
-                <dt className="leading-tight whitespace-no-wrap mb-4 md:mb-0">
-                  <Tooltip label={percentUtilizedTip}>
-                    <div className="flex items-center cursor-help">
-                      <div className="mr-2">Percent Utilization</div>
-                      <Info light />
-                    </div>
-                  </Tooltip>
-                </dt>
-                <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
-                  <div className="flex items-center">
-                    <p className="mr-4 text-white">
-                      {toPercent(
-                        getPctUsed(borrowedRounded, roundDown(creditLimit))
-                      )}
-                    </p>
-                    <UtilizationBar
-                      usage={Number(
-                        getPctUsed(borrowedRounded, roundDown(creditLimit)) *
-                          100
-                      )}
-                      short
-                    />
-                  </div>
-                </dd>
-              </dl>
+              <LabelPair
+                label="Percent Utilization"
+                value={
+                  <UtilizationBarWithPercentage
+                    borrowed={borrowedRounded}
+                    creditLimit={creditLimit}
+                  />
+                }
+                responsive
+              />
 
               <div className="md:flex justify-between py-2">
                 <p className="text-sm mb-4 md:mb-0">
