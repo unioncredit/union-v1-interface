@@ -70,18 +70,12 @@ const WithdrawRewards = ({ onComplete }) => {
 
   return (
     <button
-      className="text-sm font-semibold underline focus:outline-none text-center"
+      className="text-sm font-semibold underline focus:outline-none"
       disabled={withdrawing}
       onClick={onWithdrawRewards}
-      style={{ width: 103 }}
     >
       {withdrawing ? (
-        <Spinner
-          className="inline-block"
-          track="#032437"
-          fill="#C5CED5"
-          size={22}
-        />
+        <Spinner track="#032437" fill="#C5CED5" size={22} />
       ) : (
         "Claim rewards"
       )}
