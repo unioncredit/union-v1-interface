@@ -6,7 +6,7 @@ import LabelPair from "components/labelPair";
 import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import SuccessModal from "components/SuccessModal";
-import Transaction from "components/transaction";
+import Transaction, { TransactionSkeleton } from "components/transaction";
 import { UtilizationBarWithPercentage } from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
@@ -137,14 +137,22 @@ export default function BorrowView() {
           </div>
         </div>
 
-        {isMember === true && transactionsData && transactionsData.length && (
+        {isMember === true && (
           <div>
             <div className="mb-5">
               <h2>Transactions</h2>
             </div>
-            {transactionsData.map((datum, i) => (
-              <Transaction key={i} {...datum} />
-            ))}
+            {transactionsData && transactionsData.length ? (
+              transactionsData.map((datum, i) => (
+                <Transaction key={i} {...datum} />
+              ))
+            ) : (
+              <Fragment>
+                <TransactionSkeleton />
+                <TransactionSkeleton />
+                <TransactionSkeleton />
+              </Fragment>
+            )}
           </div>
         )}
       </div>
