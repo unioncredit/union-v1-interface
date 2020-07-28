@@ -80,9 +80,10 @@ export default function BorrowView() {
                 />
 
                 <Button
-                  tertiary
                   disabled={isMember === true ? false : true}
                   onClick={toggleBorrowModal}
+                  tertiary
+                  wide
                 >
                   Borrow
                 </Button>
@@ -139,6 +140,7 @@ export default function BorrowView() {
                 <Button
                   disabled={isMember === true ? false : true}
                   onClick={toggleRepayModal}
+                  wide
                 >
                   Repay
                 </Button>
