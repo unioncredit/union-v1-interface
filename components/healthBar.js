@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 /**
  * @name HealthBar
@@ -14,9 +15,16 @@ const HealthBar = ({ health }) => {
   const trackColor =
     health >= 66 ? "#ecf9f1" : health >= 33 ? "#FCDFDF" : "#FAD1DA";
 
+  const cachedTrackClassNames = classNames(
+    "health-track h-4 w-full overflow-hidden rounded-sm relative ml-auto",
+    {
+      dead: health <= 0,
+    }
+  );
+
   return (
-    <div className="health-track h-4 w-full overflow-hidden rounded-sm relative ml-auto">
-      <span className="health-fill h-4 block" />
+    <div className={cachedTrackClassNames}>
+      <span className="health-fill  h-4 block" />
       <style jsx>{`
          {
           --fill: ${fillColor};
@@ -38,6 +46,16 @@ const HealthBar = ({ health }) => {
         .health-fill {
           background-color: var(--fill);
           width: ${fillWidth}%;
+        }
+
+        .dead {
+          background: repeating-linear-gradient(
+            135deg,
+            hsl(347deg 80% 90%),
+            hsl(347deg 80% 90%) 10px,
+            hsl(347deg 80% 85%) 10px,
+            hsl(347deg 80% 85%) calc(2 * 10px)
+          );
         }
       `}</style>
     </div>
