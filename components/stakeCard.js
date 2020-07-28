@@ -90,8 +90,10 @@ const StakeCard = () => {
         valueType="DAI"
       />
 
+      <div className="divider bg-pink-pure my-8"></div>
+
       <LabelPair
-        className="mb-4 mt-16"
+        className="pt-1 mb-4"
         label="Rewards"
         large
         tooltip={rewardsTip}
