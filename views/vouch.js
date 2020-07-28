@@ -2,17 +2,11 @@ import ApplicationCard from "components/applicationCard";
 import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
-import LabelPair from "components/labelPair";
-import Skeleton from "components/Skeleton";
 import SuccessModal from "components/SuccessModal";
-import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
-import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useVouchData from "hooks/useVouchData";
 import { Fragment } from "react";
-import getVouchBarData from "util/getVouchBarData";
-import { roundDown } from "util/numbers";
 
 export default function VouchView() {
   const { data: isMember } = useIsMember();
@@ -20,48 +14,16 @@ export default function VouchView() {
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
   const { data: vouchData } = useVouchData();
-  const vouchBarSlices = getVouchBarData(vouchData);
-
-  const { data: creditLimit } = useCreditLimit();
 
   return (
     <Fragment>
       <div className="container">
         {isMember === false && <ApplicationCard />}
 
-        <div className="flex justify-between mb-6">
-          <LabelPair
-            label="Real-time available credit"
-            {...(creditLimit
-              ? { value: roundDown(creditLimit), valueType: "DAI" }
-              : { value: <Skeleton width={72} /> })}
-            large
-          />
+        <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 md:mb-4">
+          <h1 className="mb-4 md:mb-0">Addresses Who Vouched for You</h1>
 
-          <div className="hidden md:block">
-            <Button invert onClick={toggleCreditRequestModal}>
-              Open request for credit
-            </Button>
-          </div>
-        </div>
-
-        <div className="mb-10">
-          {vouchData ? (
-            <VouchBar slices={vouchBarSlices} />
-          ) : (
-            <Skeleton height={64} style={{ display: "block" }} />
-          )}
-        </div>
-
-        <div className="mb-6">
-          <h1>Addresses who vouched for you</h1>
-
-          <Button
-            full
-            invert
-            onClick={toggleCreditRequestModal}
-            className="mt-6 inline-block md:hidden"
-          >
+          <Button invert onClick={toggleCreditRequestModal}>
             Open request for credit
           </Button>
         </div>
