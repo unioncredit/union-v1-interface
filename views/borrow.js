@@ -161,16 +161,14 @@ export default function BorrowView() {
           </div>
         </div>
 
-        {isMember === true && (
+        {isMember === true && transactionsData && transactionsData.length && (
           <div>
             <div className="mb-5">
               <h2>Transactions</h2>
             </div>
-            {transactionsData &&
-              transactionsData.length > 0 &&
-              transactionsData.map((datum, i) => (
-                <Transaction key={i} {...datum} />
-              ))}
+            {transactionsData.map((datum, i) => (
+              <Transaction key={i} {...datum} />
+            ))}
           </div>
         )}
       </div>
