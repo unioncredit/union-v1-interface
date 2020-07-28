@@ -15,7 +15,7 @@ import getVouchBarData from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
 export default function VouchView() {
-  const { data: isMember = false } = useIsMember();
+  const { data: isMember } = useIsMember();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
