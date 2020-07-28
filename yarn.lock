@@ -8067,6 +8067,11 @@ style-loader@1.2.1:
     loader-utils "^2.0.0"
     schema-utils "^2.6.6"
 
+styled-jsx-loading-skeleton@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/styled-jsx-loading-skeleton/-/styled-jsx-loading-skeleton-1.0.1.tgz#63f812436cf5fb3f51c69776131871048716429d"
+  integrity sha512-OzIbMrm/v4R3L0xphYOFulLVkYiQHcBOhMAw0AHNIFoy0cdeergNo+Rk2AEQJhvMmKRAYQlTfTEjJSsDu5el5A==
+
 styled-jsx@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/styled-jsx/-/styled-jsx-3.3.0.tgz#32335c1a3ecfc923ba4f9c056eeb3d4699006b09"

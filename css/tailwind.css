@@ -1,5 +1,10 @@
 @tailwind base;
 
+:root {
+  --skeleton-base-color: hsl(210deg 9% 96%);
+  --skeleton-highlight-color: hsl(210deg 9% 98%);
+}
+
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
