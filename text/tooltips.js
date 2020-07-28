@@ -15,7 +15,7 @@ export const defaultedStakeTip = (
     <p>Defaulted Stake</p>
     <p>
       This part shows the total amount of people which have not paid on time.
-      Funds that are locked in defaulted stake are not earning UPY
+      Funds that are locked in defaulted stake are not earning Union.
     </p>
   </Fragment>
 );
@@ -24,8 +24,9 @@ export const withdrawableStakeTip = (
   <Fragment>
     <p>Withdrawable Stake</p>
     <p>
-      This is the stake you can actually withdraw. It is "Your total stake"
-      minus "Your utilized stake"
+      This is the stake you can actually withdraw. It is{" "}
+      <i>"Your total stake"</i> <strong>minus</strong>{" "}
+      <i>"Your utilized stake"</i>
     </p>
   </Fragment>
 );
@@ -44,7 +45,10 @@ export const vouchingTip = (
 export const rewardsTip = (
   <Fragment>
     <p>Rewards</p>
-    <p>This is the total number of UNION Tokens you’ve accumulated so far.</p>
+    <p>
+      This is the total number of UNION Tokens you’ve accumulated so far since
+      the last claim action.
+    </p>
   </Fragment>
 );
 
