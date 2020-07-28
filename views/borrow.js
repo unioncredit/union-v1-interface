@@ -73,10 +73,10 @@ export default function BorrowView() {
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={roundDown(creditLimit)}
-                  valueType="DAI"
                   large
                   outline={true}
+                  value={roundDown(creditLimit)}
+                  valueType="DAI"
                 />
 
                 <Button
