@@ -82,19 +82,15 @@ const StakeCard = () => {
         value={format(withdrawableStake)}
         valueType="DAI"
       />
+
       <LabelPair
         className="mb-4 mt-16"
-        label="Rewards multiplier"
-        large
-        value={`${rewardsMultiplier}x`}
-        slot={<WithdrawRewards onComplete={onComplete} />}
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
         label="Rewards"
-        tooltip={rewardsTip}
+        large
+        tooltip={rewardsTip(`${rewardsMultiplier}x`)}
         value={format(rewards, 3)}
         valueType="UNION"
+        slot={<WithdrawRewards onComplete={onComplete} />}
       />
       <LabelPair
         labelColor="text-grey-pure"
