@@ -42,16 +42,12 @@ export const vouchingTip = (
   </Fragment>
 );
 
-export const rewardsTip = (multiplier) => (
+export const rewardsTip = (
   <Fragment>
     <p>Rewards</p>
     <p>
       This is the total number of UNION Tokens you’ve accumulated so far since
       the last claim action.
-    </p>
-    <p className="mt-2">
-      Your current UPY rewards multiplier is{" "}
-      <span className="font-semibold text-type-base">{multiplier}</span>
     </p>
   </Fragment>
 );
