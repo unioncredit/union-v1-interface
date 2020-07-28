@@ -68,17 +68,15 @@ const WithdrawRewards = ({ onComplete }) => {
     }
   });
 
+
+  if (withdrawing) return <Spinner track="#032437" fill="#C5CED5" size={22} />;
+
   return (
     <button
-      className="text-sm font-semibold underline focus:outline-none"
-      disabled={withdrawing}
+      className="text-sm px-2 py-1 leading-none rounded bg-pink-pure hover:bg-pink-2-pure bg-opacity-25 hover:bg-opacity-50 transition-colors duration-150 font-semibold focus:outline-none"
       onClick={onWithdrawRewards}
     >
-      {withdrawing ? (
-        <Spinner track="#032437" fill="#C5CED5" size={22} />
-      ) : (
-        "Claim rewards"
-      )}
+      Collect
     </button>
   );
 };

@@ -90,7 +90,7 @@ const StakeCard = () => {
         tooltip={rewardsTip(`${rewardsMultiplier}x`)}
         value={format(rewards, 3)}
         valueType="UNION"
-        slot={<WithdrawRewards onComplete={onComplete} />}
+        valueSlot={<WithdrawRewards onComplete={onComplete} />}
       />
       <LabelPair
         labelColor="text-grey-pure"
