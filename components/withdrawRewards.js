@@ -5,6 +5,7 @@ import useToast, { FLAVORS } from "hooks/useToast";
 import useUnionContract from "hooks/useUnionContract";
 import { useState } from "react";
 import handleTxError from "util/handleTxError";
+import Spinner from "svgs/Spinner";
 
 const WithdrawRewards = ({ onComplete }) => {
   const { account, chainId, library } = useWeb3React();
@@ -69,11 +70,21 @@ const WithdrawRewards = ({ onComplete }) => {
 
   return (
     <button
-      className="text-sm font-semibold underline focus:outline-none"
+      className="text-sm font-semibold underline focus:outline-none text-center"
       disabled={withdrawing}
       onClick={onWithdrawRewards}
+      style={{ width: 103 }}
     >
-      {withdrawing ? "Withdrawing Rewards..." : "Withdraw Rewards"}
+      {withdrawing ? (
+        <Spinner
+          className="inline-block"
+          track="#032437"
+          fill="#C5CED5"
+          size={22}
+        />
+      ) : (
+        "Claim rewards"
+      )}
     </button>
   );
 };
