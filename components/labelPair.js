@@ -14,6 +14,7 @@ import Tooltip from "@reach/tooltip";
  * @param {Boolean} large Changes the LabelPair to be stacked
  * @param {String} valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  * @param {Boolean} outline
+ * @param {Boolean} responsive
  * @param {any} slot
  */
 const LabelPair = ({
@@ -25,6 +26,7 @@ const LabelPair = ({
   large = false,
   valueType,
   outline = false,
+  responsive = false,
   slot,
 }) => {
   const cachedLabelClassNames = classNames(
@@ -34,6 +36,7 @@ const LabelPair = ({
       "text-lg mb-2": large,
       "cursor-help": tooltip,
       "flex justify-between items-center": slot,
+      "mb-4 md:mb-0": responsive,
     }
   );
 
@@ -45,7 +48,9 @@ const LabelPair = ({
   );
 
   const cachedClassNames = classNames(className, {
-    "flex justify-between items-center py-2": !large,
+    "flex justify-between py-2": !large,
+    "flex-col md:flex-row md:items-center": responsive,
+    "items-center": !responsive,
   });
 
   return (
