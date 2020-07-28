@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import Skeleton from "styled-jsx-loading-skeleton";
+import Skeleton from "./Skeleton";
 import Tx from "svgs/Tx";
 import getEtherscanLink from "util/getEtherscanLink";
 

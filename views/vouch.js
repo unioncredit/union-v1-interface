@@ -3,7 +3,7 @@ import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
 import LabelPair from "components/labelPair";
-import Skeleton from "styled-jsx-loading-skeleton";
+import Skeleton from "components/Skeleton";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
 import useCreditLimit from "hooks/useCreditLimit";
