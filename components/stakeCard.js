@@ -60,6 +60,13 @@ const StakeCard = () => {
         large
         value={format(totalStake)}
         valueType="DAI"
+        valueSlot={
+          <div>
+            <div className="text-sm py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
+              Earning at {rewardsMultiplier}x
+            </div>
+          </div>
+        }
       />
       <LabelPair
         labelColor="text-grey-pure"
@@ -87,7 +94,7 @@ const StakeCard = () => {
         className="mb-4 mt-16"
         label="Rewards"
         large
-        tooltip={rewardsTip(`${rewardsMultiplier}x`)}
+        tooltip={rewardsTip}
         value={format(rewards, 3)}
         valueType="UNION"
         valueSlot={<WithdrawRewards onComplete={onComplete} />}
