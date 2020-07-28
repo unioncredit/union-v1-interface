@@ -3,6 +3,7 @@ import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
 import LabelPair from "components/labelPair";
+import Skeleton from "components/Skeleton";
 import SuccessModal from "components/SuccessModal";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
@@ -10,7 +11,6 @@ import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useVouchData from "hooks/useVouchData";
 import { Fragment } from "react";
-import Skeleton from "styled-jsx-loading-skeleton";
 import getVouchBarData from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
