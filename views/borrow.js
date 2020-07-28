@@ -148,7 +148,6 @@ export default function BorrowView() {
 
               <LabelPair
                 className="text-type-light"
-                tooltip={minimumPaymentDueTip}
                 label="Minimum Payment Due"
                 valueType="DAI"
                 value={roundUp(interest)}
