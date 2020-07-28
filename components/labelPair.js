@@ -16,6 +16,7 @@ import Tooltip from "@reach/tooltip";
  * @param {Boolean} outline
  * @param {Boolean} responsive
  * @param {any} slot
+ * @param {any} valueSlot
  */
 const LabelPair = ({
   className = "",
@@ -28,13 +29,13 @@ const LabelPair = ({
   outline = false,
   responsive = false,
   slot,
+  valueSlot,
 }) => {
   const cachedLabelClassNames = classNames(
     labelColor,
     "leading-tight whitespace-no-wrap",
     {
       "text-lg mb-2": large,
-      "cursor-help": tooltip,
       "flex justify-between items-center": slot,
       "mb-4 md:mb-0": responsive,
     }
@@ -44,7 +45,8 @@ const LabelPair = ({
     `leading-tight whitespace-no-wrap font-semibold font-sf`,
     outline ? "text-white-pure" : "text-black-pure",
     large ? "text-xl" : "text-lg",
-    large ? "text-left" : "text-right"
+    large ? "text-left" : "text-right",
+    { "flex justify-between items-center": valueSlot }
   );
 
   const cachedClassNames = classNames(className, {
@@ -58,7 +60,7 @@ const LabelPair = ({
       <dt className={cachedLabelClassNames}>
         {tooltip ? (
           <Tooltip label={tooltip}>
-            <div className="flex items-center cursor-help">
+            <div className="inline-flex items-center cursor-help">
               <div className="mr-2">{label}</div>
               <Info />
             </div>
@@ -70,6 +72,7 @@ const LabelPair = ({
       </dt>
       <dd className={cachedValueClassNames}>
         {Boolean(valueType) ? `${value} ${valueType}` : value}
+        {valueSlot}
       </dd>
     </dl>
   );
@@ -95,7 +98,9 @@ LabelPair.propTypes = {
    */
   valueType: PropTypes.oneOf(["DAI", "UNION"]),
   outline: PropTypes.bool,
+  responsive: PropTypes.bool,
   slot: PropTypes.any,
+  valueSlot: PropTypes.any,
 };
 
 export default LabelPair;
