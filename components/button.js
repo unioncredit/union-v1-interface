@@ -39,7 +39,7 @@ const Button = ({
     "btn-secondary": secondary,
     "btn-tertiary": tertiary,
     "btn-invert": invert,
-    "px-10": wide,
+    "sm:px-10": wide,
     "w-full": full,
     relative: icon || submitting,
     waiting: submitting,
