@@ -163,12 +163,6 @@ const WalletModal = () => {
             </button>
           </p>
         )}
-
-        <p className="sm:hidden text-sm text-center mt-12">
-          <button onClick={toggle} className="underline font-medium px-2 py-1">
-            Close
-          </button>
-        </p>
       </div>
     </Modal>
   );

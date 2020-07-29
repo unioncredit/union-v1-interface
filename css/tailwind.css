@@ -74,6 +74,16 @@ table td {
   @apply py-4 px-0 border-b;
 }
 
+/* Hide number input up/down arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @tailwind components;
 
 .btn {
@@ -150,7 +160,6 @@ table td {
 .active-nav-tab {
   position: relative;
 }
-
 .active-nav-tab::after {
   position: absolute;
   content: "";
@@ -168,7 +177,6 @@ table td {
 .container {
   @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
 }
-
 @screen sm {
   .container {
     @apply px-6;
@@ -186,31 +194,26 @@ table td {
   transform: skew(0, -5deg) translateY(calc(50vw / 12));
   height: calc(100vmin - 4rem + 10rem + 8.5rem);
 }
-
 @media (width >= 338px) {
   .skew {
     height: calc(100vmin - 4rem + 10rem + 6rem);
   }
 }
-
 @media (width >= 375px) {
   .skew {
     height: calc(100vmin - 4rem + 10rem + 5rem);
   }
 }
-
 @media (width >= 896px) {
   .skew {
     height: 22rem;
   }
 }
-
 @media (width >= 968px) {
   .skew {
     height: 24rem;
   }
 }
-
 @media (width >= 1048px) {
   .skew {
     height: 27rem;
@@ -282,23 +285,18 @@ table td {
   }
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 @tailwind utilities;
+
+/*
+ * @reach-ui/dialog Dialog Styles
+ */
 
 :root {
   --reach-dialog: 1;
 }
 
 [data-reach-dialog-overlay] {
-  background: #fff;
+  background: hsla(0, 0%, 0%, 0.66);
   position: fixed;
   top: 0;
   right: 0;
@@ -308,21 +306,20 @@ input[type="number"] {
   overflow: auto;
 }
 
-[data-reach-dialog-content] {
-  @apply bg-white w-full h-full outline-none;
-  overflow-y: scroll;
+/* Default Dialog Style */
+[data-reach-dialog-content].dialog-style-default {
+  @apply bg-white w-full mx-auto self-start rounded h-auto outline-none;
+  margin-top: 12vh;
+  max-width: 24rem;
   -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}
+[data-reach-dialog-content].dialog-style-is-wide {
+  max-width: 32rem;
 }
 
-@screen sm {
-  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
-    @apply self-start rounded mx-auto h-auto;
-    margin-top: 12vh;
-    max-width: 24rem;
-  }
-}
-
-[data-reach-dialog-content].wide {
+/* Fullscreen Dialog Style */
+[data-reach-dialog-content].dialog-style-fullscreen {
   @apply bg-white w-full h-full outline-none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
@@ -360,6 +357,10 @@ input[type="number"] {
   justify-content: center;
 }
 
+/*
+ * @reach-ui/tooltip Tooltip Styles
+ */
+
 :root {
   --reach-tooltip: 1;
 }
@@ -373,9 +374,7 @@ input[type="number"] {
   border-radius: 4px;
 }
 
-/*
- * Styles to crop text to X-height
- */
+/* Styles to crop text to X-height */
 [data-reach-tooltip] p {
   line-height: 1.5;
 }
@@ -391,6 +390,14 @@ input[type="number"] {
 }
 [data-reach-tooltip] p::after {
   margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
+/*
+ * Tooltip Title Styles
+ */
+/* Tooltip Title Styles */
+[data-reach-tooltip] p:first-of-type {
+  @apply font-semibold mb-2 text-type-base;
 }
 
 .crop-snug::before,

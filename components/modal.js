@@ -45,14 +45,22 @@ export const ModalHeader = ({ title, onDismiss }) => (
 );
 
 const Modal = ({
+  isOpen,
+  style = "DEFAULT",
+  wide,
+  onDismiss,
   children,
   dangerouslyBypassFocusLock,
   initialFocusRef,
-  isOpen,
   label = "Modal",
-  onDismiss,
   ...rest
 }) => {
+  const styleClassName = classNames({
+    "dialog-style-default": style === "DEFAULT",
+    "dialog-style-is-wide": wide,
+    "dialog-style-fullscreen": style === "FULLSCREEN",
+  });
+
   return (
     <DialogOverlay
       isOpen={isOpen}
@@ -60,7 +68,7 @@ const Modal = ({
       initialFocusRef={initialFocusRef}
       dangerouslyBypassFocusLock={dangerouslyBypassFocusLock}
     >
-      <DialogContent aria-label={label} {...rest}>
+      <DialogContent className={styleClassName} aria-label={label} {...rest}>
         {children}
       </DialogContent>
     </DialogOverlay>
@@ -72,8 +80,10 @@ Modal.propTypes = {
   dangerouslyBypassFocusLock: PropTypes.bool,
   initialFocusRef: PropTypes.any,
   isOpen: PropTypes.bool.isRequired,
-  label: PropTypes.string,
   onDismiss: PropTypes.func.isRequired,
+  style: PropTypes.oneOf(["DEFAULT", "FULLSCREEN"]),
+  wide: PropTypes.bool,
+  label: PropTypes.string,
 };
 
 export default Modal;

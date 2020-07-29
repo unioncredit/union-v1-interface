@@ -60,14 +60,10 @@ const CreditRequestModal = () => {
   }, [open]);
 
   return (
-    <Modal
-      isOpen={open}
-      onDismiss={toggle}
-      className={shareLink ? "wide" : undefined}
-    >
+    <Modal wide={!!shareLink} isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Ask for a vouch" onDismiss={toggle} />
 
-      {shareLink ? (
+      {!!shareLink ? (
         <div className="text-center px-4 py-6 sm:px-6 sm:py-8">
           <div className="flex justify-center mb-8" style={{ height: 104 }}>
             <QRCode link={shareLink} />
