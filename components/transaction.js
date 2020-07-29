@@ -30,7 +30,7 @@ const Transaction = ({
       target="_blank"
       rel="noopener noreferrer"
       href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-      className="mt-4 bg-white border rounded p-4 sm:p-6 flex items-center focus:shadow-outline focus:outline-none hover:bg-border-light transition-colors duration-150"
+      className="mt-4 bg-white border rounded p-4 sm:p-6 flex items-center focus:shadow-outline focus:outline-none hover:bg-border-light focus:bg-border-light transition-colors duration-150"
     >
       <Tx />
 

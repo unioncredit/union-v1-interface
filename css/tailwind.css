@@ -309,7 +309,7 @@ input[type="number"] {
 
 /* Default Dialog Style */
 [data-reach-dialog-content].dialog-style-default {
-  @apply bg-white w-full -mt-16 mx-4 rounded outline-none;
+  @apply bg-white w-full -mt-12 mx-4 rounded outline-none;
   max-width: 24rem;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
