@@ -95,26 +95,26 @@ table td {
 .btn-primary {
   @apply bg-pink-pure text-black-pure border-pink-pure;
 }
-.btn-primary:hover:enabled,
-.btn-primary:focus:enabled {
-  @apply bg-pink-coral-pure border-pink-coral-pure;
+.btn-primary:hover:enabled {
 }
 
 .btn-secondary {
   @apply bg-black-pure text-white border-black-pure;
 }
-.btn-secondary:hover:enabled,
-.btn-secondary:focus:enabled {
-  @apply bg-black-dark border-black-dark;
+.btn-secondary:hover:enabled {
 }
 
 .btn-tertiary {
   @apply text-white border-transparent;
   background-color: rgba(255, 255, 255, 0.2);
 }
+.btn-tertiary:hover:enabled {
+}
 
 .btn-invert {
   @apply bg-white border-border-pure text-black-pure;
+}
+.btn-invert:hover:enabled {
 }
 
 .btn-icon {
@@ -122,24 +122,6 @@ table td {
   top: 50%;
   transform: translateY(-50%);
   left: 16px;
-}
-
-.segmented-control-button {
-  @apply py-2 rounded w-full transition-colors duration-150 font-semibold bg-transparent;
-}
-.segmented-control-button:focus,
-.segmented-control-button:hover {
-  @apply outline-none bg-white bg-opacity-50;
-}
-.segmented-control-button.small {
-  @apply font-medium text-sm;
-}
-.segmented-control-button.active {
-  @apply bg-black-pure text-white;
-}
-.segmented-control-button.active:focus,
-.segmented-control-button.active:hover {
-  @apply bg-black-dark;
 }
 
 .active-nav-tab {
@@ -313,10 +295,13 @@ input[type="number"] {
 
 @screen sm {
   [data-reach-dialog-content].wide {
-    @apply bg-white w-full h-full outline-none self-start rounded mx-auto;
+    @apply bg-white w-full h-full outline-none self-start rounded mx-auto h-auto;
     margin-top: 12vh;
     max-width: 32rem;
   }
+}
+
+[data-reach-dialog-content].fullscreen {
 }
 
 [data-reach-dialog-content].uniswap {

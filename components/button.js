@@ -31,7 +31,6 @@ const Button = ({
   icon,
   full,
   submitting,
-  submittingText = "Waiting for confirmation...",
   ...props
 }) => {
   const cachedClassNames = classNames(className, "btn", {
@@ -69,7 +68,7 @@ const Button = ({
         <div className="btn-icon">
           <Spinner />
         </div>
-        {submittingText}
+        Waiting for confirmation...
       </button>
     );
 

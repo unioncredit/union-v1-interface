@@ -1,10 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
-import WalletOption from "components/WalletOption";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect, { useLogin, useLogout } from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { CONNECTORS, walletconnect } from "lib/connectors";
+import { CONNECTORS, SUPPORTED_WALLETS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
@@ -16,6 +15,37 @@ import {
   useWalletModalToggle,
   useWalletModalView,
 } from "./state";
+
+const isMetaMask =
+  typeof window !== "undefined" &&
+  !!(window.ethereum && window.ethereum.isMetaMask)
+    ? true
+    : false;
+
+const getWalletIcon = (name) =>
+  name === "Injected" && isMetaMask
+    ? SUPPORTED_WALLETS.MetaMask.icon
+    : SUPPORTED_WALLETS[name].icon;
+
+const getWalletName = (name) =>
+  name === "Injected" && isMetaMask
+    ? SUPPORTED_WALLETS.MetaMask.name
+    : SUPPORTED_WALLETS[name].name;
+
+const WalletOption = ({ name, activating, disabled, onClick }) => (
+  <div className="mt-4" key={name}>
+    <Button
+      full
+      icon={getWalletIcon(name)}
+      invert
+      onClick={onClick}
+      disabled={disabled}
+      submitting={activating}
+    >
+      {getWalletName(name)}
+    </Button>
+  </div>
+);
 
 const WalletModal = () => {
   const isSanctioned = useIsSanctioned();
@@ -98,19 +128,17 @@ const WalletModal = () => {
                   !!error ||
                   isSanctioned;
 
-                const handleOnClick = async () => {
-                  setActivatingConnector(currentConnector);
-                  await activate(CONNECTORS[name]);
-                  toggle();
-                  login();
-                  if (router.pathname === "/") router.push("/stake");
-                };
-
                 return (
                   <WalletOption
                     key={i}
                     name={name}
-                    onClick={handleOnClick}
+                    onClick={async () => {
+                      setActivatingConnector(currentConnector);
+                      await activate(CONNECTORS[name]);
+                      toggle();
+                      login();
+                      if (router.pathname === "/") router.push("/stake");
+                    }}
                     disabled={disabled}
                     activating={activating}
                   />
@@ -216,7 +244,7 @@ const WalletModal = () => {
               Already have an account?{" "}
               <button
                 onClick={setWalletViewSignIn}
-                className="underline font-medium"
+                className="underline focus:outline-none font-medium"
               >
                 Sign in
               </button>
@@ -225,7 +253,10 @@ const WalletModal = () => {
         )}
 
         <p className="sm:hidden text-sm text-center mt-12">
-          <button onClick={toggle} className="underline font-medium px-2 py-1">
+          <button
+            onClick={toggle}
+            className="underline focus:outline-none font-medium px-2 py-1"
+          >
             Close
           </button>
         </p>

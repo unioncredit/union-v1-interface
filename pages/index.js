@@ -310,7 +310,7 @@ export default function HomePage() {
                 </Button> */}
               </div>
             </div>
-            <div className="w-full sm:w-1/2 sm:p-8 flex self-end justify-end">
+            <div className="w-full sm:w-1/2 sm:p-8 flex justify-end">
               <img
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"

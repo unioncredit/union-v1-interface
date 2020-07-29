@@ -110,7 +110,6 @@ module.exports = {
       fontSize: {
         "3xl": "2rem",
         "4xl": "2.5rem",
-        "10xl": "10rem",
       },
       cursor: {
         inherit: "inherit",

@@ -48,8 +48,6 @@ export const UNION_TOKEN_ADDRESSES = {
   42: "0x357F7D2641488b224e83AC2322a49eb59746aA90",
 };
 
-export const GOLDEN_TICKET_NFT_ADDRESS = AddressZero;
-
 export const SCALE = 10 ** 18;
 
 export const BLOCK_SPEED = {

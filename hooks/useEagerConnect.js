@@ -1,7 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
+import { useAutoCallback } from "hooks.macro";
 import { injected } from "lib/connectors";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function useEagerConnect() {
   const cookies = parseCookies();
@@ -37,17 +38,17 @@ export default function useEagerConnect() {
 }
 
 export function useLogin() {
-  return useCallback(() => {
+  return useAutoCallback(() => {
     setCookie(null, "eagerConnect", true, {
       maxAge: 30 * 24 * 60 * 60,
       sameSite: true,
       secure: process.env.NODE_ENV === "production",
     });
-  }, []);
+  });
 }
 
 export function useLogout() {
-  return useCallback(() => {
+  return useAutoCallback(() => {
     destroyCookie(null, "eagerConnect");
-  }, []);
+  });
 }
