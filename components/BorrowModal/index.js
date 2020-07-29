@@ -55,6 +55,37 @@ const BorrowModal = ({
 
   const addToast = useToast();
 
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
+
+  const calcBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
+
+  const calcMaxIncludingFee = roundDown(creditLimit * (1 - fee));
+
+  /**
+   * Handle fee logic if the amount is the calculated max value instead of calculating the fee based on the amount passed, which in the case of using the "Max" prefill would have already had the fee taken out of it.
+   */
+  const calculateFee =
+    amount === calcMaxIncludingFee
+      ? roundDown(creditLimit * fee)
+      : amount * fee;
+
+  const calcNewBalanceOwed = calcBalanceOwed + amount + calculateFee;
+
+  const newBalanceOwed = calcNewBalanceOwed.toFixed(2);
+
+  const calcNewCredit = roundDown(creditLimit) - amount - calculateFee;
+
+  const newAvailableCredit =
+    calcNewCredit <= 0 ? Number(0).toFixed(2) : calcNewCredit.toFixed(2);
+
+  const nextPaymentDue =
+    paymentDueDate !== "-" &&
+    paymentDueDate !== "No Payment Due" &&
+    calcBalanceOwed > 0
+      ? paymentDueDate
+      : paymentPeriod;
+
   const onSubmit = async (values) => {
     let hidePendingToast = () => {};
     let txReceipt = {};
@@ -98,25 +129,6 @@ const BorrowModal = ({
     }
   };
 
-  const watchAmount = watch("amount", 0);
-  const amount = Number(watchAmount || 0);
-
-  const calculateBalanceOwed =
-    Number(balanceOwed) > 0 ? roundUp(Number(balanceOwed)) : 0;
-
-  const calculateFee = amount * Number(fee);
-
-  const calculateNewBalance = calculateBalanceOwed + amount + calculateFee;
-
-  const formatNewBalance = calculateNewBalance.toFixed(2);
-
-  const calculateNewCredit =
-    Number(roundDown(creditLimit)) - amount - calculateFee;
-
-  const formatNewCredit = calculateNewCredit.toFixed(2);
-
-  const formatMax = roundDown(creditLimit * (1 - fee));
-
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Borrow" onDismiss={toggle} />
@@ -136,9 +148,9 @@ const BorrowModal = ({
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={formatMax}
+          setMaxValue={calcMaxIncludingFee}
           setMax={() =>
-            setValue("amount", formatMax, {
+            setValue("amount", calcMaxIncludingFee, {
               shouldDirty: true,
               shouldValidate: true,
             })
@@ -147,7 +159,7 @@ const BorrowModal = ({
           ref={register({
             required: "Please fill out this field",
             max: {
-              value: formatMax,
+              value: calcMaxIncludingFee,
               message: "Not enough available credit",
             },
             min: {
@@ -160,7 +172,7 @@ const BorrowModal = ({
         <LabelPair
           className="mt-4"
           label="New balance owed"
-          value={formatNewBalance}
+          value={newBalanceOwed}
           valueType="DAI"
         />
 
@@ -181,18 +193,14 @@ const BorrowModal = ({
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">New available credit</dt>
-          <dd className="text-right">{`${formatNewCredit} DAI`}</dd>
+          <dd className="text-right">{`${newAvailableCredit} DAI`}</dd>
         </dl>
 
         <div className="divider" />
 
         <dl className="flex justify-between py-2 items-center my-2 leading-tight">
           <dt className="text-type-light">Next payment due</dt>
-          <dd className="text-right">
-            {paymentDueDate !== "-" && calculateBalanceOwed > "0"
-              ? paymentDueDate
-              : paymentPeriod}
-          </dd>
+          <dd className="text-right">{nextPaymentDue}</dd>
         </dl>
 
         <div className="divider" />
