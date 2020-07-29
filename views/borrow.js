@@ -46,6 +46,7 @@ export default function BorrowView() {
     paymentPeriod = "-",
     fee = 0,
     apr = 0,
+    isOverdue = false,
   } = !!borrowData && borrowData;
 
   const formatApr = toPercent(apr, 2);

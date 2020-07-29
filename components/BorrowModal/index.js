@@ -23,6 +23,7 @@ import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
  * @param {Number} props.fee
  * @param {String} props.paymentDueDate
  * @param {Promise<Void>} props.onComplete
+ * @param {Boolean} props.isOverdue
  */
 const BorrowModal = ({
   balanceOwed,
@@ -31,6 +32,7 @@ const BorrowModal = ({
   onComplete,
   paymentDueDate,
   paymentPeriod,
+  isOverdue = true,
 }) => {
   const { library, chainId } = useWeb3React();
 
@@ -52,6 +54,12 @@ const BorrowModal = ({
   useEffect(() => reset(), [open]);
 
   const { isDirty, isSubmitting } = formState;
+
+  useEffect(() => {
+    if (isDirty && isOverdue) {
+      addToast(FLAVORS.OVERDUE);
+    }
+  }, [isOverdue, isDirty]);
 
   const addToast = useToast();
 
