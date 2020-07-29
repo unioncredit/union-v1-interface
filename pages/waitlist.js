@@ -12,13 +12,13 @@ export default function WaitlistPage() {
 
       <section className="pt-8 pb-10 sm:pt-12 sm:pb-16 md:pt-24 md:pb-32">
         <div className="container-sm">
-          <div className="flex flex-col sm:flex-row sm:-mx-6">
-            <div className="w-full sm:w-1/2 sm:p-8 mb-12 sm:mb-0">
+          <div className="flex flex-col sm:flex-row sm:space-x-16">
+            <div className="w-full sm:py-8 sm:w-1/2 mb-12 sm:mb-0">
               <div className="w-full">
                 <WaitlistSignupForm />
               </div>
             </div>
-            <div className="w-full self-end sm:w-1/2 sm:p-8 flex justify-end">
+            <div className="w-full sm:py-8 sm:w-1/2 self-end flex justify-end">
               <img
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"

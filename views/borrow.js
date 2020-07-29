@@ -57,8 +57,8 @@ export default function BorrowView() {
           <h1>Dashboard</h1>
         </div>
 
-        <div className="flex flex-col md:flex-row -mx-3 mb-10">
-          <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row md:space-x-6 mb-10">
+          <div className="w-full md:w-1/2 mb-4 md:mb-0">
             <div className="bg-black-pure border border-black-pure rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
@@ -101,7 +101,7 @@ export default function BorrowView() {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full md:w-1/2">
             <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
