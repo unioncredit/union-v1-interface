@@ -54,10 +54,10 @@ module.exports = {
       twitter: "#1DA1F2",
     },
     screens: {
-      sm: "640px",
-      md: "768px",
-      lg: "1080px",
-      xl: "1280px",
+      sm: "768px",
+      md: "896px",
+      lg: "1280px",
+      xl: "1440px",
     },
     fontFamily: {
       sans: [
@@ -94,12 +94,6 @@ module.exports = {
       },
       spacing: {
         "2px": "2px",
-      },
-      screens: {
-        sm: "768px",
-        md: "896px",
-        lg: "1280px",
-        xl: "1440px",
       },
       backgroundOpacity: {
         10: "0.1",

@@ -3,6 +3,8 @@
 :root {
   --skeleton-base-color: hsl(210deg 9% 96%);
   --skeleton-highlight-color: hsl(210deg 9% 97%);
+
+  --radius: 4px;
 }
 
 @font-face {
@@ -307,14 +309,15 @@ input[type="number"] {
 
 [data-reach-dialog-overlay].dialog-overlay-centered {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
 /* Default Dialog Style */
 [data-reach-dialog-content].dialog-style-default {
-  @apply bg-white w-full -mt-12 mx-4 rounded outline-none;
+  @apply bg-white w-full mx-4 rounded outline-none;
   max-width: 24rem;
+  margin-top: 12vh;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
 }
@@ -370,12 +373,13 @@ input[type="number"] {
 }
 
 [data-reach-tooltip] {
-  @apply bg-white text-sm p-4 absolute text-type-light;
+  @apply bg-white text-sm border absolute text-type-light;
   z-index: 1;
+  padding: calc(1rem - 1px);
   pointer-events: none;
   box-shadow: 0px 0px 12px rgba(19, 44, 106, 0.12);
   max-width: 256px;
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
 /* Styles to crop text to X-height */
