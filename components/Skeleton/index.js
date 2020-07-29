@@ -18,7 +18,7 @@ const Skeleton = ({
     </span>
     <style jsx>{`
       .styled-jsx-skeleton {
-        border-radius: ${circle ? "99999px" : "4px"};
+        border-radius: ${circle ? "99999px" : "var(--radius)"};
         animation-duration: ${duration}s;
       }
     `}</style>
