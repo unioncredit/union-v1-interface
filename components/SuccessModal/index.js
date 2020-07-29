@@ -45,7 +45,7 @@ const SuccessModal = () => {
   };
 
   return (
-    <Modal className="wide" isOpen={open} onDismiss={toggle}>
+    <Modal wide isOpen={open} onDismiss={toggle}>
       <div className="p-4 sm:p-6 text-center">
         <div className="mb-12">
           <h2 className="text-3xl mt-6 mb-8">

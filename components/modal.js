@@ -44,10 +44,24 @@ export const ModalHeader = ({ title, onDismiss }) => (
   </div>
 );
 
-const Modal = ({ isOpen, onDismiss, children, label = "Modal", ...rest }) => {
+const Modal = ({
+  isOpen,
+  style = "DEFAULT",
+  wide,
+  onDismiss,
+  children,
+  label = "Modal",
+  ...rest
+}) => {
+  const styleClassName = classNames({
+    "dialog-style-default": style === "DEFAULT",
+    "dialog-style-is-wide": wide,
+    "dialog-style-fullscreen": style === "FULLSCREEN",
+  });
+
   return (
     <DialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
-      <DialogContent aria-label={label} {...rest}>
+      <DialogContent className={styleClassName} aria-label={label} {...rest}>
         {children}
       </DialogContent>
     </DialogOverlay>
@@ -57,6 +71,8 @@ const Modal = ({ isOpen, onDismiss, children, label = "Modal", ...rest }) => {
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onDismiss: PropTypes.func.isRequired,
+  style: PropTypes.oneOf(["DEFAULT", "FULLSCREEN"]),
+  wide: PropTypes.bool,
   label: PropTypes.string,
   children: PropTypes.any,
 };

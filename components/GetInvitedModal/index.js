@@ -44,7 +44,7 @@ const GetInvitedModal = () => {
   };
 
   return (
-    <Modal isOpen={open} onDismiss={toggle} className="fullscreen">
+    <Modal style="FULLSCREEN" isOpen={open} onDismiss={toggle}>
       <div className="container text-center mt-10 sm:mt-20">
         <CloseButton onClick={toggle} circle />
 
