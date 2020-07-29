@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import MemberView from "views/member";
 import LoggedOutView from "views/loggedOut";
+import MemberView from "views/member";
 
 export default function MemberPage() {
   const { account, library } = useWeb3React();

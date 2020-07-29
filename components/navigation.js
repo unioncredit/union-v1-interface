@@ -27,7 +27,7 @@ const NavigationLink = ({ href, children, ...rest }) => {
   const isActive = pathname === href ? true : false;
 
   const cachedClassNames = classNames(
-    "p-2 md:p-3 leading-none md:mx-4 text-lg font-semibold",
+    "p-2 md:p-3 leading-none md:mx-4 text-lg font-semibold transition-colors duration-150",
     {
       "active-nav-tab": isActive,
       "text-type-lightest": !isActive,
