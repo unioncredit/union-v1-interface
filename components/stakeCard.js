@@ -117,13 +117,13 @@ const StakeCard = () => {
         />
       </div>
       <div className="border border-t-0 rounded-b p-4">
-        <div className="flex -mx-2">
-          <div className="flex-1 px-2">
+        <div className="flex space-x-4">
+          <div className="flex-1">
             <Button secondary full onClick={toggleDepositModal}>
               Deposit
             </Button>
           </div>
-          <div className="flex-1 px-2">
+          <div className="flex-1">
             <Button invert full onClick={toggleWithdrawModal}>
               Withdraw
             </Button>

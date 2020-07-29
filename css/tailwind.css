@@ -280,8 +280,8 @@ input[type="number"] {
 }
 
 @screen md {
-  .md\:476px {
-    max-width: calc(460px + 1rem);
+  .md\:460px {
+    max-width: 460px;
   }
 }
 
