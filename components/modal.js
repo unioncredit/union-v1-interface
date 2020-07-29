@@ -44,13 +44,24 @@ export const ModalHeader = ({ title, onDismiss }) => (
   </div>
 );
 
+/**
+ * @name Modal
+ *
+ * @param {Object} props
+ * @param {any} props.children
+ * @param {Boolean} props.isOpen
+ * @param {String} props.label
+ * @param {Function<Void>} props.onDismiss
+ * @param {("DEFAULT"|"FULLSCREEN")} props.style
+ * @param {Boolean} props.wide
+ */
 const Modal = ({
+  children,
   isOpen,
+  label = "Modal",
+  onDismiss,
   style = "DEFAULT",
   wide,
-  onDismiss,
-  children,
-  label = "Modal",
   ...rest
 }) => {
   const styleClassName = classNames({
@@ -60,7 +71,11 @@ const Modal = ({
   });
 
   return (
-    <DialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
+    <DialogOverlay
+      isOpen={isOpen}
+      onDismiss={onDismiss}
+      className="dialog-overlay-centered"
+    >
       <DialogContent className={styleClassName} aria-label={label} {...rest}>
         {children}
       </DialogContent>
@@ -69,12 +84,12 @@ const Modal = ({
 };
 
 Modal.propTypes = {
+  children: PropTypes.any,
   isOpen: PropTypes.bool.isRequired,
+  label: PropTypes.string,
   onDismiss: PropTypes.func.isRequired,
   style: PropTypes.oneOf(["DEFAULT", "FULLSCREEN"]),
   wide: PropTypes.bool,
-  label: PropTypes.string,
-  children: PropTypes.any,
 };
 
 export default Modal;

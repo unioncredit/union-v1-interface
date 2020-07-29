@@ -18,6 +18,7 @@ import errorMessages from "text/errorMessages";
 
 /**
  * @name RepayModal
+ *
  * @param {Object} props
  * @param {Number} props.balanceOwed
  * @param {Promise<Void>} props.onComplete
