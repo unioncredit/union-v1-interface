@@ -23,6 +23,7 @@ import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
 
 /**
  * @name BorrowModal
+ *
  * @param {Object} props
  * @param {Number} props.balanceOwed
  * @param {Number} props.creditLimit

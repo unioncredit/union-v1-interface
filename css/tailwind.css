@@ -302,14 +302,18 @@ input[type="number"] {
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
   overflow: auto;
+}
+
+[data-reach-dialog-overlay].dialog-overlay-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Default Dialog Style */
 [data-reach-dialog-content].dialog-style-default {
-  @apply bg-white w-full mx-auto self-start rounded h-auto outline-none;
-  margin-top: 12vh;
+  @apply bg-white w-full rounded outline-none;
   max-width: 24rem;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
