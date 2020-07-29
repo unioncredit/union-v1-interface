@@ -53,78 +53,81 @@ const StakeCard = () => {
   };
 
   return (
-    <div className="bg-pink-light border border-pink-pure rounded p-6">
-      <LabelPair
-        className="mb-4"
-        label="Your total stake"
-        large
-        value={format(totalStake)}
-        valueType="DAI"
-        valueSlot={
-          <div>
-            <div className="text-sm py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
-              Earning at {rewardsMultiplier}x
+    <div>
+      <div className="bg-pink-light border border-pink-pure rounded-t px-6 pt-6 pb-5">
+        <LabelPair
+          className="mb-4"
+          label="Your total stake"
+          large
+          value={format(totalStake)}
+          valueType="DAI"
+          valueSlot={
+            <div>
+              <div className="text-sm py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
+                Earning at {rewardsMultiplier}x
+              </div>
             </div>
+          }
+        />
+        <LabelPair
+          labelColor="text-grey-pure"
+          label="Utilized Stake"
+          tooltip={utilizedStakeTip}
+          value={format(utilizedStake)}
+          valueType="DAI"
+        />
+        <LabelPair
+          labelColor="text-grey-pure"
+          label="Defaulted Stake"
+          tooltip={defaultedStakeTip}
+          value={format(defaultedStake)}
+          valueType="DAI"
+        />
+        <LabelPair
+          labelColor="text-grey-pure"
+          label="Withdrawable Stake"
+          tooltip={withdrawableStakeTip}
+          value={format(withdrawableStake)}
+          valueType="DAI"
+        />
+
+        <div className="divider bg-pink-pure my-8"></div>
+
+        <LabelPair
+          className="pt-1 mb-4"
+          label="Rewards"
+          large
+          tooltip={rewardsTip}
+          value={format(rewards, 3)}
+          valueType="UNION"
+          valueSlot={<WithdrawRewards onComplete={onComplete} />}
+        />
+        <LabelPair
+          labelColor="text-grey-pure"
+          label="Earned Per Year"
+          tooltip={unionPerYearTip}
+          value={format(upy, 3)}
+          valueType="UNION"
+        />
+        <LabelPair
+          labelColor="text-grey-pure"
+          label="Wallet Balance"
+          value={format(unionBalance, 3)}
+          valueType="UNION"
+        />
+      </div>
+      <div className="border border-t-0 rounded-b p-4">
+        <div className="flex -mx-2">
+          <div className="flex-1 px-2">
+            <Button secondary full onClick={toggleDepositModal}>
+              Deposit
+            </Button>
           </div>
-        }
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
-        label="Utilized Stake"
-        tooltip={utilizedStakeTip}
-        value={format(utilizedStake)}
-        valueType="DAI"
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
-        label="Defaulted Stake"
-        tooltip={defaultedStakeTip}
-        value={format(defaultedStake)}
-        valueType="DAI"
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
-        label="Withdrawable Stake"
-        tooltip={withdrawableStakeTip}
-        value={format(withdrawableStake)}
-        valueType="DAI"
-      />
-
-      <div className="divider bg-pink-pure my-8"></div>
-
-      <LabelPair
-        className="pt-1 mb-4"
-        label="Rewards"
-        large
-        tooltip={rewardsTip}
-        value={format(rewards, 3)}
-        valueType="UNION"
-        valueSlot={<WithdrawRewards onComplete={onComplete} />}
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
-        label="Earned Per Year"
-        tooltip={unionPerYearTip}
-        value={format(upy, 3)}
-        valueType="UNION"
-      />
-      <LabelPair
-        labelColor="text-grey-pure"
-        label="Wallet Balance"
-        value={format(unionBalance, 3)}
-        valueType="UNION"
-      />
-
-      <div className="flex -mx-2 mt-12">
-        <div className="flex-1 px-2">
-          <Button secondary full onClick={toggleDepositModal}>
-            Deposit
-          </Button>
-        </div>
-        <div className="flex-1 px-2">
-          <Button invert full onClick={toggleWithdrawModal}>
-            Withdraw
-          </Button>
+          <div className="flex-1 px-2">
+            <Button invert full onClick={toggleWithdrawModal}>
+              Withdraw
+            </Button>
+          </div>
         </div>
       </div>
 
