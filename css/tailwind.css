@@ -294,7 +294,7 @@ input[type="number"] {
 }
 
 [data-reach-dialog-overlay] {
-  background: hsla(0, 0%, 0%, 0.66);
+  background: #fff;
   position: fixed;
   top: 0;
   right: 0;
@@ -305,7 +305,7 @@ input[type="number"] {
 }
 
 [data-reach-dialog-content] {
-  @apply bg-white w-full mt-4 outline-none rounded-t-md;
+  @apply bg-white w-full h-full outline-none;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
