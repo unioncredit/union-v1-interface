@@ -72,7 +72,7 @@ const WithdrawRewards = ({ onComplete }) => {
 
   return (
     <button
-      className="text-sm px-2 py-1 leading-tight rounded bg-black-pure hover:bg-black-dark text-white transition-colors duration-150 font-semibold focus:outline-none"
+      className="text-sm underline font-semibold focus:outline-none"
       onClick={onWithdrawRewards}
     >
       Collect
