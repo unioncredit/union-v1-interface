@@ -5,7 +5,7 @@ import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
 import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";
-import "../css/tailwind.css";
+import "../styles/index.css";
 import Error from "./_error";
 
 export default function UnionApp({ Component, pageProps }) {
