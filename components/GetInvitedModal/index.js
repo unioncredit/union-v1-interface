@@ -74,7 +74,7 @@ const GetInvitedModal = () => {
 
               <p className="mb-8">
                 Send this link as a <strong>private message</strong> to someone
-                you already know is a memeber.
+                you already know is a member.
               </p>
 
               <VouchLink link={shareLink} />
