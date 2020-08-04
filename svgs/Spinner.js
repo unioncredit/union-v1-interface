@@ -1,4 +1,4 @@
-export default ({ size = 24 }) => (
+const Spinner = ({ size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <path
       fillRule="evenodd"
@@ -23,3 +23,5 @@ export default ({ size = 24 }) => (
     </path>
   </svg>
 );
+
+export default Spinner;

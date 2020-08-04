@@ -1,4 +1,4 @@
-export default ({ size = 24, pending = false }) => (
+const Bell = ({ size = 24, pending = false }) => (
   <svg
     className={pending ? "pending" : undefined}
     width={size}
@@ -29,3 +29,5 @@ export default ({ size = 24, pending = false }) => (
     `}</style>
   </svg>
 );
+
+export default Bell;
