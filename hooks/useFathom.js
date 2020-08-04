@@ -2,18 +2,12 @@ import * as Fathom from "fathom-client";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-const SITE_ID = "GMOFVKBP";
-
 export default function useFathom() {
   const router = useRouter();
 
   useEffect(() => {
-    Fathom.load(SITE_ID, {
-      includedDomains: [
-        "beta.union.finance",
-        "kovan.beta.union.finance",
-        "union.finance",
-      ],
+    Fathom.load(process.env.NEXT_PUBLIC_FATHOM_ID, {
+      includedDomains: [process.env.NEXT_PUBLIC_FATHOM_DOMAIN],
     });
 
     function onRouteChangeComplete() {
