@@ -1,4 +1,3 @@
-import { isAddress } from "@ethersproject/address";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
