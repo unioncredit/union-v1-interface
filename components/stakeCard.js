@@ -116,7 +116,7 @@ const StakeCard = () => {
           valueType="UNION"
         />
       </div>
-      <div className="border border-t-0 rounded-b p-4">
+      <div className="bg-pink-light border border-pink-pure border-t-0 rounded-b p-4">
         <div className="flex space-x-4">
           <div className="flex-1">
             <Button secondary full onClick={toggleDepositModal}>
