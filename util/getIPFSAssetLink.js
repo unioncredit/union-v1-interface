@@ -1,4 +1,4 @@
-export default function getIPFSImageUrl(imageArray) {
+export default function getIPFSAssetLink(imageArray) {
   const { contentUrl } = imageArray[0];
   const hash = contentUrl["/"];
 

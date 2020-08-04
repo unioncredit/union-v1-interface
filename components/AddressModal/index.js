@@ -20,7 +20,7 @@ import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
-import getIPFSImageUrl from "util/getIPFSImageURL";
+import getIPFSAssetLink from "util/getIPFSAssetLink";
 
 const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
@@ -200,7 +200,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               {has3BoxProfileImage ? (
                 <img
                   className="rounded-full"
-                  src={getIPFSImageUrl(data.image)}
+                  src={getIPFSAssetLink(data.image)}
                   alt={address}
                   style={{ height: 72, width: 72 }}
                 />

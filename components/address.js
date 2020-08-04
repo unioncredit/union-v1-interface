@@ -6,7 +6,7 @@ import { memo } from "react";
 import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
-import getIPFSImageUrl from "util/getIPFSImageURL";
+import getIPFSAssetLink from "util/getIPFSAssetLink";
 
 const Address = ({ address, withLabel, copyable = false }) => {
   const ENSName = useENSName(address);
@@ -38,7 +38,7 @@ const Address = ({ address, withLabel, copyable = false }) => {
         {has3BoxProfileImage ? (
           <img
             className="h-8 w-8 rounded-full"
-            src={getIPFSImageUrl(data.image)}
+            src={getIPFSAssetLink(data.image)}
             alt={address}
           />
         ) : (
