@@ -6,6 +6,8 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: getsentry/action-eslint-fix@v1
+      - uses: actions/checkout@v2
+      - name: Run ESLint
+        uses: getsentry/action-eslint-fix@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
