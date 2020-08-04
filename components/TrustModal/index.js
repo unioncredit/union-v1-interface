@@ -76,9 +76,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
         gasLimit,
       });
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -89,7 +87,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         /**
          * @note Temp fix to update trust data after updating for now
@@ -109,7 +107,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   };
 

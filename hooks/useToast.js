@@ -2,6 +2,29 @@ import cogoToast from "cogo-toast";
 import { ToastBody, TOAST_ICONS } from "components/toasts";
 import { Fragment, useCallback } from "react";
 import getEtherscanLink from "util/getEtherscanLink";
+import { useWeb3React } from "@web3-react/core";
+
+const ToastContent = ({ message, hash }) => {
+  const { chainId } = useWeb3React();
+
+  if (hash)
+    return (
+      <Fragment>
+        {message}
+        <br />
+        <a
+          className="underline"
+          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on Etherscan
+        </a>
+      </Fragment>
+    );
+
+  return message;
+};
 
 export const FLAVORS = {
   TX_WAITING: {
@@ -9,114 +32,28 @@ export const FLAVORS = {
     type: "loading",
     hideAfter: 0,
   },
-  TX_PENDING: (hash, chainId) => ({
-    body: (
-      <Fragment>
-        Transaction is pending.
-        {hash && chainId && (
-          <Fragment>
-            <br />
-            <a
-              className="underline"
-              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </Fragment>
-        )}
-      </Fragment>
-    ),
+  TX_PENDING: (hash) => ({
+    body: <ToastContent message="Transaction is pending." hash={hash} />,
     type: "loading",
     hideAfter: 0,
   }),
-  TX_PENDING_TOKEN: (hash, chainId) => ({
-    body: (
-      <Fragment>
-        Enabling token.
-        {hash && chainId && (
-          <Fragment>
-            <br />
-            <a
-              className="underline"
-              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </Fragment>
-        )}
-      </Fragment>
-    ),
+  TX_PENDING_TOKEN: (hash) => ({
+    body: <ToastContent message="Enabling token." hash={hash} />,
     type: "loading",
     hideAfter: 0,
   }),
-  TX_SUCCESS: (hash, chainId) => ({
-    body: (
-      <Fragment>
-        Transaction successful.
-        {hash && chainId && (
-          <Fragment>
-            <br />
-            <a
-              className="underline"
-              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </Fragment>
-        )}
-      </Fragment>
-    ),
+  TX_SUCCESS: (hash) => ({
+    body: <ToastContent message="Transaction successful." hash={hash} />,
     type: "success",
     hideAfter: 20,
   }),
-  TX_SUCCESS_ENABLED: (hash, chainId) => ({
-    body: (
-      <Fragment>
-        Token enabled successfully.
-        {hash && chainId && (
-          <Fragment>
-            <br />
-            <a
-              className="underline"
-              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </Fragment>
-        )}
-      </Fragment>
-    ),
+  TX_SUCCESS_ENABLED: (hash) => ({
+    body: <ToastContent message="Token enabled successfully." hash={hash} />,
     type: "success",
     hideAfter: 20,
   }),
-  TX_ERROR: (message = "Transaction failed", hash, chainId) => ({
-    body: (
-      <Fragment>
-        {message}
-
-        {hash && chainId && (
-          <Fragment>
-            <br />
-            <a
-              className="underline"
-              href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </Fragment>
-        )}
-      </Fragment>
-    ),
+  TX_ERROR: (message = "Transaction failed", hash) => ({
+    body: <ToastContent message={message} hash={hash} />,
     type: "error",
     hideAfter: 20,
   }),

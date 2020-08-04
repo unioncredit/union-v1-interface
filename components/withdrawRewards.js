@@ -1,19 +1,17 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
-import useCurrentToken from "hooks/useCurrentToken";
+import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
 import useToast, { FLAVORS } from "hooks/useToast";
-import useUnionContract from "hooks/useUnionContract";
 import { useState } from "react";
-import handleTxError from "util/handleTxError";
 import Spinner from "svgs/Spinner";
+import handleTxError from "util/handleTxError";
 
 const WithdrawRewards = ({ onComplete }) => {
-  const { account, chainId, library } = useWeb3React();
-  const curToken = useCurrentToken();
+  const { chainId, library } = useWeb3React();
 
   const [withdrawing, setWithdrawing] = useState(false);
 
-  const unionContract = useUnionContract();
+  const withdrawRewards = useWithdrawRewards();
 
   const addToast = useToast();
 
@@ -26,13 +24,11 @@ const WithdrawRewards = ({ onComplete }) => {
     const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
     try {
-      const tx = await unionContract.withdrawRewards(account, curToken);
+      const tx = await withdrawRewards();
 
       hideWaiting();
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -41,7 +37,7 @@ const WithdrawRewards = ({ onComplete }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         setWithdrawing(false);
 
@@ -64,7 +60,7 @@ const WithdrawRewards = ({ onComplete }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   });
 

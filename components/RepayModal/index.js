@@ -85,9 +85,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     try {
       const tx = await repay(amountToRepay);
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -98,7 +96,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         await onComplete();
 
@@ -115,7 +113,7 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   };
 
