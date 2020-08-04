@@ -27,11 +27,14 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const { handleSubmit, register, formState, errors, reset } = useForm();
 
-  useEffect(() => reset(), [open]);
+  const [knownScamAddress, knownScamAddressSet] = useState(false);
+
+  useEffect(() => {
+    reset();
+    knownScamAddressSet(false);
+  }, [open]);
 
   const { isDirty, isSubmitting } = formState;
-
-  const [knownScamAddress, knownScamAddressSet] = useState(false);
 
   const curToken = useCurrentToken();
 
