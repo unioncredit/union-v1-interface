@@ -19,13 +19,15 @@ import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
+import getIPFSImageUrl from "util/getIPFSImageURL";
 
-const InlineLabelEditor = ({ label, ENSName, address }) => {
+const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
 
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
-      label,
+      label: label ?? public3BoxName,
     },
   });
 
@@ -100,8 +102,11 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const ENSName = useENSName(address);
 
   const { getLabel } = useAddressLabels();
-
   const label = getLabel(address);
+
+  const { data, error } = use3BoxPublicData(address);
+  const has3BoxName = !!data && !error && data?.name;
+  const has3BoxProfileImage = !!data && !error && data?.image;
 
   const [removingAddress, removingAddressSet] = useState(false);
 
@@ -192,7 +197,16 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="flex justify-center mt-4">
-              <Identicon address={address} extraLarge />
+              {has3BoxProfileImage ? (
+                <img
+                  className="rounded-full"
+                  src={getIPFSImageUrl(data.image)}
+                  alt={address}
+                  style={{ height: 72, width: 72 }}
+                />
+              ) : (
+                <Identicon address={address} extraLarge />
+              )}
             </div>
 
             <div className="mt-4 text-center">
@@ -200,6 +214,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
                 address={address}
                 ENSName={ENSName}
                 label={label}
+                public3BoxName={has3BoxName ? data.name : null}
               />
             </div>
 
