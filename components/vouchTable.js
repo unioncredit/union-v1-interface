@@ -203,7 +203,7 @@ const VouchTable = ({ data }) => {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0))
+    if (data && data.length > 0)
       return data.sort((a, b) => b.vouched - a.vouched);
     return [];
   }, [data]);
@@ -258,6 +258,7 @@ const VouchTable = ({ data }) => {
       <table className="w-full border-none" {...getTableProps()}>
         <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
+            // eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(renderTheadColumns)}
             </tr>
@@ -268,6 +269,7 @@ const VouchTable = ({ data }) => {
             rows.map((row) => {
               prepareRow(row);
               return (
+                // eslint-disable-next-line react/jsx-key
                 <Fragment {...row.getRowProps()}>
                   <tr>{row.cells.map(renderTbodyCells)}</tr>
                   {row.isExpanded ? (

@@ -14,7 +14,7 @@ export default function useENSName(address) {
   const [ENSName, setENSName] = useState();
 
   useEffect(() => {
-    if (!!(isAddress(address) && library)) {
+    if (isAddress(address) && library) {
       let stale = false;
       library
         .lookupAddress(address)

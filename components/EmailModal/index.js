@@ -30,7 +30,7 @@ const EmailModal = () => {
 
       const signer = library.getSigner();
 
-      const signature = await signer.signMessage(MESSAGE);
+      await signer.signMessage(MESSAGE);
 
       /**
        * @todo Post email to DB here with a key / value pair of address / email

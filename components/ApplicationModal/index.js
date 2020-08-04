@@ -17,7 +17,7 @@ import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
 import { useSuccessModalToggle } from "../SuccessModal/state";
 
 const ApplicationModal = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");

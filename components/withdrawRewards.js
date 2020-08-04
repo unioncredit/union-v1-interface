@@ -7,7 +7,7 @@ import Spinner from "svgs/Spinner";
 import handleTxError from "util/handleTxError";
 
 const WithdrawRewards = ({ onComplete }) => {
-  const { chainId, library } = useWeb3React();
+  const { library } = useWeb3React();
 
   const [withdrawing, setWithdrawing] = useState(false);
 

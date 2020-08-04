@@ -15,7 +15,7 @@ const MarketModal = ({
   const open = useMarketModalOpen();
   const toggle = useMarketModalToggle();
 
-  const { handleSubmit, register, watch, setValue } = useForm();
+  const { register, watch } = useForm();
 
   const fee = watch("fee", 0);
   const debtCeiling = watch("debtCeiling", 0);

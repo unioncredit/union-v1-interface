@@ -38,7 +38,7 @@ const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
 
   const handleCopyAddress = () => copy(address);
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     await setLabel(address, data.label);
 
     await delay(1000);
@@ -88,7 +88,7 @@ const ADDRESS_VIEWS = {
 };
 
 const AddressModal = ({ address, vouched, trust, used, health }) => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library } = useWeb3React();
   const curToken = useCurrentToken("DAI");
 
   const isOpen = useAddressModalOpen();

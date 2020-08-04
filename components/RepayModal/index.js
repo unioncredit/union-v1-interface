@@ -24,7 +24,7 @@ import errorMessages from "text/errorMessages";
  * @param {Promise<Void>} props.onComplete
  */
 const RepayModal = ({ balanceOwed, onComplete }) => {
-  const { library, chainId } = useWeb3React();
+  const { library } = useWeb3React();
   const curToken = useCurrentToken();
 
   const open = useRepayModalOpen();

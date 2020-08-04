@@ -19,7 +19,7 @@ import validateAddress from "util/validateAddress";
 import errorMessages from "text/errorMessages";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-  const { chainId, account, library } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
@@ -47,7 +47,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const { setLabel } = useAddressLabels();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     let hidePendingToast = () => {};
     let txReceipt = {};
 

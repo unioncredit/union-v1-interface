@@ -14,7 +14,7 @@ const ADJUST_TYPES = {
 };
 
 const AdjustTrustForm = ({ address, vouched, onComplete }) => {
-  const { library, chainId } = useWeb3React();
+  const { library } = useWeb3React();
 
   const { register, handleSubmit, watch, formState, errors } = useForm();
 
@@ -33,7 +33,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const addToast = useToast();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async () => {
     let hidePendingToast = () => {};
     let txReceipt = {};
 

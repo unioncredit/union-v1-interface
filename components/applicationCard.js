@@ -1,12 +1,11 @@
+import Tooltip from "@reach/tooltip";
 import classNames from "classnames";
 import useTrustCountData from "hooks/useTrustCountData";
-import { useToggle } from "react-use";
 import Info from "svgs/Info";
 import { vouchingTip } from "../text/tooltips";
 import { useApplicationModalToggle } from "./ApplicationModal/state";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
-import Tooltip from "@reach/tooltip";
 
 const ApplicationCard = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
