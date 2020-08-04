@@ -7,7 +7,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
@@ -15,6 +15,7 @@ import Button from "../button";
 import Input from "../input";
 import Modal, { ModalHeader } from "../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
+import validateAddress from "util/validateAddress";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
   const { chainId, account, library } = useWeb3React();
@@ -29,6 +30,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   useEffect(() => reset(), [open]);
 
   const { isDirty, isSubmitting } = formState;
+
+  const [knownScamAddress, knownScamAddressSet] = useState(false);
 
   const curToken = useCurrentToken();
 
@@ -138,10 +141,16 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             error={errors.address}
             ref={register({
               required: "Please fill out this field",
-              validate: (value) =>
-                isAddress(value)
-                  ? true
-                  : "Please input a valid Ethereum address",
+              validate: async (value) => {
+                const validation = await validateAddress(value);
+
+                if (
+                  validation === "This address is associated with a known scam"
+                )
+                  knownScamAddressSet(true);
+
+                return validation;
+              },
             })}
           />
 
@@ -182,7 +191,12 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             <Button
               full
               type="submit"
-              disabled={isMember === false || isSubmitting || !isDirty}
+              disabled={
+                knownScamAddress ||
+                isMember === false ||
+                isSubmitting ||
+                !isDirty
+              }
               submitting={isSubmitting}
             >
               Confirm
