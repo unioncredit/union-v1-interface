@@ -37,9 +37,12 @@ const Address = ({ address, withLabel, copyable = false }) => {
       <div className="flex-grow-0 h-8">
         {has3BoxProfileImage ? (
           <img
-            className="h-8 w-8 rounded-full"
-            src={getIPFSAssetLink(data.image)}
             alt={address}
+            async
+            className="h-8 w-8 rounded-full"
+            decoding="async"
+            loading="lazy"
+            src={getIPFSAssetLink(data.image)}
           />
         ) : (
           <Identicon large address={address} />

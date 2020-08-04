@@ -199,9 +199,12 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             <div className="flex justify-center mt-4">
               {has3BoxProfileImage ? (
                 <img
-                  className="rounded-full"
-                  src={getIPFSAssetLink(data.image)}
                   alt={address}
+                  async
+                  className="rounded-full"
+                  decoding="async"
+                  loading="lazy"
+                  src={getIPFSAssetLink(data.image)}
                   style={{ height: 72, width: 72 }}
                 />
               ) : (
