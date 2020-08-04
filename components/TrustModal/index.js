@@ -146,8 +146,11 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
                 if (
                   validation === "This address is associated with a known scam"
-                )
+                ) {
                   knownScamAddressSet(true);
+                } else {
+                  knownScamAddressSet(false);
+                }
 
                 return validation;
               },
