@@ -388,6 +388,34 @@ input[type="number"] {
   margin-bottom: calc((1 - 1.5) * 0.5em);
 }
 
+.crop-snug::before,
+.crop-snug::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-snug::before {
+  margin-top: calc((1 - 1.375) * 0.5em);
+}
+.crop-snug::after {
+  margin-bottom: calc((1 - 1.375) * 0.5em);
+}
+
+.crop-tight::before,
+.crop-tight::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-tight::before {
+  margin-top: calc((1 - 1.25) * 0.5em);
+}
+.crop-tight::after {
+  margin-bottom: calc((1 - 1.25) * 0.5em);
+}
+
 /*
  * Tooltip Title Styles
  */

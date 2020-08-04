@@ -181,6 +181,7 @@ export default function BorrowView() {
         onComplete={onComplete}
         paymentDueDate={paymentDueDate}
         paymentPeriod={paymentPeriod}
+        isOverdue={isOverdue}
       />
 
       <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />

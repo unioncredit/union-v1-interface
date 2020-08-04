@@ -4,11 +4,6 @@ import { Fragment, useCallback } from "react";
 import getEtherscanLink from "util/getEtherscanLink";
 
 export const FLAVORS = {
-  OVERDUE: {
-    body: "You cannot borrow with an overdue balance. Make a payment",
-    type: "warn",
-    hideAfter: 0,
-  },
   TX_WAITING: {
     body: "Waiting for confirmation",
     type: "loading",
