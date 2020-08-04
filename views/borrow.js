@@ -54,8 +54,8 @@ export default function BorrowView() {
       <div className="container">
         {isMember === false && <ApplicationCard />}
 
-        <div className="mb-5">
-          <h1>Dashboard</h1>
+        <div className="mb-4">
+          <h1 className="h-12 leading-12">Dashboard</h1>
         </div>
 
         <div className="flex flex-col md:flex-row md:space-x-6 mb-10">
@@ -138,10 +138,11 @@ export default function BorrowView() {
         </div>
 
         {isMember === true && (
-          <div>
-            <div className="mb-5">
-              <h2>Transactions</h2>
+          <Fragment>
+            <div className="mb-4">
+              <h2 className="h-12 leading-12">Transactions</h2>
             </div>
+
             {transactionsData && transactionsData.length ? (
               transactionsData.map((datum, i) => (
                 <Transaction key={i} {...datum} />
@@ -153,7 +154,7 @@ export default function BorrowView() {
                 <TransactionSkeleton />
               </Fragment>
             )}
-          </div>
+          </Fragment>
         )}
       </div>
 

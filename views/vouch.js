@@ -21,7 +21,9 @@ export default function VouchView() {
         {isMember === false && <ApplicationCard />}
 
         <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 md:mb-4">
-          <h1 className="mb-4 md:mb-0">Addresses Who Vouched for You</h1>
+          <h1 className="h-12 leading-12 mb-4 md:mb-0">
+            Addresses Who Vouched for You
+          </h1>
 
           <Button invert onClick={toggleCreditRequestModal}>
             Open request for credit
