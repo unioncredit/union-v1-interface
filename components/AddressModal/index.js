@@ -124,9 +124,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
       const tx = await removeVouch(address);
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -135,7 +133,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         removingAddressSet(false);
 
@@ -154,7 +152,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
 
       removingAddressSet(false);
     }
