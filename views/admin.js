@@ -164,7 +164,7 @@ export default function AdminView() {
     };
   });
 
-  const onSetOriginationFee = useAutoCallback(async (amount, res) => {
+  const onSetOriginationFee = useAutoCallback(async (amount) => {
     try {
       await marketContract.setOriginationFee(
         new BigNumber(amount / 100).times(WAD).toFixed()
@@ -225,14 +225,6 @@ export default function AdminView() {
   const onAddMember = useAutoCallback(async (address) => {
     try {
       await memberContract.addMember(address);
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
-  const onSetCreditLimitModel = useAutoCallback(async (address) => {
-    try {
-      await memberContract.setCreditLimitModel(address);
     } catch (err) {
       console.error(err);
     }

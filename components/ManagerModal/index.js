@@ -8,7 +8,7 @@ const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
   const open = useManagerModalOpen();
   const toggle = useManagerModalToggle();
 
-  const { handleSubmit, register, watch, setValue } = useForm();
+  const { register, watch } = useForm();
 
   const fee = watch("fee", 0);
   const memberAddress = watch("memberAddress", 0);

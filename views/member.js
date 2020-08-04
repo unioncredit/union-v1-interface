@@ -1,11 +1,8 @@
-import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
+import useAllMemberInfo from "hooks/useAllMemberInfo";
+import { Fragment, useMemo } from "react";
+import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Address from "../components/address";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
-import useAllMemberInfo from "hooks/useAllMemberInfo";
-import { Fragment, useMemo, useState } from "react";
-import { useSortBy, useTable } from "react-table";
 
 /**
  * @name renderHeadRowSorting
@@ -30,8 +27,6 @@ const renderSortIcons = (column) => (
  * @param {import("react-table").ColumnInstance} column
  */
 const renderTheadColumns = (column) => {
-  const { Header } = column;
-
   return (
     <th {...column.getHeaderProps(column.getSortByToggleProps())}>
       <div className="flex items-center">
@@ -87,9 +82,10 @@ export default function AdminView() {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0)) return data;
+    if (data && data.length > 0) return data;
     return [];
   }, [data]);
+
   const memoizedSortBy = useMemo(
     () => [
       { id: "address", desc: true },
@@ -130,6 +126,7 @@ export default function AdminView() {
           <table className="w-full border-none" {...getTableProps()}>
             <thead className="hidden sm:table-header-group">
               {headerGroups.map((headerGroup) => (
+                // eslint-disable-next-line react/jsx-key
                 <tr {...headerGroup.getHeaderGroupProps()}>
                   {headerGroup.headers.map(renderTheadColumns)}
                 </tr>
@@ -139,6 +136,7 @@ export default function AdminView() {
               {rows.map((row) => {
                 prepareRow(row);
                 return (
+                  // eslint-disable-next-line react/jsx-key
                   <tr
                     {...row.getRowProps()}
                     className="focus:outline-none cursor-pointer"

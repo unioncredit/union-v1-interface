@@ -13,16 +13,7 @@ const TRANSACTION_TYPES_SHORT = {
   REPAY: "Repay",
 };
 
-const Transaction = ({
-  account,
-  amount,
-  blocknumber,
-  date,
-  dateShort,
-  fee,
-  hash,
-  type,
-}) => {
+const Transaction = ({ amount, date, dateShort, hash, type }) => {
   const { chainId } = useWeb3React();
 
   return (

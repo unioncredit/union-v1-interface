@@ -24,8 +24,6 @@ const GOLDEN_TICKET = {
 const hasGoldenTicket = (contract) => async (_, account) => {
   const balanceOf = await contract.balanceOf(account, GOLDEN_TICKET.id);
 
-  console.log({ balanceOf });
-
   if (balanceOf) return true;
 
   return false;

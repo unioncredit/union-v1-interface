@@ -91,7 +91,7 @@ const WalletModal = () => {
    * Handle disconnecting from the wallet if an error occurs
    */
   useAutoEffect(() => {
-    if (!!error) {
+    if (error) {
       if (connector === walletconnect) connector.close();
 
       deactivate();

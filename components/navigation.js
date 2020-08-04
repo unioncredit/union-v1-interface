@@ -50,11 +50,7 @@ const LogoLink = () => (
 );
 
 const Navigation = () => {
-  const { pathname } = useRouter();
-
   const { account, library } = useWeb3React();
-
-  const isHomepage = pathname === "/" ? true : false;
 
   const toggleSignInModal = useToggleSignInModal();
   const toggleCreateModal = useToggleCreateModal();
@@ -66,7 +62,7 @@ const Navigation = () => {
         <ul className="flex items-center justify-between">
           <LogoLink />
 
-          {!!(account && library) ? (
+          {account && library ? (
             <Fragment>
               <li className="py-4 h-20 hidden md:flex flex-1 justify-center">
                 <ul className="flex justify-center items-center">

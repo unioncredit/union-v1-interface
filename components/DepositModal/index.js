@@ -14,8 +14,8 @@ import Modal, { ModalHeader } from "../modal";
 import { useDepositModalOpen, useDepositModalToggle } from "./state";
 import errorMessages from "text/errorMessages";
 
-const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
-  const { library, chainId } = useWeb3React();
+const DepositModal = ({ totalStake, onComplete }) => {
+  const { library } = useWeb3React();
 
   const stake = useStakeDeposit();
 

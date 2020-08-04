@@ -41,7 +41,7 @@ const BorrowModal = ({
   paymentPeriod,
   isOverdue,
 }) => {
-  const { library, chainId } = useWeb3React();
+  const { library } = useWeb3React();
 
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();

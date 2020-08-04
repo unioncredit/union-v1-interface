@@ -1,4 +1,4 @@
-export default function Error({ statusCode }) {
+export default function Error() {
   return (
     <div className="container">
       <div className="text-center py-32">
@@ -14,9 +14,3 @@ export default function Error({ statusCode }) {
     </div>
   );
 }
-
-Error.getInitialProps = ({ res, err }) => {
-  const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-
-  return { statusCode };
-};

@@ -18,7 +18,7 @@ import Modal, { ModalHeader } from "../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-  const { chainId, account, library } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
@@ -48,7 +48,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const { setLabel } = useAddressLabels();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     let hidePendingToast = () => {};
     let txReceipt = {};
 

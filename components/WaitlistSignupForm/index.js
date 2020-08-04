@@ -55,7 +55,7 @@ const WaitlistSignupForm = () => {
 
   const { isSubmitting, isSubmitted } = formState;
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     const { email } = data;
 
     try {

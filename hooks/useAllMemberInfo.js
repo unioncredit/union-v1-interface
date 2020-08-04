@@ -1,8 +1,8 @@
-import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useMemberContract from "./useMemberContract";
 import useCurrentToken from "./useCurrentToken";
+import useMemberContract from "./useMemberContract";
 
 const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
   const signer = library.getSigner();
@@ -40,9 +40,9 @@ const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
           ),
         };
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return {
-          address: borrower,
+          address: member,
         };
       }
     }),
@@ -70,14 +70,14 @@ const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
           ),
         };
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return {
           address: borrower,
         };
       }
     }),
   ]);
-  console.log({ txs });
+
   return txs;
 };
 

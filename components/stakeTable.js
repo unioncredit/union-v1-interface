@@ -206,7 +206,7 @@ const StakeTable = () => {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0)) return data;
+    if (data && data.length > 0) return data;
     return [];
   }, [data]);
 
@@ -246,6 +246,7 @@ const StakeTable = () => {
       <table className="w-full border-none" {...getTableProps()}>
         <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
+            // eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(renderTheadColumns)}
             </tr>
@@ -256,6 +257,7 @@ const StakeTable = () => {
             page.map((row) => {
               prepareRow(row);
               return (
+                // eslint-disable-next-line react/jsx-key
                 <tr
                   {...row.getRowProps()}
                   className="cursor-pointer"

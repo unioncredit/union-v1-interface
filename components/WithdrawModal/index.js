@@ -14,7 +14,7 @@ import { useWithdrawModalOpen, useWithdrawModalToggle } from "./state";
 import errorMessages from "text/errorMessages";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
-  const { chainId, library } = useWeb3React();
+  const { library } = useWeb3React();
 
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
