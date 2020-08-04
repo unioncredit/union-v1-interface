@@ -4047,6 +4047,11 @@ fastest-stable-stringify@^1.0.1:
   resolved "https://registry.yarnpkg.com/fastest-stable-stringify/-/fastest-stable-stringify-1.0.1.tgz#9122d406d4c9d98bea644a6b6853d5874b87b028"
   integrity sha1-kSLUBtTJ2YvqZEpraFPVh0uHsCg=
 
+fathom-client@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/fathom-client/-/fathom-client-3.0.0.tgz#409c047cf1e2fea45b148e28d50fcd635e992893"
+  integrity sha512-d0oH2SHWCMIVLbbegB7nBIjSvbqbHrZBZxIOWSVAxlJL/roL0Ah9NNb6rTIcKMlA4gov9AjWQGEcZRzlnGc3XQ==
+
 fetch-ponyfill@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/fetch-ponyfill/-/fetch-ponyfill-4.1.0.tgz#ae3ce5f732c645eab87e4ae8793414709b239893"

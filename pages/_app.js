@@ -3,11 +3,14 @@ import ErrorBoundary from "components/errorBoundary";
 import Footer from "components/footer";
 import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
+import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";
 import "../css/tailwind.css";
 import Error from "./_error";
 
 export default function UnionApp({ Component, pageProps }) {
+  useFathom();
+
   return (
     <ErrorBoundary fallback={<Error />}>
       <Web3ReactProvider getLibrary={getLibrary}>
