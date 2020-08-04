@@ -49,8 +49,7 @@
     "react-table": "^7.5.0",
     "react-use": "^15.3.3",
     "swr": "^0.3.0",
-    "tailwindcss": "^1.6.2",
-    "styled-jsx-loading-skeleton": "^1.0.1"
+    "tailwindcss": "^1.6.2"
   },
   "devDependencies": {
     "babel-plugin-macros": "^2.8.0",
