@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import useBorrow from "hooks/payables/useBorrow";
 import useToast, { FLAVORS } from "hooks/useToast";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import { feeTip } from "text/tooltips";
@@ -14,6 +14,7 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
+import { useRepayModalToggle } from "components/RepayModal/state";
 
 /**
  * @name BorrowModal
@@ -23,6 +24,7 @@ import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
  * @param {Number} props.fee
  * @param {String} props.paymentDueDate
  * @param {Promise<Void>} props.onComplete
+ * @param {Boolean} props.isOverdue
  */
 const BorrowModal = ({
   balanceOwed,
@@ -31,11 +33,13 @@ const BorrowModal = ({
   onComplete,
   paymentDueDate,
   paymentPeriod,
+  isOverdue = true,
 }) => {
   const { library, chainId } = useWeb3React();
 
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
+  const toggleRepayModal = useRepayModalToggle();
 
   const borrow = useBorrow();
 
@@ -49,9 +53,19 @@ const BorrowModal = ({
     reset,
   } = useForm();
 
-  useEffect(() => reset(), [open]);
-
   const { isDirty, isSubmitting } = formState;
+
+  const [userIsOverdue, userIsOverdueSet] = useState(false);
+  useEffect(() => {
+    if (isDirty && isOverdue) {
+      userIsOverdueSet(true);
+    }
+  }, [isOverdue, isDirty]);
+
+  useEffect(() => {
+    reset();
+    userIsOverdueSet(false);
+  }, [open]);
 
   const addToast = useToast();
 
@@ -129,6 +143,26 @@ const BorrowModal = ({
     }
   };
 
+  const makePayment = () => {
+    toggle();
+    toggleRepayModal();
+  };
+
+  const overdueError = {
+    message: (
+      <Fragment>
+        You cannot borrow with an overdue balance.{" "}
+        <button
+          type="button"
+          onClick={makePayment}
+          className="font-medium underline focus:outline-none"
+        >
+          Make a payment
+        </button>
+      </Fragment>
+    ),
+  };
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Borrow" onDismiss={toggle} />
@@ -155,7 +189,7 @@ const BorrowModal = ({
               shouldValidate: true,
             })
           }
-          error={errors.amount}
+          error={userIsOverdue ? overdueError : errors.amount}
           ref={register({
             required: "Please fill out this field",
             max: {
@@ -226,6 +260,8 @@ BorrowModal.propTypes = {
   fee: PropTypes.number.isRequired,
   onComplete: PropTypes.func.isRequired,
   paymentDueDate: PropTypes.string.isRequired,
+  paymentPeriod: PropTypes.string.isRequired,
+  isOverdue: PropTypes.bool.isRequired,
 };
 
 export default BorrowModal;

@@ -46,6 +46,7 @@ export default function BorrowView() {
     paymentPeriod = "-",
     fee = 0,
     apr = 0,
+    isOverdue = false,
   } = !!borrowData && borrowData;
 
   const formatApr = toPercent(apr, 2);
@@ -180,6 +181,7 @@ export default function BorrowView() {
         onComplete={onComplete}
         paymentDueDate={paymentDueDate}
         paymentPeriod={paymentPeriod}
+        isOverdue={isOverdue}
       />
 
       <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />

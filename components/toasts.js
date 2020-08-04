@@ -2,7 +2,7 @@ import { Failure, Loading, Pending, Success } from "svgs/Alerts";
 
 export const ToastBody = ({ body, onDismiss }) => (
   <div className="flex justify-between items-center">
-    <p className="mr-4 sm:mr-12 text-sm truncate leading-snug">{body}</p>
+    <p className="mr-4 sm:mr-12 text-sm leading-snug">{body}</p>
     <button
       className="text-sm font-medium underline focus:outline-none"
       onClick={onDismiss}
