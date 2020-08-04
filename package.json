@@ -16,11 +16,11 @@
     }
   },
   "dependencies": {
-    "@ethersproject/address": "^5.0.1",
-    "@ethersproject/bignumber": "^5.0.3",
-    "@ethersproject/contracts": "^5.0.1",
-    "@ethersproject/providers": "^5.0.4",
-    "@ethersproject/units": "^5.0.1",
+    "@ethersproject/address": "^5.0.2",
+    "@ethersproject/bignumber": "^5.0.5",
+    "@ethersproject/contracts": "^5.0.2",
+    "@ethersproject/providers": "^5.0.5",
+    "@ethersproject/units": "^5.0.2",
     "@reach/dialog": "^0.10.5",
     "@reach/tooltip": "^0.10.5",
     "@reach/visually-hidden": "^0.10.4",
