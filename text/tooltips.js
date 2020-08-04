@@ -15,7 +15,7 @@ export const defaultedStakeTip = (
     <p>Defaulted Stake</p>
     <p>
       This part shows the total amount of people which have not paid on time.
-      Funds that are locked in defaulted stake are not earning Union.
+      Funds that are locked in defaulted stake are not earning UNION.
     </p>
   </Fragment>
 );
@@ -36,7 +36,7 @@ export const vouchingTip = (
     <p>Vouching</p>
     <p>
       Vouching for someone is similar to cosigning, you are signalling to Union
-      that they can be trusted to borrow and repay. Only UNION members are able
+      that they can be trusted to borrow and repay. Only Union members are able
       to vouch.
     </p>
   </Fragment>
