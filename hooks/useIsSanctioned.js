@@ -1,6 +1,5 @@
 import { OFAC_SANCTIONED } from "../constants/variables";
 import useSWR from "swr";
-import { useMemo } from "react";
 
 const ENDPOINT = "https://www.cloudflare.com/cdn-cgi/trace";
 
