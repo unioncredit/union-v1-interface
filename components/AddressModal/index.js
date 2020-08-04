@@ -1,15 +1,17 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
+import useRemoveVouch from "hooks/payables/useRemoveVouch";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
-import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
+import getIPFSAssetLink from "util/getIPFSAssetLink";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
@@ -19,8 +21,6 @@ import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
-import use3BoxPublicData from "hooks/use3BoxPublicData";
-import getIPFSAssetLink from "util/getIPFSAssetLink";
 
 const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
@@ -109,10 +109,9 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const has3BoxProfileImage = !!data && !error && data?.image;
 
   const [removingAddress, removingAddressSet] = useState(false);
+  const removeVouch = useRemoveVouch();
 
   const addToast = useToast();
-
-  const memberManagerContract = useMemberContract();
 
   const removeAddress = useAutoCallback(async () => {
     let hidePendingToast = () => {};
@@ -120,24 +119,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
     try {
       removingAddressSet(true);
-      let estimate;
-      try {
-        estimate = await memberManagerContract.estimateGas.cancelVouch(
-          account,
-          address,
-          curToken
-        );
-      } catch (error) {
-        estimate = 300000;
-      }
-      const tx = await memberManagerContract.cancelVouch(
-        account,
-        address,
-        curToken,
-        {
-          gasLimit: estimate,
-        }
-      );
+
+      const tx = await removeVouch(address);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
