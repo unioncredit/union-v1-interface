@@ -1,4 +1,7 @@
+import { useWeb3React } from "@web3-react/core";
+import { Fragment } from "react";
 import { Failure, Loading, Pending, Success } from "svgs/Alerts";
+import getEtherscanLink from "util/getEtherscanLink";
 
 export const ToastBody = ({ body, onDismiss }) => (
   <div className="flex justify-between items-center">
@@ -33,6 +36,28 @@ export const ToastBody = ({ body, onDismiss }) => (
     `}</style>
   </div>
 );
+
+export const ToastContent = ({ message, hash }) => {
+  const { chainId } = useWeb3React();
+
+  if (hash)
+    return (
+      <Fragment>
+        {message}
+        <br />
+        <a
+          className="underline"
+          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on Etherscan
+        </a>
+      </Fragment>
+    );
+
+  return message;
+};
 
 export const TOAST_ICONS = {
   error: () => <Failure />,
