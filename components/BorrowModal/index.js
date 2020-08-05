@@ -3,18 +3,18 @@ import { useWeb3React } from "@web3-react/core";
 import useBorrow from "hooks/payables/useBorrow";
 import useToast, { FLAVORS } from "hooks/useToast";
 import PropTypes from "prop-types";
-import { useEffect, useState, Fragment } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
+import errorMessages from "text/errorMessages";
 import { feeTip } from "text/tooltips";
 import handleTxError from "util/handleTxError";
-import { roundDown, roundUp } from "util/numbers";
+import { roundDown } from "util/numbers";
 import Button from "../button";
 import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
-import { useRepayModalToggle } from "components/RepayModal/state";
 
 /**
  * @name BorrowModal
@@ -33,13 +33,12 @@ const BorrowModal = ({
   onComplete,
   paymentDueDate,
   paymentPeriod,
-  isOverdue = true,
+  isOverdue,
 }) => {
   const { library, chainId } = useWeb3React();
 
   const open = useBorrowModalOpen();
   const toggle = useBorrowModalToggle();
-  const toggleRepayModal = useRepayModalToggle();
 
   const borrow = useBorrow();
 
@@ -51,20 +50,15 @@ const BorrowModal = ({
     setValue,
     watch,
     reset,
-  } = useForm();
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
   const { isDirty, isSubmitting } = formState;
 
-  const [userIsOverdue, userIsOverdueSet] = useState(false);
-  useEffect(() => {
-    if (isDirty && isOverdue) {
-      userIsOverdueSet(true);
-    }
-  }, [isOverdue, isDirty]);
-
   useEffect(() => {
     reset();
-    userIsOverdueSet(false);
   }, [open]);
 
   const addToast = useToast();
@@ -143,24 +137,19 @@ const BorrowModal = ({
     }
   };
 
-  const makePayment = () => {
-    toggle();
-    toggleRepayModal();
-  };
+  const handleSetMax = () =>
+    setValue("amount", calcMaxIncludingFee, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
 
-  const overdueError = {
-    message: (
-      <Fragment>
-        You cannot borrow with an overdue balance.{" "}
-        <button
-          type="button"
-          onClick={makePayment}
-          className="font-medium underline focus:outline-none"
-        >
-          Make a payment
-        </button>
-      </Fragment>
-    ),
+  const handleValidate = (val) => {
+    if (isOverdue) return errorMessages.overdueBalance;
+    if (val > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
+    if (val < 1.0) return errorMessages.minDAIBorrow;
+    if (!val) return errorMessages.required;
+
+    return true;
   };
 
   return (
@@ -183,23 +172,10 @@ const BorrowModal = ({
           label="Amount"
           placeholder="0.00"
           setMaxValue={calcMaxIncludingFee}
-          setMax={() =>
-            setValue("amount", calcMaxIncludingFee, {
-              shouldDirty: true,
-              shouldValidate: true,
-            })
-          }
-          error={userIsOverdue ? overdueError : errors.amount}
+          setMax={handleSetMax}
+          error={errors.amount}
           ref={register({
-            required: "Please fill out this field",
-            max: {
-              value: calcMaxIncludingFee,
-              message: "Not enough available credit",
-            },
-            min: {
-              value: 1.0,
-              message: "The minimum borrow is 1.00 DAI",
-            },
+            validate: handleValidate,
           })}
         />
 
