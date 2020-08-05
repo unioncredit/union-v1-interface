@@ -12,6 +12,7 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useDepositModalOpen, useDepositModalToggle } from "./state";
+import errorMessages from "text/errorMessages";
 
 const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
   const { library, chainId } = useWeb3React();
@@ -96,6 +97,12 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     parseFloat(amount || 0) + parseFloat(totalStake)
   ).toFixed(2);
 
+  const handleSetMax = () =>
+    setValue("amount", flooredDaiBalance, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Deposit" onDismiss={toggle} />
@@ -119,22 +126,17 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={flooredDaiBalance}
-          setMax={() =>
-            setValue("amount", flooredDaiBalance, {
-              shouldDirty: true,
-              shouldValidate: true,
-            })
-          }
+          setMax={handleSetMax}
           error={errors.amount}
           ref={register({
-            required: "Please fill out this field",
+            required: errorMessages.required,
             max: {
               value: flooredDaiBalance,
-              message: "Not enough DAI in your wallet",
+              message: errorMessages.notEnoughBalanceDAI,
             },
             min: {
               value: 0.01,
-              message: "Value must be greater than 0.01",
+              message: errorMessages.minValuePointZeroOne,
             },
           })}
         />

@@ -8,6 +8,7 @@ import Button from "../button";
 import Input from "../input";
 import Modal from "../modal";
 import { useEmailModalOpen, useEmailModalToggle } from "./state";
+import errorMessages from "text/errorMessages";
 
 const EmailModal = () => {
   const open = useEmailModalOpen();
@@ -72,10 +73,10 @@ const EmailModal = () => {
             type="email"
             error={errors.email}
             ref={register({
-              required: "Please fill out this field",
+              required: errorMessages.required,
               pattern: {
                 value: EMAIL_REGEX,
-                message: "Please enter a valid email",
+                message: errorMessages.validEmail,
               },
             })}
           />

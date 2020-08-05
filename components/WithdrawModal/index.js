@@ -11,6 +11,7 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useWithdrawModalOpen, useWithdrawModalToggle } from "./state";
+import errorMessages from "text/errorMessages";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const { chainId, library } = useWeb3React();
@@ -90,6 +91,12 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
     calculateNewTotalStake > 0 ? calculateNewTotalStake : 0
   ).toFixed(2);
 
+  const handleSetMax = () =>
+    setValue("amount", withdrawableStake, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Withdraw" onDismiss={toggle} />
@@ -114,22 +121,17 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           className="mb-8"
           placeholder="0.00"
           setMaxValue={withdrawableStake}
-          setMax={() =>
-            setValue("amount", withdrawableStake, {
-              shouldDirty: true,
-              shouldValidate: true,
-            })
-          }
+          setMax={handleSetMax}
           error={errors.amount}
           ref={register({
-            required: "Please fill out this field",
+            required: errorMessages.required,
             max: {
               value: withdrawableStake,
-              message: "Insufficient withdrawable stake",
+              message: errorMessages.notEnoughStake,
             },
             min: {
               value: 0.01,
-              message: "Value must be greater than 0.01",
+              message: errorMessages.minValuePointZeroOne,
             },
           })}
         />

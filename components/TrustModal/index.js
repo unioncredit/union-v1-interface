@@ -16,6 +16,7 @@ import Input from "../input";
 import Modal, { ModalHeader } from "../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
 import validateAddress from "util/validateAddress";
+import errorMessages from "text/errorMessages";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
   const { chainId, account, library } = useWeb3React();
@@ -143,13 +144,11 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             placeholder="Enter address"
             error={errors.address}
             ref={register({
-              required: "Please fill out this field",
+              required: errorMessages.required,
               validate: async (value) => {
                 const validation = await validateAddress(value);
 
-                if (
-                  validation === "This address is associated with a known scam"
-                ) {
+                if (validation === errorMessages.knownScam) {
                   knownScamAddressSet(true);
                 } else {
                   knownScamAddressSet(false);
@@ -185,10 +184,10 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             type="number"
             error={errors.amount}
             ref={register({
-              required: "Please fill out this field",
+              required: errorMessages.required,
               min: {
                 value: 1.0,
-                message: "Value must be greater than or equal to 1.00",
+                message: errorMessages.minValueOnePointZero,
               },
             })}
           />

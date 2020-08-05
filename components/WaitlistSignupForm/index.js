@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
 import Button from "../button";
 import Input from "../input";
+import errorMessages from "text/errorMessages";
 
 const checkPlace = async (email) => {
   const res = await fetch("/api/waitlist/place", {
@@ -107,10 +108,10 @@ const WaitlistSignupForm = () => {
           id="email"
           error={errors.email}
           ref={register({
-            required: "Please fill out this field",
+            required: errorMessages.required,
             pattern: {
               value: EMAIL_REGEX,
-              message: "Please enter a valid email",
+              message: errorMessages.validEmail,
             },
           })}
         />

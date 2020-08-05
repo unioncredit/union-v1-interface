@@ -1,14 +1,15 @@
 import { isAddress } from "@ethersproject/address";
+import errorMessages from "text/errorMessages";
 
 export default async function validateAddress(address) {
-  if (!isAddress(address)) return "Please input a valid Ethereum address";
+  if (!isAddress(address)) return errorMessages.validAddress;
 
   try {
     const res = await fetch(`https://api.cryptoscamdb.org/v1/check/${address}`);
     const body = await res.json();
 
     if (body.success === true && body.result.status === "blocked") {
-      return "This address is associated with a known scam";
+      return errorMessages.knownScam;
     }
 
     return true;

@@ -28,8 +28,16 @@ const OverdueBalanceMessage = () => {
 const errorMessages = {
   required: "Please fill out this field",
   notEnoughCredit: "Not enough available credit",
+  notEnoughStake: "Insufficient withdrawable stake",
+  notEnoughBalanceDAI: "Not enough DAI in your wallet",
   overdueBalance: <OverdueBalanceMessage />,
   minDAIBorrow: "The minimum borrow is 1.00 DAI",
+  minVouch: "The minimum vouch is 1.00 DAI",
+  minValuePointZeroOne: "Value must be greater than 0.01",
+  minValueOnePointZero: "Value must be greater than or equal to 1.00",
+  validEmail: "Please enter a valid email",
+  knownScam: "This address is associated with a known scam",
+  validAddress: "Please input a valid Ethereum address",
 };
 
 export default errorMessages;

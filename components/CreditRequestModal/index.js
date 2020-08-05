@@ -15,6 +15,7 @@ import {
   useCreditRequestModalOpen,
   useCreditRequestModalToggle,
 } from "./state";
+import errorMessages from "text/errorMessages";
 
 const QRCode = dynamic(() => import("../shareQRCode"));
 
@@ -119,8 +120,8 @@ const CreditRequestModal = () => {
             error={errors.amount}
             ref={register({
               min: {
-                value: 0,
-                message: "Value must be greater than 0",
+                value: 1.0,
+                message: errorMessages.minVouch,
               },
             })}
           />

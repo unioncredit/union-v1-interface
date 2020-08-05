@@ -14,6 +14,7 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useRepayModalOpen, useRepayModalToggle } from "./state";
+import errorMessages from "text/errorMessages";
 
 /**
  * @name RepayModal
@@ -117,6 +118,12 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     }
   };
 
+  const handleSetMax = () =>
+    setValue("amount", calculateMaxValue.toFixed(2), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Repay" onDismiss={toggle} />
@@ -137,22 +144,17 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           label="Amount"
           placeholder="0.00"
           setMaxValue={calculateMaxValue.toFixed(2)}
-          setMax={() =>
-            setValue("amount", calculateMaxValue.toFixed(2), {
-              shouldDirty: true,
-              shouldValidate: true,
-            })
-          }
+          setMax={handleSetMax}
           error={errors.amount}
           ref={register({
-            required: "Please fill out this field",
+            required: errorMessages.required,
             max: {
               value: flooredDaiBalance,
-              message: "Not enough DAI in your wallet",
+              message: errorMessages.notEnoughBalanceDAI,
             },
             min: {
               value: 0.01,
-              message: "Value must be greater than 0.01",
+              message: errorMessages.minValuePointZeroOne,
             },
           })}
         />

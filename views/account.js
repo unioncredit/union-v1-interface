@@ -5,6 +5,7 @@ import { MESSAGE } from "constants/variables";
 import useCopy from "hooks/useCopy";
 import { Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
 import EMAIL_REGEX from "util/emailRegex";
 
 export default function AccountView() {
@@ -55,10 +56,10 @@ export default function AccountView() {
               placeholder="name@email.com"
               error={errors.email}
               ref={register({
-                required: "Please fill out this field",
+                required: errorMessages.required,
                 pattern: {
                   value: EMAIL_REGEX,
-                  message: "Please enter a valid email",
+                  message: errorMessages.validEmail,
                 },
               })}
             />
