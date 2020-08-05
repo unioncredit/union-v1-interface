@@ -1,5 +1,5 @@
-import { useWeb3React } from "@web3-react/core";
 import { MESSAGE } from "constants/variables";
+import usePersonalSign from "hooks/usePersonalSign";
 import { setCookie } from "nookies";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -14,13 +14,12 @@ const EmailModal = () => {
   const open = useEmailModalOpen();
   const toggle = useEmailModalToggle();
 
-  const { library } = useWeb3React();
+  const sign = usePersonalSign();
 
   const { handleSubmit, register, formState, errors, reset } = useForm();
+  const { isDirty, isSubmitting } = formState;
 
   useEffect(() => reset(), [open]);
-
-  const { isDirty, isSubmitting } = formState;
 
   const onSubmit = async (values) => {
     const { email } = values;
@@ -28,13 +27,7 @@ const EmailModal = () => {
     try {
       if (!email) throw new Error("`email` is required");
 
-      const signer = library.getSigner();
-
-      await signer.signMessage(MESSAGE);
-
-      /**
-       * @todo Post email to DB here with a key / value pair of address / email
-       */
+      await sign(MESSAGE);
 
       handleToggle();
     } catch (err) {
