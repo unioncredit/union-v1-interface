@@ -1,5 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import ProfileImage from "components/ProfileImage";
+import LabelPair from "components/labelPair";
 import { useAutoCallback } from "hooks.macro";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
@@ -195,24 +196,29 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="mt-16">
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Trust</dt>
-                <dd className="text-right">{`${trust} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Vouched</dt>
-                <dd className="text-right">{`${vouched} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Used stake</dt>
-                <dd className="text-right">{`${used} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Health</dt>
-                <dd className="text-right">
-                  <HealthBar health={health} />
-                </dd>
-              </dl>
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Trust"
+                value={trust}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Vouched"
+                value={vouched}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Used stake"
+                value={used}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Health"
+                valueSlot={<HealthBar health={health} />}
+              />
             </div>
 
             <div className="mt-24">

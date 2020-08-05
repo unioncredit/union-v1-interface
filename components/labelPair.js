@@ -1,35 +1,37 @@
+import Tooltip from "@reach/tooltip";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import Info from "svgs/Info";
-import Tooltip from "@reach/tooltip";
 
 /**
  * @name LabelPair
  * @description Used to present a piece of information with an accompanying label
  *
- * @param {String} className Any additional classes to spread into the wrapper
- * @param {String} label
- * @param {any} tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
- * @param {String} value
- * @param {Boolean} large Changes the LabelPair to be stacked
- * @param {String} valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
- * @param {Boolean} outline
- * @param {Boolean} responsive
- * @param {any} slot
- * @param {any} valueSlot
+ * @param {Object} props
+ * @param {String} props.className Any additional classes to spread into the wrapper
+ * @param {String} props.label
+ * @param {String} props.labelColor
+ * @param {Boolean} props.large Changes the LabelPair to be stacked
+ * @param {Boolean} props.outline
+ * @param {Boolean} props.responsive
+ * @param {Node} props.slot
+ * @param {String} props.tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
+ * @param {String} props.value
+ * @param {Node} props.valueSlot
+ * @param {("DAI"|"UNION")} props.valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  */
 const LabelPair = ({
   className = "",
   label,
   labelColor,
-  tooltip,
-  value,
   large = false,
-  valueType,
   outline = false,
   responsive = false,
   slot,
+  tooltip,
+  value,
   valueSlot,
+  valueType,
 }) => {
   const cachedLabelClassNames = classNames(
     labelColor,
@@ -79,28 +81,17 @@ const LabelPair = ({
 };
 
 LabelPair.propTypes = {
-  /**
-   * Any additional classes to spread into the wrapper
-   */
   className: PropTypes.string,
-  label: PropTypes.any.isRequired,
-  /**
-   * Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
-   */
-  tooltip: PropTypes.any,
-  value: PropTypes.any.isRequired,
-  /**
-   * Changes the LabelPair to be stacked
-   */
+  label: PropTypes.string.isRequired,
+  labelColor: PropTypes.string,
   large: PropTypes.bool,
-  /**
-   * A secondary piece of information to append to the value, either a currency type of unit of measurement
-   */
-  valueType: PropTypes.oneOf(["DAI", "UNION"]),
   outline: PropTypes.bool,
   responsive: PropTypes.bool,
-  slot: PropTypes.any,
-  valueSlot: PropTypes.any,
+  slot: PropTypes.node,
+  tooltip: PropTypes.string,
+  value: PropTypes.string,
+  valueSlot: PropTypes.node,
+  valueType: PropTypes.oneOf(["DAI", "UNION"]),
 };
 
 export default LabelPair;
