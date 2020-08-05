@@ -22,6 +22,7 @@
     "@ethersproject/providers": "^5.0.5",
     "@ethersproject/units": "^5.0.2",
     "@reach/dialog": "^0.10.5",
+    "@reach/menu-button": "^0.10.5",
     "@reach/tooltip": "^0.10.5",
     "@reach/visually-hidden": "^0.10.4",
     "@web3-react/core": "^6.0.9",
