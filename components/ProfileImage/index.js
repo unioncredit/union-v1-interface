@@ -11,7 +11,7 @@ const ProfileImage = ({ image, size = 32, ...rest }) => {
   return (
     <img
       async
-      className="rounded-full"
+      className="rounded-full object-cover object-center"
       decoding="async"
       loading="lazy"
       src={getIPFSAssetLink(image)}
