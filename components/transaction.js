@@ -4,7 +4,7 @@ import getEtherscanLink from "util/getEtherscanLink";
 
 const TRANSACTION_TYPES = {
   BORROW: "You borrowed",
-  REPAY: "You repayed",
+  REPAY: "You repaid",
 };
 
 const TRANSACTION_TYPES_SHORT = {
