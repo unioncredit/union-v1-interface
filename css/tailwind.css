@@ -449,7 +449,7 @@ input[type="number"] {
 
 [data-reach-menu-list],
 [data-reach-menu-items] {
-  @apply block rounded whitespace-no-wrap border bg-white p-2 outline-none shadow-lg;
+  @apply block rounded whitespace-no-wrap border bg-white p-2 outline-none shadow-input;
 }
 
 /*
