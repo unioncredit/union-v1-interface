@@ -1,18 +1,19 @@
+import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
 import { useWeb3React } from "@web3-react/core";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
 import { useLogout } from "hooks/useEagerConnect";
 import useENSName from "hooks/useENSName";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { walletconnect } from "lib/connectors";
-import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
 import Arrow from "svgs/Arrow";
 import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
 import ProfileImage from "./ProfileImage";
-import Web3Button from "./web3Button";
 
 const Web3Connection = () => {
+  const { push } = useRouter();
+
   const { account, connector, deactivate } = useWeb3React();
 
   const ENSName = useENSName(account);
@@ -32,20 +33,14 @@ const Web3Connection = () => {
     logout();
   };
 
-  const [isOpen, isOpenSet] = useState(false);
-  const toggle = () => isOpenSet(!isOpen);
+  const handleMyAccount = () => push("/account");
 
   return (
     <ul className="flex items-center">
-      <li className="ml-6 md:ml-8">
-        <div className="relative">
-          <Web3Button
-            onClick={toggle}
-            id="options-menu"
-            aria-haspopup="true"
-            aria-expanded={isOpen}
-          >
-            <div className="flex items-center">
+      <li className="ml-6 md:ml-8 relative">
+        <Menu>
+          <MenuButton>
+            <div className="ml-1" aria-hidden>
               {has3BoxProfileImage ? (
                 <ProfileImage
                   alt={ENSName ?? account}
@@ -55,45 +50,19 @@ const Web3Connection = () => {
               ) : (
                 <Identicon address={account} />
               )}
-
-              <div className="ml-3 mr-2">
-                {ENSName ?? truncateAddress(account)}
-              </div>
-
+            </div>
+            <div className="ml-3 mr-2">
+              {ENSName ?? truncateAddress(account)}
+            </div>
+            <span aria-hidden>
               <Arrow />
-            </div>
-          </Web3Button>
-
-          {isOpen && (
-            <div className="origin-top-right absolute right-0 -mr-1 mt-2 w-56 z-50">
-              <div className="rounded border bg-white">
-                <div
-                  className="p-2 space-y-2"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  <Link href="/account">
-                    <a
-                      className="block px-3 rounded-sm py-2 leading-5 font-medium hover:bg-border-light transition-colors duration-150 focus:outline-none focus:shadow-outline"
-                      role="menuitem"
-                    >
-                      My account
-                    </a>
-                  </Link>
-                  <button
-                    onClick={handleSignOut}
-                    type="button"
-                    className="block w-full text-left px-3 rounded-sm py-2 font-medium leading-5 hover:bg-border-light transition-colors duration-150 focus:outline-none focus:shadow-outline"
-                    role="menuitem"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+            </span>
+          </MenuButton>
+          <MenuList className="space-y-2">
+            <MenuItem onSelect={handleMyAccount}>My account</MenuItem>
+            <MenuItem onSelect={handleSignOut}>Sign out</MenuItem>
+          </MenuList>
+        </Menu>
       </li>
     </ul>
   );

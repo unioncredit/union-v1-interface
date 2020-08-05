@@ -11,7 +11,7 @@ import {
   useToggleCreateModal,
   useToggleSignInModal,
 } from "./WalletModal/state";
-import Web3Status from "./web3Connection";
+import Web3Connection from "./web3Connection";
 
 const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
 
@@ -85,7 +85,7 @@ const Navigation = () => {
               </li>
 
               <li className="flex md:w-1/4 justify-end py-4">
-                <Web3Status />
+                <Web3Connection />
               </li>
             </Fragment>
           ) : (

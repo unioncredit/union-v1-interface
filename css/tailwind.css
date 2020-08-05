@@ -422,3 +422,56 @@ input[type="number"] {
 [data-reach-tooltip] p:first-of-type {
   @apply font-semibold mb-2 text-type-base;
 }
+
+/* Used to detect in JavaScript if apps have loaded styles or not. */
+:root {
+  --reach-menu-button: 1;
+}
+
+[data-reach-menu],
+[data-reach-menu-popover] {
+  @apply origin-top-right absolute right-0 mt-2 w-56 z-50;
+}
+
+[data-reach-menu][hidden],
+[data-reach-menu-popover][hidden] {
+  display: none;
+}
+
+[data-reach-menu-button] {
+  @apply font-medium px-4 py-3 rounded border bg-border-light leading-snug transition-colors duration-150 inline-flex items-center;
+}
+[data-reach-menu-button]:focus {
+  @apply shadow-outline outline-none;
+}
+[data-reach-menu-button][aria-expanded="true"] {
+}
+
+[data-reach-menu-list],
+[data-reach-menu-items] {
+  @apply block rounded whitespace-no-wrap border bg-white p-2 outline-none shadow-lg;
+}
+
+/*
+ The dom structure of a MenuLink is reach-menu-item > a,
+ so to target all items we can use `data-reach-menu-item`
+*/
+[data-reach-menu-item] {
+  @apply transition-colors duration-150 select-none block w-full px-3 rounded-sm py-2 leading-5 font-medium;
+
+  /*
+    These are styled in one rule instead of something like a[data-reach-menu-item]
+    and li[data-reach-menu-item] so that apps don't have to fight specificity and
+    can style both li and a menu items with one rule,
+    ie: `[data-selected] { background: red; }`.
+    Otherwise they'd have to define two styles, one for a and one for li.
+  */
+
+  /* reach-menu-item */
+  cursor: pointer;
+}
+
+/* pseudo pseudo selector */
+[data-reach-menu-item][data-selected] {
+  @apply bg-border-light outline-none;
+}

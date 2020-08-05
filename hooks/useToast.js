@@ -124,6 +124,11 @@ export const FLAVORS = {
     body: "You’ve succesfully logged out",
     type: "success",
   },
+  WALLET_ERROR: (message) => ({
+    body: message,
+    type: "warn",
+    hideAfter: 20,
+  }),
 };
 
 export default function useToast() {
