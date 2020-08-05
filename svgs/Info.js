@@ -1,4 +1,4 @@
-export default ({ size = 16, light }) => (
+const Info = ({ size = 16, light }) => (
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
     <path
       fillRule="evenodd"
@@ -15,3 +15,5 @@ export default ({ size = 16, light }) => (
     />
   </svg>
 );
+
+export default Info;

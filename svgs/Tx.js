@@ -1,4 +1,4 @@
-export default ({ size = 48 }) => (
+const Tx = ({ size = 48 }) => (
   <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
     <circle cx={24} cy={24} r={24} fill="#032437" fillOpacity={0.05} />
     <path
@@ -9,3 +9,5 @@ export default ({ size = 48 }) => (
     />
   </svg>
 );
+
+export default Tx;

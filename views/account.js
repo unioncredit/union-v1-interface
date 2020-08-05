@@ -1,90 +1,89 @@
 import { useWeb3React } from "@web3-react/core";
-import Button from "components/button";
+import Identicon from "components/identicon";
 import Input from "components/input";
-import { MESSAGE } from "constants/variables";
+import ProfileImage from "components/ProfileImage";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useCopy from "hooks/useCopy";
-import { Fragment, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
-import EMAIL_REGEX from "util/emailRegex";
+import useENSName from "hooks/useENSName";
+import { Fragment } from "react";
+import truncateAddress from "util/truncateAddress";
 
 export default function AccountView() {
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
 
-  const { register, handleSubmit, formState, errors, reset } = useForm();
-
-  useEffect(() => reset(), [open]);
-
-  const { isDirty, isSubmitting } = formState;
+  const ENSName = useENSName(account);
 
   const [isCopied, copy] = useCopy();
-
   const handleCopy = () => copy(account);
 
-  const onSubmit = async (values) => {
-    const { email } = values;
-
-    try {
-      if (!email) throw new Error("`email` is required");
-
-      const signer = library.getSigner();
-
-      const signature = await signer.signMessage(MESSAGE);
-
-      /**
-       * @todo Post email to DB here with a key / value pair of address / email
-       */
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const { data, error } = use3BoxPublicData(account);
+  const has3BoxName = !!data && !error && data?.name;
+  const has3BoxProfileImage = !!data && !error && data?.image;
 
   return (
     <Fragment>
       <div className="container">
-        <div className="bg-white border max-w-md mx-auto rounded p-4 sm:p-6 md:p-8">
-          <h1 className="mb-6">My account</h1>
-
-          <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-            <Input
-              autoComplete="email"
-              className="mb-10"
-              id="email"
-              label="Your email"
-              name="email"
-              type="email"
-              placeholder="name@email.com"
-              error={errors.email}
-              ref={register({
-                required: errorMessages.required,
-                pattern: {
-                  value: EMAIL_REGEX,
-                  message: errorMessages.validEmail,
-                },
-              })}
-            />
-
-            <div className="mb-16">
-              <p className="mb-2 text-type-light">Your address</p>
-              <button
-                className="font-medium py-1 w-full truncate text-sm text-left focus:outline-none hover:underline"
-                onClick={handleCopy}
-                title={account}
-                type="button"
-              >
-                {isCopied ? "Copied!" : account}
-              </button>
+        <div className="max-w-sm mx-auto">
+          <h1 className="h-12 leading-12 mb-4">My account</h1>
+          <div className="bg-white border rounded p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
+              <div className="flex items-center">
+                {has3BoxProfileImage ? (
+                  <ProfileImage alt={account} image={data.image} size={72} />
+                ) : (
+                  <Identicon address={account} extraLarge />
+                )}
+                <div className="ml-4">
+                  <p
+                    className="text-xl font-semibold  leading-tight"
+                    title={account}
+                  >
+                    {truncateAddress(account, 6)}
+                  </p>
+                  <button
+                    className="text-sm font-medium underline focus:outline-none"
+                    onClick={handleCopy}
+                    type="button"
+                  >
+                    {isCopied ? "Copied" : "Copy Address"}
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <Button
-              full
-              type="submit"
-              disabled={isSubmitting || !isDirty}
-              submitting={isSubmitting}
-            >
-              Save changes
-            </Button>
-          </form>
+            <Input
+              label="Your name"
+              readOnly
+              value={data?.name ?? ENSName}
+              tip={
+                has3BoxName ? (
+                  <span>
+                    Looks like you're using 3box! Update your public profile{" "}
+                    <a
+                      className="underline"
+                      href={`https://3box.io/${account}/edit`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      on 3Box
+                    </a>
+                  </span>
+                ) : (
+                  <span>
+                    Setup your public profile{" "}
+                    <a
+                      className="underline"
+                      href={`https://3box.io/${account}/edit`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      on 3Box
+                    </a>
+                  </span>
+                )
+              }
+            />
+          </div>
         </div>
       </div>
     </Fragment>

@@ -1,4 +1,4 @@
-export default ({ size = 24 }) => (
+const Fortmatic = ({ size = 24 }) => (
   <svg width={size} height={size} fill="none">
     <path
       fillRule="evenodd"
@@ -8,3 +8,5 @@ export default ({ size = 24 }) => (
     />
   </svg>
 );
+
+export default Fortmatic;

@@ -1,10 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
+import ProfileImage from "components/ProfileImage";
 import { useAutoCallback } from "hooks.macro";
+import useRemoveVouch from "hooks/payables/useRemoveVouch";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
-import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
@@ -20,12 +22,12 @@ import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
 
-const InlineLabelEditor = ({ label, ENSName, address }) => {
+const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
 
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
-      label,
+      label: label ?? public3BoxName,
     },
   });
 
@@ -100,14 +102,16 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const ENSName = useENSName(address);
 
   const { getLabel } = useAddressLabels();
-
   const label = getLabel(address);
 
+  const { data, error } = use3BoxPublicData(address);
+  const has3BoxName = !!data && !error && data?.name;
+  const has3BoxProfileImage = !!data && !error && data?.image;
+
   const [removingAddress, removingAddressSet] = useState(false);
+  const removeVouch = useRemoveVouch();
 
   const addToast = useToast();
-
-  const memberManagerContract = useMemberContract();
 
   const removeAddress = useAutoCallback(async () => {
     let hidePendingToast = () => {};
@@ -115,24 +119,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
     try {
       removingAddressSet(true);
-      let estimate;
-      try {
-        estimate = await memberManagerContract.estimateGas.cancelVouch(
-          account,
-          address,
-          curToken
-        );
-      } catch (error) {
-        estimate = 300000;
-      }
-      const tx = await memberManagerContract.cancelVouch(
-        account,
-        address,
-        curToken,
-        {
-          gasLimit: estimate,
-        }
-      );
+
+      const tx = await removeVouch(address);
 
       const { hide: hidePending } = addToast(
         FLAVORS.TX_PENDING(tx.hash, chainId)
@@ -192,7 +180,15 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="flex justify-center mt-4">
-              <Identicon address={address} extraLarge />
+              {has3BoxProfileImage ? (
+                <ProfileImage
+                  alt={ENSName ?? address}
+                  image={data.image}
+                  size={72}
+                />
+              ) : (
+                <Identicon address={address} extraLarge />
+              )}
             </div>
 
             <div className="mt-4 text-center">
@@ -200,6 +196,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
                 address={address}
                 ENSName={ENSName}
                 label={label}
+                public3BoxName={has3BoxName ? data.name : null}
               />
             </div>
 

@@ -19,9 +19,23 @@ export default function useAddressLabels() {
   const setLabel = async (address, label) => {
     const key = address.toLowerCase();
 
-    setValue((current) => ({ ...current, [key]: label }));
+    if (!label) {
+      setValue((current) => {
+        let cur = current;
+        delete cur[key];
+        return cur;
+      });
 
-    await mutate({ ...data, [key]: label });
+      let curData = data;
+      delete curData[key];
+      await mutate(curData);
+    } else {
+      setValue((current) => ({ ...current, [key]: label }));
+
+      await mutate({ ...data, [key]: label });
+    }
+
+    await revalidate();
   };
 
   /**
