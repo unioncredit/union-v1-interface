@@ -14,7 +14,6 @@ import {
   useWalletModalToggle,
   useWalletModalView,
 } from "./state";
-import useToast, { FLAVORS } from "hooks/useToast";
 
 const WalletOptions = ({
   activatingConnector,
@@ -72,8 +71,6 @@ const WalletModal = () => {
 
   const walletView = useWalletModalView();
 
-  const addToast = useToast();
-
   const {
     setWalletViewCreate,
     setWalletViewSignIn,
@@ -98,7 +95,7 @@ const WalletModal = () => {
       if (connector === walletconnect) connector.close();
 
       deactivate();
-      addToast(FLAVORS.WALLET_ERROR(getErrorMessage(error)));
+      window.alert(getErrorMessage(error));
 
       setActivatingConnector(undefined);
     }
