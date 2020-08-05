@@ -1,12 +1,9 @@
 import Benefits from "components/benefits";
 import Button from "components/button";
 import Snippet from "components/snippet";
-import { useWalletModalToggle } from "components/WalletModal/state";
 import Head from "next/head";
 
 export default function HomePage() {
-  const toggleWalletModal = useWalletModalToggle();
-
   return (
     <div>
       <Head>
@@ -28,11 +25,7 @@ export default function HomePage() {
                   revealing personal information on a public ledger.
                 </p>
 
-                <Button
-                  onClick={toggleWalletModal}
-                  className="btn-full-mobile"
-                  wide
-                >
+                <Button href="/waitlist" className="btn-full-mobile" wide>
                   Get started
                 </Button>
 
@@ -111,11 +104,7 @@ export default function HomePage() {
                   join with the help of 3 friends vouching for you and enjoy all
                   the benefits of Union
                 </p>
-                <Button
-                  onClick={toggleWalletModal}
-                  className="btn-full-mobile"
-                  wide
-                >
+                <Button href="/waitlist" className="btn-full-mobile" wide>
                   Get started
                 </Button>
               </div>
