@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import ProfileImage from "components/ProfileImage";
 import { useAutoCallback } from "hooks.macro";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
@@ -11,7 +12,6 @@ import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
-import getIPFSAssetLink from "util/getIPFSAssetLink";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
@@ -181,14 +181,10 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
             <div className="flex justify-center mt-4">
               {has3BoxProfileImage ? (
-                <img
-                  alt={address}
-                  async
-                  className="rounded-full"
-                  decoding="async"
-                  loading="lazy"
-                  src={getIPFSAssetLink(data.image)}
-                  style={{ height: 72, width: 72 }}
+                <ProfileImage
+                  alt={ENSName ?? address}
+                  image={data.image}
+                  size={72}
                 />
               ) : (
                 <Identicon address={address} extraLarge />

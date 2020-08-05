@@ -1,12 +1,12 @@
 import classNames from "classnames";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useENSName from "hooks/useENSName";
 import { memo } from "react";
 import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
-import use3BoxPublicData from "hooks/use3BoxPublicData";
-import getIPFSAssetLink from "util/getIPFSAssetLink";
+import ProfileImage from "./ProfileImage";
 
 const Address = ({ address, withLabel, copyable = false }) => {
   const ENSName = useENSName(address);
@@ -36,14 +36,7 @@ const Address = ({ address, withLabel, copyable = false }) => {
     >
       <div className="flex-grow-0 h-8">
         {has3BoxProfileImage ? (
-          <img
-            alt={address}
-            async
-            className="h-8 w-8 rounded-full"
-            decoding="async"
-            loading="lazy"
-            src={getIPFSAssetLink(data.image)}
-          />
+          <ProfileImage alt={ENSName ?? address} image={data.image} size={32} />
         ) : (
           <Identicon large address={address} />
         )}

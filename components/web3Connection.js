@@ -1,9 +1,9 @@
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useENSName from "hooks/useENSName";
-import getIPFSAssetLink from "util/getIPFSAssetLink";
 import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
+import ProfileImage from "./ProfileImage";
 import { useToggleSignInModal } from "./WalletModal/state";
 import Web3Button from "./web3Button";
 
@@ -30,14 +30,10 @@ const Web3Connection = () => {
           ) : (
             <div className="flex items-center">
               {has3BoxProfileImage ? (
-                <img
+                <ProfileImage
                   alt={ENSName ?? account}
-                  async
-                  className="rounded-full"
-                  decoding="async"
-                  loading="lazy"
-                  src={getIPFSAssetLink(data.image)}
-                  style={{ width: 18, height: 18 }}
+                  image={data.image}
+                  size={18}
                 />
               ) : (
                 <Identicon address={account} />
