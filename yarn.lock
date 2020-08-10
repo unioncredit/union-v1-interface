@@ -1591,7 +1591,7 @@
   resolved "https://registry.yarnpkg.com/@web3-react/types/-/types-6.0.7.tgz#34a6204224467eedc6123abaf55fbb6baeb2809f"
   integrity sha512-ofGmfDhxmNT1/P/MgVa8IKSkCStFiyvXe+U5tyZurKdrtTDFU+wJ/LxClPDtFerWpczNFPUSrKcuhfPX1sI6+A==
 
-"@web3-react/walletconnect-connector@^6.0.9":
+"@web3-react/walletconnect-connector@^6.1.4":
   version "6.1.6"
   resolved "https://registry.yarnpkg.com/@web3-react/walletconnect-connector/-/walletconnect-connector-6.1.6.tgz#8c216b2e38db94c60afac8453be31d31019205b7"
   integrity sha512-subMnG0/SmP7bg5ZGxX6z32GjlSFspc7AO+A2pUrifP5My/837sp900uhBxLl5ex2SMe/rDgor+7jUstAkmH8g==
