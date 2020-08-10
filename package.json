@@ -13,7 +13,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint"
+      "pre-commit": "lint-staged"
     }
   },
   "dependencies": {
@@ -59,6 +59,7 @@
     "eslint-plugin-react": "^7.20.5",
     "hooks.macro": "^1.1.2",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
@@ -72,5 +73,11 @@
   "bugs": {
     "url": "https://github.com/unioncredit/union-beta/issues"
   },
-  "homepage": "https://github.com/unioncredit/union-beta#readme"
+  "homepage": "https://github.com/unioncredit/union-beta#readme",
+  "lint-staged": {
+    "*.js": [
+      "eslint --cache",
+      "pretty-quick --staged"
+    ]
+  }
 }
