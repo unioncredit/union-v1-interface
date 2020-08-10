@@ -15,8 +15,8 @@ import Info from "svgs/Info";
  * @param {Boolean} props.outline
  * @param {Boolean} props.responsive
  * @param {Node} props.slot
- * @param {String} props.tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
- * @param {String} props.value
+ * @param {Node} props.tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
+ * @param {any} props.value
  * @param {Node} props.valueSlot
  * @param {("DAI"|"UNION")} props.valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  */
@@ -88,8 +88,8 @@ LabelPair.propTypes = {
   outline: PropTypes.bool,
   responsive: PropTypes.bool,
   slot: PropTypes.node,
-  tooltip: PropTypes.string,
-  value: PropTypes.string,
+  tooltip: PropTypes.node,
+  value: PropTypes.any,
   valueSlot: PropTypes.node,
   valueType: PropTypes.oneOf(["DAI", "UNION"]),
 };
