@@ -35,7 +35,7 @@ export default function AccountView() {
                 )}
                 <div className="ml-4">
                   <p
-                    className="text-xl font-semibold  leading-tight"
+                    className="text-xl font-semibold leading-tight"
                     title={account}
                   >
                     {truncateAddress(account, 6)}
