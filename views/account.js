@@ -54,7 +54,7 @@ export default function AccountView() {
             <Input
               label="Your name"
               readOnly
-              value={data?.name ?? ENSName}
+              defaultValue={data?.name ?? ENSName}
               tip={
                 has3BoxName ? (
                   <span>
