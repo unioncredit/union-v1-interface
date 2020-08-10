@@ -1,4 +1,4 @@
-import Bell from "../svgs/Bell";
+import Bell from "../../svgs/Bell";
 
 const Activity = () => {
   /**
