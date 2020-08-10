@@ -67,6 +67,13 @@ module.exports = {
         "Segoe UI Symbol",
         "Noto Color Emoji",
       ],
+      mono: [
+        "SFMono-Regular",
+        "Consolas",
+        "Liberation Mono",
+        "Menlo",
+        "monospace",
+      ],
       sf: [
         "SF Text",
         "SF Pro Text",
