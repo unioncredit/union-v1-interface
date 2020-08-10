@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import SegmentedControl from "components/segmentedControl";
-import useAdjustTrust from "hooks/payables/useAdjustTrust";
+import useAdjustTrust from "hooks/calls/useAdjustTrust";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

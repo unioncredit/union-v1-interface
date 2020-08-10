@@ -1,6 +1,6 @@
 import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
-import useBorrow from "hooks/payables/useBorrow";
+import useBorrow from "hooks/calls/useBorrow";
 import useToast, { FLAVORS } from "hooks/useToast";
 import PropTypes from "prop-types";
 import { useEffect } from "react";

@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import useStakeDeposit from "hooks/payables/useStakeDeposit";
+import useStakeDeposit from "hooks/calls/useStakeDeposit";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
