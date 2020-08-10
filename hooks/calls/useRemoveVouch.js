@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/useMemberContract";
+import useMemberContract from "hooks/contracts/useMemberContract";
 import { useCallback } from "react";
 
 export default function useRemoveVouch() {

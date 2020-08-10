@@ -4,7 +4,7 @@ import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import useMemberContract from "hooks/useMemberContract";
+import useMemberContract from "hooks/contracts/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTrustData from "hooks/useTrustData";
 import { useEffect, useState } from "react";

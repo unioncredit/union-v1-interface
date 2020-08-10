@@ -3,8 +3,8 @@ import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { STAKING_MANAGER_ADDRESSES } from "constants/variables";
 import useCurrentToken from "hooks/useCurrentToken";
-import useStakingContract from "hooks/useStakingContract";
-import useTokenContract from "hooks/useTokenContract";
+import useStakingContract from "hooks/contracts/useStakingContract";
+import useTokenContract from "hooks/contracts/useTokenContract";
 import { useCallback } from "react";
 
 export default function useStakeDeposit() {
