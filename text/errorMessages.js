@@ -35,6 +35,7 @@ const errorMessages = {
   minVouch: "The minimum vouch is 1.00 DAI",
   minValuePointZeroOne: "Value must be greater than 0.01",
   minValueOnePointZero: "Value must be greater than or equal to 1.00",
+  minValueZero: "Value must be greater than 0.00",
   validEmail: "Please enter a valid email",
   knownScam: "This address is associated with a known scam",
   validAddress: "Please input a valid Ethereum address",

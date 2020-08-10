@@ -4,9 +4,11 @@ import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
 import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
+import LabelPair from "./labelPair";
 
 const ADJUST_TYPES = {
   INCREASE: "INCREASE",
@@ -104,25 +106,23 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
           placeholder="0.00"
           error={errors.amount}
           ref={register({
-            required: "Please fill out this field",
+            required: errorMessages.required,
             min: {
               value: 0,
-              message: "Value must be greater than 0",
+              message: errorMessages.minValueZero,
             },
           })}
         />
       </div>
 
-      <div className="mt-8">
-        <dl className="flex justify-between items-center leading-tight">
-          <dt>New Trust</dt>
-          <dd className="text-right text-lg font-semibold">{`${formatNewTrust} DAI`}</dd>
-        </dl>
-      </div>
+      <LabelPair
+        className="mt-4 mb-2"
+        label="New Trust"
+        value={formatNewTrust}
+        valueType="DAI"
+      />
 
-      <div className="mt-4">
-        <div className="divider" />
-      </div>
+      <div className="divider" />
 
       <div className="mt-6">
         <Button
