@@ -40,7 +40,7 @@ const Web3Connection = () => {
       <li className="ml-6 md:ml-8 relative">
         <Menu>
           <MenuButton>
-            <div className="ml-1" aria-hidden>
+            <div className="ml-1 flex" aria-hidden>
               {has3BoxProfileImage ? (
                 <ProfileImage
                   alt={ENSName ?? account}
@@ -54,7 +54,7 @@ const Web3Connection = () => {
             <div className="ml-3 mr-2">
               {ENSName ?? truncateAddress(account)}
             </div>
-            <span aria-hidden>
+            <span className="mr-2px" aria-hidden>
               <Arrow />
             </span>
           </MenuButton>
