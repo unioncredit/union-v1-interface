@@ -10,7 +10,7 @@ const Bell = ({ size = 24, pending = false }) => (
     <style jsx>{`
       svg,
       circle {
-        // transition: all 150ms;
+        transition: fill 150ms;
       }
 
       svg {
