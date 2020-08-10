@@ -96,7 +96,7 @@ module.exports = {
         "72": "18rem",
       },
       borderRadius: {
-        default: "0.375rem",
+        default: "0.325rem",
       },
       backgroundOpacity: {
         "10": "0.1",

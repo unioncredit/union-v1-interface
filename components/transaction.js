@@ -37,8 +37,12 @@ const Transaction = ({ amount, date, dateShort, hash, type }) => {
           </strong>{" "}
         </p>
 
-        <p className="hidden sm:block font-normal leading-none">{date}</p>
-        <p className="block sm:hidden font-normal leading-none">{dateShort}</p>
+        <p className="hidden sm:block font-medium text-type-light leading-none">
+          {date}
+        </p>
+        <p className="block sm:hidden font-medium text-type-light leading-none">
+          {dateShort}
+        </p>
       </div>
 
       <div>
@@ -61,10 +65,10 @@ export const TransactionSkeleton = () => (
       <p className="block sm:hidden mb-2 leading-none">
         <Skeleton width={52} />
       </p>
-      <p className="hidden sm:block font-normal leading-none">
+      <p className="hidden sm:block font-medium text-type-light leading-none">
         <Skeleton width={160} />
       </p>
-      <p className="block sm:hidden font-normal leading-none">
+      <p className="block sm:hidden font-medium text-type-light leading-none">
         <Skeleton width={70} />
       </p>
     </div>
