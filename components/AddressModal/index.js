@@ -42,7 +42,6 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const label = getLabel(address);
 
   const { data, error } = use3BoxPublicData(address);
-  const has3BoxName = !!data && !error && data?.name;
   const has3BoxProfileImage = !!data && !error && data?.image;
 
   const [isCopied, copy] = useCopy();
