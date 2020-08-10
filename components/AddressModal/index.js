@@ -50,14 +50,16 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const [enableForm, enableFormSet] = useState(false);
   const toggleForm = () => enableFormSet(!enableForm);
 
-  const { register, handleSubmit, formState, reset } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm({
+    defaultValues: { label: label ?? data?.name },
+  });
 
   const { isSubmitting } = formState;
 
   useEffect(() => {
     if (isOpen) {
       setAddressView(ADDRESS_VIEWS.HOME);
-      reset();
+      reset({ label: label ?? data?.name });
       enableFormSet(false);
     }
   }, [isOpen]);
