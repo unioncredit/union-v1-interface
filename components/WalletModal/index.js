@@ -47,7 +47,10 @@ const WalletOptions = ({
           await activate(CONNECTORS[name]);
 
           toggle();
-          login();
+
+          if (name === "Injected") {
+            login();
+          }
 
           if (router.pathname === "/") router.push("/stake");
         };
