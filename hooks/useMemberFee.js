@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useMemberContract from "./useMemberContract";
+import useMemberContract from "./contracts/useMemberContract";
 
 const getMemberFee = (contract) => async () =>
   contract.newMemberFee().then((res) => parseRes(res));

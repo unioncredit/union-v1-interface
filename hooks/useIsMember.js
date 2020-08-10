@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useMemberContract from "./useMemberContract";
+import useMemberContract from "./contracts/useMemberContract";
 
 const getIsMember = (contract) => async (_, account) =>
   contract.isMember(account);

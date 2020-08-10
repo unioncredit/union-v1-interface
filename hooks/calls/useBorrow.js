@@ -3,7 +3,7 @@ import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMarketRegistryContract from "hooks/useMarketRegistryContract";
+import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import { useCallback } from "react";
 
 export default function useBorrow() {

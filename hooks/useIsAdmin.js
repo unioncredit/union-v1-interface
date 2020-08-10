@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useControllerContract from "./useControllerContract";
+import useControllerContract from "./contracts/useControllerContract";
 
 const getIsAdmin = (contract) => async (_, account) =>
   contract.isAdmin(account);

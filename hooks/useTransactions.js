@@ -6,7 +6,7 @@ import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import dayjs from "dayjs";
 import useSWR from "swr";
 import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./useMarketRegistryContract";
+import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
 
 const getTransactions = (marketRegistryContract) => async (
   _,

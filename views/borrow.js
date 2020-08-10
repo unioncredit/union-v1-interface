@@ -7,7 +7,7 @@ import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import Transaction, { TransactionSkeleton } from "components/transaction";
 import { UtilizationBarWithPercentage } from "components/utilizationBar";
-import useBorrowData from "hooks/useBorrowData";
+import useBorrowData from "hooks/contracts/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useTransactions from "hooks/useTransactions";

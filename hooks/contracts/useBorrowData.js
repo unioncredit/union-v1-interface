@@ -6,7 +6,7 @@ import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 import useSWR from "swr";
 import { formatDueDate } from "util/formatDueDate";
-import useCurrentToken from "./useCurrentToken";
+import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
 import { roundUp } from "util/numbers";
 
