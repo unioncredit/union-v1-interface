@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "format": "prettier --write \"**/*.js\"",
-    "lint": "eslint . --ext js"
+    "lint": "eslint . --ext js --cache"
   },
   "husky": {
     "hooks": {
