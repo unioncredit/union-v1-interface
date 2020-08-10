@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
-import useRepay from "hooks/payables/useRepay";
+import useRepay from "hooks/calls/useRepay";
 import useCurrentToken from "hooks/useCurrentToken";
 import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";

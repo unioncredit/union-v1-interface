@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
-import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
+import useWithdrawRewards from "hooks/calls/useWithdrawRewards";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useState } from "react";
 import Spinner from "svgs/Spinner";

@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import LabelPair from "components/labelPair";
 import ProfileImage from "components/ProfileImage";
 import { useAutoCallback } from "hooks.macro";
-import useRemoveVouch from "hooks/payables/useRemoveVouch";
+import useRemoveVouch from "hooks/calls/useRemoveVouch";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
