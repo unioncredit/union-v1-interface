@@ -54,6 +54,7 @@ export const ModalHeader = ({ title, onDismiss }) => (
  * @param {Function<Void>} props.onDismiss
  * @param {("DEFAULT"|"FULLSCREEN")} props.style
  * @param {Boolean} props.wide
+ * @param {Boolean} props.allowPinchZoom
  */
 const Modal = ({
   children,
@@ -64,6 +65,7 @@ const Modal = ({
   wide,
   dangerouslyBypassFocusLock,
   initialFocusRef,
+  allowPinchZoom = false,
   ...rest
 }) => {
   const styleClassName = classNames({
@@ -79,6 +81,7 @@ const Modal = ({
       initialFocusRef={initialFocusRef}
       dangerouslyBypassFocusLock={dangerouslyBypassFocusLock}
       className="dialog-overlay-centered"
+      allowPinchZoom={allowPinchZoom}
     >
       <DialogContent className={styleClassName} aria-label={label} {...rest}>
         {children}
@@ -96,6 +99,7 @@ Modal.propTypes = {
   onDismiss: PropTypes.func.isRequired,
   style: PropTypes.oneOf(["DEFAULT", "FULLSCREEN"]),
   wide: PropTypes.bool,
+  allowPinchZoom: PropTypes.bool,
 };
 
 export default Modal;
