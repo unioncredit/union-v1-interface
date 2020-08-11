@@ -99,6 +99,11 @@
       },
       {
         "internalType": "uint256",
+        "name": "maxBorrow",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
         "name": "minLoan",
         "type": "uint256"
       },
