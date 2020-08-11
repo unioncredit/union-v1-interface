@@ -2,6 +2,8 @@ import Button from "components/button";
 import useWeb3 from "hooks/useWeb3";
 import Head from "next/head";
 import { useEffect } from "react";
+import { formatEther } from "@ethersproject/units";
+import useSWR from "swr";
 
 export default function TestPage() {
   const { connect, disconnect, account, error } = useWeb3();
@@ -21,6 +23,7 @@ export default function TestPage() {
       <div className="px-4 max-w-md mx-auto">
         <Account />
         <ChainId />
+        <Balance />
 
         {account ? (
           <Button full invert onClick={disconnect}>
@@ -42,7 +45,10 @@ const Account = () => {
   return (
     <div className="flex justify-between mb-4 space-x-8">
       <p>
-        Account <span>🤖</span>
+        Account{" "}
+        <span role="img" aria-label="robot">
+          🤖
+        </span>
       </p>
       <p className="truncate">{account ?? ""}</p>
     </div>
@@ -55,9 +61,42 @@ const ChainId = () => {
   return (
     <div className="flex justify-between mb-4 space-x-8">
       <p>
-        Chain Id <span>⛓</span>
+        Chain Id{" "}
+        <span role="img" aria-label="chain">
+          ⛓
+        </span>
       </p>
       <p>{chainId ?? ""}</p>
+    </div>
+  );
+};
+
+const getBalance = async (_, account, library) => {
+  const balance = await library.getBalance(account);
+
+  return balance;
+};
+
+const Balance = () => {
+  const { account, library, chainId } = useWeb3();
+
+  const shouldFetch =
+    typeof account === "string" && library && typeof chainId === "number";
+
+  const { data: balance } = useSWR(
+    shouldFetch ? ["EthBalance", account, library, chainId] : null,
+    getBalance
+  );
+
+  return (
+    <div className="flex justify-between mb-4 space-x-8">
+      <p>
+        Balance{" "}
+        <span role="img" aria-label="gold">
+          💰
+        </span>
+      </p>
+      <p>{balance ? formatEther(balance) : ""}</p>
     </div>
   );
 };
