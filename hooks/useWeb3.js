@@ -70,10 +70,12 @@ export default function useWeb3() {
   }, []);
 
   const disconnect = useCallback(() => {
-    provider.disconnect();
-    provider.removeListener("accountsChanged", handleAccountsChanged);
-    provider.removeListener("chainChanged", handleChainChanged);
-    provider.removeListener("disconnect", handleDisconnect);
+    if (provider) {
+      provider.disconnect();
+      provider.removeListener("accountsChanged", handleAccountsChanged);
+      provider.removeListener("chainChanged", handleChainChanged);
+      provider.removeListener("disconnect", handleDisconnect);
+    }
 
     reset();
   }, []);
@@ -92,6 +94,8 @@ export default function useWeb3() {
         handledAccounts
       );
     }
+
+    accountSet(handledAccounts[0]);
   };
 
   const handleChainChanged = (handledChainId) => {
@@ -101,6 +105,8 @@ export default function useWeb3() {
         handledChainId
       );
     }
+
+    chainIdSet(handledChainId);
   };
 
   const handleDisconnect = (code, reason) => {
