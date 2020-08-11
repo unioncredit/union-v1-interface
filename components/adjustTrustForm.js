@@ -97,7 +97,6 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
       <div className="mt-4">
         <Input
-          autoFocus
           chip="DAI"
           id="amount"
           step="0.01"
