@@ -1,41 +1,28 @@
 import { Web3Provider } from "@ethersproject/providers";
 import { useCallback, useMemo } from "react";
-import { newRidgeState } from "react-ridge-state";
-
-const accountState = newRidgeState(null);
-const providerState = newRidgeState(null);
-const chainIdState = newRidgeState(null);
-const errorState = newRidgeState(null);
+import useSWR from "swr";
 
 const __DEV__ = process.env.NODE_ENV === "development";
 
+const useSharedState = (key, initial) => {
+  const { data: state, mutate: setState } = useSWR(key, {
+    initialData: initial,
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
+
+  return [state, setState];
+};
+
 function getLibrary(provider) {
-  const web3 = new Web3Provider(provider);
-
-  web3.pollingInterval = 12000;
-
-  return web3;
+  return new Web3Provider(provider);
 }
 
 export default function useWeb3() {
-  const [error, errorSet] = errorState.use();
-  const [account, accountSet] = accountState.use();
-  const [chainId, chainIdSet] = chainIdState.use();
-  const [provider, providerSet] = providerState.use();
-
-  const active =
-    provider !== undefined &&
-    chainId !== undefined &&
-    account !== undefined &&
-    !error;
-
-  const library = useMemo(
-    () =>
-      active && chainId !== undefined && Number.isInteger(chainId) && !!provider
-        ? getLibrary(provider)
-        : undefined,
-    [active, getLibrary, provider, chainId]
-  );
+  const [account, accountSet] = useSharedState("Web3Account", null);
+  const [chainId, chainIdSet] = useSharedState("Web3ChainId", null);
+  const [error, errorSet] = useSharedState("Web3Error", null);
+  const [provider, providerSet] = useSharedState("Web3Provider", null);
 
   const connect = useCallback(async () => {
     const { default: WalletConnectProvider } = await import(
@@ -52,42 +39,38 @@ export default function useWeb3() {
 
     web3Provider.on("accountsChanged", handleAccountsChanged);
     web3Provider.on("chainChanged", handleChainChanged);
-    web3Provider.on("disconnect", handleDisconnect);
 
     try {
       await web3Provider.enable();
 
-      providerSet(web3Provider);
-      accountSet(web3Provider.accounts[0]);
-      chainIdSet(web3Provider.chainId);
+      await accountSet(web3Provider.accounts[0]);
+
+      await chainIdSet(web3Provider.chainId);
+
+      await providerSet(web3Provider);
     } catch (err) {
       if (err.message === "User closed modal") {
-        errorState.reset();
+        await errorSet(null);
       } else {
-        errorSet(err);
+        await errorSet(err);
       }
     }
   }, []);
 
-  const disconnect = useCallback(() => {
+  const disconnect = useCallback(async () => {
     if (provider) {
       provider.disconnect();
       provider.removeListener("accountsChanged", handleAccountsChanged);
       provider.removeListener("chainChanged", handleChainChanged);
-      provider.removeListener("disconnect", handleDisconnect);
     }
 
-    reset();
+    await providerSet(null);
+    await errorSet(null);
+    await accountSet(null);
+    await chainIdSet(null);
   }, []);
 
-  const reset = () => {
-    errorState.reset();
-    accountState.reset();
-    chainIdState.reset();
-    providerState.reset();
-  };
-
-  const handleAccountsChanged = (handledAccounts) => {
+  const handleAccountsChanged = async (handledAccounts) => {
     if (__DEV__) {
       console.warn(
         "Handling 'accountsChanged' event with payload",
@@ -95,10 +78,10 @@ export default function useWeb3() {
       );
     }
 
-    accountSet(handledAccounts[0]);
+    await accountSet(handledAccounts[0]);
   };
 
-  const handleChainChanged = (handledChainId) => {
+  const handleChainChanged = async (handledChainId) => {
     if (__DEV__) {
       console.warn(
         "Handling 'chainChanged' event with payload",
@@ -106,36 +89,34 @@ export default function useWeb3() {
       );
     }
 
-    chainIdSet(handledChainId);
+    await chainIdSet(handledChainId);
   };
 
-  const handleDisconnect = (code, reason) => {
-    if (__DEV__) {
-      console.warn("Handling 'disconnect' event", code, reason);
-    }
-  };
+  const active =
+    provider !== undefined &&
+    chainId !== undefined &&
+    account !== undefined &&
+    !error;
+
+  /**
+   * @type {import("@ethersproject/providers").Web3Provider}
+   */
+  const library = useMemo(
+    () =>
+      active && chainId !== undefined && Number.isInteger(chainId) && !!provider
+        ? getLibrary(provider)
+        : undefined,
+    [active, getLibrary, provider, chainId]
+  );
 
   return {
-    /**
-     * @type {Boolean}
-     */
     active,
-    /**
-     * @type {import("@ethersproject/providers").Web3Provider}
-     */
-    library,
-    /**
-     * @type {String}
-     */
-    account,
-    /**
-     * @type {Number}
-     */
-    chainId,
-    /**
-     * @type {Error}
-     */
     error,
+
+    library,
+    account,
+    chainId,
+
     connect,
     disconnect,
   };

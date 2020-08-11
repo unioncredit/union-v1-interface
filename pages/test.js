@@ -1,7 +1,7 @@
 import Button from "components/button";
 import useWeb3 from "hooks/useWeb3";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useEffect, Fragment } from "react";
 import { formatEther } from "@ethersproject/units";
 import useSWR from "swr";
 
@@ -20,10 +20,13 @@ export default function TestPage() {
         <title>Test | Union</title>
       </Head>
 
-      <div className="px-4 max-w-md mx-auto">
-        <Account />
-        <ChainId />
-        <Balance />
+      <div className="px-4 max-w-lg mx-auto">
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <Account />
+          <ChainId />
+          <Balance />
+          <BlockNumber />
+        </div>
 
         {account ? (
           <Button full invert onClick={disconnect}>
@@ -43,7 +46,7 @@ const Account = () => {
   const { account } = useWeb3();
 
   return (
-    <div className="flex justify-between mb-4 space-x-8">
+    <Fragment>
       <p>
         Account{" "}
         <span role="img" aria-label="robot">
@@ -51,7 +54,7 @@ const Account = () => {
         </span>
       </p>
       <p className="truncate">{account ?? ""}</p>
-    </div>
+    </Fragment>
   );
 };
 
@@ -59,7 +62,7 @@ const ChainId = () => {
   const { chainId } = useWeb3();
 
   return (
-    <div className="flex justify-between mb-4 space-x-8">
+    <Fragment>
       <p>
         Chain Id{" "}
         <span role="img" aria-label="chain">
@@ -67,7 +70,7 @@ const ChainId = () => {
         </span>
       </p>
       <p>{chainId ?? ""}</p>
-    </div>
+    </Fragment>
   );
 };
 
@@ -89,14 +92,41 @@ const Balance = () => {
   );
 
   return (
-    <div className="flex justify-between mb-4 space-x-8">
+    <Fragment>
       <p>
         Balance{" "}
         <span role="img" aria-label="gold">
           💰
         </span>
       </p>
-      <p>{balance ? formatEther(balance) : ""}</p>
-    </div>
+      <p className="truncate">{balance ? formatEther(balance) : ""}</p>
+    </Fragment>
+  );
+};
+
+const getBlockNumber = async (_, library) => {
+  return library.getBlockNumber();
+};
+
+const BlockNumber = () => {
+  const { library, chainId } = useWeb3();
+
+  const shouldFetch = library && typeof chainId === "number";
+
+  const { data: blockNumber } = useSWR(
+    shouldFetch ? ["BlockNumber", library, chainId] : null,
+    getBlockNumber
+  );
+
+  return (
+    <Fragment>
+      <p>
+        Block Number{" "}
+        <span role="img" aria-label="numbers">
+          🔢
+        </span>
+      </p>
+      <p>{blockNumber ?? ""}</p>
+    </Fragment>
   );
 };
