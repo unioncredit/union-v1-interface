@@ -1,4 +1,4 @@
-import ApplicationCard from "components/applicationCard";
+import ApplicationCard from "components/ApplicationCard";
 import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
