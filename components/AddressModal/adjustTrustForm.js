@@ -6,9 +6,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "text/errorMessages";
 import handleTxError from "util/handleTxError";
-import Button from "./button";
-import Input from "./input";
-import LabelPair from "./labelPair";
+import Button from "../button";
+import Input from "../input";
+import LabelPair from "../labelPair";
 
 const ADJUST_TYPES = {
   INCREASE: "INCREASE",

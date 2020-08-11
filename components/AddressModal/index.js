@@ -16,7 +16,7 @@ import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
-import AdjustTrustForm from "../adjustTrustForm";
+import AdjustTrustForm from "./adjustTrustForm";
 import Button from "../button";
 import HealthBar from "../healthBar";
 import Identicon from "../identicon";
