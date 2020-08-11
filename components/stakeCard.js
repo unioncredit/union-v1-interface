@@ -17,9 +17,13 @@ import LabelPair from "./labelPair";
 import WithdrawModal from "./WithdrawModal";
 import { useWithdrawModalToggle } from "./WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
+import toK from "util/toK";
 
-const format = (number, decimals = 2) =>
-  commify(Number(number).toFixed(decimals));
+const format = (number, decimals = 2) => {
+  if (String(number).length > 8) return toK(number, true, 2);
+
+  return commify(Number(number).toFixed(decimals));
+};
 
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
