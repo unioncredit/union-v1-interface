@@ -2,7 +2,7 @@ import { useAutoEffect } from "hooks.macro";
 import { useCallback, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
-export default function useCopy(timeout = 1000) {
+export default function useCopy(timeout = 1500) {
   const [, copyToClipboard] = useCopyToClipboard();
 
   const [isCopied, setIsCopied] = useState(false);
