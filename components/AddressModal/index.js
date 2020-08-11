@@ -132,41 +132,44 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onDismiss={toggle}>
+    <Modal isOpen={isOpen} onDismiss={toggle} allowPinchZoom>
       <div className="p-4 sm:p-6 relative">
         {addressView === ADDRESS_VIEWS.HOME ? (
           <Fragment>
-            <div className="absolute right-0 top-0 mr-6 mt-6">
+            <div className="absolute right-0 top-0 mr-4 mt-4 sm:mr-6 sm:mt-6">
               <CloseButton onClick={toggle} large />
             </div>
 
             <div className="flex items-center mt-4">
-              {has3BoxProfileImage ? (
-                <ProfileImage
-                  alt={label ?? data?.name ?? ENSName ?? address}
-                  image={data.image}
-                  size={72}
-                />
-              ) : (
-                <Identicon address={address} extraLarge />
-              )}
+              <div className="flex-shrink-0">
+                {has3BoxProfileImage ? (
+                  <ProfileImage
+                    alt={label ?? data?.name ?? ENSName ?? address}
+                    image={data.image}
+                    size={72}
+                  />
+                ) : (
+                  <Identicon address={address} extraLarge />
+                )}
+              </div>
 
               {enableForm ? (
                 <form
-                  className="ml-4"
+                  className="ml-4 flex-1"
                   method="POST"
                   onSubmit={handleSubmit(onSubmit)}
                 >
                   <input
-                    type="text"
-                    className="text-xl font-semibold leading-tight block bg-transparent rounded-none focus:outline-none text-type-base placeholder-type-lightest"
-                    name="label"
                     autoCapitalize="off"
-                    placeholder="Add a label"
-                    autoCorrect="off"
                     autoComplete="off"
-                    ref={register}
+                    autoCorrect="off"
+                    autoFocus
+                    className="text-xl font-semibold leading-tight block bg-transparent rounded-none focus:outline-none text-type-base placeholder-type-lightest"
                     id="label"
+                    name="label"
+                    placeholder="Add a label"
+                    ref={register}
+                    type="text"
                   />
                   <div className="flex space-x-2">
                     <button
@@ -212,7 +215,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               )}
             </div>
 
-            <div className="mt-16">
+            <div className="mt-12 sm:mt-16">
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Trust"
@@ -238,7 +241,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               />
             </div>
 
-            <div className="mt-24">
+            <div className="mt-16 sm:mt-24">
               <Button full onClick={() => setAddressView(ADDRESS_VIEWS.ADJUST)}>
                 Adjust Vouch
               </Button>
@@ -265,7 +268,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             <p>Edit this member's trust</p>
 
             <div className="mt-4 cursor-text">
-              <Address address={address} large copyable withLabel />
+              <Address address={address} large withLabel />
             </div>
 
             <div className="mt-4">
