@@ -324,18 +324,28 @@ input[type="number"] {
 
 [data-reach-dialog-overlay].dialog-overlay-centered {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
+}
+@screen sm {
+  [data-reach-dialog-overlay].dialog-overlay-centered {
+    align-items: flex-start;
+  }
 }
 
 /* Default Dialog Style */
 [data-reach-dialog-content].dialog-style-default {
   @apply bg-white w-full mx-4 rounded outline-none;
   max-width: 24rem;
-  margin-top: 12vh;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
 }
+@screen sm {
+  [data-reach-dialog-content].dialog-style-default {
+    margin-top: 12vh;
+  }
+}
+
 [data-reach-dialog-content].dialog-style-is-wide {
   max-width: 32rem;
 }
