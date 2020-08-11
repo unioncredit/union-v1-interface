@@ -1,4 +1,4 @@
-import ApplicationCard from "components/applicationCard";
+import ApplicationCard from "components/ApplicationCard";
 import BorrowModal from "components/BorrowModal";
 import { useBorrowModalToggle } from "components/BorrowModal/state";
 import Button from "components/button";
