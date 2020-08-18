@@ -18,7 +18,7 @@ export default function WaitlistPage() {
                 <WaitlistSignupForm />
               </div>
             </div>
-            <div className="hidden sm:block w-full self-end sm:w-1/3 flex justify-end">
+            <div className="hidden sm:flex w-full self-end sm:w-1/3 justify-end">
               <img
                 className="w-56 sm:w-72"
                 src="/images/learn-more.svg"
