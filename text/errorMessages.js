@@ -31,6 +31,7 @@ const errorMessages = {
   notEnoughStake: "Insufficient withdrawable stake",
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
   overdueBalance: <OverdueBalanceMessage />,
+  maxBorrow: (max) => `The maximum borrow is ${Number(max).toFixed(2)} DAI`,
   minDAIBorrow: "The minimum borrow is 1.00 DAI",
   minVouch: "The minimum vouch is 1.00 DAI",
   minValuePointZeroOne: "Value must be greater than 0.01",
