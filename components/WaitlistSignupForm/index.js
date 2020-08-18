@@ -43,7 +43,7 @@ const signup = async (email) => {
 };
 
 const TWEET = `https://twitter.com/intent/tweet?url=https%3A%2F%2Funion.finance%2Fwaitlist&via=unionprotocol&text=${encodeURIComponent(
-  "Let me be your credit limit. Join the waitlist"
+  "Screw credit scores. Join Union."
 )}`;
 
 const WaitlistSignupForm = () => {
