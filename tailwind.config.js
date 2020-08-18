@@ -51,6 +51,7 @@ module.exports = {
       white: "#fff",
       "true-black": "#000",
       transparent: "transparent",
+      twitter: "#1DA1F2",
     },
     screens: {
       sm: "640px",

@@ -5,6 +5,7 @@ import EMAIL_REGEX from "util/emailRegex";
 import Button from "../button";
 import Input from "../input";
 import errorMessages from "text/errorMessages";
+import TweetButton from "components/TweetButton";
 
 const checkPlace = async (email) => {
   const res = await fetch("/api/waitlist/place", {
@@ -74,7 +75,7 @@ const WaitlistSignupForm = () => {
         <h2 className="mb-4 text-3xl md:text-4xl font-semibold leading-tight">
           You're on the list <br />{" "}
           <span className="text-4xl md:text-5xl lg:text-6xl">
-            {"#" + commify(placeData?.position ?? 8325)}
+            {"#" + commify(placeData?.position ?? "")}
           </span>
         </h2>
 
@@ -84,9 +85,7 @@ const WaitlistSignupForm = () => {
           <br /> when Union is ready to try out.
         </p>
 
-        <Button href={TWEET} target="_blank" rel="noopener" secondary>
-          Spread the word
-        </Button>
+        <TweetButton href={TWEET}>Spread the word</TweetButton>
       </div>
     );
 
