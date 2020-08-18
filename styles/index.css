@@ -235,6 +235,16 @@ input[type="number"] {
   @apply w-full px-6 mx-auto;
 }
 
+.container-lg {
+  @apply w-full px-4 mx-auto max-w-screen-xl-gutter;
+}
+
+@screen sm {
+  .container-lg {
+    @apply px-6;
+  }
+}
+
 .skew {
   @apply bg-pink-light absolute bottom-0 left-0 w-full;
   z-index: -2;
@@ -428,6 +438,20 @@ input[type="number"] {
 /* Tooltip Title Styles */
 .tooltip-text p:first-of-type {
   @apply font-semibold mb-2 text-type-base;
+}
+
+.crop-normal::before,
+.crop-normal::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-normal::before {
+  margin-top: calc((1 - 1.5) * 0.5em);
+}
+.crop-normal::after {
+  margin-bottom: calc((1 - 1.5) * 0.5em);
 }
 
 .crop-snug::before,
