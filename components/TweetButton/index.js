@@ -1,15 +1,11 @@
-const { default: Twitter } = require("svgs/Twitter");
+import Twitter from "svgs/Twitter";
 
 const TweetButton = ({ href, children, ...rest }) => (
-  <a
-    className="flex text-twitter font-semibold space-x-3"
-    href={href}
-    rel="noopener"
-    target="_blank"
-    {...rest}
-  >
-    <Twitter />
-    <span>{children}</span>
+  <a href={href} rel="noopener" target="_blank" {...rest}>
+    <div className="inline-flex space-x-3">
+      <Twitter />
+      <span className="text-twitter font-semibold">{children}</span>
+    </div>
   </a>
 );
 
