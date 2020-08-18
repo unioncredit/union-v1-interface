@@ -69,7 +69,7 @@ const Button = ({
         <div className="btn-icon">
           <Spinner />
         </div>
-        {submittingText}
+        <span className="ml-4">{submittingText}</span>
       </button>
     );
 
