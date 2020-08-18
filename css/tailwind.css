@@ -227,6 +227,10 @@ table td {
   max-width: 150%;
 }
 
+.radius-app {
+  border-radius: 16.3277px;
+}
+
 @screen sm {
   .app {
     height: unset;
@@ -474,4 +478,9 @@ input[type="number"] {
 /* pseudo pseudo selector */
 [data-reach-menu-item][data-selected] {
   @apply bg-border-light outline-none;
+}
+
+.hero-gradient {
+  background: linear-gradient(#fff, #fcf4f3);
+  background: linear-gradient(to bottom, #fff, ease-in, #fcf4f3);
 }
