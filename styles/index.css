@@ -579,3 +579,8 @@ input[type="number"] {
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
 }
+
+.gradient-pink-2-light {
+  background: linear-gradient(#fff, #f7eaeb);
+  background: linear-gradient(to bottom, #fff, ease-in, #f7eaeb);
+}
