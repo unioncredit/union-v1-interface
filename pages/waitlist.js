@@ -39,26 +39,28 @@ export default function WaitlistPage() {
         <div className="container-sm">
           <div className="md:flex md:space-x-16 space-y-8 md:space-y-0">
             <div>
-              <h3 className="text-2xl font-semibold mb-2">Trusted lending</h3>
-              <p className="text-lg">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">
+                Trusted lending
+              </h3>
+              <p className="sm:text-lg">
                 Lend your crypto assets to your friends and earn interest with
                 every repayment.{" "}
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-semibold mb-2">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">
                 Borrowing simplified
               </h3>
-              <p className="text-lg">
+              <p className="sm:text-lg">
                 Easily borrow cash on the fly from the friends who trust you,
                 without collateral.
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-semibold mb-2">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-2">
                 Earn from your cash
               </h3>
-              <p className="text-lg">
+              <p className="sm:text-lg">
                 Save up your spare cash in Union to earn interest in the form of
                 our native token, UNION.
               </p>
@@ -81,7 +83,7 @@ export default function WaitlistPage() {
         </div>
       </section>
 
-      <section className="border-t bg-white pt-8 sm:pt-12 md:pt-24 pb-0 sm:pb-12 md:pb-24">
+      <section className="border-t bg-white pt-12 md:pt-24 pb-0 sm:pb-12 md:pb-24">
         <div className="container-sm">
           <div className="flex flex-col sm:flex-row sm:space-x-16">
             <div className="w-full sm:w-2/3"></div>
