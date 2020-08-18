@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-export default function GovernanceView() {
+export default function StatsView() {
   return (
     <Fragment>
       <div className="container">
