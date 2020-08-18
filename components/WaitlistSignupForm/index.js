@@ -41,10 +41,16 @@ const signup = async (email) => {
   return data;
 };
 
+const TWEET = `https://twitter.com/intent/tweet?url=https%3A%2F%2Funion.finance%2Fwaitlist&via=unionprotocol&text=${encodeURIComponent(
+  "Let me be your credit limit. Join the waitlist"
+)}`;
+
 const WaitlistSignupForm = () => {
   const [placeData, placeDataSet] = useState(null);
 
-  const { handleSubmit, register, errors, formState } = useForm();
+  const { handleSubmit, register, errors, formState, watch } = useForm();
+
+  const watchedEmail = watch("email");
 
   const { isSubmitting, isSubmitted } = formState;
 
@@ -65,21 +71,20 @@ const WaitlistSignupForm = () => {
   if (isSubmitted && placeData)
     return (
       <div className="max-w-md">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl leading-none mb-6 md:mb-8 font-semibold">
-          {"#" + commify(placeData.position)}
+        <h2 className="mb-4 text-3xl md:text-4xl font-semibold leading-tight">
+          You're on the list <br />{" "}
+          <span className="text-4xl md:text-5xl lg:text-6xl">
+            {"#" + commify(placeData?.position ?? 8325)}
+          </span>
         </h2>
-        <p className="text-lg md:text-xl leading-tight font-normal mb-6 md:mb-8 md:max-w-md">
-          You're on the waitlist. We'll let you know when your invite to sign up
-          is ready.
+
+        <p className="text-lg mb-6">
+          We'll send an email to{" "}
+          <span className="underline">{watchedEmail ?? "your email"}</span>{" "}
+          <br /> when Union is ready to try out.
         </p>
 
-        <Button
-          href="https://twitter.com/unionprotocol"
-          target="_blank"
-          rel="noopener"
-          secondary
-          wide
-        >
+        <Button href={TWEET} target="_blank" rel="noopener" secondary>
           Spread the word
         </Button>
       </div>
@@ -87,22 +92,25 @@ const WaitlistSignupForm = () => {
 
   return (
     <div>
-      <h2 className="text-2xl md:text-3xl mb-6">Union Alpha</h2>
+      <h2 className="text-2xl md:text-3xl mb-6">
+        Borrow cash from friends, <br />
+        no collateral needed
+      </h2>
 
-      <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-sm">
-        Secure a spot on the waitlist for the Alpha program, or collect a{" "}
-        <strong>Golden Ticket</strong> to get early access.
+      <p className="text-lg mb-6 md:mb-10 md:max-w-lg">
+        Join the waitlist to become an Alpha tester of Union. Lend or borrow
+        cash from friends and stake your digital dollars to earn UNION tokens.
       </p>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
         method="POST"
-        className="sm:max-w-sm"
+        className="md:flex space-y-4 md:space-y-0 md:space-x-4 md:max-w-xl"
       >
         <Input
           type="email"
           name="email"
-          className="mb-4"
+          className="md:flex-1"
           autoComplete="email"
           placeholder="name@email.com"
           id="email"
@@ -118,6 +126,8 @@ const WaitlistSignupForm = () => {
 
         <Button
           full
+          wide
+          className="md:w-auto"
           type="submit"
           disabled={isSubmitting}
           submitting={isSubmitting}
