@@ -1,3 +1,4 @@
+import Tooltip from "@reach/tooltip";
 import ApplicationCard from "components/applicationCard";
 import BorrowModal from "components/BorrowModal";
 import { useBorrowModalToggle } from "components/BorrowModal/state";
@@ -5,6 +6,8 @@ import Button from "components/button";
 import LabelPair from "components/labelPair";
 import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
+import SuccessModal from "components/SuccessModal";
+import { useSuccessModalToggle } from "components/SuccessModal/state";
 import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
@@ -12,11 +15,10 @@ import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useTransactions from "hooks/useTransactions";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import Info from "svgs/Info";
 import { roundDown, roundUp, toPercent } from "util/numbers";
 import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
-import Tooltip from "@reach/tooltip";
 
 const getPctUsed = (borrowed, creditLimit) => {
   if (creditLimit === 0 && borrowed === 0) return 0;
@@ -28,7 +30,11 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
+  const toggleSuccessModal = useSuccessModalToggle();
+
   const { data: isMember = false } = useIsMember();
+
+  useEffect(() => toggleSuccessModal(), []);
 
   const {
     data: transactionsData,
@@ -185,6 +191,8 @@ export default function BorrowView() {
       />
 
       <RepayModal balanceOwed={borrowedRounded} onComplete={onComplete} />
+
+      <SuccessModal />
     </Fragment>
   );
 }

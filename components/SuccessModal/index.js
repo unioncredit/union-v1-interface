@@ -1,54 +1,31 @@
-import confetti from "canvas-confetti";
-import { useEffect } from "react";
-import Modal from "../modal";
-import Button from "../button";
-import { useRouter } from "next/router";
+import { commify } from "@ethersproject/units";
+import TweetButton from "components/TweetButton";
+import useCreditLimit from "hooks/useCreditLimit";
+import usePopConfetti from "hooks/usePopConfetti";
+import Modal, { CloseButton } from "../modal";
 import { useSuccessModalOpen, useSuccessModalToggle } from "./state";
 
-const SuccessModal = () => {
-  const router = useRouter();
+const TWEET = `https://twitter.com/intent/tweet?url=https%3A%2F%2Funion.finance&via=unionprotocol&text=${encodeURIComponent(
+  "I just became a member of Union. Need a vouch?"
+)}`;
 
+const SuccessModal = () => {
   const open = useSuccessModalOpen();
   const toggle = useSuccessModalToggle();
 
-  useEffect(() => {
-    (async function () {
-      if (open) {
-        const end = Date.now() + 1.5 * 1000;
+  const { data: creditLimit = 0 } = useCreditLimit();
 
-        (function frame() {
-          confetti({
-            particleCount: 8,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-          });
-
-          confetti({
-            particleCount: 8,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-          });
-
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        })();
-      }
-    })();
-  }, [open]);
-
-  const startBorrowing = () => {
-    toggle();
-    router.push("/borrow");
-  };
+  usePopConfetti(open);
 
   return (
     <Modal className="wide" isOpen={open} onDismiss={toggle}>
-      <div className="p-4 sm:p-6 text-center">
+      <div className="px-4 sm:px-6 pb-6 sm:pb-12 pt-8 sm:pt-12 text-center relative">
+        <div className="absolute right-0 top-0 mr-4 mt-4">
+          <CloseButton onClick={toggle} large />
+        </div>
+
         <div className="mb-12">
-          <h2 className="text-3xl mt-6 mb-8">
+          <h2 className="text-3xl mb-6">
             <span role="img" aria-label="Party Popper">
               🎉
             </span>{" "}
@@ -57,13 +34,24 @@ const SuccessModal = () => {
               🎊
             </span>
           </h2>
-          <p className="text-xl mb-2">You're now a Union member.</p>
-          <p>Don't worry though, no dues here from here on.</p>
+
+          <p className="text-2xl font-semibold mb-8">
+            You're now a member of Union.
+          </p>
+
+          <p className="text-lg mb-2">You now have the ability to:</p>
+
+          <ul className="text-lg">
+            <li className="mb-2">
+              Borrow up to <strong>{commify(creditLimit)} DAI</strong>
+            </li>
+            <li>
+              Vouch for your <strong>trusted friends</strong>
+            </li>
+          </ul>
         </div>
 
-        <Button full onClick={startBorrowing}>
-          Start borrowing
-        </Button>
+        <TweetButton href={TWEET}>I just became a member!</TweetButton>
       </div>
     </Modal>
   );

@@ -3,6 +3,7 @@ import Button from "components/button";
 import CreditRequestModal from "components/CreditRequestModal";
 import { useCreditRequestModalToggle } from "components/CreditRequestModal/state";
 import LabelPair from "components/labelPair";
+import SuccessModal from "components/SuccessModal";
 import VouchBar from "components/vouchBar";
 import VouchTable from "components/vouchTable";
 import useCreditLimit from "hooks/useCreditLimit";
@@ -62,6 +63,8 @@ export default function VouchView() {
       </div>
 
       <CreditRequestModal />
+
+      <SuccessModal />
     </Fragment>
   );
 }
