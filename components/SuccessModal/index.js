@@ -6,7 +6,7 @@ import Modal, { CloseButton } from "../modal";
 import { useSuccessModalOpen, useSuccessModalToggle } from "./state";
 
 const TWEET = `https://twitter.com/intent/tweet?url=https%3A%2F%2Funion.finance&via=unionprotocol&text=${encodeURIComponent(
-  "I just became a member of Union. Need a vouch?"
+  "I just became a Union member giving me instant access to credit without collateral. Apply to join the Union."
 )}`;
 
 const SuccessModal = () => {
