@@ -1,6 +1,7 @@
 import Button from "components/button";
 import StakeCard from "components/stakeCard";
 import StakeTable from "components/stakeTable";
+import SuccessModal from "components/SuccessModal";
 import TrustModal from "components/TrustModal";
 import { useTrustModalToggle } from "components/TrustModal/state";
 import TutorialModal from "components/TutorialModal";
@@ -57,6 +58,8 @@ export default function StakeView() {
       />
 
       <TutorialModal />
+
+      <SuccessModal />
     </Fragment>
   );
 }
