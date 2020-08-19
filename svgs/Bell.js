@@ -22,6 +22,8 @@ const Bell = ({ size = 24, pending = false }) => (
 
       circle {
         fill: rgba(65, 140, 252, 0);
+        stroke: #fff;
+        stroke-width: 2px;
       }
       .pending circle {
         fill: rgba(65, 140, 252, 1);
