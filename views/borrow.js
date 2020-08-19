@@ -30,11 +30,7 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const toggleSuccessModal = useSuccessModalToggle();
-
   const { data: isMember = false } = useIsMember();
-
-  useEffect(() => toggleSuccessModal(), []);
 
   const {
     data: transactionsData,
