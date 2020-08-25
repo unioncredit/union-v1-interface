@@ -1,6 +1,8 @@
 import { Menu, MenuButton, MenuList } from "@reach/menu-button";
 import { useWeb3React } from "@web3-react/core";
 import useActivity from "hooks/useActivity";
+import { useEffect, useState } from "react";
+import { useLocalStorage } from "react-use";
 import { Pending } from "svgs/Alerts";
 import Bell from "svgs/Bell";
 import BellCircle from "svgs/BellCircle";
@@ -12,11 +14,30 @@ import Identicon from "./identicon";
 const Activity = () => {
   const { chainId } = useWeb3React();
   const { data } = useActivity();
+  const [count, setCount] = useLocalStorage("notifications", 0);
+  const [hasPending, setHasPending] = useState(false);
+
+  useEffect(() => {
+    if (data && data.length && count !== data.length) {
+      setHasPending(true);
+    } else {
+      setHasPending(false);
+    }
+  }, [data, count]);
+
+  const handleUpdateNotifications = () => {
+    if (data && data.length) {
+      setCount(data.length);
+    }
+  };
 
   return (
     <Menu>
-      <MenuButton className="h-8 w-8 bg-white hover:bg-border-light transition-colors duration-150 items-center justify-center flex rounded focus:outline-none focus:shadow-outline">
-        <Bell pending={data && data.length > 0} />
+      <MenuButton
+        onClick={handleUpdateNotifications}
+        className="h-8 w-8 bg-white hover:bg-border-light transition-colors duration-150 items-center justify-center flex rounded focus:outline-none focus:shadow-outline"
+      >
+        <Bell pending={hasPending} />
       </MenuButton>
 
       <MenuList className="mt-4 w-80">
