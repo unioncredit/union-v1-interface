@@ -63,3 +63,11 @@ Query(
   )
 );
 ```
+
+##### `get_waitlist_total`
+
+```js
+Query(
+  Lambda("", Count(Match(Index("all_signups_by_sentGoldenTicket_flag"), false)))
+);
+```

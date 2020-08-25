@@ -22,4 +22,7 @@ type Query {
   "Returns the position of the email in the signups which haven't been sent invites, as well as the total of the signups remaining, additionally returns if the entered email has been sent a golden ticket yet"
   findPlaceInLine(email: String!): LinePositionObject!
     @resolver(name: "find_place_in_line")
+
+  "Returns the current number of signups which haven't been sent invites"
+  getWaitlistTotal: Int! @resolver(name: "get_waitlist_total")
 }
