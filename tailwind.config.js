@@ -94,7 +94,6 @@ module.exports = {
       },
       spacing: {
         "2px": "2px",
-        "72": "18rem",
       },
       screens: {
         sm: "768px",
@@ -103,10 +102,10 @@ module.exports = {
         xl: "1440px",
       },
       backgroundOpacity: {
-        "10": "0.1",
+        10: "0.1",
       },
       lineHeight: {
-        "12": "3rem",
+        12: "3rem",
       },
       fontSize: {
         "3xl": "2rem",
@@ -132,5 +131,11 @@ module.exports = {
   corePlugins: {
     float: false,
     container: false,
+  },
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
+  experimental: {
+    extendedSpacingScale: true,
   },
 };
