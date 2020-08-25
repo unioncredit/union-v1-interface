@@ -443,7 +443,7 @@ input[type="number"] {
 
 [data-reach-menu],
 [data-reach-menu-popover] {
-  @apply origin-top-right absolute right-0 mt-2 w-56 z-50;
+  @apply block absolute z-50;
 }
 
 [data-reach-menu][hidden],
@@ -451,16 +451,16 @@ input[type="number"] {
   display: none;
 }
 
-[data-reach-menu-button] {
+.btn-menu-button[data-reach-menu-button] {
   @apply font-medium px-4 py-3 rounded border bg-border-light leading-snug transition-colors duration-150 inline-flex items-center;
 }
-[data-reach-menu-button]:focus {
+.btn-menu-button[data-reach-menu-button]:focus {
   @apply shadow-outline outline-none;
 }
 
 [data-reach-menu-list],
 [data-reach-menu-items] {
-  @apply block rounded whitespace-no-wrap border bg-white p-2 outline-none shadow-input;
+  @apply block rounded whitespace-no-wrap border bg-white outline-none shadow-input;
 }
 
 /*
