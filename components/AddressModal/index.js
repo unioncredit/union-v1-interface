@@ -5,13 +5,12 @@ import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
-import useCurrentToken from "hooks/useCurrentToken";
 import useENSName from "hooks/useENSName";
 import useToast, { FLAVORS } from "hooks/useToast";
+import useTrustData from "hooks/useTrustData";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { mutate } from "swr";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
@@ -87,8 +86,7 @@ const ADDRESS_VIEWS = {
 };
 
 const AddressModal = ({ address, vouched, trust, used, health }) => {
-  const { account, library, chainId } = useWeb3React();
-  const curToken = useCurrentToken("DAI");
+  const { library, chainId } = useWeb3React();
 
   const isOpen = useAddressModalOpen();
   const toggle = useAddressModalToggle();
@@ -110,6 +108,8 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const [removingAddress, removingAddressSet] = useState(false);
   const removeVouch = useRemoveVouch();
+
+  const { mutate: updateTrustData } = useTrustData();
 
   const addToast = useToast();
 
@@ -137,10 +137,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
         removingAddressSet(false);
 
-        /**
-         * @note Temp fix to update trust data after updating for now
-         */
-        await mutate(["Trust", account, curToken, library]);
+        await updateTrustData();
 
         return;
       }
@@ -164,10 +161,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   const onComplete = async () => {
     toggle();
 
-    /**
-     * @note Temp fix to update trust data after updating for now
-     */
-    await mutate(["Trust", account, curToken, library]);
+    await updateTrustData();
   };
 
   return (

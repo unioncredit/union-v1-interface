@@ -1,4 +1,3 @@
-import { isAddress } from "@ethersproject/address";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
@@ -7,16 +6,16 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
 import useMemberContract from "hooks/useMemberContract";
 import useToast, { FLAVORS } from "hooks/useToast";
+import useTrustData from "hooks/useTrustData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { mutate } from "swr";
+import errorMessages from "text/errorMessages";
 import handleTxError from "util/handleTxError";
+import validateAddress from "util/validateAddress";
 import Button from "../button";
 import Input from "../input";
 import Modal, { ModalHeader } from "../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
-import validateAddress from "util/validateAddress";
-import errorMessages from "text/errorMessages";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
   const { chainId, account, library } = useWeb3React();
@@ -42,6 +41,8 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
   const addToast = useToast();
 
   const { data: isMember = null } = useIsMember();
+
+  const { mutate: updateTrustData } = useTrustData();
 
   const memberContract = useMemberContract();
 
@@ -91,10 +92,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
         addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
 
-        /**
-         * @note Temp fix to update trust data after updating for now
-         */
-        await mutate(["Trust", account, curToken, library]);
+        await updateTrustData();
 
         return;
       }
