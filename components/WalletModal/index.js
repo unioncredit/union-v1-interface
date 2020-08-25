@@ -104,7 +104,11 @@ const WalletModal = () => {
   const triedEager = useEagerConnect();
 
   return (
-    <Modal isOpen={open} onDismiss={toggle}>
+    <Modal
+      isOpen={open}
+      onDismiss={toggle}
+      dangerouslyBypassFocusLock={activatingConnector}
+    >
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <div className="mb-10">
           <p className="text-center text-xl mb-3">

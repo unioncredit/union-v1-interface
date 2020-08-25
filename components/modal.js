@@ -44,9 +44,22 @@ export const ModalHeader = ({ title, onDismiss }) => (
   </div>
 );
 
-const Modal = ({ isOpen, onDismiss, children, label = "Modal", ...rest }) => {
+const Modal = ({
+  children,
+  dangerouslyBypassFocusLock,
+  initialFocusRef,
+  isOpen,
+  label = "Modal",
+  onDismiss,
+  ...rest
+}) => {
   return (
-    <DialogOverlay isOpen={isOpen} onDismiss={onDismiss}>
+    <DialogOverlay
+      isOpen={isOpen}
+      onDismiss={onDismiss}
+      initialFocusRef={initialFocusRef}
+      dangerouslyBypassFocusLock={dangerouslyBypassFocusLock}
+    >
       <DialogContent aria-label={label} {...rest}>
         {children}
       </DialogContent>
@@ -55,10 +68,12 @@ const Modal = ({ isOpen, onDismiss, children, label = "Modal", ...rest }) => {
 };
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func.isRequired,
-  label: PropTypes.string,
   children: PropTypes.any,
+  dangerouslyBypassFocusLock: PropTypes.bool,
+  initialFocusRef: PropTypes.any,
+  isOpen: PropTypes.bool.isRequired,
+  label: PropTypes.string,
+  onDismiss: PropTypes.func.isRequired,
 };
 
 export default Modal;
