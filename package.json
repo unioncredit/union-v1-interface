@@ -33,7 +33,7 @@
     "canvas-confetti": "^1.2.0",
     "classnames": "^2.2.6",
     "cogo-toast": "^4.2.3",
-    "dayjs": "^1.8.33",
+    "dayjs": "^1.8.34",
     "fathom-client": "^3.0.0",
     "graphql-request": "^2.0.0",
     "next": "^9.5.2",
@@ -43,13 +43,13 @@
     "qrcode.react": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hook-form": "^6.3.2",
+    "react-hook-form": "^6.5.2",
     "react-jazzicon-custom-colors": "^0.1.7",
     "react-ridge-state": "^4.1.6",
     "react-table": "^7.5.0",
     "react-use": "^15.3.3",
-    "swr": "^0.3.0",
-    "tailwindcss": "^1.6.2"
+    "swr": "^0.3.1",
+    "tailwindcss": "^1.7.3"
   },
   "devDependencies": {
     "babel-plugin-macros": "^2.8.0",
@@ -58,8 +58,8 @@
     "husky": "^4.2.5",
     "postcss-easing-gradients": "^3.0.1",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1",
+    "prettier": "^2.1.0",
+    "pretty-quick": "^3.0.0",
     "source-map": "^0.7.3"
   },
   "repository": {
