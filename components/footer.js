@@ -49,14 +49,7 @@ const Footer = () => {
               <li className="sm:mb-0">© 2020 Union.Finance</li>
             </ul>
           </div>
-          <ul className="flex w-1/4 justify-end  space-x-4">
-            <li>
-              <a href="https://discord.gg/cwTNFP" aria-label="Discord">
-                <div className="p-2px">
-                  <Discord size={20} color="currentColor" />
-                </div>
-              </a>
-            </li>
+          <ul className="flex w-1/4 justify-end space-x-4">
             <li>
               <a href="https://github.com/unioncredit" aria-label="Github">
                 <div className="p-2px">
