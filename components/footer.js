@@ -1,6 +1,5 @@
 import GitHub from "svgs/GitHub";
 import Twitter from "svgs/Twitter";
-import Discord from "svgs/Discord";
 
 const FOOTER_LINKS = [
   // {
