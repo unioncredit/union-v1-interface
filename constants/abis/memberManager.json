@@ -150,6 +150,21 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "MAX_TRUST_LIMIT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "STAKING_MANAGER",
     "outputs": [
       {
@@ -392,9 +407,9 @@
     "name": "getCreditLimit",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "",
-        "type": "uint256"
+        "type": "int256"
       }
     ],
     "payable": false,
@@ -697,21 +712,6 @@
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "maxTrustLimit",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -807,29 +807,33 @@
     "type": "function"
   },
   {
-    "constant": true,
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "borrower",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "",
+        "name": "token",
         "type": "address"
-      }
-    ],
-    "name": "trustList",
-    "outputs": [
+      },
       {
         "internalType": "uint256",
-        "name": "count",
+        "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isBorrow",
+        "type": "bool"
       }
     ],
+    "name": "updateLockedData",
+    "outputs": [],
     "payable": false,
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

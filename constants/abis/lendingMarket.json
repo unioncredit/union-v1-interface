@@ -391,9 +391,9 @@
     "name": "getCreditLimit",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "",
-        "type": "uint256"
+        "type": "int256"
       }
     ],
     "payable": false,
@@ -474,9 +474,9 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "int256",
         "name": "limit",
-        "type": "uint256"
+        "type": "int256"
       },
       {
         "internalType": "bool",
@@ -663,11 +663,6 @@
         "internalType": "uint256",
         "name": "lastRepay",
         "type": "uint256"
-      },
-      {
-        "internalType": "enum LendingMarket.LoanStatus",
-        "name": "lastStatus",
-        "type": "uint8"
       }
     ],
     "payable": false,
