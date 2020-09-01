@@ -32,11 +32,6 @@ const DepositModal = ({ totalStake, onComplete }) => {
     reset,
   } = useForm();
 
-  useEffect(() => {
-    reset();
-    updateDaiBalance();
-  }, [open]);
-
   const { isDirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount", 0);
@@ -47,6 +42,11 @@ const DepositModal = ({ totalStake, onComplete }) => {
   const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
     DAI
   );
+
+  useEffect(() => {
+    reset();
+    updateDaiBalance();
+  }, [open]);
 
   const flooredDaiBalance = roundDown(daiBalance);
 
