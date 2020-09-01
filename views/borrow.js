@@ -1,5 +1,4 @@
-import Tooltip from "@reach/tooltip";
-import ApplicationCard from "components/applicationCard";
+import ApplicationCard from "components/ApplicationCard";
 import BorrowModal from "components/BorrowModal";
 import { useBorrowModalToggle } from "components/BorrowModal/state";
 import Button from "components/button";
@@ -8,22 +7,14 @@ import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import SuccessModal from "components/SuccessModal";
 import Transaction, { TransactionSkeleton } from "components/transaction";
-import UtilizationBar from "components/utilizationBar";
+import { UtilizationBarWithPercentage } from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useTransactions from "hooks/useTransactions";
 import Link from "next/link";
 import { Fragment } from "react";
-import Info from "svgs/Info";
 import { roundDown, roundUp, toPercent } from "util/numbers";
-import { minimumPaymentDueTip, percentUtilizedTip } from "../text/tooltips";
-
-const getPctUsed = (borrowed, creditLimit) => {
-  if (creditLimit === 0 && borrowed === 0) return 0;
-
-  return borrowed / (creditLimit + borrowed);
-};
 
 export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
@@ -67,52 +58,38 @@ export default function BorrowView() {
           <h1 className="h-12 leading-12">Dashboard</h1>
         </div>
 
-        <div className="flex flex-col md:flex-row -mx-3 mb-10">
-          <div className="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row md:space-x-6 mb-10">
+          <div className="w-full md:w-1/2 mb-4 md:mb-0">
             <div className="bg-black-pure border border-black-pure rounded p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
-                  value={roundDown(creditLimit)}
-                  valueType="DAI"
                   large
                   outline={true}
+                  value={roundDown(creditLimit)}
+                  valueType="DAI"
                 />
 
                 <Button
-                  tertiary
                   disabled={isMember === true ? false : true}
                   onClick={toggleBorrowModal}
+                  tertiary
+                  wide
                 >
                   Borrow
                 </Button>
               </div>
 
-              <dl className="flex flex-col md:flex-row justify-between md:items-center py-2">
-                <dt className="leading-tight whitespace-no-wrap mb-4 md:mb-0">
-                  <Tooltip label={percentUtilizedTip}>
-                    <div className="flex items-center cursor-help">
-                      <div className="mr-2">Percent Utilization</div>
-                      <Info light />
-                    </div>
-                  </Tooltip>
-                </dt>
-                <dd className="leading-tight whitespace-no-wrap font-semibold text-lg text-right">
-                  <div className="flex items-center">
-                    <p className="mr-4 text-white">
-                      {toPercent(
-                        getPctUsed(borrowedRounded, roundDown(creditLimit))
-                      )}
-                    </p>
-                    <UtilizationBar
-                      usage={Number(
-                        getPctUsed(borrowedRounded, roundDown(creditLimit)) *
-                          100
-                      )}
-                    />
-                  </div>
-                </dd>
-              </dl>
+              <LabelPair
+                label="Percent Utilization"
+                value={
+                  <UtilizationBarWithPercentage
+                    borrowed={borrowedRounded}
+                    creditLimit={creditLimit}
+                  />
+                }
+                responsive
+              />
 
               <div className="md:flex justify-between py-2">
                 <p className="text-sm mb-4 md:mb-0">
@@ -125,7 +102,7 @@ export default function BorrowView() {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 px-3">
+          <div className="w-full md:w-1/2">
             <div className="bg-white border rounded p-6">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
@@ -138,6 +115,7 @@ export default function BorrowView() {
                 <Button
                   disabled={isMember === true ? false : true}
                   onClick={toggleRepayModal}
+                  wide
                 >
                   Repay
                 </Button>
@@ -145,7 +123,6 @@ export default function BorrowView() {
 
               <LabelPair
                 className="text-type-light"
-                tooltip={minimumPaymentDueTip}
                 label="Minimum Payment Due"
                 valueType="DAI"
                 value={roundUp(interest)}
