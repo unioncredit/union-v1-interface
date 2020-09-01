@@ -68,7 +68,7 @@
     "lint-staged": "^10.2.13",
     "postcss-easing-gradients": "^3.0.1",
     "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.1.0",
+    "prettier": "^2.1.1",
     "pretty-quick": "^3.0.0",
     "source-map": "^0.7.3"
   },
