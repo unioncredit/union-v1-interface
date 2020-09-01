@@ -14,34 +14,42 @@ export default function useRepay() {
   const marketRegistryContract = useMarketRegistryContract();
   const tokenContract = useTokenContract(tokenAddress);
 
-  return useCallback(async (amount) => {
-    const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+  return useCallback(
+    /**
+     * @param {Number|String} amount
+     *
+     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
+     */
+    async (amount) => {
+      const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
-    const lendingMarketContract = new Contract(
-      marketAddress,
-      LENDING_MARKET_ABI,
-      library.getSigner()
-    );
-
-    const repayAmount = parseUnits(String(amount), 18);
-
-    const allowance = await tokenContract.allowance(account, marketAddress);
-
-    if (allowance.lt(repayAmount))
-      await tokenContract.approve(marketAddress, MaxUint256);
-
-    let gasLimit;
-    try {
-      gasLimit = await lendingMarketContract.estimateGas.repay(
-        account,
-        repayAmount.toString()
+      const lendingMarketContract = new Contract(
+        marketAddress,
+        LENDING_MARKET_ABI,
+        library.getSigner()
       );
-    } catch (err) {
-      gasLimit = 3000000;
-    }
 
-    return lendingMarketContract.repay(account, repayAmount.toString(), {
-      gasLimit,
-    });
-  }, []);
+      const repayAmount = parseUnits(String(amount), 18);
+
+      const allowance = await tokenContract.allowance(account, marketAddress);
+
+      if (allowance.lt(repayAmount))
+        await tokenContract.approve(marketAddress, MaxUint256);
+
+      let gasLimit;
+      try {
+        gasLimit = await lendingMarketContract.estimateGas.repay(
+          account,
+          repayAmount.toString()
+        );
+      } catch (err) {
+        gasLimit = 3000000;
+      }
+
+      return lendingMarketContract.repay(account, repayAmount.toString(), {
+        gasLimit,
+      });
+    },
+    []
+  );
 }

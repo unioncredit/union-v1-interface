@@ -8,20 +8,28 @@ export default function useRemoveVouch() {
   const tokenAddress = useCurrentToken();
   const memberContract = useMemberContract();
 
-  return useCallback(async (memberAddress) => {
-    let gasLimit;
-    try {
-      gasLimit = await memberContract.estimateGas.cancelVouch(
-        account,
-        memberAddress,
-        tokenAddress
-      );
-    } catch (err) {
-      gasLimit = 300000;
-    }
+  return useCallback(
+    /**
+     * @param {String} memberAddress
+     *
+     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
+     */
+    async (memberAddress) => {
+      let gasLimit;
+      try {
+        gasLimit = await memberContract.estimateGas.cancelVouch(
+          account,
+          memberAddress,
+          tokenAddress
+        );
+      } catch (err) {
+        gasLimit = 300000;
+      }
 
-    return memberContract.cancelVouch(account, memberAddress, tokenAddress, {
-      gasLimit,
-    });
-  }, []);
+      return memberContract.cancelVouch(account, memberAddress, tokenAddress, {
+        gasLimit,
+      });
+    },
+    []
+  );
 }

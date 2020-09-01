@@ -14,32 +14,40 @@ export default function useStakeDeposit() {
   const tokenAddress = useCurrentToken();
   const tokenContract = useTokenContract(tokenAddress);
 
-  return useCallback(async (amount) => {
-    const stakeAmount = parseUnits(String(amount), 18);
+  return useCallback(
+    /**
+     * @param {String|Number} amount
+     *
+     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
+     */
+    async (amount) => {
+      const stakeAmount = parseUnits(String(amount), 18);
 
-    const allowance = await tokenContract.allowance(
-      account,
-      STAKING_MANAGER_ADDRESSES[chainId]
-    );
-
-    if (allowance.lt(stakeAmount))
-      await tokenContract.approve(
-        STAKING_MANAGER_ADDRESSES[chainId],
-        MaxUint256
+      const allowance = await tokenContract.allowance(
+        account,
+        STAKING_MANAGER_ADDRESSES[chainId]
       );
 
-    let gasLimit;
-    try {
-      gasLimit = await stakingContract.estimateGas.stake(
-        tokenAddress,
-        stakeAmount.toString()
-      );
-    } catch (err) {
-      gasLimit = 3000000;
-    }
+      if (allowance.lt(stakeAmount))
+        await tokenContract.approve(
+          STAKING_MANAGER_ADDRESSES[chainId],
+          MaxUint256
+        );
 
-    return stakingContract.stake(tokenAddress, stakeAmount.toString(), {
-      gasLimit,
-    });
-  }, []);
+      let gasLimit;
+      try {
+        gasLimit = await stakingContract.estimateGas.stake(
+          tokenAddress,
+          stakeAmount.toString()
+        );
+      } catch (err) {
+        gasLimit = 3000000;
+      }
+
+      return stakingContract.stake(tokenAddress, stakeAmount.toString(), {
+        gasLimit,
+      });
+    },
+    []
+  );
 }
