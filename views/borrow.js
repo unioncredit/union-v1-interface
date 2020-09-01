@@ -60,7 +60,7 @@ export default function BorrowView() {
 
         <div className="flex flex-col md:flex-row md:space-x-6 mb-10">
           <div className="w-full md:w-1/2 mb-4 md:mb-0">
-            <div className="bg-black-pure border border-black-pure rounded p-6 text-white">
+            <div className="bg-black-pure border border-black-pure rounded p-4 sm:p-6 text-white">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Available Credit"
@@ -91,7 +91,7 @@ export default function BorrowView() {
                 responsive
               />
 
-              <div className="md:flex justify-between py-2">
+              <div className="md:flex justify-between pt-2 pb-0">
                 <p className="text-sm mb-4 md:mb-0">
                   Current Rate: {formatApr} APR
                 </p>
@@ -103,7 +103,7 @@ export default function BorrowView() {
             </div>
           </div>
           <div className="w-full md:w-1/2">
-            <div className="bg-white border rounded p-6">
+            <div className="bg-white border rounded p-4 sm:p-6">
               <div className="flex justify-between items-start mb-10">
                 <LabelPair
                   label="Balance Owed"
@@ -129,7 +129,7 @@ export default function BorrowView() {
               />
 
               <LabelPair
-                className="text-type-light"
+                className="text-type-light pb-0"
                 label="Payment Due Date"
                 value={paymentDueDate}
               />

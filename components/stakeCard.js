@@ -53,7 +53,7 @@ const StakeCard = () => {
   };
 
   return (
-    <div className="bg-pink-light border border-pink-pure rounded p-6">
+    <div className="bg-pink-light border border-pink-pure rounded p-4 sm:p-6">
       <LabelPair
         className="mb-4"
         label="Your total stake"
