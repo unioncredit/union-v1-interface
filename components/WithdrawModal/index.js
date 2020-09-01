@@ -101,9 +101,9 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
       <form
         method="POST"
         onSubmit={handleSubmit(onSubmit)}
-        className="px-4 py-6 sm:px-6 sm:py-8"
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
       >
-        <dl className="flex justify-between py-2 items-center mb-4 leading-tight">
+        <dl className="flex justify-between items-center mb-4">
           <dt>Current total stake</dt>
           <dd className="text-right">{`${totalStake} DAI`}</dd>
         </dl>
@@ -116,7 +116,6 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           name="amount"
           type="number"
           label="Amount"
-          className="mb-8"
           placeholder="0.00"
           setMaxValue={withdrawableStake}
           setMax={handleSetMax}
@@ -134,23 +133,25 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
           })}
         />
 
-        <div className="divider" />
-
         <LabelPair
-          className="mb-6 mt-4"
+          className="mt-4 mb-2"
           label="New total stake"
           value={formatNewTotalStake}
           valueType="DAI"
         />
 
-        <Button
-          full
-          type="submit"
-          submitting={isSubmitting}
-          disabled={isSubmitting || !isDirty}
-        >
-          Confirm
-        </Button>
+        <div className="divider" />
+
+        <div className="mt-6">
+          <Button
+            full
+            type="submit"
+            submitting={isSubmitting}
+            disabled={isSubmitting || !isDirty}
+          >
+            Confirm
+          </Button>
+        </div>
       </form>
     </Modal>
   );

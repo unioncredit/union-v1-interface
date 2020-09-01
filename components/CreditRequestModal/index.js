@@ -126,7 +126,7 @@ const CreditRequestModal = () => {
             })}
           />
 
-          <div className="mt-20">
+          <div className="mt-6">
             <Button full type="submit">
               Generate link
             </Button>

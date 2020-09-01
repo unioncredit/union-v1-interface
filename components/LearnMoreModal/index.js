@@ -36,11 +36,11 @@ const LearnMoreModal = () => {
         </h2>
 
         <div className="mx-auto max-w-3xl">
-          <div className="md:flex md:-mx-2 ">
-            <div className="md:w-1/2 md:px-2 mb-6">
+          <div className="md:flex md:space-x-4">
+            <div className="md:w-1/2 mb-6">
               <Solo onClick={handleStartStaking} hasButton />
             </div>
-            <div className="md:w-1/2 md:px-2 mb-6">
+            <div className="md:w-1/2 mb-6">
               <Together onClick={handleSwapModals} hasButton />
             </div>
           </div>
