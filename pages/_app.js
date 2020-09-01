@@ -4,12 +4,14 @@ import Footer from "components/footer";
 import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
 import useFathom from "hooks/useFathom";
+import useNProgress from "hooks/useNProgress";
 import getLibrary from "lib/getLibrary";
 import "../styles/index.css";
 import Error from "./_error";
 
 export default function UnionApp({ Component, pageProps }) {
   useFathom();
+  useNProgress();
 
   return (
     <ErrorBoundary fallback={<Error />}>
