@@ -2,9 +2,9 @@ import { MaxUint256 } from "@ethersproject/constants";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { STAKING_MANAGER_ADDRESSES } from "constants/variables";
-import useCurrentToken from "hooks/useCurrentToken";
 import useStakingContract from "hooks/useStakingContract";
 import useTokenContract from "hooks/useTokenContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useStakeDeposit() {
