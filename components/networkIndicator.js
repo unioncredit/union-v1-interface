@@ -21,7 +21,7 @@ const NetworkIndicator = () => {
   if (chainId === 1 || !chainId) return null;
 
   return (
-    <div className="py-3 flex justify-center font-semibold text-center text-sm bg-black-pure shadow-lg text-white select-none">
+    <div className="py-3 flex justify-center font-semibold text-center text-sm bg-black-pure text-white select-none">
       <div className="flex items-center mx-auto">
         <NetworkDot color={NETWORKS[chainId].color} />
         <p className="ml-3 leading-none">{NETWORKS[chainId].name}</p>
