@@ -19,7 +19,7 @@ const LearnMoreModal = () => {
   };
 
   const handleSwapModals = async () => {
-    await toggleGetInvitedModal();
+    toggleGetInvitedModal();
 
     toggle();
   };
