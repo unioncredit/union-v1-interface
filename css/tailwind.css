@@ -1,9 +1,6 @@
 @tailwind base;
 
 :root {
-  --skeleton-base-color: hsl(210deg 9% 96%);
-  --skeleton-highlight-color: hsl(210deg 9% 97%);
-
   --radius: 4px;
 }
 
