@@ -17,7 +17,6 @@ import { useApplicationModalToggle } from "./ApplicationModal/state";
 import Tooltip from "@reach/tooltip";
 import Skeleton from "./Skeleton";
 
-// eslint-disable-next-line no-unused-vars
 const StakeTableRowSkeleton = () => (
   <tr>
     <td>
