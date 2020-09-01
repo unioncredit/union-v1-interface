@@ -2,7 +2,7 @@ import useIsMember from "hooks/useIsMember";
 import useTrustData from "hooks/useTrustData";
 import useTrustCountData from "hooks/useTrustCountData";
 import { Fragment, useMemo, useState } from "react";
-import { usePagination, useSortBy, useTable } from "react-table";
+import { useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
@@ -218,33 +218,22 @@ const StakeTable = () => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    rows,
     prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    state: { pageIndex },
   } = useTable(
     {
       columns: memoizedColumns,
       data: memoizedData,
       initialState: {
         sortBy: memoizedSortBy,
-        pageIndex: 0,
-        pageSize: 6,
       },
       disableSortRemove: true,
     },
-    useSortBy,
-    usePagination
+    useSortBy
   );
 
   return (
-    <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full flex flex-col">
+    <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full">
       <table className="w-full border-none" {...getTableProps()}>
         <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
@@ -256,7 +245,7 @@ const StakeTable = () => {
         </thead>
         <tbody {...getTableBodyProps()}>
           {data ? (
-            page.map((row) => {
+            rows.map((row) => {
               prepareRow(row);
               return (
                 // eslint-disable-next-line react/jsx-key
@@ -279,44 +268,7 @@ const StakeTable = () => {
         </tbody>
       </table>
 
-      {pageCount > 1 && (
-        <div className="flex justify-between items-center mt-auto pt-4 sm:pt-6">
-          <p className="text-xs uppercase font-semibold">
-            Page {pageIndex + 1} of {pageOptions.length}
-          </p>
-
-          <div className="flex">
-            <button
-              className="pagination-button"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-            >
-              <Chevron.Left size={14} />
-            </button>
-
-            {new Array(pageCount).fill("").map((_, index) => (
-              <button
-                className="pagination-button"
-                disabled={pageIndex === index}
-                key={index}
-                onClick={() => gotoPage(index)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-            <button
-              className="pagination-button"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-            >
-              <Chevron.Right size={14} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {data && page.length === 0 && <StakeTableEmptyState />}
+      {data && rows.length === 0 && <StakeTableEmptyState />}
 
       {activeRow && <AddressModal {...activeRow} />}
     </div>
