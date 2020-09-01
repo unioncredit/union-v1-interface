@@ -17,7 +17,7 @@ import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
 import { useSuccessModalToggle } from "../SuccessModal/state";
 
 const ApplicationModal = () => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const DAI = useCurrentToken("DAI");
   const UNION = useCurrentToken("UNION");
@@ -79,9 +79,7 @@ const ApplicationModal = () => {
         gasLimit: estimate,
       });
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -92,7 +90,7 @@ const ApplicationModal = () => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         isSubmittingSet(false);
 
@@ -113,7 +111,7 @@ const ApplicationModal = () => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   });
 

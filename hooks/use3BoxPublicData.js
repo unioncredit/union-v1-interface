@@ -14,5 +14,9 @@ const fetcher = async (address) => {
 export default function use3BoxPublicData(address) {
   const shouldFetch = typeof address === "string";
 
-  return useSWR(shouldFetch ? address : null, fetcher);
+  return useSWR(shouldFetch ? address : null, fetcher, {
+    shouldRetryOnError: false,
+    refreshWhenHidden: false,
+    revalidateOnFocus: false,
+  });
 }

@@ -14,8 +14,8 @@ import Modal, { ModalHeader } from "../modal";
 import { useDepositModalOpen, useDepositModalToggle } from "./state";
 import errorMessages from "text/errorMessages";
 
-const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
-  const { library, chainId } = useWeb3React();
+const DepositModal = ({ totalStake, onComplete }) => {
+  const { library } = useWeb3React();
 
   const stake = useStakeDeposit();
 
@@ -59,9 +59,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
     try {
       const tx = await stake(values.amount);
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -72,7 +70,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         await onComplete();
 
@@ -89,7 +87,7 @@ const DepositModal = ({ totalStake, rewardsMultiplier, onComplete }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   };
 

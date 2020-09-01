@@ -14,7 +14,7 @@ const ADJUST_TYPES = {
 };
 
 const AdjustTrustForm = ({ address, vouched, onComplete }) => {
-  const { library, chainId } = useWeb3React();
+  const { library } = useWeb3React();
 
   const { register, handleSubmit, watch, formState, errors } = useForm();
 
@@ -33,7 +33,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
   const addToast = useToast();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async () => {
     let hidePendingToast = () => {};
     let txReceipt = {};
 
@@ -41,9 +41,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
       if (formatNewTrust >= 0) {
         const tx = await adjustTrust(address, formatNewTrust);
 
-        const { hide: hidePending } = addToast(
-          FLAVORS.TX_PENDING(tx.hash, chainId)
-        );
+        const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
         hidePendingToast = hidePending;
 
@@ -52,7 +50,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
         if (receipt.status === 1) {
           hidePending();
 
-          addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+          addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
           onComplete();
 
@@ -70,7 +68,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   };
 
