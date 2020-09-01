@@ -70,8 +70,7 @@ export const healthTip = (
   <Fragment>
     <p>Health</p>
     <p>
-      This is how the member you trust is behaving regarding repaying what they
-      owed
+      This is how much of your voucher/backers trust you are currently using
     </p>
   </Fragment>
 );
