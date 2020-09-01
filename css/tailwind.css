@@ -1,5 +1,9 @@
 @tailwind base;
 
+:root {
+  --radius: 4px;
+}
+
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
