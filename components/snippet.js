@@ -9,7 +9,7 @@ const Snippet = () => (
       <div role="presentation">
         <pre role="presentation">
           <span role="presentation">
-            <span className="text-type-light">// Get max credit limit</span>
+            <span className="text-type-light">{"// Get max credit limit"}</span>
           </span>
         </pre>
         <pre role="presentation">
@@ -35,7 +35,7 @@ const Snippet = () => (
         <pre role="presentation">
           <span role="presentation">
             <span className="text-type-light">
-              // Borrow up to max credit limit
+              {"// Borrow up to max credit limit"}
             </span>
           </span>
         </pre>
