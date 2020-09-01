@@ -1,4 +1,5 @@
-import { graphql } from "lib/fauna/client";
+import { gql } from "graphql-request";
+import client from "lib/fauna/client";
 
 export default async function place(req, res) {
   if (req.method === "POST") {
@@ -7,7 +8,7 @@ export default async function place(req, res) {
     try {
       if (!email) throw new Error("'email' is Required");
 
-      const query = /* GraphQL */ `
+      const query = gql`
         query place($email: String!) {
           findPlaceInLine(email: $email) {
             position
@@ -21,7 +22,7 @@ export default async function place(req, res) {
         email,
       };
 
-      const data = await graphql.request(query, variables);
+      const data = await client.request(query, variables);
 
       res.status(200).json({ success: true, result: data.findPlaceInLine });
     } catch (e) {

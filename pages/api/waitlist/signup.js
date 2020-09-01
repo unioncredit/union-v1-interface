@@ -1,4 +1,5 @@
-import { graphql } from "lib/fauna/client";
+import { gql } from "graphql-request";
+import client from "lib/fauna/client";
 
 export default async function signup(req, res) {
   if (req.method === "POST") {
@@ -7,7 +8,7 @@ export default async function signup(req, res) {
     try {
       if (!email) throw new Error("'email' is Required");
 
-      const query = /* GraphQL */ `
+      const mutation = gql`
         mutation signup($email: String!) {
           createSignup(data: { email: $email, sentGoldenTicket: false }) {
             id: _id
@@ -20,7 +21,7 @@ export default async function signup(req, res) {
         email,
       };
 
-      const data = await graphql.request(query, variables);
+      const data = await client.request(mutation, variables);
 
       res.status(200).json({
         success: true,

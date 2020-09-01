@@ -1,15 +1,16 @@
-import { graphql } from "lib/fauna/client";
+import { gql } from "graphql-request";
+import client from "lib/fauna/client";
 
 export default async function place(req, res) {
   if (req.method === "GET") {
     try {
-      const query = /* GraphQL */ `
+      const query = gql`
         query {
           getWaitlistTotal
         }
       `;
 
-      const data = await graphql.request(query);
+      const data = await client.request(query);
 
       res.status(200).json({
         success: true,
