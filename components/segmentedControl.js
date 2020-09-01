@@ -7,7 +7,7 @@ const SegmentedControlButton = ({ active, onClick, label, small }) => {
   });
 
   return (
-    <div className="flex-1 px-2px">
+    <div className="flex-1">
       <button type="button" className={cachedClassNames} onClick={onClick}>
         {label}
       </button>
@@ -16,14 +16,11 @@ const SegmentedControlButton = ({ active, onClick, label, small }) => {
 };
 
 const SegmentedControlWrapper = ({ className, children }) => {
-  const cachedClassNames = classNames(
-    className,
-    "rounded p-1 bg-grey-light w-full"
-  );
+  const cachedClassNames = classNames(className, "p-1 bg-grey-light w-full");
 
   return (
-    <div className={cachedClassNames}>
-      <div className="flex -mx-2px">{children}</div>
+    <div className={cachedClassNames} style={{ borderRadius: 10 }}>
+      <div className="flex space-x-1">{children}</div>
     </div>
   );
 };
