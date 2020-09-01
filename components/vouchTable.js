@@ -1,3 +1,4 @@
+import Tooltip from "@reach/tooltip";
 import { useAutoCallback } from "hooks.macro";
 import { Fragment, useMemo } from "react";
 import { useExpanded, useSortBy, useTable } from "react-table";
@@ -9,36 +10,31 @@ import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
 import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
-import Tooltip from "@reach/tooltip";
+import Skeleton from "./Skeleton";
 
-const TableLoading = ({ count = 3, cellCount = 5 }) => {
-  const rows = new Array(count).fill("");
-  const cells = new Array(cellCount).fill("");
-
-  return (
-    <Fragment>
-      {rows.map((_, i) => (
-        <tr key={i}>
-          {cells.map((_, i) => {
-            if (i === 0)
-              return (
-                <td>
-                  <div className="font-medium focus:outline-none flex text-left">
-                    <div className="flex-grow-0 h-8">
-                      <div className="w-8 h-8 rounded-full bg-border-light" />
-                    </div>
-                    <p className="ml-4 flex-auto leading-loose">...</p>
-                  </div>
-                </td>
-              );
-
-            return <td key={i}>...</td>;
-          })}
-        </tr>
-      ))}
-    </Fragment>
-  );
-};
+// eslint-disable-next-line no-unused-vars
+const VouchTableRowSkeleton = () => (
+  <tr>
+    <td>
+      <div className="flex items-center" style={{ width: "11rem" }}>
+        <Skeleton width={32} height={32} circle style={{ display: "block" }} />
+        <Skeleton width={121} style={{ marginLeft: "1rem" }} />
+      </div>
+    </td>
+    <td className="hidden sm:table-cell">
+      <Skeleton width={128} />
+    </td>
+    <td className="hidden sm:table-cell">
+      <Skeleton width={85} />
+    </td>
+    <td className="hidden sm:table-cell">
+      <Skeleton width={70} />
+    </td>
+    <td className="hidden sm:table-cell text-right">
+      <Skeleton style={{ borderRadius: 2 }} />
+    </td>
+  </tr>
+);
 
 const VouchTableEmptyState = () => {
   const toggleGetInvitedModal = useGetInvitedModalToggle();
@@ -208,7 +204,7 @@ const VouchTable = ({ data }) => {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0))
+    if (data && data.length > 0)
       return data.sort((a, b) => b.vouched - a.vouched);
     return [];
   }, [data]);
@@ -263,6 +259,7 @@ const VouchTable = ({ data }) => {
       <table className="w-full border-none" {...getTableProps()}>
         <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
+            // eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(renderTheadColumns)}
             </tr>
@@ -272,6 +269,7 @@ const VouchTable = ({ data }) => {
           {rows.map((row) => {
             prepareRow(row);
             return (
+              // eslint-disable-next-line react/jsx-key
               <Fragment {...row.getRowProps()}>
                 <tr>{row.cells.map(renderTbodyCells)}</tr>
                 {row.isExpanded ? (
