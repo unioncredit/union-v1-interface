@@ -139,11 +139,17 @@ const renderTheadColumns = (column) => {
 /**
  * @name renderTbodyCells
  * @param {import("react-table").Cell} cell
+ * @param {array} memoizedData
  */
-const renderTbodyCells = (cell) => {
+const renderTbodyCells = (cell, memoizedData) => {
   const {
     column: { Header },
+    row: { values },
   } = cell;
+
+  const cellData = memoizedData
+    .filter(({ address }) => address === values.address)
+    .pop();
 
   if (Header === "Address")
     return (
@@ -162,7 +168,7 @@ const renderTbodyCells = (cell) => {
   if (Header === "Health")
     return (
       <td {...cell.getCellProps()}>
-        <HealthBar health={cell.value} />
+        <HealthBar health={cell.value} isPoisoned={cellData.isOverdue} />
       </td>
     );
 
@@ -265,7 +271,9 @@ const StakeTable = () => {
                   className="cursor-pointer"
                   onClick={handleRowClick(row)}
                 >
-                  {row.cells.map(renderTbodyCells)}
+                  {row.cells.map((cell) =>
+                    renderTbodyCells(cell, memoizedData)
+                  )}
                 </tr>
               );
             })

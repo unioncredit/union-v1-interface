@@ -86,7 +86,7 @@ const ADDRESS_VIEWS = {
   ADJUST: "ADJUST",
 };
 
-const AddressModal = ({ address, vouched, trust, used, health }) => {
+const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
   const { library } = useWeb3React();
 
   const isOpen = useAddressModalOpen();
@@ -215,7 +215,12 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Health"
-                valueSlot={<HealthBar health={health} />}
+                valueSlot={<HealthBar health={health} isPoisoned={isOverdue} />}
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Status"
+                value={isOverdue ? "Overdue" : "In Good Standing"}
               />
             </div>
 

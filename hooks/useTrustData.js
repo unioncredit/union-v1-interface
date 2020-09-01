@@ -53,6 +53,7 @@ const getTrust = (marketRegistryContract, memberContract) => async (
       return {
         address,
         health,
+        isOverdue,
         percentage,
         trust,
         used,
