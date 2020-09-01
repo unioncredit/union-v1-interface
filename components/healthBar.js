@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
  * @param {Number} health The health of the user, between 0 - 100
  */
 const HealthBar = ({ health }) => {
-  const fillWidth = health > 100 ? 100 : health < 0 ? 0 : health;
+  const fillWidth = health > 100 ? 100 : health <= 0 ? 2 : health;
 
   const fillColor =
     health >= 66 ? "#3fc37c" : health >= 33 ? "#F77849" : "#E61744";

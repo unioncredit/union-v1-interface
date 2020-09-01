@@ -108,6 +108,16 @@ export const percentUtilizedTip = (
   </Fragment>
 );
 
+export const utilizedVouchTip = (
+  <Fragment>
+    <p>Utilized</p>
+    <p>
+      This is how much of your voucher/backers vouch you are current using, if
+      you default, this is how much of their funds will be locked.
+    </p>
+  </Fragment>
+);
+
 export const feeTip = (
   <Fragment>
     <p>Fee</p>

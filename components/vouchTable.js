@@ -4,11 +4,10 @@ import { Fragment, useMemo } from "react";
 import { useExpanded, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
-import { healthTip } from "text/tooltips";
+import { utilizedVouchTip } from "text/tooltips";
 import Address from "./address";
 import Button from "./button";
 import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
-import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 import Skeleton from "./Skeleton";
 
@@ -19,9 +18,6 @@ const VouchTableRowSkeleton = () => (
         <Skeleton width={32} height={32} circle style={{ display: "block" }} />
         <Skeleton width={121} style={{ marginLeft: "1rem" }} />
       </div>
-    </td>
-    <td className="hidden sm:table-cell">
-      <Skeleton width={128} />
     </td>
     <td className="hidden sm:table-cell">
       <Skeleton width={85} />
@@ -86,11 +82,11 @@ const renderTheadColumns = (column) => {
       </th>
     );
 
-  if (Header === "Health")
+  if (Header === "Utilized")
     return (
       <th {...column.getHeaderProps(column.getSortByToggleProps())}>
         <div className="flex items-center">
-          <Tooltip label={healthTip}>
+          <Tooltip label={utilizedVouchTip}>
             <span className="flex items-center cursor-help">
               <div className="mr-2">
                 <Info size={16} />
@@ -130,10 +126,14 @@ const renderTbodyCells = (cell) => {
       </td>
     );
 
-  if (Header === "Percentage")
+  if (Header === "Utilized")
     return (
       <td {...cell.getCellProps()}>
-        <PercentageBar value={cell.value} index={index} />
+        <PercentageBar
+          value={cell.value}
+          index={index}
+          className="ml-auto sm:justify-end"
+        />
       </td>
     );
 
@@ -141,13 +141,6 @@ const renderTbodyCells = (cell) => {
     return (
       <td className="hidden sm:table-cell" {...cell.getCellProps()}>
         <span>{cell.value} DAI</span>
-      </td>
-    );
-
-  if (Header === "Health")
-    return (
-      <td className="hidden sm:table-cell" {...cell.getCellProps()}>
-        <HealthBar health={cell.value} />
       </td>
     );
 
@@ -185,10 +178,6 @@ const VouchTable = ({ data }) => {
         accessor: "address",
       },
       {
-        Header: "Percentage",
-        accessor: "percentage",
-      },
-      {
         Header: "Set Vouch",
         accessor: "vouched",
       },
@@ -197,8 +186,8 @@ const VouchTable = ({ data }) => {
         accessor: "available",
       },
       {
-        Header: "Health",
-        accessor: "health",
+        Header: "Utilized",
+        accessor: "utilized",
       },
     ],
     []
@@ -210,7 +199,7 @@ const VouchTable = ({ data }) => {
     return [];
   }, [data]);
 
-  const memoizedSortBy = useMemo(() => [{ id: "health", desc: true }], []);
+  const memoizedSortBy = useMemo(() => [{ id: "utilized", desc: true }], []);
 
   const {
     getTableProps,
@@ -233,22 +222,18 @@ const VouchTable = ({ data }) => {
   );
 
   const renderRowSubComponent = useAutoCallback((row) => {
-    const { vouched, available, health } = row.values;
+    const { vouched, available } = row.values;
 
     return (
       <div className="bg-border-light text-type-light -m-4 px-4 py-3">
-        <ul className="ml-10">
-          <li className="h-5 leading-tight flex justify-between items-center mb-3">
+        <ul className="ml-10 space-y-3">
+          <li className="h-5 leading-tight flex justify-between items-center">
             <p className="text-sm">Vouched</p>
             <p>{Number(vouched).toFixed()} DAI</p>
           </li>
-          <li className="h-5 leading-tight flex justify-between items-center mb-3">
+          <li className="h-5 leading-tight flex justify-between items-center">
             <p className="text-sm">Available</p>
             <p>{Number(available).toFixed()} DAI</p>
-          </li>
-          <li className="h-5 leading-tight flex justify-between items-center">
-            <p className="text-sm">Health</p>
-            <HealthBar health={health} />
           </li>
         </ul>
       </div>

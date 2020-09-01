@@ -23,10 +23,6 @@ const getVouch = (
     library.getSigner()
   );
 
-  const creditLimitRes = await marketContract.getCreditLimit(account);
-
-  const creditLimit = parseRes(creditLimitRes);
-
   const addresses = await memberContract.getStakerAddresses(
     account,
     tokenAddress
@@ -34,11 +30,11 @@ const getVouch = (
 
   const list = await Promise.all(
     addresses.map(async (address) => {
-      const res = await memberContract.getStakerAsset(
-        account,
-        address,
-        tokenAddress
-      );
+      const {
+        vouchingAmount,
+        lockedStake,
+        trustAmount,
+      } = await memberContract.getStakerAsset(account, address, tokenAddress);
 
       const totalUsed = Number(
         formatUnits(
@@ -56,9 +52,11 @@ const getVouch = (
 
       const isOverdue = await marketContract.checkIsOverdue(address);
 
-      const vouched = parseRes(res.vouchingAmount);
+      const vouched = parseRes(vouchingAmount);
 
-      const used = parseRes(res.lockedStake);
+      const used = parseRes(lockedStake);
+
+      const trust = parseRes(trustAmount);
 
       const freeStakingAmount =
         stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
@@ -68,22 +66,15 @@ const getVouch = (
           ? freeStakingAmount.toFixed(2)
           : Number(vouched - used).toFixed(2);
 
-      const trust = parseRes(res.trustAmount);
-
-      const health = (Number(available) / vouched) * 100;
-
-      const calcPct = Number(parseFloat(available) / parseFloat(creditLimit));
-      const percentage =
-        calcPct > 1 ? 1 : typeof calcPct !== "number" ? 0 : calcPct;
+      const utilized = used / vouched;
 
       return {
         address,
         available,
-        health,
         isOverdue,
-        percentage,
         trust,
         used,
+        utilized,
         vouched,
       };
     })

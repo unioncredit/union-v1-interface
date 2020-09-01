@@ -1,13 +1,19 @@
 import pastels from "lib/pastels";
 import { toPercent } from "util/numbers";
+import classNames from "classnames";
 
-const PercentageBar = ({ value, index }) => {
+const PercentageBar = ({ value, index, className }) => {
   const pct = toPercent(value || 0);
 
+  const cachedClassNames = classNames(
+    className,
+    "flex justify-end sm:justify-start space-x-2"
+  );
+
   return (
-    <div className="flex justify-end sm:justify-start">
+    <div className={cachedClassNames}>
       <span className="h-4 w-20 bar" />
-      <span className="ml-2 leading-none">{pct}</span>
+      <span className="leading-none">{pct}</span>
       <style jsx>{`
         .bar {
           border-radius: 5px;
