@@ -155,7 +155,6 @@ input[type="number"] {
 .active-nav-tab {
   position: relative;
 }
-
 .active-nav-tab::after {
   position: absolute;
   content: "";
@@ -173,7 +172,6 @@ input[type="number"] {
 .container {
   @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
 }
-
 @screen sm {
   .container {
     @apply px-6;
@@ -191,31 +189,26 @@ input[type="number"] {
   transform: skew(0, -5deg) translateY(calc(50vw / 12));
   height: calc(100vmin - 4rem + 10rem + 8.5rem);
 }
-
 @media (width >= 338px) {
   .skew {
     height: calc(100vmin - 4rem + 10rem + 6rem);
   }
 }
-
 @media (width >= 375px) {
   .skew {
     height: calc(100vmin - 4rem + 10rem + 5rem);
   }
 }
-
 @media (width >= 896px) {
   .skew {
     height: 22rem;
   }
 }
-
 @media (width >= 968px) {
   .skew {
     height: 24rem;
   }
 }
-
 @media (width >= 1048px) {
   .skew {
     height: 27rem;
