@@ -11,28 +11,36 @@ export default function useBorrow() {
   const tokenAddress = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
 
-  return useCallback(async (amount) => {
-    const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+  return useCallback(
+    /**
+     * @param {Number|String} amount
+     *
+     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
+     */
+    async (amount) => {
+      const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
-    const lendingMarketContract = new Contract(
-      marketAddress,
-      LENDING_MARKET_ABI,
-      library.getSigner()
-    );
-
-    const borrowAmount = parseUnits(String(amount), 18);
-
-    let gasLimit;
-    try {
-      gasLimit = await lendingMarketContract.estimateGas.borrow(
-        borrowAmount.toString()
+      const lendingMarketContract = new Contract(
+        marketAddress,
+        LENDING_MARKET_ABI,
+        library.getSigner()
       );
-    } catch (err) {
-      gasLimit = 5000000;
-    }
 
-    return lendingMarketContract.borrow(borrowAmount.toString(), {
-      gasLimit,
-    });
-  }, []);
+      const borrowAmount = parseUnits(String(amount), 18);
+
+      let gasLimit;
+      try {
+        gasLimit = await lendingMarketContract.estimateGas.borrow(
+          borrowAmount.toString()
+        );
+      } catch (err) {
+        gasLimit = 5000000;
+      }
+
+      return lendingMarketContract.borrow(borrowAmount.toString(), {
+        gasLimit,
+      });
+    },
+    []
+  );
 }
