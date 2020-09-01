@@ -1,6 +1,5 @@
 import { OFAC_SANCTIONED } from "../constants/variables";
 import useSWR from "swr";
-import { useMemo } from "react";
 
 const ENDPOINT = "https://www.cloudflare.com/cdn-cgi/trace";
 
@@ -28,7 +27,7 @@ export default function useIsSanctioned() {
 
   let isSanctioned = false;
 
-  if (!!data) {
+  if (data) {
     const { loc } = keyValueToJSON(data);
 
     if (OFAC_SANCTIONED.includes(loc)) isSanctioned = true;
