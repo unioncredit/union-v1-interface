@@ -44,49 +44,58 @@ export function useIncreaseUnionAllowance() {
 
   const contract = useUnionContract();
 
-  const increase = useAutoCallback(async (amount) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
+  const increase = useAutoCallback(
+    /**
+     * @param {Number|String} amount
+     *
+     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
+     */
+    async (amount) => {
+      let hidePendingToast = () => {};
+      let txReceipt = {};
 
-    const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
+      const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
 
-    try {
-      const tx = await contract.approve(
-        MEMBER_MANAGER_ADDRESSES[chainId],
-        parseUnits(amount, 18).toString()
-      );
+      try {
+        const tx = await contract.approve(
+          MEMBER_MANAGER_ADDRESSES[chainId],
+          parseUnits(amount, 18).toString()
+        );
 
-      hideWaiting();
+        hideWaiting();
 
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING_TOKEN(tx.hash));
+        const { hide: hidePending } = addToast(
+          FLAVORS.TX_PENDING_TOKEN(tx.hash)
+        );
 
-      hidePendingToast = hidePending();
+        hidePendingToast = hidePending();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+        const receipt = await library.waitForTransaction(tx.hash);
 
-      if (receipt.status === 1) {
+        if (receipt.status === 1) {
+          hidePending();
+
+          addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash));
+
+          return;
+        }
+
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash));
+        txReceipt = receipt;
 
-        return;
+        throw new Error(receipt.logs[0]);
+      } catch (err) {
+        hideWaiting();
+
+        hidePendingToast();
+
+        const message = handleTxError(err);
+
+        addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
       }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
-    } catch (err) {
-      hideWaiting();
-
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
-  });
+  );
 
   return increase;
 }
