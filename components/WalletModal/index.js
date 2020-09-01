@@ -55,6 +55,9 @@ const WalletOptions = ({
           if (router.pathname === "/") router.push("/stake");
         };
 
+        if (name === "Injected" && !(window?.ethereum || window?.web3))
+          return null;
+
         return (
           <WalletOption
             key={i}
