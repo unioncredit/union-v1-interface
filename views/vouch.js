@@ -14,7 +14,7 @@ import getVouchBarData from "util/getVouchBarData";
 import { roundDown } from "util/numbers";
 
 export default function VouchView() {
-  const { data: isMember = false } = useIsMember();
+  const { data: isMember } = useIsMember();
 
   const toggleCreditRequestModal = useCreditRequestModalToggle();
 
@@ -46,8 +46,8 @@ export default function VouchView() {
 
         <VouchBar className="mb-10" slices={vouchBarSlices} />
 
-        <div className="mb-6">
-          <h1>Addresses who vouched for you</h1>
+        <div className="mb-4">
+          <h1 className="h-12 leading-12">Addresses who vouched for you</h1>
 
           <Button
             full

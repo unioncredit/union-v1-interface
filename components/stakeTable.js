@@ -15,6 +15,27 @@ import { useLearnMoreModalToggle } from "./LearnMoreModal/state";
 import { useTrustModalToggle } from "./TrustModal/state";
 import { useApplicationModalToggle } from "./ApplicationModal/state";
 import Tooltip from "@reach/tooltip";
+import Skeleton from "./Skeleton";
+
+const StakeTableRowSkeleton = () => (
+  <tr>
+    <td>
+      <div className="flex items-center" style={{ width: "12.1rem" }}>
+        <Skeleton width={32} height={32} circle style={{ display: "block" }} />
+        <Skeleton width={121} style={{ marginLeft: "1rem" }} />
+      </div>
+    </td>
+    <td className="hidden sm:table-cell">
+      <Skeleton width={85} />
+    </td>
+    <td className="hidden sm:table-cell">
+      <Skeleton width={70} />
+    </td>
+    <td className="text-right">
+      <Skeleton width={128} style={{ borderRadius: 2 }} />
+    </td>
+  </tr>
+);
 
 const StakeTableEmptyState = () => {
   const toggleLearnMoreModal = useLearnMoreModalToggle();
@@ -65,19 +86,21 @@ const StakeTableEmptyState = () => {
  * @name renderHeadRowSorting
  * @param {import("react-table").ColumnInstance} column
  */
-const renderSortIcons = (column) => (
-  <Fragment>
-    {column.isSorted ? (
-      column.isSortedDesc ? (
-        <Chevron.Down size={16} />
+const renderSortIcons = (column) => {
+  return (
+    <Fragment>
+      {column.isSorted ? (
+        column.isSortedDesc ? (
+          <Chevron.Down size={16} />
+        ) : (
+          <Chevron.Up size={16} />
+        )
       ) : (
-        <Chevron.Up size={16} />
-      )
-    ) : (
-      <Chevron.Down size={16} color="transparent" />
-    )}
-  </Fragment>
-);
+        <Chevron.Down size={16} color="transparent" />
+      )}
+    </Fragment>
+  );
+};
 
 /**
  * @name renderTheadColumns
@@ -185,7 +208,7 @@ const StakeTable = () => {
   );
 
   const memoizedData = useMemo(() => {
-    if (!!(data && data.length > 0)) return data;
+    if (data && data.length > 0) return data;
     return [];
   }, [data]);
 
@@ -214,28 +237,38 @@ const StakeTable = () => {
       <table className="w-full border-none" {...getTableProps()}>
         <thead className="hidden sm:table-header-group">
           {headerGroups.map((headerGroup) => (
+            // eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(renderTheadColumns)}
             </tr>
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                className="cursor-pointer"
-                onClick={handleRowClick(row)}
-              >
-                {row.cells.map(renderTbodyCells)}
-              </tr>
-            );
-          })}
+          {data ? (
+            rows.map((row) => {
+              prepareRow(row);
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <tr
+                  {...row.getRowProps()}
+                  className="cursor-pointer"
+                  onClick={handleRowClick(row)}
+                >
+                  {row.cells.map(renderTbodyCells)}
+                </tr>
+              );
+            })
+          ) : (
+            <Fragment>
+              <StakeTableRowSkeleton />
+              <StakeTableRowSkeleton />
+              <StakeTableRowSkeleton />
+            </Fragment>
+          )}
         </tbody>
       </table>
 
-      {rows.length === 0 && <StakeTableEmptyState />}
+      {data && rows.length === 0 && <StakeTableEmptyState />}
 
       {activeRow && <AddressModal {...activeRow} />}
     </div>
