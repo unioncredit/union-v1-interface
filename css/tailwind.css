@@ -69,6 +69,16 @@ table td {
   @apply py-4 px-0 border-b;
 }
 
+/* Hide number input up/down arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 @tailwind components;
 
 .btn {
@@ -275,15 +285,6 @@ table td {
   .md\:476px {
     max-width: calc(460px + 1rem);
   }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type="number"] {
-  -moz-appearance: textfield;
 }
 
 @tailwind utilities;
