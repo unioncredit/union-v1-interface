@@ -80,7 +80,6 @@ const getVouch = (
         address,
         available,
         health,
-        isOverdue,
         percentage,
         trust,
         used,

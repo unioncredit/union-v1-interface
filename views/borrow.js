@@ -7,7 +7,7 @@ import LabelPair from "components/labelPair";
 import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import SuccessModal from "components/SuccessModal";
-import Transaction, { TransactionSkeleton } from "components/transaction";
+import Transaction from "components/transaction";
 import UtilizationBar from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
@@ -29,7 +29,7 @@ export default function BorrowView() {
   const toggleBorrowModal = useBorrowModalToggle();
   const toggleRepayModal = useRepayModalToggle();
 
-  const { data: isMember } = useIsMember();
+  const { data: isMember = false } = useIsMember();
 
   const {
     data: transactionsData,
@@ -63,8 +63,8 @@ export default function BorrowView() {
       <div className="container">
         {isMember === false && <ApplicationCard />}
 
-        <div className="mb-4">
-          <h1 className="h-12 leading-12">Dashboard</h1>
+        <div className="mb-5">
+          <h1>Dashboard</h1>
         </div>
 
         <div className="flex flex-col md:flex-row -mx-3 mb-10">
@@ -162,23 +162,16 @@ export default function BorrowView() {
         </div>
 
         {isMember === true && (
-          <Fragment>
-            <div className="mb-4">
-              <h2 className="h-12 leading-12">Transactions</h2>
+          <div>
+            <div className="mb-5">
+              <h2>Transactions</h2>
             </div>
-
-            {transactionsData && transactionsData.length ? (
+            {transactionsData &&
+              transactionsData.length > 0 &&
               transactionsData.map((datum, i) => (
                 <Transaction key={i} {...datum} />
-              ))
-            ) : (
-              <Fragment>
-                <TransactionSkeleton />
-                <TransactionSkeleton />
-                <TransactionSkeleton />
-              </Fragment>
-            )}
-          </Fragment>
+              ))}
+          </div>
         )}
       </div>
 
