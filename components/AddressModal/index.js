@@ -20,6 +20,7 @@ import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
+import LabelPair from "components/labelPair";
 
 const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
@@ -193,24 +194,29 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
             </div>
 
             <div className="mt-16">
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Trust</dt>
-                <dd className="text-right">{`${trust} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Vouched</dt>
-                <dd className="text-right">{`${vouched} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Used stake</dt>
-                <dd className="text-right">{`${used} DAI`}</dd>
-              </dl>
-              <dl className="flex justify-between py-2 items-center mb-2 leading-tight">
-                <dt className="text-type-light">Health</dt>
-                <dd className="text-right">
-                  <HealthBar health={health} />
-                </dd>
-              </dl>
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Trust"
+                value={trust}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Vouched"
+                value={vouched}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Used stake"
+                value={used}
+                valueType="DAI"
+              />
+              <LabelPair
+                labelColor="text-grey-pure"
+                label="Health"
+                valueSlot={<HealthBar health={health} />}
+              />
             </div>
 
             <div className="mt-24">
