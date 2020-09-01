@@ -18,7 +18,7 @@ import Modal, { ModalHeader } from "../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-  const { chainId, account, library } = useWeb3React();
+  const { library } = useWeb3React();
 
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
@@ -48,7 +48,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const { setLabel } = useAddressLabels();
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     let hidePendingToast = () => {};
     let txReceipt = {};
 
@@ -77,9 +77,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
         gasLimit,
       });
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
 
       hidePendingToast = hidePending;
 
@@ -90,7 +88,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS(tx.hash));
 
         await updateTrustData();
 
@@ -107,7 +105,7 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   };
 

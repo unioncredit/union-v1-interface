@@ -123,11 +123,7 @@ const StakeCard = () => {
         </div>
       </div>
 
-      <DepositModal
-        totalStake={totalStake}
-        rewardsMultiplier={rewardsMultiplier}
-        onComplete={onComplete}
-      />
+      <DepositModal totalStake={totalStake} onComplete={onComplete} />
       <WithdrawModal
         totalStake={totalStake}
         withdrawableStake={withdrawableStake}
