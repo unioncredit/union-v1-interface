@@ -286,10 +286,15 @@ input[type="number"] {
 
 @tailwind utilities;
 
+/*
+ * @reach-ui/dialog Dialog Styles
+ */
+
 :root {
   --reach-dialog: 1;
 }
 
+/* Default Dialog Overlay Style */
 [data-reach-dialog-overlay] {
   background: #fff;
   position: fixed;
@@ -297,52 +302,42 @@ input[type="number"] {
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
   overflow: auto;
 }
-
-[data-reach-dialog-content] {
-  @apply bg-white w-full h-full outline-none;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-[data-reach-dialog-content].wide {
-  @apply bg-white w-full h-full outline-none;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
 @screen sm {
-  [data-reach-dialog-content].wide {
-    @apply bg-white w-full h-auto outline-none self-start rounded mx-auto;
-    margin-top: 12vh;
-    max-width: 32rem;
+  [data-reach-dialog-overlay] {
+    background: hsla(0, 0%, 0%, 0.66);
   }
 }
 
-[data-reach-dialog-content].uniswap {
-  @apply self-start mx-auto;
-  margin-top: 12vh;
-  border-radius: 1.25rem;
-  max-width: 32rem;
-  height: 660px;
-  overflow: hidden;
+@screen sm {
+  [data-reach-dialog-overlay].dialog-overlay-centered {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
 }
 
-[data-reach-dialog-content].uniswap iframe {
-  border: 0;
-  display: block;
-  height: 660px;
-  min-width: 300px;
+/* Default & Fullscreen Dialog Style */
+[data-reach-dialog-content].dialog-style-default,
+[data-reach-dialog-content].dialog-style-fullscreen {
+  @apply bg-white w-full h-full outline-none;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
 }
 
-.centered {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@screen sm {
+  [data-reach-dialog-content].dialog-style-default {
+    @apply mx-4 rounded h-auto;
+    max-width: 24rem;
+    margin-top: 12vh;
+  }
+}
+
+@screen sm {
+  [data-reach-dialog-content].dialog-style-is-wide {
+    max-width: 32rem;
+  }
 }
 
 /*

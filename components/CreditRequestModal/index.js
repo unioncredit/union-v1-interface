@@ -60,11 +60,7 @@ const CreditRequestModal = () => {
   }, [open]);
 
   return (
-    <Modal
-      isOpen={open}
-      onDismiss={toggle}
-      className={shareLink ? "wide" : undefined}
-    >
+    <Modal wide={!!shareLink} isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Ask for a vouch" onDismiss={toggle} />
 
       {shareLink ? (
