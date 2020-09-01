@@ -3,7 +3,6 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useTokenBalance from "hooks/useTokenBalance";
-import toK from "util/toK";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -19,11 +18,8 @@ import WithdrawModal from "./WithdrawModal";
 import { useWithdrawModalToggle } from "./WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
 
-const format = (number, decimals = 2) => {
-  if (String(number).length > 8) return toK(number, true, 2);
-
-  return commify(Number(number).toFixed(decimals));
-};
+const format = (number, decimals = 2) =>
+  commify(Number(number).toFixed(decimals));
 
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
@@ -57,81 +53,73 @@ const StakeCard = () => {
   };
 
   return (
-    <div>
-      <div className="bg-pink-light border border-pink-pure rounded-t px-6 pt-6 pb-5">
-        <LabelPair
-          className="mb-4"
-          label="Your total stake"
-          large
-          value={format(totalStake)}
-          valueType="DAI"
-          valueSlot={
-            <div>
-              <div className="text-sm py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
-                Earning at {rewardsMultiplier}x
-              </div>
-            </div>
-          }
-        />
-        <LabelPair
-          labelColor="text-grey-pure"
-          label="Utilized Stake"
-          tooltip={utilizedStakeTip}
-          value={format(utilizedStake)}
-          valueType="DAI"
-        />
-        <LabelPair
-          labelColor="text-grey-pure"
-          label="Defaulted Stake"
-          tooltip={defaultedStakeTip}
-          value={format(defaultedStake)}
-          valueType="DAI"
-        />
-        <LabelPair
-          labelColor="text-grey-pure"
-          label="Withdrawable Stake"
-          tooltip={withdrawableStakeTip}
-          value={format(withdrawableStake)}
-          valueType="DAI"
-        />
+    <div className="bg-pink-light border border-pink-pure rounded p-6">
+      <LabelPair
+        className="mb-4"
+        label="Your total stake"
+        large
+        value={format(totalStake)}
+        valueType="DAI"
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Utilized Stake"
+        tooltip={utilizedStakeTip}
+        value={format(utilizedStake)}
+        valueType="DAI"
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Defaulted Stake"
+        tooltip={defaultedStakeTip}
+        value={format(defaultedStake)}
+        valueType="DAI"
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Withdrawable Stake"
+        tooltip={withdrawableStakeTip}
+        value={format(withdrawableStake)}
+        valueType="DAI"
+      />
+      <LabelPair
+        className="mb-4 mt-16"
+        label="Rewards multiplier"
+        large
+        value={`${rewardsMultiplier}x`}
+        slot={<WithdrawRewards onComplete={onComplete} />}
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Rewards"
+        tooltip={rewardsTip}
+        value={format(rewards, 3)}
+        valueType="UNION"
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Earned Per Year"
+        tooltip={unionPerYearTip}
+        value={format(upy, 3)}
+        valueType="UNION"
+      />
+      <LabelPair
+        labelColor="text-grey-pure"
+        label="Wallet Balance"
+        value={format(unionBalance, 3)}
+        valueType="UNION"
+      />
 
-        <div className="divider bg-pink-pure my-8"></div>
-
-        <LabelPair
-          className="pt-1 mb-4"
-          label="Rewards"
-          large
-          tooltip={rewardsTip}
-          value={format(rewards, 3)}
-          valueType="UNION"
-          valueSlot={<WithdrawRewards onComplete={onComplete} />}
-        />
-        <LabelPair
-          labelColor="text-grey-pure"
-          label="Earned Per Year"
-          tooltip={unionPerYearTip}
-          value={format(upy, 3)}
-          valueType="UNION"
-        />
-        <LabelPair
-          labelColor="text-grey-pure"
-          label="Wallet Balance"
-          value={format(unionBalance, 3)}
-          valueType="UNION"
-        />
-      </div>
-      <div className="bg-pink-light border border-pink-pure border-t-0 rounded-b p-4">
-        <div className="flex space-x-4">
-          <div className="flex-1">
-            <Button secondary full onClick={toggleDepositModal}>
-              Deposit
-            </Button>
-          </div>
-          <div className="flex-1">
-            <Button invert full onClick={toggleWithdrawModal}>
-              Withdraw
-            </Button>
-          </div>
+      <div className="flex -mx-2 mt-12">
+        <div className="flex-1 px-2">
+          <Button secondary full onClick={toggleDepositModal}>
+            Deposit
+          </Button>
+        </div>
+        <div className="flex-1 px-2">
+          <Button invert full onClick={toggleWithdrawModal}>
+            Withdraw
+          </Button>
         </div>
       </div>
 
