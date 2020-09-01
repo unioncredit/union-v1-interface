@@ -109,7 +109,6 @@ export default function BorrowView() {
                         getPctUsed(borrowedRounded, roundDown(creditLimit)) *
                           100
                       )}
-                      short
                     />
                   </div>
                 </dd>
