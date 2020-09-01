@@ -1,5 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
-import ProfileImage from "components/ProfileImage";
+import LabelPair from "../labelPair";
+import ProfileImage from "../ProfileImage";
 import { useAutoCallback } from "hooks.macro";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
@@ -14,72 +15,12 @@ import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
-import AdjustTrustForm from "../adjustTrustForm";
 import Button from "../button";
 import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
+import AdjustTrustForm from "../adjustTrustForm";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
-import LabelPair from "components/labelPair";
-
-const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
-  const { setLabel } = useAddressLabels();
-
-  const { register, handleSubmit, formState, reset } = useForm({
-    defaultValues: {
-      label: label ?? public3BoxName,
-    },
-  });
-
-  const { isSubmitting, isDirty } = formState;
-
-  const [copied, copy] = useCopy();
-
-  const handleCopyAddress = () => copy(address);
-
-  const onSubmit = async (data) => {
-    await setLabel(address, data.label);
-
-    await delay(1000);
-
-    reset({ label: data.label });
-  };
-
-  return (
-    <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col items-center">
-        <input
-          type="text"
-          className="text-lg font-semibold text-center w-auto bg-transparent rounded-none focus:outline-none"
-          name="label"
-          autoCapitalize="off"
-          placeholder="Add a label"
-          autoCorrect="off"
-          autoComplete="off"
-          ref={register}
-          id="label"
-        />
-      </div>
-      {isDirty ? (
-        <button
-          type="submit"
-          className="focus:outline-none leading-none font-medium text-type-light underline"
-        >
-          {isSubmitting ? "Saving..." : "Save"}
-        </button>
-      ) : (
-        <button
-          type="button"
-          onClick={handleCopyAddress}
-          className="focus:outline-none leading-none font-medium text-type-light"
-          title={address}
-        >
-          {copied ? "Copied!" : ENSName ?? truncateAddress(address, 6)}
-        </button>
-      )}
-    </form>
-  );
-};
 
 const ADDRESS_VIEWS = {
   HOME: "HOME",
@@ -94,20 +35,46 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
 
   const [addressView, setAddressView] = useState(ADDRESS_VIEWS.HOME);
 
-  useEffect(() => {
-    if (isOpen) setAddressView(ADDRESS_VIEWS.HOME);
-  }, [isOpen]);
-
   const ENSName = useENSName(address);
 
-  const { getLabel } = useAddressLabels();
+  const { getLabel, setLabel } = useAddressLabels();
   const label = getLabel(address);
 
   const { data, error } = use3BoxPublicData(address);
-  const has3BoxName = !!data && !error && data?.name;
   const has3BoxProfileImage = !!data && !error && data?.image;
 
+  const [isCopied, copy] = useCopy();
+  const handleCopy = () => copy(address);
+
+  const [enableForm, enableFormSet] = useState(false);
+  const toggleForm = () => enableFormSet(!enableForm);
+
+  const { register, handleSubmit, formState, reset } = useForm({
+    defaultValues: { label: label ?? data?.name },
+  });
+
+  const { isSubmitting } = formState;
+
+  useEffect(() => {
+    if (isOpen) {
+      setAddressView(ADDRESS_VIEWS.HOME);
+      reset({ label: label ?? data?.name });
+      enableFormSet(false);
+    }
+  }, [isOpen]);
+
+  const onSubmit = async (data) => {
+    await setLabel(address, data.label);
+
+    await delay(500);
+
+    reset({ label: data.label });
+
+    enableFormSet(false);
+  };
+
   const [removingAddress, removingAddressSet] = useState(false);
+
   const removeVouch = useRemoveVouch();
 
   const { mutate: updateTrustData } = useTrustData();
@@ -164,36 +131,90 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onDismiss={toggle}>
+    <Modal isOpen={isOpen} onDismiss={toggle} allowPinchZoom>
       <div className="p-4 sm:p-6 relative">
         {addressView === ADDRESS_VIEWS.HOME ? (
           <Fragment>
-            <div className="absolute right-0 top-0 mr-6 mt-6">
+            <div className="absolute right-0 top-0 mr-4 mt-4 sm:mr-6 sm:mt-6">
               <CloseButton onClick={toggle} large />
             </div>
 
-            <div className="flex justify-center mt-4">
-              {has3BoxProfileImage ? (
-                <ProfileImage
-                  alt={ENSName ?? address}
-                  image={data.image}
-                  size={72}
-                />
+            <div className="flex items-center mt-4">
+              <div className="flex-shrink-0">
+                {has3BoxProfileImage ? (
+                  <ProfileImage
+                    alt={label ?? data?.name ?? ENSName ?? address}
+                    image={data.image}
+                    size={72}
+                  />
+                ) : (
+                  <Identicon address={address} extraLarge />
+                )}
+              </div>
+
+              {enableForm ? (
+                <form
+                  className="ml-4 flex-1"
+                  method="POST"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
+                  <input
+                    autoCapitalize="off"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoFocus
+                    className="text-xl font-semibold leading-tight block bg-transparent rounded-none focus:outline-none text-type-base placeholder-type-lightest"
+                    id="label"
+                    name="label"
+                    placeholder="Add a label"
+                    ref={register}
+                    type="text"
+                  />
+                  <div className="flex space-x-2">
+                    <button
+                      className="text-sm font-medium underline focus:outline-none"
+                      onClick={toggleForm}
+                      type="button"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="text-sm font-medium underline focus:outline-none"
+                      type="submit"
+                    >
+                      {isSubmitting ? "Saving..." : "Save"}
+                    </button>
+                  </div>
+                </form>
               ) : (
-                <Identicon address={address} extraLarge />
+                <div className="ml-4">
+                  <p
+                    className="text-xl font-semibold leading-tight"
+                    title={address}
+                  >
+                    {label ?? data?.name ?? ENSName ?? truncateAddress(address)}
+                  </p>
+                  <div className="flex space-x-2">
+                    <button
+                      className="text-sm font-medium underline focus:outline-none"
+                      type="button"
+                      onClick={toggleForm}
+                    >
+                      Rename
+                    </button>
+                    <button
+                      className="text-sm font-medium underline focus:outline-none"
+                      onClick={handleCopy}
+                      type="button"
+                    >
+                      {isCopied ? "Copied" : "Copy Address"}
+                    </button>
+                  </div>
+                </div>
               )}
             </div>
 
-            <div className="mt-4 text-center">
-              <InlineLabelEditor
-                address={address}
-                ENSName={ENSName}
-                label={label}
-                public3BoxName={has3BoxName ? data.name : null}
-              />
-            </div>
-
-            <div className="mt-16">
+            <div className="mt-12 sm:mt-16">
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Trust"
@@ -219,7 +240,7 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
               />
             </div>
 
-            <div className="mt-24">
+            <div className="mt-16 sm:mt-24">
               <Button full onClick={() => setAddressView(ADDRESS_VIEWS.ADJUST)}>
                 Adjust Vouch
               </Button>
@@ -239,16 +260,14 @@ const AddressModal = ({ address, vouched, trust, used, health }) => {
           </Fragment>
         ) : (
           <Fragment>
-            <div className="absolute left-0 top-0 ml-6 mt-6">
+            <div className="flex mb-4">
               <BackButton onClick={() => setAddressView(ADDRESS_VIEWS.HOME)} />
             </div>
 
-            <div className="mt-12">
-              <p>Edit this member's trust</p>
-            </div>
+            <p>Edit this member's trust</p>
 
             <div className="mt-4 cursor-text">
-              <Address address={address} large copyable withLabel />
+              <Address address={address} large withLabel />
             </div>
 
             <div className="mt-4">
