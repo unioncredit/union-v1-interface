@@ -54,19 +54,21 @@ const VouchTableEmptyState = () => {
  * @name renderHeadRowSorting
  * @param {import("react-table").ColumnInstance} column
  */
-const renderSortIcons = (column) => (
-  <Fragment>
-    {column.isSorted ? (
-      column.isSortedDesc ? (
-        <Chevron.Down size={16} />
+const renderSortIcons = (column) => {
+  return (
+    <Fragment>
+      {column.isSorted ? (
+        column.isSortedDesc ? (
+          <Chevron.Down size={16} />
+        ) : (
+          <Chevron.Up size={16} />
+        )
       ) : (
-        <Chevron.Up size={16} />
-      )
-    ) : (
-      <Chevron.Down size={16} color="transparent" />
-    )}
-  </Fragment>
-);
+        <Chevron.Down size={16} color="transparent" />
+      )}
+    </Fragment>
+  );
+};
 
 /**
  * @name renderTheadColumns
@@ -285,7 +287,7 @@ const VouchTable = ({ data }) => {
         </tbody>
       </table>
 
-      {rows.length === 0 && <VouchTableEmptyState />}
+      {data && rows.length === 0 && <VouchTableEmptyState />}
     </div>
   );
 };
