@@ -58,9 +58,7 @@ export function useIncreaseUnionAllowance() {
 
       hideWaiting();
 
-      const { hide: hidePending } = addToast(
-        FLAVORS.TX_PENDING_TOKEN(tx.hash, chainId)
-      );
+      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING_TOKEN(tx.hash));
 
       hidePendingToast = hidePending();
 
@@ -69,7 +67,7 @@ export function useIncreaseUnionAllowance() {
       if (receipt.status === 1) {
         hidePending();
 
-        addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash, chainId));
+        addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash));
 
         return;
       }
@@ -86,7 +84,7 @@ export function useIncreaseUnionAllowance() {
 
       const message = handleTxError(err);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash, chainId));
+      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
     }
   });
 
