@@ -1,51 +1,61 @@
+import classNames from "classnames";
 import PropTypes from "prop-types";
 
 /**
  * @name HealthBar
  *
  * @param {Number} health The health of the user, between 0 - 100
- * @param {Number} width The width of the HealthBar
  */
-const HealthBar = ({ health, width = 96 }) => {
-  const inner = health > 100 ? 100 : health < 0 ? 0 : health;
+const HealthBar = ({ health }) => {
+  const fillWidth = health > 100 ? 100 : health < 0 ? 0 : health;
+
+  const fillColor =
+    health >= 66 ? "#3fc37c" : health >= 33 ? "#F77849" : "#E61744";
+
+  const trackColor =
+    health >= 66 ? "#ecf9f1" : health >= 33 ? "#FCDFDF" : "#FAD1DA";
+
+  const cachedTrackClassNames = classNames(
+    "health-track h-4 w-full overflow-hidden rounded-sm relative ml-auto",
+    {
+      dead: health <= 0,
+    }
+  );
 
   return (
-    <div className="w-full relative ml-auto">
-      <span className="block" />
+    <div className={cachedTrackClassNames}>
+      <span className="health-fill  h-4 block" />
       <style jsx>{`
-        div {
-          --fill: ${health >= 66
-            ? "#3fc37c"
-            : health >= 33
-            ? "#F77849"
-            : "#E61744"};
-          --track: ${health >= 66
-            ? "#ecf9f1"
-            : health >= 33
-            ? "#FCDFDF"
-            : "#FAD1DA"};
+         {
+          --fill: ${fillColor};
+          --track: ${trackColor};
         }
-      `}</style>
-      <style jsx>{`
-        div {
+
+        .health-track {
           background-color: var(--track);
-          min-width: ${width}px;
+          min-width: 96px;
           max-width: 96px;
-          border-radius: 2px;
-          overflow: hidden;
-          height: 16px;
         }
 
         @media screen and (min-width: 768px) {
-          div {
+          .health-track {
             max-width: 128px;
           }
         }
 
-        span {
+        .health-fill {
           background-color: var(--fill);
-          width: ${inner}%;
-          height: 16px;
+          width: ${fillWidth}%;
+        }
+
+        .dead {
+          background: repeating-linear-gradient(
+            135deg,
+            hsl(347deg 80% 90%),
+            hsl(347deg 80% 90%) 10px,
+            hsl(347deg 80% 85%) 10px,
+            hsl(347deg 80% 85%) calc(2 * 10px)
+          );
         }
       `}</style>
     </div>
@@ -57,10 +67,6 @@ HealthBar.propTypes = {
    * The health of the user, between 0 - 100
    */
   health: PropTypes.number.isRequired,
-  /**
-   * The width of the HealthBar
-   */
-  width: PropTypes.number,
 };
 
 export default HealthBar;
