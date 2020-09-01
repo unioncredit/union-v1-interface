@@ -150,7 +150,7 @@ const WalletModal = () => {
             Don't have an account?{" "}
             <button
               onClick={setWalletViewCreate}
-              className="underline font-medium"
+              className="underline font-medium inline whitespace-no-wrap"
             >
               Sign up
             </button>
@@ -160,7 +160,7 @@ const WalletModal = () => {
             Already have an account?{" "}
             <button
               onClick={setWalletViewSignIn}
-              className="underline font-medium"
+              className="underline font-medium inline whitespace-no-wrap"
             >
               Sign in
             </button>
