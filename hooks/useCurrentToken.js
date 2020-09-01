@@ -12,8 +12,8 @@ export default function useCurrentToken(symbol = "DAI") {
 
   if (
     chainId &&
-    TOKENS.hasOwnProperty(chainId) &&
-    TOKENS[chainId].hasOwnProperty(symbol)
+    Object.prototype.hasOwnProperty.call(TOKENS, chainId) &&
+    Object.prototype.hasOwnProperty.call(TOKENS[chainId], symbol)
   ) {
     return useAutoMemo(() => TOKENS[chainId][symbol]);
   }
