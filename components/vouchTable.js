@@ -12,7 +12,6 @@ import HealthBar from "./healthBar";
 import PercentageBar from "./percentageBar";
 import Skeleton from "./Skeleton";
 
-// eslint-disable-next-line no-unused-vars
 const VouchTableRowSkeleton = () => (
   <tr>
     <td>
@@ -268,22 +267,32 @@ const VouchTable = ({ data }) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <Fragment {...row.getRowProps()}>
-                <tr>{row.cells.map(renderTbodyCells)}</tr>
-                {row.isExpanded ? (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      {renderRowSubComponent(row)}
-                    </td>
-                  </tr>
-                ) : null}
-              </Fragment>
-            );
-          })}
+          {data ? (
+            rows.map((row) => {
+              prepareRow(row);
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <Fragment {...row.getRowProps()}>
+                  <tr>{row.cells.map(renderTbodyCells)}</tr>
+                  {row.isExpanded ? (
+                    <tr>
+                      <td colSpan={visibleColumns.length}>
+                        {renderRowSubComponent(row)}
+                      </td>
+                    </tr>
+                  ) : null}
+                </Fragment>
+              );
+            })
+          ) : (
+            <Fragment>
+              <VouchTableRowSkeleton />
+              <VouchTableRowSkeleton />
+              <VouchTableRowSkeleton />
+              <VouchTableRowSkeleton />
+              <VouchTableRowSkeleton />
+            </Fragment>
+          )}
         </tbody>
       </table>
 
