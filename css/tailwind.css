@@ -341,34 +341,25 @@ input[type="number"] {
   justify-content: center;
 }
 
-@screen sm {
-  [data-reach-dialog-overlay] {
-    background: hsla(0, 0%, 0%, 0.66);
-  }
-
-  [data-reach-dialog-content]:not(.fullscreen):not(.uniswap):not(.wide) {
-    @apply self-start rounded mx-auto h-auto;
-    margin-top: 12vh;
-    max-width: 24rem;
-  }
-}
+/*
+ * @reach-ui/tooltip Tooltip Styles
+ */
 
 :root {
   --reach-tooltip: 1;
 }
 
 [data-reach-tooltip] {
-  @apply bg-white text-sm p-4 absolute text-type-light;
+  @apply bg-white text-sm border absolute text-type-light;
   z-index: 1;
+  padding: calc(1rem - 1px);
   pointer-events: none;
   box-shadow: 0px 0px 12px rgba(19, 44, 106, 0.12);
   max-width: 256px;
-  border-radius: 4px;
+  border-radius: var(--radius);
 }
 
-/*
- * Styles to crop text to X-height
- */
+/* Styles to crop text to X-height */
 [data-reach-tooltip] p {
   line-height: 1.5;
 }
@@ -384,6 +375,14 @@ input[type="number"] {
 }
 [data-reach-tooltip] p::after {
   margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
+/*
+ * Tooltip Title Styles
+ */
+/* Tooltip Title Styles */
+[data-reach-tooltip] p:first-of-type {
+  @apply font-semibold mb-2 text-type-base;
 }
 
 .crop-snug::before,
