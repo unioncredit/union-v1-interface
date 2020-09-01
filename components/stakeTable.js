@@ -245,23 +245,31 @@ const StakeTable = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <tr
-                {...row.getRowProps()}
-                className="cursor-pointer"
-                onClick={handleRowClick(row)}
-              >
-                {row.cells.map(renderTbodyCells)}
-              </tr>
-            );
-          })}
+          {data ? (
+            rows.map((row) => {
+              prepareRow(row);
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <tr
+                  {...row.getRowProps()}
+                  className="cursor-pointer"
+                  onClick={handleRowClick(row)}
+                >
+                  {row.cells.map(renderTbodyCells)}
+                </tr>
+              );
+            })
+          ) : (
+            <Fragment>
+              <StakeTableRowSkeleton />
+              <StakeTableRowSkeleton />
+              <StakeTableRowSkeleton />
+            </Fragment>
+          )}
         </tbody>
       </table>
 
-      {rows.length === 0 && <StakeTableEmptyState />}
+      {data && rows.length === 0 && <StakeTableEmptyState />}
 
       {activeRow && <AddressModal {...activeRow} />}
     </div>
