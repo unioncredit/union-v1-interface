@@ -1,4 +1,4 @@
-import { useWeb3React } from "@web3-react/core";
+import useChainId from "hooks/useChainId";
 import { Fragment } from "react";
 import { Failure, Loading, Pending, Success } from "svgs/Alerts";
 import getEtherscanLink from "util/getEtherscanLink";
@@ -38,7 +38,7 @@ export const ToastBody = ({ body, onDismiss }) => (
 );
 
 export const ToastContent = ({ message, hash }) => {
-  const { chainId } = useWeb3React();
+  const chainId = useChainId();
 
   if (hash)
     return (

@@ -1,5 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import { useChainIdUpdater } from "hooks/useChainId";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -54,6 +55,8 @@ const Navigation = () => {
 
   const toggleSignInModal = useToggleSignInModal();
   const toggleCreateModal = useToggleCreateModal();
+
+  useChainIdUpdater();
 
   return (
     <nav className="border-b bg-white">
