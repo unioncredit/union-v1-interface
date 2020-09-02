@@ -14,7 +14,7 @@ export default async function getReceipt(hash, library) {
   hidePending();
 
   if (receipt.status !== 1) {
-    throw new Error(receipt.logs[0]);
+    throw new Error(receipt.transactionHash);
   }
 
   addToast(FLAVORS.TX_SUCCESS(hash));

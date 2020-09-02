@@ -3,7 +3,6 @@ import { useAutoCallback } from "hooks.macro";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMemberContract from "hooks/useMemberContract";
 import useMemberFee from "hooks/useMemberFee";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import useUnionAllowance, {
   useIncreaseUnionAllowance,
@@ -13,8 +12,9 @@ import handleTxError from "util/handleTxError";
 import Button from "../button";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
-import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
 import { useSuccessModalToggle } from "../SuccessModal/state";
+import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
+import getReceipt from "util/getReceipt";
 
 const ApplicationModal = () => {
   const { account, library } = useWeb3React();
@@ -40,8 +40,6 @@ const ApplicationModal = () => {
 
   const memberManagerContract = useMemberContract();
 
-  const addToast = useToast();
-
   const increaseUnionAllowance = useIncreaseUnionAllowance();
 
   const enableUNION = useAutoCallback(async () => {
@@ -50,7 +48,7 @@ const ApplicationModal = () => {
     try {
       await increaseUnionAllowance(fee);
 
-      updateUnionAllowance();
+      await updateUnionAllowance();
 
       isSubmittingSet(false);
     } catch (err) {
@@ -59,59 +57,37 @@ const ApplicationModal = () => {
   });
 
   const submit = useAutoCallback(async () => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     isSubmittingSet(true);
 
-    let estimate;
+    let gasLimit;
     try {
-      estimate = await memberManagerContract.estimateGas.applyMember(
+      gasLimit = await memberManagerContract.estimateGas.applyMember(
         account,
         DAI
       );
     } catch (error) {
-      estimate = 150000;
+      gasLimit = 150000;
     }
 
     try {
-      const tx = await memberManagerContract.applyMember(account, DAI, {
-        gasLimit: estimate,
+      /**
+       * @type {import("@ethersproject/abstract-provider").TransactionResponse}
+       */
+      const { hash } = await memberManagerContract.applyMember(account, DAI, {
+        gasLimit,
       });
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
-
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        isSubmittingSet(false);
-
-        toggleSuccessModal();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
-    } catch (err) {
-      hidePendingToast();
+      await getReceipt(hash, library);
 
       isSubmittingSet(false);
 
-      const message = handleTxError(err);
+      toggleSuccessModal();
+    } catch (err) {
+      isSubmittingSet(false);
 
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   });
 

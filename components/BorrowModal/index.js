@@ -6,13 +6,13 @@ import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useBorrow from "hooks/payables/useBorrow";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
-import useToast, { FLAVORS } from "hooks/useToast";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import errorMessages from "text/errorMessages";
 import { feeTip } from "text/tooltips";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
 import Button from "../button";
@@ -69,8 +69,6 @@ const BorrowModal = ({
     reset();
   }, [open]);
 
-  const addToast = useToast();
-
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
@@ -102,44 +100,19 @@ const BorrowModal = ({
       ? paymentDueDate
       : paymentPeriod;
 
-  const onSubmit = async (values) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
-    const { amount } = values;
+  const onSubmit = async (data) => {
+    const { amount } = data;
 
     try {
-      const tx = await borrow(amount);
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
+      const { hash } = await borrow(amount);
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+      await getReceipt(hash, library);
 
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        await onComplete();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
+      await onComplete();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 

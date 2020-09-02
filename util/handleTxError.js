@@ -1,8 +1,29 @@
-export default function handleTxError(err) {
-  console.error(err);
+import { addToast, FLAVORS } from "hooks/useToast";
+import isHash from "./isHash";
 
-  if (err.code && err.code === 4001) return "Denied transaction signature";
-  if (err.code && err.code === -32000) return "Transaction failed";
+export default function handleTxError(error) {
+  console.error(error);
 
-  return "Something went wrong";
+  let message = "Something went wrong";
+
+  switch (error?.code) {
+    case 4001:
+      message = "Rejected transaction signature";
+      break;
+    case -3200:
+    case -32603:
+      message = "Internal transaction error";
+      break;
+    case -32602:
+      message = "Invalid transaction parameters";
+      break;
+    default:
+      break;
+  }
+
+  if (isHash(error.message)) {
+    addToast(FLAVORS.TX_ERROR(message, error.message));
+  } else {
+    addToast(FLAVORS.TX_ERROR(message));
+  }
 }

@@ -1,15 +1,13 @@
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { useGetInvitedModalToggle } from "components/GetInvitedModal/state";
+import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import useAddressLabels from "hooks/useAddressLabels";
-import useCurrentToken from "hooks/useCurrentToken";
 import useIsMember from "hooks/useIsMember";
-import useMemberContract from "hooks/useMemberContract";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTrustData from "hooks/useTrustData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import validateAddress from "util/validateAddress";
 import Button from "../button";
@@ -36,76 +34,31 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
 
   const { isDirty, isSubmitting } = formState;
 
-  const curToken = useCurrentToken();
-
-  const addToast = useToast();
-
   const { data: isMember = null } = useIsMember();
 
   const { mutate: updateTrustData } = useTrustData();
 
-  const memberContract = useMemberContract();
+  const adjustTrust = useAdjustTrust();
 
   const { setLabel } = useAddressLabels();
 
   const onSubmit = async (data) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
-    const { address, amount: rawAmount } = data;
-
-    const amount = parseUnits(rawAmount, 18).toString();
+    const { address, amount } = data;
 
     if (data.label) {
       await setLabel(address, data.label);
     }
 
     try {
-      let gasLimit;
-
-      try {
-        gasLimit = await memberContract.estimateGas.updateTrust(
-          address,
-          curToken,
-          amount
-        );
-      } catch (error) {
-        gasLimit = 300000;
-      }
-
-      const tx = await memberContract.updateTrust(address, curToken, amount, {
-        gasLimit,
-      });
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
+      const { hash } = await adjustTrust(address, amount);
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+      await getReceipt(hash, library);
 
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        await updateTrustData();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
+      await updateTrustData();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 

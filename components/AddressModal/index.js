@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import LabelPair from "components/labelPair";
 import ProfileImage from "components/ProfileImage";
 import { useAutoCallback } from "hooks.macro";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
@@ -6,11 +7,11 @@ import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useENSName from "hooks/useENSName";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTrustData from "hooks/useTrustData";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
 import Address from "../address";
@@ -20,7 +21,6 @@ import HealthBar from "../healthBar";
 import Identicon from "../identicon";
 import Modal, { BackButton, CloseButton } from "../modal";
 import { useAddressModalOpen, useAddressModalToggle } from "./state";
-import LabelPair from "components/labelPair";
 
 const InlineLabelEditor = ({ label, ENSName, address, public3BoxName }) => {
   const { setLabel } = useAddressLabels();
@@ -112,48 +112,21 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
 
   const { mutate: updateTrustData } = useTrustData();
 
-  const addToast = useToast();
-
   const removeAddress = useAutoCallback(async () => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     try {
       removingAddressSet(true);
 
-      const tx = await removeVouch(address);
+      const { hash } = await removeVouch(address);
 
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
-
-      const receipt = await library.waitForTransaction(tx.hash);
-
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        removingAddressSet(false);
-
-        await updateTrustData();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
-    } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      await getReceipt(hash, library);
 
       removingAddressSet(false);
+
+      await updateTrustData();
+    } catch (err) {
+      removingAddressSet(false);
+
+      handleTxError(err);
     }
   });
 

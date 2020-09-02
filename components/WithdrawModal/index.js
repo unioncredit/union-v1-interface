@@ -2,16 +2,16 @@ import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
 import useStakingContract from "hooks/useStakingContract";
-import useToast, { FLAVORS } from "hooks/useToast";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import Button from "../button";
 import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useWithdrawModalOpen, useWithdrawModalToggle } from "./state";
-import errorMessages from "text/errorMessages";
 
 const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -38,48 +38,24 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
 
   const DAI = useCurrentToken("DAI");
 
-  const addToast = useToast();
-
   const stakingContract = useStakingContract();
 
   const onSubmit = async (values) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     try {
       const amount = parseUnits(values.amount, 18).toString();
 
-      const tx = await stakingContract.unstake(DAI, amount);
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
+      /**
+       * @type {import("@ethersproject/abstract-provider").TransactionResponse}
+       */
+      const { hash } = await stakingContract.unstake(DAI, amount);
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+      await getReceipt(hash, library);
 
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        await onComplete();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
+      await onComplete();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 

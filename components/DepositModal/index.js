@@ -1,10 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
 import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import useCurrentToken from "hooks/useCurrentToken";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
 import Button from "../button";
@@ -12,7 +13,6 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useDepositModalOpen, useDepositModalToggle } from "./state";
-import errorMessages from "text/errorMessages";
 
 const DepositModal = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -50,44 +50,17 @@ const DepositModal = ({ totalStake, onComplete }) => {
 
   const flooredDaiBalance = roundDown(daiBalance);
 
-  const addToast = useToast();
-
   const onSubmit = async (values) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     try {
-      const tx = await stake(values.amount);
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
+      const { hash } = await stake(values.amount);
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+      await getReceipt(hash, library);
 
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        await onComplete();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
+      await onComplete();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 
