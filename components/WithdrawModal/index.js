@@ -1,7 +1,5 @@
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import useCurrentToken from "hooks/useCurrentToken";
-import useStakingContract from "hooks/useStakingContract";
+import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "text/errorMessages";
@@ -36,18 +34,11 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const DAI = useCurrentToken("DAI");
-
-  const stakingContract = useStakingContract();
+  const withdraw = useStakeWithdraw();
 
   const onSubmit = async (values) => {
     try {
-      const amount = parseUnits(values.amount, 18).toString();
-
-      /**
-       * @type {import("@ethersproject/abstract-provider").TransactionResponse}
-       */
-      const { hash } = await stakingContract.unstake(DAI, amount);
+      const { hash } = await withdraw(values.amount);
 
       if (open) toggle();
 

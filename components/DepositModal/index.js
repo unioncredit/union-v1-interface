@@ -17,8 +17,6 @@ import { useDepositModalOpen, useDepositModalToggle } from "./state";
 const DepositModal = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
 
-  const stake = useStakeDeposit();
-
   const open = useDepositModalOpen();
   const toggle = useDepositModalToggle();
 
@@ -50,9 +48,11 @@ const DepositModal = ({ totalStake, onComplete }) => {
 
   const flooredDaiBalance = roundDown(daiBalance);
 
+  const deposit = useStakeDeposit();
+
   const onSubmit = async (values) => {
     try {
-      const { hash } = await stake(values.amount);
+      const { hash } = await deposit(values.amount);
 
       if (open) toggle();
 
