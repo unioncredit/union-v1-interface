@@ -2,11 +2,15 @@ import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
 import { newRidgeState } from "react-ridge-state";
 
-const chainIdState = newRidgeState();
+const globalChainIdState = newRidgeState();
 
+/**
+ * @name useChainIdUpdater
+ * @description Used to update the context-less global ridge-state variable any time the web3-react 'chainId' changes
+ */
 export function useChainIdUpdater() {
   const { chainId } = useWeb3React();
-  const [, setState] = chainIdState.use();
+  const [, setState] = globalChainIdState.use();
 
   useEffect(() => {
     if (chainId) {
@@ -15,6 +19,10 @@ export function useChainIdUpdater() {
   }, [chainId]);
 }
 
+/**
+ * @name useChainId
+ * @description Used to access the web3-react 'chainId' variable outside of the Web3Provider context
+ */
 export default function useChainId() {
-  return chainIdState.useValue();
+  return globalChainIdState.useValue();
 }
