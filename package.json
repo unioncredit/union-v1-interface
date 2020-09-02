@@ -43,7 +43,7 @@
     "dayjs": "^1.8.34",
     "fathom-client": "^3.0.0",
     "graphql-request": "^3.0.0",
-    "next": "^9.5.2",
+    "next": "^9.5.3",
     "nookies": "^2.4.0",
     "parse-ms": "^2.1.0",
     "prop-types": "^15.7.2",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "eslint": "^7.8.0",
+    "eslint": "^7.8.1",
     "eslint-plugin-react": "^7.20.6",
     "hooks.macro": "^1.1.2",
     "husky": "^4.2.5",
