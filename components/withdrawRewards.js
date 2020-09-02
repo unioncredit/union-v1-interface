@@ -3,7 +3,7 @@ import { useAutoCallback } from "hooks.macro";
 import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { useState } from "react";
-// import Spinner from "svgs/Spinner";
+import Spinner from "svgs/Spinner";
 import handleTxError from "util/handleTxError";
 
 const WithdrawRewards = ({ onComplete }) => {
@@ -64,16 +64,7 @@ const WithdrawRewards = ({ onComplete }) => {
     }
   });
 
-  // if (withdrawing) return <Spinner track="#032437" fill="#C5CED5" size={22} />;
-
-  // return (
-  //   <button
-  //     className="text-sm underline font-semibold focus:outline-none"
-  //     onClick={onWithdrawRewards}
-  //   >
-  //     Collect
-  //   </button>
-  // );
+  if (withdrawing) return <Spinner track="#032437" fill="#C5CED5" size={22} />;
 
   return (
     <button
@@ -81,7 +72,7 @@ const WithdrawRewards = ({ onComplete }) => {
       disabled={withdrawing}
       onClick={onWithdrawRewards}
     >
-      {withdrawing ? "Withdrawing Rewards..." : "Withdraw Rewards"}
+      Collect
     </button>
   );
 };
