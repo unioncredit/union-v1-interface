@@ -5,69 +5,44 @@ export default function StatsView() {
     <Fragment>
       <section>
         <div className="container">
-          <h1>Union Stats</h1>
-        </div>
-      </section>
-
-      <section className="pt-12 sm:pt-24">
-        <div className="container mb-8">
-          <h2>Global Lending</h2>
-        </div>
-
-        <div className="container">
-          <div className="flex divide-x">
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 2</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 3</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 4</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 5</div>
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-4xl">Union Stats</h1>
           </div>
-        </div>
-      </section>
 
-      <section className="pt-12 sm:pt-24">
-        <div className="container mb-8">
-          <h2>Asset Management</h2>
-        </div>
-
-        <div className="container">
-          <div className="flex divide-x">
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 2</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="pt-12 sm:pt-24">
-        <div className="container mb-8">
-          <h2>UNION Token</h2>
-        </div>
-
-        <div className="container">
-          <div className="flex divide-x">
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label 2</div>
-          </div>
-        </div>
-      </section>
-
-      <section className="pt-12 sm:pt-24">
-        <div className="container mb-8">
-          <h2>Current Parameter Values</h2>
-        </div>
-
-        <div className="container">
-          <div className="flex divide-x">
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-            <div className="flex-1 flex justify-center p-4 sm:p-6">Label</div>
-          </div>
+          <ul className="flex space-x-3">
+            <li>
+              <a
+                className="inline-block rounded py-2 px-4 font-medium bg-black-pure hover:bg-black-dark duration-150 transition-colors text-white"
+                href="#"
+              >
+                Global Lending
+              </a>
+            </li>
+            <li>
+              <a
+                className="inline-block rounded py-2 px-4 font-medium hover:bg-black-pure hover:bg-opacity-10 duration-150 transition-colors text-type-base "
+                href="#"
+              >
+                Asset Management
+              </a>
+            </li>
+            <li>
+              <a
+                className="inline-block rounded py-2 px-4 font-medium hover:bg-black-pure hover:bg-opacity-10 duration-150 transition-colors text-type-base "
+                href="#"
+              >
+                UNION Token
+              </a>
+            </li>
+            <li>
+              <a
+                className="inline-block rounded py-2 px-4 font-medium hover:bg-black-pure hover:bg-opacity-10 duration-150 transition-colors text-type-base "
+                href="#"
+              >
+                Current Parameters
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
     </Fragment>
