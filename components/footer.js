@@ -41,23 +41,14 @@ const Footer = () => {
                   <a className="block hover:underline">Faucet</a>
                 </Link>
               </li>
-              <li className="mb-2 sm:mb-0">
+              <li>
                 <Link href="/governance">
-                  <a className="inline-block pb-2 pr-4 hover:underline">
-                    Governance
-                  </a>
+                  <a className="block hover:underline">Governance</a>
                 </Link>
               </li>
-              <li className="mb-2 sm:mb-0">
-                <Link href="/vote">
-                  <a className="inline-block pb-2 pr-4 hover:underline">Vote</a>
-                </Link>
-              </li>
-              <li className="mb-2 sm:mb-0">
+              <li>
                 <Link href="/stats">
-                  <a className="inline-block pb-2 pr-4 hover:underline">
-                    Stats
-                  </a>
+                  <a className="block hover:underline">Stats</a>
                 </Link>
               </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (

@@ -4,6 +4,7 @@ export default function GovernanceView() {
   return (
     <Fragment>
       <div className="container">
+        <h1>Governance</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
           praesentium aliquid. Cumque, dicta tempore libero perferendis
