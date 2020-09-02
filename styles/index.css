@@ -7,11 +7,6 @@
   --radius: 4px;
 }
 
-a:focus,
-button:focus {
-  @apply outline-none shadow-outline;
-}
-
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
