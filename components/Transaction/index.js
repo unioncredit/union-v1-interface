@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import Tx from "svgs/Tx";
 import getEtherscanLink from "util/getEtherscanLink";
-import Skeleton from "./Skeleton";
+import Skeleton from "../Skeleton";
 
 const TRANSACTION_TYPES = {
   BORROW: "You borrowed",

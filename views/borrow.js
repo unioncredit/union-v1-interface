@@ -6,7 +6,7 @@ import LabelPair from "components/labelPair";
 import RepayModal from "components/RepayModal";
 import { useRepayModalToggle } from "components/RepayModal/state";
 import SuccessModal from "components/SuccessModal";
-import Transaction, { TransactionSkeleton } from "components/transaction";
+import TransactionList from "components/TransactionList";
 import { UtilizationBarWithPercentage } from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";
 import useCreditLimit from "hooks/useCreditLimit";
@@ -22,10 +22,7 @@ export default function BorrowView() {
 
   const { data: isMember } = useIsMember();
 
-  const {
-    data: transactionsData,
-    mutate: updateTransactionsData,
-  } = useTransactions();
+  const { data: txsData, mutate: updateTxsData } = useTransactions();
 
   const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
 
@@ -46,7 +43,7 @@ export default function BorrowView() {
   const onComplete = async () => {
     await updateBorrowData();
     await updateCreditLimit();
-    await updateTransactionsData();
+    await updateTxsData();
   };
 
   return (
@@ -137,25 +134,7 @@ export default function BorrowView() {
           </div>
         </div>
 
-        {isMember === true && (
-          <Fragment>
-            <div className="mb-4">
-              <h2 className="h-12 leading-12">Transactions</h2>
-            </div>
-
-            {transactionsData && transactionsData.length ? (
-              transactionsData.map((datum, i) => (
-                <Transaction key={i} {...datum} />
-              ))
-            ) : (
-              <Fragment>
-                <TransactionSkeleton />
-                <TransactionSkeleton />
-                <TransactionSkeleton />
-              </Fragment>
-            )}
-          </Fragment>
-        )}
+        <TransactionList data={txsData} />
       </div>
 
       <BorrowModal

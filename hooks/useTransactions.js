@@ -12,7 +12,8 @@ const getTransactions = (marketRegistryContract) => async (
   _,
   account,
   tokenAddress,
-  library
+  library,
+  count
 ) => {
   const signer = library.getSigner();
 
@@ -77,12 +78,17 @@ const getTransactions = (marketRegistryContract) => async (
    */
   const sortedTxs = txs
     .sort((a, b) => b.blockNumber - a.blockNumber)
-    .slice(0, 5);
+    .slice(0, count);
 
   return sortedTxs;
 };
 
-export default function useTransactions() {
+/**
+ * @name useTransactions
+ *
+ * @param {Number} count The number of txs to return in the array
+ */
+export default function useTransactions(count = 5) {
   const { account, library } = useWeb3React();
 
   const curToken = useCurrentToken();
@@ -96,7 +102,7 @@ export default function useTransactions() {
     !!library;
 
   return useSWR(
-    shouldFetch ? ["Transactions", account, curToken, library] : null,
+    shouldFetch ? ["Transactions", account, curToken, library, count] : null,
     getTransactions(marketRegistryContract)
   );
 }
