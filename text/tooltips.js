@@ -1,59 +1,57 @@
-import { Fragment } from "react";
-
 export const utilizedStakeTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Utilized Stake</p>
     <p>
       This is the stake that is currently being used by someone. It cannot be
       withdrawn.
     </p>
-  </Fragment>
+  </div>
 );
 
 export const defaultedStakeTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Defaulted Stake</p>
     <p>
       This part shows the total amount of people which have not paid on time.
       Funds that are locked in defaulted stake are not earning UNION.
     </p>
-  </Fragment>
+  </div>
 );
 
 export const withdrawableStakeTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Withdrawable Stake</p>
     <p>
       This is the stake you can actually withdraw. It is{" "}
       <i>"Your total stake"</i> <strong>minus</strong>{" "}
       <i>"Your utilized stake"</i>
     </p>
-  </Fragment>
+  </div>
 );
 
 export const vouchingTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Vouching</p>
     <p>
       Vouching for someone is similar to cosigning, you are signalling to Union
       that they can be trusted to borrow and repay. Only Union members are able
       to vouch.
     </p>
-  </Fragment>
+  </div>
 );
 
 export const rewardsTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Rewards</p>
     <p>
       This is the total number of UNION Tokens you’ve accumulated so far since
       the last claim action.
     </p>
-  </Fragment>
+  </div>
 );
 
 export const rewardsMultiplierTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Rewards multiplier</p>
     <p>
       These are the rewards you accumulated based on your utilized stake and
@@ -63,28 +61,28 @@ export const rewardsMultiplierTip = (
       utilized stake is 700 and you don’t have any defaulted stake, then 1 +
       700/1000 means that your reward multiplier would be 1.75x
     </p>
-  </Fragment>
+  </div>
 );
 
 export const healthTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Health</p>
     <p>
       This is how much of <strong>your</strong> vouch the voucher is currently
       using
     </p>
-  </Fragment>
+  </div>
 );
 
 export const minimumPaymentDueTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Minimum Payment Due</p>
     <p>This is the amount you need to repay monthly</p>
-  </Fragment>
+  </div>
 );
 
 export const unionPerYearTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>UNION Per Year</p>
     <p>
       This is the token that the staking contract returns to the user that is
@@ -99,29 +97,29 @@ export const unionPerYearTip = (
       <i>"your reward multiplier"</i> <strong>divided by</strong>{" "}
       <i>"Sum of everyone elses above number"</i>
     </p>
-  </Fragment>
+  </div>
 );
 
 export const percentUtilizedTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Percent Utilized</p>
     <p>Calculated percentage usage of your available credit.</p>
-  </Fragment>
+  </div>
 );
 
 export const utilizedVouchTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Utilized</p>
     <p>
       This is how much of your voucher/backers vouch you are current using, if
       you default, this is how much of their funds will be locked.
     </p>
-  </Fragment>
+  </div>
 );
 
 export const feeTip = (
-  <Fragment>
+  <div className="tooltip-text">
     <p>Fee</p>
     <p>Union's marginal fee, we use this to keep the lights on.</p>
-  </Fragment>
+  </div>
 );

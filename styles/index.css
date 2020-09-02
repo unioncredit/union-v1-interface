@@ -371,7 +371,7 @@ input[type="number"] {
 }
 
 [data-reach-tooltip] {
-  @apply bg-white text-sm border absolute text-type-light;
+  @apply bg-white border absolute;
   z-index: 1;
   padding: calc(1rem - 1px);
   pointer-events: none;
@@ -381,28 +381,26 @@ input[type="number"] {
 }
 
 /* Styles to crop text to X-height */
-[data-reach-tooltip] p {
+.tooltip-text p {
+  @apply text-type-light text-sm;
   line-height: 1.5;
 }
-[data-reach-tooltip] p::before,
-[data-reach-tooltip] p::after {
+.tooltip-text p::before,
+.tooltip-text p::after {
   content: "";
   display: block;
   height: 0;
   width: 0;
 }
-[data-reach-tooltip] p::before {
+.tooltip-text p::before {
   margin-top: calc((1 - 1.5) * 0.5em);
 }
-[data-reach-tooltip] p::after {
+.tooltip-text p::after {
   margin-bottom: calc((1 - 1.5) * 0.5em);
 }
 
-/*
- * Tooltip Title Styles
- */
 /* Tooltip Title Styles */
-[data-reach-tooltip] p:first-of-type {
+.tooltip-text p:first-of-type {
   @apply font-semibold mb-2 text-type-base;
 }
 
@@ -432,13 +430,6 @@ input[type="number"] {
 }
 .crop-tight::after {
   margin-bottom: calc((1 - 1.25) * 0.5em);
-}
-
-/*
- * Tooltip Title Styles
- */
-[data-reach-tooltip] p:first-of-type {
-  @apply font-semibold mb-2 text-type-base;
 }
 
 /* Used to detect in JavaScript if apps have loaded styles or not. */

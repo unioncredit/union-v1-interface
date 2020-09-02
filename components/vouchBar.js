@@ -1,24 +1,38 @@
 import pastels from "lib/pastels";
+import Tooltip from "@reach/tooltip";
+import Address from "components/address";
 
-const Vouch = ({ width, index }) => {
+const Vouch = ({ width, address, index }) => {
   return (
-    <div className="h-16">
-      <style jsx>{`
-        div {
-          background: ${pastels[index]};
-          width: ${width}%;
-        }
-      `}</style>
-    </div>
+    <Tooltip
+      label={<Address address={address} />}
+      style={{ maxWidth: 320, paddingRight: "calc(2rem - 1px)" }}
+    >
+      <div className="h-16 hover:opacity-75 duration-150 transition-opacity">
+        <style jsx>{`
+          div {
+            background: ${pastels[index]};
+            width: ${width}%;
+          }
+        `}</style>
+      </div>
+    </Tooltip>
   );
 };
 
-const VouchBar = ({ className, slices }) => {
+const VouchBar = ({ className, data }) => {
   return (
     <div className={className}>
       <div className="h-16 bg-border-light flex rounded overflow-hidden relative w-full select-none flex-row-reverse">
-        {slices.length > 0 &&
-          slices.map((slice, i) => <Vouch key={i} index={i} width={slice} />)}
+        {data.length > 0 &&
+          data.map((vouch, i) => (
+            <Vouch
+              key={i}
+              index={i}
+              width={vouch.width}
+              address={vouch.address}
+            />
+          ))}
       </div>
     </div>
   );

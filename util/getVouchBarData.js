@@ -6,12 +6,20 @@ export default function getVouchBarData(vouchData) {
   if (!vouchData || vouchData.length === 0) return [];
 
   const vouches = vouchData
-    .map(({ vouched }) => Number(vouched))
-    .sort((a, b) => b - a);
+    .map(({ vouched, address }) => ({
+      address,
+      vouched: Number(vouched),
+    }))
+    .sort((a, b) => b.vouched - a.vouched);
 
-  const vouchTotal = vouches.reduce((acc, cur) => acc + cur);
+  const vouchTotal = vouches
+    .map(({ vouched }) => vouched)
+    .reduce((acc, cur) => acc + cur);
 
-  return vouches.map((vouch) => (vouch / vouchTotal) * 100);
+  return vouches.map(({ vouched, address }) => ({
+    address,
+    width: (vouched / vouchTotal) * 100,
+  }));
 }
 
 export function getVouchTotal(vouchData) {

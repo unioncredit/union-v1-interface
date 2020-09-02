@@ -22,7 +22,7 @@ export default function VouchView() {
 
   const { data: creditLimit = 0 } = useCreditLimit();
 
-  const vouchBarSlices = getVouchBarData(vouchData);
+  const vouchBarData = getVouchBarData(vouchData);
 
   return (
     <Fragment>
@@ -44,7 +44,7 @@ export default function VouchView() {
           </div>
         </div>
 
-        <VouchBar className="mb-10" slices={vouchBarSlices} />
+        <VouchBar className="mb-10" data={vouchBarData} />
 
         <div className="mb-4">
           <h1 className="h-12 leading-12">Addresses who vouched for you</h1>
