@@ -77,7 +77,7 @@ const WithdrawRewards = ({ onComplete }) => {
 
   return (
     <button
-      className="text-sm font-semibold underline focus:outline-none"
+      className="text-sm font-semibold underline"
       disabled={withdrawing}
       onClick={onWithdrawRewards}
     >
