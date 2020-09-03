@@ -1,5 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import Identicon from "components/identicon";
+import ProfileImage from "components/ProfileImage";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 import { Pending } from "svgs/Alerts";
 import BellCircle from "svgs/BellCircle";
 import Spinner from "svgs/Spinner";
@@ -9,16 +11,30 @@ import truncateAddress from "util/truncateAddress";
 const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
   const { chainId } = useWeb3React();
 
+  const { data, error } = use3BoxPublicData(borrower);
+  const has3BoxName = !!data && !error && data?.name;
+  const has3BoxProfileImage = !!data && !error && data?.image;
+
   return (
     <li className="text-sm pt-4">
       <div className="flex space-x-4">
         <div>
-          <Identicon address={borrower} large />
+          {has3BoxProfileImage ? (
+            <ProfileImage
+              alt={has3BoxName ? data.name : borrower}
+              image={data.image}
+              size={32}
+            />
+          ) : (
+            <Identicon address={borrower} large />
+          )}
         </div>
-        <div>
+        <div className="flex-1">
           <p className="whitespace-normal leading-snug crop-snug mb-2">
-            <strong>{truncateAddress(borrower)}</strong> now trusts you with{" "}
-            <strong>{trustAmount} DAI</strong>
+            <strong>
+              {has3BoxName ? data.name : truncateAddress(borrower)}
+            </strong>{" "}
+            now trusts you with <strong>{trustAmount} DAI</strong>
           </p>
           <div className="flex justify-between leading-none text-type-light space-x-2">
             <p>
@@ -46,7 +62,7 @@ const ApplyMember = ({ date }) => {
         <div>
           <Pending size={32} />
         </div>
-        <div>
+        <div className="flex-1">
           <p className="whitespace-normal leading-snug crop-snug mb-2">
             <strong>Congratulations</strong> you are now a member of Union.
           </p>
@@ -63,16 +79,30 @@ const ApplyMember = ({ date }) => {
 const CancelVouch = ({ account, hash, date }) => {
   const { chainId } = useWeb3React();
 
+  const { data, error } = use3BoxPublicData(account);
+  const has3BoxName = !!data && !error && data?.name;
+  const has3BoxProfileImage = !!data && !error && data?.image;
+
   return (
     <li className="text-sm pt-4">
       <div className="flex space-x-4">
         <div>
-          <Identicon address={account} large />
+          {has3BoxProfileImage ? (
+            <ProfileImage
+              alt={has3BoxName ? data.name : account}
+              image={data.image}
+              size={32}
+            />
+          ) : (
+            <Identicon address={account} large />
+          )}
         </div>
-        <div>
+        <div className="flex-1">
           <p className="whitespace-normal leading-snug crop-snug mb-2">
-            <strong>{truncateAddress(account)}</strong> is no longer vouching
-            for you
+            <strong>
+              {has3BoxName ? data.name : truncateAddress(account)}
+            </strong>{" "}
+            is no longer vouching for you
           </p>
           <div className="flex justify-between leading-none text-type-light space-x-2">
             <p>
