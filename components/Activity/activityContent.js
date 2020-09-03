@@ -60,6 +60,39 @@ const ApplyMember = ({ date }) => {
   );
 };
 
+const CancelVouch = ({ account, hash, date }) => {
+  const { chainId } = useWeb3React();
+
+  return (
+    <li className="text-sm pt-4">
+      <div className="flex space-x-4">
+        <div>
+          <Identicon address={account} large />
+        </div>
+        <div>
+          <p className="whitespace-normal leading-snug crop-snug mb-2">
+            <strong>{truncateAddress(account)}</strong> is no longer vouching
+            for you
+          </p>
+          <div className="flex justify-between leading-none text-type-light space-x-2">
+            <p>
+              <a
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              >
+                See details
+              </a>
+            </p>
+            <p className="text-right">{date}</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+};
+
 /**
  *
  * @param {object} props
@@ -92,13 +125,9 @@ const ActivityContent = ({ data }) => {
 
         if (log.type === "ApplyMember") return <ApplyMember key={i} {...log} />;
 
-        return (
-          <li key={i}>
-            <pre>
-              <code>{JSON.stringify(log, null, 2)}</code>
-            </pre>
-          </li>
-        );
+        if (log.type === "CancelVouch") return <CancelVouch key={i} {...log} />;
+
+        return null;
       })}
     </ul>
   );

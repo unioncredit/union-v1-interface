@@ -10,6 +10,10 @@ dayjs.extend(relativeTime);
 const getActivity = (contract) => async (_, account, library) => {
   const signer = library.getSigner();
 
+  /**
+   * UpdateTrust Logs
+   */
+
   const updateTrustFilter = contract.filters.LogUpdateTrust();
   updateTrustFilter.fromBlock = 0;
 
@@ -25,6 +29,7 @@ const getActivity = (contract) => async (_, account, library) => {
 
       return {
         borrower,
+        ts: block.timestamp * 1000,
         date: dayjs(block.timestamp * 1000).fromNow(),
         hash: log.transactionHash,
         staker,
@@ -38,6 +43,10 @@ const getActivity = (contract) => async (_, account, library) => {
     (log) => log.staker === account
   );
 
+  /**
+   * ApplyMember Logs
+   */
+
   const applyMemberFilter = contract.filters.LogApplyMember(account);
   applyMemberFilter.fromBlock = 0;
 
@@ -48,6 +57,7 @@ const getActivity = (contract) => async (_, account, library) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
       return {
+        ts: block.timestamp * 1000,
         date: dayjs(block.timestamp * 1000).fromNow(),
         hash: log.transactionHash,
         type: "ApplyMember",
@@ -55,7 +65,53 @@ const getActivity = (contract) => async (_, account, library) => {
     })
   );
 
-  return [...personalUpdateTrustLogs, ...parseApplyMemberLogs];
+  /**
+   * CancelVouch Logs
+   */
+
+  const cancelVouchFilter = contract.filters.LogCancelVouch();
+  cancelVouchFilter.fromBlock = 0;
+
+  const cancelVouchLogs = await signer.provider.getLogs(cancelVouchFilter);
+
+  const parseCancelVouchLogs = await Promise.all(
+    cancelVouchLogs.map(async (log) => {
+      const block = await signer.provider.getBlock(log.blockNumber);
+
+      const logData = contract.interface.parseLog(log);
+
+      const [account, borrower] = logData.args;
+
+      return {
+        ts: block.timestamp * 1000,
+        date: dayjs(block.timestamp * 1000).fromNow(),
+        hash: log.transactionHash,
+        type: "CancelVouch",
+        account,
+        borrower,
+      };
+    })
+  );
+
+  const personalCancelVouchLogs = parseCancelVouchLogs.filter(
+    (log) => log.borrower === account
+  );
+
+  /**
+   * Compiled Logs
+   */
+  const logs = [
+    ...personalUpdateTrustLogs,
+    ...parseApplyMemberLogs,
+    ...personalCancelVouchLogs,
+  ];
+
+  /**
+   * Sort logs by timestamp
+   */
+  const sortedLogs = logs.sort((a, b) => b.ts - a.ts);
+
+  return sortedLogs;
 };
 
 export default function useActivity() {
