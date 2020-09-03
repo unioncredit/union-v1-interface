@@ -460,7 +460,7 @@ input[type="number"] {
 
 [data-reach-menu-list],
 [data-reach-menu-items] {
-  @apply block rounded whitespace-no-wrap border bg-white outline-none shadow-input;
+  @apply block rounded whitespace-no-wrap border bg-white outline-none;
 }
 
 /*

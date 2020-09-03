@@ -57,7 +57,7 @@ const Web3Connection = () => {
           <Arrow />
         </span>
       </MenuButton>
-      <MenuList className="mt-2 w-56 space-y-2 p-2">
+      <MenuList className="mt-2 w-56 space-y-2 p-2 shadow-input">
         <MenuItem onSelect={handleMyAccount}>My account</MenuItem>
         <MenuItem onSelect={handleCopyAddress}>{copyAddressText}</MenuItem>
         <MenuItem onSelect={handleSignOut}>Sign out</MenuItem>
