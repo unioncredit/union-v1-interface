@@ -11,8 +11,61 @@ import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
 
-const Activity = () => {
+const NewTrustAdded = ({ borrower, trustAmount, hash, date }) => {
   const { chainId } = useWeb3React();
+
+  return (
+    <li className="text-sm pt-4">
+      <div className="flex space-x-4">
+        <div>
+          <Identicon address={borrower} large />
+        </div>
+        <div>
+          <p className="whitespace-normal leading-snug crop-snug mb-2">
+            <strong>{truncateAddress(borrower)}</strong> now trusts you with{" "}
+            <strong>{trustAmount} DAI</strong>
+          </p>
+          <div className="flex justify-between leading-none text-type-light space-x-2">
+            <p>
+              <a
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              >
+                See details
+              </a>
+            </p>
+            <p className="text-right">{date}</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+};
+
+const BecameMember = ({ date }) => {
+  return (
+    <li className="text-sm pt-4">
+      <div className="flex space-x-4">
+        <div>
+          <Pending size={32} />
+        </div>
+        <div>
+          <p className="whitespace-normal leading-snug crop-snug mb-2">
+            <strong>Congratulations</strong> you are now a member of Union.
+          </p>
+          <div className="flex justify-between leading-none text-type-light space-x-2">
+            <span />
+            <p className="text-right">{date}</p>
+          </div>
+        </div>
+      </div>
+    </li>
+  );
+};
+
+const Activity = () => {
   const { data } = useActivity();
   const [count, setCount] = useLocalStorage("notifications", 0);
   const [hasPending, setHasPending] = useState(false);
@@ -50,60 +103,10 @@ const Activity = () => {
               <ul className="divide-y space-y-4 -mt-4">
                 {data.map((log, i) => {
                   if (log.type === "UpdateTrust")
-                    return (
-                      <li key={i} className="text-sm pt-4">
-                        <div className="flex space-x-4">
-                          <div>
-                            <Identicon address={log.borrower} large />
-                          </div>
-                          <div>
-                            <p className="whitespace-normal leading-snug crop-snug mb-2">
-                              <strong>{truncateAddress(log.borrower)}</strong>{" "}
-                              now trusts you with{" "}
-                              <strong>{log.trustAmount} DAI</strong>
-                            </p>
-                            <div className="flex justify-between leading-none text-type-light space-x-2">
-                              <p>
-                                <a
-                                  className="underline"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  href={getEtherscanLink(
-                                    chainId,
-                                    log.hash,
-                                    "TRANSACTION"
-                                  )}
-                                >
-                                  See details
-                                </a>
-                              </p>
-                              <p className="text-right">{log.date}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    );
+                    return <NewTrustAdded key={i} {...log} />;
 
                   if (log.type === "ApplyMember")
-                    return (
-                      <li key={i} className="text-sm pt-4">
-                        <div className="flex space-x-4">
-                          <div>
-                            <Pending size={32} />
-                          </div>
-                          <div>
-                            <p className="whitespace-normal leading-snug crop-snug mb-2">
-                              <strong>Congratulations</strong> you are now a
-                              member of Union.
-                            </p>
-                            <div className="flex justify-between leading-none text-type-light space-x-2">
-                              <span />
-                              <p className="text-right">{log.date}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </li>
-                    );
+                    return <BecameMember key={i} {...log} />;
 
                   return (
                     <li key={i}>
