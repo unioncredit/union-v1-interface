@@ -10,7 +10,7 @@ import BellCircle from "svgs/BellCircle";
 import Spinner from "svgs/Spinner";
 import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
-import Identicon from "./identicon";
+import Identicon from "../identicon";
 import MenuArrow from "svgs/MenuArrow";
 
 /**

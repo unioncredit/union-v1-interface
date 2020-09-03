@@ -13,7 +13,7 @@ import {
   useToggleSignInModal,
 } from "./WalletModal/state";
 import Web3Connection from "./web3Connection";
-import Activity from "./activity";
+import Activity from "./Activity";
 
 const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
 
