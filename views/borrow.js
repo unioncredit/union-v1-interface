@@ -48,9 +48,9 @@ export default function BorrowView() {
 
   return (
     <Fragment>
-      <div className="container">
-        {isMember === false && <ApplicationCard />}
+      {isMember === false && <ApplicationCard />}
 
+      <div className="container">
         <div className="mb-4">
           <h1 className="h-12 leading-12">Dashboard</h1>
         </div>

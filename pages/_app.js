@@ -23,7 +23,7 @@ export default function UnionApp({ Component, pageProps }) {
             <Navigation />
           </header>
 
-          <main className="flex-1">
+          <main className="flex-1 relative">
             <Component {...pageProps} />
           </main>
 

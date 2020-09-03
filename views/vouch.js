@@ -26,9 +26,9 @@ export default function VouchView() {
 
   return (
     <Fragment>
-      <div className="container">
-        {isMember === false && <ApplicationCard />}
+      {isMember === false && <ApplicationCard />}
 
+      <div className="container">
         <div className="flex justify-between mb-6">
           <LabelPair
             label="Real-time available credit"
