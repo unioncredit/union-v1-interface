@@ -26,12 +26,12 @@ export default function StakeView() {
     <Fragment>
       <div className="container">
         <div className="flex flex-col md:flex-row md:space-x-4">
-          <div className="w-full md:460px mb-12 md:mb-0">
+          <div className="flex-1 md:460px mb-12 md:mb-0">
             <h1 className="hidden md:block mb-4 h-12 leading-12">Stake</h1>
             <StakeCard />
           </div>
 
-          <div className="w-full">
+          <div className="flex-1">
             <div className="flex flex-col h-full">
               <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 md:mb-4">
                 <h2 className="mb-4 md:mb-0">Addresses You Trust</h2>
