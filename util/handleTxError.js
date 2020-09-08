@@ -6,20 +6,13 @@ export default function handleTxError(error) {
 
   let message = "Something went wrong";
 
-  switch (error?.code) {
-    case 4001:
-      message = "Rejected transaction signature";
-      break;
-    case -3200:
-    case -32603:
-      message = "Internal transaction error";
-      break;
-    case -32602:
-      message = "Invalid transaction parameters";
-      break;
-    default:
-      break;
-  }
+  if (error?.message === "User rejected request" || error?.code === 4001)
+    message = "Rejected transaction signature";
+
+  if (error?.code === -3200 || error?.code === -32603)
+    message = "Internal transaction error";
+
+  if (error?.code === -32602) message = "Invalid transaction parameters";
 
   if (isHash(error.message)) {
     addToast(FLAVORS.TX_ERROR(message, error.message));
