@@ -40,7 +40,7 @@
     "canvas-confetti": "^1.2.0",
     "classnames": "^2.2.6",
     "cogo-toast": "^4.2.3",
-    "dayjs": "^1.8.34",
+    "dayjs": "^1.8.35",
     "fathom-client": "^3.0.0",
     "graphql-request": "^3.0.0",
     "next": "^9.5.3",
@@ -55,7 +55,7 @@
     "react-jazzicon-custom-colors": "^0.1.7",
     "react-ridge-state": "^4.1.6",
     "react-table": "^7.5.0",
-    "react-use": "^15.3.3",
+    "react-use": "^15.3.4",
     "swr": "^0.3.2",
     "tailwindcss": "^1.8.5"
   },
