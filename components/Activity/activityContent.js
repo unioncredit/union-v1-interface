@@ -34,7 +34,8 @@ const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
             <strong>
               {has3BoxName ? data.name : truncateAddress(borrower)}
             </strong>{" "}
-            now trusts you with <strong>{trustAmount} DAI</strong>
+            adjusted your trust <br />
+            by <strong>{trustAmount} DAI</strong>
           </p>
           <div className="flex justify-between leading-none text-type-light space-x-2">
             <p>
