@@ -87,7 +87,7 @@ const Navigation = () => {
                   <li>
                     <Activity />
                   </li>
-                  <li className="ml-6 md:ml-8">
+                  <li className="ml-4 sm:ml-6 md:ml-8">
                     <Web3Connection />
                   </li>
                 </ul>

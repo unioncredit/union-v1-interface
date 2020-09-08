@@ -45,7 +45,12 @@ const Activity = () => {
             <p className="text-lg font-semibold leading-none">Activity</p>
           </div>
 
-          <div className="p-4">
+          <div
+            className="p-4 max-h-72 overflow-y-scroll"
+            style={{
+              "-webkit-overflow-scrolling": "touch",
+            }}
+          >
             <ActivityContent data={data} />
           </div>
         </MenuItems>

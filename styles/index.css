@@ -452,10 +452,16 @@ input[type="number"] {
 }
 
 .btn-menu-button[data-reach-menu-button] {
-  @apply font-medium px-4 py-3 rounded border bg-border-light leading-snug transition-colors duration-150 inline-flex items-center;
+  @apply font-medium px-3 py-3 rounded border bg-border-light leading-snug transition-colors duration-150 inline-flex items-center;
 }
 .btn-menu-button[data-reach-menu-button]:focus {
   @apply shadow-outline outline-none;
+}
+
+@screen sm {
+  .btn-menu-button[data-reach-menu-button] {
+    @apply px-4;
+  }
 }
 
 [data-reach-menu-list],

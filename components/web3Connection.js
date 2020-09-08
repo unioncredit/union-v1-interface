@@ -52,7 +52,14 @@ const Web3Connection = () => {
             <Identicon address={account} />
           )}
         </div>
-        <div className="ml-3 mr-2">{ENSName ?? truncateAddress(account)}</div>
+        <div className="ml-3 mr-2">
+          <span className="hidden sm:inline">
+            {ENSName ?? truncateAddress(account)}
+          </span>{" "}
+          <span className="sm:hidden">
+            {ENSName ?? truncateAddress(account, 2)}
+          </span>
+        </div>
         <span className="mr-2px" aria-hidden>
           <Arrow />
         </span>
