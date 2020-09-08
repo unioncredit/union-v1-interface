@@ -39,36 +39,30 @@ const Web3Connection = () => {
   const copyAddressText = isCopied ? "Address copied" : "Copy address";
 
   return (
-    <ul className="flex items-center">
-      <li className="ml-6 md:ml-8 relative">
-        <Menu>
-          <MenuButton>
-            <div className="ml-1 flex" aria-hidden>
-              {has3BoxProfileImage ? (
-                <ProfileImage
-                  alt={ENSName ?? account}
-                  image={threeBox.image}
-                  size={18}
-                />
-              ) : (
-                <Identicon address={account} />
-              )}
-            </div>
-            <div className="ml-3 mr-2">
-              {ENSName ?? truncateAddress(account)}
-            </div>
-            <span className="mr-2px" aria-hidden>
-              <Arrow />
-            </span>
-          </MenuButton>
-          <MenuList className="space-y-2">
-            <MenuItem onSelect={handleMyAccount}>My account</MenuItem>
-            <MenuItem onSelect={handleCopyAddress}>{copyAddressText}</MenuItem>
-            <MenuItem onSelect={handleSignOut}>Sign out</MenuItem>
-          </MenuList>
-        </Menu>
-      </li>
-    </ul>
+    <Menu>
+      <MenuButton className="btn-menu-button">
+        <div className="ml-1 flex" aria-hidden>
+          {has3BoxProfileImage ? (
+            <ProfileImage
+              alt={ENSName ?? account}
+              image={threeBox.image}
+              size={18}
+            />
+          ) : (
+            <Identicon address={account} />
+          )}
+        </div>
+        <div className="ml-3 mr-2">{ENSName ?? truncateAddress(account)}</div>
+        <span className="mr-2px" aria-hidden>
+          <Arrow />
+        </span>
+      </MenuButton>
+      <MenuList className="mt-2 w-56 space-y-2 p-2 shadow-input">
+        <MenuItem onSelect={handleMyAccount}>My account</MenuItem>
+        <MenuItem onSelect={handleCopyAddress}>{copyAddressText}</MenuItem>
+        <MenuItem onSelect={handleSignOut}>Sign out</MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
 

@@ -57,7 +57,7 @@
     "react-table": "^7.5.0",
     "react-use": "^15.3.3",
     "swr": "^0.3.2",
-    "tailwindcss": "^1.7.6"
+    "tailwindcss": "^1.8.5"
   },
   "devDependencies": {
     "babel-plugin-macros": "^2.8.0",

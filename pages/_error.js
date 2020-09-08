@@ -1,16 +1,52 @@
+import Footer from "components/footer";
+import Logo from "components/logo";
+import Head from "next/head";
+import Link from "next/link";
+
 export default function Error() {
   return (
-    <div className="container">
-      <div className="text-center py-32">
-        <h1>Something went wrong</h1>
-        <p className="text-lg mt-4">
-          An unexpected error occurred.{" "}
-          <a className="underline" href="mailto:support@union.finance">
-            Contact Support
-          </a>
-          .
-        </p>
-      </div>
+    <div className="flex flex-col min-h-screen">
+      <Head>
+        <title>Union</title>
+        <meta property="og:title" content="Union" />
+        <meta name="twitter:title" content="Union" />
+      </Head>
+
+      <header>
+        <nav className="border-b bg-white">
+          <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
+            <ul className="flex items-center justify-between">
+              <li className="py-4 h-20 flex items-center justify-start">
+                <Link href="/">
+                  <a>
+                    <Logo />
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <main className="flex-1">
+        <div className="my-8 md:my-10">
+          <div className="container">
+            <div className="text-center pt-32 pb-64">
+              <h1>Something went wrong</h1>
+
+              <p className="text-lg mt-4">
+                An unexpected error occurred{" "}
+                <a className="underline" href="mailto:support@union.finance">
+                  contact Support
+                </a>
+                .
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
