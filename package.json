@@ -45,6 +45,7 @@
     "graphql-request": "^3.0.0",
     "next": "^9.5.3",
     "nookies": "^2.4.0",
+    "nprogress": "^0.2.0",
     "parse-ms": "^2.1.0",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
