@@ -55,6 +55,9 @@ const WalletOptions = ({
           if (router.pathname === "/") router.push("/stake");
         };
 
+        if (name === "Injected" && !(window?.ethereum || window?.web3))
+          return null;
+
         return (
           <WalletOption
             key={i}
@@ -120,7 +123,7 @@ const WalletModal = () => {
           <div className="w-full h-1 bg-pink-pure" />
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 space-y-4">
           <WalletOptions
             activatingConnector={activatingConnector}
             setActivatingConnector={setActivatingConnector}
