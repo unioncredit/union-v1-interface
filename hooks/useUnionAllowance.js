@@ -1,7 +1,7 @@
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { MEMBER_MANAGER_ADDRESSES } from "constants/variables";
-import { useAutoCallback } from "hooks.macro";
+import { useCallback } from "react";
 import useSWR from "swr";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
@@ -40,7 +40,7 @@ export function useIncreaseUnionAllowance() {
 
   const unionContract = useUnionContract();
 
-  const increase = useAutoCallback(
+  return useCallback(
     /**
      * @param {Number|String} amount
      */
@@ -58,8 +58,7 @@ export function useIncreaseUnionAllowance() {
       } catch (err) {
         handleTxError(err);
       }
-    }
+    },
+    [chainId]
   );
-
-  return increase;
 }

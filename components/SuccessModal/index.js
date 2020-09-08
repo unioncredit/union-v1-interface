@@ -18,7 +18,7 @@ const SuccessModal = () => {
   usePopConfetti(open);
 
   return (
-    <Modal className="wide" isOpen={open} onDismiss={toggle}>
+    <Modal wide isOpen={open} onDismiss={toggle}>
       <div className="px-4 sm:px-6 pb-6 sm:pb-12 pt-8 sm:pt-12 text-center relative">
         <div className="absolute right-0 top-0 mr-4 mt-4">
           <CloseButton onClick={toggle} large />
