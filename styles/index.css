@@ -133,6 +133,10 @@ input[type="number"] {
 .btn-invert {
   @apply bg-white border-border-pure text-black-pure;
 }
+.btn-invert:hover:enabled,
+.btn-invert:focus:enabled {
+  @apply bg-border-light;
+}
 
 .btn-icon {
   @apply absolute;
@@ -452,8 +456,6 @@ input[type="number"] {
 }
 [data-reach-menu-button]:focus {
   @apply shadow-outline outline-none;
-}
-[data-reach-menu-button][aria-expanded="true"] {
 }
 
 [data-reach-menu-list],
