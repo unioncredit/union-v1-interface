@@ -133,13 +133,19 @@ const WalletModal = () => {
 
         {walletView === "CREATE" && (
           <div className="mb-6">
-            <p className="text-center leading-tight text-grey-pure font-normal">
+            <p className="text-center text-sm leading-snug crop-snug text-grey-pure">
               By signing up, you agree to our <br />
-              <a className="underline" href="">
+              <a
+                className="text-type-base hover:underline focus:underline focus:outline-none"
+                href=""
+              >
                 Terms of Service
               </a>{" "}
               and{" "}
-              <a className="underline" href="">
+              <a
+                className="text-type-base hover:underline focus:underline focus:outline-none"
+                href=""
+              >
                 Privacy Policy
               </a>
             </p>
@@ -153,7 +159,7 @@ const WalletModal = () => {
             Don't have an account?{" "}
             <button
               onClick={setWalletViewCreate}
-              className="underline font-medium inline whitespace-no-wrap"
+              className="underline font-medium inline whitespace-no-wrap focus:outline-none focus:shadow-outline rounded"
             >
               Sign up
             </button>
@@ -163,7 +169,7 @@ const WalletModal = () => {
             Already have an account?{" "}
             <button
               onClick={setWalletViewSignIn}
-              className="underline font-medium inline whitespace-no-wrap"
+              className="underline font-medium inline whitespace-no-wrap focus:outline-none focus:shadow-outline rounded"
             >
               Sign in
             </button>
