@@ -1,11 +1,11 @@
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { MEMBER_MANAGER_ADDRESSES } from "constants/variables";
-import { useAutoCallback } from "hooks.macro";
+import { useCallback } from "react";
 import useSWR from "swr";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import parseRes from "util/parseRes";
-import useToast, { FLAVORS } from "./useToast";
 import useUnionContract from "./useUnionContract";
 
 const getUnionAllowance = (contract) => async (_, account, chainId) => {
@@ -14,9 +14,7 @@ const getUnionAllowance = (contract) => async (_, account, chainId) => {
     MEMBER_MANAGER_ADDRESSES[chainId]
   );
 
-  const allowance = parseRes(res);
-
-  return allowance;
+  return parseRes(res);
 };
 
 export default function useUnionAllowance() {
@@ -40,62 +38,27 @@ export default function useUnionAllowance() {
 export function useIncreaseUnionAllowance() {
   const { library, chainId } = useWeb3React();
 
-  const addToast = useToast();
+  const unionContract = useUnionContract();
 
-  const contract = useUnionContract();
-
-  const increase = useAutoCallback(
+  return useCallback(
     /**
      * @param {Number|String} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
      */
     async (amount) => {
-      let hidePendingToast = () => {};
-      let txReceipt = {};
-
-      const { hide: hideWaiting } = addToast(FLAVORS.TX_WAITING);
-
       try {
-        const tx = await contract.approve(
+        /**
+         * @type {import("@ethersproject/abstract-provider").TransactionResponse}
+         */
+        const { hash } = await unionContract.approve(
           MEMBER_MANAGER_ADDRESSES[chainId],
           parseUnits(amount, 18).toString()
         );
 
-        hideWaiting();
-
-        const { hide: hidePending } = addToast(
-          FLAVORS.TX_PENDING_TOKEN(tx.hash)
-        );
-
-        hidePendingToast = hidePending();
-
-        const receipt = await library.waitForTransaction(tx.hash);
-
-        if (receipt.status === 1) {
-          hidePending();
-
-          addToast(FLAVORS.TX_SUCCESS_ENABLED(tx.hash));
-
-          return;
-        }
-
-        hidePending();
-
-        txReceipt = receipt;
-
-        throw new Error(receipt.logs[0]);
+        await getReceipt(hash, library);
       } catch (err) {
-        hideWaiting();
-
-        hidePendingToast();
-
-        const message = handleTxError(err);
-
-        addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+        handleTxError(err);
       }
-    }
+    },
+    [chainId]
   );
-
-  return increase;
 }

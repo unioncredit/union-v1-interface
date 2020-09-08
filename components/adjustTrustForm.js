@@ -1,10 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
 import SegmentedControl from "components/segmentedControl";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
-import useToast, { FLAVORS } from "hooks/useToast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import Button from "./button";
 import Input from "./input";
@@ -33,44 +33,17 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
       ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
   );
 
-  const addToast = useToast();
-
   const onSubmit = async () => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     try {
-      if (formatNewTrust >= 0) {
-        const tx = await adjustTrust(address, formatNewTrust);
+      if (formatNewTrust <= 0) return;
 
-        const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
+      const { hash } = await adjustTrust(address, formatNewTrust);
 
-        hidePendingToast = hidePending;
+      await getReceipt(hash, library);
 
-        const receipt = await library.waitForTransaction(tx.hash);
-
-        if (receipt.status === 1) {
-          hidePending();
-
-          addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-          onComplete();
-
-          return;
-        }
-
-        hidePending();
-
-        txReceipt = receipt;
-
-        throw new Error(receipt.logs[0]);
-      }
+      await onComplete();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 

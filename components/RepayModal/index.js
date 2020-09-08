@@ -2,11 +2,12 @@ import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
 import useRepay from "hooks/payables/useRepay";
 import useCurrentToken from "hooks/useCurrentToken";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useTokenBalance from "hooks/useTokenBalance";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
 import Button from "../button";
@@ -14,7 +15,6 @@ import Input from "../input";
 import LabelPair from "../labelPair";
 import Modal, { ModalHeader } from "../modal";
 import { useRepayModalOpen, useRepayModalToggle } from "./state";
-import errorMessages from "text/errorMessages";
 
 /**
  * @name RepayModal
@@ -41,14 +41,12 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
     reset,
   } = useForm();
 
+  const { isDirty, isSubmitting } = formState;
+
   useEffect(() => {
     reset();
     updateDaiBalance();
   }, [open]);
-
-  const { isDirty, isSubmitting } = formState;
-
-  const addToast = useToast();
 
   const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
     curToken
@@ -71,9 +69,6 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
       : calculateBalanceOwed;
 
   const onSubmit = async (values) => {
-    let hidePendingToast = () => {};
-    let txReceipt = {};
-
     const amountToRepay =
       Number(values.amount) === calculateMaxValue
         ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
@@ -82,37 +77,15 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
         : Number(values.amount);
 
     try {
-      const tx = await repay(amountToRepay);
-
-      const { hide: hidePending } = addToast(FLAVORS.TX_PENDING(tx.hash));
-
-      hidePendingToast = hidePending;
+      const { hash } = await repay(amountToRepay);
 
       if (open) toggle();
 
-      const receipt = await library.waitForTransaction(tx.hash);
+      await getReceipt(hash, library);
 
-      if (receipt.status === 1) {
-        hidePending();
-
-        addToast(FLAVORS.TX_SUCCESS(tx.hash));
-
-        await onComplete();
-
-        return;
-      }
-
-      hidePending();
-
-      txReceipt = receipt;
-
-      throw new Error(receipt.logs[0]);
+      await onComplete();
     } catch (err) {
-      hidePendingToast();
-
-      const message = handleTxError(err);
-
-      addToast(FLAVORS.TX_ERROR(message, txReceipt?.transactionHash));
+      handleTxError(err);
     }
   };
 
@@ -163,13 +136,6 @@ const RepayModal = ({ balanceOwed, onComplete }) => {
           value={formatNewBalance}
           valueType="DAI"
         />
-
-        {/* <div className="divider" />
-
-        <dl className="flex justify-between py-2 items-center my-2 leading-tight">
-          <dt className="text-type-light">New min payment</dt>
-          <dd className="text-right">{`${0} DAI`}</dd>
-        </dl> */}
 
         <div className="divider" />
 
