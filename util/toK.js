@@ -1,3 +1,10 @@
+/**
+ * @name toK
+ *
+ * @param {string|number} num
+ * @param {boolean} fixed
+ * @param {number} decimals
+ */
 export default function toK(num, fixed = false, decimals = 2) {
   const formatter = (divideBy) =>
     fixed === true
