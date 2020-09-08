@@ -129,13 +129,20 @@ module.exports = {
     boxShadow: ["responsive", "hover", "focus", "focus-within"],
   },
   plugins: [],
-  purge: ["./components/**/*.js", "./pages/**/*.js", "./views/**/*.js"],
+  purge: [
+    "./components/**/*.js",
+    "./pages/**/*.js",
+    "./views/**/*.js",
+    "./svgs/**/*.js",
+    "./text/**/*.js",
+  ],
   corePlugins: {
     float: false,
     container: false,
   },
   future: {
     removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
   },
   experimental: {
     extendedSpacingScale: true,
