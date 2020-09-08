@@ -1,10 +1,9 @@
-import { commify } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useTokenBalance from "hooks/useTokenBalance";
 import { Fragment } from "react";
-import toK from "util/toK";
+import format from "util/formatValue";
 import {
   defaultedStakeTip,
   rewardsTip,
@@ -19,18 +18,6 @@ import LabelPair from "./labelPair";
 import WithdrawModal from "./WithdrawModal";
 import { useWithdrawModalToggle } from "./WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
-
-/**
- * @name format
- *
- * @param {string|number} number
- * @param {number} decimals
- */
-const format = (number, decimals = 2) => {
-  if (String(number).length > 8) return toK(number, true, 2);
-
-  return commify(Number(number).toFixed(decimals));
-};
 
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
