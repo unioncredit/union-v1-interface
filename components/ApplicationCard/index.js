@@ -14,31 +14,18 @@ import pastels from "lib/pastels";
 
 const Step = {
   Complete: () => (
-    <div className="h-6 w-6 z-10 rounded-full bg-healthy shadow-healthy border-2 border-healthy flex items-center justify-center">
+    <div className="h-8 w-8 z-10 rounded-full bg-healthy shadow-healthy border-2 border-healthy flex items-center justify-center">
       <Check size={16} />
     </div>
   ),
   Pending: () => (
-    <div className="h-6 w-6 flex justify-center items-center relative z-10">
-      <div className="animate-ping-slow absolute inline-flex h-5 w-5 rounded-full bg-healthy bg-opacity-75" />
-      <div className="relative inline-flex rounded-full h-6 w-6 bg-on-dark border-2 border-healthy" />
-    </div>
-  ),
-  PendingAlt: () => (
-    <div className="h-6 w-6 flex justify-center items-center relative z-10">
-      <div className="animate-ping-slow absolute inline-flex h-5 w-5 rounded-full bg-white" />
-      <div className="relative inline-flex rounded-full h-6 w-6 bg-white" />
-      <div className="absolute inline-flex rounded-full h-3 w-3 bg-healthy" />
-    </div>
-  ),
-  PendingAlt2: () => (
-    <div className="h-6 w-6 flex justify-center items-center relative z-10">
-      <div className="relative inline-flex rounded-full h-6 w-6 bg-on-dark" />
-      <div className="absolute inline-flex rounded-full h-3 w-3 bg-healthy" />
+    <div className="h-8 w-8 flex justify-center items-center relative z-10">
+      <div className="animate-ping-slow absolute inline-flex h-8 w-8 rounded-full bg-healthy bg-opacity-75" />
+      <div className="relative inline-flex rounded-full h-8 w-8 bg-on-dark border-4 border-healthy" />
     </div>
   ),
   Incomplete: () => (
-    <div className="h-6 w-6 z-10 rounded-full bg-on-dark border-2 border-transparent" />
+    <div className="h-8 w-8 z-10 rounded-full bg-on-dark border-2 border-transparent" />
   ),
 };
 
@@ -108,6 +95,10 @@ const ApplicationCard = () => {
 
   const { data: vouchData } = useVouchData();
 
+  const hasVouchData = vouchData?.length > 0;
+
+  const getVouch = (index) => (hasVouchData ? vouchData[index] : undefined);
+
   return (
     <div
       className="top-0 left-0 bottom-0 right-0 flex items-start justify-center absolute z-10"
@@ -135,11 +126,11 @@ const ApplicationCard = () => {
             </p>
           </div>
 
-          <div className="max-w-xs mx-auto">
+          {/* <div className="max-w-xs mx-auto">
             <StepperBar count={trustCount} />
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <p className="text-lg text-left font-semibold mb-6">
               <Tooltip label={vouchingTip}>
                 <span className="inline-flex items-center cursor-help">
@@ -152,7 +143,7 @@ const ApplicationCard = () => {
             </p>
 
             <ul>
-              {vouchData?.map((vouch, i) => (
+              {[...vouchData?.data].map((vouch, i) => (
                 <li key={i} className="flex items-center justify-between">
                   <Address address={vouch.address} />
                   <div
@@ -166,7 +157,46 @@ const ApplicationCard = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
+
+          <ul className="-space-y-px ml-20">
+            <li>
+              {getVouch(0) ? (
+                <Address address={vouchData[0].address} />
+              ) : (
+                "Nope"
+              )}
+            </li>
+            <li
+              aria-hidden
+              className="h-16 w-1 bg-healthy"
+              style={{ marginLeft: "calc((2rem / 2) - (0.25rem / 2))" }}
+            />
+            <li>
+              {getVouch(1) ? (
+                <Address address={vouchData[1].address} />
+              ) : (
+                <div className="flex items-center space-x-4">
+                  <Step.Pending />
+                  <div className="font-semibold">Ask for a vouch</div>
+                </div>
+              )}
+            </li>
+            <li
+              aria-hidden
+              className="h-16 w-1 bg-on-dark"
+              style={{ marginLeft: "calc((2rem / 2) - (0.25rem / 2))" }}
+            />
+            <li>
+              {getVouch(2) ? (
+                <Address address={vouchData[2].address} />
+              ) : (
+                <div className="flex">
+                  <Step.Incomplete />
+                </div>
+              )}
+            </li>
+          </ul>
 
           <div>
             <div className="mb-6" hidden>
