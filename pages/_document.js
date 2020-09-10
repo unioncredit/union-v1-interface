@@ -13,21 +13,28 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.png" />
           <link
             rel="preload"
-            href="/Montserrat-400.woff2"
+            href="/fonts/Montserrat-400.woff2"
             as="font"
             type="font/woff2"
             crossOrigin="anonymous"
           />
           <link
             rel="preload"
-            href="/Montserrat-500.woff2"
+            href="/fonts/Montserrat-500.woff2"
             as="font"
             type="font/woff2"
             crossOrigin="anonymous"
           />
           <link
             rel="preload"
-            href="/Montserrat-600.woff2"
+            href="/fonts/Montserrat-600.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/fonts/subset-Inter-SemiBold.woff2"
             as="font"
             type="font/woff2"
             crossOrigin="anonymous"

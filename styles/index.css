@@ -12,21 +12,43 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(/Montserrat-400.woff2) format("woff2");
+  src: url(/fonts/Montserrat-400.woff2) format("woff2");
 }
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url(/Montserrat-500.woff2) format("woff2");
+  src: url(/fonts/Montserrat-500.woff2) format("woff2");
 }
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url(/Montserrat-600.woff2) format("woff2");
+  src: url(/fonts/Montserrat-600.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-Regular.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-Medium.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-SemiBold.woff2) format("woff2");
 }
 
 *,

@@ -75,9 +75,8 @@ module.exports = {
         "Menlo",
         "monospace",
       ],
-      sf: [
-        "SF Text",
-        "SF Pro Text",
+      inter: [
+        "Inter",
         "-apple-system",
         "BlinkMacSystemFont",
         "Segoe UI",
@@ -122,6 +121,11 @@ module.exports = {
         "screen-md-gutter": "calc(912px + 1.5rem * 2)",
         "screen-lg-gutter": "calc(1080px + 1.5rem * 2)",
         "screen-xl-gutter": "calc(1280px + 1.5rem * 2)",
+      },
+      letterSpacing: {
+        "inter-16": "-0.011em",
+        "inter-18": "-0.014em",
+        "inter-20": "-0.017em",
       },
     },
   },
