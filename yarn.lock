@@ -3030,7 +3030,7 @@ color@^3.1.2:
     color-convert "^1.9.1"
     color-string "^1.5.2"
 
-combined-stream@^1.0.6, combined-stream@~1.0.6:
+combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
   integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -3211,7 +3211,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-fetch@3.0.5, cross-fetch@^3.0.4:
+cross-fetch@3.0.5, cross-fetch@^3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.5.tgz#2739d2981892e7ab488a7ad03b92df2816e03f4c"
   integrity sha512-FFLcLtraisj5eteosnX1gf01qYDCOc4fDy0+euOt8Kn9YBY2NtXL/pCoYPavw24NIQkQqm5ZOLsGD5Zzj0gyew==
@@ -4285,6 +4285,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+extract-files@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-9.0.0.tgz#8a7744f2437f81f5ed3250ed9f1550de902fe54a"
+  integrity sha512-CvdFfHkC95B4bBBk36hcEmvdR2awOdhhVUYH6S/zrVj3477zven/fJMYg7121h4T1xHZC+tetUpubpAhxwI7hQ==
+
 extsprintf@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
@@ -4492,6 +4497,15 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
+form-data@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
+  integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
+  dependencies:
+    asynckit "^0.4.0"
+    combined-stream "^1.0.8"
+    mime-types "^2.1.12"
+
 form-data@~2.3.2:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
@@ -4680,12 +4694,14 @@ graceful-fs@^4.2.2:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
 
-graphql-request@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-3.0.0.tgz#942d81bbd621cc2223d35fbf2b42edf8be822b83"
-  integrity sha512-zW8AuLnKMYOnpVKdANU9FzLDoj4u4AoU6KZ79e+BcJaNiuw/vgCJ0p7ppDMSDrW77a12Moa7J7Mg4w0f9Kd/Kg==
+graphql-request@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-3.1.0.tgz#c487488a1aa7b9a0f02335026b4ec897d645f9d4"
+  integrity sha512-Flg2Bd4Ek9BDJ5qacZC/iYuiS3LroHxQTmlUnfqjo/6jKwowY25FVtoLTnssMCBrYspRYEYEIfF1GN8J3/o5JQ==
   dependencies:
-    cross-fetch "^3.0.4"
+    cross-fetch "^3.0.5"
+    extract-files "^9.0.0"
+    form-data "^3.0.0"
 
 har-schema@^2.0.0:
   version "2.0.0"
@@ -7065,10 +7081,10 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
-pretty-quick@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.0.0.tgz#cba8597eca7f3821232abe6a93302d362cc30d71"
-  integrity sha512-oIXlGQUcUxt3XpoNfQECEWvH1Q9PtKfelF2pdp6UvC1CSQ5QcB7gUYKu0kuJGlm3LMBZzJaO/vbRkxA61pWlcg==
+pretty-quick@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.0.1.tgz#5860237ff370c02332bcbe3f8a42d9b3a876eff7"
+  integrity sha512-csYZMBFih6/buPQMfsPuBLXGVMEsClkvtojUFq78dirXcWU/gKu153bRcihbx2CNjqloaqrTw/e1XJiICyeHBw==
   dependencies:
     chalk "^3.0.0"
     execa "^4.0.0"
@@ -7282,10 +7298,10 @@ react-focus-lock@^2.3.1:
     use-callback-ref "^1.2.1"
     use-sidecar "^1.0.1"
 
-react-hook-form@^6.7.2:
-  version "6.7.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.7.2.tgz#a6a498bff188cfead9fd8e4a1404bd53e0ebe66e"
-  integrity sha512-nZakWdvKqAuoz96UD463/lWND4/yMZIr4xTRdkyeN2JDnXbrWgCeVjwP6/mLw33WajMCHSdFW4tvJTq+bM9dzg==
+react-hook-form@^6.8.1:
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.8.1.tgz#eb2f78ddd5ae468082259f772d072c820a6fda46"
+  integrity sha512-ORHf4Ee2AuPPotJjGjqOjD5GrLVkWV/d+yeUimXndx2pVYj/3qzqF9RIyTszIAWfuLNJ4SZt4Oi29UTnT2kx5A==
 
 react-is@16.13.1:
   version "16.13.1"
@@ -8412,10 +8428,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tailwindcss@^1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.8.5.tgz#3b4624530b5fd71688fd04d16d8bd8c8d56834de"
-  integrity sha512-W4kLvs0iADgn83AOtI35pi24OGgxCfKls9H8qfdwbDTyO2ec7zBPgfEqu2mzaMdE3MWhtbCpyeCDY5rjmCHjTw==
+tailwindcss@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-1.8.6.tgz#7ec08777d6cc50bd79e9bedf381f1f10f132bdd5"
+  integrity sha512-iUbDjwkBdbY+9hlVfuHRXJN3lC7h4Fc4Vz/YqjMMeL0AeCH73MMgVDmto0ulCzh1KM1sv0VV9WmV0bcDMgw5Tw==
   dependencies:
     "@fullhuman/postcss-purgecss" "^2.1.2"
     autoprefixer "^9.4.5"
