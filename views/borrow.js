@@ -14,6 +14,7 @@ import useIsMember from "hooks/useIsMember";
 import useTransactions from "hooks/useTransactions";
 import Link from "next/link";
 import { Fragment } from "react";
+import format from "util/formatValue";
 import { roundDown, roundUp, toPercent } from "util/numbers";
 
 export default function BorrowView() {
@@ -63,7 +64,7 @@ export default function BorrowView() {
                   label="Available Credit"
                   large
                   outline={true}
-                  value={roundDown(creditLimit)}
+                  value={format(roundDown(creditLimit))}
                   valueType="DAI"
                 />
 

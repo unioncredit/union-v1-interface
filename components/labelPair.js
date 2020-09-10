@@ -43,12 +43,16 @@ const LabelPair = ({
     }
   );
 
-  const cachedValueClassNames = classNames(
-    `leading-tight whitespace-no-wrap font-semibold font-sf`,
+  const cachedValueClassNames = classNames({
+    "flex justify-between items-center": valueSlot,
+  });
+
+  const cachedValueTextClassNames = classNames(
+    "leading-tight whitespace-no-wrap font-semibold font-inter",
     outline ? "text-white-pure" : "text-black-pure",
-    large ? "text-xl" : "text-lg",
-    large ? "text-left" : "text-right",
-    { "flex justify-between items-center": valueSlot }
+    large
+      ? "text-xl tracking-inter-20 text-left"
+      : "text-lg tracking-inter-18 text-right"
   );
 
   const cachedClassNames = classNames(className, {
@@ -73,7 +77,9 @@ const LabelPair = ({
         {slot}
       </dt>
       <dd className={cachedValueClassNames}>
-        {valueType ? `${value} ${valueType}` : value}
+        <span className={cachedValueTextClassNames}>
+          {valueType ? `${value} ${valueType}` : value}
+        </span>
         {valueSlot}
       </dd>
     </dl>

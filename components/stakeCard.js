@@ -35,10 +35,10 @@ const StakeCard = () => {
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
   const {
-    totalStake = 0,
-    utilizedStake = 0,
-    defaultedStake = 0,
-    withdrawableStake = 0,
+    totalStake = 0.0,
+    utilizedStake = 0.0,
+    defaultedStake = 0.0,
+    withdrawableStake = 0.0,
   } = !!stakeData && stakeData;
 
   const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "0.00" } =
@@ -61,7 +61,7 @@ const StakeCard = () => {
             value={format(totalStake)}
             valueType="DAI"
             valueSlot={
-              <div className="text-sm py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
+              <div className="text-sm font-inter font-semibold py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
                 Earning at {rewardsMultiplier}x
               </div>
             }
