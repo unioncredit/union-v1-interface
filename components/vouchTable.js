@@ -122,7 +122,7 @@ const renderTbodyCells = (cell) => {
   if (Header === "Address")
     return (
       <td {...cell.getCellProps()}>
-        <Address address={cell.value} copyable withLabel />
+        <Address address={cell.value} copyable />
       </td>
     );
 

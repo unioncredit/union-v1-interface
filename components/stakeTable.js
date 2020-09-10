@@ -154,7 +154,7 @@ const renderTbodyCells = (cell, memoizedData) => {
   if (Header === "Address")
     return (
       <td {...cell.getCellProps()}>
-        <Address address={cell.value} withLabel />
+        <Address address={cell.value} />
       </td>
     );
 

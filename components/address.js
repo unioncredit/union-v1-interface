@@ -8,7 +8,7 @@ import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
 import ProfileImage from "./ProfileImage";
 
-const Address = ({ address, withLabel, copyable = false }) => {
+const Address = ({ address, copyable = false }) => {
   const ENSName = useENSName(address);
 
   const [copied, copy] = useCopy();
@@ -22,7 +22,7 @@ const Address = ({ address, withLabel, copyable = false }) => {
 
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
-  const hasLabel = withLabel && !!label;
+  const hasLabel = !!label;
 
   const { data, error } = use3BoxPublicData(address);
   const has3BoxName = !!data && !error && data?.name;
@@ -42,19 +42,10 @@ const Address = ({ address, withLabel, copyable = false }) => {
         )}
       </div>
 
-      {hasLabel ? (
+      {has3BoxName || hasLabel ? (
         <p className="ml-4 flex-auto leading-none">
           <span className="block text-sm mb-2px font-semibold whitespace-no-wrap">
-            {getLabel(address)}
-          </span>
-          <span className="text-xs text-type-light">
-            {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
-          </span>
-        </p>
-      ) : has3BoxName ? (
-        <p className="ml-4 flex-auto leading-none">
-          <span className="block text-sm mb-2px font-semibold whitespace-no-wrap">
-            {data.name}
+            {hasLabel ? label : data.name}
           </span>
           <span className="text-xs text-type-light">
             {copied ? "Copied!" : ENSName ?? truncateAddress(address)}

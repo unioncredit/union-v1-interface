@@ -54,7 +54,7 @@ const renderTbodyCells = (cell) => {
   if (Header === "Address" && cell.value)
     return (
       <td {...cell.getCellProps()}>
-        <Address address={cell.value} withLabel />
+        <Address address={cell.value} />
       </td>
     );
 

@@ -226,7 +226,7 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
             </div>
 
             <div className="mt-4 cursor-text">
-              <Address address={address} large copyable withLabel />
+              <Address address={address} large copyable />
             </div>
 
             <div className="mt-4">
