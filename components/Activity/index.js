@@ -32,7 +32,7 @@ const Activity = () => {
     <Menu>
       <MenuButton
         onClick={handleUpdateCount}
-        className="h-8 w-8 bg-white hover:bg-border-light transition-colors duration-150 items-center justify-center flex rounded focus:outline-none focus:shadow-outline"
+        className="h-8 w-8 text-type-light hover:text-type-base bg-white hover:bg-border-light transition-colors duration-150 items-center justify-center flex rounded focus:outline-none focus:shadow-outline"
       >
         <Bell pending={hasPending} />
       </MenuButton>
