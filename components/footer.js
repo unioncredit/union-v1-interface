@@ -7,10 +7,10 @@ const FOOTER_LINKS = [
   //   href: "",
   //   label: "White paper",
   // },
-  // {
-  //   href: "",
-  //   label: "Documentation",
-  // },
+  {
+    href: "https://unionfinance.gitbook.io/union-docs/",
+    label: "Documentation",
+  },
   // {
   //   href: "",
   //   label: "Terms of Service",
@@ -43,7 +43,12 @@ const Footer = () => {
               </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (
                 <li key={i}>
-                  <a className="block hover:underline" href={href}>
+                  <a
+                    className="block hover:underline"
+                    href={href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
                     {label}
                   </a>
                 </li>
