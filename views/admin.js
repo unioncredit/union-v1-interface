@@ -14,10 +14,8 @@ import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import useAssetContract from "hooks/useAssetContract";
 import useCompoundContract from "hooks/useCompoundContract";
 import useCurrentToken from "hooks/useCurrentToken";
-import useIsAdmin from "hooks/useIsAdmin";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
-import useMemberContract from "hooks/useMemberContract";
-import useStakingContract from "hooks/useStakingContract";
+import useUserContract from "hooks/useUserContract";
 import { Fragment, useState } from "react";
 
 const parseRes = (res, decimals = 2) =>
@@ -32,11 +30,9 @@ export default function AdminView() {
   const toggleManagerModal = useManagerModalToggle();
 
   const curToken = useCurrentToken();
-  const isAdmin = useIsAdmin();
   const assetContract = useAssetContract();
   const compoundContract = useCompoundContract();
-  const stakingContract = useStakingContract();
-  const memberContract = useMemberContract();
+  const userContract = useUserContract();
   const marketRegistryContract = useMarketRegistryContract();
 
   let marketContract;
@@ -109,8 +105,8 @@ export default function AdminView() {
     async function fetchStakingData() {
       try {
         if (isMounted) {
-          const totalStakedRes = await stakingContract.totalStaked(curToken);
-          const totalFrozenRes = await stakingContract.totalFrozen(curToken);
+          const totalStakedRes = await userContract.totalStaked(curToken);
+          const totalFrozenRes = await userContract.totalFrozen(curToken);
           setTotalStake(parseRes(totalStakedRes, 2));
           setFrozenStake(parseRes(totalFrozenRes, 2));
         }
@@ -124,7 +120,7 @@ export default function AdminView() {
     async function fetchMemberData() {
       try {
         if (isMounted) {
-          const newMemberFeeRes = await memberContract.newMemberFee();
+          const newMemberFeeRes = await userContract.newMemberFee();
           setMemberFee(parseRes(newMemberFeeRes, 2));
         }
       } catch (err) {
@@ -164,7 +160,7 @@ export default function AdminView() {
     };
   });
 
-  const onSetOriginationFee = useAutoCallback(async (amount, res) => {
+  const onSetOriginationFee = useAutoCallback(async (amount) => {
     try {
       await marketContract.setOriginationFee(
         new BigNumber(amount / 100).times(WAD).toFixed()
@@ -214,7 +210,7 @@ export default function AdminView() {
 
   const onSetNewMemberFee = useAutoCallback(async (amount) => {
     try {
-      await memberContract.setNewMemberFee(
+      await userContract.setNewMemberFee(
         new BigNumber(amount).times(WAD).toFixed()
       );
     } catch (err) {
@@ -224,15 +220,7 @@ export default function AdminView() {
 
   const onAddMember = useAutoCallback(async (address) => {
     try {
-      await memberContract.addMember(address);
-    } catch (err) {
-      console.error(err);
-    }
-  });
-
-  const onSetCreditLimitModel = useAutoCallback(async (address) => {
-    try {
-      await memberContract.setCreditLimitModel(address);
+      await userContract.addMember(address);
     } catch (err) {
       console.error(err);
     }
@@ -294,9 +282,7 @@ export default function AdminView() {
                 <td>{minLoan}</td>
                 <td>{overdueBlocks}</td>
                 <td style={{ textAlign: "right" }}>
-                  <Button disabled={!isAdmin} onClick={toggleMarketModal}>
-                    Edit
-                  </Button>
+                  <Button onClick={toggleMarketModal}>Edit</Button>
                 </td>
               </tr>
             </tbody>
@@ -330,9 +316,7 @@ export default function AdminView() {
                 <td>{frozenStake}</td>
                 <td>{memberFee}</td>
                 <td style={{ textAlign: "right" }}>
-                  <Button disabled={!isAdmin} onClick={toggleManagerModal}>
-                    Edit
-                  </Button>
+                  <Button onClick={toggleManagerModal}>Edit</Button>
                 </td>
               </tr>
             </tbody>

@@ -6,7 +6,7 @@ import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
-import useMemberContract from "./useMemberContract";
+import useUserContract from "./useUserContract";
 
 const getTrust = (marketRegistryContract, memberContract) => async (
   _,
@@ -72,7 +72,7 @@ export default function useTrustData() {
 
   const marketRegistryContract = useMarketRegistryContract();
 
-  const memberContract = useMemberContract();
+  const memberContract = useUserContract();
 
   const shouldFetch =
     !!marketRegistryContract &&

@@ -1,6 +1,6 @@
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { MEMBER_MANAGER_ADDRESSES } from "constants/variables";
+import { USER_MANAGER_ADDRESSES } from "constants/variables";
 import { useCallback } from "react";
 import useSWR from "swr";
 import getReceipt from "util/getReceipt";
@@ -11,7 +11,7 @@ import useUnionContract from "./useUnionContract";
 const getUnionAllowance = (contract) => async (_, account, chainId) => {
   const res = await contract.allowance(
     account,
-    MEMBER_MANAGER_ADDRESSES[chainId]
+    USER_MANAGER_ADDRESSES[chainId]
   );
 
   return parseRes(res);
@@ -50,7 +50,7 @@ export function useIncreaseUnionAllowance() {
          * @type {import("@ethersproject/abstract-provider").TransactionResponse}
          */
         const { hash } = await unionContract.approve(
-          MEMBER_MANAGER_ADDRESSES[chainId],
+          USER_MANAGER_ADDRESSES[chainId],
           parseUnits(amount, 18).toString()
         );
 

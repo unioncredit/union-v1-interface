@@ -1,10 +1,10 @@
 import { parseUnits } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
-import useStakingContract from "hooks/useStakingContract";
+import useUserContract from "hooks/useUserContract";
 import { useCallback } from "react";
 
 export default function useStakeWithdraw() {
-  const stakingContract = useStakingContract();
+  const userContract = useUserContract();
   const tokenAddress = useCurrentToken();
 
   return useCallback(
@@ -16,7 +16,7 @@ export default function useStakeWithdraw() {
     async (amount) => {
       const stakeAmount = parseUnits(String(amount), 18);
 
-      return stakingContract.stake(tokenAddress, stakeAmount.toString());
+      return userContract.unstake(tokenAddress, stakeAmount.toString());
     },
     []
   );

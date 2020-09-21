@@ -1,11 +1,11 @@
 import { parseUnits } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/useMemberContract";
+import useUserContract from "hooks/useUserContract";
 import { useCallback } from "react";
 
 export default function useAdjustTrust() {
   const tokenAddress = useCurrentToken();
-  const memberContract = useMemberContract();
+  const memberContract = useUserContract();
 
   return useCallback(
     /**

@@ -1,14 +1,14 @@
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useMemberContract from "./useMemberContract";
+import useUserContract from "./useUserContract";
 
 const getIsMember = (contract) => async (_, account) =>
-  contract.isMember(account);
+  contract.checkIsMember(account);
 
 export default function useIsMember() {
   const { account } = useWeb3React();
 
-  const contract = useMemberContract();
+  const contract = useUserContract();
 
   const shouldFetch = !!contract && typeof account === "string";
 
