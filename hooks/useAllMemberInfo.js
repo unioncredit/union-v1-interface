@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
-import useMemberContract from "./useMemberContract";
+import useUserContract from "./useUserContract";
 import useCurrentToken from "./useCurrentToken";
 
 const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
@@ -40,9 +40,8 @@ const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
           ),
         };
       } catch (error) {
-        console.log(error);
         return {
-          address: borrower,
+          address: member,
         };
       }
     }),
@@ -70,21 +69,19 @@ const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {
           ),
         };
       } catch (error) {
-        console.log(error);
         return {
           address: borrower,
         };
       }
     }),
   ]);
-  console.log({ txs });
   return txs;
 };
 
 export default function useAllMemberInfo() {
   const { library } = useWeb3React();
   const curToken = useCurrentToken();
-  const memberContract = useMemberContract();
+  const memberContract = useUserContract();
 
   const shouldFetch = !!memberContract && !!library;
 

@@ -1,12 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberContract from "hooks/useMemberContract";
+import useUserContract from "hooks/useUserContract";
 import { useCallback } from "react";
 
 export default function useApplyMember() {
   const { account } = useWeb3React();
   const tokenAddress = useCurrentToken();
-  const memberContract = useMemberContract();
+  const memberContract = useUserContract();
 
   return useCallback(
     /**

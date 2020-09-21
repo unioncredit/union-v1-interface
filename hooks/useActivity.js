@@ -2,7 +2,7 @@ import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import useMemberContract from "hooks/useMemberContract";
+import useUserContract from "hooks/useUserContract";
 import useSWR from "swr";
 
 dayjs.extend(relativeTime);
@@ -116,7 +116,7 @@ const getActivity = (contract) => async (_, account, library) => {
 
 export default function useActivity() {
   const { account, library } = useWeb3React();
-  const memberManagerContract = useMemberContract();
+  const memberManagerContract = useUserContract();
 
   const shouldFetch =
     !!memberManagerContract && typeof account === "string" && !!library;

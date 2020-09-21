@@ -7,14 +7,14 @@ import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
 import useMarketRegistryContract from "./useMarketRegistryContract";
-import useMemberContract from "./useMemberContract";
-import useStakingContract from "./useStakingContract";
+import useUserContract from "./useUserContract";
 
-const getVouch = (
-  marketRegistryContract,
-  memberContract,
-  stakingContract
-) => async (_, account, tokenAddress, library) => {
+const getVouch = (marketRegistryContract, memberContract) => async (
+  _,
+  account,
+  tokenAddress,
+  library
+) => {
   const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
   const marketContract = new Contract(
@@ -45,7 +45,7 @@ const getVouch = (
 
       const stakingAmount = Number(
         formatUnits(
-          await stakingContract.getStakerBalance(address, tokenAddress),
+          await memberContract.getStakerBalance(address, tokenAddress),
           18
         )
       );
@@ -90,20 +90,17 @@ export default function useVouchData() {
 
   const marketRegistryContract = useMarketRegistryContract();
 
-  const memberContract = useMemberContract();
-
-  const stakingContract = useStakingContract();
+  const memberContract = useUserContract();
 
   const shouldFetch =
     !!marketRegistryContract &&
     !!memberContract &&
-    !!stakingContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
     !!library;
 
   return useSWR(
     shouldFetch ? ["Vouch", account, curToken, library] : null,
-    getVouch(marketRegistryContract, memberContract, stakingContract)
+    getVouch(marketRegistryContract, memberContract)
   );
 }

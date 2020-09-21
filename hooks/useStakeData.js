@@ -5,15 +5,10 @@ import useSWR from "swr";
 import { roundDown } from "util/numbers";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useMemberContract from "./useMemberContract";
-import useStakingContract from "./useStakingContract";
+import useUserContract from "./useUserContract";
 
-const getStakeData = (memberContract, stakingContract) => async (
-  _,
-  account,
-  tokenAddress
-) => {
-  const totalStake = await stakingContract.getStakerBalance(
+const getStakeData = (memberContract) => async (_, account, tokenAddress) => {
+  const totalStake = await memberContract.getStakerBalance(
     account,
     tokenAddress
   );
@@ -38,18 +33,14 @@ const getStakeData = (memberContract, stakingContract) => async (
 
 export default function useStakeData() {
   const { account } = useWeb3React();
-  const stakingContract = useStakingContract();
-  const memberContract = useMemberContract();
+  const memberContract = useUserContract();
   const curToken = useCurrentToken();
 
   const shouldFetch =
-    !!memberContract &&
-    !!stakingContract &&
-    typeof account === "string" &&
-    isAddress(curToken);
+    !!memberContract && typeof account === "string" && isAddress(curToken);
 
   return useSWR(
     shouldFetch ? ["StakeData", account, curToken] : null,
-    getStakeData(memberContract, stakingContract)
+    getStakeData(memberContract)
   );
 }
