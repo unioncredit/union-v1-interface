@@ -58,11 +58,10 @@ export default function WaitlistPage() {
             </div>
             <div>
               <h3 className="text-xl sm:text-2xl font-semibold mb-2">
-                Earn from your cash
+                Governed by you
               </h3>
               <p className="sm:text-lg">
-                Save up your spare cash in Union to earn interest in the form of
-                our native token, UNION.
+                There's no middleman corporation controlling Union, the entire protocol is owned and operated by its users.
               </p>
             </div>
           </div>
