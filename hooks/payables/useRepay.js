@@ -43,7 +43,7 @@ export default function useRepay() {
           repayAmount.toString()
         );
       } catch (err) {
-        gasLimit = 3000000;
+        gasLimit = 800000;
       }
 
       return lendingMarketContract.repay(account, repayAmount.toString(), {

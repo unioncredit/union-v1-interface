@@ -41,7 +41,7 @@ export default function useStakeDeposit() {
           stakeAmount.toString()
         );
       } catch (err) {
-        gasLimit = 3000000;
+        gasLimit = 800000;
       }
 
       return userContract.stake(tokenAddress, stakeAmount.toString(), {
