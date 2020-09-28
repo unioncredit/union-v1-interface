@@ -42,11 +42,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/governance">
-                  <a className="block hover:underline">Governance</a>
-                </Link>
-              </li>
-              <li>
                 <Link href="/stats">
                   <a className="block hover:underline">Stats</a>
                 </Link>

@@ -79,6 +79,11 @@ const Navigation = () => {
                   <li>
                     <NavigationLink href="/vouch">Vouch</NavigationLink>
                   </li>
+                  <li>
+                    <NavigationLink href="/governance">
+                      Governance
+                    </NavigationLink>
+                  </li>
                 </ul>
               </li>
 
@@ -123,6 +128,9 @@ const Navigation = () => {
             </li>
             <li>
               <NavigationLink href="/vouch">Vouch</NavigationLink>
+            </li>
+            <li>
+              <NavigationLink href="/governance">Governance</NavigationLink>
             </li>
           </ul>
         )}
