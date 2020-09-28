@@ -120,6 +120,6 @@ export const utilizedVouchTip = (
 export const feeTip = (
   <div className="tooltip-text">
     <p>Fee</p>
-    <p>Union's marginal fee, we use this to keep the lights on.</p>
+    <p>An origination fee is charged to cover the upfront risk of the loan.</p>
   </div>
 );
