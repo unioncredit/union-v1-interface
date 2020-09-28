@@ -14,7 +14,7 @@ export default function GovernanceView() {
 
             <Link href="/">
               <a className="font-semibold inline-flex items-center">
-                <span className="mr-1">See all</span> <LinkArrow />
+                <span className="mr-1">See all</span> <LinkArrow.Right />
               </a>
             </Link>
           </div>
@@ -28,7 +28,7 @@ export default function GovernanceView() {
 
             <Link href="/">
               <a className="font-semibold inline-flex items-center">
-                <span className="mr-1">See all</span> <LinkArrow />
+                <span className="mr-1">See all</span> <LinkArrow.Right />
               </a>
             </Link>
           </div>
@@ -38,9 +38,9 @@ export default function GovernanceView() {
           <div className="mb-6 flex items-center justify-between">
             <h2>Leaderboard</h2>
 
-            <Link href="/">
+            <Link href="/governance/leaderboard">
               <a className="font-semibold inline-flex items-center">
-                <span className="mr-1">See all</span> <LinkArrow />
+                <span className="mr-1">See all</span> <LinkArrow.Right />
               </a>
             </Link>
           </div>

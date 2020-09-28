@@ -1,4 +1,4 @@
-const LinkArrow = ({ size = 16 }) => (
+const Right = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
     <path
       fillRule="evenodd"
@@ -8,5 +8,21 @@ const LinkArrow = ({ size = 16 }) => (
     />
   </svg>
 );
+
+const Left = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M5.293 3.293L.086 8.5l5.207 5.207 1.414-1.414L3.914 9.5H15v-2H3.914l2.793-2.793-1.414-1.414z"
+      fill="#F4998E"
+    />
+  </svg>
+);
+
+const LinkArrow = {
+  Left,
+  Right,
+};
 
 export default LinkArrow;
