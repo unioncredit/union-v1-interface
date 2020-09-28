@@ -1,6 +1,6 @@
 import Button from "components/button";
 import StakeCard from "components/stakeCard";
-import StakeTable from "components/stakeTable";
+import StakeTable from "components/StakeTable";
 import SuccessModal from "components/SuccessModal";
 import TrustModal from "components/TrustModal";
 import { useTrustModalToggle } from "components/TrustModal/state";

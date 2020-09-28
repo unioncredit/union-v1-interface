@@ -6,16 +6,17 @@ import { usePagination, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
-import Address from "./address";
-import AddressModal from "./AddressModal";
-import { useAddressModalToggle } from "./AddressModal/state";
-import Button from "./button";
-import HealthBar from "./healthBar";
-import { useLearnMoreModalToggle } from "./LearnMoreModal/state";
-import { useTrustModalToggle } from "./TrustModal/state";
-import { useApplicationModalToggle } from "./ApplicationModal/state";
+import Address from "../address";
+import AddressModal from "../AddressModal";
+import { useAddressModalToggle } from "../AddressModal/state";
+import Button from "../button";
+import HealthBar from "../healthBar";
+import { useLearnMoreModalToggle } from "../LearnMoreModal/state";
+import { useTrustModalToggle } from "../TrustModal/state";
+import { useApplicationModalToggle } from "../ApplicationModal/state";
 import Tooltip from "@reach/tooltip";
-import Skeleton from "./Skeleton";
+import Skeleton from "../Skeleton";
+import { renderSortIcons } from "util/tables";
 
 const StakeTableRowSkeleton = () => (
   <tr>
@@ -79,26 +80,6 @@ const StakeTableEmptyState = () => {
       </p>
       <Button onClick={toggleLearnMoreModal}>Learn more</Button>
     </div>
-  );
-};
-
-/**
- * @name renderHeadRowSorting
- * @param {import("react-table").ColumnInstance} column
- */
-const renderSortIcons = (column) => {
-  return (
-    <Fragment>
-      {column.isSorted ? (
-        column.isSortedDesc ? (
-          <Chevron.Down size={16} />
-        ) : (
-          <Chevron.Up size={16} />
-        )
-      ) : (
-        <Chevron.Down size={16} color="transparent" />
-      )}
-    </Fragment>
   );
 };
 
