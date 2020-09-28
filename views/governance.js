@@ -1,3 +1,4 @@
+import Proposals from "components/GovernanceProposals";
 import Statistics from "components/GovernanceStatistics";
 import LeaderboardTable from "components/LeaderboardTable";
 import Link from "next/link";
@@ -12,7 +13,7 @@ export default function GovernanceView() {
           <div className="mb-6 flex items-center justify-between">
             <h2>Statistics</h2>
 
-            <Link href="/">
+            <Link href="/governance/statistics">
               <a className="font-semibold inline-flex items-center">
                 <span className="mr-1">See all</span> <LinkArrow.Right />
               </a>
@@ -26,12 +27,14 @@ export default function GovernanceView() {
           <div className="mb-6 flex items-center justify-between">
             <h2>Recent proposals</h2>
 
-            <Link href="/">
+            <Link href="/governance/proposals">
               <a className="font-semibold inline-flex items-center">
                 <span className="mr-1">See all</span> <LinkArrow.Right />
               </a>
             </Link>
           </div>
+
+          <Proposals />
         </section>
 
         <section className="pt-16">
