@@ -3,7 +3,7 @@ import GovernanceView from "views/governance";
 
 export default function GovernancePage() {
   return (
-    <div className="my-8 md:my-10">
+    <div className="gradient-governance">
       <Head>
         <title>Governance | Union</title>
         <meta property="og:title" content="Governance | Union" />

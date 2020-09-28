@@ -581,6 +581,14 @@ input[type="number"] {
 }
 
 .gradient-pink-2-light {
-  background: linear-gradient(#fff, #f7eaeb);
-  background: linear-gradient(to bottom, #fff, ease-in, #f7eaeb);
+  background: linear-gradient(#f7eaeb, #fff);
+  background: linear-gradient(to bottom, #f7eaeb, ease-in, #fff);
+}
+
+.gradient-governance {
+  background: linear-gradient(
+    to bottom,
+    #fcf7f7 20%,
+    rgba(252, 247, 247, 0) 100%
+  );
 }
