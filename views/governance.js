@@ -1,4 +1,5 @@
 import GovernanceNavigation from "components/GovernanceNavigation";
+import Statistics from "components/GovernanceStatistics";
 import Link from "next/link";
 import { Fragment } from "react";
 import LinkArrow from "svgs/LinkArrow";
@@ -22,6 +23,8 @@ export default function GovernanceView() {
               </a>
             </Link>
           </div>
+
+          <Statistics />
         </section>
 
         <section className="pt-16">
