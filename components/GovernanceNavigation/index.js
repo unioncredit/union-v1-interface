@@ -56,7 +56,7 @@ const GovernanceNavigation = () => {
       <GovernanceSegmentedControlWrapper>
         <GovernanceSegmentedControlLink href="/governance" label="Overview" />
         <GovernanceSegmentedControlLink
-          href="/governance/voting-wallet"
+          href="/governance/voting"
           label="Voting Wallet"
         />
       </GovernanceSegmentedControlWrapper>

@@ -1,4 +1,3 @@
-import GovernanceNavigation from "components/GovernanceNavigation";
 import Statistics from "components/GovernanceStatistics";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -8,12 +7,6 @@ export default function GovernanceView() {
   return (
     <Fragment>
       <div className="container">
-        <h1 hidden>Governance</h1>
-
-        <nav className="pt-6">
-          <GovernanceNavigation />
-        </nav>
-
         <section className="pt-16">
           <div className="mb-6 flex items-center justify-between">
             <h2>Statistics</h2>
