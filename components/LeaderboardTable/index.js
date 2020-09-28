@@ -1,6 +1,6 @@
+import TablePagination from "components/TablePagination";
 import { Fragment, useMemo } from "react";
 import { usePagination, useSortBy, useTable } from "react-table";
-import Chevron from "svgs/Chevron";
 import { renderSortIcons } from "util/tables";
 import Address from "../address";
 import Skeleton from "../Skeleton";
@@ -70,7 +70,7 @@ const renderTbodyRows = (prepareRow) => (row) => {
 
 const LeaderboardTable = ({ disablePagination = false }) => {
   const data = useMemo(() => {
-    return new Array(100).fill({
+    return new Array(48).fill({
       address: "0xf6fDeE29e3A14610fdbE187e2d3442543cfA45B8",
       votes: "100",
       voteWeight: "10%",
@@ -123,14 +123,6 @@ const LeaderboardTable = ({ disablePagination = false }) => {
     headerGroups,
     prepareRow,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    state: { pageIndex },
   } = table;
 
   return (
@@ -159,42 +151,7 @@ const LeaderboardTable = ({ disablePagination = false }) => {
         </tbody>
       </table>
 
-      {pageCount > 1 && (
-        <div className="flex justify-between items-center mt-auto pt-4 sm:pt-6">
-          <p className="text-xs uppercase font-semibold">
-            Page {pageIndex + 1} of {pageOptions.length}
-          </p>
-
-          <div className="flex">
-            <button
-              className="pagination-button"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-            >
-              <Chevron.Left size={14} />
-            </button>
-
-            {new Array(pageCount).fill("").map((_, index) => (
-              <button
-                className="pagination-button"
-                disabled={pageIndex === index}
-                key={index}
-                onClick={() => gotoPage(index)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-            <button
-              className="pagination-button"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-            >
-              <Chevron.Right size={14} />
-            </button>
-          </div>
-        </div>
-      )}
+      <TablePagination {...table} />
     </div>
   );
 };
