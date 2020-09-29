@@ -1,10 +1,15 @@
+import GovernanceProposal from "components/GovernanceProposal";
+
 const GovernanceVotingHistory = () => {
   return (
-    <div className="bg-white rounded border p-4 sm:p-6">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-      doloremque distinctio reiciendis excepturi cupiditate ad repellat non
-      saepe. Blanditiis voluptates in sint ullam tempora corrupti eius libero
-      voluptatem amet quas!
+    <div className="bg-white rounded border">
+      <div className="p-2">
+        {new Array(5)
+          .fill({ vote: "For", status: "Passed", type: "Offchain" })
+          .map((vote, i) => (
+            <GovernanceProposal key={i} {...vote} />
+          ))}
+      </div>
     </div>
   );
 };

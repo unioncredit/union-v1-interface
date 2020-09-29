@@ -91,16 +91,16 @@ export const ProposalTypeBadge = ({ type = "Onchain" }) => {
  * @param {string} props.slug
  * @param {string} props.date
  * @param {("Offchain"|"Onchain")} props.type
- * @param {("For"|"Against"|"No Vote")} props.vote
  * @param {("Active"|"Passed"|"Failed")} props.status
+ * @param {("For"|"Against"|"No Vote")} props.vote
  */
 const GovernanceProposal = ({
   title = "Liquidity migration proposal",
   slug = "/governance",
   date = "Aug 3, 2020",
   type = "Onchain",
-  vote = "For",
   status = "Active",
+  vote,
 }) => {
   return (
     <Link href={slug}>
