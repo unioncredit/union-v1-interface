@@ -32,6 +32,7 @@ const Address = ({ address, copyable = false }) => {
     <button
       onClick={copyable ? handleCopyAddress : undefined}
       className={cachedClassNames}
+      tabIndex={!copyable && -1}
       title={address}
     >
       <div className="flex-grow-0 h-8">
