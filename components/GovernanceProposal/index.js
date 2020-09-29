@@ -67,13 +67,15 @@ export const ProposalVoteBadge = ({ vote = "No Vote" }) => {
  * @name ProposalTypeBadge
  * @param {object} props
  * @param {("Offchain"|"Onchain")} props.type
+ * @param {string} props.className
  */
-export const ProposalTypeBadge = ({ type = "Onchain" }) => {
+export const ProposalTypeBadge = ({ type = "Onchain", className }) => {
   let icon = <Onchain />;
   if (type === "Offchain") icon = <Offchain />;
 
   const cachedClassNames = classNames(
-    "inline-flex items-center space-x-2 p-2 rounded-sm leading-tight bg-pink-3-lighter"
+    "inline-flex items-center space-x-2 p-2 rounded-sm leading-tight bg-pink-3-lighter",
+    className
   );
 
   return (
@@ -88,7 +90,7 @@ export const ProposalTypeBadge = ({ type = "Onchain" }) => {
  *
  * @param {object} props
  * @param {string} props.title
- * @param {string} props.slug
+ * @param {string|number} props.id
  * @param {string} props.date
  * @param {("Offchain"|"Onchain")} props.type
  * @param {("Active"|"Passed"|"Failed")} props.status
@@ -96,14 +98,14 @@ export const ProposalTypeBadge = ({ type = "Onchain" }) => {
  */
 const GovernanceProposal = ({
   title = "Liquidity migration proposal",
-  slug = "/governance",
+  id = 1,
   date = "Aug 3, 2020",
   type = "Onchain",
   status = "Active",
   vote,
 }) => {
   return (
-    <Link href={slug}>
+    <Link href="/governance/proposals/[id]" as={`/governance/proposals/${id}`}>
       <a className="p-4 flex items-center">
         <div className="flex-1 space-y-3">
           <p className="text-lg leading-tight font-semibold">{title}</p>

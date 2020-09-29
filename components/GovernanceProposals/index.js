@@ -41,7 +41,7 @@ const GovernanceProposals = () => {
 
       <div className="p-2">
         {new Array(5).fill("").map((_, i) => (
-          <GovernanceProposal key={i} />
+          <GovernanceProposal key={i} id={i + 1} />
         ))}
       </div>
     </div>
