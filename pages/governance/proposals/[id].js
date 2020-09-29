@@ -7,7 +7,7 @@ export default function ProposalPage() {
       <Head>
         <title>Proposal | Union</title>
         <meta property="og:title" content="Proposal | Union" />
-        <meta name="twitter:title" content="Proposals| Union" />
+        <meta name="twitter:title" content="Proposal | Union" />
       </Head>
 
       <ProposalView />
