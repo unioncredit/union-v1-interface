@@ -52,6 +52,21 @@ module.exports = {
         increase: "#5DCE8D",
         decrease: "#E9506B",
       },
+      active: {
+        pure: "#8872BC",
+        light: "#EDEAF4",
+      },
+      passed: {
+        pure: "#5DCE8D",
+        light: "#DFF5E8",
+      },
+      failed: {
+        pure: "#A7B2C2",
+        light: "#EDF0F3",
+      },
+      against: {
+        pure: "#EC6087",
+      },
       alert: {
         error: "#E61744",
         loading: "#068DFE",

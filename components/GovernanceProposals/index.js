@@ -40,9 +40,11 @@ const GovernanceProposals = () => {
         <div className="divider" />
       </div>
 
-      {new Array(5).fill("").map((_, i) => (
-        <GovernanceProposal key={i} />
-      ))}
+      <div className="p-2">
+        {new Array(5).fill("").map((_, i) => (
+          <GovernanceProposal key={i} />
+        ))}
+      </div>
     </div>
   );
 };
