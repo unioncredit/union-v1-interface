@@ -186,22 +186,17 @@ input[type="number"] {
 }
 
 .pagination-button {
-  @apply w-6 h-6 bg-border-light border border-border-pure leading-none text-xs font-semibold flex items-center justify-center;
-}
-.pagination-button:not(:first-of-type) {
-  @apply border-l-0;
+  @apply w-6 h-6 leading-none rounded text-type-light text-xs font-semibold flex items-center justify-center;
 }
 .pagination-button:disabled {
-  @apply cursor-not-allowed opacity-50 text-type-light;
+  @apply cursor-not-allowed text-type-base bg-failed-light;
 }
-.pagination-button:first-of-type {
-  @apply rounded-l;
-}
-.pagination-button:last-of-type {
-  @apply rounded-r;
+.pagination-button:first-of-type:disabled,
+.pagination-button:last-of-type:disabled {
+  @apply text-type-light bg-transparent;
 }
 .pagination-button:focus {
-  @apply outline-none shadow-outline z-10;
+  @apply outline-none shadow-outline;
 }
 
 .active-nav-tab {
