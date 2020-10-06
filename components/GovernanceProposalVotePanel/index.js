@@ -1,6 +1,22 @@
-const { default: Button } = require("components/button");
+import { commify } from "@ethersproject/units";
+import Button from "components/button";
+import { toPercent } from "util/numbers";
 
-const GovernanceProposalVotePanel = () => {
+const GovernanceProposalVotePanel = ({
+  id,
+  forCount = 0,
+  againstCount = 0,
+}) => {
+  const forVotes = forCount;
+  const againstVotes = againstCount;
+
+  const totalVotes = forVotes + againstVotes;
+
+  const forPercent = id ? toPercent(forVotes / totalVotes) : toPercent(0);
+  const againstPercent = id
+    ? toPercent(againstVotes / totalVotes)
+    : toPercent(0);
+
   return (
     <div className="rounded bg-white shadow-card">
       <div className="px-8 py-6 border-b">
@@ -10,7 +26,9 @@ const GovernanceProposalVotePanel = () => {
         <div>
           <div className="flex justify-between font-semibold text-lg">
             <div>For</div>
-            <div>(89%) 757,203</div>
+            <div>
+              ({forPercent}) {commify(forVotes.toFixed(2))}
+            </div>
           </div>
         </div>
 
@@ -20,7 +38,9 @@ const GovernanceProposalVotePanel = () => {
         <div>
           <div className="flex justify-between font-semibold text-lg">
             <div>Against</div>
-            <div>(11%) 58,103</div>
+            <div>
+              ({againstPercent}) {commify(againstVotes.toFixed(2))}
+            </div>
           </div>
         </div>
 

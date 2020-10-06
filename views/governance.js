@@ -1,21 +1,14 @@
 import Proposals from "components/GovernanceProposals";
 import Statistics from "components/GovernanceStatistics";
 import LeaderboardTable from "components/LeaderboardTable";
-import useAllProposalData from "hooks/governance/useAllProposalData";
 import Link from "next/link";
 import { Fragment } from "react";
 import LinkArrow from "svgs/LinkArrow";
 
 export default function GovernanceView() {
-  const { data: proposals } = useAllProposalData();
-
   return (
     <Fragment>
       <div className="container">
-        <pre>
-          <code>{JSON.stringify(proposals, null, 2)}</code>
-        </pre>
-
         <section className="pt-16">
           <div className="mb-6 flex items-center justify-between">
             <h2>Statistics</h2>

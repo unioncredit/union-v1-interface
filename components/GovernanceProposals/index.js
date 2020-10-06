@@ -1,6 +1,11 @@
 import GovernanceProposal from "components/GovernanceProposal";
+import useAllProposalData from "hooks/governance/useAllProposalData";
 
 const GovernanceProposals = () => {
+  const { data } = useAllProposalData();
+
+  const hasProposals = data && data.length > 0;
+
   return (
     <div className="bg-white rounded border">
       <div className="px-4 sm:px-6 pt-2">
@@ -40,9 +45,10 @@ const GovernanceProposals = () => {
       </div>
 
       <div className="p-2">
-        {new Array(5).fill("").map((_, i) => (
-          <GovernanceProposal key={i} id={i + 1} />
-        ))}
+        {hasProposals &&
+          data.map((proposal, i) => (
+            <GovernanceProposal key={i} {...proposal} />
+          ))}
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ const getAllProposalData = (
           formattedEvents[i].description?.split(/# /)[1] || "No description.",
         proposer: allProposals[i]?.result?.proposer,
         status:
-          enumerateProposalState(allProposalStates[i]?.result?.[0]) ??
+          enumerateProposalState(allProposalStates[i]?.result) ??
           "Undetermined",
         forCount: parseFloat(
           formatUnits(allProposals[i]?.result?.forVotes.toString(), 18)
@@ -99,6 +99,12 @@ export default function useAllProposalData() {
     shouldFetch
       ? ["AllProposalData", govContract, proposalCount, formattedEvents]
       : null,
-    getAllProposalData(govContract, proposalIndexes, formattedEvents)
+    getAllProposalData(govContract, proposalIndexes, formattedEvents),
+    {
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }

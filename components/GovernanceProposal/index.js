@@ -1,32 +1,34 @@
+import classNames from "classnames";
 import Link from "next/link";
 import Offchain from "svgs/Offchain";
 import Onchain from "svgs/Onchain";
-import classNames from "classnames";
 import Status from "svgs/Status";
 
 /**
  * @name ProposalStatusBadge
  * @param {object} props
- * @param {("Active"|"Passed"|"Failed")} props.status
+ * @param {("pending"|"active"|"canceled"|"defeated"|"succeeded"|"queued"|"expired"|"executed")} props.status
  */
-export const ProposalStatusBadge = ({ status = "Active" }) => {
+export const ProposalStatusBadge = ({ status = "active" }) => {
   let icon = <Status.Active />;
-  if (status === "Passed") icon = <Status.Passed />;
-  if (status === "Failed") icon = <Status.Failed />;
+  if (status === "executed") icon = <Status.Passed />;
+  if (status === "defeated" || status === "canceled") icon = <Status.Failed />;
 
   const cachedClassNames = classNames(
     "inline-flex items-center space-x-2 p-2 font-semibold rounded leading-tight",
     {
-      "bg-active-light text-active-pure": status === "Active",
-      "bg-passed-light text-passed-pure": status === "Passed",
-      "bg-failed-light text-failed-pure": status === "Failed",
+      "bg-active-light text-active-pure":
+        status === "active" || status === "pending" || status === "queued",
+      "bg-passed-light text-passed-pure": status === "executed",
+      "bg-failed-light text-failed-pure":
+        status === "defeated" || status === "expired" || status === "canceled",
     }
   );
 
   return (
     <div className={cachedClassNames}>
       {icon}
-      <span className="-my-2px">{status}</span>
+      <span className="-my-2px capitalize">{status}</span>
     </div>
   );
 };
@@ -93,7 +95,7 @@ export const ProposalTypeBadge = ({ type = "Onchain", className }) => {
  * @param {string|number} props.id
  * @param {string} props.date
  * @param {("Offchain"|"Onchain")} props.type
- * @param {("Active"|"Passed"|"Failed")} props.status
+ * @param {("pending"|"active"|"canceled"|"defeated"|"succeeded"|"queued"|"expired"|"executed")} props.status
  * @param {("For"|"Against"|"No Vote")} props.vote
  */
 const GovernanceProposal = ({
@@ -101,7 +103,7 @@ const GovernanceProposal = ({
   id = 1,
   date = "Aug 3, 2020",
   type = "Onchain",
-  status = "Active",
+  status = "executed",
   vote,
 }) => {
   return (

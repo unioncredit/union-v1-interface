@@ -5,11 +5,19 @@ import {
 import GovernanceProposalHistory from "components/GovernanceProposalHistory";
 import GovernanceProposalVote from "components/GovernanceProposalVote";
 import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel";
+import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
 import LinkArrow from "svgs/LinkArrow";
 
 export default function ProposalView() {
+  const { query } = useRouter();
+
+  const { id } = query;
+
+  const data = useProposalData(id);
+
   return (
     <Fragment>
       <h1 hidden>Proposal</h1>
@@ -31,20 +39,17 @@ export default function ProposalView() {
 
         <div className="grid grid-cols-12">
           <div className="col-span-7">
-            <h1>
-              Should we merge the latest commit made arround updating our FAQ
-              Page?
-            </h1>
+            <h1>{data?.title}</h1>
 
             {/* Spacer */}
             <div className="h-4" />
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <ProposalTypeBadge type="Offchain" className="bg-white" />
+                <ProposalTypeBadge type="Onchain" className="bg-white" />
                 <p className="text-type-light">Executed on Aug 3, 2020</p>
               </div>
-              <ProposalStatusBadge status="Active" />
+              <ProposalStatusBadge status={data?.status} />
             </div>
 
             {/* Spacer */}
@@ -56,18 +61,7 @@ export default function ProposalView() {
             <div className="h-4" />
 
             <div className="space-y-4 font-normal text-lg">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
-                deleniti accusantium id veritatis est eius maiores, neque ut
-                error. Ratione, corporis dolores vitae temporibus at modi?
-                Aspernatur aliquid molestias provident.
-              </p>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Delectus, aspernatur itaque neque eaque praesentium libero
-                quaerat autem facere maxime non voluptatibus ratione ipsum
-                perspiciatis fuga enim dolorem soluta dicta hic.
-              </p>
+              <p>{data?.description}</p>
             </div>
 
             {/* Spacer */}
@@ -104,7 +98,11 @@ export default function ProposalView() {
           </div>
           <div className="col-span-1" />
           <div className="col-span-4">
-            <GovernanceProposalVotePanel />
+            <GovernanceProposalVotePanel
+              id={id}
+              forCount={data?.forCount}
+              againstCount={data?.againstCount}
+            />
 
             {/* Spacer */}
             <div className="h-8" />
