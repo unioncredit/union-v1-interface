@@ -7,6 +7,9 @@ import useSWR from "swr";
 const fetchData = (contract, library) => async () => {
   const filter = {
     ...contract?.filters?.["ProposalCreated"](),
+    /**
+     * @note change to block contract deployed
+     */
     fromBlock: 0,
     toBlock: "latest",
   };
