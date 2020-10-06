@@ -91,6 +91,13 @@ const ApplicationModal = () => {
           valueType="UNION"
         />
 
+        {unionBalance <= "0.00" && (
+          <p className="mt-2">
+            <strong>Note:</strong> You'll need to deposit DAI in order to earn
+            UNION to become a member
+          </p>
+        )}
+
         <LabelPair
           className="mt-8 mb-4"
           label="Membership Fee"
