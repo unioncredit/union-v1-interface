@@ -1,19 +1,17 @@
-import { useWeb3React } from "@web3-react/core";
 import useCurrentToken from "hooks/useCurrentToken";
-import useUnionContract from "hooks/useUnionContract";
+import useUserContract from "hooks/useUserContract";
 import { useCallback } from "react";
 
 export default function useWithdrawRewards() {
-  const { account } = useWeb3React();
   const tokenAddress = useCurrentToken();
-  const unionContract = useUnionContract();
+  const userContract = useUserContract();
 
   return useCallback(
     /**
      * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
      */
     async () => {
-      return unionContract.withdrawRewards(account, tokenAddress);
+      return userContract.withdrawRewards(tokenAddress);
     },
     []
   );

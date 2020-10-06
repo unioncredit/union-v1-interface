@@ -34,7 +34,7 @@ export default function useBorrow() {
           borrowAmount.toString()
         );
       } catch (err) {
-        gasLimit = 5000000;
+        gasLimit = 1000000;
       }
 
       return lendingMarketContract.borrow(borrowAmount.toString(), {

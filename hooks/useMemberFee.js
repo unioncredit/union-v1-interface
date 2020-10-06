@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useMemberContract from "./useMemberContract";
+import useUserContract from "./useUserContract";
 
 const getMemberFee = (contract) => async () =>
   contract.newMemberFee().then((res) => parseRes(res));
 
 export default function useMemberFee() {
-  const contract = useMemberContract();
+  const contract = useUserContract();
 
   const shouldFetch = !!contract;
 

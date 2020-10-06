@@ -4,7 +4,7 @@ import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useUnionContract from "./useUnionContract";
+import useUserContract from "./useUserContract";
 
 const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
   const delta = Number(await contract.getUserBlockDelta(account, tokenAddress));
@@ -49,18 +49,18 @@ const getRewardsData = (contract) => async (
 
 export default function useRewardsData() {
   const { account, chainId } = useWeb3React();
-  const unionContract = useUnionContract();
+  const userContract = useUserContract();
   const curToken = useCurrentToken();
 
   const shouldFetch =
-    !!unionContract &&
+    !!userContract &&
     typeof chainId === "number" &&
     typeof account === "string" &&
     isAddress(curToken);
 
   return useSWR(
     shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
-    getRewardsData(unionContract),
+    getRewardsData(userContract),
     {
       refreshInterval: 10 * 1000,
       dedupingInterval: 10 * 1000,
