@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import LinkArrow from "svgs/LinkArrow";
+import ReactMarkdown from "react-markdown";
 
 export default function ProposalView() {
   const { query } = useRouter();
@@ -47,7 +48,7 @@ export default function ProposalView() {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <ProposalTypeBadge type="Onchain" className="bg-white" />
-                <p className="text-type-light">Executed on Aug 3, 2020</p>
+                <p className="text-type-light">Executed on {data?.endBlock}</p>
               </div>
               <ProposalStatusBadge status={data?.status} />
             </div>
@@ -61,7 +62,13 @@ export default function ProposalView() {
             <div className="h-4" />
 
             <div className="space-y-4 font-normal text-lg">
-              <p>{data?.description}</p>
+              <ReactMarkdown
+                renderers={{
+                  link: (props) => <a className="underline" {...props} />,
+                }}
+              >
+                {data?.description}
+              </ReactMarkdown>
             </div>
 
             {/* Spacer */}
@@ -96,7 +103,9 @@ export default function ProposalView() {
               <div className="h-4" />
             </div>
           </div>
+
           <div className="col-span-1" />
+
           <div className="col-span-4">
             <GovernanceProposalVotePanel
               id={id}

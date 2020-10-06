@@ -1,5 +1,6 @@
 import { commify } from "@ethersproject/units";
 import Button from "components/button";
+import useProposalQuorum from "hooks/governance/useProposalQuorum";
 import { toPercent } from "util/numbers";
 
 const GovernanceProposalVotePanel = ({
@@ -12,10 +13,10 @@ const GovernanceProposalVotePanel = ({
 
   const totalVotes = forVotes + againstVotes;
 
-  const forPercent = id ? toPercent(forVotes / totalVotes) : toPercent(0);
-  const againstPercent = id
-    ? toPercent(againstVotes / totalVotes)
-    : toPercent(0);
+  const forPercent = id ? forVotes / totalVotes : 0;
+  const againstPercent = id ? againstVotes / totalVotes : 0;
+
+  const { data: quorum = 0 } = useProposalQuorum();
 
   return (
     <div className="rounded bg-white shadow-card">
@@ -27,8 +28,18 @@ const GovernanceProposalVotePanel = ({
           <div className="flex justify-between font-semibold text-lg">
             <div>For</div>
             <div>
-              ({forPercent}) {commify(forVotes.toFixed(2))}
+              ({toPercent(forPercent)}) {commify(forVotes.toFixed(2))}
             </div>
+          </div>
+
+          {/* Spacer */}
+          <div className="h-2" />
+
+          <div className="h-1 relative rounded-full w-full bg-passed-pure bg-opacity-25">
+            <div
+              className="h-1 absolute rounded-full bg-passed-pure"
+              style={{ width: `calc(${forPercent} * 100%)` }}
+            />
           </div>
         </div>
 
@@ -39,8 +50,18 @@ const GovernanceProposalVotePanel = ({
           <div className="flex justify-between font-semibold text-lg">
             <div>Against</div>
             <div>
-              ({againstPercent}) {commify(againstVotes.toFixed(2))}
+              ({toPercent(againstPercent)}) {commify(againstVotes.toFixed(2))}
             </div>
+          </div>
+
+          {/* Spacer */}
+          <div className="h-2" />
+
+          <div className="h-1 relative rounded-full w-full bg-against-pure bg-opacity-25">
+            <div
+              className="h-1 absolute rounded-full bg-against-pure"
+              style={{ width: `calc(${againstPercent} * 100%)` }}
+            />
           </div>
         </div>
 
@@ -55,7 +76,7 @@ const GovernanceProposalVotePanel = ({
         <div>
           <div className="flex justify-between">
             <div className="text-type-light">Quorum</div>
-            <div className="font-semibold">19%</div>
+            <div className="font-semibold">{commify(quorum)}</div>
           </div>
         </div>
 

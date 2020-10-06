@@ -96,15 +96,7 @@ export default function useAllProposalData() {
   const shouldFetch = govContract && proposalCount && formattedEvents;
 
   return useSWR(
-    shouldFetch
-      ? ["AllProposalData", govContract, proposalCount, formattedEvents]
-      : null,
-    getAllProposalData(govContract, proposalIndexes, formattedEvents),
-    {
-      refreshWhenHidden: false,
-      refreshWhenOffline: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+    shouldFetch ? ["AllProposalData"] : null,
+    getAllProposalData(govContract, proposalIndexes, formattedEvents)
   );
 }
