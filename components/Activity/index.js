@@ -48,7 +48,7 @@ const Activity = () => {
           <div
             className="p-4 max-h-72 overflow-y-scroll"
             style={{
-              "-webkit-overflow-scrolling": "touch",
+              WebkitOverflowScrolling: "touch",
             }}
           >
             <ActivityContent data={data} />
