@@ -4,6 +4,7 @@ import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useBorrow from "hooks/payables/useBorrow";
+import useAssetContract from "hooks/useAssetContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
 import PropTypes from "prop-types";
@@ -49,6 +50,17 @@ const BorrowModal = ({
 
   const tokenAddress = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
+  const assetContract = useAssetContract();
+
+  useEffect(() => {
+    async function getPoolBalance() {
+      const res = await assetContract.getLoanableAmount(tokenAddress);
+
+      return formatUnits(res, 18);
+    }
+
+    getPoolBalance();
+  }, []);
 
   const {
     errors,
