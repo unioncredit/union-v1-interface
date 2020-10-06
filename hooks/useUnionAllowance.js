@@ -36,7 +36,7 @@ export default function useUnionAllowance() {
 }
 
 export function useIncreaseUnionAllowance() {
-  const { library, chainId } = useWeb3React();
+  const { library, chainId, account } = useWeb3React();
 
   const unionContract = useUnionContract();
 
@@ -59,6 +59,6 @@ export function useIncreaseUnionAllowance() {
         handleTxError(err);
       }
     },
-    [chainId]
+    [chainId, account]
   );
 }
