@@ -3,14 +3,14 @@ import {
   ProposalTypeBadge,
 } from "components/GovernanceProposal";
 import GovernanceProposalHistory from "components/GovernanceProposalHistory";
-import GovernanceProposalVote from "components/GovernanceProposalVote";
+import GovernanceProposalVoteHistory from "components/GovernanceProposalVoteHistory";
 import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel";
 import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import LinkArrow from "svgs/LinkArrow";
 import ReactMarkdown from "react-markdown";
+import LinkArrow from "svgs/LinkArrow";
 
 export default function ProposalView() {
   const { query } = useRouter();
@@ -74,34 +74,7 @@ export default function ProposalView() {
             {/* Spacer */}
             <div className="h-12" />
 
-            <div className="bg-white rounded border">
-              <div className="px-4 sm:px-6 pt-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-1">
-                    <button className="px-4 py-4 font-semibold text-type-base border-b-2 border-pink-3-pure">
-                      All
-                    </button>
-                    <button className="px-4 py-4 font-semibold text-type-light border-b-2 border-transparent">
-                      For
-                    </button>
-                    <button className="px-4 py-4 font-semibold text-type-light border-b-2 border-transparent">
-                      Against
-                    </button>
-                  </div>
-                </div>
-
-                <div className="divider -mt-px" />
-              </div>
-
-              <div className="p-2">
-                {new Array(4).fill("").map((_, i) => (
-                  <GovernanceProposalVote key={i} />
-                ))}
-              </div>
-
-              {/* Spacer */}
-              <div className="h-4" />
-            </div>
+            <GovernanceProposalVoteHistory id={id} />
           </div>
 
           <div className="col-span-1" />
@@ -116,7 +89,7 @@ export default function ProposalView() {
             {/* Spacer */}
             <div className="h-8" />
 
-            <GovernanceProposalHistory />
+            <GovernanceProposalHistory id={id} />
           </div>
         </div>
       </div>
