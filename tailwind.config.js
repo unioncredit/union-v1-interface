@@ -73,6 +73,10 @@ module.exports = {
         pending: "#FE9F7C",
         success: "#5DCE8D",
       },
+      quorum: {
+        pure: "#34555A",
+        light: "#E6EFE7",
+      },
       white: "#fff",
       "true-black": "#000",
       transparent: "transparent",

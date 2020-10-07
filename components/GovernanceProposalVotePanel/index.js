@@ -1,6 +1,9 @@
 import { commify } from "@ethersproject/units";
+import Tooltip from "@reach/tooltip";
 import Button from "components/button";
+import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
+import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
 const GovernanceProposalVotePanel = ({
@@ -17,6 +20,12 @@ const GovernanceProposalVotePanel = ({
   const againstPercent = id ? againstVotes / totalVotes : 0;
 
   const { data: quorum = 0 } = useProposalQuorum();
+
+  const { data: totalSupply = 0 } = useGovernanceTokenSupply();
+
+  const totalVotePercent = totalVotes / totalSupply;
+
+  const quorumPercent = quorum / totalSupply;
 
   return (
     <div className="rounded bg-white shadow-card">
@@ -75,8 +84,24 @@ const GovernanceProposalVotePanel = ({
 
         <div>
           <div className="flex justify-between">
-            <div className="text-type-light">Quorum</div>
-            <div className="font-semibold">{commify(quorum)}</div>
+            <div>
+              <Tooltip label="Quorum Tooltip">
+                <div className="flex items-center space-x-2">
+                  <div className="text-type-light leading-tight">Quorum</div>
+                  <Info />
+                </div>
+              </Tooltip>
+
+              {/* Spacer */}
+              <div className="h-3" />
+
+              <div className="leading-tight px-1 py-2px rounded bg-quorum-pure text-quorum-light font-semibold text-sm">{`${toPercent(
+                quorumPercent
+              )} needed`}</div>
+            </div>
+            <div className="text-lg font-semibold">
+              {toPercent(totalVotePercent)}
+            </div>
           </div>
         </div>
 
