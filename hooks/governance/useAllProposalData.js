@@ -1,4 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import useGovernanceContract from "hooks/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
@@ -21,6 +22,7 @@ const enumerateProposalState = (state) => {
 
 const getAllProposalData = (
   govContract,
+  library,
   proposalIndexes,
   formattedEvents
 ) => async () => {
@@ -47,7 +49,7 @@ const getAllProposalData = (
   allProposals.reverse();
   allProposalStates.reverse();
 
-  return allProposals
+  const formattedAllProposals = allProposals
     .filter((p, i) => {
       return (
         Boolean(p.result) &&
@@ -79,9 +81,22 @@ const getAllProposalData = (
 
       return formattedProposal;
     });
+
+  return Promise.all(
+    formattedAllProposals.map(async (prop) => {
+      const block = await library.getBlock(prop.endBlock);
+
+      return {
+        ...prop,
+        date: block.timestamp.toString(),
+      };
+    })
+  );
 };
 
 export default function useAllProposalData() {
+  const { library } = useWeb3React();
+
   const govContract = useGovernanceContract();
 
   const { data: proposalCount } = useProposalCount();
@@ -98,6 +113,6 @@ export default function useAllProposalData() {
 
   return useSWR(
     shouldFetch ? ["AllProposalData"] : null,
-    getAllProposalData(govContract, proposalIndexes, formattedEvents)
+    getAllProposalData(govContract, library, proposalIndexes, formattedEvents)
   );
 }

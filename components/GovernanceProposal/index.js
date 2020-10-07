@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import dayjs from "dayjs";
 import Link from "next/link";
 import Offchain from "svgs/Offchain";
 import Onchain from "svgs/Onchain";
@@ -101,11 +102,13 @@ export const ProposalTypeBadge = ({ type = "onchain", className }) => {
 const GovernanceProposal = ({
   title = "Liquidity migration proposal",
   id = 1,
-  date = "Aug 3, 2020",
+  date,
   type = "onchain",
   status = "executed",
   vote,
 }) => {
+  const formatDate = dayjs.unix(date).format("MMM D, YYYY");
+
   return (
     <Link href="/governance/proposals/[id]" as={`/governance/proposals/${id}`}>
       <a className="p-4 flex items-center">
@@ -117,7 +120,7 @@ const GovernanceProposal = ({
 
             <ProposalTypeBadge type={type} />
 
-            <div className="text-type-light">Executed on {date}</div>
+            <div className="text-type-light">Executed on {formatDate}</div>
           </div>
         </div>
 
