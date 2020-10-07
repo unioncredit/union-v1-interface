@@ -1,6 +1,6 @@
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import useGovernanceContract from "hooks/useGovernanceContract";
+import useGovernanceContract from "hooks/governance/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
 import useProposalCount from "./useProposalCount";

@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import useGovernanceContract from "hooks/useGovernanceContract";
+import useGovernanceContract from "hooks/governance/useGovernanceContract";
 import useSWR from "swr";
 
 const getQuorum = (contract) => async () => {
