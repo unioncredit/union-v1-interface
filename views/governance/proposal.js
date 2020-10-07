@@ -5,6 +5,7 @@ import {
 import GovernanceProposalHistory from "components/GovernanceProposalHistory";
 // import GovernanceProposalVoteHistory from "components/GovernanceProposalVoteHistory";
 import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel";
+import dayjs from "dayjs";
 import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -18,6 +19,8 @@ export default function ProposalView() {
   const { id } = query;
 
   const data = useProposalData(id);
+
+  const formatDate = dayjs.unix(data?.date).format("MMM D, YYYY");
 
   return (
     <Fragment>
@@ -48,7 +51,7 @@ export default function ProposalView() {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <ProposalTypeBadge type="Onchain" className="bg-white" />
-                <p className="text-type-light">Executed on {data?.endBlock}</p>
+                <p className="text-type-light">Executed on {formatDate}</p>
               </div>
               <ProposalStatusBadge status={data?.status} />
             </div>
