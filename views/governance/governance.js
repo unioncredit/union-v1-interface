@@ -1,6 +1,6 @@
 import Proposals from "components/GovernanceProposals";
 import Statistics from "components/GovernanceStatistics";
-import LeaderboardTable from "components/LeaderboardTable";
+// import LeaderboardTable from "components/LeaderboardTable";
 import Link from "next/link";
 import { Fragment } from "react";
 import LinkArrow from "svgs/LinkArrow";
@@ -37,7 +37,7 @@ export default function GovernanceView() {
           <Proposals />
         </section>
 
-        <section className="pt-16">
+        {/* <section className="pt-16">
           <div className="mb-6 flex items-center justify-between">
             <h2>Leaderboard</h2>
 
@@ -49,7 +49,7 @@ export default function GovernanceView() {
           </div>
 
           <LeaderboardTable />
-        </section>
+        </section> */}
       </div>
     </Fragment>
   );
