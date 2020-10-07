@@ -13,14 +13,20 @@ const jazziconTheme = [
   "#48666A",
 ];
 
-const Identicon = memo(({ address, extraLarge = false, large = false }) => {
+/**
+ * @name Identicon
+ * @param {object} props
+ * @param {string} props.address
+ * @param {(18|32|48|72)} props.size
+ */
+const Identicon = ({ address, size = 18 }) => {
   return (
     <Jazzicon
       colors={jazziconTheme}
-      diameter={extraLarge ? 72 : large ? 32 : 18}
+      diameter={size}
       seed={jsNumberForAddress(address)}
     />
   );
-});
+};
 
-export default Identicon;
+export default memo(Identicon);

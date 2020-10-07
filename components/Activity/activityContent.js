@@ -26,7 +26,7 @@ const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
               size={32}
             />
           ) : (
-            <Identicon address={borrower} large />
+            <Identicon address={borrower} size={32} />
           )}
         </div>
         <div className="flex-1">
@@ -94,7 +94,7 @@ const CancelVouch = ({ account, hash, date }) => {
               size={32}
             />
           ) : (
-            <Identicon address={account} large />
+            <Identicon address={account} size={32} />
           )}
         </div>
         <div className="flex-1">

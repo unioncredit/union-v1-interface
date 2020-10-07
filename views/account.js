@@ -31,7 +31,7 @@ export default function AccountView() {
                 {has3BoxProfileImage ? (
                   <ProfileImage alt={account} image={data.image} size={72} />
                 ) : (
-                  <Identicon address={account} extraLarge />
+                  <Identicon address={account} size={72} />
                 )}
                 <div className="ml-4">
                   <p

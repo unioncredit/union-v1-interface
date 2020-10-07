@@ -39,7 +39,7 @@ const Address = ({ address, copyable = false }) => {
         {has3BoxProfileImage ? (
           <ProfileImage alt={ENSName ?? address} image={data.image} size={32} />
         ) : (
-          <Identicon large address={address} />
+          <Identicon size={32} address={address} />
         )}
       </div>
 

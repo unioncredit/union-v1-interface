@@ -4,6 +4,7 @@ import Badge from "components/Badge";
 import Button from "components/button";
 import { ViewDelegated } from "components/DelegatedModal";
 import { ViewDelegateVoting } from "components/DelegateVotingModal";
+import Identicon from "components/identicon";
 import WithdrawRewards from "components/withdrawRewards";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useUserGovernanceTokenBalance from "hooks/governance/useUserGovernanceTokenBalance";
@@ -108,3 +109,45 @@ const GovernanceVotingWallet = ({ address }) => {
 };
 
 export default GovernanceVotingWallet;
+
+export const GovernanceVotingProfile = ({ address }) => {
+  const { data: currentVotes = 0 } = useUserVotes(address);
+  const { data: totalSupply = 0 } = useGovernanceTokenSupply();
+  const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
+
+  const votePowerPercent = currentVotes / totalSupply;
+
+  const votesDelegated = currentVotes - tokenBalance;
+
+  return (
+    <div className="bg-white rounded border">
+      <div className="p-4 sm:p-6 border-b">
+        <div className="flex">
+          <Identicon address={address} size={48} />
+        </div>
+      </div>
+      <div className="p-4 sm:p-6">
+        <div className="space-y-4">
+          <VotingWalletRow
+            label="Wallet balance"
+            value={`${commify(tokenBalance.toFixed(4))} UNION`}
+          />
+          <VotingWalletRow
+            label="Votes delegated"
+            value={`${commify(votesDelegated.toFixed(4))} votes`}
+            slotBottomRight={<ViewDelegated />}
+          />
+          <VotingWalletRow
+            label="Total voting power"
+            value={`${commify(currentVotes.toFixed(4))} votes`}
+            slotTopRight={<PercentOfTotalBadge value={votePowerPercent} />}
+          />
+          <VotingWalletRow label="Delegating to" value={"Self"} />
+        </div>
+        <div className="mt-8">
+          <Button full>Delegate votes</Button>
+        </div>
+      </div>
+    </div>
+  );
+};
