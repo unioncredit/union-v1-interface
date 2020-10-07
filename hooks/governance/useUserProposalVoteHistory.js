@@ -27,9 +27,7 @@ const getProposalVoteHistory = (govContract, proposals) => async (
   return allProposalsWithReceipt;
 };
 
-export default function useUserProposalVoteHistory(
-  address = "0x6626593c237f530d15ae9980a95ef938ac15c35c"
-) {
+export default function useUserProposalVoteHistory(address) {
   const govContract = useGovernanceContract();
 
   const { data: proposals } = useAllProposalData();

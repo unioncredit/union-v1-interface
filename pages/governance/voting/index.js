@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import GovernanceNavigation from "components/GovernanceNavigation";
 import Head from "next/head";
 import LoggedOutView from "views/loggedOut";
-import VotingView from "views/voting";
+import VotingView from "views/governance/voting";
 
 export default function GovernanceVotingPage() {
   const { account, library } = useWeb3React();

@@ -1,9 +1,13 @@
+import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import Badge from "components/Badge";
 import Button from "components/button";
 import { ViewDelegated } from "components/DelegatedModal";
 import { ViewDelegateVoting } from "components/DelegateVotingModal";
 import WithdrawRewards from "components/withdrawRewards";
+import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
+import useUserGovernanceTokenBalance from "hooks/governance/useUserGovernanceTokenBalance";
+import useUserVotes from "hooks/governance/useUserVotes";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
@@ -56,30 +60,37 @@ const PercentOfTotalBadge = ({ value }) => {
   );
 };
 
-const GovernanceVotingWallet = () => {
-  /**
-   * @todo Hook up to contract
-   */
-  const votePowerPercent = 0.012;
+const GovernanceVotingWallet = ({ address }) => {
+  const { data: currentVotes = 0 } = useUserVotes(address);
+  const { data: totalSupply = 0 } = useGovernanceTokenSupply();
+  const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
+  const { data: unclaimedUnion = 0 } = { data: undefined };
+
+  const votePowerPercent = currentVotes / totalSupply;
+
+  const votesDelegated = currentVotes - tokenBalance;
 
   return (
     <div className="bg-white rounded border p-4 sm:p-6">
       <div className="space-y-4">
-        <VotingWalletRow label="Wallet balance" value="5,083 UNION" />
         <VotingWalletRow
-          label="Unclaimed balance"
-          value={"1,294 UNION"}
-          slotBottomRight={<WithdrawRewards />}
+          label="Wallet balance"
+          value={`${commify(tokenBalance.toFixed(4))} UNION`}
         />
         <VotingWalletRow
           label="Votes delegated to you"
-          value={"1,292 votes"}
+          value={`${commify(votesDelegated.toFixed(4))} votes`}
           slotBottomRight={<ViewDelegated />}
         />
         <VotingWalletRow
           label="Total voting power"
-          value={"6,325 votes"}
+          value={`${commify(currentVotes.toFixed(4))} votes`}
           slotTopRight={<PercentOfTotalBadge value={votePowerPercent} />}
+        />
+        <VotingWalletRow
+          label="Unclaimed balance"
+          value={`${commify(unclaimedUnion.toFixed(4))} UNION`}
+          slotBottomRight={<WithdrawRewards />}
         />
         <VotingWalletRow
           label="Delegating to"

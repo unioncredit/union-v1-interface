@@ -1,4 +1,5 @@
 import Head from "next/head";
+import AddressView from "views/governance/address";
 
 export default function AddressPage() {
   return (
@@ -8,6 +9,10 @@ export default function AddressPage() {
         <meta property="og:title" content="Profile | Union" />
         <meta name="twitter:title" content="Profile | Union" />
       </Head>
+
+      <h1 hidden>Profile</h1>
+
+      <AddressView />
     </div>
   );
 }

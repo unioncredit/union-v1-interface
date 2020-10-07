@@ -1,5 +1,5 @@
 import Head from "next/head";
-import ProposalView from "views/proposal";
+import ProposalView from "views/governance/proposal";
 
 export default function ProposalPage() {
   return (

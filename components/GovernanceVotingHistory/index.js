@@ -1,8 +1,8 @@
 import GovernanceProposal from "components/GovernanceProposal";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 
-const GovernanceVotingHistory = () => {
-  const { data } = useUserProposalVoteHistory();
+const GovernanceVotingHistory = ({ address }) => {
+  const { data } = useUserProposalVoteHistory(address);
 
   const hasVoted = data && data.length > 0;
 

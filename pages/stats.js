@@ -1,5 +1,5 @@
 import Head from "next/head";
-import StatsView from "views/statistics";
+import StatsView from "views/governance/statistics";
 
 export default function StatisticsPage() {
   return (

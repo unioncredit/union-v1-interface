@@ -1,6 +1,6 @@
 import GovernanceNavigation from "components/GovernanceNavigation";
 import Head from "next/head";
-import GovernanceView from "views/governance";
+import GovernanceView from "views/governance/governance";
 
 export default function GovernancePage() {
   return (
