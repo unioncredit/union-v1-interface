@@ -1,5 +1,8 @@
-import GovernanceProposal from "components/GovernanceProposal";
+import GovernanceProposal, {
+  GovernanceProposalSkeleton,
+} from "components/GovernanceProposal";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
+import { Fragment } from "react";
 
 const GovernanceVotingHistory = ({ address }) => {
   const { data } = useUserProposalVoteHistory(address);
@@ -9,7 +12,7 @@ const GovernanceVotingHistory = ({ address }) => {
   return (
     <div className="bg-white rounded border">
       <div className="p-2">
-        {hasVoted &&
+        {hasVoted ? (
           data.map((proposal, i) => {
             const formatVote = proposal.receipt.hasVoted
               ? proposal.receipt.support
@@ -20,7 +23,16 @@ const GovernanceVotingHistory = ({ address }) => {
             return (
               <GovernanceProposal key={i} {...proposal} vote={formatVote} />
             );
-          })}
+          })
+        ) : (
+          <Fragment>
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+          </Fragment>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 import classNames from "classnames";
-import GovernanceProposal from "components/GovernanceProposal";
+import GovernanceProposal, {
+  GovernanceProposalSkeleton,
+} from "components/GovernanceProposal";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 const StatusFilterButton = ({ onClick, label, isActive }) => {
   const cachedClassNames = classNames(
@@ -98,10 +100,19 @@ const GovernanceProposals = ({ showAll = false }) => {
       </div>
 
       <div className="p-2">
-        {hasProposals &&
+        {hasProposals ? (
           data
             .slice(0, showAll ? -1 : 5)
-            .map((proposal, i) => <GovernanceProposal key={i} {...proposal} />)}
+            .map((proposal, i) => <GovernanceProposal key={i} {...proposal} />)
+        ) : (
+          <Fragment>
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+            <GovernanceProposalSkeleton />
+          </Fragment>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import Skeleton from "components/Skeleton";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Offchain from "svgs/Offchain";
@@ -131,3 +132,25 @@ const GovernanceProposal = ({
 };
 
 export default GovernanceProposal;
+
+export const GovernanceProposalSkeleton = () => {
+  return (
+    <div className="p-4 flex items-center">
+      <div className="flex-1 space-y-3">
+        <div className="flex">
+          <Skeleton height={22} width={400} />
+        </div>
+
+        <div className="flex items-center space-x-4">
+          <Skeleton width={110} height={32} />
+
+          <Skeleton width={192} height={24} />
+        </div>
+      </div>
+
+      <p className="leading-tight">
+        <Skeleton width={110} height={32} />
+      </p>
+    </div>
+  );
+};
