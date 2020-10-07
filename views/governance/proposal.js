@@ -3,7 +3,7 @@ import {
   ProposalTypeBadge,
 } from "components/GovernanceProposal";
 import GovernanceProposalHistory from "components/GovernanceProposalHistory";
-import GovernanceProposalVoteHistory from "components/GovernanceProposalVoteHistory";
+// import GovernanceProposalVoteHistory from "components/GovernanceProposalVoteHistory";
 import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel";
 import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
@@ -72,9 +72,9 @@ export default function ProposalView() {
             </div>
 
             {/* Spacer */}
-            <div className="h-12" />
+            {/* <div className="h-12" /> */}
 
-            <GovernanceProposalVoteHistory id={id} />
+            {/* <GovernanceProposalVoteHistory id={id} /> */}
           </div>
 
           <div className="col-span-1" />
