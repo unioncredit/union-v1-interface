@@ -28,7 +28,7 @@ export default function ProposalsView() {
         {/* Spacer */}
         <div className="h-8" />
 
-        <GovernanceProposals />
+        <GovernanceProposals showAll />
       </div>
     </Fragment>
   );

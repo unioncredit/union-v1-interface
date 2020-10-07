@@ -74,6 +74,7 @@ const getAllProposalData = (
         startBlock: parseInt(allProposals[i]?.result?.startBlock?.toString()),
         endBlock: parseInt(allProposals[i]?.result?.endBlock?.toString()),
         details: formattedEvents[i].details,
+        type: "onchain",
       };
 
       return formattedProposal;

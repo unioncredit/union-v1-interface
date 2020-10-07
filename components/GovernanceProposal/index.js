@@ -68,15 +68,15 @@ export const ProposalVoteBadge = ({ vote = "No Vote" }) => {
 /**
  * @name ProposalTypeBadge
  * @param {object} props
- * @param {("Offchain"|"Onchain")} props.type
+ * @param {("offchain"|"onchain")} props.type
  * @param {string} props.className
  */
-export const ProposalTypeBadge = ({ type = "Onchain", className }) => {
+export const ProposalTypeBadge = ({ type = "onchain", className }) => {
   let icon = <Onchain />;
   if (type === "Offchain") icon = <Offchain />;
 
   const cachedClassNames = classNames(
-    "inline-flex items-center space-x-2 p-2 rounded-sm leading-tight bg-pink-3-lighter",
+    "inline-flex items-center space-x-2 p-2 rounded-sm leading-tight bg-pink-3-lighter capitalize",
     className
   );
 
@@ -94,7 +94,7 @@ export const ProposalTypeBadge = ({ type = "Onchain", className }) => {
  * @param {string} props.title
  * @param {string|number} props.id
  * @param {string} props.date
- * @param {("Offchain"|"Onchain")} props.type
+ * @param {("offchain"|"onchain")} props.type
  * @param {("pending"|"active"|"canceled"|"defeated"|"succeeded"|"queued"|"expired"|"executed")} props.status
  * @param {("For"|"Against"|"No Vote")} props.vote
  */
@@ -102,7 +102,7 @@ const GovernanceProposal = ({
   title = "Liquidity migration proposal",
   id = 1,
   date = "Aug 3, 2020",
-  type = "Onchain",
+  type = "onchain",
   status = "executed",
   vote,
 }) => {
