@@ -61,13 +61,13 @@ const GovernanceProposals = ({ showAll = false }) => {
               label="Active"
             />
             <StatusFilterButton
-              onClick={updateStatusFilter("succeeded")}
-              isActive={statusFilter === "succeeded"}
+              onClick={updateStatusFilter("passed")}
+              isActive={statusFilter === "passed"}
               label="Passed"
             />
             <StatusFilterButton
-              onClick={updateStatusFilter("defeated")}
-              isActive={statusFilter === "defeated"}
+              onClick={updateStatusFilter("failed")}
+              isActive={statusFilter === "failed"}
               label="Failed"
             />
             <StatusFilterButton
