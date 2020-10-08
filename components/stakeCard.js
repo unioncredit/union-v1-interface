@@ -1,16 +1,13 @@
-import Tooltip from "@reach/tooltip";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useTokenBalance from "hooks/useTokenBalance";
 import { Fragment } from "react";
-import Info from "svgs/Info";
 import format from "util/formatValue";
 import {
   defaultedStakeTip,
   utilizedStakeTip,
   withdrawableStakeTip,
-  yourUnionTip,
 } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./DepositModal";
@@ -93,12 +90,7 @@ const StakeCard = () => {
 
           <dl className="py-1 flex justify-between items-center">
             <dt className="leading-tight whitespace-no-wrap text-lg mb-2">
-              <Tooltip label={yourUnionTip}>
-                <div className="inline-flex items-center cursor-help">
-                  <div className="mr-2">Your UNION</div>
-                  <Info />
-                </div>
-              </Tooltip>
+              Your UNION
             </dt>
             <dd>
               <WithdrawRewards onComplete={onComplete} />

@@ -50,17 +50,6 @@ export const rewardsTip = (
   </div>
 );
 
-export const yourUnionTip = (
-  <div className="tooltip-text">
-    <p>UNION Token</p>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo tenetur
-      voluptatum dolorum in laborum, dicta odit porro soluta est ratione
-      voluptates cupiditate molestias unde odio hic sapiente magni esse facilis?
-    </p>
-  </div>
-);
-
 export const rewardsMultiplierTip = (
   <div className="tooltip-text">
     <p>Rewards multiplier</p>
