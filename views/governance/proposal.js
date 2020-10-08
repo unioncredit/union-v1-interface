@@ -1,3 +1,5 @@
+import { isAddress } from "@ethersproject/address";
+import { useWeb3React } from "@web3-react/core";
 import {
   ProposalStatusBadge,
   ProposalTypeBadge,
@@ -12,15 +14,33 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
 import LinkArrow from "svgs/LinkArrow";
+import getEtherscanLink from "util/getEtherscanLink";
 
 export default function ProposalView() {
   const { query } = useRouter();
+
+  const { chainId } = useWeb3React();
 
   const { id } = query;
 
   const data = useProposalData(id);
 
   const formatDate = dayjs.unix(data?.date).format("MMM D, YYYY");
+
+  const linkIfAddress = (content) => {
+    if (isAddress(content) && chainId) {
+      return (
+        <a
+          className="underline"
+          href={getEtherscanLink(chainId, content, "address")}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    return <span>{content}</span>;
+  };
 
   return (
     <Fragment>
@@ -60,6 +80,32 @@ export default function ProposalView() {
             <div className="h-12" />
 
             <h2 className="text-xl">Summary</h2>
+
+            {/* Spacer */}
+            <div className="h-4" />
+
+            <ol className="divide-y border-t border-b">
+              {data?.details.map((d, i) => (
+                <li
+                  key={i}
+                  className="py-4 flex space-x-4 break-words break-all"
+                >
+                  <span className="font-semibold">{i + 1}</span>
+                  <p className="">
+                    {linkIfAddress(d.target)}.{d.functionSig}(
+                    {d.callData.split(",").map((content, i) => {
+                      return (
+                        <span key={i}>
+                          {linkIfAddress(content)}
+                          {d.callData.split(",").length - 1 === i ? "" : ","}
+                        </span>
+                      );
+                    })}
+                    )
+                  </p>
+                </li>
+              ))}
+            </ol>
 
             {/* Spacer */}
             <div className="h-4" />
