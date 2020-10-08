@@ -1,15 +1,16 @@
+import Tooltip from "@reach/tooltip";
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/useRewardsData";
 import useStakeData from "hooks/useStakeData";
 import useTokenBalance from "hooks/useTokenBalance";
 import { Fragment } from "react";
+import Info from "svgs/Info";
 import format from "util/formatValue";
 import {
   defaultedStakeTip,
-  rewardsTip,
-  unionPerYearTip,
   utilizedStakeTip,
   withdrawableStakeTip,
+  yourUnionTip,
 } from "../text/tooltips";
 import Button from "./button";
 import DepositModal from "./DepositModal";
@@ -41,7 +42,7 @@ const StakeCard = () => {
     withdrawableStake = 0.0,
   } = !!stakeData && stakeData;
 
-  const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "0.00" } =
+  const { rewards = 0.0, rewardsMultiplier = "0.00" } =
     !!rewardsData && rewardsData;
 
   const onComplete = async () => {
@@ -90,26 +91,30 @@ const StakeCard = () => {
 
           <div className="divider bg-pink-pure my-8" />
 
-          <LabelPair
-            className="pt-1 mb-4"
-            label="Rewards"
-            large
-            tooltip={rewardsTip}
-            value={format(rewards, 3)}
-            valueType="UNION"
-            valueSlot={<WithdrawRewards onComplete={onComplete} />}
-          />
-          <LabelPair
-            labelColor="text-grey-pure"
-            label="Earned Per Year"
-            tooltip={unionPerYearTip}
-            value={format(upy, 3)}
-            valueType="UNION"
-          />
+          <dl className="py-1 flex justify-between items-center">
+            <dt className="leading-tight whitespace-no-wrap text-lg mb-2">
+              <Tooltip label={yourUnionTip}>
+                <div className="inline-flex items-center cursor-help">
+                  <div className="mr-2">Your UNION</div>
+                  <Info />
+                </div>
+              </Tooltip>
+            </dt>
+            <dd>
+              <WithdrawRewards onComplete={onComplete} />
+            </dd>
+          </dl>
+
           <LabelPair
             labelColor="text-grey-pure"
-            label="Wallet Balance"
+            label="Balance"
             value={format(unionBalance, 3)}
+            valueType="UNION"
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Unclaimed"
+            value={format(rewards, 3)}
             valueType="UNION"
           />
         </div>
