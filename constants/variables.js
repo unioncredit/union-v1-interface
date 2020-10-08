@@ -47,6 +47,10 @@ export const BLOCK_SPEED = {
 };
 
 export const TOKENS = {
+  1: {
+    DAI: AddressZero,
+    UNION: AddressZero,
+  },
   4: {
     DAI: "0x5592ec0cfb4dbc12d3ab100b257153436a1f0fea",
     UNION: "0xCAA40be0C270175101EF93F7414315CE344cB72d",

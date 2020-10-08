@@ -1,6 +1,16 @@
+import { commify } from "@ethersproject/units";
 import GovernanceStatistic from "components/GovernanceStatistic";
+import useStatisticsData from "hooks/governance/useStatisticsData";
+
+/**
+ * @name format
+ * @param {number} value
+ */
+const format = (value) => commify(Number(value ?? 0).toFixed(2));
 
 const GovernanceStatistics = () => {
+  const { data } = useStatisticsData();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <GovernanceStatistic
@@ -29,14 +39,14 @@ const GovernanceStatistics = () => {
       />
       <GovernanceStatistic
         label={"Outstanding loans"}
-        value={"938,334.45 DAI"}
-        changePercentage={0.028}
+        value={`${format(data?.outstandingLoans)} DAI`}
+        changePercentage={0}
         changePeriod="vs last week"
       />
       <GovernanceStatistic
         label={"Total staked"}
-        value={"938,334.45 DAI"}
-        changePercentage={-0.058}
+        value={`${format(data?.totalStaked)} DAI`}
+        changePercentage={0}
         changePeriod="vs last week"
       />
     </div>
