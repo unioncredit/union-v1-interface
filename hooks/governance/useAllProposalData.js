@@ -61,6 +61,9 @@ const getAllProposalData = (
       const formattedProposal = {
         id: allProposals[i]?.result?.id.toString(),
         title: formattedEvents[i].description?.split(/# |\n/g)[1] || "Untitled",
+        /**
+         * @todo Find out why this is split
+         */
         description:
           formattedEvents[i].description?.split(/# /)[1] || "No description.",
         proposer: allProposals[i]?.result?.proposer,
