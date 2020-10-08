@@ -77,23 +77,33 @@ const GovernanceProposalHistory = ({ id }) => {
       <ul className="space-y-6">
         {hasHistory ? (
           data.map((event, i) => {
+            const formatDate = dayjs
+              .unix(event.timestamp)
+              .format("MMMM D, YYYY h:m A");
+
             let eventName;
 
             if (event.name === "ProposalCreated") {
-              eventName = (
-                <span>
-                  Proposed by <u>{truncateAddress(event.args.proposer)}</u>
-                </span>
+              return (
+                <Fragment key={i}>
+                  <Event
+                    name={
+                      <span>
+                        Proposed by{" "}
+                        <u>{truncateAddress(event.args.proposer)}</u>
+                      </span>
+                    }
+                    tx={event.transactionHash}
+                    date={formatDate}
+                  />
+                  <Event name={"Active"} date={formatDate} />
+                </Fragment>
               );
             }
 
             if (event.name === "ProposalExecuted") eventName = "Executed";
 
             if (event.name === "ProposalQueued") eventName = "Queued";
-
-            const formatDate = dayjs
-              .unix(event.timestamp)
-              .format("MMMM D, YYYY h:m A");
 
             return (
               <Event
