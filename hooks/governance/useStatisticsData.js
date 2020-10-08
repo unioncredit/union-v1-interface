@@ -1,20 +1,18 @@
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
+import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
 import useUserContract from "hooks/useUserContract";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
-
 import useSWR from "swr";
+import { useGovernanceTokenContract } from "./useGovernanceContract";
 
-const getStatisticsData = (marketRegistryContract, userContract) => async (
-  _,
-  account,
-  DAI,
-  chainId,
-  library
-) => {
+const getStatisticsData = (
+  marketRegistryContract,
+  userContract,
+  tokenContract
+) => async (_, account, DAI, chainId, library) => {
   const marketAddress = await marketRegistryContract.tokens(DAI);
 
   const marketContract = new Contract(
@@ -35,9 +33,12 @@ const getStatisticsData = (marketRegistryContract, userContract) => async (
 
   const totalBorrowed = await marketContract.totalBorrows();
 
+  const totalSupply = await tokenContract.totalSupply();
+
   return {
     totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
     outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
+    totalSupply: parseFloat(formatUnits(totalSupply, 18)),
   };
 };
 
@@ -47,12 +48,13 @@ export default function useStatisticsData() {
   const DAI = useCurrentToken();
 
   const userContract = useUserContract();
-
   const marketRegistryContract = useMarketRegistryContract();
+  const tokenContract = useGovernanceTokenContract();
 
   const shouldFetch =
     !!marketRegistryContract &&
     !!userContract &&
+    !!tokenContract &&
     typeof account === "string" &&
     typeof chainId === "number" &&
     typeof DAI === "string" &&
@@ -60,6 +62,6 @@ export default function useStatisticsData() {
 
   return useSWR(
     shouldFetch ? ["StatisticsData", account, DAI, chainId, library] : null,
-    getStatisticsData(marketRegistryContract, userContract)
+    getStatisticsData(marketRegistryContract, userContract, tokenContract)
   );
 }

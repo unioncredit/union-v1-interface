@@ -32,9 +32,9 @@ const GovernanceStatistics = () => {
         changePeriod="vs last week"
       />
       <GovernanceStatistic
-        label={"Circulating supply"}
-        value={"938,334.45 UNION"}
-        changePercentage={0.028}
+        label={"Total supply"}
+        value={`${format(data?.totalSupply)} UNION`}
+        changePercentage={0.0}
         changePeriod="vs last week"
       />
       <GovernanceStatistic
