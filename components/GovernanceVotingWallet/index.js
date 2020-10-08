@@ -2,8 +2,9 @@ import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import Badge from "components/Badge";
 import Button from "components/button";
-import { ViewDelegated } from "components/DelegatedModal";
-import { ViewDelegateVoting } from "components/DelegateVotingModal";
+import { ViewDelegated } from "components/governance/DelegatedModal";
+import { ViewDelegateVoting } from "components/governance/DelegateVotingModal";
+import { useDelegateVotingModalToggle } from "components/governance/DelegateVotingModal/state";
 import Identicon from "components/identicon";
 import WithdrawRewards from "components/withdrawRewards";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
@@ -119,6 +120,8 @@ export const GovernanceVotingProfile = ({ address }) => {
 
   const votesDelegated = currentVotes - tokenBalance;
 
+  const delegateVotingModalToggle = useDelegateVotingModalToggle();
+
   return (
     <div className="bg-white rounded border">
       <div className="p-4 sm:p-6 border-b">
@@ -145,7 +148,9 @@ export const GovernanceVotingProfile = ({ address }) => {
           <VotingWalletRow label="Delegating to" value={"Self"} />
         </div>
         <div className="mt-8">
-          <Button full>Delegate votes</Button>
+          <Button full onClick={delegateVotingModalToggle}>
+            Delegate votes
+          </Button>
         </div>
       </div>
     </div>

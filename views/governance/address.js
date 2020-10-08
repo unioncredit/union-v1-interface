@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import DelegateVotingModal from "components/governance/DelegateVotingModal";
 import GovernanceVotingHistory from "components/GovernanceVotingHistory";
 import { GovernanceVotingProfile } from "components/GovernanceVotingWallet";
 import Link from "next/link";
@@ -46,6 +47,8 @@ export default function AddressView() {
             </div>
           </div>
         </div>
+
+        <DelegateVotingModal address={address} />
       </Fragment>
     );
 
