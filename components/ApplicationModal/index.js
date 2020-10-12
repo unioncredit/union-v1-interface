@@ -81,7 +81,9 @@ const ApplicationModal = () => {
 
       <div className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6">
         <p>
-          You've collected all three vouches and are ready to become a member.
+          You've collected all three vouches and are ready to become a member.{" "}
+          {unionBalance <= "0.00" &&
+            "You'll need to deposit DAI in order to earn UNION to become a member"}
         </p>
 
         <LabelPair
