@@ -2,6 +2,7 @@ import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import Button from "components/button";
 import { useProposalVoteModalToggle } from "components/governance/ProposalVoteModal/state";
+import VoteBar from "components/governance/VoteBar";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
 import Info from "svgs/Info";
@@ -47,12 +48,7 @@ const GovernanceProposalVotePanel = ({
           {/* Spacer */}
           <div className="h-2" />
 
-          <div className="h-1 relative rounded-full w-full bg-passed-pure bg-opacity-25">
-            <div
-              className="h-1 absolute rounded-full bg-passed-pure"
-              style={{ width: `calc(${forPercent} * 100%)` }}
-            />
-          </div>
+          <VoteBar percent={forPercent} type="For" />
         </div>
 
         {/* Spacer */}
@@ -69,12 +65,7 @@ const GovernanceProposalVotePanel = ({
           {/* Spacer */}
           <div className="h-2" />
 
-          <div className="h-1 relative rounded-full w-full bg-against-pure bg-opacity-25">
-            <div
-              className="h-1 absolute rounded-full bg-against-pure"
-              style={{ width: `calc(${againstPercent} * 100%)` }}
-            />
-          </div>
+          <VoteBar percent={againstPercent} type="Against" />
         </div>
 
         {/* Spacer */}
