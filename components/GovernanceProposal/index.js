@@ -121,7 +121,9 @@ const GovernanceProposal = ({
 
             <ProposalTypeBadge type={type} />
 
-            <div className="text-type-light">Executed on {formatDate}</div>
+            <div className="text-type-light">
+              <span className="capitalize">{status}</span> on {formatDate}
+            </div>
           </div>
         </div>
 
