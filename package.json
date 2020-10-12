@@ -8,6 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "format": "prettier --write \"**/*.js\"",
     "lint": "eslint . --ext js --cache"
   },
