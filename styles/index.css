@@ -7,11 +7,6 @@
   --radius: 4px;
 }
 
-.styled-jsx-skeleton--pink {
-  --skeleton-base-color: hsl(0deg 71% 96%);
-  --skeleton-highlight-color: hsl(0deg 71% 97%);
-}
-
 @font-face {
   font-family: "Montserrat";
   font-style: normal;

@@ -99,7 +99,7 @@ export default function ProposalView() {
         <div className="h-8" />
 
         <div className="grid grid-cols-12">
-          <div className="col-span-7 styled-jsx-skeleton--pink">
+          <div className="col-span-7">
             <h1>{data?.title ?? <Skeleton />}</h1>
 
             {/* Spacer */}
