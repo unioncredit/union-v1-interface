@@ -13,7 +13,7 @@ export default function useProposalCount() {
   const shouldFetch = Boolean(contract);
 
   return useSWR(
-    shouldFetch ? ["ProposalCount", contract] : null,
+    shouldFetch ? ["ProposalCount"] : null,
     getProposalCount(contract)
   );
 }

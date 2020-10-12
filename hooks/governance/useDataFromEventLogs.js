@@ -7,10 +7,7 @@ import useSWR from "swr";
 const fetchData = (contract, library) => async () => {
   const filter = {
     ...contract?.filters?.["ProposalCreated"](),
-    /**
-     * @note change to block contract deployed
-     */
-    fromBlock: 0,
+    fromBlock: 9601459,
     toBlock: "latest",
   };
 
@@ -56,7 +53,7 @@ export function useDataFromEventLogs() {
   const shouldFetch = govContract && library;
 
   return useSWR(
-    shouldFetch ? ["EventLogsData", govContract] : null,
+    shouldFetch ? ["EventLogsData"] : null,
     fetchData(govContract, library)
   );
 }

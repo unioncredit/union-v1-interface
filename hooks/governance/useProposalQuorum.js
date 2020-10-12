@@ -13,8 +13,5 @@ export default function useProposalQuorum() {
 
   const shouldFetch = Boolean(contract);
 
-  return useSWR(
-    shouldFetch ? ["ProposalQuorum", contract] : null,
-    getQuorum(contract)
-  );
+  return useSWR(shouldFetch ? ["ProposalQuorum"] : null, getQuorum(contract));
 }
