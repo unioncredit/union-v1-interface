@@ -1,5 +1,6 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
+import Back from "components/governance/Back";
 import ProposalVoteModal from "components/governance/ProposalVoteModal";
 import {
   ProposalStatusBadge,
@@ -11,11 +12,9 @@ import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel"
 import Skeleton from "components/Skeleton";
 import dayjs from "dayjs";
 import useProposalData from "hooks/governance/useProposalData";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
-import LinkArrow from "svgs/LinkArrow";
 import getEtherscanLink from "util/getEtherscanLink";
 
 const Loading = {
@@ -88,11 +87,7 @@ export default function ProposalView() {
         <div className="h-8" />
 
         <div>
-          <Link href="/governance">
-            <a className="font-semibold inline-flex align-middle items-center">
-              <LinkArrow.Left /> <span className="ml-1">Back</span>
-            </a>
-          </Link>
+          <Back />
         </div>
 
         {/* Spacer */}

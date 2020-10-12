@@ -1,7 +1,6 @@
+import Back from "components/governance/Back";
 import LeaderboardTable from "components/LeaderboardTable";
-import Link from "next/link";
 import { Fragment } from "react";
-import LinkArrow from "svgs/LinkArrow";
 
 export default function LeaderboardView() {
   return (
@@ -13,11 +12,7 @@ export default function LeaderboardView() {
         <div className="h-8" />
 
         <div>
-          <Link href="/governance">
-            <a className="font-semibold inline-flex align-middle items-center">
-              <LinkArrow.Left /> <span className="ml-1">Back</span>
-            </a>
-          </Link>
+          <Back />
         </div>
 
         {/* Spacer */}

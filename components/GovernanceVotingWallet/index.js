@@ -14,6 +14,23 @@ import useUserGovernanceTokenBalance from "hooks/governance/useUserGovernanceTok
 import useUserVotes from "hooks/governance/useUserVotes";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
+import { isAddress } from "@ethersproject/address";
+import truncateAddress from "util/truncateAddress";
+import Link from "next/link";
+
+const DisplayDelegating = ({ delegates }) => {
+  if (isAddress(delegates))
+    return (
+      <Link href={`/governance/address/${delegates}`}>
+        <a className="underline flex items-center space-x-2">
+          <Identicon size={24} address={delegates} />
+          <span>{truncateAddress(delegates)}</span>
+        </a>
+      </Link>
+    );
+
+  return delegates;
+};
 
 /**
  * @name VotingWalletRow
@@ -32,7 +49,7 @@ const VotingWalletRow = ({
   return (
     <div className="border-b pb-4">
       <div className="flex justify-between items-center">
-        <p className="text-type-light leading-tight">{label}</p>
+        <div className="text-type-light leading-tight">{label}</div>
         {slotTopRight}
       </div>
 
@@ -40,9 +57,9 @@ const VotingWalletRow = ({
       <div className="h-2" />
 
       <div className="flex justify-between items-center">
-        <p className="text-xl font-semibold leading-tight">
+        <div className="text-xl font-semibold leading-tight">
           {value ? value : <Skeleton width={200} />}
-        </p>
+        </div>
         {slotBottomRight}
       </div>
     </div>
@@ -101,7 +118,7 @@ const GovernanceVotingWallet = ({ address }) => {
         />
         <VotingWalletRow
           label="Delegating to"
-          value={delegatingTo}
+          value={delegatingTo && <DisplayDelegating delegates={delegatingTo} />}
           slotBottomRight={<ViewDelegateVoting />}
         />
       </div>
@@ -147,7 +164,12 @@ export const GovernanceVotingProfile = ({ address }) => {
             label="Total voting power"
             value={`${commify(currentVotes.toFixed(4))} votes`}
           />
-          <VotingWalletRow label="Delegating to" value={delegatingTo} />
+          <VotingWalletRow
+            label="Delegating to"
+            value={
+              delegatingTo && <DisplayDelegating delegates={delegatingTo} />
+            }
+          />
         </div>
         <div className="mt-8">
           <Button full onClick={delegateVotingModalToggle}>

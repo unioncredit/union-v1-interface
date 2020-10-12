@@ -1,12 +1,11 @@
 import { useWeb3React } from "@web3-react/core";
+import Back from "components/governance/Back";
 import DelegatedModal from "components/governance/DelegatedModal";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
 import GovernanceVotingHistory from "components/GovernanceVotingHistory";
 import { GovernanceVotingProfile } from "components/GovernanceVotingWallet";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import LinkArrow from "svgs/LinkArrow";
 
 export default function AddressView() {
   const { query } = useRouter();
@@ -22,11 +21,7 @@ export default function AddressView() {
           <div className="h-8" />
 
           <div>
-            <Link href="/governance">
-              <a className="font-semibold inline-flex align-middle items-center">
-                <LinkArrow.Left /> <span className="ml-1">Back</span>
-              </a>
-            </Link>
+            <Back />
           </div>
 
           {/* Spacer */}
