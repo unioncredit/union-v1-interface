@@ -21,9 +21,9 @@ const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
   const forPercent = hasVotes ? forVotes / totalVotes : 0;
   const againstPercent = hasVotes ? againstVotes / totalVotes : 0;
 
-  const { data: quorum = 0 } = useProposalQuorum();
+  const { data: quorum } = useProposalQuorum();
 
-  const { data: totalSupply = 0 } = useGovernanceTokenSupply();
+  const { data: totalSupply } = useGovernanceTokenSupply();
 
   const toggleProposalVoteModal = useProposalVoteModalToggle();
 
@@ -103,9 +103,15 @@ const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
               {/* Spacer */}
               <div className="h-3" />
 
-              <div className="leading-tight px-1 py-2px rounded bg-quorum-pure text-quorum-light font-semibold text-sm">{`${toPercent(
-                quorumPercent
-              )} needed`}</div>
+              {quorum && totalSupply ? (
+                <div className="leading-tight px-1 py-2px rounded bg-quorum-pure text-quorum-light font-semibold text-sm">{`${toPercent(
+                  quorumPercent
+                )} needed`}</div>
+              ) : (
+                <div className="leading-none">
+                  <Skeleton width={92} height={21} />
+                </div>
+              )}
             </div>
             <div className="text-lg font-semibold leading-tight">
               {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
