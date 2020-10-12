@@ -1,11 +1,16 @@
 import { commify } from "@ethersproject/units";
+import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import Button from "components/button";
 import Modal, { ModalHeader } from "components/modal";
+import Skeleton from "components/Skeleton";
+import useCastVote from "hooks/governance/useCastVote";
 import useProposalData from "hooks/governance/useProposalData";
 import useUserVotes from "hooks/governance/useUserVotes";
-import { forwardRef, useEffect } from "react";
+import { forwardRef, Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
 import { toPercent } from "util/numbers";
 import VoteBar from "../VoteBar";
 import { useProposalVoteModalOpen, useProposalVoteModalToggle } from "./state";
@@ -40,11 +45,17 @@ const VoteRadioButton = forwardRef(
           />
         </div>
         <div className="pl-4 w-full">
-          <div className="flex justify-between">
-            <p className="font-semibold text-lg leading-tight">{type}</p>
-            <p className="font-semibold text-lg leading-tight">
-              ({toPercent(percent)}) {commify(votes.toFixed(2))}
-            </p>
+          <div className="flex justify-between font-semibold text-lg leading-tight">
+            <div>{type}</div>
+            <div>
+              {votes ? (
+                `(${toPercent(percent)}) ${commify(votes.toFixed(2))}`
+              ) : (
+                <Fragment>
+                  <Skeleton width={60} /> <Skeleton width={90} />
+                </Fragment>
+              )}
+            </div>
           </div>
 
           {/* Spacer */}
@@ -58,10 +69,7 @@ const VoteRadioButton = forwardRef(
 );
 
 const ProposalVoteModal = ({ id }) => {
-  /**
-   * @todo Hook up to web3
-   */
-  const address = "0x54a37d93e57c5da659f508069cf65a381b61e189";
+  const { library, account } = useWeb3React();
 
   const open = useProposalVoteModalOpen();
   const toggle = useProposalVoteModalToggle();
@@ -78,29 +86,43 @@ const ProposalVoteModal = ({ id }) => {
     reset();
   }, [open]);
 
+  const castVote = useCastVote();
+
   /**
    * @param {object} values
    * @param {("For"|"Against")} values.vote
    */
-  const onSubmit = async () => {};
+  const onSubmit = async (values) => {
+    try {
+      const support = values.vote === "For" ? true : false;
+
+      const { hash } = await castVote(id, support);
+
+      if (open) toggle();
+
+      await getReceipt(hash, library);
+    } catch (err) {
+      handleTxError(err);
+    }
+  };
 
   /**
    * @type {("For"|"Against")}
    */
-  const voteSelection = watch("vote");
+  const vote = watch("vote");
 
   /**
    * Vote Maths
    */
-  const { data: userVotes = 0 } = useUserVotes(address);
+  const { data: userVotes = 0 } = useUserVotes(account);
 
   const forVotes =
-    isDirty && voteSelection === "For"
+    isDirty && vote === "For"
       ? (data?.forCount || 0) + userVotes
       : data?.forCount || 0;
 
   const againstVotes =
-    isDirty && voteSelection === "Against"
+    isDirty && vote === "Against"
       ? (data?.againstCount || 0) + userVotes
       : data?.againstCount || 0;
 
@@ -110,11 +132,11 @@ const ProposalVoteModal = ({ id }) => {
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Vote" onDismiss={toggle} />
       <form
-        onSubmit={handleSubmit(onSubmit)}
         method="POST"
+        onSubmit={handleSubmit(onSubmit)}
         className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
       >
-        <p className="text-xl font-semibold">{data?.title}</p>
+        <p className="text-xl font-semibold">{data?.title ?? <Skeleton />}</p>
 
         {/* Spacer */}
         <div className="h-8" />
@@ -125,10 +147,10 @@ const ProposalVoteModal = ({ id }) => {
         <div className="h-6" />
 
         <VoteRadioButton
-          votes={forVotes}
           totalVotes={totalVotes}
           type="For"
-          isSelected={voteSelection === "For"}
+          disabled={!data}
+          isSelected={vote === "For"}
           ref={register({ required: true })}
         />
 
@@ -136,10 +158,10 @@ const ProposalVoteModal = ({ id }) => {
         <div className="h-4" />
 
         <VoteRadioButton
-          votes={againstVotes}
           totalVotes={totalVotes}
           type="Against"
-          isSelected={voteSelection === "Against"}
+          disabled={!data}
+          isSelected={vote === "Against"}
           ref={register({ required: true })}
         />
 
