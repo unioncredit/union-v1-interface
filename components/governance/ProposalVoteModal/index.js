@@ -1,11 +1,11 @@
 import Button from "components/button";
 import Modal, { ModalHeader } from "components/modal";
 import useProposalData from "hooks/governance/useProposalData";
-import { useProposalModalOpen, useProposalModalToggle } from "./state";
+import { useProposalVoteModalOpen, useProposalVoteModalToggle } from "./state";
 
-const ProposalModal = ({ id }) => {
-  const open = useProposalModalOpen();
-  const toggle = useProposalModalToggle();
+const ProposalVoteModal = ({ id }) => {
+  const open = useProposalVoteModalOpen();
+  const toggle = useProposalVoteModalToggle();
 
   const data = useProposalData(id);
 
@@ -31,4 +31,4 @@ const ProposalModal = ({ id }) => {
   );
 };
 
-export default ProposalModal;
+export default ProposalVoteModal;

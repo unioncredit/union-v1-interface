@@ -1,7 +1,7 @@
 import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import Button from "components/button";
-import { useProposalModalToggle } from "components/governance/ProposalModal/state";
+import { useProposalVoteModalToggle } from "components/governance/ProposalVoteModal/state";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
 import Info from "svgs/Info";
@@ -24,7 +24,7 @@ const GovernanceProposalVotePanel = ({
 
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
 
-  const toggleProposalModal = useProposalModalToggle();
+  const toggleProposalVoteModal = useProposalVoteModalToggle();
 
   const totalVotePercent = totalVotes / totalSupply;
 
@@ -116,7 +116,7 @@ const GovernanceProposalVotePanel = ({
         {/* Spacer */}
         <div className="h-10" />
 
-        <Button onClick={toggleProposalModal} full>
+        <Button onClick={toggleProposalVoteModal} full>
           Vote for this proposal
         </Button>
       </div>

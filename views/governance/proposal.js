@@ -1,6 +1,6 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
-import ProposalModal from "components/governance/ProposalModal";
+import ProposalVoteModal from "components/governance/ProposalVoteModal";
 import {
   ProposalStatusBadge,
   ProposalTypeBadge,
@@ -144,7 +144,7 @@ export default function ProposalView() {
         </div>
       </div>
 
-      <ProposalModal id={id} />
+      <ProposalVoteModal id={id} />
     </Fragment>
   );
 }
