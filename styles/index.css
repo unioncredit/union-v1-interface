@@ -1,10 +1,15 @@
 @tailwind base;
 
 :root {
-  --skeleton-base-color: hsl(210deg 9% 96%);
-  --skeleton-highlight-color: hsl(210deg 9% 97%);
+  --skeleton-base-color: hsl(210deg 9% 95%);
+  --skeleton-highlight-color: hsl(210deg 9% 96%);
 
   --radius: 4px;
+}
+
+.styled-jsx-skeleton--pink {
+  --skeleton-base-color: hsl(0deg 71% 96%);
+  --skeleton-highlight-color: hsl(0deg 71% 97%);
 }
 
 @font-face {
