@@ -6,7 +6,9 @@ import { ViewDelegated } from "components/governance/DelegatedModal";
 import { ViewDelegateVoting } from "components/governance/DelegateVotingModal";
 import { useDelegateVotingModalToggle } from "components/governance/DelegateVotingModal/state";
 import Identicon from "components/identicon";
+import Skeleton from "components/Skeleton";
 import WithdrawRewards from "components/withdrawRewards";
+import useUserDelegateStatus from "hooks/governance/useUserDelegateStatus";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useUserGovernanceTokenBalance from "hooks/governance/useUserGovernanceTokenBalance";
 import useUserVotes from "hooks/governance/useUserVotes";
@@ -38,7 +40,9 @@ const VotingWalletRow = ({
       <div className="h-2" />
 
       <div className="flex justify-between items-center">
-        <p className="text-xl font-semibold leading-tight">{value}</p>
+        <p className="text-xl font-semibold leading-tight">
+          {value ? value : <Skeleton width={200} />}
+        </p>
         {slotBottomRight}
       </div>
     </div>
@@ -66,6 +70,7 @@ const GovernanceVotingWallet = ({ address }) => {
   const { data: currentVotes = 0 } = useUserVotes(address);
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
+  const { data: delegatingTo } = useUserDelegateStatus(address);
   const { data: unclaimedUnion = 0 } = { data: undefined };
 
   const votePowerPercent = currentVotes / totalSupply;
@@ -96,7 +101,7 @@ const GovernanceVotingWallet = ({ address }) => {
         />
         <VotingWalletRow
           label="Delegating to"
-          value={"Self"}
+          value={delegatingTo}
           slotBottomRight={<ViewDelegateVoting />}
         />
       </div>
@@ -113,10 +118,8 @@ export default GovernanceVotingWallet;
 
 export const GovernanceVotingProfile = ({ address }) => {
   const { data: currentVotes = 0 } = useUserVotes(address);
-  const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
-
-  const votePowerPercent = currentVotes / totalSupply;
+  const { data: delegatingTo } = useUserDelegateStatus(address);
 
   const votesDelegated = currentVotes - tokenBalance;
 
@@ -143,9 +146,8 @@ export const GovernanceVotingProfile = ({ address }) => {
           <VotingWalletRow
             label="Total voting power"
             value={`${commify(currentVotes.toFixed(4))} votes`}
-            slotTopRight={<PercentOfTotalBadge value={votePowerPercent} />}
           />
-          <VotingWalletRow label="Delegating to" value={"Self"} />
+          <VotingWalletRow label="Delegating to" value={delegatingTo} />
         </div>
         <div className="mt-8">
           <Button full onClick={delegateVotingModalToggle}>
