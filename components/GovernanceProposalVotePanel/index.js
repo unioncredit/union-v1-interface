@@ -3,23 +3,23 @@ import Tooltip from "@reach/tooltip";
 import Button from "components/button";
 import { useProposalVoteModalToggle } from "components/governance/ProposalVoteModal/state";
 import VoteBar from "components/governance/VoteBar";
+import Skeleton from "components/Skeleton";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
+import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
-const GovernanceProposalVotePanel = ({
-  id,
-  forCount = 0,
-  againstCount = 0,
-}) => {
-  const forVotes = forCount;
-  const againstVotes = againstCount;
+const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
+  const hasVotes = forCount && againstCount;
+
+  const forVotes = forCount ?? 0;
+  const againstVotes = againstCount ?? 0;
 
   const totalVotes = forVotes + againstVotes;
 
-  const forPercent = id ? forVotes / totalVotes : 0;
-  const againstPercent = id ? againstVotes / totalVotes : 0;
+  const forPercent = hasVotes ? forVotes / totalVotes : 0;
+  const againstPercent = hasVotes ? againstVotes / totalVotes : 0;
 
   const { data: quorum = 0 } = useProposalQuorum();
 
@@ -41,7 +41,13 @@ const GovernanceProposalVotePanel = ({
           <div className="flex justify-between font-semibold text-lg">
             <div>For</div>
             <div>
-              ({toPercent(forPercent)}) {commify(forVotes.toFixed(2))}
+              {hasVotes ? (
+                `(${toPercent(forPercent)}) ${commify(forVotes.toFixed(2))}`
+              ) : (
+                <Fragment>
+                  <Skeleton width={60} /> <Skeleton width={90} />
+                </Fragment>
+              )}
             </div>
           </div>
 
@@ -58,7 +64,15 @@ const GovernanceProposalVotePanel = ({
           <div className="flex justify-between font-semibold text-lg">
             <div>Against</div>
             <div>
-              ({toPercent(againstPercent)}) {commify(againstVotes.toFixed(2))}
+              {hasVotes ? (
+                `(${toPercent(againstPercent)}) ${commify(
+                  againstVotes.toFixed(2)
+                )}`
+              ) : (
+                <Fragment>
+                  <Skeleton width={60} /> <Skeleton width={90} />
+                </Fragment>
+              )}
             </div>
           </div>
 
@@ -77,7 +91,7 @@ const GovernanceProposalVotePanel = ({
         <div className="h-6" />
 
         <div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-start">
             <div>
               <Tooltip label="Quorum Tooltip">
                 <div className="flex items-center space-x-2">
@@ -93,8 +107,8 @@ const GovernanceProposalVotePanel = ({
                 quorumPercent
               )} needed`}</div>
             </div>
-            <div className="text-lg font-semibold">
-              {toPercent(totalVotePercent)}
+            <div className="text-lg font-semibold leading-tight">
+              {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
             </div>
           </div>
         </div>
