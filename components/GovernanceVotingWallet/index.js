@@ -17,6 +17,7 @@ import { toPercent } from "util/numbers";
 import { isAddress } from "@ethersproject/address";
 import truncateAddress from "util/truncateAddress";
 import Link from "next/link";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
 
 const DisplayDelegating = ({ delegates }) => {
   if (isAddress(delegates))
@@ -138,6 +139,10 @@ export const GovernanceVotingProfile = ({ address }) => {
   const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
   const { data: delegatingTo } = useUserDelegateStatus(address);
 
+  const { data: threeBoxData } = use3BoxPublicData(address);
+
+  const has3BoxName = Boolean(threeBoxData?.name);
+
   const votesDelegated = currentVotes - tokenBalance;
 
   const delegateVotingModalToggle = useDelegateVotingModalToggle();
@@ -145,8 +150,21 @@ export const GovernanceVotingProfile = ({ address }) => {
   return (
     <div className="bg-white rounded border">
       <div className="p-4 sm:p-6 border-b">
-        <div className="flex">
+        <div className="flex items-center space-x-4">
           <Identicon address={address} size={48} />
+
+          {has3BoxName ? (
+            <div>
+              <p className="text-lg font-semibold">{threeBoxData.name}</p>
+              <p title={address} className="text-type-light">
+                {truncateAddress(address, 6)}
+              </p>
+            </div>
+          ) : (
+            <p title={address} className="text-lg font-semibold">
+              {truncateAddress(address, 6)}
+            </p>
+          )}
         </div>
       </div>
       <div className="p-4 sm:p-6">
