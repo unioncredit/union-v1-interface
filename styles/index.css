@@ -111,7 +111,10 @@ input[type="number"] {
 @tailwind components;
 
 .btn {
-  @apply font-semibold py-2 px-6 leading-7 rounded transition-colors duration-150 border-2 inline-block;
+  @apply font-semibold py-2 px-6 leading-7 rounded  duration-150 border-2 inline-block;
+
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity;
 }
 .btn:focus {
   @apply outline-none shadow-outline;
