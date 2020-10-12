@@ -19,14 +19,13 @@ import getEtherscanLink from "util/getEtherscanLink";
 
 export default function ProposalView() {
   const { query } = useRouter();
-
-  const { chainId } = useWeb3React();
-
   const { id } = query;
 
   const data = useProposalData(id);
 
   const formatDate = dayjs.unix(data?.date).format("MMM D, YYYY");
+
+  const { chainId } = useWeb3React();
 
   const linkIfAddress = (content) => {
     if (isAddress(content) && chainId) {

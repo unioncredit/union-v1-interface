@@ -147,6 +147,7 @@ const ProposalVoteModal = ({ id }) => {
         <div className="h-6" />
 
         <VoteRadioButton
+          votes={forVotes}
           totalVotes={totalVotes}
           type="For"
           disabled={!data}
@@ -158,6 +159,7 @@ const ProposalVoteModal = ({ id }) => {
         <div className="h-4" />
 
         <VoteRadioButton
+          votes={againstVotes}
           totalVotes={totalVotes}
           type="Against"
           disabled={!data}
