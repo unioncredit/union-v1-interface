@@ -28,6 +28,7 @@ export default function useTokenBalance(tokenAddress) {
     getTokenBalance(contract),
     {
       refreshInterval: 10 * 1000,
+      dedupingInterval: 10 * 1000,
     }
   );
 }

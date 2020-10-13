@@ -15,6 +15,13 @@ export default function useGovernanceTokenSupply() {
 
   return useSWR(
     shouldFetch ? "GovernanceTokenSupply" : null,
-    getGovernanceTokenSupply(tokenContract)
+    getGovernanceTokenSupply(tokenContract),
+    {
+      shouldRetryOnError: false,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }
