@@ -24,14 +24,6 @@ const getStatisticsData = (
     library.getSigner()
   );
 
-  // const currentBlockNumber = await library.getBlockNumber();
-
-  // const currentBlock = await library.getBlock(currentBlock);
-
-  // const previousTotalStaked = await userContract.totalStaked(DAI, {
-  //   blockNumber: currentBlockNumber,
-  // });
-
   const currentTotalStaked = await userContract.totalStaked(DAI);
 
   const totalFrozen = await userContract.totalFrozen(DAI);
