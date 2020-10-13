@@ -114,7 +114,7 @@ const GovernanceVotingWallet = ({ address }) => {
         <VotingWalletRow
           label="Unclaimed balance"
           value={`${commify(unclaimedUnion.toFixed(4))} UNION`}
-          slotBottomRight={<WithdrawRewards />}
+          slotBottomRight={<WithdrawRewards style="Underline" />}
         />
         <VotingWalletRow
           label="Delegating to"
