@@ -85,16 +85,30 @@ const getAllProposalData = (
       return formattedProposal;
     });
 
-  return Promise.all(
-    formattedAllProposals.map(async (prop) => {
-      const block = await library.getBlock(prop.endBlock);
+  const formattedAllProposalsWithTimestamp = await Promise.all(
+    formattedAllProposals.map(async (proposal) => {
+      const currentBlock = await library.getBlockNumber();
+
+      let date = "0";
+
+      if (proposal.endBlock < currentBlock) {
+        try {
+          const block = await library.getBlock(proposal.endBlock);
+
+          date = block.timestamp.toString();
+        } catch (err) {
+          console.error(err);
+        }
+      }
 
       return {
-        ...prop,
-        date: block.timestamp.toString(),
+        ...proposal,
+        date,
       };
     })
   );
+
+  return formattedAllProposalsWithTimestamp;
 };
 
 export default function useAllProposalData() {
@@ -112,10 +126,17 @@ export default function useAllProposalData() {
   // get metadata from past events
   const { data: formattedEvents } = useDataFromEventLogs();
 
-  const shouldFetch = govContract && proposalCount && formattedEvents;
+  const shouldFetch = Boolean(govContract && proposalCount && formattedEvents);
 
   return useSWR(
     shouldFetch ? ["AllProposalData"] : null,
-    getAllProposalData(govContract, library, proposalIndexes, formattedEvents)
+    getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
+    {
+      shouldRetryOnError: false,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }

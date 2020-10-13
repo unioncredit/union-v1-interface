@@ -108,7 +108,20 @@ const GovernanceProposal = ({
   status = "executed",
   vote,
 }) => {
-  const formatDate = dayjs.unix(date).format("MMM D, YYYY");
+  let dateText = (
+    <div className="text-type-light">
+      <span className="capitalize">{status}</span>
+    </div>
+  );
+
+  if (Number(date) > 0) {
+    dateText = (
+      <div className="text-type-light">
+        <span className="capitalize">{status}</span> on{" "}
+        {dayjs.unix(date).format("MMM D, YYYY")}
+      </div>
+    );
+  }
 
   return (
     <Link href="/governance/proposals/[id]" as={`/governance/proposals/${id}`}>
@@ -121,9 +134,7 @@ const GovernanceProposal = ({
 
             <ProposalTypeBadge type={type} />
 
-            <div className="text-type-light">
-              <span className="capitalize">{status}</span> on {formatDate}
-            </div>
+            {dateText}
           </div>
         </div>
 
