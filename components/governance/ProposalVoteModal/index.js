@@ -6,7 +6,7 @@ import Modal, { ModalHeader } from "components/modal";
 import Skeleton from "components/Skeleton";
 import useCastVote from "hooks/governance/useCastVote";
 import useProposalData from "hooks/governance/useProposalData";
-import useUserVotes from "hooks/governance/useUserVotes";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { forwardRef, Fragment, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import getReceipt from "util/getReceipt";
@@ -114,16 +114,17 @@ const ProposalVoteModal = ({ id }) => {
   /**
    * Vote Maths
    */
-  const { data: userVotes = 0 } = useUserVotes(account);
+  const { data: votingWalletData } = useVotingWalletData(account);
+  const { currentVotes = 0 } = !!votingWalletData && votingWalletData;
 
   const forVotes =
     isDirty && vote === "For"
-      ? (data?.forCount || 0) + userVotes
+      ? (data?.forCount || 0) + currentVotes
       : data?.forCount || 0;
 
   const againstVotes =
     isDirty && vote === "Against"
-      ? (data?.againstCount || 0) + userVotes
+      ? (data?.againstCount || 0) + currentVotes
       : data?.againstCount || 0;
 
   const totalVotes = forVotes + againstVotes;

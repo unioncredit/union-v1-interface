@@ -3,28 +3,65 @@ import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input from "components/input";
 import Modal, { ModalHeader } from "components/modal";
-import useUserVotes from "hooks/governance/useUserVotes";
+import useDelegate from "hooks/governance/useDelegate";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import errorMessages from "text/errorMessages";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import validateAddress from "util/validateAddress";
 import {
   useDelegateVotingModalOpen,
   useDelegateVotingModalToggle,
 } from "./state";
 
 const DelegateVotingModal = ({ address }) => {
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
 
-  const { data: currentVotes = 0 } = useUserVotes(account);
+  const { data: votingWalletData } = useVotingWalletData(account);
+  const { currentVotes = 0 } = !!votingWalletData && votingWalletData;
 
   const open = useDelegateVotingModalOpen();
   const toggle = useDelegateVotingModalToggle();
 
+  const { register, handleSubmit, errors, formState } = useForm({
+    defaultValues: { address: address ?? "" },
+  });
+  const { isSubmitting } = formState;
+
+  const [knownScamAddress, knownScamAddressSet] = useState(false);
+
+  useEffect(() => {
+    knownScamAddressSet(false);
+  }, [open]);
+
+  const delegate = useDelegate();
+
+  const onSubmit = async (values) => {
+    try {
+      const { hash } = await delegate(values.address);
+
+      if (open) toggle();
+
+      await getReceipt(hash, library);
+    } catch (err) {
+      handleTxError(err);
+    }
+  };
+
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Delegate Voting" onDismiss={toggle} />
-      <div className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6">
+      <form
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
+      >
         <dl className="flex justify-between items-center mb-4">
           <dt>Your voting power</dt>
           <dd className="text-right">{`${commify(
-            currentVotes.toFixed(2)
+            currentVotes.toFixed(4)
           )}`}</dd>
         </dl>
 
@@ -39,11 +76,25 @@ const DelegateVotingModal = ({ address }) => {
         <div className="h-4" />
 
         <Input
-          label="Address"
           id="address"
+          label="Address"
           name="address"
           placeholder="Enter the delegation address"
-          defaultValue={address ?? ""}
+          error={errors.address}
+          ref={register({
+            required: errorMessages.required,
+            validate: async (value) => {
+              const validation = await validateAddress(value);
+
+              if (validation === errorMessages.knownScam) {
+                knownScamAddressSet(true);
+              } else {
+                knownScamAddressSet(false);
+              }
+
+              return validation;
+            },
+          })}
         />
 
         {/* Spacer */}
@@ -63,10 +114,16 @@ const DelegateVotingModal = ({ address }) => {
         {/* Spacer */}
         <div className="h-6" />
 
-        <Button full disabled>
+        <Button
+          full
+          type="submit"
+          submitting={isSubmitting}
+          submittingText="Confirming delegation..."
+          disabled={knownScamAddress || isSubmitting}
+        >
           Confirm delegation
         </Button>
-      </div>
+      </form>
     </Modal>
   );
 };
