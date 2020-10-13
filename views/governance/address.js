@@ -1,8 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import Back from "components/governance/Back";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
-import GovernanceVotingHistory from "components/GovernanceVotingHistory";
-import { GovernanceVotingProfile } from "components/GovernanceVotingWallet";
+import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
+import { GovernanceVotingProfile } from "components/governance/GovernanceVotingWallet";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 

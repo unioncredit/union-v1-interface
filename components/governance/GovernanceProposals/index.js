@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import GovernanceProposal, {
   GovernanceProposalSkeleton,
-} from "components/GovernanceProposal";
+} from "components/governance/GovernanceProposal";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 import { Fragment, useState } from "react";
 

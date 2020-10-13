@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import GovernanceNavigation from "components/GovernanceNavigation";
+import GovernanceNavigation from "components/governance/GovernanceNavigation";
 import Head from "next/head";
 import LoggedOutView from "views/loggedOut";
 import VotingView from "views/governance/voting";

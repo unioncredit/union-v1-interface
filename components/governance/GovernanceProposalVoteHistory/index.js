@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import GovernanceProposalVote, {
   GovernanceProposalVoteSkeleton,
-} from "components/GovernanceProposalVote";
+} from "components/governance/GovernanceProposalVote";
 import { Fragment, useState } from "react";
 
 const VoteFilterButton = ({ onClick, label, isActive }) => {

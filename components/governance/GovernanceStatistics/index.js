@@ -1,5 +1,5 @@
 import { commify } from "@ethersproject/units";
-import GovernanceStatistic from "components/GovernanceStatistic";
+import GovernanceStatistic from "components/governance/GovernanceStatistic";
 import useStatisticsData from "hooks/governance/useStatisticsData";
 
 /**

@@ -1,5 +1,5 @@
-import Proposals from "components/GovernanceProposals";
-import Statistics from "components/GovernanceStatistics";
+import Proposals from "components/governance/GovernanceProposals";
+import Statistics from "components/governance/GovernanceStatistics";
 // import LeaderboardTable from "components/LeaderboardTable";
 import Link from "next/link";
 import { Fragment } from "react";

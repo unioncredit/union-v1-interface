@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
-import GovernanceVotingHistory from "components/GovernanceVotingHistory";
-import GovernanceVotingWallet from "components/GovernanceVotingWallet";
+import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
+import GovernanceVotingWallet from "components/governance/GovernanceVotingWallet";
 import { Fragment } from "react";
 
 export default function VotingView() {

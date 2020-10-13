@@ -5,10 +5,10 @@ import ProposalVoteModal from "components/governance/ProposalVoteModal";
 import {
   ProposalStatusBadge,
   ProposalTypeBadge,
-} from "components/GovernanceProposal";
-import GovernanceProposalHistory from "components/GovernanceProposalHistory";
-// import GovernanceProposalVoteHistory from "components/GovernanceProposalVoteHistory";
-import GovernanceProposalVotePanel from "components/GovernanceProposalVotePanel";
+} from "components/governance/GovernanceProposal";
+import GovernanceProposalHistory from "components/governance/GovernanceProposalHistory";
+// import GovernanceProposalVoteHistory from "components/governance/GovernanceProposalVoteHistory";
+import GovernanceProposalVotePanel from "components/governance/GovernanceProposalVotePanel";
 import Skeleton from "components/Skeleton";
 import dayjs from "dayjs";
 import useProposalData from "hooks/governance/useProposalData";

@@ -1,4 +1,4 @@
-import GovernanceNavigation from "components/GovernanceNavigation";
+import GovernanceNavigation from "components/governance/GovernanceNavigation";
 import Head from "next/head";
 import GovernanceView from "views/governance/governance";
 

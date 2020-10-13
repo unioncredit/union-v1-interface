@@ -1,5 +1,5 @@
 import Back from "components/governance/Back";
-import GovernanceProposals from "components/GovernanceProposals";
+import GovernanceProposals from "components/governance/GovernanceProposals";
 import { Fragment } from "react";
 
 export default function ProposalsView() {

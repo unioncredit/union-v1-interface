@@ -1,6 +1,6 @@
 import GovernanceProposal, {
   GovernanceProposalSkeleton,
-} from "components/GovernanceProposal";
+} from "components/governance/GovernanceProposal";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 import { Fragment } from "react";
 
