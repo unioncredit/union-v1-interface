@@ -8,7 +8,7 @@ import errorMessages from "text/errorMessages";
 import TweetButton from "components/TweetButton";
 
 const checkPlace = async (email) => {
-  const res = await fetch("https://beta.union.finance/api/waitlist/place", {
+  const res = await fetch("/api/waitlist/place", {
     method: "POST",
     body: JSON.stringify({ email }),
     headers: {
@@ -28,7 +28,7 @@ const checkPlace = async (email) => {
 };
 
 const signup = async (email) => {
-  const res = await fetch("https://beta.union.finance/api/waitlist/signup", {
+  const res = await fetch("/api/waitlist/signup", {
     method: "POST",
     body: JSON.stringify({ email }),
     headers: {
