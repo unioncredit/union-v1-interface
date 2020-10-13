@@ -42,7 +42,7 @@ const NavigationLink = ({ href, children, ...rest }) => {
 };
 
 const LogoLink = () => (
-  <li className="py-4 md:w-1/4 h-20 flex items-center justify-start">
+  <li className="py-4 lg:w-1/4 h-20 flex items-center justify-start">
     <Link href="/">
       <a>
         <Logo />
@@ -63,12 +63,12 @@ const Navigation = () => {
     <nav className="border-b bg-white">
       <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
         {/* Desktop */}
-        <ul className="flex items-center justify-between">
+        <ul className="flex items-center md:justify-between">
           <LogoLink />
 
           {account && library ? (
             <Fragment>
-              <li className="py-4 h-20 hidden md:flex flex-1 justify-center">
+              <li className="py-4 h-20 hidden md:flex flex-1 lg:justify-center">
                 <ul className="flex justify-center items-center">
                   <li>
                     <NavigationLink href="/stake">Stake</NavigationLink>
@@ -87,7 +87,7 @@ const Navigation = () => {
                 </ul>
               </li>
 
-              <li className="flex md:w-1/4 justify-end py-4">
+              <li className="flex ml-auto lg:w-1/4 justify-end py-4">
                 <ul className="flex items-center">
                   <li>
                     <Activity />
@@ -119,7 +119,7 @@ const Navigation = () => {
 
         {/* Mobile */}
         {!!(account && library) && (
-          <ul className="flex md:hidden justify-between sm:justify-evenly items-center pt-4 pb-6">
+          <ul className="flex md:hidden justify-between sm:justify-evenly whitespace-no-wrap overflow-x-scroll items-center pt-4 pb-6">
             <li>
               <NavigationLink href="/stake">Stake</NavigationLink>
             </li>
