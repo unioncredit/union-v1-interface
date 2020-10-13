@@ -1,8 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
 import WalletOption from "components/WalletOption";
 import { useAutoEffect } from "hooks.macro";
-import useEagerConnect, { useLogin } from "hooks/useEagerConnect";
+import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
+import { login } from "lib/auth";
 import { CONNECTORS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
@@ -24,7 +25,6 @@ const WalletOptions = ({
 
   const isSanctioned = useIsSanctioned();
   const router = useRouter();
-  const login = useLogin();
 
   const toggle = useWalletModalToggle();
 

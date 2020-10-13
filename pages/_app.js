@@ -6,12 +6,19 @@ import NetworkIndicator from "components/networkIndicator";
 import useFathom from "hooks/useFathom";
 import useNProgress from "hooks/useNProgress";
 import getLibrary from "lib/getLibrary";
+import { useEffect } from "react";
 import "../styles/index.css";
 import Error from "./_error";
 
 export default function UnionApp({ Component, pageProps }) {
   useFathom();
   useNProgress();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      import("cookie-store");
+    }
+  }, []);
 
   return (
     <ErrorBoundary fallback={<Error />}>

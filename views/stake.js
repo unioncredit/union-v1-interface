@@ -7,7 +7,6 @@ import { useTrustModalToggle } from "components/TrustModal/state";
 import TutorialModal from "components/TutorialModal";
 import useIsMember from "hooks/useIsMember";
 import usePopTrustModal from "hooks/usePopTrustModal";
-import usePopTutorialModal from "hooks/usePopTutorialModal";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
@@ -17,8 +16,6 @@ export default function StakeView() {
   const toggleTrustModal = useTrustModalToggle();
 
   const { data: isMember = false } = useIsMember();
-
-  usePopTutorialModal();
 
   usePopTrustModal();
 

@@ -1,6 +1,5 @@
 import { MESSAGE } from "constants/variables";
 import usePersonalSign from "hooks/usePersonalSign";
-import { setCookie } from "nookies";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "text/errorMessages";
@@ -35,12 +34,13 @@ const EmailModal = () => {
     }
   };
 
-  const handleToggle = () => {
-    setCookie(null, "email_modal_completed", true, {
-      maxAge: 30 * 24 * 60 * 60,
-      sameSite: true,
-      secure: process.env.NODE_ENV === "production",
+  const handleToggle = async () => {
+    await window?.cookieStore?.set({
+      name: "email_modal_completed",
+      value: true,
+      expires: 30 * 24 * 60 * 60,
     });
+
     toggle();
   };
 
