@@ -11,6 +11,7 @@ import WithdrawRewards from "components/withdrawRewards";
 import useUserDelegateStatus from "hooks/governance/useUserDelegateStatus";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useUserGovernanceTokenBalance from "hooks/governance/useUserGovernanceTokenBalance";
+import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 import useUserVotes from "hooks/governance/useUserVotes";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
@@ -89,11 +90,13 @@ const GovernanceVotingWallet = ({ address }) => {
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: tokenBalance = 0 } = useUserGovernanceTokenBalance(address);
   const { data: delegatingTo } = useUserDelegateStatus(address);
-  const { data: unclaimedUnion = 0 } = { data: undefined };
+  const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
 
-  const votePowerPercent = currentVotes / totalSupply;
+  const totalVotingPower = currentVotes > 0 ? currentVotes : tokenBalance;
 
-  const votesDelegated = currentVotes - tokenBalance;
+  const votePowerPercent = totalVotingPower / totalSupply;
+
+  const votesDelegated = currentVotes > 0 ? currentVotes - tokenBalance : 0;
 
   return (
     <div className="bg-white rounded border p-4 sm:p-6">
@@ -108,12 +111,12 @@ const GovernanceVotingWallet = ({ address }) => {
         />
         <VotingWalletRow
           label="Total voting power"
-          value={`${commify(currentVotes.toFixed(4))} votes`}
+          value={`${commify(totalVotingPower.toFixed(4))} votes`}
           slotTopRight={<PercentOfTotalBadge value={votePowerPercent} />}
         />
         <VotingWalletRow
           label="Unclaimed balance"
-          value={`${commify(unclaimedUnion.toFixed(4))} UNION`}
+          value={`${commify(unclaimedBalance.toFixed(4))} UNION`}
           slotBottomRight={<WithdrawRewards style="Underline" />}
         />
         <VotingWalletRow
@@ -142,7 +145,7 @@ export const GovernanceVotingProfile = ({ address }) => {
 
   const has3BoxName = Boolean(threeBoxData?.name);
 
-  const votesDelegated = currentVotes - tokenBalance;
+  const votesDelegated = currentVotes > 0 ? currentVotes - tokenBalance : 0;
 
   const delegateVotingModalToggle = useDelegateVotingModalToggle();
 
