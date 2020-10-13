@@ -1,6 +1,7 @@
 import { commify } from "@ethersproject/units";
 import GovernanceStatistic from "components/governance/GovernanceStatistic";
 import useStatisticsData from "hooks/governance/useStatisticsData";
+import { toPercent } from "util/numbers";
 
 /**
  * @name format
@@ -13,41 +14,23 @@ const GovernanceStatistics = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <GovernanceStatistic
-        label={"Default rate"}
-        value={"15%"}
-        changePercentage={0.028}
-        changePeriod="vs last week"
-      />
+      <GovernanceStatistic label={"Default rate"} value={toPercent(0)} />
       <GovernanceStatistic
         label={"Interest rate"}
-        value={"10%"}
-        changePercentage={-0.032}
-        changePeriod="vs last week"
+        value={toPercent(data?.interestRate ?? 0)}
       />
-      <GovernanceStatistic
-        label={"Inflation rate"}
-        value={"7.2%"}
-        changePercentage={0.028}
-        changePeriod="vs last week"
-      />
+      <GovernanceStatistic label={"Inflation rate"} value={toPercent(0)} />
       <GovernanceStatistic
         label={"Total supply"}
         value={`${format(data?.totalSupply)} UNION`}
-        changePercentage={0.0}
-        changePeriod="vs last week"
       />
       <GovernanceStatistic
         label={"Outstanding loans"}
         value={`${format(data?.outstandingLoans)} DAI`}
-        changePercentage={0}
-        changePeriod="vs last week"
       />
       <GovernanceStatistic
         label={"Total staked"}
         value={`${format(data?.totalStaked)} DAI`}
-        changePercentage={0}
-        changePeriod="vs last week"
       />
     </div>
   );

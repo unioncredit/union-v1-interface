@@ -2,6 +2,7 @@ import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import { BLOCKS_PER_YEAR } from "constants/variables";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
 import useUserContract from "hooks/useUserContract";
@@ -35,10 +36,15 @@ const getStatisticsData = (
 
   const totalSupply = await tokenContract.totalSupply();
 
+  const ratePreBlock = await marketContract.borrowRatePerBlock();
+
   return {
     totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
     outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
     totalSupply: parseFloat(formatUnits(totalSupply, 18)),
+    interestRate: parseFloat(
+      formatUnits(ratePreBlock, 18) * BLOCKS_PER_YEAR[chainId]
+    ),
   };
 };
 

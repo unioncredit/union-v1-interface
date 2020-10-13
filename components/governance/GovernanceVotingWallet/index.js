@@ -84,7 +84,7 @@ const PercentOfTotalBadge = ({ value }) => {
 
 const GovernanceVotingWallet = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
-  const { balanceOf = 0, currentVotes = 0, delegates = "Self" } =
+  const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
 
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
@@ -136,7 +136,7 @@ export default GovernanceVotingWallet;
 
 export const GovernanceVotingProfile = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
-  const { balanceOf = 0, currentVotes = 0, delegates = "Self" } =
+  const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
 
   const { data: threeBoxData } = use3BoxPublicData(address);

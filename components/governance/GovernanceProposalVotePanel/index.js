@@ -11,7 +11,7 @@ import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
 const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
-  const hasVotes = forCount && againstCount;
+  const hasVotes = Boolean(forCount >= 0 && againstCount >= 0);
 
   const forVotes = forCount ?? 0;
   const againstVotes = againstCount ?? 0;

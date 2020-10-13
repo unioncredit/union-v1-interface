@@ -49,10 +49,12 @@ const GovernanceStatistic = ({
   changePeriod,
 }) => {
   return (
-    <div className="p-4 sm:p-6 rounded bg-white border shadow-governance-stat space-y-2 leading-tight">
+    <div className="p-4 sm:p-6 rounded bg-white border shadow-governance-stat space-y-3 leading-tight">
       <p className="text-type-light">{label}</p>
-      <p className="font-semibold text-xl leading-snug">{value}</p>
-      <StatisticChange percentage={changePercentage} period={changePeriod} />
+      <p className="font-semibold text-xl leading-snug crop-snug">{value}</p>
+      {Boolean(changePercentage && changePeriod) && (
+        <StatisticChange percentage={changePercentage} period={changePeriod} />
+      )}
     </div>
   );
 };
