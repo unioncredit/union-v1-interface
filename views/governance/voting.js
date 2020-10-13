@@ -3,6 +3,7 @@ import DelegateVotingModal from "components/governance/DelegateVotingModal";
 import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
 import GovernanceVotingWallet from "components/governance/GovernanceVotingWallet";
 import { Fragment } from "react";
+import ChooseDelegationModal from "../../components/governance/ChooseDelegationModal";
 
 export default function VotingView() {
   const { account } = useWeb3React();
@@ -28,6 +29,7 @@ export default function VotingView() {
       </div>
 
       <DelegateVotingModal />
+      <ChooseDelegationModal />
     </Fragment>
   );
 }

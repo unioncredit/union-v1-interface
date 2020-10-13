@@ -11,6 +11,7 @@ import errorMessages from "text/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import validateAddress from "util/validateAddress";
+import { useChooseDelegationModalToggle } from "../ChooseDelegationModal/state";
 import {
   useDelegateVotingModalOpen,
   useDelegateVotingModalToggle,
@@ -133,15 +134,17 @@ export default DelegateVotingModal;
 export const ViewDelegateVoting = () => {
   const toggle = useDelegateVotingModalToggle();
 
-  /**
-   * @todo Hook up to contract to check if user is delegating their votes
-   */
-  const isDelegating = false;
+  const chooseDelegationModalToggle = useChooseDelegationModalToggle();
+
+  const { account } = useWeb3React();
+  const { data: votingWalletData } = useVotingWalletData(account);
+
+  const isDelegating = Boolean(votingWalletData?.delegates !== "Self");
 
   return (
     <button
       className="text-sm font-semibold underline rounded focus:outline-none focus:shadow-outline"
-      onClick={toggle}
+      onClick={isDelegating ? chooseDelegationModalToggle : toggle}
     >
       {isDelegating ? "Change" : "Delegate your votes"}
     </button>
