@@ -49,7 +49,7 @@ const GovernanceProposals = ({ showAll = false }) => {
     <div className="bg-white rounded border">
       <div className="px-4 sm:px-6 pt-2">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-1 overflow-x-scroll whitespace-no-wrap">
             <StatusFilterButton
               onClick={updateStatusFilter("all")}
               isActive={statusFilter === "all"}
@@ -77,7 +77,7 @@ const GovernanceProposals = ({ showAll = false }) => {
             />
           </div>
 
-          <div className="flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1">
             <TypeFilterButton
               onClick={updateTypeFilter("all")}
               isActive={typeFilter === "all"}
