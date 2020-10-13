@@ -105,7 +105,6 @@ const GovernanceVotingWallet = ({ address }) => {
         <VotingWalletRow
           label="Votes delegated to you"
           value={`${commify(votesDelegated.toFixed(4))} votes`}
-          slotBottomRight={<ViewDelegated />}
         />
         <VotingWalletRow
           label="Total voting power"

@@ -1,6 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
 import Back from "components/governance/Back";
-import DelegatedModal from "components/governance/DelegatedModal";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
 import GovernanceVotingHistory from "components/GovernanceVotingHistory";
 import { GovernanceVotingProfile } from "components/GovernanceVotingWallet";
@@ -44,7 +43,6 @@ export default function AddressView() {
           </div>
         </div>
 
-        <DelegatedModal />
         <DelegateVotingModal address={address} />
       </Fragment>
     );
