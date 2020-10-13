@@ -54,6 +54,13 @@ export function useDataFromEventLogs() {
 
   return useSWR(
     shouldFetch ? ["EventLogsData"] : null,
-    fetchData(govContract, library)
+    fetchData(govContract, library),
+    {
+      shouldRetryOnError: false,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }

@@ -14,6 +14,13 @@ export default function useProposalCount() {
 
   return useSWR(
     shouldFetch ? ["ProposalCount"] : null,
-    getProposalCount(contract)
+    getProposalCount(contract),
+    {
+      shouldRetryOnError: false,
+      refreshWhenHidden: false,
+      refreshWhenOffline: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 }
