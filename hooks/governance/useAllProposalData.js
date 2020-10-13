@@ -112,7 +112,7 @@ const getAllProposalData = (
 };
 
 export default function useAllProposalData() {
-  const { library } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const govContract = useGovernanceContract();
 
@@ -129,7 +129,7 @@ export default function useAllProposalData() {
   const shouldFetch = Boolean(govContract && proposalCount && formattedEvents);
 
   return useSWR(
-    shouldFetch ? ["AllProposalData"] : null,
+    shouldFetch ? ["AllProposalData", chainId] : null,
     getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
     {
       shouldRetryOnError: false,

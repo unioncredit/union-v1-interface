@@ -3,6 +3,7 @@ import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
+import useAssetContract from "hooks/useAssetContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/useMarketRegistryContract";
 import useUserContract from "hooks/useUserContract";
@@ -12,8 +13,9 @@ import { useGovernanceTokenContract } from "./useGovernanceContract";
 const getStatisticsData = (
   marketRegistryContract,
   userContract,
-  tokenContract
-) => async (_, account, DAI, chainId, library) => {
+  tokenContract,
+  assetContract
+) => async (_, DAI, chainId, library) => {
   const marketAddress = await marketRegistryContract.tokens(DAI);
 
   const marketContract = new Contract(
@@ -32,6 +34,10 @@ const getStatisticsData = (
 
   const currentTotalStaked = await userContract.totalStaked(DAI);
 
+  const totalFrozen = await userContract.totalFrozen(DAI);
+
+  const loanableAmount = await assetContract.getLoanableAmount(DAI);
+
   const totalBorrowed = await marketContract.totalBorrows();
 
   const totalSupply = await tokenContract.totalSupply();
@@ -39,6 +45,8 @@ const getStatisticsData = (
   const ratePreBlock = await marketContract.borrowRatePerBlock();
 
   return {
+    lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
+    totalDefaulted: parseFloat(formatUnits(totalFrozen, 18)),
     totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
     outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
     totalSupply: parseFloat(formatUnits(totalSupply, 18)),
@@ -49,25 +57,31 @@ const getStatisticsData = (
 };
 
 export default function useStatisticsData() {
-  const { account, library, chainId } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const DAI = useCurrentToken();
 
   const userContract = useUserContract();
   const marketRegistryContract = useMarketRegistryContract();
   const tokenContract = useGovernanceTokenContract();
+  const assetContract = useAssetContract();
 
   const shouldFetch =
     !!marketRegistryContract &&
     !!userContract &&
     !!tokenContract &&
-    typeof account === "string" &&
+    !!assetContract &&
     typeof chainId === "number" &&
     typeof DAI === "string" &&
     !!library;
 
   return useSWR(
-    shouldFetch ? ["StatisticsData", account, DAI, chainId, library] : null,
-    getStatisticsData(marketRegistryContract, userContract, tokenContract)
+    shouldFetch ? ["StatisticsData", DAI, chainId, library] : null,
+    getStatisticsData(
+      marketRegistryContract,
+      userContract,
+      tokenContract,
+      assetContract
+    )
   );
 }

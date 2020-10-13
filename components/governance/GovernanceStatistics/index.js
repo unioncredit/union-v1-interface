@@ -14,12 +14,18 @@ const GovernanceStatistics = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <GovernanceStatistic label={"Default rate"} value={toPercent(0)} />
+      <GovernanceStatistic
+        label={"Total defaulted"}
+        value={`${format(data?.totalDefaulted)} DAI`}
+      />
       <GovernanceStatistic
         label={"Interest rate"}
         value={toPercent(data?.interestRate ?? 0)}
       />
-      <GovernanceStatistic label={"Inflation rate"} value={toPercent(0)} />
+      <GovernanceStatistic
+        label={"Lending Pool balance"}
+        value={`${format(data?.lendingPoolBalance)} DAI`}
+      />
       <GovernanceStatistic
         label={"Total supply"}
         value={`${format(data?.totalSupply)} UNION`}
