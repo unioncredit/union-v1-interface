@@ -6,8 +6,6 @@ import { Fragment } from "react";
 import format from "util/formatValue";
 import {
   defaultedStakeTip,
-  rewardsTip,
-  unionPerYearTip,
   utilizedStakeTip,
   withdrawableStakeTip,
 } from "../text/tooltips";
@@ -41,7 +39,7 @@ const StakeCard = () => {
     withdrawableStake = 0.0,
   } = !!stakeData && stakeData;
 
-  const { upy = 0.0, rewards = 0.0, rewardsMultiplier = "0.00" } =
+  const { rewards = 0.0, rewardsMultiplier = "0.00" } =
     !!rewardsData && rewardsData;
 
   const onComplete = async () => {
@@ -90,26 +88,25 @@ const StakeCard = () => {
 
           <div className="divider bg-pink-pure my-8" />
 
-          <LabelPair
-            className="pt-1 mb-4"
-            label="Rewards"
-            large
-            tooltip={rewardsTip}
-            value={format(rewards, 3)}
-            valueType="UNION"
-            valueSlot={<WithdrawRewards onComplete={onComplete} />}
-          />
-          <LabelPair
-            labelColor="text-grey-pure"
-            label="Earned Per Year"
-            tooltip={unionPerYearTip}
-            value={format(upy, 3)}
-            valueType="UNION"
-          />
+          <dl className="py-1 flex justify-between items-center">
+            <dt className="leading-tight whitespace-no-wrap text-lg mb-2">
+              Your UNION
+            </dt>
+            <dd>
+              <WithdrawRewards onComplete={onComplete} />
+            </dd>
+          </dl>
+
           <LabelPair
             labelColor="text-grey-pure"
-            label="Wallet Balance"
+            label="Balance"
             value={format(unionBalance, 3)}
+            valueType="UNION"
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Unclaimed"
+            value={format(rewards, 3)}
             valueType="UNION"
           />
         </div>

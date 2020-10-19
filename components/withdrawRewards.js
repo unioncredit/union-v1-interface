@@ -35,11 +35,11 @@ const WithdrawRewards = ({ onComplete }) => {
 
   return (
     <button
-      className="text-sm font-semibold underline rounded focus:outline-none focus:shadow-outline"
+      className="text-sm leading-tight py-1 px-2 rounded-full bg-true-black bg-opacity-10 font-semibold focus:outline-none focus:shadow-outline"
       disabled={withdrawing}
       onClick={onWithdrawRewards}
     >
-      Collect
+      Claim
     </button>
   );
 };
