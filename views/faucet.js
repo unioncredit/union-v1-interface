@@ -6,18 +6,17 @@ export default function FaucetView() {
     <Fragment>
       <div className="container">
         <div className="mb-10">
-          <h1 className="mb-5">Step 1: Get Rinkeby Ether </h1>
-          <Button secondary href="https://faucet.rinkeby.io/">
-            Get Rinkeby Ether
+          <h1 className="mb-5">Step 1: Get Testnet Ether </h1>
+          <Button secondary href="https://faucet.kovan.network">
+            Get Kovan Ether
           </Button>
         </div>
         <div className="mb-10">
           <h1 className="mb-5">
-            Step 2: Supply Ether on the rinkeby version of Compound and borrow
-            DAI to get rinkeby DAI{" "}
+            Step 2: Supply Ether on the Kovan version of Compound and borrow DAI to get Kovan DAI{" "}
           </h1>
           <Button secondary href="https://app.compound.finance/">
-            Get Compound Rinkeby Dai
+            Get Compound Kovan Dai
           </Button>
         </div>
       </div>
