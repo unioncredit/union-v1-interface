@@ -1,3 +1,4 @@
+import { defaultAbiCoder } from "@ethersproject/abi";
 import Button from "components/button";
 import Input, { Select } from "components/input";
 import Modal, { ModalHeader } from "components/modal";
@@ -26,6 +27,8 @@ const ProposalActionsModal = () => {
   const toggle = useProposalActionsModalToggle();
 
   useGovernanceContractFunctions();
+
+  const encode = (type, value) => defaultAbiCoder.encode([type], [value]);
 
   const targets = [
     { value: "0x", label: "UNION" },
