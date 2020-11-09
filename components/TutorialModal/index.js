@@ -1,5 +1,4 @@
 import { useLearnMoreModalToggle } from "components/LearnMoreModal/state";
-import { setCookie } from "nookies";
 import { Fragment } from "react";
 import { useStateList } from "react-use";
 import Chevron from "svgs/Chevron";
@@ -17,12 +16,13 @@ const TutorialModal = () => {
 
   const { state, prev, next } = useStateList(TUTORIAL_VIEWS);
 
-  const completeTutorial = () =>
-    setCookie(null, "tutorial_modal_completed", true, {
-      maxAge: 30 * 24 * 60 * 60,
-      sameSite: true,
-      secure: process.env.NODE_ENV === "production",
+  const completeTutorial = async () => {
+    await window?.cookieStore?.set({
+      name: "tutorial_modal_completed",
+      value: true,
+      expires: 30 * 24 * 60 * 60,
     });
+  };
 
   const handleToggle = () => {
     completeTutorial();

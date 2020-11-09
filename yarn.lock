@@ -3175,10 +3175,10 @@ convert-source-map@^0.3.3:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-0.3.5.tgz#f1d802950af7dd2631a1febe0596550c86ab3190"
   integrity sha1-8dgClQr33SYxof6+BZZVDIarMZA=
 
-cookie@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
-  integrity sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
+cookie-store@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/cookie-store/-/cookie-store-3.0.0.tgz#121ecacd7aa3c363a02d1d2555bdf21383c8390f"
+  integrity sha512-9tPVv15oPqXnf+MbxlMYZDcOL9jkBs6N192xQ1ITq5dQn6qeOAoFmDGnW8pRL/U/Djkap1LfoVt2H5sRweBvSQ==
 
 cookiejar@^2.1.1:
   version "2.1.2"
@@ -6385,14 +6385,6 @@ node-releases@^1.1.58:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.60.tgz#6948bdfce8286f0b5d0e5a88e8384e954dfe7084"
   integrity sha512-gsO4vjEdQaTusZAEebUWp2a5d7dF5DYoIpDG7WySnk7BuZDW+GPpHXoXXuYawRBr/9t5q54tirPz79kFIWg4dA==
 
-nookies@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/nookies/-/nookies-2.4.0.tgz#1bd4eb244f54d6e622e8ff1c7aeca692892d292d"
-  integrity sha512-QC1+Ih9/BedZOIUVXneHBQgp8n9NzvsqyfmzAoUTrwOdwJOjB+phWzeLXuLqcxgxztTq3t3PeHtuosFKclL+Hw==
-  dependencies:
-    cookie "^0.4.0"
-    set-cookie-parser "^2.4.3"
-
 normalize-html-whitespace@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/normalize-html-whitespace/-/normalize-html-whitespace-1.0.0.tgz#5e3c8e192f1b06c3b9eee4b7e7f28854c7601e34"
@@ -8151,11 +8143,6 @@ set-blocking@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
   integrity sha1-BF+XgtARrppoA93TgrJDkrPYkPc=
-
-set-cookie-parser@^2.4.3:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/set-cookie-parser/-/set-cookie-parser-2.4.5.tgz#94a5060724e614c56c65588010594dc4b848fb8d"
-  integrity sha512-LkSDwseogN5l6TerqGzFzL9mUDTxSq3hX2b5AaynjC1nSCNWiDypEgHatfc0v6KcnfgV3/6F6h4ABh6igjzlQQ==
 
 set-harmonic-interval@^1.0.1:
   version "1.0.1"
