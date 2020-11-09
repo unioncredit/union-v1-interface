@@ -81,7 +81,7 @@ const GovernanceProposalHistory = ({ id }) => {
               .unix(event.timestamp)
               .format("MMMM D, YYYY h:m A");
 
-            let eventName;
+            let eventName = event.name;
 
             if (event.name === "ProposalCreated") {
               return (
@@ -104,6 +104,8 @@ const GovernanceProposalHistory = ({ id }) => {
             if (event.name === "ProposalExecuted") eventName = "Executed";
 
             if (event.name === "ProposalQueued") eventName = "Queued";
+
+            if (event.name === "ProposalCanceled") eventName = "Cancelled";
 
             return (
               <Event
