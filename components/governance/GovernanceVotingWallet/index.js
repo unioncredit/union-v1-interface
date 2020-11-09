@@ -16,6 +16,7 @@ import Link from "next/link";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
+import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
   if (isAddress(delegates))
@@ -90,6 +91,8 @@ const GovernanceVotingWallet = ({ address }) => {
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
 
+  const toggleCreateProposalModal = useCreateProposalModalToggle();
+
   const totalVotingPower = currentVotes > 0 ? currentVotes : balanceOf;
 
   const votePowerPercent = totalVotingPower / totalSupply;
@@ -124,7 +127,7 @@ const GovernanceVotingWallet = ({ address }) => {
         />
       </div>
       <div className="mt-8">
-        <Button invert full>
+        <Button invert full onClick={toggleCreateProposalModal}>
           Create a proposal
         </Button>
       </div>

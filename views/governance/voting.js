@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import CreateProposalModal from "components/governance/CreateProposalModal";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
 import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
 import GovernanceVotingWallet from "components/governance/GovernanceVotingWallet";
@@ -30,6 +31,7 @@ export default function VotingView() {
 
       <DelegateVotingModal />
       <ChooseDelegationModal />
+      <CreateProposalModal />
     </Fragment>
   );
 }
