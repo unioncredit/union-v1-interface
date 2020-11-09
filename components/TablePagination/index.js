@@ -13,7 +13,7 @@ const TablePagination = ({
   if (pageCount <= 1) return null;
 
   return (
-    <div className="flex justify-between items-center mt-auto pt-4 sm:pt-6">
+    <div className="flex justify-between items-center mt-auto">
       <p className="text-xs uppercase font-semibold">
         Page {pageIndex + 1} of {pageOptions.length}
       </p>

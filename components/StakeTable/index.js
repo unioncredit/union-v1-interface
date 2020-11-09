@@ -262,6 +262,9 @@ const StakeTable = () => {
         </tbody>
       </table>
 
+      {/* Spacer */}
+      <div className="h-4 sm:h-6" />
+
       <TablePagination {...table} />
 
       {data && page.length === 0 && <StakeTableEmptyState />}
