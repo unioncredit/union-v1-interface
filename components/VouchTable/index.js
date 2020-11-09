@@ -5,11 +5,12 @@ import { useExpanded, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { utilizedVouchTip } from "text/tooltips";
-import Address from "./address";
-import Button from "./button";
-import { useGetInvitedModalToggle } from "./GetInvitedModal/state";
-import PercentageBar from "./percentageBar";
-import Skeleton from "./Skeleton";
+import { renderSortIcons } from "util/tables";
+import Address from "../address";
+import Button from "../button";
+import { useGetInvitedModalToggle } from "../GetInvitedModal/state";
+import PercentageBar from "../percentageBar";
+import Skeleton from "../Skeleton";
 
 const VouchTableRowSkeleton = () => (
   <tr>
@@ -42,26 +43,6 @@ const VouchTableEmptyState = () => {
       </p>
       <Button onClick={toggleGetInvitedModal}>Get invited</Button>
     </div>
-  );
-};
-
-/**
- * @name renderHeadRowSorting
- * @param {import("react-table").ColumnInstance} column
- */
-const renderSortIcons = (column) => {
-  return (
-    <Fragment>
-      {column.isSorted ? (
-        column.isSortedDesc ? (
-          <Chevron.Down size={16} />
-        ) : (
-          <Chevron.Up size={16} />
-        )
-      ) : (
-        <Chevron.Down size={16} color="transparent" />
-      )}
-    </Fragment>
   );
 };
 

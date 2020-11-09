@@ -34,12 +34,13 @@ const WalletOptions = ({
         const currentConnector = CONNECTORS[name];
         const activating = currentConnector === activatingConnector;
         const connected = currentConnector === connector;
-        const disabled =
+        const disabled = Boolean(
           !triedEager ||
-          !!activatingConnector ||
-          connected ||
-          !!error ||
-          isSanctioned;
+            !!activatingConnector ||
+            connected ||
+            !!error ||
+            isSanctioned
+        );
 
         const handleSignIn = async () => {
           setActivatingConnector(currentConnector);
@@ -113,7 +114,7 @@ const WalletModal = () => {
     <Modal
       isOpen={open}
       onDismiss={toggle}
-      dangerouslyBypassFocusLock={activatingConnector}
+      dangerouslyBypassFocusLock={Boolean(activatingConnector)}
     >
       <div className="px-4 py-6 sm:px-6 sm:py-8">
         <div className="mb-10">

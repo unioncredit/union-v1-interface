@@ -1,8 +1,8 @@
 @tailwind base;
 
 :root {
-  --skeleton-base-color: hsl(210deg 9% 96%);
-  --skeleton-highlight-color: hsl(210deg 9% 97%);
+  --skeleton-base-color: hsl(210deg 9% 95%);
+  --skeleton-highlight-color: hsl(210deg 9% 96%);
 
   --radius: 4px;
 }
@@ -111,7 +111,10 @@ input[type="number"] {
 @tailwind components;
 
 .btn {
-  @apply font-semibold py-2 px-6 leading-7 rounded transition-colors duration-150 border-2 inline-block;
+  @apply font-semibold py-2 px-6 leading-7 rounded  duration-150 border-2 inline-block;
+
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity;
 }
 .btn:focus {
   @apply outline-none shadow-outline;
@@ -186,22 +189,17 @@ input[type="number"] {
 }
 
 .pagination-button {
-  @apply w-6 h-6 bg-border-light border border-border-pure leading-none text-xs font-semibold flex items-center justify-center;
-}
-.pagination-button:not(:first-of-type) {
-  @apply border-l-0;
+  @apply w-6 h-6 leading-none rounded text-type-light text-xs font-semibold flex items-center justify-center;
 }
 .pagination-button:disabled {
-  @apply cursor-not-allowed opacity-50 text-type-light;
+  @apply cursor-not-allowed text-type-base bg-failed-light;
 }
-.pagination-button:first-of-type {
-  @apply rounded-l;
-}
-.pagination-button:last-of-type {
-  @apply rounded-r;
+.pagination-button:first-of-type:disabled,
+.pagination-button:last-of-type:disabled {
+  @apply text-type-light bg-transparent;
 }
 .pagination-button:focus {
-  @apply outline-none shadow-outline z-10;
+  @apply outline-none shadow-outline;
 }
 
 .active-nav-tab {
@@ -233,6 +231,16 @@ input[type="number"] {
 .container-sm {
   max-width: calc(1008px + 1.5rem * 2);
   @apply w-full px-6 mx-auto;
+}
+
+.container-lg {
+  @apply w-full px-4 mx-auto max-w-screen-xl-gutter;
+}
+
+@screen sm {
+  .container-lg {
+    @apply px-6;
+  }
 }
 
 .skew {
@@ -430,6 +438,20 @@ input[type="number"] {
   @apply font-semibold mb-2 text-type-base;
 }
 
+.crop-normal::before,
+.crop-normal::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-normal::before {
+  margin-top: calc((1 - 1.5) * 0.5em);
+}
+.crop-normal::after {
+  margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
 .crop-snug::before,
 .crop-snug::after {
   content: "";
@@ -554,4 +576,17 @@ input[type="number"] {
   -webkit-transform: rotate(3deg) translate(0px, -4px);
   -ms-transform: rotate(3deg) translate(0px, -4px);
   transform: rotate(3deg) translate(0px, -4px);
+}
+
+.gradient-pink-2-light {
+  background: linear-gradient(#f7eaeb, #fff);
+  background: linear-gradient(to bottom, #f7eaeb, ease-in, #fff);
+}
+
+.gradient-governance {
+  background: linear-gradient(
+    to bottom,
+    #fcf7f7 20%,
+    rgba(252, 247, 247, 0) 100%
+  );
 }

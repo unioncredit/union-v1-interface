@@ -32,13 +32,14 @@ const Address = ({ address, copyable = false }) => {
     <button
       onClick={copyable ? handleCopyAddress : undefined}
       className={cachedClassNames}
+      tabIndex={!copyable && -1}
       title={address}
     >
       <div className="flex-grow-0 h-8">
         {has3BoxProfileImage ? (
           <ProfileImage alt={ENSName ?? address} image={data.image} size={32} />
         ) : (
-          <Identicon large address={address} />
+          <Identicon size={32} address={address} />
         )}
       </div>
 

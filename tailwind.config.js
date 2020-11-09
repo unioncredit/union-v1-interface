@@ -13,6 +13,12 @@ module.exports = {
         pure: "#F9C4BE",
         light: "#F7EEF0",
       },
+      "pink-3": {
+        dark: "#C6A7A7",
+        pure: "#F4998E",
+        light: "#FCEDED",
+        lighter: " #FCF7F7",
+      },
       black: {
         pure: "#032437",
         light: "#C5CED5",
@@ -42,11 +48,35 @@ module.exports = {
         lightest: "#A4A8AD",
         footer: "#6d7278",
       },
+      stat: {
+        increase: "#5DCE8D",
+        decrease: "#E9506B",
+      },
+      active: {
+        pure: "#8872BC",
+        light: "#EDEAF4",
+      },
+      passed: {
+        pure: "#5DCE8D",
+        light: "#DFF5E8",
+      },
+      failed: {
+        pure: "#A7B2C2",
+        light: "#EDF0F3",
+      },
+      against: {
+        pure: "#EC6087",
+        light: "#FFEAEE",
+      },
       alert: {
         error: "#E61744",
         loading: "#068DFE",
         pending: "#FE9F7C",
         success: "#5DCE8D",
+      },
+      quorum: {
+        pure: "#34555A",
+        light: "#E6EFE7",
       },
       white: "#fff",
       "true-black": "#000",
@@ -98,6 +128,8 @@ module.exports = {
         app: "-35px 1.16px 74px rgba(207, 192, 192, 0.16)",
         input: "0px 0px 12px rgba(19, 44, 106, 0.1)",
         smooth: `0px 100px 80px rgba(0, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802)`,
+        "governance-nav": "0px 0px 8px #DEB9B9",
+        "governance-stat": "0px 0px 16px #FBF4F4",
       },
       spacing: {
         "2px": "2px",

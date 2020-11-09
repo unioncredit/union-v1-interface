@@ -153,7 +153,7 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
                   size={72}
                 />
               ) : (
-                <Identicon address={address} extraLarge />
+                <Identicon address={address} size={72} />
               )}
             </div>
 

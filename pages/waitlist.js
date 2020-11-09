@@ -61,7 +61,8 @@ export default function WaitlistPage() {
                 Governed by you
               </h3>
               <p className="sm:text-lg">
-                There's no corporation controlling Union, the entire protocol is owned and operated by its users.
+                There's no corporation controlling Union, the entire protocol is
+                owned and operated by its users.
               </p>
             </div>
           </div>

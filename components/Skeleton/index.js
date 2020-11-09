@@ -5,17 +5,15 @@ const Skeleton = ({
   circle = false,
   style: customStyle,
 }) => (
-  <span>
-    <span
-      className="styled-jsx-skeleton"
-      style={{
-        width,
-        height,
-        ...customStyle,
-      }}
-    >
-      &zwnj;
-    </span>
+  <span
+    className="styled-jsx-skeleton"
+    style={{
+      width,
+      height,
+      ...customStyle,
+    }}
+  >
+    &zwnj;
     <style jsx>{`
       .styled-jsx-skeleton {
         border-radius: ${circle ? "99999px" : "var(--radius)"};

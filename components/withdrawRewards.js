@@ -5,8 +5,15 @@ import { useState } from "react";
 import Spinner from "svgs/Spinner";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
+import classNames from "classnames";
 
-const WithdrawRewards = ({ onComplete }) => {
+/**
+ *
+ * @param {object} props
+ * @param {("Pill"|"Underline")} props.style
+ * @param {Function<Void>} props.onComplete
+ */
+const WithdrawRewards = ({ style = "Pill", onComplete }) => {
   const { library } = useWeb3React();
 
   const [withdrawing, setWithdrawing] = useState(false);
@@ -31,11 +38,20 @@ const WithdrawRewards = ({ onComplete }) => {
     }
   });
 
+  const cachedClassNames = classNames(
+    "text-sm font-semibold focus:outline-none focus:shadow-outline",
+    {
+      "leading-tight py-1 px-2 rounded-full bg-true-black bg-opacity-10":
+        style === "Pill",
+      "underline rounded": style === "Underline",
+    }
+  );
+
   if (withdrawing) return <Spinner track="#032437" fill="#C5CED5" size={22} />;
 
   return (
     <button
-      className="text-sm leading-tight py-1 px-2 rounded-full bg-true-black bg-opacity-10 font-semibold focus:outline-none focus:shadow-outline"
+      className={cachedClassNames}
       disabled={withdrawing}
       onClick={onWithdrawRewards}
     >

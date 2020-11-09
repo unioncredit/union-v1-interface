@@ -1,21 +1,22 @@
+import Tooltip from "@reach/tooltip";
+import TablePagination from "components/TablePagination";
 import useIsMember from "hooks/useIsMember";
-import useTrustData from "hooks/useTrustData";
 import useTrustCountData from "hooks/useTrustCountData";
+import useTrustData from "hooks/useTrustData";
 import { Fragment, useMemo, useState } from "react";
 import { usePagination, useSortBy, useTable } from "react-table";
-import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
-import Address from "./address";
-import AddressModal from "./AddressModal";
-import { useAddressModalToggle } from "./AddressModal/state";
-import Button from "./button";
-import HealthBar from "./healthBar";
-import { useLearnMoreModalToggle } from "./LearnMoreModal/state";
-import { useTrustModalToggle } from "./TrustModal/state";
-import { useApplicationModalToggle } from "./ApplicationModal/state";
-import Tooltip from "@reach/tooltip";
-import Skeleton from "./Skeleton";
+import { renderSortIcons } from "util/tables";
+import Address from "../address";
+import AddressModal from "../AddressModal";
+import { useAddressModalToggle } from "../AddressModal/state";
+import { useApplicationModalToggle } from "../ApplicationModal/state";
+import Button from "../button";
+import HealthBar from "../healthBar";
+import { useLearnMoreModalToggle } from "../LearnMoreModal/state";
+import Skeleton from "../Skeleton";
+import { useTrustModalToggle } from "../TrustModal/state";
 
 const StakeTableRowSkeleton = () => (
   <tr>
@@ -79,26 +80,6 @@ const StakeTableEmptyState = () => {
       </p>
       <Button onClick={toggleLearnMoreModal}>Learn more</Button>
     </div>
-  );
-};
-
-/**
- * @name renderHeadRowSorting
- * @param {import("react-table").ColumnInstance} column
- */
-const renderSortIcons = (column) => {
-  return (
-    <Fragment>
-      {column.isSorted ? (
-        column.isSortedDesc ? (
-          <Chevron.Down size={16} />
-        ) : (
-          <Chevron.Up size={16} />
-        )
-      ) : (
-        <Chevron.Down size={16} color="transparent" />
-      )}
-    </Fragment>
   );
 };
 
@@ -220,21 +201,7 @@ const StakeTable = () => {
 
   const memoizedSortBy = useMemo(() => [{ id: "health", desc: true }], []);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    state: { pageIndex },
-  } = useTable(
+  const table = useTable(
     {
       columns: memoizedColumns,
       data: memoizedData,
@@ -248,6 +215,14 @@ const StakeTable = () => {
     useSortBy,
     usePagination
   );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+  } = table;
 
   return (
     <div className="sm:bg-white sm:border sm:rounded sm:p-6 h-full flex flex-col">
@@ -287,42 +262,10 @@ const StakeTable = () => {
         </tbody>
       </table>
 
-      {pageCount > 1 && (
-        <div className="flex justify-between items-center mt-auto pt-4 sm:pt-6">
-          <p className="text-xs uppercase font-semibold">
-            Page {pageIndex + 1} of {pageOptions.length}
-          </p>
+      {/* Spacer */}
+      <div className="h-4 sm:h-6" />
 
-          <div className="flex">
-            <button
-              className="pagination-button"
-              onClick={() => previousPage()}
-              disabled={!canPreviousPage}
-            >
-              <Chevron.Left size={14} />
-            </button>
-
-            {new Array(pageCount).fill("").map((_, index) => (
-              <button
-                className="pagination-button"
-                disabled={pageIndex === index}
-                key={index}
-                onClick={() => gotoPage(index)}
-              >
-                {index + 1}
-              </button>
-            ))}
-
-            <button
-              className="pagination-button"
-              onClick={() => nextPage()}
-              disabled={!canNextPage}
-            >
-              <Chevron.Right size={14} />
-            </button>
-          </div>
-        </div>
-      )}
+      <TablePagination {...table} />
 
       {data && page.length === 0 && <StakeTableEmptyState />}
 
