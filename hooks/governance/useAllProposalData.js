@@ -4,6 +4,7 @@ import useGovernanceContract from "hooks/governance/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
 import useProposalCount from "./useProposalCount";
+import dayjs from "dayjs";
 
 const enumerateProposalState = (state) => {
   const proposalStates = [
@@ -60,12 +61,11 @@ const getAllProposalData = (
     .map((p, i) => {
       const formattedProposal = {
         id: allProposals[i]?.result?.id.toString(),
-        title: formattedEvents[i].description?.split(/# |\n/g)[1] || "Untitled",
-        /**
-         * @todo Find out why this is split
-         */
-        description:
-          formattedEvents[i].description?.split(/# /)[1] || "No description.",
+        title: formattedEvents[i].description,
+        // title: formattedEvents[i].description?.split(/# |\n/g)[1] || "Untitled",
+        description: formattedEvents[i].description,
+        // description:
+        //   formattedEvents[i].description?.split(/# /)[1] || "No description.",
         proposer: allProposals[i]?.result?.proposer,
         status:
           enumerateProposalState(allProposalStates[i]?.result) ??
@@ -89,13 +89,15 @@ const getAllProposalData = (
     formattedAllProposals.map(async (proposal) => {
       const currentBlock = await library.getBlockNumber();
 
-      let date = "0";
+      let date = `Ends at Block ${proposal.endBlock}`;
 
       if (proposal.endBlock < currentBlock) {
         try {
           const block = await library.getBlock(proposal.endBlock);
 
-          date = block.timestamp.toString();
+          date = `Executed on ${dayjs
+            .unix(block.timestamp.toString())
+            .format("MMM D, YYYY")}`;
         } catch (err) {
           console.error(err);
         }

@@ -13,13 +13,18 @@ import { toPercent } from "util/numbers";
 const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
   const hasVotes = Boolean(forCount >= 0 && againstCount >= 0);
 
-  const forVotes = forCount ?? 0;
-  const againstVotes = againstCount ?? 0;
+  const forVotes = forCount;
+  const againstVotes = againstCount;
 
   const totalVotes = forVotes + againstVotes;
 
-  const forPercent = hasVotes ? forVotes / totalVotes : 0;
-  const againstPercent = hasVotes ? againstVotes / totalVotes : 0;
+  const forPercent =
+    hasVotes && Boolean(forVotes / totalVotes) ? forVotes / totalVotes : 0;
+
+  const againstPercent =
+    hasVotes && Boolean(againstVotes / totalVotes)
+      ? againstVotes / totalVotes
+      : 0;
 
   const { data: quorum } = useProposalQuorum();
 

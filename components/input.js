@@ -208,9 +208,7 @@ export const Select = forwardRef(
               aria-invalid={error ? "true" : "false"}
               {...props}
             >
-              <option value="" selected>
-                {placeholder}
-              </option>
+              <option value="">{placeholder}</option>
               {options.map((option, i) => (
                 <option key={i} value={option.value}>
                   {option.label}

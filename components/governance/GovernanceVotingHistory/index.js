@@ -20,7 +20,7 @@ const GovernanceVotingHistory = ({ address }) => {
 
   return (
     <div className="bg-white rounded border">
-      <div className="px-2 pt-2">
+      <div className="p-2">
         {proposals?.length > 0 ? (
           proposals?.map((proposal, i) => {
             const formatVote = proposal.receipt.hasVoted
@@ -44,7 +44,7 @@ const GovernanceVotingHistory = ({ address }) => {
         )}
       </div>
 
-      {proposals?.length > 0 && (
+      {proposals?.length > 5 && (
         <div className="px-6 pb-4">
           <TablePagination
             pageOptions={new Array(maxPage).fill("")}

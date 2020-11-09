@@ -10,7 +10,6 @@ import GovernanceProposalHistory from "components/governance/GovernanceProposalH
 // import GovernanceProposalVoteHistory from "components/governance/GovernanceProposalVoteHistory";
 import GovernanceProposalVotePanel from "components/governance/GovernanceProposalVotePanel";
 import Skeleton from "components/Skeleton";
-import dayjs from "dayjs";
 import useProposalData from "hooks/governance/useProposalData";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
@@ -59,8 +58,6 @@ export default function ProposalView() {
 
   const data = useProposalData(id);
 
-  const formatDate = dayjs.unix(data?.date).format("MMM D, YYYY");
-
   const { chainId } = useWeb3React();
 
   const linkIfAddress = (content) => {
@@ -108,11 +105,7 @@ export default function ProposalView() {
                   <Skeleton width={110} height={32} />
                 )}
                 <p className="text-type-light">
-                  {data?.date ? (
-                    `Executed on ${formatDate}`
-                  ) : (
-                    <Skeleton width={200} />
-                  )}
+                  {data?.date ?? <Skeleton width={200} />}
                 </p>
               </div>
               {data?.status ? (
