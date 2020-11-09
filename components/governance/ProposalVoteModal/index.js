@@ -24,7 +24,7 @@ const VoteRadioButton = forwardRef(
    * @param {("For"|"Against")} props.type
    */
   ({ votes, totalVotes, isSelected, type = "For", ...props }, ref) => {
-    const percent = votes / totalVotes;
+    const percent = votes / totalVotes ? votes / totalVotes : 0;
 
     const cachedClassNames = classNames(
       "p-4 rounded border flex items-center divide-x focus-within:shadow-outline select-none transition-colors duration-150",
@@ -48,7 +48,7 @@ const VoteRadioButton = forwardRef(
           <div className="flex justify-between font-semibold text-lg leading-tight">
             <div>{type}</div>
             <div>
-              {votes ? (
+              {typeof votes === "number" ? (
                 `(${toPercent(percent)}) ${commify(votes.toFixed(2))}`
               ) : (
                 <Fragment>
