@@ -66,6 +66,7 @@ module.exports = {
       },
       against: {
         pure: "#EC6087",
+        light: "#FFEAEE",
       },
       alert: {
         error: "#E61744",

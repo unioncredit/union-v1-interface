@@ -27,7 +27,10 @@ const CreateProposalModal = () => {
               </Link>
             </li>
 
-            <button className="underline font-semibold" onClick={toggle}>
+            <button
+              className="underline font-semibold focus:outline-none focus:shadow-outline rounded"
+              onClick={toggle}
+            >
               Close
             </button>
           </div>
@@ -80,6 +83,30 @@ const CreateProposalModal = () => {
               <div className="h-2" />
 
               <p>2 choices:</p>
+
+              {/* Spacer */}
+              <div className="h-4" />
+
+              <div className="h-14 rounded border flex bg-border-light">
+                <div className="w-14 flex items-center justify-center text-center bg-success-light text-success-pure font-semibold">
+                  1
+                </div>
+                <div className="flex items-center text-type-light px-5">
+                  For
+                </div>
+              </div>
+
+              {/* Spacer */}
+              <div className="h-4" />
+
+              <div className="h-14 rounded border flex bg-border-light">
+                <div className="w-14 flex items-center justify-center text-center bg-against-light text-against-pure font-semibold">
+                  2
+                </div>
+                <div className="flex items-center text-type-light px-5">
+                  Against
+                </div>
+              </div>
 
               {/* Spacer */}
               <div className="h-8" />
