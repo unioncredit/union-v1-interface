@@ -5,6 +5,8 @@ import Logo from "components/logo";
 import Modal from "components/modal";
 import Link from "next/link";
 import Info from "svgs/Info";
+import ProposalActionsModal from "../ProposalActionsModal";
+import { useProposalActionsModalToggle } from "../ProposalActionsModal/state";
 import {
   useCreateProposalModalOpen,
   useCreateProposalModalToggle,
@@ -13,6 +15,8 @@ import {
 const CreateProposalModal = () => {
   const open = useCreateProposalModalOpen();
   const toggle = useCreateProposalModalToggle();
+
+  const toggleProposalActionsModal = useProposalActionsModalToggle();
 
   return (
     <Modal style="FULLSCREEN" isOpen={open} onDismiss={toggle}>
@@ -42,7 +46,7 @@ const CreateProposalModal = () => {
 
       <div className="container">
         <div className="flex flex-col md:flex-row md:space-x-4">
-          <div className="w-2/3 mb-12 md:mb-0">
+          <div className="w-full md:w-2/3 mb-12 md:mb-0">
             <h2>Add a title and description</h2>
 
             {/* Spacer */}
@@ -65,7 +69,8 @@ const CreateProposalModal = () => {
               tip="You can use Markdown for formatting and adding images."
             />
           </div>
-          <div className="w-1/3">
+
+          <div className="w-full md:w-1/3 mb-12 md:mb-0">
             <h2>Choose proposal type</h2>
 
             {/* Spacer */}
@@ -121,7 +126,7 @@ const CreateProposalModal = () => {
               {/* Spacer */}
               <div className="h-4" />
 
-              <Button invert full>
+              <Button invert full onClick={toggleProposalActionsModal}>
                 Add an action
               </Button>
 
@@ -140,6 +145,8 @@ const CreateProposalModal = () => {
           </div>
         </div>
       </div>
+
+      <ProposalActionsModal />
     </Modal>
   );
 };
