@@ -80,9 +80,7 @@ const Navigation = () => {
                     <NavigationLink href="/vouch">Vouch</NavigationLink>
                   </li>
                   <li>
-                    <NavigationLink href="/governance">
-                      Governance
-                    </NavigationLink>
+                    <NavigationLink href="/governance">Vote</NavigationLink>
                   </li>
                 </ul>
               </li>
@@ -130,7 +128,7 @@ const Navigation = () => {
               <NavigationLink href="/vouch">Vouch</NavigationLink>
             </li>
             <li>
-              <NavigationLink href="/governance">Governance</NavigationLink>
+              <NavigationLink href="/governance">Vote</NavigationLink>
             </li>
           </ul>
         )}
