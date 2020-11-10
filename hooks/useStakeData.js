@@ -5,7 +5,7 @@ import useSWR from "swr";
 import { roundDown } from "util/numbers";
 import parseRes from "util/parseRes";
 import useCurrentToken from "./useCurrentToken";
-import useUserContract from "./useUserContract";
+import useUserContract from "./contracts/useUserContract";
 
 const getStakeData = (memberContract) => async (_, account, tokenAddress) => {
   const totalStake = await memberContract.getStakerBalance(

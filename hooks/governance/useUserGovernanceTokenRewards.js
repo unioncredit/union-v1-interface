@@ -2,7 +2,7 @@ import { isAddress } from "@ethersproject/address";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
-import useUserContract from "../useUserContract";
+import useUserContract from "../contracts/useUserContract";
 
 const getUserGovernanceTokenRewards = (contract) => async (
   _,

@@ -11,11 +11,11 @@ import INTEREST_RATE_ABI from "constants/abis/IInterestRateModel.json";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import { useAutoCallback, useAutoEffect } from "hooks.macro";
-import useAssetContract from "hooks/useAssetContract";
-import useCompoundContract from "hooks/useCompoundContract";
+import useAssetContract from "hooks/contracts/useAssetContract";
+import useCompoundContract from "hooks/contracts/useCompoundContract";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMarketRegistryContract from "hooks/useMarketRegistryContract";
-import useUserContract from "hooks/useUserContract";
+import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
+import useUserContract from "hooks/contracts/useUserContract";
 import { Fragment, useState } from "react";
 
 const parseRes = (res, decimals = 2) =>

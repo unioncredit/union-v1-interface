@@ -2,7 +2,7 @@ import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import useUserContract from "hooks/useUserContract";
+import useUserContract from "hooks/contracts/useUserContract";
 import useSWR from "swr";
 
 dayjs.extend(relativeTime);

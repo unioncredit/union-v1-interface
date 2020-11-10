@@ -2,8 +2,8 @@ import { MaxUint256 } from "@ethersproject/constants";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { USER_MANAGER_ADDRESSES } from "constants/variables";
-import useUserContract from "hooks/useUserContract";
-import useTokenContract from "hooks/useTokenContract";
+import useUserContract from "hooks/contracts/useUserContract";
+import useTokenContract from "hooks/contracts/useTokenContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 

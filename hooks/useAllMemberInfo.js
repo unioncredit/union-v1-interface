@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
-import useUserContract from "./useUserContract";
+import useUserContract from "./contracts/useUserContract";
 import useCurrentToken from "./useCurrentToken";
 
 const getAllMemberInfo = (memberContract) => async (_, curToken, library) => {

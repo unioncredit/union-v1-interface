@@ -1,5 +1,5 @@
 import useCurrentToken from "hooks/useCurrentToken";
-import useUserContract from "hooks/useUserContract";
+import useUserContract from "hooks/contracts/useUserContract";
 import { useCallback } from "react";
 
 export default function useWithdrawRewards() {
