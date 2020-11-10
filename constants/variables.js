@@ -12,12 +12,6 @@ export const ASSET_MANAGER_ADDRESSES = {
   42: "0x7A8e9527dc1365c0B28A82bEc9Cd0FaD2411Cb46",
 };
 
-export const COMPOUND_ADAPTER_ADDRESSES = {
-  1: AddressZero,
-  4: "0xE1a3c79E71f634b28168176e7B2D91215F1eC75a",
-  42: "0xE95D9BBe4CFFF338264D37a8a5Ca779Bcd9f6415",
-};
-
 export const MARKET_REGISTRY_ADDRESSES = {
   1: AddressZero,
   4: "0x0D6449C959c1Db36a25861aAF007e650B45E672a",
@@ -36,7 +30,11 @@ export const UNION_TOKEN_ADDRESSES = {
   42: "0x667242C6d755c302e753D31C16BC8d693b426127",
 };
 
-export const GOLDEN_TICKET_NFT_ADDRESS = AddressZero;
+export const GOLDEN_TICKET_NFT_ADDRESS = {
+  1: AddressZero,
+  4: AddressZero,
+  42: AddressZero,
+};
 
 export const SCALE = 10 ** 18;
 
