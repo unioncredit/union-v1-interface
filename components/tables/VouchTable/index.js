@@ -4,7 +4,7 @@ import { Fragment, useMemo } from "react";
 import { useExpanded, useSortBy, useTable } from "react-table";
 import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
-import { utilizedVouchTip } from "text/tooltips";
+import { utilizedVouchTip } from "util/tooltips";
 import { renderSortIcons } from "util/tables";
 import Address from "../../Address";
 import Button from "../../button";

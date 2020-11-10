@@ -1,5 +1,5 @@
 import { isAddress } from "@ethersproject/address";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 
 export default async function validateAddress(address) {
   if (!isAddress(address)) return errorMessages.validAddress;

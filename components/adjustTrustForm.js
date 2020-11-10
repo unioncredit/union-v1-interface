@@ -3,7 +3,7 @@ import SegmentedControl from "components/segmentedControl";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import Button from "./button";

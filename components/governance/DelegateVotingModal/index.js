@@ -7,7 +7,7 @@ import useDelegate from "hooks/governance/useDelegate";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import validateAddress from "util/validateAddress";

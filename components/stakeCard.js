@@ -8,7 +8,7 @@ import {
   defaultedStakeTip,
   utilizedStakeTip,
   withdrawableStakeTip,
-} from "../text/tooltips";
+} from "../util/tooltips";
 import Button from "./button";
 import DepositModal from "./modals/DepositModal";
 import { useDepositModalToggle } from "./modals/DepositModal/state";

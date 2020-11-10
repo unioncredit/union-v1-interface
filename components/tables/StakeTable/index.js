@@ -6,7 +6,7 @@ import useTrustData from "hooks/useTrustData";
 import { Fragment, useMemo, useState } from "react";
 import { usePagination, useSortBy, useTable } from "react-table";
 import Info from "svgs/Info";
-import { healthTip } from "text/tooltips";
+import { healthTip } from "util/tooltips";
 import { renderSortIcons } from "util/tables";
 import Address from "../../Address";
 import AddressModal from "../../modals/AddressModal";

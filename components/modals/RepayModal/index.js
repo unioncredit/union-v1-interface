@@ -6,7 +6,7 @@ import useTokenBalance from "hooks/useTokenBalance";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";

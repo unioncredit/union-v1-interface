@@ -2,7 +2,7 @@ import { MESSAGE } from "constants/variables";
 import usePersonalSign from "hooks/usePersonalSign";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 import EMAIL_REGEX from "util/emailRegex";
 import Button from "../../button";
 import Input from "../../input";

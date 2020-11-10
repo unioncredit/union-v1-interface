@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import useTrustCountData from "hooks/useTrustCountData";
 import Info from "svgs/Info";
-import { vouchingTip } from "../../text/tooltips";
+import { vouchingTip } from "../../util/tooltips";
 import { useApplicationModalToggle } from "../modals/ApplicationModal/state";
 import Button from "../button";
 import { useGetInvitedModalToggle } from "../modals/GetInvitedModal/state";

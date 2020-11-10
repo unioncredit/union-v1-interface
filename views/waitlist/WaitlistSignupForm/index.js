@@ -4,7 +4,7 @@ import Input from "components/input";
 import TweetButton from "components/TweetButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 import EMAIL_REGEX from "util/emailRegex";
 
 const checkPlace = async (email) => {

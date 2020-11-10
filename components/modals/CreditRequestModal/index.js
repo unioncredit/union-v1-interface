@@ -15,7 +15,7 @@ import {
   useCreditRequestModalOpen,
   useCreditRequestModalToggle,
 } from "./state";
-import errorMessages from "text/errorMessages";
+import errorMessages from "util/errorMessages";
 
 const QRCode = dynamic(() => import("../../shareQRCode"));
 
