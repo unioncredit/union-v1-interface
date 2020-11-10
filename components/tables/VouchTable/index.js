@@ -6,11 +6,11 @@ import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { utilizedVouchTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
-import Address from "../Address";
-import Button from "../button";
-import { useGetInvitedModalToggle } from "../modals/GetInvitedModal/state";
-import PercentageBar from "../percentageBar";
-import Skeleton from "../Skeleton";
+import Address from "../../Address";
+import Button from "../../button";
+import { useGetInvitedModalToggle } from "../../modals/GetInvitedModal/state";
+import PercentageBar from "../../percentageBar";
+import Skeleton from "../../Skeleton";
 
 const VouchTableRowSkeleton = () => (
   <tr>

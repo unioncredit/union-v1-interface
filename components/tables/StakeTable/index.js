@@ -1,5 +1,5 @@
 import Tooltip from "@reach/tooltip";
-import TablePagination from "components/TablePagination";
+import TablePagination from "components/tables/TablePagination";
 import useIsMember from "hooks/useIsMember";
 import useTrustCountData from "hooks/useTrustCountData";
 import useTrustData from "hooks/useTrustData";
@@ -8,15 +8,15 @@ import { usePagination, useSortBy, useTable } from "react-table";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
-import Address from "../Address";
-import AddressModal from "../modals/AddressModal";
-import { useAddressModalToggle } from "../modals/AddressModal/state";
-import { useApplicationModalToggle } from "../modals/ApplicationModal/state";
-import Button from "../button";
-import HealthBar from "../healthBar";
-import { useLearnMoreModalToggle } from "../modals/LearnMoreModal/state";
-import Skeleton from "../Skeleton";
-import { useTrustModalToggle } from "../modals/TrustModal/state";
+import Address from "../../Address";
+import AddressModal from "../../modals/AddressModal";
+import { useAddressModalToggle } from "../../modals/AddressModal/state";
+import { useApplicationModalToggle } from "../../modals/ApplicationModal/state";
+import Button from "../../button";
+import HealthBar from "../../healthBar";
+import { useLearnMoreModalToggle } from "../../modals/LearnMoreModal/state";
+import Skeleton from "../../Skeleton";
+import { useTrustModalToggle } from "../../modals/TrustModal/state";
 
 const StakeTableRowSkeleton = () => (
   <tr>

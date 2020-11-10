@@ -1,5 +1,5 @@
 import Back from "components/governance/Back";
-import LeaderboardTable from "components/LeaderboardTable";
+import LeaderboardTable from "components/tables/LeaderboardTable";
 import { Fragment } from "react";
 
 export default function LeaderboardView() {

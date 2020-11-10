@@ -1,7 +1,7 @@
 import GovernanceProposal, {
   GovernanceProposalSkeleton,
 } from "components/governance/GovernanceProposal";
-import TablePagination from "components/TablePagination";
+import TablePagination from "components/tables/TablePagination";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 import usePagination from "hooks/usePagination";
 

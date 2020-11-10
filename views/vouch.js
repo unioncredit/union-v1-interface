@@ -5,7 +5,7 @@ import { useCreditRequestModalToggle } from "components/modals/CreditRequestModa
 import LabelPair from "components/labelPair";
 import SuccessModal from "components/modals/SuccessModal";
 import VouchBar from "components/vouchBar";
-import VouchTable from "components/VouchTable";
+import VouchTable from "components/tables/VouchTable";
 import useCreditLimit from "hooks/useCreditLimit";
 import useIsMember from "hooks/useIsMember";
 import useVouchData from "hooks/useVouchData";
