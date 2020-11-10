@@ -1,3 +1,4 @@
+import Image from "next/image";
 import getIPFSAssetLink from "util/getIPFSAssetLink";
 
 /**
@@ -9,16 +10,12 @@ import getIPFSAssetLink from "util/getIPFSAssetLink";
  */
 const ProfileImage = ({ image, size = 32, ...rest }) => {
   return (
-    <img
-      async
-      className="rounded-full object-cover object-center align-middle"
-      decoding="async"
+    <Image
       loading="lazy"
+      className="rounded-full object-cover object-center align-middle"
+      width={size}
+      height={size}
       src={getIPFSAssetLink(image)}
-      style={{
-        height: size,
-        width: size,
-      }}
       {...rest}
     />
   );
