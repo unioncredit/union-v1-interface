@@ -62,7 +62,7 @@ export default function ProposalView() {
   const { chainId } = useWeb3React();
 
   const linkIfAddress = (content) => {
-    const parsed = parseProposalDetails(content, chainId);
+    const parsed = parseProposalDetails(content);
 
     if (isAddress(content) && chainId) {
       return (
