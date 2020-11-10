@@ -49,7 +49,7 @@ const GovernanceProposals = ({ showAll = false }) => {
     <div className="md:bg-white md:rounded md:border">
       <div className="md:px-6 md:pt-2">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-1 overflow-x-scroll whitespace-no-wrap">
+          <div className="flex items-center space-x-1 overflow-x-scroll whitespace-no-wrap hide-scrollbar">
             <StatusFilterButton
               onClick={updateStatusFilter("all")}
               isActive={statusFilter === "all"}

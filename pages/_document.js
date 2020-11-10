@@ -53,7 +53,7 @@ class MyDocument extends Document {
           <meta name="twitter:description" content={META_TAGS.DESCRIPTION} />
           <meta name="theme-color" content="#032437" />
         </Head>
-        <body>
+        <body className="hide-scrollbar">
           <Main />
           <NextScript />
         </body>
