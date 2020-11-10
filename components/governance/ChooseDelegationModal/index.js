@@ -9,6 +9,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { useDelegateVotingModalToggle } from "../DelegateVotingModal/state";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { AddressZero } from "constants/variables";
 
 const Manual = () => (
   <svg width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -43,7 +44,10 @@ const ChooseDelegationModal = () => {
 
   const { data: votingWalletData } = useVotingWalletData(account);
 
-  const isDelegating = Boolean(votingWalletData?.delegates !== "Self");
+  const isDelegating = Boolean(
+    votingWalletData?.delegates !== "Self" &&
+      votingWalletData?.delegates !== AddressZero
+  );
 
   const delegate = useDelegate();
 
