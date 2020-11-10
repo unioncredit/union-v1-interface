@@ -1,11 +1,11 @@
 import { commify } from "@ethersproject/units";
+import Button from "components/button";
+import Input from "components/input";
+import TweetButton from "components/TweetButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import EMAIL_REGEX from "util/emailRegex";
-import Button from "../button";
-import Input from "../input";
 import errorMessages from "text/errorMessages";
-import TweetButton from "components/TweetButton";
+import EMAIL_REGEX from "util/emailRegex";
 
 const checkPlace = async (email) => {
   const res = await fetch("/api/waitlist/place", {
