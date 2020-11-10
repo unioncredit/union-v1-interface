@@ -1,6 +1,6 @@
 import { Web3ReactProvider } from "@web3-react/core";
 import ErrorBoundary from "components/errorBoundary";
-import Footer from "components/footer";
+import Footer from "components/Footer";
 import Navigation from "components/navigation";
 import NetworkIndicator from "components/networkIndicator";
 import useFathom from "hooks/useFathom";
