@@ -10,14 +10,17 @@ import Skeleton from "components/Skeleton";
 import WithdrawRewards from "components/withdrawRewards";
 import { AddressZero } from "constants/variables";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
+import useProposalThreshold from "hooks/governance/useProposalThreshold";
 import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import use3BoxPublicData from "hooks/use3BoxPublicData";
 import Link from "next/link";
+import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
 import { useChooseDelegationModalToggle } from "../ChooseDelegationModal/state";
+import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
   if (isAddress(delegates))
@@ -115,14 +118,19 @@ const GovernanceVotingWallet = ({ address }) => {
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
 
+  const toggleCreateProposalModal = useCreateProposalModalToggle();
+
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
+  const { data: proposalThreshold = 0 } = useProposalThreshold();
 
   const votePowerPercent = currentVotes / totalSupply;
 
   const votesDelegated = currentVotes > 0 ? currentVotes - balanceOf : 0;
 
   const notReadyToVote = delegates === AddressZero;
+
+  const canCreateProposal = currentVotes > proposalThreshold;
 
   return (
     <div className="bg-white rounded border p-4 sm:p-6">
@@ -149,13 +157,24 @@ const GovernanceVotingWallet = ({ address }) => {
           <SetupVoting />
         ) : (
           <VotingWalletRow
-            className=""
+            className={canCreateProposal ? "border-b pb-4" : ""}
             label="Delegating to"
             value={delegates && <DisplayDelegating delegates={delegates} />}
             slotBottomRight={<ViewDelegateVoting />}
           />
         )}
       </div>
+
+      {canCreateProposal && (
+        <Fragment>
+          {/* Spacer */}
+          <div className="h-8" />
+
+          <Button invert full onClick={toggleCreateProposalModal}>
+            Create proposal
+          </Button>
+        </Fragment>
+      )}
     </div>
   );
 };
