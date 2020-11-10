@@ -1,7 +1,6 @@
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import BigNumber from "bignumber.js/bignumber.mjs";
 import Button from "components/button";
 import ManagerModal from "components/ManagerModal";
 import { useManagerModalToggle } from "components/ManagerModal/state";
@@ -20,8 +19,6 @@ import { Fragment, useState } from "react";
 
 const parseRes = (res, decimals = 2) =>
   Number(formatUnits(res, 18)).toFixed(decimals);
-
-const WAD = 1e18;
 
 export default function AdminView() {
   const { library, chainId } = useWeb3React();
@@ -162,9 +159,7 @@ export default function AdminView() {
 
   const onSetOriginationFee = useAutoCallback(async (amount) => {
     try {
-      await marketContract.setOriginationFee(
-        new BigNumber(amount / 100).times(WAD).toFixed()
-      );
+      await marketContract.setOriginationFee(formatUnits(amount / 100, 18));
     } catch (err) {
       console.error(err);
     }
@@ -172,9 +167,7 @@ export default function AdminView() {
 
   const onSetDebtCeiling = useAutoCallback(async (amount) => {
     try {
-      await marketContract.setDebtCeiling(
-        new BigNumber(amount).times(WAD).toFixed()
-      );
+      await marketContract.setDebtCeiling(formatUnits(amount, 18));
     } catch (err) {
       console.error(err);
     }
@@ -182,9 +175,7 @@ export default function AdminView() {
 
   const onSetMaxBorrow = useAutoCallback(async (amount) => {
     try {
-      await marketContract.setMaxBorrow(
-        new BigNumber(amount).times(WAD).toFixed()
-      );
+      await marketContract.setMaxBorrow(formatUnits(amount, 18));
     } catch (err) {
       console.error(err);
     }
@@ -192,9 +183,7 @@ export default function AdminView() {
 
   const onSetMinLoan = useAutoCallback(async (amount) => {
     try {
-      await marketContract.setMinLoan(
-        new BigNumber(amount).times(WAD).toFixed()
-      );
+      await marketContract.setMinLoan(formatUnits(amount, 18));
     } catch (err) {
       console.error(err);
     }
@@ -210,9 +199,7 @@ export default function AdminView() {
 
   const onSetNewMemberFee = useAutoCallback(async (amount) => {
     try {
-      await userContract.setNewMemberFee(
-        new BigNumber(amount).times(WAD).toFixed()
-      );
+      await userContract.setNewMemberFee(formatUnits(amount, 18));
     } catch (err) {
       console.error(err);
     }
