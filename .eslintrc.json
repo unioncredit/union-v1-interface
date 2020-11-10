@@ -12,7 +12,7 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "@next/eslint-plugin-next"],
   "settings": {
     "react": {
       "version": "detect"
