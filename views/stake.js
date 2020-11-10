@@ -5,7 +5,7 @@ import SuccessModal from "components/modals/SuccessModal";
 import TrustModal from "components/modals/TrustModal";
 import { useTrustModalToggle } from "components/modals/TrustModal/state";
 import TutorialModal from "components/modals/TutorialModal";
-import useIsMember from "hooks/useIsMember";
+import useIsMember from "hooks/data/useIsMember";
 import usePopTrustModal from "hooks/usePopTrustModal";
 import { useRouter } from "next/router";
 import { Fragment } from "react";

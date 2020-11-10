@@ -5,8 +5,8 @@ import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import dayjs from "dayjs";
 import useSWR from "swr";
-import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
+import useCurrentToken from "../useCurrentToken";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
 const getTransactions = (marketRegistryContract) => async (
   _,

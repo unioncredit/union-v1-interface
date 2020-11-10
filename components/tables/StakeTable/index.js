@@ -1,8 +1,8 @@
 import Tooltip from "@reach/tooltip";
 import TablePagination from "components/tables/TablePagination";
-import useIsMember from "hooks/useIsMember";
-import useTrustCountData from "hooks/useTrustCountData";
-import useTrustData from "hooks/useTrustData";
+import useIsMember from "hooks/data/useIsMember";
+import useTrustCountData from "hooks/data/useTrustCountData";
+import useTrustData from "hooks/data/useTrustData";
 import { Fragment, useMemo, useState } from "react";
 import { usePagination, useSortBy, useTable } from "react-table";
 import Info from "svgs/Info";

@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import useCurrentToken from "hooks/useCurrentToken";
-import useTokenBalance from "hooks/useTokenBalance";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "util/errorMessages";

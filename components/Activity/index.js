@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuItems, MenuPopover } from "@reach/menu-button";
-import useActivity from "hooks/useActivity";
+import useActivity from "hooks/data/useActivity";
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "react-use";
 import Bell from "svgs/Bell";

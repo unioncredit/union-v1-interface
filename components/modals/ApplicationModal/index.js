@@ -2,11 +2,11 @@ import { useWeb3React } from "@web3-react/core";
 import { useAutoCallback } from "hooks.macro";
 import useApplyMember from "hooks/payables/useApplyMember";
 import useCurrentToken from "hooks/useCurrentToken";
-import useMemberFee from "hooks/useMemberFee";
-import useTokenBalance from "hooks/useTokenBalance";
+import useMemberFee from "hooks/data/useMemberFee";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import useUnionAllowance, {
   useIncreaseUnionAllowance,
-} from "hooks/useUnionAllowance";
+} from "hooks/data/useUnionAllowance";
 import { useState } from "react";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";

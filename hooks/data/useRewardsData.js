@@ -3,8 +3,8 @@ import { useWeb3React } from "@web3-react/core";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useCurrentToken from "./useCurrentToken";
-import useUserContract from "./contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
+import useUserContract from "../contracts/useUserContract";
 
 const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
   const delta = Number(await contract.getUserBlockDelta(account, tokenAddress));

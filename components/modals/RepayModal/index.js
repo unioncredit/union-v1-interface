@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { REPAY_MARGIN } from "constants/variables";
 import useRepay from "hooks/payables/useRepay";
 import useCurrentToken from "hooks/useCurrentToken";
-import useTokenBalance from "hooks/useTokenBalance";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

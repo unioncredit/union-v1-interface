@@ -6,8 +6,8 @@ import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 import useSWR from "swr";
 import { formatDueDate } from "util/formatDueDate";
-import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
+import useCurrentToken from "../useCurrentToken";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { roundUp } from "util/numbers";
 
 const getPaymentDue = async (account, chainId, contract, library) => {

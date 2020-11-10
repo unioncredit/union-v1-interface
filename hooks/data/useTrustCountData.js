@@ -1,8 +1,8 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useCurrentToken from "./useCurrentToken";
-import useUserContract from "./contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
+import useUserContract from "../contracts/useUserContract";
 
 const getTrustCount = (contract) => async (_, account, tokenAddress) => {
   let count = 0;

@@ -1,6 +1,6 @@
 import { commify } from "@ethersproject/units";
 import TweetButton from "components/TweetButton";
-import useCreditLimit from "hooks/useCreditLimit";
+import useCreditLimit from "hooks/data/useCreditLimit";
 import usePopConfetti from "hooks/usePopConfetti";
 import Modal, { CloseButton } from "../../modal";
 import { useSuccessModalOpen, useSuccessModalToggle } from "./state";

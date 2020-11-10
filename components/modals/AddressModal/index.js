@@ -7,7 +7,7 @@ import use3BoxPublicData from "hooks/use3BoxPublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import useCopy from "hooks/useCopy";
 import useENSName from "hooks/useENSName";
-import useTrustData from "hooks/useTrustData";
+import useTrustData from "hooks/data/useTrustData";
 import delay from "lib/delay";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

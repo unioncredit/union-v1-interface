@@ -1,7 +1,7 @@
 import useCurrentToken from "hooks/useCurrentToken";
-import useRewardsData from "hooks/useRewardsData";
-import useStakeData from "hooks/useStakeData";
-import useTokenBalance from "hooks/useTokenBalance";
+import useRewardsData from "hooks/data/useRewardsData";
+import useStakeData from "hooks/data/useStakeData";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import { Fragment } from "react";
 import format from "util/formatValue";
 import {

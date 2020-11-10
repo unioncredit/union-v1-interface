@@ -4,9 +4,9 @@ import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useCurrentToken from "./useCurrentToken";
-import useMarketRegistryContract from "./contracts/useMarketRegistryContract";
-import useUserContract from "./contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import useUserContract from "../contracts/useUserContract";
 
 const getTrust = (marketRegistryContract, memberContract) => async (
   _,
