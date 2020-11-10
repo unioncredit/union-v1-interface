@@ -18,8 +18,10 @@ const TransactionList = ({ data, count = 5 }) => {
         <h2 className="h-12 leading-12">Transactions</h2>
       </div>
 
-      {hasTransactions
-        ? data.map((tx, i) => <Transaction key={i} {...tx} />)
+      {data
+        ? hasTransactions
+          ? data.map((tx, i) => <Transaction key={i} {...tx} />)
+          : null
         : createArray(count).map((_, i) => <TransactionSkeleton key={i} />)}
     </Fragment>
   );
