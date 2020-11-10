@@ -12,6 +12,10 @@ export default function useEagerConnect() {
 
   useEffect(() => {
     async function handleEagerConnect() {
+      if (typeof window !== "undefined") {
+        await import("cookie-store");
+      }
+
       const eagerConnect = await window?.cookieStore?.get("eager_connect");
 
       if (
