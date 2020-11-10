@@ -4,6 +4,7 @@ import Button from "components/button";
 import Input, { Textarea } from "components/input";
 import Logo from "components/logo";
 import Modal from "components/modal";
+import useProposalMaxOperations from "hooks/governance/useProposalMaxOperations";
 import usePropose from "hooks/governance/usePropose";
 import Link from "next/link";
 import { useState } from "react";
@@ -26,6 +27,8 @@ const CreateProposalModal = () => {
   const toggle = useCreateProposalModalToggle();
 
   const toggleProposalActionsModal = useProposalActionsModalToggle();
+
+  const { data: maxActions = 0 } = useProposalMaxOperations();
 
   const [actions, actionsSet] = useState([]);
 
@@ -180,6 +183,7 @@ const CreateProposalModal = () => {
                 type="button"
                 invert
                 full
+                disabled={actions.length === maxActions}
                 onClick={toggleProposalActionsModal}
               >
                 Add an action
