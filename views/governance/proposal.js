@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import ReactMarkdown from "react-markdown";
 import getEtherscanLink from "util/getEtherscanLink";
+import parseProposalDetails from "util/parseProposalDetails";
 
 const Loading = {
   Description: () => (
@@ -61,18 +62,20 @@ export default function ProposalView() {
   const { chainId } = useWeb3React();
 
   const linkIfAddress = (content) => {
+    const parsed = parseProposalDetails(content, chainId);
+
     if (isAddress(content) && chainId) {
       return (
         <a
           className="underline"
           href={getEtherscanLink(chainId, content, "address")}
         >
-          {content}
+          {parsed}
         </a>
       );
     }
 
-    return <span>{content}</span>;
+    return <span>{parsed}</span>;
   };
 
   return (
