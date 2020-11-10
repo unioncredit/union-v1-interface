@@ -35,7 +35,7 @@ const DepositModal = ({ totalStake, onComplete }) => {
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const DAI = useCurrentToken("DAI");
+  const DAI = useCurrentToken();
 
   const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
     DAI
