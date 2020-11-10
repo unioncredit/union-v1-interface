@@ -30,6 +30,7 @@ const errorMessages = {
   notEnoughCredit: "Not enough available credit",
   notEnoughStake: "Insufficient withdrawable stake",
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
+  notEnoughPoolDAI: "Insufficient DAI available",
   overdueBalance: <OverdueBalanceMessage />,
   maxBorrow: (max) => `The maximum borrow is ${Number(max).toFixed(2)} DAI`,
   minDAIBorrow: "The minimum borrow is 1.00 DAI",

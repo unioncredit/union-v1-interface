@@ -1,11 +1,8 @@
-import { Contract } from "@ethersproject/contracts";
-import { formatUnits } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import useLoanableAmount from "hooks/data/useLoanableAmount";
+import useMaxBorrow from "hooks/data/useMaxBorrow";
 import useBorrow from "hooks/payables/useBorrow";
-import useCurrentToken from "hooks/useCurrentToken";
-import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -47,8 +44,8 @@ const BorrowModal = ({
 
   const borrow = useBorrow();
 
-  const tokenAddress = useCurrentToken();
-  const marketRegistryContract = useMarketRegistryContract();
+  const { data: loanableAmount } = useLoanableAmount();
+  const { data: maxBorrow } = useMaxBorrow();
 
   const {
     errors,
@@ -123,23 +120,13 @@ const BorrowModal = ({
     });
 
   const handleValidate = async (val) => {
-    const marketAddress = await marketRegistryContract.tokens(tokenAddress);
-
-    const lendingMarketContract = new Contract(
-      marketAddress,
-      LENDING_MARKET_ABI,
-      library.getSigner()
-    );
-
-    const maxBorrow = Number(
-      formatUnits(await lendingMarketContract.maxBorrow(), 18)
-    );
-
     if (isOverdue) return errorMessages.overdueBalance;
+
+    if (val > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
 
     if (val > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
 
-    if (val > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
+    if (val > loanableAmount) return errorMessages.notEnoughPoolDAI;
 
     if (val < 1.0) return errorMessages.minDAIBorrow;
 
