@@ -26,8 +26,8 @@ export default function AddressView() {
           {/* Spacer */}
           <div className="h-8" />
 
-          <div className="grid grid-cols-3 gap-4">
-            <div className="col-span-1">
+          <div className="pt-16 md:grid grid-cols-3 gap-4">
+            <div className="col-span-1 mb-8 md:mb-0">
               <h2>Profile</h2>
               <div className="pt-6">
                 <GovernanceVotingProfile address={address} />
