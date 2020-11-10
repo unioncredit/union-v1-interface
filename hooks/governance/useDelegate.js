@@ -12,6 +12,7 @@ export default function useDelegate() {
      */
     async (address) => {
       return contract.delegate(address);
-    }
+    },
+    []
   );
 }

@@ -1,10 +1,17 @@
 import Tooltip from "@reach/tooltip";
+import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input, { Textarea } from "components/input";
 import Logo from "components/logo";
 import Modal from "components/modal";
+import usePropose from "hooks/governance/usePropose";
 import Link from "next/link";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
+import errorMessages from "util/errorMessages";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
 import ProposalActionsModal from "../ProposalActionsModal";
 import { useProposalActionsModalToggle } from "../ProposalActionsModal/state";
 import {
@@ -13,10 +20,30 @@ import {
 } from "./state";
 
 const CreateProposalModal = () => {
+  const { library } = useWeb3React();
+
   const open = useCreateProposalModalOpen();
   const toggle = useCreateProposalModalToggle();
 
   const toggleProposalActionsModal = useProposalActionsModalToggle();
+
+  const [actions, actionsSet] = useState([]);
+
+  const { register, errors, handleSubmit } = useForm();
+
+  const propose = usePropose();
+
+  const onSubmit = async (data) => {
+    try {
+      const { hash } = await propose({ ...data, actions });
+
+      if (open) toggle();
+
+      await getReceipt(hash, library);
+    } catch (err) {
+      handleTxError(err);
+    }
+  };
 
   return (
     <Modal style="FULLSCREEN" isOpen={open} onDismiss={toggle}>
@@ -45,8 +72,12 @@ const CreateProposalModal = () => {
       <div className="h-12" />
 
       <div className="container">
-        <div className="flex flex-col md:flex-row md:space-x-4">
-          <div className="w-full md:w-2/3 mb-12 md:mb-0">
+        <form
+          method="POST"
+          onSubmit={handleSubmit(onSubmit)}
+          className="md:grid grid-cols-3 gap-4"
+        >
+          <div className="col-span-2 mb-8 md:mb-0">
             <h2>Add a title and description</h2>
 
             {/* Spacer */}
@@ -54,6 +85,9 @@ const CreateProposalModal = () => {
 
             <Input
               id="title"
+              name="title"
+              ref={register({ required: errorMessages.required })}
+              error={errors?.title}
               label="Add a title"
               placeholder="Proposal title"
               autoFocus
@@ -65,12 +99,15 @@ const CreateProposalModal = () => {
             <Textarea
               id="description"
               label="Description"
+              name="description"
+              ref={register({ required: errorMessages.required })}
+              error={errors?.description}
               placeholder="Write your description..."
               tip="You can use Markdown for formatting and adding images."
             />
           </div>
 
-          <div className="w-full md:w-1/3 mb-12 md:mb-0">
+          <div className="col-span-1">
             <h2>Choose proposal type</h2>
 
             {/* Spacer */}
@@ -126,7 +163,25 @@ const CreateProposalModal = () => {
               {/* Spacer */}
               <div className="h-4" />
 
-              <Button invert full onClick={toggleProposalActionsModal}>
+              <ol className="space-y-4">
+                {actions?.map((action, i) => (
+                  <li key={i}>{`${action.targets[0]}.${
+                    action.signatures[0].split("(")[0]
+                  }(${action.calldata
+                    .map((data) => data.value)
+                    .join(", ")})`}</li>
+                ))}
+              </ol>
+
+              {/* Spacer */}
+              <div className="h-4" />
+
+              <Button
+                type="button"
+                invert
+                full
+                onClick={toggleProposalActionsModal}
+              >
                 Add an action
               </Button>
 
@@ -138,15 +193,15 @@ const CreateProposalModal = () => {
               {/* Spacer */}
               <div className="h-8" />
 
-              <Button full disabled>
+              <Button type="submit" full disabled={actions.length <= 0}>
                 Publish proposal
               </Button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
 
-      <ProposalActionsModal />
+      <ProposalActionsModal addAction={actionsSet} />
     </Modal>
   );
 };

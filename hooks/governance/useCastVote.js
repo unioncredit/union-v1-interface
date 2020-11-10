@@ -13,6 +13,7 @@ export default function useCastVote() {
      */
     async (proposalId, support) => {
       return governanceContract.castVote(proposalId, support);
-    }
+    },
+    []
   );
 }

@@ -1,64 +1,115 @@
-import { defaultAbiCoder } from "@ethersproject/abi";
+import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input, { Select } from "components/input";
 import Modal, { ModalHeader } from "components/modal";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
-import useSWR from "swr";
+import { TARGETS } from "constants/governance";
+import { useForm } from "react-hook-form";
+import errorMessages from "util/errorMessages";
 import {
   useProposalActionsModalOpen,
   useProposalActionsModalToggle,
 } from "./state";
 
-const getGovernanceContractFunctions = (contract) => () => {
-  return contract?.interface?.functions;
-};
+const ProposalActionsModal = ({ addAction }) => {
+  const { chainId } = useWeb3React();
 
-const useGovernanceContractFunctions = () => {
-  const contract = useGovernanceContract();
-
-  return useSWR(
-    "GovernanceContractFunctions",
-    getGovernanceContractFunctions(contract)
-  );
-};
-
-const ProposalActionsModal = () => {
   const open = useProposalActionsModalOpen();
   const toggle = useProposalActionsModalToggle();
 
-  useGovernanceContractFunctions();
+  const { register, watch, errors, handleSubmit } = useForm();
 
-  const encode = (type, value) => defaultAbiCoder.encode([type], [value]);
+  const targets = Object.keys(TARGETS[chainId]).map((key) => ({
+    label: key,
+    value: key,
+  }));
 
-  const targets = [
-    { value: "0x", label: "UNION" },
-    { value: "0x", label: "DAI" },
-  ];
+  const getActions = (target) =>
+    TARGETS[chainId][target].actions.map((action) => ({
+      label: action.signature,
+      value: action.signature,
+    }));
+
+  const getParams = (target, func) =>
+    TARGETS[chainId][target].actions
+      .filter((action) => action.signature === func)
+      .pop();
+
+  const inputs = watch();
+
+  const onSubmit = async (data) => {
+    const address = TARGETS[chainId][data.target].address;
+
+    const calldata = Object.keys(data.calldata).map((key) => ({
+      type: key.split("_")[0],
+      value: data.calldata[key],
+    }));
+
+    const structuredResponse = {
+      targets: [address],
+      values: ["0"],
+      signatures: [data.func],
+      calldata: calldata,
+    };
+
+    await addAction((prev) => [...prev, structuredResponse]);
+
+    toggle();
+  };
 
   return (
     <Modal isOpen={open} onDismiss={toggle}>
       <ModalHeader title="Add action" onDismiss={toggle} />
 
-      <div className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6">
-        <Select label="Select Target" autoFocus options={targets} />
+      <form
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
+      >
+        <div className="space-y-4">
+          <Select
+            label="Select target"
+            autoFocus
+            options={targets}
+            id="target"
+            name="target"
+            ref={register({ required: errorMessages.required })}
+            error={errors?.target}
+          />
 
-        {/* Spacer */}
-        <div className="h-4" />
+          {inputs?.target && (
+            <Select
+              label="Select function"
+              name="func"
+              id="func"
+              ref={register({ required: errorMessages.required })}
+              options={getActions(inputs.target)}
+              error={errors?.func}
+            />
+          )}
 
-        <Select label="Select Function" />
-
-        {/* Spacer */}
-        <div className="h-4" />
-
-        <Input label="Enter New Data" placeholder="0x" />
+          {inputs?.func &&
+            inputs?.target &&
+            getParams(inputs.target, inputs.func)?.params.map((param, i) => {
+              return (
+                <Input
+                  key={i}
+                  name={`calldata.${param}_${i}`}
+                  label="Enter new value"
+                  ref={register({ required: errorMessages.required })}
+                  placeholder={param}
+                  error={errors?.calldata?.[`${param}_${i}`]}
+                />
+              );
+            })}
+        </div>
 
         {/* Spacer */}
         <div className="h-12" />
 
-        <Button full disabled>
+        <Button type="submit" full>
           Add action
         </Button>
-      </div>
+      </form>
     </Modal>
   );
 };
