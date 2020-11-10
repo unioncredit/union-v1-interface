@@ -8,6 +8,7 @@ import { useDelegateVotingModalToggle } from "components/governance/DelegateVoti
 import Identicon from "components/identicon";
 import Skeleton from "components/Skeleton";
 import WithdrawRewards from "components/withdrawRewards";
+import { AddressZero } from "constants/variables";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
@@ -16,7 +17,7 @@ import Link from "next/link";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
-import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
+import { useChooseDelegationModalToggle } from "../ChooseDelegationModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
   if (isAddress(delegates))
@@ -45,9 +46,10 @@ const VotingWalletRow = ({
   value,
   slotTopRight = null,
   slotBottomRight = null,
+  className = "border-b pb-4",
 }) => {
   return (
-    <div className="border-b pb-4">
+    <div className={className}>
       <div className="flex justify-between items-center">
         <div className="text-type-light leading-tight">{label}</div>
         {slotTopRight}
@@ -62,6 +64,31 @@ const VotingWalletRow = ({
         </div>
         {slotBottomRight}
       </div>
+    </div>
+  );
+};
+
+const SetupVoting = () => {
+  const chooseDelegationModalToggle = useChooseDelegationModalToggle();
+
+  return (
+    <div>
+      <div className="text-xl font-semibold leading-tight">Setup voting</div>
+
+      {/* Spacer */}
+      <div className="h-2" />
+
+      <div className="leading-tight text-type-light">
+        You can either vote on each proposal yourself or delegate your votes to
+        a third party.
+      </div>
+
+      {/* Spacer */}
+      <div className="h-4" />
+
+      <Button full onClick={chooseDelegationModalToggle}>
+        Get started
+      </Button>
     </div>
   );
 };
@@ -91,13 +118,11 @@ const GovernanceVotingWallet = ({ address }) => {
   const { data: totalSupply = 0 } = useGovernanceTokenSupply();
   const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
 
-  const toggleCreateProposalModal = useCreateProposalModalToggle();
-
-  const totalVotingPower = currentVotes > 0 ? currentVotes : balanceOf;
-
-  const votePowerPercent = totalVotingPower / totalSupply;
+  const votePowerPercent = currentVotes / totalSupply;
 
   const votesDelegated = currentVotes > 0 ? currentVotes - balanceOf : 0;
+
+  const notReadyToVote = delegates === AddressZero;
 
   return (
     <div className="bg-white rounded border p-4 sm:p-6">
@@ -112,7 +137,7 @@ const GovernanceVotingWallet = ({ address }) => {
         />
         <VotingWalletRow
           label="Total voting power"
-          value={`${commify(totalVotingPower.toFixed(4))} votes`}
+          value={`${commify(currentVotes.toFixed(4))} votes`}
           slotTopRight={<PercentOfTotalBadge value={votePowerPercent} />}
         />
         <VotingWalletRow
@@ -120,16 +145,16 @@ const GovernanceVotingWallet = ({ address }) => {
           value={`${commify(unclaimedBalance.toFixed(4))} UNION`}
           slotBottomRight={<WithdrawRewards style="Underline" />}
         />
-        <VotingWalletRow
-          label="Delegating to"
-          value={delegates && <DisplayDelegating delegates={delegates} />}
-          slotBottomRight={<ViewDelegateVoting />}
-        />
-      </div>
-      <div className="mt-8">
-        <Button invert full onClick={toggleCreateProposalModal}>
-          Create a proposal
-        </Button>
+        {notReadyToVote ? (
+          <SetupVoting />
+        ) : (
+          <VotingWalletRow
+            className=""
+            label="Delegating to"
+            value={delegates && <DisplayDelegating delegates={delegates} />}
+            slotBottomRight={<ViewDelegateVoting />}
+          />
+        )}
       </div>
     </div>
   );
