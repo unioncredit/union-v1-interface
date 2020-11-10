@@ -53,7 +53,7 @@
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.11.0",
     "react-jazzicon-custom-colors": "^0.1.7",
-    "react-markdown": "^4.3.1",
+    "react-markdown": "^5.0.2",
     "react-ridge-state": "^4.1.6",
     "react-table": "^7.6.1",
     "react-use": "^15.3.4",
