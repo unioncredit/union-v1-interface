@@ -10,7 +10,7 @@ import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
-const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
+const GovernanceProposalVotePanel = ({ forCount, againstCount, status }) => {
   const hasVotes = Boolean(forCount >= 0 && againstCount >= 0);
 
   const forVotes = forCount;
@@ -124,17 +124,21 @@ const GovernanceProposalVotePanel = ({ forCount, againstCount }) => {
           </div>
         </div>
 
-        {/* Spacer */}
-        <div className="h-6" />
+        {status === "Active" && (
+          <Fragment>
+            {/* Spacer */}
+            <div className="h-6" />
 
-        <div className="divider" />
+            <div className="divider" />
 
-        {/* Spacer */}
-        <div className="h-10" />
+            {/* Spacer */}
+            <div className="h-10" />
 
-        <Button onClick={toggleProposalVoteModal} full>
-          Vote for this proposal
-        </Button>
+            <Button onClick={toggleProposalVoteModal} full>
+              Vote for this proposal
+            </Button>
+          </Fragment>
+        )}
       </div>
     </div>
   );
