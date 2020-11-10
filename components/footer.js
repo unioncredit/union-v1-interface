@@ -1,4 +1,3 @@
-import Link from "next/link";
 import GitHub from "svgs/GitHub";
 import Twitter from "svgs/Twitter";
 
@@ -7,6 +6,11 @@ const FOOTER_LINKS = [
   //   href: "",
   //   label: "White paper",
   // },
+  {
+    href:
+      "https://www.notion.so/unionfinance/Faucet-edf318353f144a61a97afa33063710d0",
+    label: "Faucet",
+  },
   {
     href: "https://unionfinance.gitbook.io/union-docs/",
     label: "Documentation",
@@ -36,11 +40,6 @@ const Footer = () => {
         <div className="flex">
           <div className="w-3/4">
             <ul className="flex flex-col sm:flex-row sm:flex-wrap space-y-2 sm:space-y-0 sm:space-x-4">
-              <li>
-                <Link href="/faucet">
-                  <a className="block hover:underline">Faucet</a>
-                </Link>
-              </li>
               {FOOTER_LINKS.map(({ href, label }, i) => (
                 <li key={i}>
                   <a
