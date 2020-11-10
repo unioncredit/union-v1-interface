@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import Head from "next/head";
-import AdminView from "views/admin";
+import AdminView from "views/administrator";
 import LoggedOutView from "views/loggedOut";
 
 export default function AdministratorPage() {
