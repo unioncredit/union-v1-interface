@@ -104,7 +104,7 @@ export default function ProposalView() {
                 ) : (
                   <Skeleton width={110} height={32} />
                 )}
-                <p className="text-type-light">
+                <p className="text-type-light capitalize">
                   {data?.date ?? <Skeleton width={200} />}
                 </p>
               </div>
