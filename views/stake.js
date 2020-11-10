@@ -1,10 +1,10 @@
 import Button from "components/button";
 import StakeCard from "components/stakeCard";
 import StakeTable from "components/StakeTable";
-import SuccessModal from "components/SuccessModal";
-import TrustModal from "components/TrustModal";
-import { useTrustModalToggle } from "components/TrustModal/state";
-import TutorialModal from "components/TutorialModal";
+import SuccessModal from "components/modals/SuccessModal";
+import TrustModal from "components/modals/TrustModal";
+import { useTrustModalToggle } from "components/modals/TrustModal/state";
+import TutorialModal from "components/modals/TutorialModal";
 import useIsMember from "hooks/useIsMember";
 import usePopTrustModal from "hooks/usePopTrustModal";
 import { useRouter } from "next/router";

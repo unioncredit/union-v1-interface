@@ -2,9 +2,9 @@ import classNames from "classnames";
 import useTrustCountData from "hooks/useTrustCountData";
 import Info from "svgs/Info";
 import { vouchingTip } from "../../text/tooltips";
-import { useApplicationModalToggle } from "../ApplicationModal/state";
+import { useApplicationModalToggle } from "../modals/ApplicationModal/state";
 import Button from "../button";
-import { useGetInvitedModalToggle } from "../GetInvitedModal/state";
+import { useGetInvitedModalToggle } from "../modals/GetInvitedModal/state";
 import Tooltip from "@reach/tooltip";
 
 const ApplicationCard = () => {

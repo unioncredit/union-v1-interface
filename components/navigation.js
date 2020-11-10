@@ -7,19 +7,19 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 import Button from "./button";
 import Logo from "./logo";
-import WalletModal from "./WalletModal";
+import WalletModal from "./modals/WalletModal";
 import {
   useToggleCreateModal,
   useToggleSignInModal,
-} from "./WalletModal/state";
+} from "./modals/WalletModal/state";
 import Web3Connection from "./web3Connection";
 import Activity from "./Activity";
 
-const GetInvitedModal = dynamic(() => import("./GetInvitedModal"));
+const GetInvitedModal = dynamic(() => import("./modals/GetInvitedModal"));
 
-const LearnMoreModal = dynamic(() => import("./LearnMoreModal"));
+const LearnMoreModal = dynamic(() => import("./modals/LearnMoreModal"));
 
-const ApplicationModal = dynamic(() => import("./ApplicationModal"));
+const ApplicationModal = dynamic(() => import("./modals/ApplicationModal"));
 
 const NavigationLink = ({ href, children, ...rest }) => {
   const { pathname } = useRouter();

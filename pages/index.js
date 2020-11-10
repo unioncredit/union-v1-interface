@@ -1,7 +1,7 @@
 import Benefits from "components/benefits";
 import Button from "components/button";
 import Snippet from "components/snippet";
-import { useWalletModalToggle } from "components/WalletModal/state";
+import { useWalletModalToggle } from "components/modals/WalletModal/state";
 import Head from "next/head";
 
 export default function HomePage() {

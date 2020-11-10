@@ -1,4 +1,4 @@
-import { useTrustModalToggle } from "components/TrustModal/state";
+import { useTrustModalToggle } from "components/modals/TrustModal/state";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 

@@ -10,11 +10,11 @@ import {
   withdrawableStakeTip,
 } from "../text/tooltips";
 import Button from "./button";
-import DepositModal from "./DepositModal";
-import { useDepositModalToggle } from "./DepositModal/state";
+import DepositModal from "./modals/DepositModal";
+import { useDepositModalToggle } from "./modals/DepositModal/state";
 import LabelPair from "./labelPair";
-import WithdrawModal from "./WithdrawModal";
-import { useWithdrawModalToggle } from "./WithdrawModal/state";
+import WithdrawModal from "./modals/WithdrawModal";
+import { useWithdrawModalToggle } from "./modals/WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
 
 const StakeCard = () => {

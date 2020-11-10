@@ -9,14 +9,14 @@ import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
 import Address from "../Address";
-import AddressModal from "../AddressModal";
-import { useAddressModalToggle } from "../AddressModal/state";
-import { useApplicationModalToggle } from "../ApplicationModal/state";
+import AddressModal from "../modals/AddressModal";
+import { useAddressModalToggle } from "../modals/AddressModal/state";
+import { useApplicationModalToggle } from "../modals/ApplicationModal/state";
 import Button from "../button";
 import HealthBar from "../healthBar";
-import { useLearnMoreModalToggle } from "../LearnMoreModal/state";
+import { useLearnMoreModalToggle } from "../modals/LearnMoreModal/state";
 import Skeleton from "../Skeleton";
-import { useTrustModalToggle } from "../TrustModal/state";
+import { useTrustModalToggle } from "../modals/TrustModal/state";
 
 const StakeTableRowSkeleton = () => (
   <tr>

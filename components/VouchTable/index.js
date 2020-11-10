@@ -8,7 +8,7 @@ import { utilizedVouchTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
 import Address from "../Address";
 import Button from "../button";
-import { useGetInvitedModalToggle } from "../GetInvitedModal/state";
+import { useGetInvitedModalToggle } from "../modals/GetInvitedModal/state";
 import PercentageBar from "../percentageBar";
 import Skeleton from "../Skeleton";
 

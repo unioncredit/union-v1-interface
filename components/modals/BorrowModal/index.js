@@ -1,0 +1,226 @@
+import Tooltip from "@reach/tooltip";
+import { useWeb3React } from "@web3-react/core";
+import useLoanableAmount from "hooks/data/useLoanableAmount";
+import useMaxBorrow from "hooks/data/useMaxBorrow";
+import useBorrow from "hooks/payables/useBorrow";
+import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Info from "svgs/Info";
+import errorMessages from "text/errorMessages";
+import { feeTip } from "text/tooltips";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import { roundDown } from "util/numbers";
+import Button from "../../button";
+import Input from "../../input";
+import LabelPair from "../../labelPair";
+import Modal, { ModalHeader } from "../../modal";
+import { useBorrowModalOpen, useBorrowModalToggle } from "./state";
+
+/**
+ * @name BorrowModal
+ * @param {Object} props
+ * @param {Number} props.balanceOwed
+ * @param {Number} props.creditLimit
+ * @param {Number} props.fee
+ * @param {String} props.paymentDueDate
+ * @param {Promise<Void>} props.onComplete
+ * @param {Boolean} props.isOverdue
+ */
+const BorrowModal = ({
+  balanceOwed,
+  creditLimit,
+  fee,
+  onComplete,
+  paymentDueDate,
+  paymentPeriod,
+  isOverdue,
+}) => {
+  const { library } = useWeb3React();
+
+  const open = useBorrowModalOpen();
+  const toggle = useBorrowModalToggle();
+
+  const borrow = useBorrow();
+
+  const { data: loanableAmount } = useLoanableAmount();
+  const { data: maxBorrow } = useMaxBorrow();
+
+  const {
+    errors,
+    formState,
+    handleSubmit,
+    register,
+    setValue,
+    watch,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+
+  const { isDirty, isSubmitting } = formState;
+
+  useEffect(() => {
+    reset();
+  }, [open]);
+
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
+
+  const calcBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
+
+  const calcMaxIncludingFee = roundDown(creditLimit * (1 - fee));
+
+  /**
+   * Handle fee logic if the amount is the calculated max value instead of calculating the fee based on the amount passed, which in the case of using the "Max" prefill would have already had the fee taken out of it.
+   */
+  const calculateFee =
+    amount === calcMaxIncludingFee
+      ? roundDown(creditLimit * fee)
+      : amount * fee;
+
+  const calcNewBalanceOwed = calcBalanceOwed + amount + calculateFee;
+
+  const newBalanceOwed = calcNewBalanceOwed.toFixed(2);
+
+  const calcNewCredit = roundDown(creditLimit) - amount - calculateFee;
+
+  const newAvailableCredit =
+    calcNewCredit <= 0 ? Number(0).toFixed(2) : calcNewCredit.toFixed(2);
+
+  const nextPaymentDue =
+    paymentDueDate !== "-" &&
+    paymentDueDate !== "No Payment Due" &&
+    calcBalanceOwed > 0
+      ? paymentDueDate
+      : paymentPeriod;
+
+  const onSubmit = async (data) => {
+    const { amount } = data;
+
+    try {
+      const { hash } = await borrow(amount);
+
+      if (open) toggle();
+
+      await getReceipt(hash, library);
+
+      await onComplete();
+    } catch (err) {
+      handleTxError(err);
+    }
+  };
+
+  const handleSetMax = () =>
+    setValue("amount", calcMaxIncludingFee, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
+  const handleValidate = async (val) => {
+    if (isOverdue) return errorMessages.overdueBalance;
+
+    if (val > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
+
+    if (val > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
+
+    if (val > loanableAmount) return errorMessages.notEnoughPoolDAI;
+
+    if (val < 1.0) return errorMessages.minDAIBorrow;
+
+    if (!val) return errorMessages.required;
+
+    return true;
+  };
+
+  return (
+    <Modal isOpen={open} onDismiss={toggle}>
+      <ModalHeader title="Borrow" onDismiss={toggle} />
+      <form
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
+      >
+        <p className="mb-4">How much would you like to borrow?</p>
+
+        <Input
+          autoFocus
+          chip="DAI"
+          id="amount"
+          name="amount"
+          step="0.01"
+          type="number"
+          label="Amount"
+          placeholder="0.00"
+          setMaxValue={calcMaxIncludingFee}
+          setMax={handleSetMax}
+          error={errors.amount}
+          ref={register({
+            validate: handleValidate,
+          })}
+        />
+
+        <LabelPair
+          className="mt-4"
+          label="New balance owed"
+          value={newBalanceOwed}
+          valueType="DAI"
+        />
+
+        <div className="flex justify-end mb-4">
+          <Tooltip label={feeTip}>
+            <span className="inline-flex items-center text-xs cursor-help">
+              <div className="mr-2">
+                <Info />
+              </div>
+              <span className="underline">
+                Includes fee of {calculateFee.toFixed(2)} DAI
+              </span>
+            </span>
+          </Tooltip>
+        </div>
+
+        <div className="divider" />
+
+        <dl className="flex justify-between py-2 items-center my-2 leading-tight">
+          <dt className="text-type-light">New available credit</dt>
+          <dd className="text-right">{`${newAvailableCredit} DAI`}</dd>
+        </dl>
+
+        <div className="divider" />
+
+        <dl className="flex justify-between py-2 items-center my-2 leading-tight">
+          <dt className="text-type-light">Next payment due</dt>
+          <dd className="text-right">{nextPaymentDue}</dd>
+        </dl>
+
+        <div className="divider" />
+
+        <div className="mt-6">
+          <Button
+            full
+            type="submit"
+            disabled={isSubmitting || !isDirty}
+            submitting={isSubmitting}
+          >
+            Confirm
+          </Button>
+        </div>
+      </form>
+    </Modal>
+  );
+};
+
+BorrowModal.propTypes = {
+  balanceOwed: PropTypes.number.isRequired,
+  creditLimit: PropTypes.number.isRequired,
+  fee: PropTypes.number.isRequired,
+  onComplete: PropTypes.func.isRequired,
+  paymentDueDate: PropTypes.string.isRequired,
+  paymentPeriod: PropTypes.string.isRequired,
+  isOverdue: PropTypes.bool.isRequired,
+};
+
+export default BorrowModal;

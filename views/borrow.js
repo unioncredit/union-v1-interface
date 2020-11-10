@@ -1,11 +1,11 @@
 import ApplicationCard from "components/ApplicationCard";
-import BorrowModal from "components/BorrowModal";
-import { useBorrowModalToggle } from "components/BorrowModal/state";
+import BorrowModal from "components/modals/BorrowModal";
+import { useBorrowModalToggle } from "components/modals/BorrowModal/state";
 import Button from "components/button";
 import LabelPair from "components/labelPair";
-import RepayModal from "components/RepayModal";
-import { useRepayModalToggle } from "components/RepayModal/state";
-import SuccessModal from "components/SuccessModal";
+import RepayModal from "components/modals/RepayModal";
+import { useRepayModalToggle } from "components/modals/RepayModal/state";
+import SuccessModal from "components/modals/SuccessModal";
 import TransactionList from "components/TransactionList";
 import { UtilizationBarWithPercentage } from "components/utilizationBar";
 import useBorrowData from "hooks/useBorrowData";

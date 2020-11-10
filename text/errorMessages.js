@@ -1,5 +1,5 @@
-import { useBorrowModalToggle } from "components/BorrowModal/state";
-import { useRepayModalToggle } from "components/RepayModal/state";
+import { useBorrowModalToggle } from "components/modals/BorrowModal/state";
+import { useRepayModalToggle } from "components/modals/RepayModal/state";
 import { Fragment } from "react";
 
 const OverdueBalanceMessage = () => {
