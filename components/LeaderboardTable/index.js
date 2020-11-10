@@ -2,7 +2,7 @@ import TablePagination from "components/TablePagination";
 import { Fragment, useMemo } from "react";
 import { usePagination, useSortBy, useTable } from "react-table";
 import { renderSortIcons } from "util/tables";
-import Address from "../address";
+import Address from "../Address";
 import Skeleton from "../Skeleton";
 
 const LeaderboardTableRowSkeleton = () => (

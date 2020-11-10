@@ -5,8 +5,8 @@ import useCopy from "hooks/useCopy";
 import useENSName from "hooks/useENSName";
 import { memo } from "react";
 import truncateAddress from "util/truncateAddress";
-import Identicon from "./identicon";
-import ProfileImage from "./ProfileImage";
+import Identicon from "../identicon";
+import ProfileImage from "../ProfileImage";
 
 const Address = ({ address, copyable = false }) => {
   const ENSName = useENSName(address);

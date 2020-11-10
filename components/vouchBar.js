@@ -1,6 +1,6 @@
 import pastels from "lib/pastels";
 import Tooltip from "@reach/tooltip";
-import Address from "components/address";
+import Address from "components/Address";
 
 const Vouch = ({ width, address, index }) => {
   return (

@@ -6,7 +6,7 @@ import Chevron from "svgs/Chevron";
 import Info from "svgs/Info";
 import { utilizedVouchTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
-import Address from "../address";
+import Address from "../Address";
 import Button from "../button";
 import { useGetInvitedModalToggle } from "../GetInvitedModal/state";
 import PercentageBar from "../percentageBar";

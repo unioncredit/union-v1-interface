@@ -1,11 +1,8 @@
-import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
-import Chevron from "svgs/Chevron";
-import Address from "../components/address";
-import { useAutoCallback, useAutoEffect } from "hooks.macro";
 import useAllMemberInfo from "hooks/useAllMemberInfo";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo } from "react";
 import { useSortBy, useTable } from "react-table";
+import Chevron from "svgs/Chevron";
+import Address from "../components/Address";
 
 /**
  * @name renderHeadRowSorting

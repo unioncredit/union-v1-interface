@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import truncateAddress from "util/truncateAddress";
-import Address from "../address";
+import Address from "../Address";
 import AdjustTrustForm from "../adjustTrustForm";
 import Button from "../button";
 import HealthBar from "../healthBar";

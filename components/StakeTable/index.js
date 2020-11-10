@@ -8,7 +8,7 @@ import { usePagination, useSortBy, useTable } from "react-table";
 import Info from "svgs/Info";
 import { healthTip } from "text/tooltips";
 import { renderSortIcons } from "util/tables";
-import Address from "../address";
+import Address from "../Address";
 import AddressModal from "../AddressModal";
 import { useAddressModalToggle } from "../AddressModal/state";
 import { useApplicationModalToggle } from "../ApplicationModal/state";
