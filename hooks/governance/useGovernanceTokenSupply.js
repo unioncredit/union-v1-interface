@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import { useGovernanceTokenContract } from "hooks/governance/useGovernanceContract";
+import { useGovernanceTokenContract } from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
 const getGovernanceTokenSupply = (contract) => async () => {

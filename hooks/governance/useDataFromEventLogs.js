@@ -1,7 +1,7 @@
 import { defaultAbiCoder, Interface } from "@ethersproject/abi";
 import { useWeb3React } from "@web3-react/core";
 import { GOV_ABI } from "constants/governance";
-import useGovernanceContract from "hooks/governance/useGovernanceContract";
+import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
 const fetchData = (contract, library) => async () => {

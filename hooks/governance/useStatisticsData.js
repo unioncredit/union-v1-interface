@@ -8,7 +8,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useUserContract from "hooks/contracts/useUserContract";
 import useSWR from "swr";
-import { useGovernanceTokenContract } from "./useGovernanceContract";
+import { useGovernanceTokenContract } from "../contracts/useGovernanceContract";
 
 const getStatisticsData = (
   marketRegistryContract,

@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useGovernanceContract from "./useGovernanceContract";
+import useGovernanceContract from "../contracts/useGovernanceContract";
 
 const getProposalHistory = (contract, library) => async (_, id) => {
   const params = { fromBlock: 9601459, toBlock: "latest" };

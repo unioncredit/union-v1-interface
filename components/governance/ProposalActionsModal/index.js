@@ -2,7 +2,7 @@ import { defaultAbiCoder } from "@ethersproject/abi";
 import Button from "components/button";
 import Input, { Select } from "components/input";
 import Modal, { ModalHeader } from "components/modal";
-import useGovernanceContract from "hooks/governance/useGovernanceContract";
+import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 import {
   useProposalActionsModalOpen,

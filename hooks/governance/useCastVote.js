@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import useGovernanceContract from "./useGovernanceContract";
+import useGovernanceContract from "../contracts/useGovernanceContract";
 
 export default function useCastVote() {
   const governanceContract = useGovernanceContract();

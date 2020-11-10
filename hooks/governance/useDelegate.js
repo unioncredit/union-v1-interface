@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useGovernanceTokenContract } from "./useGovernanceContract";
+import { useGovernanceTokenContract } from "../contracts/useGovernanceContract";
 
 export default function useDelegate() {
   const governanceTokenContract = useGovernanceTokenContract();

@@ -1,4 +1,4 @@
-import useGovernanceContract from "hooks/governance/useGovernanceContract";
+import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
 const getProposalCount = (contract) => async () => {
