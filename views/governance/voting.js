@@ -12,8 +12,8 @@ export default function VotingView() {
   return (
     <Fragment>
       <div className="container">
-        <div className="pt-16 grid grid-cols-3 gap-4">
-          <div className="col-span-1">
+        <div className="pt-16 md:grid grid-cols-3 gap-4">
+          <div className="col-span-1 mb-8 md:mb-0">
             <h2>Your voting wallet</h2>
             <div className="pt-6">
               <GovernanceVotingWallet address={account} />

@@ -4,7 +4,6 @@ import GovernanceProposal, {
 import TablePagination from "components/TablePagination";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 import usePagination from "hooks/usePagination";
-import { Fragment } from "react";
 
 const GovernanceVotingHistory = ({ address }) => {
   const { data } = useUserProposalVoteHistory(address);
@@ -19,8 +18,8 @@ const GovernanceVotingHistory = ({ address }) => {
   const proposals = data ? currentData() : [];
 
   return (
-    <div className="bg-white rounded border">
-      <div className="p-2">
+    <div className="md:bg-white md:rounded md:border">
+      <div className="md:p-2">
         {proposals?.length > 0 ? (
           proposals?.map((proposal, i) => {
             const formatVote = proposal.receipt.hasVoted
@@ -34,18 +33,18 @@ const GovernanceVotingHistory = ({ address }) => {
             );
           })
         ) : (
-          <Fragment>
+          <div className="space-y-8 md:space-y-0">
             <GovernanceProposalSkeleton />
             <GovernanceProposalSkeleton />
             <GovernanceProposalSkeleton />
             <GovernanceProposalSkeleton />
             <GovernanceProposalSkeleton />
-          </Fragment>
+          </div>
         )}
       </div>
 
       {proposals?.length > 5 && (
-        <div className="px-6 pb-4">
+        <div className="md:px-6 md:pb-4">
           <TablePagination
             pageOptions={new Array(maxPage).fill("")}
             pageCount={maxPage}

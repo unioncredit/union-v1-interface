@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import Skeleton from "components/Skeleton";
-import dayjs from "dayjs";
 import Link from "next/link";
 import Offchain from "svgs/Offchain";
 import Onchain from "svgs/Onchain";
@@ -108,37 +107,34 @@ const GovernanceProposal = ({
   status = "executed",
   vote,
 }) => {
-  let dateText = (
-    <div className="text-type-light">
-      <span className="capitalize">{status}</span>
-    </div>
-  );
-
-  if (Number(date) > 0) {
-    dateText = (
-      <div className="text-type-light">
-        <span className="capitalize">{status}</span> on{" "}
-        {dayjs.unix(date).format("MMM D, YYYY")}
-      </div>
-    );
-  }
-
   return (
     <Link href="/governance/proposals/[id]" as={`/governance/proposals/${id}`}>
-      <a className="p-4 flex items-center">
+      <a className="md:p-4 flex items-center">
         <div className="flex-1 space-y-3">
           <p className="text-lg leading-tight font-semibold">{title}</p>
 
-          <div className="flex items-center space-x-4">
-            {vote && <ProposalVoteBadge vote={vote} />}
+          <div className="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0">
+            <div className="flex space-x-4 items-center">
+              {vote && <ProposalVoteBadge vote={vote} />}
 
-            <ProposalTypeBadge type={type} />
+              <ProposalTypeBadge type={type} />
 
-            {dateText}
+              {!vote && (
+                <div className="block md:hidden">
+                  <ProposalStatusBadge status={status} />
+                </div>
+              )}
+            </div>
+
+            <div className="text-type-light capitalize leading-none">
+              {date}
+            </div>
           </div>
         </div>
 
-        <ProposalStatusBadge status={status} />
+        <div className="hidden md:block">
+          <ProposalStatusBadge status={status} />
+        </div>
       </a>
     </Link>
   );
@@ -148,7 +144,7 @@ export default GovernanceProposal;
 
 export const GovernanceProposalSkeleton = () => {
   return (
-    <div className="p-4 flex items-center">
+    <div className="md:p-4 flex items-center">
       <div className="flex-1 space-y-3">
         <div className="flex">
           <Skeleton height={22} width={400} />
@@ -161,9 +157,11 @@ export const GovernanceProposalSkeleton = () => {
         </div>
       </div>
 
-      <p className="leading-tight">
-        <Skeleton width={110} height={32} />
-      </p>
+      <div className="hidden md:block">
+        <p className="leading-tight">
+          <Skeleton width={110} height={32} />
+        </p>
+      </div>
     </div>
   );
 };

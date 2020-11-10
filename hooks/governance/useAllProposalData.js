@@ -95,7 +95,7 @@ const getAllProposalData = (
         try {
           const block = await library.getBlock(proposal.endBlock);
 
-          date = `Executed on ${dayjs
+          date = `${proposal.status} on ${dayjs
             .unix(block.timestamp.toString())
             .format("MMM D, YYYY")}`;
         } catch (err) {
