@@ -1,5 +1,5 @@
 import { getWalletIcon, getWalletName } from "util/formatWalletDetails";
-import Button from "../button";
+import Button from "../../../button";
 
 const WalletOption = ({ name, activating, disabled, onClick }) => (
   <Button

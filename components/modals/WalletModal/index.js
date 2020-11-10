@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import WalletOption from "components/WalletOption";
+import WalletOption from "./WalletOption";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
