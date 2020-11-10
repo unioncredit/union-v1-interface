@@ -3,16 +3,16 @@ import { Contract } from "@ethersproject/contracts";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
-import useCurrentToken from "hooks/useCurrentToken";
+import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
-import useTokenContract from "hooks/contracts/useTokenContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useRepay() {
   const { library, account } = useWeb3React();
-  const tokenAddress = useCurrentToken();
+  const DAI = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
-  const tokenContract = useTokenContract(tokenAddress);
+  const DAIContract = useERC20Contract(DAI);
 
   return useCallback(
     /**
@@ -21,7 +21,7 @@ export default function useRepay() {
      * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
      */
     async (amount) => {
-      const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+      const marketAddress = await marketRegistryContract.tokens(DAI);
 
       const lendingMarketContract = new Contract(
         marketAddress,
@@ -31,10 +31,10 @@ export default function useRepay() {
 
       const repayAmount = parseUnits(String(amount), 18);
 
-      const allowance = await tokenContract.allowance(account, marketAddress);
+      const allowance = await DAIContract.allowance(account, marketAddress);
 
       if (allowance.lt(repayAmount))
-        await tokenContract.approve(marketAddress, MaxUint256);
+        await DAIContract.approve(marketAddress, MaxUint256);
 
       let gasLimit;
       try {

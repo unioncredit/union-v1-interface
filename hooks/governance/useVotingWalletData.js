@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import { useGovernanceTokenContract } from "hooks/contracts/useGovernanceContract";
+import useUnionContract from "hooks/contracts/useUnionContract";
 import useSWR from "swr";
 
 const getVotingWalletData = (governanceTokenContract) => async (_, address) => {
@@ -20,13 +20,13 @@ const getVotingWalletData = (governanceTokenContract) => async (_, address) => {
 };
 
 export default function useVotingWalletData(address) {
-  const governanceTokenContract = useGovernanceTokenContract();
+  const contract = useUnionContract();
 
-  const shouldFetch = typeof address === "string" && !!governanceTokenContract;
+  const shouldFetch = typeof address === "string" && !!contract;
 
   return useSWR(
     shouldFetch ? ["VotingWalletData", address] : null,
-    getVotingWalletData(governanceTokenContract),
+    getVotingWalletData(contract),
     {
       refreshInterval: 10 * 1000,
       dedupingInterval: 10 * 1000,

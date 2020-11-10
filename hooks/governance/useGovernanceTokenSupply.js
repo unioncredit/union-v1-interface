@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import { useGovernanceTokenContract } from "hooks/contracts/useGovernanceContract";
+import useUnionContract from "hooks/contracts/useUnionContract";
 import useSWR from "swr";
 
 const getGovernanceTokenSupply = (contract) => async () => {
@@ -9,13 +9,13 @@ const getGovernanceTokenSupply = (contract) => async () => {
 };
 
 export default function useGovernanceTokenSupply() {
-  const tokenContract = useGovernanceTokenContract();
+  const contract = useUnionContract();
 
-  const shouldFetch = Boolean(tokenContract);
+  const shouldFetch = Boolean(contract);
 
   return useSWR(
     shouldFetch ? "GovernanceTokenSupply" : null,
-    getGovernanceTokenSupply(tokenContract),
+    getGovernanceTokenSupply(contract),
     {
       shouldRetryOnError: false,
       refreshWhenHidden: false,

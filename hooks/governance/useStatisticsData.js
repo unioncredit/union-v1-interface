@@ -4,16 +4,16 @@ import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import useAssetContract from "hooks/contracts/useAssetContract";
-import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
+import useUnionContract from "hooks/contracts/useUnionContract";
 import useUserContract from "hooks/contracts/useUserContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
-import { useGovernanceTokenContract } from "../contracts/useGovernanceContract";
 
 const getStatisticsData = (
   marketRegistryContract,
   userContract,
-  tokenContract,
+  unionContract,
   assetContract
 ) => async (_, DAI, chainId, library) => {
   const marketAddress = await marketRegistryContract.tokens(DAI);
@@ -32,7 +32,7 @@ const getStatisticsData = (
 
   const totalBorrowed = await marketContract.totalBorrows();
 
-  const totalSupply = await tokenContract.totalSupply();
+  const totalSupply = await unionContract.totalSupply();
 
   const ratePreBlock = await marketContract.borrowRatePerBlock();
 
@@ -55,13 +55,13 @@ export default function useStatisticsData() {
 
   const userContract = useUserContract();
   const marketRegistryContract = useMarketRegistryContract();
-  const tokenContract = useGovernanceTokenContract();
+  const unionContract = useUnionContract();
   const assetContract = useAssetContract();
 
   const shouldFetch =
     !!marketRegistryContract &&
     !!userContract &&
-    !!tokenContract &&
+    !!unionContract &&
     !!assetContract &&
     typeof chainId === "number" &&
     typeof DAI === "string" &&
@@ -72,7 +72,7 @@ export default function useStatisticsData() {
     getStatisticsData(
       marketRegistryContract,
       userContract,
-      tokenContract,
+      unionContract,
       assetContract
     )
   );

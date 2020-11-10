@@ -1,8 +1,8 @@
+import useUnionContract from "hooks/contracts/useUnionContract";
 import { useCallback } from "react";
-import { useGovernanceTokenContract } from "../contracts/useGovernanceContract";
 
 export default function useDelegate() {
-  const governanceTokenContract = useGovernanceTokenContract();
+  const contract = useUnionContract();
 
   return useCallback(
     /**
@@ -11,7 +11,7 @@ export default function useDelegate() {
      * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
      */
     async (address) => {
-      return governanceTokenContract.delegate(address);
+      return contract.delegate(address);
     }
   );
 }
