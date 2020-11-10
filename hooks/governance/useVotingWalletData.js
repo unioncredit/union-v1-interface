@@ -1,5 +1,4 @@
 import { formatUnits } from "@ethersproject/units";
-import { AddressZero } from "constants/variables";
 import { useGovernanceTokenContract } from "hooks/governance/useGovernanceContract";
 import useSWR from "swr";
 
@@ -16,8 +15,7 @@ const getVotingWalletData = (governanceTokenContract) => async (_, address) => {
   return {
     balanceOf: parseFloat(formatUnits(balanceOf, 18)),
     currentVotes: parseFloat(formatUnits(currentVotes, 18)),
-    delegates:
-      delegates === AddressZero || delegates === address ? "Self" : delegates,
+    delegates: delegates === address ? "Self" : delegates,
   };
 };
 
