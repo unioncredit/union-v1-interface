@@ -7,7 +7,6 @@ import {
   ProposalTypeBadge,
 } from "components/governance/GovernanceProposal";
 import GovernanceProposalHistory from "components/governance/GovernanceProposalHistory";
-// import GovernanceProposalVoteHistory from "components/governance/GovernanceProposalVoteHistory";
 import GovernanceProposalVotePanel from "components/governance/GovernanceProposalVotePanel";
 import Skeleton from "components/Skeleton";
 import useProposalData from "hooks/governance/useProposalData";
@@ -169,11 +168,6 @@ export default function ProposalView() {
                 <Loading.Description />
               )}
             </div>
-
-            {/* Spacer */}
-            {/* <div className="h-12" /> */}
-
-            {/* <GovernanceProposalVoteHistory id={id} /> */}
           </div>
 
           <div className="col-span-1" />
