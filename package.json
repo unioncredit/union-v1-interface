@@ -24,11 +24,11 @@
     ]
   },
   "dependencies": {
-    "@ethersproject/address": "^5.0.3",
-    "@ethersproject/bignumber": "^5.0.6",
-    "@ethersproject/contracts": "^5.0.3",
-    "@ethersproject/providers": "^5.0.7",
-    "@ethersproject/units": "^5.0.3",
+    "@ethersproject/address": "^5.0.5",
+    "@ethersproject/bignumber": "^5.0.8",
+    "@ethersproject/contracts": "^5.0.5",
+    "@ethersproject/providers": "^5.0.14",
+    "@ethersproject/units": "^5.0.6",
     "@reach/dialog": "^0.11.2",
     "@reach/menu-button": "^0.11.2",
     "@reach/tooltip": "^0.11.2",
