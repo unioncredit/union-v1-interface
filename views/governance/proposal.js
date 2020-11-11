@@ -178,6 +178,7 @@ export default function ProposalView() {
               forCount={data?.forCount}
               againstCount={data?.againstCount}
               status={data?.status}
+              proposalId={id}
             />
 
             {/* Spacer */}

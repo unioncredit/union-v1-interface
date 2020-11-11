@@ -1,16 +1,27 @@
 import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
+import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import { useProposalVoteModalToggle } from "components/governance/ProposalVoteModal/state";
 import VoteBar from "components/governance/VoteBar";
 import Skeleton from "components/Skeleton";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
+import useProposalVoteReceipt from "hooks/governance/useProposalVoteReceipt";
 import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 
-const GovernanceProposalVotePanel = ({ forCount, againstCount, status }) => {
+const GovernanceProposalVotePanel = ({
+  forCount,
+  againstCount,
+  status,
+  proposalId,
+}) => {
+  const { account } = useWeb3React();
+
+  const { data: voteReceipt } = useProposalVoteReceipt(account, proposalId);
+
   const hasVotes = Boolean(forCount >= 0 && againstCount >= 0);
 
   const forVotes = forCount;
@@ -135,7 +146,9 @@ const GovernanceProposalVotePanel = ({ forCount, againstCount, status }) => {
             <div className="h-10" />
 
             <Button onClick={toggleProposalVoteModal} full>
-              Vote for this proposal
+              {voteReceipt?.hasVoted
+                ? "Change your vote"
+                : "Vote for this proposal"}
             </Button>
           </Fragment>
         )}
