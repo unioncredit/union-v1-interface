@@ -198,8 +198,11 @@ export const GovernanceVotingProfile = ({ address }) => {
     <div className="bg-white rounded border">
       <div className="p-4 sm:p-6 border-b">
         <div className="flex items-center space-x-4">
-          <Identicon address={address} size={48} />
-
+          {address ? (
+            <Identicon address={address} size={48} />
+          ) : (
+            <Skeleton width={48} height={48} circle />
+          )}
           {has3BoxName ? (
             <div>
               <p className="text-lg font-semibold">{threeBoxData.name}</p>
@@ -207,9 +210,13 @@ export const GovernanceVotingProfile = ({ address }) => {
                 {truncateAddress(address, 6)}
               </p>
             </div>
-          ) : (
+          ) : address ? (
             <p title={address} className="text-lg font-semibold">
               {truncateAddress(address, 6)}
+            </p>
+          ) : (
+            <p className="text-lg">
+              <Skeleton width={160} />
             </p>
           )}
         </div>
