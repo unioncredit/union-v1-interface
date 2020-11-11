@@ -13,14 +13,11 @@ export default function AddressView() {
     <Fragment>
       <div className="container">
         {/* Spacer */}
-        <div className="h-8" />
+        <div className="h-6" />
 
-        <div>
+        <div className="h-12 flex items-center">
           <Back />
         </div>
-
-        {/* Spacer */}
-        <div className="h-8" />
 
         <div className="pt-16 md:grid grid-cols-3 gap-4">
           <div className="col-span-1 mb-8 md:mb-0">

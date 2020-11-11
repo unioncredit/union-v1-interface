@@ -23,6 +23,8 @@ import { useChooseDelegationModalToggle } from "../ChooseDelegationModal/state";
 import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
+  if (delegates === AddressZero) return "Undelegated";
+
   if (isAddress(delegates))
     return (
       <Link href={`/governance/address/${delegates}`}>
