@@ -14,6 +14,7 @@ import handleTxError from "util/handleTxError";
 import { toPercent } from "util/numbers";
 import VoteBar from "../VoteBar";
 import { useProposalVoteModalOpen, useProposalVoteModalToggle } from "./state";
+import useAllProposalData from "hooks/governance/useAllProposalData";
 
 const VoteRadioButton = forwardRef(
   /**
@@ -74,6 +75,8 @@ const ProposalVoteModal = ({ id }) => {
   const open = useProposalVoteModalOpen();
   const toggle = useProposalVoteModalToggle();
 
+  const { mutate: updateProposalData } = useAllProposalData();
+
   const data = useProposalData(id);
 
   /**
@@ -101,6 +104,8 @@ const ProposalVoteModal = ({ id }) => {
       if (open) toggle();
 
       await getReceipt(hash, library);
+
+      await updateProposalData();
     } catch (err) {
       handleTxError(err);
     }
