@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import WaitlistSignupForm from "./WaitlistSignupForm";
+import WaitlistSignupForm from "./waitlistSignupForm";
 
 export default function WaitlistView() {
   return (

@@ -4,8 +4,8 @@ import Input from "components/input";
 import TweetButton from "components/TweetButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import errorMessages from "util/errorMessages";
 import EMAIL_REGEX from "util/emailRegex";
+import errorMessages from "util/errorMessages";
 
 const checkPlace = async (email) => {
   const res = await fetch("/api/waitlist/place", {
