@@ -123,3 +123,14 @@ export const feeTip = (
     <p>An origination fee is charged to cover the upfront risk of the loan.</p>
   </div>
 );
+
+export const quorumTip = (
+  <div className="tooltip-text">
+    <p>Votes Cast</p>
+    <p>
+      The percent of votes cast related to the total token supply. The{" "}
+      <strong>percent quorum</strong> is the threshold of votes for the proposal
+      to pass.
+    </p>
+  </div>
+);

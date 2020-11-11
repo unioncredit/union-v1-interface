@@ -11,6 +11,7 @@ import useProposalVoteReceipt from "hooks/governance/useProposalVoteReceipt";
 import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
+import { quorumTip } from "util/tooltips";
 
 const GovernanceProposalVotePanel = ({
   forCount,
@@ -108,19 +109,15 @@ const GovernanceProposalVotePanel = ({
 
         <div>
           <div className="flex justify-between items-center">
-            <Tooltip label="Quorum Tooltip">
+            <Tooltip label={quorumTip}>
               <div className="flex items-center space-x-2">
-                <div className="text-type-light leading-tight">Quorum</div>
+                <div className="text-type-light leading-tight">Votes Cast</div>
                 <Info />
               </div>
             </Tooltip>
 
             <div className="text-lg font-semibold leading-tight">
-              {hasVotes ? (
-                toPercent(totalVotePercent / quorumPercent)
-              ) : (
-                <Skeleton width={40} />
-              )}
+              {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
             </div>
           </div>
 
@@ -132,7 +129,7 @@ const GovernanceProposalVotePanel = ({
               {quorum && totalSupply ? (
                 <div className="leading-tight px-1 py-2px rounded bg-quorum-pure text-quorum-light font-semibold text-sm">{`${toPercent(
                   quorumPercent
-                )} needed`}</div>
+                )} quorum`}</div>
               ) : (
                 <div className="leading-none">
                   <Skeleton width={92} height={21} />
