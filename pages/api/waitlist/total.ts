@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import client from "lib/fauna/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function place(req, res) {
+export default async function total(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     try {
       const query = gql`
@@ -10,12 +11,16 @@ export default async function place(req, res) {
         }
       `;
 
-      const data = await client.request(query);
+      interface Data {
+        getWaitlistTotal: number;
+      }
+
+      const { getWaitlistTotal } = await client.request<Data>(query);
 
       res.status(200).json({
         success: true,
         result: {
-          total: data.getWaitlistTotal,
+          total: getWaitlistTotal,
         },
       });
     } catch (e) {

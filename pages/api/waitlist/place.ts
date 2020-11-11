@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import client from "lib/fauna/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function place(req, res) {
+export default async function place(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { email } = req.body;
 
@@ -22,9 +23,17 @@ export default async function place(req, res) {
         email,
       };
 
-      const data = await client.request(query, variables);
+      interface Data {
+        findPlaceInLine: {
+          position: number;
+          total: number;
+          hasGoldenTicket: boolean;
+        };
+      }
 
-      res.status(200).json({ success: true, result: data.findPlaceInLine });
+      const { findPlaceInLine } = await client.request<Data>(query, variables);
+
+      res.status(200).json({ success: true, result: findPlaceInLine });
     } catch (e) {
       res.status(400).json({ success: false, error: e.message });
     }

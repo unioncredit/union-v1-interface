@@ -1,9 +1,13 @@
 import { gql } from "graphql-request";
 import client from "lib/fauna/client";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async function signup(req, res) {
+export default async function signup(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   if (req.method === "POST") {
-    const { email } = req.body;
+    const { email }: { email: string } = req.body;
 
     try {
       if (!email) throw new Error("'email' is Required");
@@ -21,12 +25,19 @@ export default async function signup(req, res) {
         email,
       };
 
-      const data = await client.request(mutation, variables);
+      interface Data {
+        createSignup: {
+          id: string;
+          timestamp: number;
+        };
+      }
+
+      const { createSignup } = await client.request<Data>(mutation, variables);
 
       res.status(200).json({
         success: true,
         result: {
-          timestamp: data.createSignup.timestamp,
+          timestamp: createSignup.timestamp,
         },
       });
     } catch (e) {
