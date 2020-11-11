@@ -26,10 +26,14 @@ const DelegateVotingModal = ({ address }) => {
   const open = useDelegateVotingModalOpen();
   const toggle = useDelegateVotingModalToggle();
 
-  const { register, handleSubmit, errors, formState } = useForm({
-    defaultValues: { address: address ?? "" },
-  });
+  const { register, handleSubmit, errors, formState, setValue } = useForm();
   const { isSubmitting } = formState;
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (address) setValue("address", address);
+    }, 100);
+  }, [open, address]);
 
   const [knownScamAddress, knownScamAddressSet] = useState(false);
 
