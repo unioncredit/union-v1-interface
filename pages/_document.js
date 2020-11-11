@@ -5,7 +5,7 @@ const META_TAGS = {
     "Credit backed by trust. Union works without the need for collateral, credit score, or revealing personal information on a public ledger.",
 };
 
-class MyDocument extends Document {
+export default class UnionDocument extends Document {
   render() {
     return (
       <Html lang="en" className="font-medium antialiased text-type-base">
@@ -61,5 +61,3 @@ class MyDocument extends Document {
     );
   }
 }
-
-export default MyDocument;
