@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
-import CreateProposalModal from "components/governance/CreateProposalModal";
-import DelegateVotingModal from "components/governance/AccountVotingWallet/node_modules/components/governance/DelegateVotingModal";
+import CreateProposalModal from "components/governance/modals/CreateProposalModal";
+import DelegateVotingModal from "components/governance/modals/DelegateVotingModal";
 import AccountVoteHistory from "components/governance/AccountVoteHistory";
 import AccountVotingWallet from "components/governance/AccountVotingWallet";
 import { Fragment } from "react";

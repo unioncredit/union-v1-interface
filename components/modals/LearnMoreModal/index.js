@@ -1,6 +1,6 @@
 import { useGetInvitedModalToggle } from "../GetInvitedModal/state";
 import { useRouter } from "next/router";
-import { Solo, Together } from "../../benefits";
+import { Solo, Together } from "views/home/benefits";
 import Modal, { CloseButton } from "../../modal";
 import { useLearnMoreModalOpen, useLearnMoreModalToggle } from "./state";
 

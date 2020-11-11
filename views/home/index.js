@@ -1,7 +1,7 @@
-import Benefits from "components/benefits";
+import Benefits from "./benefits";
 import Button from "components/button";
 import { useWalletModalToggle } from "components/modals/WalletModal/state";
-import Snippet from "components/snippet";
+import Snippet from "./snippet";
 import Image from "next/image";
 import { Fragment } from "react";
 
