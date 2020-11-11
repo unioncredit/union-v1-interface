@@ -13,6 +13,6 @@ export default function useWithdrawRewards() {
     async () => {
       return userContract.withdrawRewards(tokenAddress);
     },
-    []
+    [tokenAddress, userContract]
   );
 }

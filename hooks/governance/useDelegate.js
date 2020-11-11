@@ -2,7 +2,7 @@ import useUnionContract from "hooks/contracts/useUnionContract";
 import { useCallback } from "react";
 
 export default function useDelegate() {
-  const contract = useUnionContract();
+  const unionContract = useUnionContract();
 
   return useCallback(
     /**
@@ -11,8 +11,8 @@ export default function useDelegate() {
      * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
      */
     async (address) => {
-      return contract.delegate(address);
+      return unionContract.delegate(address);
     },
-    []
+    [unionContract]
   );
 }

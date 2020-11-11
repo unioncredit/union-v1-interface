@@ -50,6 +50,6 @@ export default function useRepay() {
         gasLimit,
       });
     },
-    []
+    [account, DAI, marketRegistryContract, DAIContract]
   );
 }

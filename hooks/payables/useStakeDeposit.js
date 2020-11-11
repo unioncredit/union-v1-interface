@@ -45,6 +45,6 @@ export default function useStakeDeposit() {
         gasLimit,
       });
     },
-    []
+    [account, chainId, userContract, DAI, DAIContract]
   );
 }

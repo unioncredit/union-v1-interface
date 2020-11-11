@@ -30,6 +30,6 @@ export default function useRemoveVouch() {
         gasLimit,
       });
     },
-    []
+    [account, tokenAddress, memberContract]
   );
 }

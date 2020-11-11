@@ -41,6 +41,6 @@ export default function useBorrow() {
         gasLimit,
       });
     },
-    []
+    [tokenAddress, marketRegistryContract]
   );
 }

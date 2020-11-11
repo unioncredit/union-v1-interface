@@ -18,6 +18,6 @@ export default function useStakeWithdraw() {
 
       return userContract.unstake(tokenAddress, stakeAmount.toString());
     },
-    []
+    [userContract, tokenAddress]
   );
 }

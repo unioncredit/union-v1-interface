@@ -37,6 +37,6 @@ export default function useAdjustTrust() {
         }
       );
     },
-    []
+    [memberContract, tokenAddress]
   );
 }

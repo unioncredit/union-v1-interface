@@ -27,6 +27,6 @@ export default function useApplyMember() {
         gasLimit,
       });
     },
-    [account]
+    [account, tokenAddress, memberContract]
   );
 }
