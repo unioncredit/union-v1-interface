@@ -115,7 +115,7 @@ const PercentOfTotalBadge = ({ value }) => {
   );
 };
 
-const VotingWallet = ({ address }) => {
+const AccountVotingWallet = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
@@ -181,9 +181,9 @@ const VotingWallet = ({ address }) => {
   );
 };
 
-export default VotingWallet;
+export default AccountVotingWallet;
 
-export const VotingProfile = ({ address }) => {
+export const ProfileVotingWallet = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
