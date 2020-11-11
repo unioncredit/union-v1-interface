@@ -1,7 +1,7 @@
 import Back from "components/Back";
 import AccountVoteHistory from "components/governance/AccountVoteHistory";
 import { ProfileVotingWallet } from "components/governance/AccountVotingWallet";
-import DelegateVotingModal from "components/governance/AccountVotingWallet/node_modules/components/governance/DelegateVotingModal";
+import DelegateVotingModal from "components/governance/modals/DelegateVotingModal";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 

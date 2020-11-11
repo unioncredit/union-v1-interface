@@ -3,8 +3,8 @@ import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import Badge from "components/Badge";
 import Button from "components/button";
-import { ViewDelegateVoting } from "components/governance/DelegateVotingModal";
-import { useDelegateVotingModalToggle } from "components/governance/DelegateVotingModal/state";
+import { ViewDelegateVoting } from "components/governance/modals/DelegateVotingModal";
+import { useDelegateVotingModalToggle } from "components/governance/modals/DelegateVotingModal/state";
 import Identicon from "components/identicon";
 import Skeleton from "components/Skeleton";
 import WithdrawRewards from "components/withdrawRewards";
@@ -20,7 +20,7 @@ import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
 import { useChooseDelegationModalToggle } from "../modals/ChooseDelegationModal/state";
-import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
+import { useCreateProposalModalToggle } from "../modals/CreateProposalModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
   if (delegates === AddressZero) return "Undelegated";
