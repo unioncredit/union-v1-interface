@@ -171,6 +171,11 @@ module.exports = {
     "./views/**/*.js",
     "./svgs/**/*.js",
     "./text/**/*.js",
+    "./components/**/*.tsx",
+    "./pages/**/*.tsx",
+    "./views/**/*.tsx",
+    "./svgs/**/*.tsx",
+    "./text/**/*.tsx",
   ],
   corePlugins: {
     float: false,
