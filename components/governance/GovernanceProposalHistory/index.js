@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import LinkExternal from "svgs/LinkExternal";
 import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
+import Link from "next/link";
 
 const Event = ({ name, date, tx }) => {
   const { chainId } = useWeb3React();
@@ -90,7 +91,13 @@ const GovernanceProposalHistory = ({ id }) => {
                     name={
                       <span>
                         Proposed by{" "}
-                        <u>{truncateAddress(event.args.proposer)}</u>
+                        <Link
+                          href={`/governance/address/${event.args.proposer}`}
+                        >
+                          <a>
+                            <u>{truncateAddress(event.args.proposer)}</u>
+                          </a>
+                        </Link>
                       </span>
                     }
                     tx={event.transactionHash}
