@@ -5,7 +5,7 @@ import Input, { Textarea } from "components/input";
 import Logo from "components/logo";
 import Modal from "components/modal";
 import useProposalMaxOperations from "hooks/governance/useProposalMaxOperations";
-import usePropose from "hooks/governance/usePropose";
+import usePropose from "hooks/payables/usePropose";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

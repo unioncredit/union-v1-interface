@@ -4,7 +4,7 @@ import classNames from "classnames";
 import Button from "components/button";
 import Modal, { ModalHeader } from "components/modal";
 import Skeleton from "components/Skeleton";
-import useCastVote from "hooks/governance/useCastVote";
+import useCastVote from "hooks/payables/useCastVote";
 import useProposalData from "hooks/governance/useProposalData";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { forwardRef, Fragment, useEffect } from "react";

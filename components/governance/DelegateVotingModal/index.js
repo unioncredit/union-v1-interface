@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input from "components/input";
 import Modal, { ModalHeader } from "components/modal";
-import useDelegate from "hooks/governance/useDelegate";
+import useDelegate from "hooks/payables/useDelegate";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
