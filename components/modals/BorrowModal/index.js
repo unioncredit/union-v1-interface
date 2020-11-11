@@ -122,13 +122,16 @@ const BorrowModal = ({
   const handleValidate = async (val) => {
     if (isOverdue) return errorMessages.overdueBalance;
 
-    if (val > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
+    if (Number(val) > Number(calcMaxIncludingFee))
+      return errorMessages.notEnoughCredit;
 
-    if (val > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
+    if (Number(val) > Number(maxBorrow))
+      return errorMessages.maxBorrow(maxBorrow);
 
-    if (val > loanableAmount) return errorMessages.notEnoughPoolDAI;
+    if (Number(val) > Number(loanableAmount))
+      return errorMessages.notEnoughPoolDAI;
 
-    if (val < 1.0) return errorMessages.minDAIBorrow;
+    if (Number(val) < 1.0) return errorMessages.minDAIBorrow;
 
     if (!val) return errorMessages.required;
 

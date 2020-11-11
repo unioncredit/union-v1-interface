@@ -1,3 +1,4 @@
+import { commify } from "@ethersproject/units";
 import { useBorrowModalToggle } from "components/modals/BorrowModal/state";
 import { useRepayModalToggle } from "components/modals/RepayModal/state";
 import { Fragment } from "react";
@@ -32,7 +33,8 @@ const errorMessages = {
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
   notEnoughPoolDAI: "Insufficient DAI available",
   overdueBalance: <OverdueBalanceMessage />,
-  maxBorrow: (max) => `The maximum borrow is ${Number(max).toFixed(2)} DAI`,
+  maxBorrow: (max) =>
+    `The maximum borrow is ${commify(Number(max).toFixed(2))} DAI`,
   minDAIBorrow: "The minimum borrow is 1.00 DAI",
   minVouch: "The minimum vouch is 1.00 DAI",
   minValuePointZeroOne: "Value must be greater than 0.01",
