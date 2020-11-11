@@ -3,6 +3,7 @@ import Button from "components/button";
 import Snippet from "components/snippet";
 import { useWalletModalToggle } from "components/modals/WalletModal/state";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function HomePage() {
   const toggleWalletModal = useWalletModalToggle();
@@ -141,14 +142,14 @@ export default function HomePage() {
                 </h2>
 
                 <div className="flex justify-center md:hidden pb-8">
-                  <img
-                    src="/images/become-your-own-bank.svg"
-                    alt="Become your own bank"
-                    loading="lazy"
-                    importance="low"
-                    decoding="async"
-                    className="-mb-6 -ml-4"
-                  />
+                  <div className="-mb-10">
+                    <Image
+                      src="/images/become-your-own-bank.png"
+                      width={464}
+                      height={464}
+                      alt="Become your own bank"
+                    />
+                  </div>
                 </div>
 
                 <ol className="md:max-w-md">
@@ -188,14 +189,14 @@ export default function HomePage() {
               </div>
             </div>
             <div className="w-full md:w-1/2 md:p-8 hidden md:block">
-              <img
-                src="/images/become-your-own-bank.svg"
-                alt="Become your own bank"
-                loading="lazy"
-                importance="low"
-                decoding="async"
-                className="-mb-10 -ml-6"
-              />
+              <div className="-ml-7 -mb-10">
+                <Image
+                  src="/images/become-your-own-bank.png"
+                  width={464}
+                  height={464}
+                  alt="Become your own bank"
+                />
+              </div>
             </div>
           </div>
         </div>
