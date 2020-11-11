@@ -124,7 +124,7 @@ const GovernanceProposalVotePanel = ({ forCount, againstCount, status }) => {
           </div>
         </div>
 
-        {status === "Active" && (
+        {status === "active" && (
           <Fragment>
             {/* Spacer */}
             <div className="h-6" />
