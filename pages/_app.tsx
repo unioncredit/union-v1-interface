@@ -5,11 +5,12 @@ import Navigation from "components/Navigation";
 import NetworkIndicator from "components/NetworkIndicator";
 import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";
+import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import "../styles/index.css";
 import Error from "./_error";
 
-export default function UnionApp({ Component, pageProps }) {
+export default function UnionApp({ Component, pageProps }: AppProps) {
   useFathom();
 
   useEffect(() => {
