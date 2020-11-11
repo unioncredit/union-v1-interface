@@ -61,11 +61,15 @@ const getAllProposalData = (
     .map((p, i) => {
       const formattedProposal = {
         id: allProposals[i]?.result?.id.toString(),
-        title: formattedEvents[i].description,
-        // title: formattedEvents[i].description?.split(/# |\n/g)[1] || "Untitled",
-        description: formattedEvents[i].description,
-        // description:
-        //   formattedEvents[i].description?.split(/# /)[1] || "No description.",
+        title:
+          String(formattedEvents[i].description)
+            ?.split("\n")[1]
+            ?.replace("#", "") || "Untitled",
+        description:
+          String(formattedEvents[i].description)
+            ?.split("\n")
+            ?.slice(2)
+            ?.join("\n") || "No description",
         proposer: allProposals[i]?.result?.proposer,
         status:
           enumerateProposalState(allProposalStates[i]?.result) ??

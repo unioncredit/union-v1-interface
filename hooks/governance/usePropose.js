@@ -16,7 +16,7 @@ export default function usePropose() {
       .map((data) => encode(data.type, data.value));
 
     const description = `
-# ${data.title}
+${data.title}
 
 ${data.description}`;
 
