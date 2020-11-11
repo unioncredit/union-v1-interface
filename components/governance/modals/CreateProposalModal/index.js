@@ -2,7 +2,7 @@ import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import Input, { Textarea } from "components/input";
-import Logo from "components/logo";
+import Logo from "components/Navigation/logo";
 import Modal from "components/modal";
 import useProposalMaxOperations from "hooks/governance/useProposalMaxOperations";
 import usePropose from "hooks/payables/usePropose";

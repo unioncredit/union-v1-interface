@@ -1,5 +1,5 @@
 import Footer from "components/Footer";
-import Logo from "components/logo";
+import Logo from "components/Navigation/logo";
 import Link from "next/link";
 import { Fragment } from "react";
 
