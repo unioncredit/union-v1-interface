@@ -116,7 +116,11 @@ const GovernanceProposalVotePanel = ({
             </Tooltip>
 
             <div className="text-lg font-semibold leading-tight">
-              {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
+              {hasVotes ? (
+                toPercent(totalVotePercent / quorumPercent)
+              ) : (
+                <Skeleton width={40} />
+              )}
             </div>
           </div>
 
