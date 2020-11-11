@@ -107,18 +107,24 @@ const GovernanceProposalVotePanel = ({
         <div className="h-6" />
 
         <div>
-          <div className="flex justify-between items-start">
-            <div>
-              <Tooltip label="Quorum Tooltip">
-                <div className="flex items-center space-x-2">
-                  <div className="text-type-light leading-tight">Quorum</div>
-                  <Info />
-                </div>
-              </Tooltip>
+          <div className="flex justify-between items-center">
+            <Tooltip label="Quorum Tooltip">
+              <div className="flex items-center space-x-2">
+                <div className="text-type-light leading-tight">Quorum</div>
+                <Info />
+              </div>
+            </Tooltip>
 
-              {/* Spacer */}
-              <div className="h-3" />
+            <div className="text-lg font-semibold leading-tight">
+              {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
+            </div>
+          </div>
 
+          {/* Spacer */}
+          <div className="h-3" />
+
+          <div className="flex justify-between items-center">
+            <div className="flex-1 flex">
               {quorum && totalSupply ? (
                 <div className="leading-tight px-1 py-2px rounded bg-quorum-pure text-quorum-light font-semibold text-sm">{`${toPercent(
                   quorumPercent
@@ -129,13 +135,18 @@ const GovernanceProposalVotePanel = ({
                 </div>
               )}
             </div>
-            <div className="text-lg font-semibold leading-tight">
-              {hasVotes ? toPercent(totalVotePercent) : <Skeleton width={40} />}
+
+            <div className="flex-1">
+              <VoteBar
+                percent={totalVotePercent / quorumPercent}
+                type="Quorum"
+                height={8}
+              />
             </div>
           </div>
         </div>
 
-        {status === "active" && (
+        {status === "active" && !voteReceipt?.hasVoted && (
           <Fragment>
             {/* Spacer */}
             <div className="h-6" />
@@ -146,9 +157,7 @@ const GovernanceProposalVotePanel = ({
             <div className="h-10" />
 
             <Button onClick={toggleProposalVoteModal} full>
-              {voteReceipt?.hasVoted
-                ? "Change your vote"
-                : "Vote for this proposal"}
+              Vote for this proposal
             </Button>
           </Fragment>
         )}
