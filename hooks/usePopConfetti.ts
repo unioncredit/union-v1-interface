@@ -1,7 +1,7 @@
 import confetti from "canvas-confetti";
 import { useEffect } from "react";
 
-export default function usePopConfetti(shouldPop) {
+export default function usePopConfetti(shouldPop: boolean) {
   useEffect(() => {
     if (shouldPop) {
       const end = Date.now() + 1.5 * 1000;
