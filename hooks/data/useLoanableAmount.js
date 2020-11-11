@@ -6,7 +6,7 @@ import useSWR from "swr";
 const getLoanableAmount = (contract) => async (_, tokenAddress) => {
   const res = await contract.getLoanableAmount(tokenAddress);
 
-  return formatUnits(res, 18);
+  return Number(formatUnits(res, 18));
 };
 
 export default function useLoanableAmount() {

@@ -17,7 +17,7 @@ const getMaxBorrow = (contract) => async (_, tokenAddress, library) => {
 
   const res = await lendingMarketContract.maxBorrow();
 
-  return formatUnits(res, 18);
+  return Number(formatUnits(res, 18));
 };
 
 export default function useMaxBorrow() {

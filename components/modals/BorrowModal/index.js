@@ -8,10 +8,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Info from "svgs/Info";
 import errorMessages from "util/errorMessages";
-import { feeTip } from "util/tooltips";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { roundDown } from "util/numbers";
+import { feeTip } from "util/tooltips";
 import Button from "../../button";
 import Input from "../../input";
 import LabelPair from "../../labelPair";
@@ -122,14 +122,11 @@ const BorrowModal = ({
   const handleValidate = async (val) => {
     if (isOverdue) return errorMessages.overdueBalance;
 
-    if (Number(val) > Number(calcMaxIncludingFee))
-      return errorMessages.notEnoughCredit;
+    if (Number(val) > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
 
-    if (Number(val) > Number(maxBorrow))
-      return errorMessages.maxBorrow(maxBorrow);
+    if (Number(val) > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
 
-    if (Number(val) > Number(loanableAmount))
-      return errorMessages.notEnoughPoolDAI;
+    if (Number(val) > loanableAmount) return errorMessages.notEnoughPoolDAI;
 
     if (Number(val) < 1.0) return errorMessages.minDAIBorrow;
 
