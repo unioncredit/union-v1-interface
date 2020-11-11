@@ -63,7 +63,7 @@ const EventSkeleton = () => {
   );
 };
 
-const GovernanceProposalHistory = ({ id }) => {
+const ProposalEventHistory = ({ id }) => {
   const { data } = useProposalHistory(id);
 
   const hasHistory = data && data.length > 0;
@@ -135,4 +135,4 @@ const GovernanceProposalHistory = ({ id }) => {
   );
 };
 
-export default GovernanceProposalHistory;
+export default ProposalEventHistory;

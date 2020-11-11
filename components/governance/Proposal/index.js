@@ -99,7 +99,7 @@ export const ProposalTypeBadge = ({ type = "onchain", className }) => {
  * @param {("pending"|"active"|"canceled"|"defeated"|"succeeded"|"queued"|"expired"|"executed")} props.status
  * @param {("For"|"Against"|"No Vote")} props.vote
  */
-const GovernanceProposal = ({
+const Proposal = ({
   title = "Liquidity migration proposal",
   id = 1,
   date,
@@ -140,9 +140,9 @@ const GovernanceProposal = ({
   );
 };
 
-export default GovernanceProposal;
+export default Proposal;
 
-export const GovernanceProposalSkeleton = () => {
+export const ProposalSkeleton = () => {
   return (
     <div className="md:p-4 flex items-center">
       <div className="flex-1 space-y-3">

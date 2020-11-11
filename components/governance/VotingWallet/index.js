@@ -19,7 +19,7 @@ import { Fragment } from "react";
 import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
-import { useChooseDelegationModalToggle } from "../ChooseDelegationModal/state";
+import { useChooseDelegationModalToggle } from "../modals/ChooseDelegationModal/state";
 import { useCreateProposalModalToggle } from "../CreateProposalModal/state";
 
 const DisplayDelegating = ({ delegates }) => {
@@ -115,7 +115,7 @@ const PercentOfTotalBadge = ({ value }) => {
   );
 };
 
-const GovernanceVotingWallet = ({ address }) => {
+const VotingWallet = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
@@ -181,9 +181,9 @@ const GovernanceVotingWallet = ({ address }) => {
   );
 };
 
-export default GovernanceVotingWallet;
+export default VotingWallet;
 
-export const GovernanceVotingProfile = ({ address }) => {
+export const VotingProfile = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;

@@ -2,7 +2,7 @@ import {
   useChooseDelegationModalOpen,
   useChooseDelegationModalToggle,
 } from "./state";
-import Modal, { ModalHeader } from "../../modal";
+import Modal, { ModalHeader } from "../../../modal";
 import { useWeb3React } from "@web3-react/core";
 import useDelegate from "hooks/payables/useDelegate";
 import getReceipt from "util/getReceipt";

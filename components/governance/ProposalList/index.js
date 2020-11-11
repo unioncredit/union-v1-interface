@@ -1,7 +1,5 @@
 import classNames from "classnames";
-import GovernanceProposal, {
-  GovernanceProposalSkeleton,
-} from "components/governance/GovernanceProposal";
+import Proposal, { ProposalSkeleton } from "components/governance/Proposal";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 import { useState } from "react";
 
@@ -33,7 +31,7 @@ const TypeFilterButton = ({ onClick, label, isActive }) => {
   );
 };
 
-const GovernanceProposals = ({ showAll = false }) => {
+const ProposalsList = ({ showAll = false }) => {
   const [statusFilter, statusFilterSet] = useState("all");
   const [typeFilter, typeFilterSet] = useState("all");
 
@@ -103,14 +101,14 @@ const GovernanceProposals = ({ showAll = false }) => {
         {hasProposals ? (
           data
             .slice(0, showAll ? data.length : 5)
-            .map((proposal, i) => <GovernanceProposal key={i} {...proposal} />)
+            .map((proposal, i) => <Proposal key={i} {...proposal} />)
         ) : (
           <div className="space-y-8 md:space-y-0">
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
           </div>
         )}
       </div>
@@ -118,4 +116,4 @@ const GovernanceProposals = ({ showAll = false }) => {
   );
 };
 
-export default GovernanceProposals;
+export default ProposalsList;

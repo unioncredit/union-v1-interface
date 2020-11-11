@@ -2,7 +2,7 @@ import { commify } from "@ethersproject/units";
 import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
-import { useProposalVoteModalToggle } from "components/governance/ProposalVoteModal/state";
+import { useProposalVoteModalToggle } from "components/governance/modals/ProposalVoteModal/state";
 import VoteBar from "components/governance/VoteBar";
 import Skeleton from "components/Skeleton";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
@@ -13,12 +13,7 @@ import Info from "svgs/Info";
 import { toPercent } from "util/numbers";
 import { quorumTip } from "util/tooltips";
 
-const GovernanceProposalVotePanel = ({
-  forCount,
-  againstCount,
-  status,
-  proposalId,
-}) => {
+const ProposalVotePanel = ({ forCount, againstCount, status, proposalId }) => {
   const { account } = useWeb3React();
 
   const { data: voteReceipt } = useProposalVoteReceipt(account, proposalId);
@@ -167,4 +162,4 @@ const GovernanceProposalVotePanel = ({
   );
 };
 
-export default GovernanceProposalVotePanel;
+export default ProposalVotePanel;

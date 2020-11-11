@@ -1,5 +1,5 @@
-import Proposals from "components/governance/GovernanceProposals";
-import Statistics from "components/governance/GovernanceStatistics";
+import ProposalList from "components/governance/ProposalList";
+import StatisticGrid from "components/governance/StatisticGrid";
 import useProposalCount from "hooks/governance/useProposalCount";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -16,7 +16,7 @@ export default function GovernanceView() {
             <h2>Statistics</h2>
           </div>
 
-          <Statistics />
+          <StatisticGrid />
         </section>
 
         <section className="pt-16">
@@ -32,7 +32,7 @@ export default function GovernanceView() {
             )}
           </div>
 
-          <Proposals />
+          <ProposalList />
         </section>
       </div>
     </Fragment>

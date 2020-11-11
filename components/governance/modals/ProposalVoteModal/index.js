@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { toPercent } from "util/numbers";
-import VoteBar from "../VoteBar";
+import VoteBar from "../../VoteBar";
 import { useProposalVoteModalOpen, useProposalVoteModalToggle } from "./state";
 import useAllProposalData from "hooks/governance/useAllProposalData";
 

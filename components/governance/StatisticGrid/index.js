@@ -1,5 +1,5 @@
 import { commify } from "@ethersproject/units";
-import GovernanceStatistic from "components/governance/GovernanceStatistic";
+import Statistic from "components/governance/Statistic";
 import useStatisticsData from "hooks/governance/useStatisticsData";
 import { toPercent } from "util/numbers";
 
@@ -9,32 +9,32 @@ import { toPercent } from "util/numbers";
  */
 const format = (value) => commify(Number(value ?? 0).toFixed(2));
 
-const GovernanceStatistics = () => {
+const StatisticGrid = () => {
   const { data } = useStatisticsData();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <GovernanceStatistic
+      <Statistic
         label={"Total defaulted"}
         value={`${format(data?.totalDefaulted)} DAI`}
       />
-      <GovernanceStatistic
+      <Statistic
         label={"Interest rate"}
         value={toPercent(data?.interestRate ?? 0)}
       />
-      <GovernanceStatistic
+      <Statistic
         label={"Lending Pool balance"}
         value={`${format(data?.lendingPoolBalance)} DAI`}
       />
-      <GovernanceStatistic
+      <Statistic
         label={"Total supply"}
         value={`${format(data?.totalSupply)} UNION`}
       />
-      <GovernanceStatistic
+      <Statistic
         label={"Outstanding loans"}
         value={`${format(data?.outstandingLoans)} DAI`}
       />
-      <GovernanceStatistic
+      <Statistic
         label={"Total staked"}
         value={`${format(data?.totalStaked)} DAI`}
       />
@@ -42,4 +42,4 @@ const GovernanceStatistics = () => {
   );
 };
 
-export default GovernanceStatistics;
+export default StatisticGrid;

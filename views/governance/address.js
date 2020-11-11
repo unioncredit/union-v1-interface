@@ -1,7 +1,7 @@
-import Back from "components/governance/Back";
+import Back from "components/Back";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
-import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
-import { GovernanceVotingProfile } from "components/governance/GovernanceVotingWallet";
+import ProposalVoteHistoryList from "components/governance/ProposalVoteHistoryList";
+import { VotingProfile } from "components/governance/VotingWallet";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 
@@ -23,14 +23,14 @@ export default function AddressView() {
           <div className="col-span-1 mb-8 md:mb-0">
             <h2>Profile</h2>
             <div className="pt-6">
-              <GovernanceVotingProfile address={address} />
+              <VotingProfile address={address} />
             </div>
           </div>
 
           <div className="col-span-2">
             <h2>Voting history</h2>
             <div className="pt-6">
-              <GovernanceVotingHistory address={address} />
+              <ProposalVoteHistoryList address={address} />
             </div>
           </div>
         </div>

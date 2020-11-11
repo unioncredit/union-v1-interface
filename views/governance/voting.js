@@ -1,10 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
 import CreateProposalModal from "components/governance/CreateProposalModal";
 import DelegateVotingModal from "components/governance/DelegateVotingModal";
-import GovernanceVotingHistory from "components/governance/GovernanceVotingHistory";
-import GovernanceVotingWallet from "components/governance/GovernanceVotingWallet";
+import ProposalVoteHistoryList from "components/governance/ProposalVoteHistoryList";
+import VotingWallet from "components/governance/VotingWallet";
 import { Fragment } from "react";
-import ChooseDelegationModal from "../../components/governance/ChooseDelegationModal";
+import ChooseDelegationModal from "../../components/governance/modals/ChooseDelegationModal";
 
 export default function VotingView() {
   const { account } = useWeb3React();
@@ -16,14 +16,14 @@ export default function VotingView() {
           <div className="col-span-1 mb-8 md:mb-0">
             <h2>Your voting wallet</h2>
             <div className="pt-6">
-              <GovernanceVotingWallet address={account} />
+              <VotingWallet address={account} />
             </div>
           </div>
 
           <div className="col-span-2">
             <h2>Your voting history</h2>
             <div className="pt-6">
-              <GovernanceVotingHistory address={account} />
+              <ProposalVoteHistoryList address={account} />
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import Back from "components/governance/Back";
-import GovernanceProposals from "components/governance/GovernanceProposals";
+import Back from "components/Back";
+import ProposalList from "components/governance/ProposalList";
 import { Fragment } from "react";
 
 export default function ProposalsView() {
@@ -23,7 +23,7 @@ export default function ProposalsView() {
         {/* Spacer */}
         <div className="h-8" />
 
-        <GovernanceProposals showAll />
+        <ProposalList showAll />
       </div>
     </Fragment>
   );

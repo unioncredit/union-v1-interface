@@ -1,11 +1,9 @@
-import GovernanceProposal, {
-  GovernanceProposalSkeleton,
-} from "components/governance/GovernanceProposal";
+import Proposal, { ProposalSkeleton } from "components/governance/Proposal";
 import TablePagination from "components/tables/TablePagination";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 import usePagination from "hooks/usePagination";
 
-const GovernanceVotingHistory = ({ address }) => {
+const ProposalVoteHistoryList = ({ address }) => {
   const { data } = useUserProposalVoteHistory(address);
   const { next, prev, currentData, currentPage, jump, maxPage } = usePagination(
     data,
@@ -28,17 +26,15 @@ const GovernanceVotingHistory = ({ address }) => {
                 : "Against"
               : "No Vote";
 
-            return (
-              <GovernanceProposal key={i} {...proposal} vote={formatVote} />
-            );
+            return <Proposal key={i} {...proposal} vote={formatVote} />;
           })
         ) : (
           <div className="space-y-8 md:space-y-0">
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
-            <GovernanceProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
           </div>
         )}
       </div>
@@ -61,4 +57,4 @@ const GovernanceVotingHistory = ({ address }) => {
   );
 };
 
-export default GovernanceVotingHistory;
+export default ProposalVoteHistoryList;

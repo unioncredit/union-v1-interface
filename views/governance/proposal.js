@@ -1,13 +1,13 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
-import Back from "components/governance/Back";
-import ProposalVoteModal from "components/governance/ProposalVoteModal";
+import Back from "components/Back";
+import ProposalVoteModal from "components/governance/modals/ProposalVoteModal";
 import {
   ProposalStatusBadge,
   ProposalTypeBadge,
-} from "components/governance/GovernanceProposal";
-import GovernanceProposalHistory from "components/governance/GovernanceProposalHistory";
-import GovernanceProposalVotePanel from "components/governance/GovernanceProposalVotePanel";
+} from "components/governance/Proposal";
+import ProposalEventHistory from "components/governance/ProposalEventHistory";
+import ProposalVotePanel from "components/governance/ProposalVotePanel";
 import Skeleton from "components/Skeleton";
 import useProposalData from "hooks/governance/useProposalData";
 import { useRouter } from "next/router";
@@ -173,7 +173,7 @@ export default function ProposalView() {
           <div className="col-span-1" />
 
           <div className="col-span-4">
-            <GovernanceProposalVotePanel
+            <ProposalVotePanel
               id={id}
               forCount={data?.forCount}
               againstCount={data?.againstCount}
@@ -184,7 +184,7 @@ export default function ProposalView() {
             {/* Spacer */}
             <div className="h-8" />
 
-            <GovernanceProposalHistory id={id} />
+            <ProposalEventHistory id={id} />
           </div>
         </div>
       </div>
