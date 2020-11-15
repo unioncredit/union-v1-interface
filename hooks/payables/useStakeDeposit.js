@@ -1,14 +1,13 @@
-import { MaxUint256 } from "@ethersproject/constants";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { USER_MANAGER_ADDRESSES } from "constants/variables";
 import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useUserContract from "hooks/contracts/useUserContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
+import { signDaiPermit } from "eth-permit";
 
 export default function useStakeDeposit() {
-  const { account, chainId } = useWeb3React();
+  const { account, chainId, library } = useWeb3React();
   const userContract = useUserContract();
 
   const DAI = useCurrentToken();
@@ -23,27 +22,40 @@ export default function useStakeDeposit() {
     async (amount) => {
       const stakeAmount = parseUnits(String(amount), 18);
 
-      const allowance = await DAIContract.allowance(
+      const result = await signDaiPermit(
+        library.getSigner(),
+        DAI,
         account,
-        USER_MANAGER_ADDRESSES[chainId]
+        userContract.address
       );
-
-      if (allowance.lt(stakeAmount))
-        await DAIContract.approve(USER_MANAGER_ADDRESSES[chainId], MaxUint256);
 
       let gasLimit;
       try {
-        gasLimit = await userContract.estimateGas.stake(
+        gasLimit = await userContract.estimateGas.stakeWithPermit(
           DAI,
-          stakeAmount.toString()
+          stakeAmount.toString(),
+          result.nonce,
+          result.expiry,
+          result.v,
+          result.r,
+          result.s
         );
       } catch (err) {
         gasLimit = 800000;
       }
 
-      return userContract.stake(DAI, stakeAmount.toString(), {
-        gasLimit,
-      });
+      return userContract.stakeWithPermit(
+        DAI,
+        stakeAmount.toString(),
+        result.nonce,
+        result.expiry,
+        result.v,
+        result.r,
+        result.s,
+        {
+          gasLimit,
+        }
+      );
     },
     [account, chainId, userContract, DAI, DAIContract]
   );
