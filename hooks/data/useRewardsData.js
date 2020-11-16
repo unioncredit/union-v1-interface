@@ -1,46 +1,12 @@
 import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
-import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useCurrentToken from "../useCurrentToken";
 import useUserContract from "../contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
 
-const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
+const getRewardsData = (contract) => async (_, account, tokenAddress) => {
   try {
-    const res = await contract.getUserBlockDelta(account, tokenAddress);
-
-    const delta = Number(res);
-
-    return delta > BLOCKS_PER_YEAR[chainId]
-      ? delta
-      : BLOCKS_PER_YEAR[chainId] - delta;
-  } catch (error) {
-    console.error("getBlocksPerYear", error);
-    throw error;
-  }
-};
-
-const getRewardsData = (contract) => async (
-  _,
-  account,
-  tokenAddress,
-  chainId
-) => {
-  try {
-    const blocksPerYear = await getBlocksPerYear(
-      contract,
-      account,
-      tokenAddress,
-      chainId
-    );
-
-    const upy = await contract.calculateRewardsByBlocks(
-      account,
-      tokenAddress,
-      blocksPerYear
-    );
-
     const rewardsMultiplier = await contract.getRewardsMultiplier(
       account,
       tokenAddress
@@ -49,7 +15,6 @@ const getRewardsData = (contract) => async (
     const rewards = await contract.calculateRewards(account, tokenAddress);
 
     return {
-      upy: parseRes(upy),
       rewards: parseRes(rewards, 3),
       rewardsMultiplier: parseRes(rewardsMultiplier),
     };
