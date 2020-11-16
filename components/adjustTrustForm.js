@@ -15,10 +15,13 @@ const ADJUST_TYPES = {
   DECREASE: "DECREASE",
 };
 
-const AdjustTrustForm = ({ address, vouched, onComplete }) => {
+const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
   const { library } = useWeb3React();
 
-  const { register, handleSubmit, watch, formState, errors } = useForm();
+  const { register, handleSubmit, watch, formState, errors } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
   const { isSubmitting, isDirty } = formState;
 
@@ -29,7 +32,7 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
   const adjustTrust = useAdjustTrust();
 
   const formatNewTrust = Number(
-    parseFloat(vouched) +
+    parseFloat(trust) +
       ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
   );
 
@@ -78,10 +81,20 @@ const AdjustTrustForm = ({ address, vouched, onComplete }) => {
           placeholder="0.00"
           error={errors.amount}
           ref={register({
-            required: errorMessages.required,
-            min: {
-              value: 0,
-              message: errorMessages.minValueZero,
+            validate: async (val) => {
+              if (
+                adjustType === ADJUST_TYPES.DECREASE &&
+                (Number(val) > Number(trust) - Number(usedTrust) ||
+                  Number(val) === Number(trust))
+              ) {
+                return "You can't remove their entire trust";
+              }
+
+              if (Number(val) === 0) return errorMessages.minValueZero;
+
+              if (!val) return errorMessages.required;
+
+              return true;
             },
           })}
         />
