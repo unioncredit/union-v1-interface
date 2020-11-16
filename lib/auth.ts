@@ -1,6 +1,6 @@
 export async function login() {
   try {
-    await window?.cookieStore?.set("eager_connect", true);
+    await window?.cookieStore?.set("eager_connect", "true");
   } catch (err) {
     console.error(err);
   }
