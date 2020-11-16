@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
 import errorMessages from "util/errorMessages";
 
+const ENDPOINT = "https://api.union.finance/api";
+
 const checkPlace = async (email) => {
-  const res = await fetch("/api/waitlist/place", {
+  const res = await fetch(`${ENDPOINT}/waitlist/place`, {
     method: "POST",
     body: JSON.stringify({ email }),
     headers: {
@@ -28,7 +30,7 @@ const checkPlace = async (email) => {
 };
 
 const signup = async (email) => {
-  const res = await fetch("/api/waitlist/signup", {
+  const res = await fetch(`${ENDPOINT}/waitlist/signup`, {
     method: "POST",
     body: JSON.stringify({ email }),
     headers: {
