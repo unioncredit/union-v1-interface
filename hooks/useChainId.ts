@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useEffect } from "react";
 import { newRidgeState } from "react-ridge-state";
 
-const globalChainIdState = newRidgeState();
+const globalChainIdState = newRidgeState<number>(null);
 
 /**
  * @name useChainIdUpdater
