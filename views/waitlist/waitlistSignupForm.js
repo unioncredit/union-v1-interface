@@ -7,18 +7,17 @@ import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
 import errorMessages from "util/errorMessages";
 
+const ENDPOINT = "https://api.union.finance/api";
+
 const checkPlace = async (email) => {
-  const res = await fetch(
-    "https://union-api.union.vercel.app/api/waitlist/place",
-    {
-      method: "POST",
-      body: JSON.stringify({ email }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${ENDPOINT}/waitlist/place`, {
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
 
   if (res.status > 200) {
     const { error } = await res.json();
@@ -31,17 +30,14 @@ const checkPlace = async (email) => {
 };
 
 const signup = async (email) => {
-  const res = await fetch(
-    "https://union-api.union.vercel.app/api/waitlist/signup",
-    {
-      method: "POST",
-      body: JSON.stringify({ email }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }
-  );
+  const res = await fetch(`${ENDPOINT}/waitlist/signup`, {
+    method: "POST",
+    body: JSON.stringify({ email }),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
 
   const data = await res.json();
 
