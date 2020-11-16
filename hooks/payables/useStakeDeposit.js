@@ -23,7 +23,7 @@ export default function useStakeDeposit() {
       const stakeAmount = parseUnits(String(amount), 18);
 
       const result = await signDaiPermit(
-        library.getSigner(),
+        library.provider,
         DAI,
         account,
         userContract.address

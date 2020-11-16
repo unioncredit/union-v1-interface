@@ -32,7 +32,7 @@ export default function useRepay() {
       const repayAmount = parseUnits(String(amount), 18);
 
       const result = await signDaiPermit(
-        library.getSigner(),
+        library.provider,
         DAI,
         account,
         marketAddress

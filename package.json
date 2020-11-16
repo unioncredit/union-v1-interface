@@ -42,6 +42,7 @@
     "cogo-toast": "^4.2.3",
     "cookie-store": "^3.0.0",
     "dayjs": "^1.9.6",
+    "eth-permit": "^0.1.8",
     "fathom-client": "^3.0.0",
     "graphql-request": "^3.3.0",
     "next": "^10.0.1",
