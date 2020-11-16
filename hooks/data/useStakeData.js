@@ -8,27 +8,34 @@ import useCurrentToken from "../useCurrentToken";
 import useUserContract from "../contracts/useUserContract";
 
 const getStakeData = (memberContract) => async (_, account, tokenAddress) => {
-  const totalStake = await memberContract.getStakerBalance(
-    account,
-    tokenAddress
-  );
+  try {
+    const totalStake = await memberContract.getStakerBalance(
+      account,
+      tokenAddress
+    );
 
-  const totalLocked = await memberContract.getTotalLockedStake(
-    account,
-    tokenAddress
-  );
+    const totalLocked = await memberContract.getTotalLockedStake(
+      account,
+      tokenAddress
+    );
 
-  const totalFrozen = await memberContract.getTotalFrozenAmount(
-    account,
-    tokenAddress
-  );
+    const totalFrozen = await memberContract.getTotalFrozenAmount(
+      account,
+      tokenAddress
+    );
 
-  return {
-    totalStake: parseRes(totalStake),
-    utilizedStake: parseRes(totalLocked.sub(totalFrozen)),
-    withdrawableStake: roundDown(formatUnits(totalStake.sub(totalLocked), 18)),
-    defaultedStake: parseRes(totalFrozen),
-  };
+    return {
+      totalStake: parseRes(totalStake),
+      utilizedStake: parseRes(totalLocked.sub(totalFrozen)),
+      withdrawableStake: roundDown(
+        formatUnits(totalStake.sub(totalLocked), 18)
+      ),
+      defaultedStake: parseRes(totalFrozen),
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export default function useStakeData() {

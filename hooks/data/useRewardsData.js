@@ -7,11 +7,18 @@ import useCurrentToken from "../useCurrentToken";
 import useUserContract from "../contracts/useUserContract";
 
 const getBlocksPerYear = async (contract, account, tokenAddress, chainId) => {
-  const delta = Number(await contract.getUserBlockDelta(account, tokenAddress));
+  try {
+    const res = await contract.getUserBlockDelta(account, tokenAddress);
 
-  return delta > BLOCKS_PER_YEAR[chainId]
-    ? delta
-    : BLOCKS_PER_YEAR[chainId] - delta;
+    const delta = Number(res);
+
+    return delta > BLOCKS_PER_YEAR[chainId]
+      ? delta
+      : BLOCKS_PER_YEAR[chainId] - delta;
+  } catch (error) {
+    console.error("getBlocksPerYear", error);
+    throw error;
+  }
 };
 
 const getRewardsData = (contract) => async (
@@ -20,31 +27,36 @@ const getRewardsData = (contract) => async (
   tokenAddress,
   chainId
 ) => {
-  const blocksPerYear = await getBlocksPerYear(
-    contract,
-    account,
-    tokenAddress,
-    chainId
-  );
+  try {
+    const blocksPerYear = await getBlocksPerYear(
+      contract,
+      account,
+      tokenAddress,
+      chainId
+    );
 
-  const upy = await contract.calculateRewardsByBlocks(
-    account,
-    tokenAddress,
-    blocksPerYear
-  );
+    const upy = await contract.calculateRewardsByBlocks(
+      account,
+      tokenAddress,
+      blocksPerYear
+    );
 
-  const rewardsMultiplier = await contract.getRewardsMultiplier(
-    account,
-    tokenAddress
-  );
+    const rewardsMultiplier = await contract.getRewardsMultiplier(
+      account,
+      tokenAddress
+    );
 
-  const rewards = await contract.calculateRewards(account, tokenAddress);
+    const rewards = await contract.calculateRewards(account, tokenAddress);
 
-  return {
-    upy: parseRes(upy),
-    rewards: parseRes(rewards, 3),
-    rewardsMultiplier: parseRes(rewardsMultiplier),
-  };
+    return {
+      upy: parseRes(upy),
+      rewards: parseRes(rewards, 3),
+      rewardsMultiplier: parseRes(rewardsMultiplier),
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export default function useRewardsData() {
