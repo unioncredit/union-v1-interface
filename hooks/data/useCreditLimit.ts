@@ -1,11 +1,16 @@
 import { isAddress } from "@ethersproject/address";
+import type { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
 import useUserContract from "../contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
 
-const getCreditLimit = (userContract) => async (_, account, tokenAddress) => {
+const getCreditLimit = (userContract: Contract) => async (
+  _: any,
+  account: string,
+  tokenAddress: string
+) => {
   const res = await userContract.getCreditLimit(tokenAddress, account);
 
   return Number(formatUnits(res, 18));

@@ -1,9 +1,13 @@
+import type { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useUserContract from "../contracts/useUserContract";
 
-const getIsMember = (contract) => async (_, account) =>
-  contract.checkIsMember(account);
+const getIsMember = (contract: Contract) => async (_: any, account: string) => {
+  const isMember: boolean = await contract.checkIsMember(account);
+
+  return isMember;
+};
 
 export default function useIsMember() {
   const { account } = useWeb3React();

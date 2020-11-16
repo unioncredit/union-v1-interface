@@ -1,9 +1,13 @@
+import type { Contract } from "@ethersproject/contracts";
+import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
-import parseRes from "util/parseRes";
 import useUserContract from "../contracts/useUserContract";
 
-const getMemberFee = (contract) => async () =>
-  contract.newMemberFee().then((res) => parseRes(res));
+const getMemberFee = (contract: Contract) => async () => {
+  const res = await contract.newMemberFee();
+
+  return Number(formatUnits(res, 18));
+};
 
 export default function useMemberFee() {
   const contract = useUserContract();

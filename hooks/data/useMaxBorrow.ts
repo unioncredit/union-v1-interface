@@ -1,4 +1,5 @@
 import { Contract } from "@ethersproject/contracts";
+import type { Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
@@ -6,7 +7,11 @@ import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract
 import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
 
-const getMaxBorrow = (contract) => async (_, tokenAddress, library) => {
+const getMaxBorrow = (contract: Contract) => async (
+  _: any,
+  tokenAddress: string,
+  library: Web3Provider
+) => {
   const marketAddress = await contract.tokens(tokenAddress);
 
   const lendingMarketContract = new Contract(

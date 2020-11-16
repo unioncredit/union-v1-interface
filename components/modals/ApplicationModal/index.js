@@ -34,7 +34,7 @@ const ApplicationModal = () => {
 
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
-  const { data: fee = "0.00" } = useMemberFee();
+  const { data: fee = 0.0 } = useMemberFee();
 
   const applyMember = useApplyMember();
 
@@ -95,7 +95,7 @@ const ApplicationModal = () => {
         <LabelPair
           className="mt-8 mb-4"
           label="Membership Fee"
-          value={fee}
+          value={fee.toFixed(2)}
           valueType="UNION"
         />
 
