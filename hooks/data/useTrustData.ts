@@ -1,20 +1,27 @@
 import { isAddress } from "@ethersproject/address";
+import type { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
+import type { Web3Provider } from "@ethersproject/providers";
+import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
 import useSWR from "swr";
-import parseRes from "util/parseRes";
-import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useUserContract from "../contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
 
-const getTrust = (marketRegistryContract, memberContract) => async (
-  _,
-  account,
-  tokenAddress,
-  library
+const getTrust = (
+  marketRegistryContract: Contract,
+  memberContract: Contract
+) => async (
+  _: any,
+  account: string,
+  tokenAddress: string,
+  library: Web3Provider
 ) => {
-  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+  const marketAddress: string = await marketRegistryContract.tokens(
+    tokenAddress
+  );
 
   const marketContract = new Contract(
     marketAddress,
@@ -22,31 +29,28 @@ const getTrust = (marketRegistryContract, memberContract) => async (
     library.getSigner()
   );
 
-  const addresses = await memberContract.getBorrowerAddresses(
+  const addresses: string[] = await memberContract.getBorrowerAddresses(
     account,
     tokenAddress
   );
 
   const data = await Promise.all(
     addresses.map(async (address) => {
-      const res = await memberContract.getBorrowerAsset(
-        account,
-        address,
-        tokenAddress
-      );
+      const res: {
+        vouchingAmount: BigNumber;
+        lockedStake: BigNumber;
+        trustAmount: BigNumber;
+      } = await memberContract.getBorrowerAsset(account, address, tokenAddress);
 
-      const vouched = parseRes(res.vouchingAmount);
+      const vouched = Number(formatUnits(res.vouchingAmount, 18));
 
-      const used = parseRes(res.lockedStake);
+      const used = Number(formatUnits(res.lockedStake, 18));
 
-      const trust = parseRes(res.trustAmount);
+      const trust = Number(formatUnits(res.trustAmount, 18));
 
-      const percentage =
-        res.vouchingAmount > 0
-          ? parseFloat(res.lockedStake / res.vouchingAmount)
-          : 0;
+      const percentage = vouched < 0 ? used / vouched : 0;
 
-      const isOverdue = await marketContract.checkIsOverdue(address);
+      const isOverdue: boolean = await marketContract.checkIsOverdue(address);
 
       const health = isOverdue ? 0 : ((vouched - used) / vouched) * 100;
 

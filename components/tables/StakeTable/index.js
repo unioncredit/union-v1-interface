@@ -142,7 +142,7 @@ const renderTbodyCells = (cell, memoizedData) => {
   if (Header === "Used" || Header === "Trust")
     return (
       <td className="hidden sm:table-cell" {...cell.getCellProps()}>
-        <span>{cell.value} DAI</span>
+        <span>{Number(cell.value).toFixed(2)} DAI</span>
       </td>
     );
 

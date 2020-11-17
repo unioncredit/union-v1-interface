@@ -170,19 +170,19 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Trust"
-                value={trust}
+                value={Number(trust).toFixed(2)}
                 valueType="DAI"
               />
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Vouched"
-                value={vouched}
+                value={Number(vouched).toFixed(2)}
                 valueType="DAI"
               />
               <LabelPair
                 labelColor="text-grey-pure"
                 label="Used stake"
-                value={used}
+                value={Number(used).toFixed(2)}
                 valueType="DAI"
               />
               <LabelPair
@@ -236,7 +236,7 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
             <div className="mt-4">
               <dl className="flex justify-between items-center leading-tight">
                 <dt>Current Trust</dt>
-                <dd className="text-right">{`${trust} DAI`}</dd>
+                <dd className="text-right">{Number(trust).toFixed(2)} DAI</dd>
               </dl>
             </div>
 
