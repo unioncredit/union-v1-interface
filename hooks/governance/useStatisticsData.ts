@@ -1,4 +1,6 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
+import type { Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
@@ -11,12 +13,12 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
 
 const getStatisticsData = (
-  marketRegistryContract,
-  userContract,
-  unionContract,
-  assetContract
-) => async (_, DAI, chainId, library) => {
-  const marketAddress = await marketRegistryContract.tokens(DAI);
+  marketRegistryContract: Contract,
+  userContract: Contract,
+  unionContract: Contract,
+  assetContract: Contract
+) => async (_: any, DAI: string, chainId: number, library: Web3Provider) => {
+  const marketAddress: string = await marketRegistryContract.tokens(DAI);
 
   const marketContract = new Contract(
     marketAddress,
@@ -24,17 +26,17 @@ const getStatisticsData = (
     library.getSigner()
   );
 
-  const currentTotalStaked = await userContract.totalStaked(DAI);
+  const currentTotalStaked: BigNumber = await userContract.totalStaked(DAI);
 
-  const totalFrozen = await userContract.totalFrozen(DAI);
+  const totalFrozen: BigNumber = await userContract.totalFrozen(DAI);
 
-  const loanableAmount = await assetContract.getLoanableAmount(DAI);
+  const loanableAmount: BigNumber = await assetContract.getLoanableAmount(DAI);
 
-  const totalBorrowed = await marketContract.totalBorrows();
+  const totalBorrowed: BigNumber = await marketContract.totalBorrows();
 
-  const totalSupply = await unionContract.totalSupply();
+  const totalSupply: BigNumber = await unionContract.totalSupply();
 
-  const ratePreBlock = await marketContract.borrowRatePerBlock();
+  const ratePreBlock: BigNumber = await marketContract.borrowRatePerBlock();
 
   return {
     lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
@@ -42,9 +44,8 @@ const getStatisticsData = (
     totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
     outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
     totalSupply: parseFloat(formatUnits(totalSupply, 18)),
-    interestRate: parseFloat(
-      formatUnits(ratePreBlock, 18) * BLOCKS_PER_YEAR[chainId]
-    ),
+    interestRate:
+      parseFloat(formatUnits(ratePreBlock, 18)) * BLOCKS_PER_YEAR[chainId],
   };
 };
 
