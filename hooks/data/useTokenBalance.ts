@@ -1,11 +1,16 @@
 import { isAddress } from "@ethersproject/address";
+import type { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import ABI from "constants/abis/erc20Detailed.json";
 import useSWR from "swr";
 import useContract from "../useContract";
 
-const getTokenBalance = (contract) => async (_, __, account) => {
+const getTokenBalance = (contract: Contract) => async (
+  _: any,
+  __: any,
+  account: string
+) => {
   const decimals = await contract.decimals();
 
   const balanceOf = await contract.balanceOf(account);
@@ -15,7 +20,7 @@ const getTokenBalance = (contract) => async (_, __, account) => {
   return parseFloat(balance);
 };
 
-export default function useTokenBalance(tokenAddress) {
+export default function useTokenBalance(tokenAddress: string) {
   const { account } = useWeb3React();
 
   const contract = useContract(tokenAddress, ABI);
