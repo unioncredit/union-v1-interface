@@ -1,3 +1,4 @@
+import type { BigNumber } from "@ethersproject/bignumber";
 import type { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import useUnionContract from "hooks/contracts/useUnionContract";
@@ -7,9 +8,11 @@ const getVotingWalletData = (governanceTokenContract: Contract) => async (
   _: any,
   address: string
 ) => {
-  const balanceOf = await governanceTokenContract.balanceOf(address);
+  const balanceOf: BigNumber = await governanceTokenContract.balanceOf(address);
 
-  const currentVotes = await governanceTokenContract.getCurrentVotes(address);
+  const currentVotes: BigNumber = await governanceTokenContract.getCurrentVotes(
+    address
+  );
 
   const delegates: string = await governanceTokenContract.delegates(address);
 
