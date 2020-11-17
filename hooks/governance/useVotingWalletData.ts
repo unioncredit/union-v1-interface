@@ -1,25 +1,26 @@
+import type { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import useUnionContract from "hooks/contracts/useUnionContract";
 import useSWR from "swr";
 
-const getVotingWalletData = (governanceTokenContract) => async (_, address) => {
+const getVotingWalletData = (governanceTokenContract: Contract) => async (
+  _: any,
+  address: string
+) => {
   const balanceOf = await governanceTokenContract.balanceOf(address);
 
   const currentVotes = await governanceTokenContract.getCurrentVotes(address);
 
-  /**
-   * @type {string}
-   */
-  const delegates = await governanceTokenContract.delegates(address);
+  const delegates: string = await governanceTokenContract.delegates(address);
 
   return {
     balanceOf: parseFloat(formatUnits(balanceOf, 18)),
     currentVotes: parseFloat(formatUnits(currentVotes, 18)),
-    delegates: delegates === address ? "Self" : delegates,
+    delegates: delegates,
   };
 };
 
-export default function useVotingWalletData(address) {
+export default function useVotingWalletData(address: string) {
   const contract = useUnionContract();
 
   const shouldFetch = typeof address === "string" && !!contract;
