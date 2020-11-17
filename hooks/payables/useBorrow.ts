@@ -1,9 +1,10 @@
 import { Contract } from "@ethersproject/contracts";
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
-import useCurrentToken from "hooks/useCurrentToken";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useBorrow() {
@@ -12,12 +13,7 @@ export default function useBorrow() {
   const marketRegistryContract = useMarketRegistryContract();
 
   return useCallback(
-    /**
-     * @param {Number|String} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (amount) => {
+    async (amount: number | string): Promise<TransactionResponse> => {
       const marketAddress = await marketRegistryContract.tokens(tokenAddress);
 
       const lendingMarketContract = new Contract(
@@ -28,7 +24,7 @@ export default function useBorrow() {
 
       const borrowAmount = parseUnits(String(amount), 18);
 
-      let gasLimit;
+      let gasLimit: any;
       try {
         gasLimit = await lendingMarketContract.estimateGas.borrow(
           borrowAmount.toString()

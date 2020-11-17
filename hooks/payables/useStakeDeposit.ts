@@ -1,4 +1,5 @@
 import { MaxUint256 } from "@ethersproject/constants";
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { USER_MANAGER_ADDRESSES } from "constants/variables";
@@ -15,12 +16,7 @@ export default function useStakeDeposit() {
   const DAIContract = useERC20Contract(DAI);
 
   return useCallback(
-    /**
-     * @param {String|Number} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (amount) => {
+    async (amount: number | string): Promise<TransactionResponse> => {
       const stakeAmount = parseUnits(String(amount), 18);
 
       const allowance = await DAIContract.allowance(
@@ -31,7 +27,7 @@ export default function useStakeDeposit() {
       if (allowance.lt(stakeAmount))
         await DAIContract.approve(USER_MANAGER_ADDRESSES[chainId], MaxUint256);
 
-      let gasLimit;
+      let gasLimit: any;
       try {
         gasLimit = await userContract.estimateGas.stake(
           DAI,

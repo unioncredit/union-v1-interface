@@ -1,3 +1,4 @@
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import { USER_MANAGER_ADDRESSES } from "constants/variables";
@@ -12,17 +13,11 @@ export default function useIncreaseUnionAllowance() {
   const unionContract = useUnionContract();
 
   return useCallback(
-    /**
-     * @param {Number|String} amount
-     */
-    async (amount) => {
+    async (amount: number | string): Promise<void> => {
       try {
-        /**
-         * @type {import("@ethersproject/abstract-provider").TransactionResponse}
-         */
-        const { hash } = await unionContract.approve(
+        const { hash }: TransactionResponse = await unionContract.approve(
           USER_MANAGER_ADDRESSES[chainId],
-          parseUnits(amount, 18).toString()
+          parseUnits(String(amount), 18).toString()
         );
 
         await getReceipt(hash, library);

@@ -1,5 +1,6 @@
 import { MaxUint256 } from "@ethersproject/constants";
 import { Contract } from "@ethersproject/contracts";
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
@@ -15,12 +16,7 @@ export default function useRepay() {
   const DAIContract = useERC20Contract(DAI);
 
   return useCallback(
-    /**
-     * @param {Number|String} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (amount) => {
+    async (amount: number | string): Promise<TransactionResponse> => {
       const marketAddress = await marketRegistryContract.tokens(DAI);
 
       const lendingMarketContract = new Contract(
@@ -36,7 +32,7 @@ export default function useRepay() {
       if (allowance.lt(repayAmount))
         await DAIContract.approve(marketAddress, MaxUint256);
 
-      let gasLimit;
+      let gasLimit: any;
       try {
         gasLimit = await lendingMarketContract.estimateGas.repay(
           account,

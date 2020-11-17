@@ -1,6 +1,7 @@
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
-import useCurrentToken from "hooks/useCurrentToken";
 import useUserContract from "hooks/contracts/useUserContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useAdjustTrust() {
@@ -8,16 +9,13 @@ export default function useAdjustTrust() {
   const memberContract = useUserContract();
 
   return useCallback(
-    /**
-     * @param {String} memberAddress
-     * @param {Number|String} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (memberAddress, amount) => {
+    async (
+      memberAddress: string,
+      amount: number | string
+    ): Promise<TransactionResponse> => {
       const trustAmount = parseUnits(String(amount), 18);
 
-      let gasLimit;
+      let gasLimit: any;
       try {
         gasLimit = await memberContract.estimateGas.updateTrust(
           memberAddress,

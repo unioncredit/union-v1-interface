@@ -1,6 +1,7 @@
+import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
-import useCurrentToken from "hooks/useCurrentToken";
 import useUserContract from "hooks/contracts/useUserContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useStakeWithdraw() {
@@ -8,12 +9,7 @@ export default function useStakeWithdraw() {
   const tokenAddress = useCurrentToken();
 
   return useCallback(
-    /**
-     * @param {String|Number} amount
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (amount) => {
+    async (amount: number | string): Promise<TransactionResponse> => {
       const stakeAmount = parseUnits(String(amount), 18);
 
       return userContract.unstake(tokenAddress, stakeAmount.toString());

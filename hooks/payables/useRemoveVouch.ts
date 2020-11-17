@@ -1,6 +1,7 @@
+import type { TransactionResponse } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import useCurrentToken from "hooks/useCurrentToken";
 import useUserContract from "hooks/contracts/useUserContract";
+import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 
 export default function useRemoveVouch() {
@@ -9,13 +10,8 @@ export default function useRemoveVouch() {
   const memberContract = useUserContract();
 
   return useCallback(
-    /**
-     * @param {String} memberAddress
-     *
-     * @returns {Promise<import("@ethersproject/abstract-provider").TransactionResponse>}
-     */
-    async (memberAddress) => {
-      let gasLimit;
+    async (memberAddress: string): Promise<TransactionResponse> => {
+      let gasLimit: any;
       try {
         gasLimit = await memberContract.estimateGas.cancelVouch(
           account,

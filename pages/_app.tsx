@@ -15,7 +15,7 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      import("cookie-store");
+      const cookieStore = require("cookie-store");
     }
   }, []);
 
