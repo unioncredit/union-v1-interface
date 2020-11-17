@@ -1,9 +1,8 @@
-import Benefits from "./benefits";
 import Button from "components/button";
 import { useWalletModalToggle } from "components/modals/WalletModal/state";
-import Snippet from "./snippet";
-import Image from "next/image";
 import { Fragment } from "react";
+import Benefits from "./benefits";
+import Snippet from "./snippet";
 
 export default function HomeView() {
   const toggleWalletModal = useWalletModalToggle();
@@ -137,7 +136,7 @@ export default function HomeView() {
 
                 <div className="flex justify-center md:hidden pb-8">
                   <div className="-mb-10">
-                    <Image
+                    <img
                       src="/images/become-your-own-bank.png"
                       width={464}
                       height={464}
@@ -184,7 +183,7 @@ export default function HomeView() {
             </div>
             <div className="w-full md:w-1/2 md:p-8 hidden md:block">
               <div className="-ml-7 -mb-10">
-                <Image
+                <img
                   src="/images/become-your-own-bank.png"
                   width={464}
                   height={464}
