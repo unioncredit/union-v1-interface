@@ -1,7 +1,8 @@
+import type { Contract } from "@ethersproject/contracts";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
-const getProposalCount = (contract) => async () => {
+const getProposalCount = (contract: Contract) => async () => {
   const res = await contract.proposalCount();
 
   return parseInt(res);
