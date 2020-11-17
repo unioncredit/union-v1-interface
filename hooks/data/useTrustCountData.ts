@@ -1,21 +1,34 @@
 import { isAddress } from "@ethersproject/address";
+import type { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
 import useUserContract from "../contracts/useUserContract";
+import useCurrentToken from "../useCurrentToken";
 
-const getTrustCount = (contract) => async (_, account, tokenAddress) => {
+const getTrustCount = (contract: Contract) => async (
+  _: any,
+  account: string,
+  tokenAddress: string
+) => {
   let count = 0;
-  const addresses = await contract.getStakerAddresses(account, tokenAddress);
-  const promises = addresses.map(async (stakerAddress) => {
-    const isEffective = await contract.isEffectiveStaker(
-      stakerAddress,
-      account,
-      tokenAddress
-    );
-    if (isEffective) count++;
-  });
-  await Promise.all(promises);
+
+  const addresses: string[] = await contract.getStakerAddresses(
+    account,
+    tokenAddress
+  );
+
+  await Promise.all(
+    addresses.map(async (stakerAddress) => {
+      const isEffective: boolean = await contract.isEffectiveStaker(
+        stakerAddress,
+        account,
+        tokenAddress
+      );
+
+      if (isEffective) count++;
+    })
+  );
+
   return count;
 };
 
