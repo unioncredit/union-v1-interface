@@ -1,11 +1,16 @@
 import { isAddress } from "@ethersproject/address";
+import type { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useUserContract from "../contracts/useUserContract";
 import useCurrentToken from "../useCurrentToken";
 
-const getRewardsData = (contract) => async (_, account, tokenAddress) => {
+const getRewardsData = (contract: Contract) => async (
+  _: any,
+  account: string,
+  tokenAddress: string
+) => {
   try {
     const rewardsMultiplier = await contract.getRewardsMultiplier(
       account,
