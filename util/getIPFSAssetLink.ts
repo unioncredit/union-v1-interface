@@ -1,4 +1,4 @@
-import { IPFSImage } from "hooks/use3BoxPublicData";
+import type { IPFSImage } from "hooks/use3BoxPublicData";
 
 export default function getIPFSAssetLink(imageArray: [IPFSImage]) {
   const { contentUrl } = imageArray[0];

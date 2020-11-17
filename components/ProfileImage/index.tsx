@@ -1,13 +1,15 @@
+import type { IPFSImage } from "hooks/use3BoxPublicData";
 import getIPFSAssetLink from "util/getIPFSAssetLink";
 
-/**
- * @name ProfileImage
- *
- * @param {Object} props
- * @param {Array} props.image
- * @param {(18|32|72)} props.size
- */
-const ProfileImage = ({ image, size = 32, ...rest }) => {
+const ProfileImage = ({
+  image,
+  size = 32,
+  alt,
+}: {
+  image: [IPFSImage];
+  size: 18 | 32 | 72;
+  alt: string;
+}) => {
   return (
     <img
       loading="lazy"
@@ -16,7 +18,7 @@ const ProfileImage = ({ image, size = 32, ...rest }) => {
       height={size}
       style={{ width: size, height: size }}
       src={getIPFSAssetLink(image)}
-      {...rest}
+      alt={alt}
     />
   );
 };

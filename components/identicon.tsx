@@ -13,13 +13,13 @@ const jazziconTheme = [
   "#48666A",
 ];
 
-/**
- * @name Identicon
- * @param {object} props
- * @param {string} props.address
- * @param {(18|24|32|48|72)} props.size
- */
-const Identicon = ({ address, size = 18 }) => {
+const Identicon = ({
+  address,
+  size = 18,
+}: {
+  address: string;
+  size: 18 | 24 | 32 | 48 | 72;
+}) => {
   return (
     <Jazzicon
       colors={jazziconTheme}
