@@ -22,7 +22,9 @@ import truncateAddress from "util/truncateAddress";
 import { useChooseDelegationModalToggle } from "../modals/ChooseDelegationModal/state";
 import { useCreateProposalModalToggle } from "../modals/CreateProposalModal/state";
 
-const DisplayDelegating = ({ delegates }) => {
+const DisplayDelegating = ({ delegates, address }) => {
+  if (delegates === address) return "Self";
+
   if (delegates === AddressZero) return "Undelegated";
 
   if (isAddress(delegates))
@@ -126,11 +128,14 @@ const AccountVotingWallet = ({ address }) => {
   const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
   const { data: proposalThreshold = 0 } = useProposalThreshold();
 
+  const notReadyToVote = delegates === AddressZero;
+  const isDelegatingToSelf = delegates === address;
+
   const votePowerPercent = currentVotes / totalSupply;
 
-  const votesDelegated = currentVotes > 0 ? currentVotes - balanceOf : 0;
-
-  const notReadyToVote = delegates === AddressZero;
+  const votesDelegated = isDelegatingToSelf
+    ? currentVotes - balanceOf
+    : currentVotes;
 
   const canCreateProposal = currentVotes > proposalThreshold;
 
@@ -161,7 +166,11 @@ const AccountVotingWallet = ({ address }) => {
           <VotingWalletRow
             className={canCreateProposal ? "border-b pb-4" : ""}
             label="Delegating to"
-            value={delegates && <DisplayDelegating delegates={delegates} />}
+            value={
+              delegates && (
+                <DisplayDelegating delegates={delegates} address={address} />
+              )
+            }
             slotBottomRight={<ViewDelegateVoting />}
           />
         )}
@@ -192,7 +201,11 @@ export const ProfileVotingWallet = ({ address }) => {
 
   const has3BoxName = Boolean(threeBoxData?.name);
 
-  const votesDelegated = currentVotes > 0 ? currentVotes - balanceOf : 0;
+  const isDelegatingToSelf = delegates === address;
+
+  const votesDelegated = isDelegatingToSelf
+    ? currentVotes - balanceOf
+    : currentVotes;
 
   const delegateVotingModalToggle = useDelegateVotingModalToggle();
 
@@ -239,7 +252,11 @@ export const ProfileVotingWallet = ({ address }) => {
           />
           <VotingWalletRow
             label="Delegating to"
-            value={delegates && <DisplayDelegating delegates={delegates} />}
+            value={
+              delegates && (
+                <DisplayDelegating delegates={delegates} address={address} />
+              )
+            }
           />
         </div>
         <div className="mt-8">
