@@ -30,7 +30,7 @@ const WithdrawRewards = ({ style = "Pill", onComplete }) => {
 
       setWithdrawing(false);
 
-      await onComplete();
+      if (typeof onComplete === "function") await onComplete();
     } catch (err) {
       setWithdrawing(false);
 
