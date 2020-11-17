@@ -21,7 +21,7 @@ const DelegateVotingModal = ({ address }) => {
   const { account, library } = useWeb3React();
 
   const { data: votingWalletData } = useVotingWalletData(account);
-  const { currentVotes = 0 } = !!votingWalletData && votingWalletData;
+  const { balanceOf = 0 } = !!votingWalletData && votingWalletData;
 
   const open = useDelegateVotingModalOpen();
   const toggle = useDelegateVotingModalToggle();
@@ -64,10 +64,8 @@ const DelegateVotingModal = ({ address }) => {
         className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
       >
         <dl className="flex justify-between items-center mb-4">
-          <dt>Your voting power</dt>
-          <dd className="text-right">{`${commify(
-            currentVotes.toFixed(4)
-          )}`}</dd>
+          <dt>Your votes</dt>
+          <dd className="text-right">{`${commify(balanceOf.toFixed(4))}`}</dd>
         </dl>
 
         <div className="divider" />
