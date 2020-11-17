@@ -1,7 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import SegmentedControl from "components/segmentedControl";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
@@ -10,12 +8,7 @@ import Button from "./button";
 import Input from "./input";
 import LabelPair from "./labelPair";
 
-const ADJUST_TYPES = {
-  INCREASE: "INCREASE",
-  DECREASE: "DECREASE",
-};
-
-const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
+const AdjustTrustForm = ({ address, usedTrust, onComplete }) => {
   const { library } = useWeb3React();
 
   const { register, handleSubmit, watch, formState, errors } = useForm({
@@ -25,22 +18,13 @@ const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
 
   const { isSubmitting, isDirty } = formState;
 
-  const [adjustType, setAdjustType] = useState(ADJUST_TYPES.INCREASE);
-
   const amount = watch("amount", 0);
 
   const adjustTrust = useAdjustTrust();
 
-  const formatNewTrust = Number(
-    parseFloat(trust) +
-      ((adjustType === ADJUST_TYPES.INCREASE ? 1 : -1) * amount || 0)
-  );
-
-  const onSubmit = async () => {
+  const onSubmit = async (values) => {
     try {
-      if (formatNewTrust <= 0) return;
-
-      const { hash } = await adjustTrust(address, formatNewTrust);
+      const { hash } = await adjustTrust(address, values.amount);
 
       await getReceipt(hash, library);
 
@@ -50,26 +34,19 @@ const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
     }
   };
 
+  const handleValidate = (val) => {
+    if (Number(val) <= usedTrust) return errorMessages.cantRemoveStake;
+
+    if (Number(val) <= 0) return errorMessages.minValueZero;
+
+    if (!val) return errorMessages.required;
+
+    return true;
+  };
+
   return (
     <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-      <p className="text-type-light">
-        How would you like to adjust this members trust?
-      </p>
-
-      <SegmentedControl.Wrapper className="mt-4">
-        <SegmentedControl.Button
-          onClick={() => setAdjustType(ADJUST_TYPES.INCREASE)}
-          active={adjustType === ADJUST_TYPES.INCREASE}
-          label="Increase trust"
-          small
-        />
-        <SegmentedControl.Button
-          onClick={() => setAdjustType(ADJUST_TYPES.DECREASE)}
-          active={adjustType === ADJUST_TYPES.DECREASE}
-          label="Decrease trust"
-          small
-        />
-      </SegmentedControl.Wrapper>
+      <p className="text-type-light">Adjust this members trust</p>
 
       <div className="mt-4">
         <Input
@@ -81,21 +58,7 @@ const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
           placeholder="0.00"
           error={errors.amount}
           ref={register({
-            validate: async (val) => {
-              if (
-                adjustType === ADJUST_TYPES.DECREASE &&
-                (Number(val) > Number(trust) - Number(usedTrust) ||
-                  Number(val) === Number(trust))
-              ) {
-                return "You can't remove their entire trust";
-              }
-
-              if (Number(val) === 0) return errorMessages.minValueZero;
-
-              if (!val) return errorMessages.required;
-
-              return true;
-            },
+            validate: handleValidate,
           })}
         />
       </div>
@@ -103,7 +66,7 @@ const AdjustTrustForm = ({ address, trust, usedTrust, onComplete }) => {
       <LabelPair
         className="mt-4 mb-2"
         label="New Trust"
-        value={formatNewTrust}
+        value={amount}
         valueType="DAI"
       />
 

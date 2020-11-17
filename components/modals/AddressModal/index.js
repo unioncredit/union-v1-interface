@@ -247,7 +247,6 @@ const AddressModal = ({ address, vouched, trust, used, isOverdue, health }) => {
             <div className="mt-6">
               <AdjustTrustForm
                 address={address}
-                trust={trust}
                 usedTrust={used}
                 onComplete={onComplete}
               />
