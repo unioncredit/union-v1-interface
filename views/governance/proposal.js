@@ -92,8 +92,8 @@ export default function ProposalView() {
         {/* Spacer */}
         <div className="h-8" />
 
-        <div className="grid grid-cols-12">
-          <div className="col-span-7">
+        <div className="md:grid grid-cols-12">
+          <div className="mb-8 md:mb-0 col-span-7">
             <h1>{data?.title ?? <Skeleton />}</h1>
 
             {/* Spacer */}
@@ -170,7 +170,7 @@ export default function ProposalView() {
             </div>
           </div>
 
-          <div className="col-span-1" />
+          <div className="hidden md:block col-span-1" />
 
           <div className="col-span-4">
             <ProposalVotePanel
