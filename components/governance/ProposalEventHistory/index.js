@@ -7,12 +7,14 @@ import LinkExternal from "svgs/LinkExternal";
 import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
 import Link from "next/link";
+import useProposalData from "hooks/governance/useProposalData";
 
 const Event = ({ name, date, tx }) => {
   const { chainId } = useWeb3React();
 
   return (
-    <li>
+    <li className="flex space-x-4">
+      <div className="mt-2 h-2 w-2 rounded-full bg-grey-light" />
       <div className="flex justify-between items-center">
         <div>
           <div className="text-lg leading-tight font-semibold">{name}</div>
@@ -63,8 +65,11 @@ const EventSkeleton = () => {
   );
 };
 
+const formatTs = (ts) => dayjs.unix(ts).format("MMMM D, YYYY h:m A");
+
 const ProposalEventHistory = ({ id }) => {
   const { data } = useProposalHistory(id);
+  const proposal = useProposalData(id);
 
   const hasHistory = data && data.length > 0;
 
@@ -77,52 +82,54 @@ const ProposalEventHistory = ({ id }) => {
 
       <ul className="space-y-6">
         {hasHistory ? (
-          data.map((event, i) => {
-            const formatDate = dayjs
-              .unix(event.timestamp)
-              .format("MMMM D, YYYY h:m A");
+          <Fragment>
+            {data.map((event, i) => {
+              let eventName = event.name;
 
-            let eventName = event.name;
+              if (event.name === "ProposalCreated") {
+                return (
+                  <Fragment key={i}>
+                    <Event
+                      name={
+                        <span>
+                          Proposed by{" "}
+                          <Link
+                            href={`/governance/address/${event.args.proposer}`}
+                          >
+                            <a>
+                              <u>{truncateAddress(event.args.proposer)}</u>
+                            </a>
+                          </Link>
+                        </span>
+                      }
+                      tx={event.transactionHash}
+                      date={formatTs(event.timestamp)}
+                    />
+                    <Event name={"Active"} date={formatTs(event.timestamp)} />
+                  </Fragment>
+                );
+              }
 
-            if (event.name === "ProposalCreated") {
+              if (event.name === "ProposalExecuted") eventName = "Executed";
+
+              if (event.name === "ProposalQueued") eventName = "Queued";
+
+              if (event.name === "ProposalCanceled") eventName = "Cancelled";
+
               return (
-                <Fragment key={i}>
-                  <Event
-                    name={
-                      <span>
-                        Proposed by{" "}
-                        <Link
-                          href={`/governance/address/${event.args.proposer}`}
-                        >
-                          <a>
-                            <u>{truncateAddress(event.args.proposer)}</u>
-                          </a>
-                        </Link>
-                      </span>
-                    }
-                    tx={event.transactionHash}
-                    date={formatDate}
-                  />
-                  <Event name={"Active"} date={formatDate} />
-                </Fragment>
+                <Event
+                  key={i}
+                  name={eventName}
+                  tx={event.transactionHash}
+                  date={formatTs(event.timestamp)}
+                />
               );
-            }
+            })}
 
-            if (event.name === "ProposalExecuted") eventName = "Executed";
-
-            if (event.name === "ProposalQueued") eventName = "Queued";
-
-            if (event.name === "ProposalCanceled") eventName = "Cancelled";
-
-            return (
-              <Event
-                key={i}
-                name={eventName}
-                tx={event.transactionHash}
-                date={formatDate}
-              />
-            );
-          })
+            {proposal?.status === "defeated" && (
+              <Event name={"Defeated"} date={formatTs(proposal.endTimestamp)} />
+            )}
+          </Fragment>
         ) : (
           <Fragment>
             <EventSkeleton />

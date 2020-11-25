@@ -94,14 +94,18 @@ const getAllProposalData = (
       const currentBlock = await library.getBlockNumber();
 
       let date = `Ends at Block ${proposal.endBlock}`;
+      let endTimestamp = "";
 
       if (proposal.endBlock < currentBlock) {
         try {
           const block = await library.getBlock(proposal.endBlock);
 
-          date = `${proposal.status} on ${dayjs
+          const formattedDate = dayjs
             .unix(block.timestamp.toString())
-            .format("MMM D, YYYY")}`;
+            .format("MMM D, YYYY");
+
+          date = `${proposal.status} on ${formattedDate}`;
+          endTimestamp = block.timestamp.toString();
         } catch (err) {
           console.error(err);
         }
@@ -110,6 +114,7 @@ const getAllProposalData = (
       return {
         ...proposal,
         date,
+        endTimestamp,
       };
     })
   );
