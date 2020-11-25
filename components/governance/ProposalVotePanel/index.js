@@ -44,10 +44,11 @@ const ProposalVotePanel = ({ forCount, againstCount, status, proposalId }) => {
   const quorumPercent = quorum / totalSupply;
 
   return (
-    <div className="rounded bg-white shadow-card">
+    <div className="border rounded bg-white">
       <div className="px-8 py-6 border-b">
         <h2 className="leading-tight">Votes</h2>
       </div>
+
       <div className="p-8">
         <div>
           <div className="flex justify-between font-semibold text-lg">

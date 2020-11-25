@@ -16,7 +16,7 @@ const Event = ({ name, date, tx }) => {
     <li className="flex space-x-4">
       <div className="mt-2 h-2 w-2 rounded-full bg-grey-light" />
       <div className="flex justify-between items-center">
-        <div>
+        <div className="mr-4">
           <div className="text-lg leading-tight font-semibold">{name}</div>
 
           {/* Spacer */}
@@ -44,9 +44,10 @@ const Event = ({ name, date, tx }) => {
 
 const EventSkeleton = () => {
   return (
-    <li>
+    <li className="flex space-x-4">
+      <div className="mt-2 h-2 w-2 rounded-full bg-grey-light" />
       <div className="flex justify-between items-center">
-        <div>
+        <div className="mr-4">
           <div className="text-lg leading-tight">
             <Skeleton width={245} />
           </div>

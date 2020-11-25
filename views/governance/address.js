@@ -19,7 +19,7 @@ export default function AddressView() {
           <Back />
         </div>
 
-        <div className="pt-16 md:grid grid-cols-3 gap-4">
+        <div className="pt-6 md:grid grid-cols-3 gap-4">
           <div className="col-span-1 mb-8 md:mb-0">
             <h2>Profile</h2>
             <div className="pt-6">
