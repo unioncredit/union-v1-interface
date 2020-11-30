@@ -12,6 +12,10 @@ export default function parseProposalDetails(content) {
       parsed = "LendingMarket";
       break;
 
+    case "0x2D117E4F6368EDdA4456CD21a2e3D5f0C95F38eB":
+      parsed = "FixedInterestRate";
+      break;
+
     default:
       parsed = content;
       break;
