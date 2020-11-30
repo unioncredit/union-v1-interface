@@ -93,7 +93,8 @@ const getAllProposalData = (
     formattedAllProposals.map(async (proposal) => {
       const currentBlock = await library.getBlockNumber();
 
-      let date = `Ends at Block ${proposal.endBlock}`;
+      let date = `Ends in ${proposal.endBlock - Number(currentBlock)} Blocks`;
+
       let endTimestamp = "";
 
       if (proposal.endBlock < currentBlock) {
