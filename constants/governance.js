@@ -57,5 +57,14 @@ export const TARGETS = {
         },
       ],
     },
+    FixedInterestRate: {
+      address: "0x2D117E4F6368EDdA4456CD21a2e3D5f0C95F38eB",
+      actions: [
+        {
+          signature: "setInterestRate(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
   },
 };
