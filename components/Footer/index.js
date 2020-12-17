@@ -1,3 +1,4 @@
+import Discord from "svgs/Discord";
 import GitHub from "svgs/GitHub";
 import Twitter from "svgs/Twitter";
 
@@ -75,6 +76,17 @@ const Footer = () => {
               >
                 <div className="p-2px">
                   <Twitter size={20} color="currentColor" />
+                </div>
+              </a>
+            </li>
+            <li>
+              <a
+                className="block hover:opacity-75 duration-150 transition-opacity"
+                href="https://discord.gg/XCUvHeREa3"
+                aria-label="Discord"
+              >
+                <div className="p-2px">
+                  <Discord size={20} color="currentColor" />
                 </div>
               </a>
             </li>

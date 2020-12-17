@@ -1,7 +1,6 @@
 import Button from "components/button";
 import { useWalletModalToggle } from "components/modals/WalletModal/state";
 import { Fragment } from "react";
-import Benefits from "./benefits";
 import Snippet from "./snippet";
 
 export default function HomeView() {
@@ -90,39 +89,6 @@ export default function HomeView() {
         </div>
 
         <div className="skew" />
-      </section>
-
-      <section className="pt-16 pb-0 md:py-20 lg:pb-20 lg:pt-40">
-        <div className="container-sm">
-          <div className="flex flex-col md:flex-row md:-mx-6">
-            <div className="w-full md:w-1/2 md:p-8 mb-12 md:mb-0">
-              <div className="w-full">
-                <h2 className="text-2xl md:text-3xl mb-6 md:mb-8 md:mt-16">
-                  Union key benefits
-                </h2>
-                <p className="md:text-xl leading-tight font-normal mb-6 md:mb-10 md:max-w-md">
-                  You can join union by yourself and be able to just stake or
-                  join with the help of 3 friends vouching for you and enjoy all
-                  the benefits of Union
-                </p>
-                <Button
-                  onClick={toggleWalletModal}
-                  className="btn-full-mobile"
-                  wide
-                >
-                  Get started
-                </Button>
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 md:p-8 flex md:justify-end">
-              <Benefits />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="container-sm hidden md:block">
-        <div className="divider"></div>
       </section>
 
       <section className="py-12 md:py-20 lg:pt-24 lg:pb-32">
