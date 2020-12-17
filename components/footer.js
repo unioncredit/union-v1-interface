@@ -1,3 +1,4 @@
+import Discord from "svgs/Discord";
 import GitHub from "svgs/GitHub";
 import Twitter from "svgs/Twitter";
 
@@ -60,6 +61,13 @@ const Footer = () => {
               <a href="https://twitter.com/unionprotocol" aria-label="Twitter">
                 <div className="p-2px">
                   <Twitter size={20} color="currentColor" />
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="https://discord.gg/XCUvHeREa3" aria-label="Discord">
+                <div className="p-2px">
+                  <Discord size={20} color="currentColor" />
                 </div>
               </a>
             </li>
