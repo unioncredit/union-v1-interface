@@ -1,4 +1,3 @@
-import { MaxUint256 } from "@ethersproject/constants";
 import { Contract } from "@ethersproject/contracts";
 import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
@@ -8,6 +7,7 @@ import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
+import { signDaiPermit } from "eth-permit";
 
 export default function useRepay() {
   const { library, account } = useWeb3React();
@@ -27,24 +27,40 @@ export default function useRepay() {
 
       const repayAmount = parseUnits(String(amount), 18);
 
-      const allowance = await DAIContract.allowance(account, marketAddress);
-
-      if (allowance.lt(repayAmount))
-        await DAIContract.approve(marketAddress, MaxUint256);
+      const result = await signDaiPermit(
+        library.provider,
+        DAI,
+        account,
+        marketAddress
+      );
 
       let gasLimit: any;
       try {
-        gasLimit = await lendingMarketContract.estimateGas.repay(
+        gasLimit = await lendingMarketContract.estimateGas.repayWithPermit(
           account,
-          repayAmount.toString()
+          repayAmount.toString(),
+          result.nonce,
+          result.expiry,
+          result.v,
+          result.r,
+          result.s
         );
       } catch (err) {
         gasLimit = 800000;
       }
 
-      return lendingMarketContract.repay(account, repayAmount.toString(), {
-        gasLimit,
-      });
+      return lendingMarketContract.repayWithPermit(
+        account,
+        repayAmount.toString(),
+        result.nonce,
+        result.expiry,
+        result.v,
+        result.r,
+        result.s,
+        {
+          gasLimit,
+        }
+      );
     },
     [account, DAI, marketRegistryContract, DAIContract]
   );
