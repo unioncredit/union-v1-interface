@@ -2,7 +2,7 @@ import { Contract } from "@ethersproject/contracts";
 import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKENT_ABI from "constants/abis/uToken.json";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
@@ -14,11 +14,12 @@ export default function useBorrow() {
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {
-      const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+      const res = await marketRegistryContract.tokens(tokenAddress);
+      const uTokenAddress = res.uToken;
 
-      const lendingMarketContract = new Contract(
-        marketAddress,
-        LENDING_MARKET_ABI,
+      const uTokenContract = new Contract(
+        uTokenAddress,
+        U_TOKENT_ABI,
         library.getSigner()
       );
 
@@ -26,14 +27,14 @@ export default function useBorrow() {
 
       let gasLimit: any;
       try {
-        gasLimit = await lendingMarketContract.estimateGas.borrow(
+        gasLimit = await uTokenContract.estimateGas.borrow(
           borrowAmount.toString()
         );
       } catch (err) {
         gasLimit = 1000000;
       }
 
-      return lendingMarketContract.borrow(borrowAmount.toString(), {
+      return uTokenContract.borrow(borrowAmount.toString(), {
         gasLimit,
       });
     },

@@ -2,7 +2,7 @@ import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKEN_ABI from "constants/abis/uToken.json";
 import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 import useSWR from "swr";
 import { formatDueDate } from "util/formatDueDate";
@@ -45,30 +45,31 @@ const getCreditLimit = (contract) => async (
   chainId,
   library
 ) => {
-  const marketAddress = await contract.tokens(tokenAddress);
+  const res = await contract.tokens(tokenAddress);
+  const uTokenAddress = res.uToken;
 
-  const marketContract = new Contract(
-    marketAddress,
-    LENDING_MARKET_ABI,
+  const uTokenContract = new Contract(
+    uTokenAddress,
+    U_TOKEN_ABI,
     library.getSigner()
   );
 
-  const apr = await marketContract.borrowRatePerBlock();
+  const apr = await uTokenContract.borrowRatePerBlock();
 
-  const borrowed = await marketContract.getBorrowed(account);
+  const borrowed = await uTokenContract.getBorrowed(account);
 
-  const fee = await marketContract.originationFee();
+  const fee = await uTokenContract.originationFee();
 
-  const interest = await marketContract.calculatingInterest(account);
+  const interest = await uTokenContract.calculatingInterest(account);
 
-  const overdueBlocks = await marketContract.overdueBlocks();
+  const overdueBlocks = await uTokenContract.overdueBlocks();
 
-  const isOverdue = await marketContract.checkIsOverdue(account);
+  const isOverdue = await uTokenContract.checkIsOverdue(account);
 
   const paymentDueDate = await getPaymentDue(
     account,
     chainId,
-    marketContract,
+    uTokenContract,
     library
   );
 

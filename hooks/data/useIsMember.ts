@@ -1,24 +1,41 @@
-import type { Contract } from "@ethersproject/contracts";
+import { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useUserContract from "../contracts/useUserContract";
+import type { Web3Provider } from "@ethersproject/providers";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import useCurrentToken from "../useCurrentToken";
 
-const getIsMember = (contract: Contract) => async (_: any, account: string) => {
-  const isMember: boolean = await contract.checkIsMember(account);
+const getIsMember = (marketRegistryContract: Contract) => async (
+  _: any,
+  account: string,
+  library: Web3Provider,
+  tokenAddress: string
+) => {
+  const signer = library.getSigner();
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const userManagerAddress = res.userManager;
+  const userManagerContract = new Contract(
+    userManagerAddress,
+    USER_MANAGER_ABI,
+    signer
+  );
+
+  const isMember: boolean = await userManagerContract.checkIsMember(account);
 
   return isMember;
 };
 
 export default function useIsMember() {
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
+  const curToken = useCurrentToken();
+  const marketRegistryContract = useMarketRegistryContract();
 
-  const contract = useUserContract();
-
-  const shouldFetch = !!contract && typeof account === "string";
+  const shouldFetch = !!marketRegistryContract && typeof account === "string";
 
   return useSWR(
-    shouldFetch ? ["IsMember", account] : null,
-    getIsMember(contract),
+    shouldFetch ? ["IsMember", account, curToken, library] : null,
+    getIsMember(marketRegistryContract),
     {
       refreshInterval: 10 * 1000,
     }

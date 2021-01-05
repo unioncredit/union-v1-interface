@@ -362,7 +362,7 @@
             "type": "uint256"
           }
         ],
-        "internalType": "struct IGovernance.Receipt",
+        "internalType": "struct IGovernor.Receipt",
         "name": "",
         "type": "tuple"
       }
@@ -393,7 +393,13 @@
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin_",
+        "type": "address"
+      }
+    ],
     "name": "initialize",
     "outputs": [],
     "payable": false,
@@ -459,13 +465,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "pause",
     "outputs": [],
     "payable": false,
@@ -473,39 +473,9 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "pauseGlobal",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "paused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "pausedGlobal",
     "outputs": [
       {
         "internalType": "bool",
@@ -760,7 +730,7 @@
     "name": "state",
     "outputs": [
       {
-        "internalType": "enum IGovernance.ProposalState",
+        "internalType": "enum IGovernor.ProposalState",
         "name": "",
         "type": "uint8"
       }
@@ -801,23 +771,8 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "unpause",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [],
-    "name": "unpauseGlobal",
+    "name": "unpause",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

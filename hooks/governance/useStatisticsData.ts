@@ -3,40 +3,41 @@ import { Contract } from "@ethersproject/contracts";
 import type { Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKEN_ABI from "constants/abis/uToken.json";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import useAssetContract from "hooks/contracts/useAssetContract";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useUnionContract from "hooks/contracts/useUnionContract";
-import useUserContract from "hooks/contracts/useUserContract";
 import useCurrentToken from "hooks/useCurrentToken";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useSWR from "swr";
 
 const getStatisticsData = (
   marketRegistryContract: Contract,
-  userContract: Contract,
   unionContract: Contract,
   assetContract: Contract
 ) => async (_: any, DAI: string, chainId: number, library: Web3Provider) => {
-  const marketAddress: string = await marketRegistryContract.tokens(DAI);
+  const { uToken, userManager } = await marketRegistryContract.tokens(DAI);
 
-  const marketContract = new Contract(
-    marketAddress,
-    LENDING_MARKET_ABI,
+  const uTokenContract = new Contract(uToken, U_TOKEN_ABI, library.getSigner());
+
+  const userManagerContract = new Contract(
+    userManager,
+    USER_MANAGER_ABI,
     library.getSigner()
   );
 
-  const currentTotalStaked: BigNumber = await userContract.totalStaked(DAI);
+  const currentTotalStaked: BigNumber = await userManagerContract.totalStaked();
 
-  const totalFrozen: BigNumber = await userContract.totalFrozen(DAI);
+  const totalFrozen: BigNumber = await userManagerContract.totalFrozen();
 
   const loanableAmount: BigNumber = await assetContract.getLoanableAmount(DAI);
 
-  const totalBorrowed: BigNumber = await marketContract.totalBorrows();
+  const totalBorrowed: BigNumber = await uTokenContract.totalBorrows();
 
   const totalSupply: BigNumber = await unionContract.totalSupply();
 
-  const ratePreBlock: BigNumber = await marketContract.borrowRatePerBlock();
+  const ratePreBlock: BigNumber = await uTokenContract.borrowRatePerBlock();
 
   return {
     lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
@@ -54,14 +55,12 @@ export default function useStatisticsData() {
 
   const DAI = useCurrentToken();
 
-  const userContract = useUserContract();
   const marketRegistryContract = useMarketRegistryContract();
   const unionContract = useUnionContract();
   const assetContract = useAssetContract();
 
   const shouldFetch =
     !!marketRegistryContract &&
-    !!userContract &&
     !!unionContract &&
     !!assetContract &&
     typeof chainId === "number" &&
@@ -70,11 +69,6 @@ export default function useStatisticsData() {
 
   return useSWR(
     shouldFetch ? ["StatisticsData", DAI, chainId, library] : null,
-    getStatisticsData(
-      marketRegistryContract,
-      userContract,
-      unionContract,
-      assetContract
-    )
+    getStatisticsData(marketRegistryContract, unionContract, assetContract)
   );
 }

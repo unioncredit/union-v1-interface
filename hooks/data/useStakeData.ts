@@ -1,33 +1,35 @@
 import { isAddress } from "@ethersproject/address";
-import type { Contract } from "@ethersproject/contracts";
+import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import { roundDown } from "util/numbers";
 import parseRes from "util/parseRes";
-import useUserContract from "../contracts/useUserContract";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useCurrentToken from "../useCurrentToken";
 
-const getStakeData = (memberContract: Contract) => async (
+const getStakeData = (marketRegistryContract: Contract) => async (
   _: any,
   account: string,
-  tokenAddress: string
+  tokenAddress: string,
+  library
 ) => {
   try {
-    const totalStake = await memberContract.getStakerBalance(
-      account,
-      tokenAddress
+    const signer = library.getSigner();
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const userManagerAddress = res.userManager;
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
     );
 
-    const totalLocked = await memberContract.getTotalLockedStake(
-      account,
-      tokenAddress
-    );
+    const totalStake = await userManagerContract.getStakerBalance(account);
 
-    const totalFrozen = await memberContract.getTotalFrozenAmount(
-      account,
-      tokenAddress
-    );
+    const totalLocked = await userManagerContract.getTotalLockedStake(account);
+
+    const totalFrozen = await userManagerContract.getTotalFrozenAmount(account);
 
     return {
       totalStake: parseRes(totalStake),
@@ -44,15 +46,17 @@ const getStakeData = (memberContract: Contract) => async (
 };
 
 export default function useStakeData() {
-  const { account } = useWeb3React();
-  const memberContract = useUserContract();
+  const { account, library } = useWeb3React();
   const curToken = useCurrentToken();
+  const marketRegistryContract = useMarketRegistryContract();
 
   const shouldFetch =
-    !!memberContract && typeof account === "string" && isAddress(curToken);
+    !!marketRegistryContract &&
+    typeof account === "string" &&
+    isAddress(curToken);
 
   return useSWR(
-    shouldFetch ? ["StakeData", account, curToken] : null,
-    getStakeData(memberContract)
+    shouldFetch ? ["StakeData", account, curToken, library] : null,
+    getStakeData(marketRegistryContract)
   );
 }
