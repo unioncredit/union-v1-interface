@@ -32,7 +32,6 @@ export default function useAdjustTrust() {
 
         gasLimit = await userManagerContract.estimateGas.updateTrust(
           memberAddress,
-          tokenAddress,
           trustAmount.toString()
         );
       } catch (err) {
@@ -41,7 +40,6 @@ export default function useAdjustTrust() {
 
       return userManagerContract.updateTrust(
         memberAddress,
-        tokenAddress,
         trustAmount.toString(),
         {
           gasLimit,

@@ -8,6 +8,7 @@ import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useCurrentToken from "../useCurrentToken";
 
 const getMemberFee = (marketRegistryContract: Contract) => async (
+  _: any,
   library: Web3Provider,
   tokenAddress: string
 ) => {

@@ -42,7 +42,6 @@ const ApplicationModal = () => {
 
   const enableUNION = useAutoCallback(async () => {
     isSubmittingSet(true);
-
     try {
       await increaseUnionAllowance(fee);
 

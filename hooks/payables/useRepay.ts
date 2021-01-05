@@ -37,7 +37,7 @@ export default function useRepay() {
 
       let gasLimit: any;
       try {
-        gasLimit = await uTokenContract.estimateGas.repayWithPermit(
+        gasLimit = await uTokenContract.estimateGas.repayBorrowWithPermit(
           account,
           repayAmount.toString(),
           result.nonce,
@@ -50,7 +50,7 @@ export default function useRepay() {
         gasLimit = 800000;
       }
 
-      return uTokenContract.repayWithPermit(
+      return uTokenContract.repayBorrowWithPermit(
         account,
         repayAmount.toString(),
         result.nonce,

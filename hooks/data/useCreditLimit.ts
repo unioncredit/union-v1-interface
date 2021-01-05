@@ -39,7 +39,7 @@ export default function useCreditLimit() {
     !!library;
 
   return useSWR(
-    shouldFetch ? ["CreditLimit", account, library, curToken] : null,
+    shouldFetch ? ["CreditLimit", library, account, curToken] : null,
     getCreditLimit(marketRegistryContract)
   );
 }

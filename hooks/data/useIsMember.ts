@@ -9,8 +9,8 @@ import useCurrentToken from "../useCurrentToken";
 const getIsMember = (marketRegistryContract: Contract) => async (
   _: any,
   account: string,
-  library: Web3Provider,
-  tokenAddress: string
+  tokenAddress: string,
+  library: Web3Provider
 ) => {
   const signer = library.getSigner();
   const res = await marketRegistryContract.tokens(tokenAddress);
@@ -22,7 +22,6 @@ const getIsMember = (marketRegistryContract: Contract) => async (
   );
 
   const isMember: boolean = await userManagerContract.checkIsMember(account);
-
   return isMember;
 };
 
