@@ -28,10 +28,10 @@ export default function useStakeDeposit() {
       );
 
       const stakeAmount = parseUnits(String(amount), 18);
-      const allowance = await DAIContract.allowance(
-        account,
-        userManagerAddress
-      );
+      // const allowance = await DAIContract.allowance(
+      //   account,
+      //   userManagerAddress
+      // );
 
       const result = await signDaiPermit(
         library.provider,
@@ -40,8 +40,9 @@ export default function useStakeDeposit() {
         userManagerAddress
       );
 
-      if (allowance.lt(stakeAmount))
-        await DAIContract.approve(userManagerAddress, MaxUint256);
+      // Approve is not required to call stakeWithPermit
+      // if (allowance.lt(stakeAmount))
+      //   await DAIContract.approve(userManagerAddress, MaxUint256);
 
       let gasLimit: any;
       try {
