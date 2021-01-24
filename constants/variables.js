@@ -47,7 +47,7 @@ export const SCALE = 10 ** 18;
 export const BLOCK_SPEED = {
   1: 12,
   4: 12,
-  42: 4,
+  42: 7,
 };
 
 export const TOKENS = {
