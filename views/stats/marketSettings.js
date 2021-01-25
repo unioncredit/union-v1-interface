@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import StatsNavigation from "../../components/stats/StatsNavigation";
+import StatsCard from "../../components/stats/StatsCard";
+import StatsGrid from "../../components/stats/StatsGrid";
 
 export default function MarketSettingsStatsView() {
   return (
@@ -22,17 +24,15 @@ export default function MarketSettingsStatsView() {
 
       <section className="mb-8">
         <div className="container">
-          <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-            <li className="border rounded p-4 sm:p-6">
-              <p className="crop-snug leading-snug mb-4">Label</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xl font-semibold crop-snug leading-snug">
-                  Value
-                </p>
-                <p className="text-sm leading-none">+100%</p>
-              </div>
-            </li>
-          </ul>
+          <StatsGrid>
+            <StatsCard label="APR" value="20%" />
+            <StatsCard label="Fee" value="2%" />
+            <StatsCard label="Payment Period" value="30" />
+            <StatsCard label="Reserve Factor" value="5" />
+            <StatsCard label="Membership Fee" value="200" />
+            <StatsCard label="Min & Max Borrow" value="100" />
+            <StatsCard label="Current Debt Ceiling" value="1000" />
+          </StatsGrid>
         </div>
       </section>
     </Fragment>

@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import StatsNavigation from "../../components/stats/StatsNavigation";
+import StatsCard from "../../components/stats/StatsCard";
+import StatsGrid from "../../components/stats/StatsGrid";
 
 export default function GovernanceStatsView() {
   return (
@@ -22,17 +24,13 @@ export default function GovernanceStatsView() {
 
       <section className="mb-8">
         <div className="container">
-          <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-            <li className="border rounded p-4 sm:p-6">
-              <p className="crop-snug leading-snug mb-4">Label</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xl font-semibold crop-snug leading-snug">
-                  Value
-                </p>
-                <p className="text-sm leading-none">+100%</p>
-              </div>
-            </li>
-          </ul>
+          <StatsGrid>
+            <StatsCard label="Quorum" value="200000" />
+            <StatsCard label="Proposal Threshold" value="20000" />
+            <StatsCard label="Voting Period" value="30" />
+            <StatsCard label="Delay Period" value="50" />
+            <StatsCard label="Timelock" value="50" />
+          </StatsGrid>
         </div>
       </section>
     </Fragment>

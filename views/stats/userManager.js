@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import StatsNavigation from "../../components/stats/StatsNavigation";
+import StatsCard from "../../components/stats/StatsCard";
+import StatsGrid from "../../components/stats/StatsGrid";
 
 export default function UserManagerStatsView() {
   return (
@@ -22,17 +24,15 @@ export default function UserManagerStatsView() {
 
       <section className="mb-8">
         <div className="container">
-          <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-            <li className="border rounded p-4 sm:p-6">
-              <p className="crop-snug leading-snug mb-4">Label</p>
-              <div className="flex items-center justify-between">
-                <p className="text-xl font-semibold crop-snug leading-snug">
-                  Value
-                </p>
-                <p className="text-sm leading-none">+100%</p>
-              </div>
-            </li>
-          </ul>
+          <StatsGrid>
+            <StatsCard label="Total Staked DAI" value="10000" />
+            <StatsCard label="Effective Total Stake" value="100000" />
+            <StatsCard label="Total Locked Stake" value="10000" />
+            <StatsCard label="Defaulted Stake" value="10000" />
+            <StatsCard label="Total Frozen Stake" value="10000" />
+            <StatsCard label="Effective = Total - Frozen" value="yes" />
+            <StatsCard label="Defaulted ≥ Frozen" value="yes" />
+          </StatsGrid>
         </div>
       </section>
     </Fragment>
