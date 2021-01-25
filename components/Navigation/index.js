@@ -82,6 +82,9 @@ const Navigation = () => {
                   <li>
                     <NavigationLink href="/governance">Vote</NavigationLink>
                   </li>
+                  <li>
+                    <NavigationLink href="/stats">Stats</NavigationLink>
+                  </li>
                 </ul>
               </li>
 
