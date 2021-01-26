@@ -28,7 +28,7 @@ const StatsNavigation = () => {
       <StatsLink href="/stats/user-manager" label="User Manager" />
       <StatsLink href="/stats/asset-manager" label="Asset Manager" />
       <StatsLink href="/stats/market-settings" label="Market Settings" />
-      <StatsLink href="/stats/governance" label="Governance" />
+      <StatsLink href="/stats/gov-vars" label="Governance" />
     </ul>
   );
 };
