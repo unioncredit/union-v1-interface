@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import StatsNavigation from "../../components/stats/StatsNavigation";
-import StatsCard from "../../components/stats/StatsCard";
-import StatsGrid from "../../components/stats/StatsGrid";
+import StatsNavigation from "components/stats/StatsNavigation";
+import StatsCard from "components/stats/StatsCard";
+import StatsGrid from "components/stats/StatsGrid";
 
 export default function MarketSettingsStatsView() {
   return (
