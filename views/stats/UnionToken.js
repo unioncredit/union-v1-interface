@@ -2,8 +2,12 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import useUnionTokenSupply from "hooks/stats/useUnionTokenSupply";
+import format from "util/formatValue";
 
 export default function UnionTokenStatsView() {
+  const { data: totalSupply } = useUnionTokenSupply();
+
   return (
     <Fragment>
       <section className="mb-8">
@@ -25,7 +29,7 @@ export default function UnionTokenStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Total Supply" value="100000" />
+            <StatsCard label="Total Supply" value={format(totalSupply)} />
             <StatsCard label="Reservoir Balance" value="10000" />
             <StatsCard label="Comptroller Balance" value="10000" />
             <StatsCard label="Annualized Inflation" value="20%" />
