@@ -19,13 +19,18 @@ const getTrustCount = (contract: Contract) => async (
 
   await Promise.all(
     addresses.map(async (stakerAddress) => {
-      const isEffective: boolean = await contract.isEffectiveStaker(
-        stakerAddress,
-        account,
-        tokenAddress
-      );
+      try {
+        const trustAmount: number = await contract.getVouchingAmount(
+          stakerAddress,
+          account,
+          tokenAddress
+        );
+        const isMember: boolean = await contract.checkIsMember(stakerAddress);
 
-      if (isEffective) count++;
+        if (trustAmount > 0 && isMember) count++;
+      } catch (error) {
+        console.log(error);
+      }
     })
   );
 
