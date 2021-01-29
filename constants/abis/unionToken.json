@@ -556,7 +556,43 @@
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "symbol",
+        "type": "string"
+      },
+      {
+        "internalType": "uint8",
+        "name": "decimals",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mintingAllowedAfter_",
+        "type": "uint256"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin_",
+        "type": "address"
+      }
+    ],
     "name": "initialize",
     "outputs": [],
     "payable": false,
@@ -585,11 +621,26 @@
     "type": "function"
   },
   {
+    "constant": true,
+    "inputs": [],
+    "name": "minimumTimeBetweenMints",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [
       {
         "internalType": "address",
-        "name": "account",
+        "name": "dst",
         "type": "address"
       },
       {
@@ -613,12 +664,27 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "minter",
+    "name": "mintCap",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "mintingAllowedAfter",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -684,13 +750,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "pause",
     "outputs": [],
     "payable": false,
@@ -698,29 +758,14 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "pauseGlobal",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "paused",
+    "inputs": [],
+    "name": "pauseGuardian",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "address",
         "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "payable": false,
@@ -730,7 +775,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "pausedGlobal",
+    "name": "paused",
     "outputs": [
       {
         "internalType": "bool",
@@ -801,11 +846,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_minter",
+        "name": "account",
         "type": "address"
       }
     ],
-    "name": "setMinter",
+    "name": "setGuardian",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -900,23 +945,8 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "unpause",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [],
-    "name": "unpauseGlobal",
+    "name": "unpause",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
