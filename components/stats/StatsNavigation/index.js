@@ -25,6 +25,7 @@ const StatsNavigation = () => {
   return (
     <ul className="flex flex-wrap -mb-2">
       <StatsLink href="/stats" label="Union Token" />
+      <StatsLink href="/stats/u-token" label="UToken" />
       <StatsLink href="/stats/user-manager" label="User Manager" />
       <StatsLink href="/stats/asset-manager" label="Asset Manager" />
       <StatsLink href="/stats/market-settings" label="Market Settings" />
