@@ -5,6 +5,7 @@ import { formatUnits } from "@ethersproject/units";
 import ABI from "constants/abis/erc20Detailed.json";
 import useSWR from "swr";
 import useContract from "../useContract";
+import { AddressZero } from "constants/variables"
 
 const getTokenBalanceOfAccount = (contract: Contract) => async (
   _: any,
@@ -24,7 +25,10 @@ export default function useTokenBalanceOfAccount(tokenAddress: string, account: 
   const contract = useContract(tokenAddress, ABI);
 
   const shouldFetch =
-    !!contract && isAddress(tokenAddress) && typeof account === "string";
+    !!contract &&
+    isAddress(tokenAddress) &&
+    isAddress(account) &&
+    account !== AddressZero;
 
   return useSWR(
     shouldFetch ? ["TokenBalance", tokenAddress, account] : null,
