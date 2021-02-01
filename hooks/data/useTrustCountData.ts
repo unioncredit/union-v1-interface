@@ -29,11 +29,16 @@ const getTrustCount = (marketRegistryContract: Contract) => async (
 
   await Promise.all(
     addresses.map(async (stakerAddress) => {
+      const trustAmount: number = await userManagerContract.getVouchingAmount(
+        stakerAddress,
+        account
+      );
+
       const isMember: boolean = await userManagerContract.checkIsMember(
         stakerAddress
       );
 
-      if (isMember) count++;
+      if (trustAmount > 0 && isMember) count++;
     })
   );
 
