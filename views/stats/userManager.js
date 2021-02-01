@@ -2,8 +2,15 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import useTotalStakedDAI from "hooks/stats/useTotalStakedDAI";
+import useTotalFrozenStake from "hooks/stats/useTotalFrozenStake";
+import useEffectiveTotalStake from "hooks/stats/useEffectiveTotalStake";
+import format from "util/formatValue";
 
 export default function UserManagerStatsView() {
+  const { data: totalStakedDAI } = useTotalStakedDAI();
+  const { data: totalFrozenStake } = useTotalFrozenStake();
+  const effectiveTotalStake = useEffectiveTotalStake();
   return (
     <Fragment>
       <section className="mb-8">
@@ -25,13 +32,22 @@ export default function UserManagerStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Total Staked DAI" value="10000" />
-            <StatsCard label="Effective Total Stake" value="100000" />
-            <StatsCard label="Total Locked Stake" value="10000" />
-            <StatsCard label="Defaulted Stake" value="10000" />
-            <StatsCard label="Total Frozen Stake" value="10000" />
-            <StatsCard label="Effective = Total - Frozen" value="yes" />
-            <StatsCard label="Defaulted ≥ Frozen" value="yes" />
+            <StatsCard
+              label="Total Staked DAI"
+              value={format(totalStakedDAI)}
+            />
+            <StatsCard
+              label="Effective Total Stake"
+              value={format(effectiveTotalStake)}
+            />
+            <StatsCard label="Total Locked Stake" value="TBD" />
+            <StatsCard label="Defaulted Stake" value="TBD" />
+            <StatsCard
+              label="Total Frozen Stake"
+              value={format(totalFrozenStake)}
+            />
+            <StatsCard label="Effective = Total - Frozen" value="TBD" />
+            <StatsCard label="Defaulted ≥ Frozen" value="TBD" />
           </StatsGrid>
         </div>
       </section>

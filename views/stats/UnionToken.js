@@ -6,13 +6,21 @@ import useUnionTokenSupply from "hooks/stats/useUnionTokenSupply";
 import useComptrollerUnionBalance from "hooks/stats/useComptrollerUnionBalance";
 import useReservoirUnionBalance from "hooks/stats/useReservoirUnionBalance";
 import useUnionPausedState from "hooks/stats/useUnionPausedState";
+import useUnionInflationPerBlock from "hooks/stats/useUnionInflationPerBlock";
+import useChainId from "hooks/useChainId";
 import format from "util/formatValue";
+import { BLOCKS_PER_YEAR } from "constants/variables";
 
 export default function UnionTokenStatsView() {
   const { data: totalSupply } = useUnionTokenSupply();
   const { data: reservoirUnionBalance } = useReservoirUnionBalance();
   const { data: comptrollerUnionBalance } = useComptrollerUnionBalance();
   const { data: isUnionTransferPaused } = useUnionPausedState();
+  const { data: unionInflationPerBlock } = useUnionInflationPerBlock();
+  const chainId = useChainId();
+  const unionAnnualInflation = unionInflationPerBlock?.times(
+    BLOCKS_PER_YEAR[chainId]
+  );
 
   return (
     <Fragment>
@@ -44,8 +52,15 @@ export default function UnionTokenStatsView() {
               label="Comptroller Balance"
               value={format(comptrollerUnionBalance)}
             />
-            <StatsCard label="Annualized Inflation" value="20%" />
-            <StatsCard label="UPB" value="1000" />
+            <StatsCard
+              label="Annualized Inflation"
+              value={
+                unionAnnualInflation
+                  ? format(unionAnnualInflation) + "%"
+                  : "NaN"
+              }
+            />
+            <StatsCard label="UPB" value={format(unionAnnualInflation)} />
             <StatsCard
               label="Transfers"
               value={isUnionTransferPaused ? "Off" : "On"}
