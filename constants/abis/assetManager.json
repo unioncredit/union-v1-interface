@@ -245,6 +245,26 @@
         "type": "uint256"
       }
     ],
+    "name": "debtWriteOff",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
     "name": "deposit",
     "outputs": [
       {
@@ -496,13 +516,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "pause",
     "outputs": [],
     "payable": false,
@@ -510,29 +524,14 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "pauseGlobal",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "paused",
+    "inputs": [],
+    "name": "pauseGuardian",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "address",
         "name": "",
-        "type": "bool"
+        "type": "address"
       }
     ],
     "payable": false,
@@ -542,7 +541,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "pausedGlobal",
+    "name": "paused",
     "outputs": [
       {
         "internalType": "bool",
@@ -578,6 +577,21 @@
     "constant": false,
     "inputs": [],
     "name": "renounceAdmin",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "setGuardian",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -657,7 +671,13 @@
   },
   {
     "constant": true,
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "totalPrincipal",
     "outputs": [
       {
@@ -714,23 +734,8 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "unpause",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
     "inputs": [],
-    "name": "unpauseGlobal",
+    "name": "unpause",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

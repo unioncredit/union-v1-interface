@@ -2,8 +2,16 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import useLoanableAmount from "hooks/stats/useLoanableAmount";
+import usePoolBalance from "hooks/stats/usePoolBalance";
+import useAssetManagerDAIBalance from "hooks/stats/useAssetManagerDAIBalance";
+import format from "util/formatValue";
 
 export default function AssetManagerStatsView() {
+  const { data: loanableAmount } = useLoanableAmount();
+  const { data: poolBalance } = usePoolBalance();
+  const { data: assetManagerDAIBalance } = useAssetManagerDAIBalance();
+
   return (
     <Fragment>
       <section className="mb-8">
@@ -25,9 +33,15 @@ export default function AssetManagerStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Available Credit" value="10000" />
-            <StatsCard label="Pool Balance" value="100000" />
-            <StatsCard label="DAI in Contract" value="10000" />
+            <StatsCard
+              label="Available Credit"
+              value={format(loanableAmount)}
+            />
+            <StatsCard label="Pool Balance" value={format(poolBalance)} />
+            <StatsCard
+              label="DAI in Contract"
+              value={format(assetManagerDAIBalance)}
+            />
           </StatsGrid>
         </div>
       </section>
