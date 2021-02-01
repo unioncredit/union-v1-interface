@@ -30,6 +30,12 @@ export const UNION_TOKEN_ADDRESSES = {
   42: "0x0B43bFB0ee50f39E82E4b17BBC53A6D9d5BA240e",
 };
 
+export const U_TOKEN_ADDRESSES = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
+};
+
 export const GOLDEN_TICKET_NFT_ADDRESS = {
   1: AddressZero,
   4: AddressZero,

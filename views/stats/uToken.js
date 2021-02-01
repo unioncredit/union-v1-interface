@@ -2,8 +2,20 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import useTotalBorrows from "hooks/stats/useTotalBorrows";
+import useTotalRedeemable from "hooks/stats/useTotalRedeemable";
+import useTotalReserves from "hooks/stats/useTotalReserves";
+import useUTokenSupply from "hooks/stats/useUTokenSupply";
+import useUTokenRate from "hooks/stats/useUTokenRate";
+import format from "util/formatValue";
 
 export default function UTokenStatsView() {
+  const { data: totalBorrows } = useTotalBorrows();
+  const { data: totalRedeemable } = useTotalRedeemable();
+  const { data: totalReserves } = useTotalReserves();
+  const { data: uTokenSupply } = useUTokenSupply();
+  const { data: uTokenRate } = useUTokenRate();
+
   return (
     <Fragment>
       <section className="mb-8">
@@ -25,13 +37,19 @@ export default function UTokenStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Total Borrowed" value="20000" />
-            <StatsCard label="Total Redeemable" value="20000" />
-            <StatsCard label="Total Reserves" value="200000" />
-            <StatsCard label="Defaulted Loan Amount" value="4000" />
-            <StatsCard label="Frozen Loan Amount" value="40000" />
-            <StatsCard label="uDAI Supply" value="400000" />
-            <StatsCard label="DAI/uDAI Exchange Rate" value="20" />
+            <StatsCard label="Total Borrowed" value={format(totalBorrows)} />
+            <StatsCard
+              label="Total Redeemable"
+              value={format(totalRedeemable)}
+            />
+            <StatsCard label="Total Reserves" value={format(totalReserves)} />
+            <StatsCard label="Defaulted Loan Amount" value="TBD" />
+            <StatsCard label="Frozen Loan Amount" value="TBD" />
+            <StatsCard label="uDAI Supply" value={format(uTokenSupply)} />
+            <StatsCard
+              label="DAI/uDAI Exchange Rate"
+              value={format(uTokenRate)}
+            />
           </StatsGrid>
         </div>
       </section>
