@@ -46,8 +46,6 @@ export default function UserManagerStatsView() {
               label="Total Frozen Stake"
               value={format(totalFrozenStake)}
             />
-            <StatsCard label="Effective = Total - Frozen" value="TBD" />
-            <StatsCard label="Defaulted ≥ Frozen" value="TBD" />
           </StatsGrid>
         </div>
       </section>
