@@ -66,6 +66,12 @@ export const GOVERNOR_ADDRESSES = {
   42: "0x9d8C41bd1e0B2d7dCCa7E3F765459bDa8C3FFb85",
 };
 
+export const TIMELOCK_ADDRESSES = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x65Fa4F167f588BcE55D563bd56eE8422A8252F20",
+};
+
 export const SCALE = 10 ** 18;
 
 export const BLOCK_SPEED = {
