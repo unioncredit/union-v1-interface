@@ -2,15 +2,15 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useLoanableAmount from "hooks/stats/useLoanableAmount";
-import usePoolBalance from "hooks/stats/usePoolBalance";
-import useAssetManagerDAIBalance from "hooks/stats/useAssetManagerDAIBalance";
+import useAssetManagerStats from "hooks/stats/assetManagerStats";
 import format from "util/formatValue";
 
 export default function AssetManagerStatsView() {
-  const { data: loanableAmount } = useLoanableAmount();
-  const { data: poolBalance } = usePoolBalance();
-  const { data: assetManagerDAIBalance } = useAssetManagerDAIBalance();
+  const {
+    loanableAmount,
+    poolBalance,
+    assetManagerDAIBalance,
+  } = useAssetManagerStats();
 
   return (
     <Fragment>

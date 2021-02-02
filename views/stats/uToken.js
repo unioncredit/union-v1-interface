@@ -2,19 +2,17 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useTotalBorrows from "hooks/stats/useTotalBorrows";
-import useTotalRedeemable from "hooks/stats/useTotalRedeemable";
-import useTotalReserves from "hooks/stats/useTotalReserves";
-import useUTokenSupply from "hooks/stats/useUTokenSupply";
-import useUTokenRate from "hooks/stats/useUTokenRate";
+import useUTokenStats from "hooks/stats/uTokenStats";
 import format from "util/formatValue";
 
 export default function UTokenStatsView() {
-  const { data: totalBorrows } = useTotalBorrows();
-  const { data: totalRedeemable } = useTotalRedeemable();
-  const { data: totalReserves } = useTotalReserves();
-  const { data: uTokenSupply } = useUTokenSupply();
-  const { data: uTokenRate } = useUTokenRate();
+  const {
+    totalBorrows,
+    totalRedeemable,
+    totalReserves,
+    uTokenSupply,
+    uTokenRate,
+  } = useUTokenStats();
 
   return (
     <Fragment>

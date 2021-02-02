@@ -2,19 +2,17 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useUnionTokenSupply from "hooks/stats/useUnionTokenSupply";
-import useComptrollerUnionBalance from "hooks/stats/useComptrollerUnionBalance";
-import useReservoirUnionBalance from "hooks/stats/useReservoirUnionBalance";
-import useUnionPausedState from "hooks/stats/useUnionPausedState";
-import useUnionInflationPerBlock from "hooks/stats/useUnionInflationPerBlock";
+import useUnionTokenStats from "hooks/stats/unionTokenStats";
 import format from "util/formatValue";
 
 export default function UnionTokenStatsView() {
-  const { data: totalSupply } = useUnionTokenSupply();
-  const { data: reservoirUnionBalance } = useReservoirUnionBalance();
-  const { data: comptrollerUnionBalance } = useComptrollerUnionBalance();
-  const { data: isUnionTransferPaused } = useUnionPausedState();
-  const { data: unionInflationPerBlock } = useUnionInflationPerBlock();
+  const {
+    totalSupply,
+    reservoirUnionBalance,
+    comptrollerUnionBalance,
+    isUnionTransferPaused,
+    unionInflationPerBlock,
+  } = useUnionTokenStats();
 
   return (
     <Fragment>

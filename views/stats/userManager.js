@@ -2,15 +2,16 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useTotalStakedDAI from "hooks/stats/useTotalStakedDAI";
-import useTotalFrozenStake from "hooks/stats/useTotalFrozenStake";
-import useEffectiveTotalStake from "hooks/stats/useEffectiveTotalStake";
+import useUserManagerStats from "hooks/stats/userManagerStats";
 import format from "util/formatValue";
 
 export default function UserManagerStatsView() {
-  const { data: totalStakedDAI } = useTotalStakedDAI();
-  const { data: totalFrozenStake } = useTotalFrozenStake();
-  const effectiveTotalStake = useEffectiveTotalStake();
+  const {
+    totalStakedDAI,
+    totalFrozenStake,
+    effectiveTotalStake,
+  } = useUserManagerStats();
+
   return (
     <Fragment>
       <section className="mb-8">

@@ -2,25 +2,20 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useInterestRate from "hooks/stats/useInterestRate";
-import useOriginationFee from "hooks/stats/useOriginationFee";
-import useOverdueBlocks from "hooks/stats/useOverdueBlocks";
-import useReserveFactor from "hooks/stats/useReserveFactor";
-import useNewMemberFee from "hooks/stats/useNewMemberFee";
-import useMaxBorrow from "hooks/stats/useMaxBorrow";
-import useMinBorrow from "hooks/stats/useMinBorrow";
-import useDebtCeiling from "hooks/stats/useDebtCeiling";
+import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
 import format from "util/formatValue";
 
 export default function MarketSettingsStatsView() {
-  const { data: interestRate } = useInterestRate();
-  const { data: originationFee } = useOriginationFee();
-  const { data: overdueBlocks } = useOverdueBlocks();
-  const { data: reserveFactor } = useReserveFactor();
-  const { data: newMemberFee } = useNewMemberFee();
-  const { data: maxBorrow } = useMaxBorrow();
-  const { data: minBorrow } = useMinBorrow();
-  const { data: debtCeiling } = useDebtCeiling();
+  const {
+    interestRate,
+    originationFee,
+    overdueBlocks,
+    reserveFactor,
+    newMemberFee,
+    maxBorrow,
+    minBorrow,
+    debtCeiling,
+  } = useMarketSettingsStats();
 
   return (
     <Fragment>

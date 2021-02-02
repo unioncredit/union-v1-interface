@@ -3,7 +3,7 @@ import { Contract } from "@ethersproject/contracts";
 import { UNION_TOKEN_ADDRESSES } from "constants/variables";
 import useComptrollerContract from "hooks/contracts/useComptrollerContract";
 import useSWR from "swr";
-import useEffectiveTotalStake from "hooks/stats/useEffectiveTotalStake";
+import useEffectiveTotalStake from "hooks/stats/userManagerStats/useEffectiveTotalStake";
 
 const getUnionInflationPerBlock = (comptroller: Contract) => async (
   _: any,

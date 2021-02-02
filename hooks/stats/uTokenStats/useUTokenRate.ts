@@ -4,11 +4,9 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getUTokenRate = (uTokenContract: Contract) => async (
-  _: any
-) => {
+const getUTokenRate = (uTokenContract: Contract) => async (_: any) => {
   const uTokenRate: BigNumber = await uTokenContract.exchangeRateStored();
-  const decimals = BigNumber.from(18)
+  const decimals = BigNumber.from(18);
   return formatUnits(uTokenRate, decimals);
 };
 

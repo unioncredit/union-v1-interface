@@ -2,19 +2,17 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
-import useProposalQuorum from "hooks/governance/useProposalQuorum";
-import useProposalThreshold from "hooks/governance/useProposalThreshold";
-import useVotingPeriod from "hooks/stats/useVotingPeriod";
-import useVotingDelay from "hooks/stats/useVotingDelay";
-import useTimelock from "hooks/stats/useTimelock";
+import useGovernanceStats from "hooks/stats/governanceStats";
 import format from "util/formatValue";
 
 export default function GovernanceStatsView() {
-  const { data: quorum } = useProposalQuorum();
-  const { data: threshold } = useProposalThreshold();
-  const { data: votingPeriod } = useVotingPeriod();
-  const { data: votingDelay } = useVotingDelay();
-  const { data: timelock } = useTimelock();
+  const {
+    quorum,
+    threshold,
+    votingPeriod,
+    votingDelay,
+    timelock,
+  } = useGovernanceStats();
 
   return (
     <Fragment>
