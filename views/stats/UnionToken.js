@@ -35,18 +35,33 @@ export default function UnionTokenStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Total Supply" value={format(totalSupply)} />
+            <StatsCard
+              label="Total Supply"
+              value={totalSupply ? format(totalSupply) + " Union" : "NaN"}
+            />
             <StatsCard
               label="Reservoir Balance"
-              value={format(reservoirUnionBalance)}
+              value={
+                reservoirUnionBalance
+                  ? format(reservoirUnionBalance) + " Union"
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Comptroller Balance"
-              value={format(comptrollerUnionBalance)}
+              value={
+                comptrollerUnionBalance
+                  ? format(comptrollerUnionBalance) + " Union"
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Actual UPB"
-              value={format(unionInflationPerBlock)}
+              value={
+                unionInflationPerBlock
+                  ? format(unionInflationPerBlock) + " Union"
+                  : "NaN"
+              }
             />
             <StatsCard label="Base UPB" value="TBD" />
             <StatsCard

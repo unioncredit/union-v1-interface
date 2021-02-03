@@ -35,12 +35,19 @@ export default function AssetManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Available Credit"
-              value={format(loanableAmount)}
+              value={loanableAmount ? format(loanableAmount) + " DAI" : "NaN"}
             />
-            <StatsCard label="Pool Balance" value={format(poolBalance)} />
+            <StatsCard
+              label="Pool Balance"
+              value={poolBalance ? format(poolBalance) + " DAI" : "NaN"}
+            />
             <StatsCard
               label="DAI in Contract"
-              value={format(assetManagerDAIBalance)}
+              value={
+                assetManagerDAIBalance
+                  ? format(assetManagerDAIBalance) + " DAI"
+                  : "NaN"
+              }
             />
           </StatsGrid>
         </div>

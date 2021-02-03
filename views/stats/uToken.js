@@ -35,15 +35,26 @@ export default function UTokenStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard label="Total Borrowed" value={format(totalBorrows)} />
+            <StatsCard
+              label="Total Borrowed"
+              value={totalBorrows ? format(totalBorrows) + " DAI" : "NaN"}
+            />
             <StatsCard
               label="Total Redeemable"
-              value={format(totalRedeemable)}
+              value={
+                totalRedeemable ? format(totalRedeemable) + " uDAI" : "NaN"
+              }
             />
-            <StatsCard label="Total Reserves" value={format(totalReserves)} />
+            <StatsCard
+              label="Total Reserves"
+              value={totalReserves ? format(totalReserves) + " DAI" : "NaN"}
+            />
             <StatsCard label="Defaulted Loan Amount" value="TBD" />
             <StatsCard label="Frozen Loan Amount" value="TBD" />
-            <StatsCard label="uDAI Supply" value={format(uTokenSupply)} />
+            <StatsCard
+              label="uDAI Supply"
+              value={uTokenSupply ? format(uTokenSupply) + " uDAI" : "NaN"}
+            />
             <StatsCard
               label="DAI/uDAI Exchange Rate"
               value={format(uTokenRate)}

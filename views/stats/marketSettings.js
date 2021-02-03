@@ -2,7 +2,9 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import { BLOCK_SPEED } from "constants/variables";
 import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
+import useChainId from "hooks/useChainId";
 import format from "util/formatValue";
 
 export default function MarketSettingsStatsView() {
@@ -16,6 +18,18 @@ export default function MarketSettingsStatsView() {
     minBorrow,
     debtCeiling,
   } = useMarketSettingsStats();
+
+  const chainId = useChainId();
+
+  const overdueHours = overdueBlocks
+    ?.mul(BLOCK_SPEED[chainId])
+    ?.div(3600)
+    .toNumber();
+
+  const overdueDays = overdueBlocks
+    ?.mul(BLOCK_SPEED[chainId])
+    ?.div(86400)
+    .toNumber();
 
   return (
     <Fragment>
@@ -42,15 +56,36 @@ export default function MarketSettingsStatsView() {
               label="APR"
               value={interestRate ? format(interestRate) + "%" : "NaN"}
             />
-            <StatsCard label="Fee" value={format(originationFee)} />
-            <StatsCard label="Payment Period" value={format(overdueBlocks)} />
+            <StatsCard
+              label="Fee"
+              value={originationFee ? format(originationFee) + " DAI" : "NaN"}
+            />
+            <StatsCard
+              label="Payment Period"
+              value={
+                overdueBlocks
+                  ? overdueHours < 48
+                    ? format(overdueBlocks, 0) + " (" + overdueHours + " Hours)"
+                    : format(overdueBlocks, 0) + " (" + overdueDays + " Days)"
+                  : "NaN"
+              }
+            />
             <StatsCard label="Reserve Factor" value={format(reserveFactor)} />
-            <StatsCard label="Membership Fee" value={format(newMemberFee)} />
-            <StatsCard label="Max Borrow" value={format(maxBorrow)} />
-            <StatsCard label="Min Borrow" value={format(minBorrow)} />
+            <StatsCard
+              label="Membership Fee"
+              value={newMemberFee ? format(newMemberFee) + " Union" : "NaN"}
+            />
+            <StatsCard
+              label="Max Borrow"
+              value={maxBorrow ? format(maxBorrow) + " DAI" : "NaN"}
+            />
+            <StatsCard
+              label="Min Borrow"
+              value={minBorrow ? format(minBorrow) + " DAI" : "NaN"}
+            />
             <StatsCard
               label="Current Debt Ceiling"
-              value={format(debtCeiling)}
+              value={debtCeiling ? format(debtCeiling) + " DAI" : "NaN"}
             />
           </StatsGrid>
         </div>
