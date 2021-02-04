@@ -6,6 +6,7 @@ import { BLOCK_SPEED } from "constants/variables";
 import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
 import useChainId from "hooks/useChainId";
 import format from "util/formatValue";
+import { toPercent } from "util/numbers";
 
 export default function MarketSettingsStatsView() {
   const {
@@ -52,14 +53,8 @@ export default function MarketSettingsStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard
-              label="APR"
-              value={interestRate ? format(interestRate) + "%" : "NaN"}
-            />
-            <StatsCard
-              label="Fee"
-              value={originationFee ? format(originationFee) + " DAI" : "NaN"}
-            />
+            <StatsCard label="APR" value={toPercent(interestRate || 0, 2)} />
+            <StatsCard label="Fee" value={toPercent(originationFee || 0, 2)} />
             <StatsCard
               label="Payment Period"
               value={
