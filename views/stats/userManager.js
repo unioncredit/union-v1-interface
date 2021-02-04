@@ -3,6 +3,7 @@ import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
 import useUserManagerStats from "hooks/stats/userManagerStats";
+import useUTokenStats from "hooks/stats/uTokenStats";
 import format from "util/formatValue";
 
 export default function UserManagerStatsView() {
@@ -11,6 +12,8 @@ export default function UserManagerStatsView() {
     totalFrozenStake,
     effectiveTotalStake,
   } = useUserManagerStats();
+
+  const { defaultedAmount } = useUTokenStats();
 
   return (
     <Fragment>
@@ -45,7 +48,10 @@ export default function UserManagerStatsView() {
                   : "NaN"
               }
             />
-            <StatsCard label="Defaulted Stake" value="TBD" />
+            <StatsCard
+              label="Defaulted Stake"
+              value={defaultedAmount ? format(defaultedAmount) + " DAI" : "NaN"}
+            />
             <StatsCard
               label="Total Frozen Stake"
               value={

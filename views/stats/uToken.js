@@ -3,6 +3,7 @@ import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
 import useUTokenStats from "hooks/stats/uTokenStats";
+import useUserManagerStats from "hooks/stats/userManagerStats";
 import format from "util/formatValue";
 
 export default function UTokenStatsView() {
@@ -12,7 +13,10 @@ export default function UTokenStatsView() {
     totalReserves,
     uTokenSupply,
     uTokenRate,
+    defaultedAmount,
   } = useUTokenStats();
+
+  const { totalFrozenStake } = useUserManagerStats();
 
   return (
     <Fragment>
@@ -49,8 +53,16 @@ export default function UTokenStatsView() {
               label="Total Reserves"
               value={totalReserves ? format(totalReserves) + " DAI" : "NaN"}
             />
-            <StatsCard label="Defaulted Loan Amount" value="TBD" />
-            <StatsCard label="Frozen Loan Amount" value="TBD" />
+            <StatsCard
+              label="Defaulted Loan Amount"
+              value={defaultedAmount ? format(defaultedAmount) + " DAI" : "NaN"}
+            />
+            <StatsCard
+              label="Frozen Loan Amount"
+              value={
+                totalFrozenStake ? format(totalFrozenStake) + " DAI" : "NaN"
+              }
+            />
             <StatsCard
               label="uDAI Supply"
               value={uTokenSupply ? format(uTokenSupply) + " uDAI" : "NaN"}
