@@ -2,31 +2,33 @@ import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKEN_ABI from "constants/abis/uToken.json";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import useUserContract from "../contracts/useUserContract";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
 
-const getVouch = (marketRegistryContract, memberContract) => async (
+const getVouch = (marketRegistryContract) => async (
   _,
   account,
   tokenAddress,
   library
 ) => {
-  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const signer = library.getSigner();
+  const uTokenAddress = res.uToken;
+  const userManagerAddress = res.userManager;
 
-  const marketContract = new Contract(
-    marketAddress,
-    LENDING_MARKET_ABI,
-    library.getSigner()
+  const userManagerContract = new Contract(
+    userManagerAddress,
+    USER_MANAGER_ABI,
+    signer
   );
 
-  const addresses = await memberContract.getStakerAddresses(
-    account,
-    tokenAddress
-  );
+  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
+
+  const addresses = await userManagerContract.getStakerAddresses(account);
 
   const list = await Promise.all(
     addresses.map(async (address) => {
@@ -34,23 +36,17 @@ const getVouch = (marketRegistryContract, memberContract) => async (
         vouchingAmount,
         lockedStake,
         trustAmount,
-      } = await memberContract.getStakerAsset(account, address, tokenAddress);
+      } = await userManagerContract.getStakerAsset(account, address);
 
       const totalUsed = Number(
-        formatUnits(
-          await memberContract.getTotalLockedStake(address, tokenAddress),
-          18
-        )
+        formatUnits(await userManagerContract.getTotalLockedStake(address), 18)
       );
 
       const stakingAmount = Number(
-        formatUnits(
-          await memberContract.getStakerBalance(address, tokenAddress),
-          18
-        )
+        formatUnits(await userManagerContract.getStakerBalance(address), 18)
       );
 
-      const isOverdue = await marketContract.checkIsOverdue(address);
+      const isOverdue = await uTokenContract.checkIsOverdue(address);
 
       const vouched = parseRes(vouchingAmount);
 
@@ -90,17 +86,14 @@ export default function useVouchData() {
 
   const marketRegistryContract = useMarketRegistryContract();
 
-  const memberContract = useUserContract();
-
   const shouldFetch =
     !!marketRegistryContract &&
-    !!memberContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
     !!library;
 
   return useSWR(
     shouldFetch ? ["Vouch", account, curToken, library] : null,
-    getVouch(marketRegistryContract, memberContract)
+    getVouch(marketRegistryContract)
   );
 }

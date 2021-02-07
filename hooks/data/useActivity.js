@@ -1,20 +1,35 @@
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
+import { Contract } from "@ethersproject/contracts";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import useUserContract from "hooks/contracts/useUserContract";
 import useSWR from "swr";
+import useCurrentToken from "../useCurrentToken";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
 dayjs.extend(relativeTime);
 
-const getActivity = (contract) => async (_, account, library) => {
+const getActivity = (marketRegistryContract) => async (
+  _,
+  account,
+  library,
+  tokenAddress
+) => {
   const signer = library.getSigner();
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const userManagerAddress = res.userManager;
+  const userManagerContract = new Contract(
+    userManagerAddress,
+    USER_MANAGER_ABI,
+    signer
+  );
 
   /**
    * UpdateTrust Logs
    */
 
-  const updateTrustFilter = contract.filters.LogUpdateTrust();
+  const updateTrustFilter = userManagerContract.filters.LogUpdateTrust();
   updateTrustFilter.fromBlock = 0;
 
   const updateTrustLogs = await signer.provider.getLogs(updateTrustFilter);
@@ -23,7 +38,7 @@ const getActivity = (contract) => async (_, account, library) => {
     updateTrustLogs.map(async (log) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
-      const logData = contract.interface.parseLog(log);
+      const logData = userManagerContract.interface.parseLog(log);
 
       const [borrower, staker, , trustAmount] = logData.args;
 
@@ -47,7 +62,7 @@ const getActivity = (contract) => async (_, account, library) => {
    * ApplyMember Logs
    */
 
-  const applyMemberFilter = contract.filters.LogApplyMember(account);
+  const applyMemberFilter = userManagerContract.filters.LogApplyMember(account);
   applyMemberFilter.fromBlock = 0;
 
   const applyMemberLogs = await signer.provider.getLogs(applyMemberFilter);
@@ -69,7 +84,7 @@ const getActivity = (contract) => async (_, account, library) => {
    * CancelVouch Logs
    */
 
-  const cancelVouchFilter = contract.filters.LogCancelVouch();
+  const cancelVouchFilter = userManagerContract.filters.LogCancelVouch();
   cancelVouchFilter.fromBlock = 0;
 
   const cancelVouchLogs = await signer.provider.getLogs(cancelVouchFilter);
@@ -78,7 +93,7 @@ const getActivity = (contract) => async (_, account, library) => {
     cancelVouchLogs.map(async (log) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
-      const logData = contract.interface.parseLog(log);
+      const logData = userManagerContract.interface.parseLog(log);
 
       const [account, borrower] = logData.args;
 
@@ -116,13 +131,14 @@ const getActivity = (contract) => async (_, account, library) => {
 
 export default function useActivity() {
   const { account, library } = useWeb3React();
-  const memberManagerContract = useUserContract();
+  const curToken = useCurrentToken();
+  const marketRegistryContract = useMarketRegistryContract();
 
   const shouldFetch =
-    !!memberManagerContract && typeof account === "string" && !!library;
+    !!marketRegistryContract && typeof account === "string" && !!library;
 
   return useSWR(
-    shouldFetch ? ["Activity", account, library] : null,
-    getActivity(memberManagerContract)
+    shouldFetch ? ["Activity", account, library, curToken] : null,
+    getActivity(marketRegistryContract)
   );
 }

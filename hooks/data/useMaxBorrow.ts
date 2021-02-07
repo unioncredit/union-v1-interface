@@ -2,7 +2,7 @@ import { Contract } from "@ethersproject/contracts";
 import type { Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKEN_ABI from "constants/abis/uToken.json";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
@@ -12,15 +12,16 @@ const getMaxBorrow = (contract: Contract) => async (
   tokenAddress: string,
   library: Web3Provider
 ) => {
-  const marketAddress = await contract.tokens(tokenAddress);
+  const market = await contract.tokens(tokenAddress);
+  const uTokenAddress = market.uToken;
 
-  const lendingMarketContract = new Contract(
-    marketAddress,
-    LENDING_MARKET_ABI,
+  const uTokenContract = new Contract(
+    uTokenAddress,
+    U_TOKEN_ABI,
     library.getSigner()
   );
 
-  const res = await lendingMarketContract.maxBorrow();
+  const res = await uTokenContract.maxBorrow();
 
   return Number(formatUnits(res, 18));
 };

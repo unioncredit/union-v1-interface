@@ -3,7 +3,7 @@ import type { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import parseRes from "util/parseRes";
-import useUserContract from "../contracts/useUserContract";
+import useComptrollerContract from "../contracts/useComptrollerContract";
 import useCurrentToken from "../useCurrentToken";
 
 const getRewardsData = (contract: Contract) => async (
@@ -31,18 +31,18 @@ const getRewardsData = (contract: Contract) => async (
 
 export default function useRewardsData() {
   const { account, chainId } = useWeb3React();
-  const userContract = useUserContract();
+  const comptrollerContract = useComptrollerContract();
   const curToken = useCurrentToken();
 
   const shouldFetch =
-    !!userContract &&
+    !!comptrollerContract &&
     typeof chainId === "number" &&
     typeof account === "string" &&
     isAddress(curToken);
 
   return useSWR(
     shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
-    getRewardsData(userContract),
+    getRewardsData(comptrollerContract),
     {
       refreshInterval: 10 * 1000,
       dedupingInterval: 10 * 1000,

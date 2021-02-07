@@ -15,7 +15,26 @@
         "type": "bytes"
       }
     ],
-    "name": "LogCreateMarket",
+    "name": "LogCreateUToken",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "contractAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "LogCreateUserManager",
     "type": "event"
   },
   {
@@ -64,16 +83,16 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "market",
+        "name": "token",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "token",
+        "name": "uToken",
         "type": "address"
       }
     ],
-    "name": "addMarket",
+    "name": "addUToken",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -88,47 +107,132 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "originationFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "globalMaxLoan",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxBorrow",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "minLoan",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "maxLateBlock",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "interestRateModel",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "assetManager",
-        "type": "address"
-      },
-      {
         "internalType": "address",
         "name": "userManager",
         "type": "address"
       }
     ],
-    "name": "createMarket",
+    "name": "addUserManager",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "address",
+            "name": "underlying",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "initialExchangeRateMantissa",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reserveFactorMantissa",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "originationFee",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "debtCeiling",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxBorrow",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minBorrow",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "overdueBlocks",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct MarketRegistry.uTokenData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "name": "createUToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "assetManager",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "unionToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "stakingToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "creditLimitModel",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "comptroller",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct MarketRegistry.userManagerData",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "name": "createUserManager",
     "outputs": [
       {
         "internalType": "address",
@@ -158,7 +262,22 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "getMarkets",
+    "name": "getUTokens",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getUserManagers",
     "outputs": [
       {
         "internalType": "address[]",
@@ -192,7 +311,13 @@
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin_",
+        "type": "address"
+      }
+    ],
     "name": "initialize",
     "outputs": [],
     "payable": false,
@@ -221,35 +346,8 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "markets",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "pause",
     "outputs": [],
     "payable": false,
@@ -257,39 +355,9 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "pauseGlobal",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "paused",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "pausedGlobal",
     "outputs": [
       {
         "internalType": "bool",
@@ -338,6 +406,32 @@
     "outputs": [
       {
         "internalType": "address",
+        "name": "uToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "userManager",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "uTokenList",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -348,13 +442,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "unpause",
     "outputs": [],
     "payable": false,
@@ -362,12 +450,24 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "unpauseGlobal",
-    "outputs": [],
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "userManagerList",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   }
 ]

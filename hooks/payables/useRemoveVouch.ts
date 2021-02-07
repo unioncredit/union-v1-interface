@@ -1,31 +1,41 @@
 import type { TransactionResponse } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import useUserContract from "hooks/contracts/useUserContract";
+import { Contract } from "@ethersproject/contracts";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
 export default function useRemoveVouch() {
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
   const tokenAddress = useCurrentToken();
-  const memberContract = useUserContract();
+  const marketRegistryContract = useMarketRegistryContract();
 
   return useCallback(
     async (memberAddress: string): Promise<TransactionResponse> => {
-      let gasLimit: any;
+      let gasLimit: any, userManagerContract: Contract;
       try {
-        gasLimit = await memberContract.estimateGas.cancelVouch(
+        const signer = library.getSigner();
+        const res = await marketRegistryContract.tokens(tokenAddress);
+        const userManagerAddress = res.userManager;
+        userManagerContract = new Contract(
+          userManagerAddress,
+          USER_MANAGER_ABI,
+          signer
+        );
+
+        gasLimit = await userManagerContract.estimateGas.cancelVouch(
           account,
-          memberAddress,
-          tokenAddress
+          memberAddress
         );
       } catch (err) {
         gasLimit = 300000;
       }
 
-      return memberContract.cancelVouch(account, memberAddress, tokenAddress, {
+      return userManagerContract.cancelVouch(account, memberAddress, {
         gasLimit,
       });
     },
-    [account, tokenAddress, memberContract]
+    [account, library, tokenAddress, marketRegistryContract]
   );
 }
