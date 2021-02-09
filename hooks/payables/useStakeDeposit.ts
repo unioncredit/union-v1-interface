@@ -1,46 +1,75 @@
 import { MaxUint256 } from "@ethersproject/constants";
+import { Contract } from "@ethersproject/contracts";
 import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import { USER_MANAGER_ADDRESSES } from "constants/variables";
 import useERC20Contract from "hooks/contracts/useERC20Contract";
-import useUserContract from "hooks/contracts/useUserContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
+import { signDaiPermit } from "eth-permit";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
 export default function useStakeDeposit() {
-  const { account, chainId } = useWeb3React();
-  const userContract = useUserContract();
-
+  const { account, chainId, library } = useWeb3React();
+  const marketRegistryContract = useMarketRegistryContract();
   const DAI = useCurrentToken();
   const DAIContract = useERC20Contract(DAI);
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {
-      const stakeAmount = parseUnits(String(amount), 18);
-
-      const allowance = await DAIContract.allowance(
-        account,
-        USER_MANAGER_ADDRESSES[chainId]
+      const signer = library.getSigner();
+      const res = await marketRegistryContract.tokens(DAI);
+      const userManagerAddress = res.userManager;
+      const userManagerContract = new Contract(
+        userManagerAddress,
+        USER_MANAGER_ABI,
+        signer
       );
 
-      if (allowance.lt(stakeAmount))
-        await DAIContract.approve(USER_MANAGER_ADDRESSES[chainId], MaxUint256);
+      const stakeAmount = parseUnits(String(amount), 18);
+      // const allowance = await DAIContract.allowance(
+      //   account,
+      //   userManagerAddress
+      // );
+
+      const result = await signDaiPermit(
+        library.provider,
+        DAI,
+        account,
+        userManagerAddress
+      );
+
+      // Approve is not required to call stakeWithPermit
+      // if (allowance.lt(stakeAmount))
+      //   await DAIContract.approve(userManagerAddress, MaxUint256);
 
       let gasLimit: any;
       try {
-        gasLimit = await userContract.estimateGas.stake(
-          DAI,
-          stakeAmount.toString()
+        gasLimit = await userManagerContract.estimateGas.stakeWithPermit(
+          stakeAmount.toString(),
+          result.nonce,
+          result.expiry,
+          result.v,
+          result.r,
+          result.s
         );
       } catch (err) {
         gasLimit = 800000;
       }
 
-      return userContract.stake(DAI, stakeAmount.toString(), {
-        gasLimit,
-      });
+      return userManagerContract.stakeWithPermit(
+        stakeAmount.toString(),
+        result.nonce,
+        result.expiry,
+        result.v,
+        result.r,
+        result.s,
+        {
+          gasLimit,
+        }
+      );
     },
-    [account, chainId, userContract, DAI, DAIContract]
+    [account, chainId, DAI, DAIContract, marketRegistryContract]
   );
 }

@@ -1,35 +1,45 @@
 import { isAddress } from "@ethersproject/address";
-import type { Contract } from "@ethersproject/contracts";
+import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useUserContract from "../contracts/useUserContract";
 import useCurrentToken from "../useCurrentToken";
+import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
-const getCreditLimit = (userContract: Contract) => async (
+const getCreditLimit = (marketRegistryContract: Contract) => async (
   _: any,
+  library: any,
   account: string,
   tokenAddress: string
 ) => {
-  const res = await userContract.getCreditLimit(tokenAddress, account);
+  const signer = library.getSigner();
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const userManagerAddress = res.userManager;
+  const userManagerContract = new Contract(
+    userManagerAddress,
+    USER_MANAGER_ABI,
+    signer
+  );
 
-  return Number(formatUnits(res, 18));
+  const limit = await userManagerContract.getCreditLimit(account);
+
+  return Number(formatUnits(limit, 18));
 };
 
 export default function useCreditLimit() {
   const { account, library } = useWeb3React();
   const curToken = useCurrentToken();
-
-  const userContract = useUserContract();
+  const marketRegistryContract = useMarketRegistryContract();
 
   const shouldFetch =
-    !!userContract &&
+    !!marketRegistryContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
     !!library;
 
   return useSWR(
-    shouldFetch ? ["CreditLimit", account, curToken] : null,
-    getCreditLimit(userContract)
+    shouldFetch ? ["CreditLimit", library, account, curToken] : null,
+    getCreditLimit(marketRegistryContract)
   );
 }

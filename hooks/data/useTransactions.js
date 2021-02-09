@@ -2,7 +2,7 @@ import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import LENDING_MARKET_ABI from "constants/abis/lendingMarket.json";
+import U_TOKEN_ABI from "constants/abis/uToken.json";
 import dayjs from "dayjs";
 import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
@@ -17,20 +17,16 @@ const getTransactions = (marketRegistryContract) => async (
 ) => {
   const signer = library.getSigner();
 
-  const marketAddress = await marketRegistryContract.tokens(tokenAddress);
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const uTokenAddress = res.uToken;
+  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
 
-  const marketContract = new Contract(
-    marketAddress,
-    LENDING_MARKET_ABI,
-    signer
-  );
-
-  const borrowFilter = marketContract.filters.LogBorrow(account);
+  const borrowFilter = uTokenContract.filters.LogBorrow(account);
   borrowFilter.fromBlock = 0;
 
   const borrowLogs = await signer.provider.getLogs(borrowFilter);
 
-  const repayFilter = marketContract.filters.LogRepay(account);
+  const repayFilter = uTokenContract.filters.LogRepay(account);
   repayFilter.fromBlock = 0;
 
   const repayLogs = await signer.provider.getLogs(repayFilter);
@@ -39,7 +35,7 @@ const getTransactions = (marketRegistryContract) => async (
     ...repayLogs.map(async (log) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
-      const logData = marketContract.interface.parseLog(log);
+      const logData = uTokenContract.interface.parseLog(log);
 
       const [account, amount] = logData.args;
 
@@ -56,7 +52,7 @@ const getTransactions = (marketRegistryContract) => async (
     ...borrowLogs.map(async (log) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
-      const logData = marketContract.interface.parseLog(log);
+      const logData = uTokenContract.interface.parseLog(log);
 
       const [account, amount, fee] = logData.args;
 

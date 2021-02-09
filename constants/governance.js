@@ -4,14 +4,14 @@ import { AddressZero } from "./variables";
 export const GOV_ADDRESS = {
   1: AddressZero,
   4: AddressZero,
-  42: "0xfDc7E087395c8ba7EfFc9f888eD52379dB235023",
+  42: "0x9d8C41bd1e0B2d7dCCa7E3F765459bDa8C3FFb85",
 };
 
 export const GOV_ABI = GOVERNOR_ABI;
 
 export const TARGETS = {
   4: {
-    LendingMarket: {
+    UToken: {
       address: "0x567781ecC20da0fd0bA7ff219fBDaE0275c3Ad7f",
       actions: [
         {
@@ -35,8 +35,8 @@ export const TARGETS = {
     },
   },
   42: {
-    LendingMarket: {
-      address: "0xf98bC4c21096b35EF0f7DE3f80349c39E54C12C3",
+    UToken: {
+      address: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -49,7 +49,7 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0x9BFf08164fD83F6349c347Dc755Ea5549f88410b",
+      address: "0x485c6a9e364008458853AF0160960C34aC05bebE",
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
@@ -58,7 +58,7 @@ export const TARGETS = {
       ],
     },
     FixedInterestRate: {
-      address: "0x2D117E4F6368EDdA4456CD21a2e3D5f0C95F38eB",
+      address: "0x5f39644341fed87bcF551b2C09d63a9990de338b",
       actions: [
         {
           signature: "setInterestRate(uint256)",

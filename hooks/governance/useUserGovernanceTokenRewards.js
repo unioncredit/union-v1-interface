@@ -2,7 +2,7 @@ import { isAddress } from "@ethersproject/address";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
-import useUserContract from "../contracts/useUserContract";
+import useComptrollerContract from "../contracts/useComptrollerContract";
 
 const getUserGovernanceTokenRewards = (contract) => async (
   _,
@@ -18,15 +18,15 @@ const getUserGovernanceTokenRewards = (contract) => async (
 };
 
 export default function useUserGovernanceTokenRewards(address) {
-  const userContract = useUserContract();
+  const comptrollerContract = useComptrollerContract();
   const DAI = useCurrentToken();
 
   const shouldFetch =
-    !!userContract && typeof address === "string" && isAddress(DAI);
+    !!comptrollerContract && typeof address === "string" && isAddress(DAI);
 
   return useSWR(
     shouldFetch ? ["UserGovernanceTokenRewards", address, DAI] : null,
-    getUserGovernanceTokenRewards(userContract),
+    getUserGovernanceTokenRewards(comptrollerContract),
     {
       refreshInterval: 10 * 1000,
       dedupingInterval: 10 * 1000,
