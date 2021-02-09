@@ -8,7 +8,8 @@ import format from "util/formatValue";
 export default function UnionTokenStatsView() {
   const {
     totalSupply,
-    reservoirUnionBalance,
+    reservoir1UnionBalance,
+    reservoir2UnionBalance,
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
@@ -41,10 +42,18 @@ export default function UnionTokenStatsView() {
               value={totalSupply ? format(totalSupply) + " Union" : "NaN"}
             />
             <StatsCard
-              label="Reservoir Balance"
+              label="Reservoir 1 Balance"
               value={
-                reservoirUnionBalance
-                  ? format(reservoirUnionBalance) + " Union"
+                reservoir1UnionBalance
+                  ? format(reservoir1UnionBalance) + " Union"
+                  : "NaN"
+              }
+            />
+            <StatsCard
+              label="Reservoir 2 Balance"
+              value={
+                reservoir1UnionBalance
+                  ? format(reservoir2UnionBalance) + " Union"
                   : "NaN"
               }
             />
