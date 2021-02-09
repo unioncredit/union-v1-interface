@@ -38,8 +38,8 @@ export const COMPTROLLER_ADDRESSES = {
 
 export const U_TOKEN_ADDRESSES = {
   1: AddressZero,
-  4: AddressZero,
-  42: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
+  4: "0x286dc33F2fE0D3C4368cc00b2643945249F6555A",
+  42: "0x1474DDc49655794A479947aA9b3B3563CeaA2e19",
 };
 
 export const GOLDEN_TICKET_NFT_ADDRESS = {
@@ -48,28 +48,22 @@ export const GOLDEN_TICKET_NFT_ADDRESS = {
   42: AddressZero,
 };
 
-export const UTOKEN_ADDRESSES = {
-  1: AddressZero,
-  4: AddressZero,
-  42: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
-};
-
 export const RESERVOIR_ADDRESSES = {
   1: AddressZero,
-  4: AddressZero,
-  42: AddressZero,
+  4: "0x8c6149A463212A9f388D83e61d724c36b8E5dd12",
+  42: "0xe70c89F37598e6a3B9DB48b7706998Fd18aC9Be0",
 };
 
 export const GOVERNOR_ADDRESSES = {
   1: AddressZero,
-  4: AddressZero,
-  42: "0x9d8C41bd1e0B2d7dCCa7E3F765459bDa8C3FFb85",
+  4: "0x51658ff9283BdFAFF845F99Fe693a1Dc0bDF44a7",
+  42: "0x902b32dEe11a5C0A4d4bdA279f534329b11944d3",
 };
 
 export const TIMELOCK_ADDRESSES = {
   1: AddressZero,
-  4: AddressZero,
-  42: "0x65Fa4F167f588BcE55D563bd56eE8422A8252F20",
+  4: "0x9815370e9950fc0fbAc50A32F38edaD9cef06429",
+  42: "0xBF053a2fF0fb3EFB2B9309A63057eA1bF3Cfc044",
 };
 
 export const SCALE = 10 ** 18;
