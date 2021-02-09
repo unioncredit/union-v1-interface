@@ -12,7 +12,7 @@ export default function UnionTokenStatsView() {
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
-    unionBaseInflation,
+    unionInflationIndex,
   } = useUnionTokenStats();
 
   return (
@@ -65,12 +65,8 @@ export default function UnionTokenStatsView() {
               }
             />
             <StatsCard
-              label="Base UPB"
-              value={
-                unionBaseInflation
-                  ? format(unionBaseInflation) + " Union"
-                  : "NaN"
-              }
+              label="Inflation Index"
+              value={unionInflationIndex ? format(unionInflationIndex) : "NaN"}
             />
             <StatsCard
               label="Transfers"

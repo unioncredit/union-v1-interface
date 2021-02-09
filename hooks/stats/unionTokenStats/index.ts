@@ -3,7 +3,7 @@ import useReservoirUnionBalance from "./useReservoirUnionBalance";
 import useComptrollerUnionBalance from "./useComptrollerUnionBalance";
 import useUnionPausedState from "./useUnionPausedState";
 import useUnionInflationPerBlock from "./useUnionInflationPerBlock";
-import useUnionBaseInflation from "./useUnionBaseInflation";
+import useUnionInflationIndex from "./useUnionInflationIndex";
 
 export default function useUnionTokenStats() {
   const { data: totalSupply } = useUnionTokenSupply();
@@ -11,7 +11,7 @@ export default function useUnionTokenStats() {
   const { data: comptrollerUnionBalance } = useComptrollerUnionBalance();
   const { data: isUnionTransferPaused } = useUnionPausedState();
   const { data: unionInflationPerBlock } = useUnionInflationPerBlock();
-  const { data: unionBaseInflation } = useUnionBaseInflation();
+  const { data: unionInflationIndex } = useUnionInflationIndex();
 
   return {
     totalSupply,
@@ -19,6 +19,6 @@ export default function useUnionTokenStats() {
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
-    unionBaseInflation,
+    unionInflationIndex,
   };
 }
