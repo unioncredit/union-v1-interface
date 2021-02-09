@@ -664,7 +664,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "mintingAllowedAfter",
+    "name": "mintCap",
     "outputs": [
       {
         "internalType": "uint256",
@@ -760,6 +760,21 @@
   {
     "constant": true,
     "inputs": [],
+    "name": "pauseGuardian",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
     "name": "paused",
     "outputs": [
       {
@@ -821,6 +836,21 @@
     "constant": false,
     "inputs": [],
     "name": "renounceAdmin",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "setGuardian",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
