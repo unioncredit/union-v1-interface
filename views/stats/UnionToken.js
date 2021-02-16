@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import StatsHeader from "components/stats/StatsHeader";
 import useUnionTokenStats from "hooks/stats/unionTokenStats";
 import format from "util/formatValue";
 
@@ -20,10 +21,7 @@ export default function UnionTokenStatsView() {
     <Fragment>
       <section className="mb-8">
         <div className="container">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl">Union Stats</h1>
-          </div>
-
+          <StatsHeader />
           <StatsNavigation />
         </div>
       </section>

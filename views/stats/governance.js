@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import StatsNavigation from "components/stats/StatsNavigation";
 import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
+import StatsHeader from "components/stats/StatsHeader";
 import { BLOCK_SPEED } from "constants/variables";
 import useGovernanceStats from "hooks/stats/governanceStats";
 import useChainId from "hooks/useChainId";
@@ -42,10 +43,7 @@ export default function GovernanceStatsView() {
     <Fragment>
       <section className="mb-8">
         <div className="container">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl">Union Stats</h1>
-          </div>
-
+          <StatsHeader />
           <StatsNavigation />
         </div>
       </section>
