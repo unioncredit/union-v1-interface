@@ -43,9 +43,7 @@ export default function UTokenStatsView() {
             />
             <StatsCard
               label="Total Redeemable"
-              value={
-                totalRedeemable ? format(totalRedeemable) + " uDAI" : "NaN"
-              }
+              value={totalRedeemable ? format(totalRedeemable) + " DAI" : "NaN"}
             />
             <StatsCard
               label="Total Reserves"
