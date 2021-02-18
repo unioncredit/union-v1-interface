@@ -6,7 +6,7 @@ import StatsHeader from "components/stats/StatsHeader";
 import { BLOCK_SPEED } from "constants/variables";
 import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
 import useChainId from "hooks/useChainId";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 import { toPercent } from "util/numbers";
 
 export default function MarketSettingsStatsView() {
@@ -57,28 +57,34 @@ export default function MarketSettingsStatsView() {
               label="Payment Period"
               value={
                 overdueBlocks
-                  ? overdueHours < 48
-                    ? format(overdueBlocks, 0) + " (" + overdueHours + " Hours)"
-                    : format(overdueBlocks, 0) + " (" + overdueDays + " Days)"
+                  ? formatDetailed(overdueBlocks, 0) +
+                    (overdueHours < 48
+                      ? " (" + overdueHours + " Hours)"
+                      : " (" + overdueDays + " Days)")
                   : "NaN"
               }
             />
-            <StatsCard label="Reserve Factor" value={format(reserveFactor)} />
+            <StatsCard
+              label="Reserve Factor"
+              value={formatDetailed(reserveFactor)}
+            />
             <StatsCard
               label="Membership Fee"
-              value={newMemberFee ? format(newMemberFee) + " Union" : "NaN"}
+              value={
+                newMemberFee ? formatDetailed(newMemberFee) + " Union" : "NaN"
+              }
             />
             <StatsCard
               label="Max Borrow"
-              value={maxBorrow ? format(maxBorrow) + " DAI" : "NaN"}
+              value={maxBorrow ? formatDetailed(maxBorrow) + " DAI" : "NaN"}
             />
             <StatsCard
               label="Min Borrow"
-              value={minBorrow ? format(minBorrow) + " DAI" : "NaN"}
+              value={minBorrow ? formatDetailed(minBorrow) + " DAI" : "NaN"}
             />
             <StatsCard
               label="Current Debt Ceiling"
-              value={debtCeiling ? format(debtCeiling) + " DAI" : "NaN"}
+              value={debtCeiling ? formatDetailed(debtCeiling) + " DAI" : "NaN"}
             />
           </StatsGrid>
         </div>

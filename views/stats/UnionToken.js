@@ -4,7 +4,7 @@ import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
 import StatsHeader from "components/stats/StatsHeader";
 import useUnionTokenStats from "hooks/stats/unionTokenStats";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 
 export default function UnionTokenStatsView() {
   const {
@@ -37,13 +37,15 @@ export default function UnionTokenStatsView() {
           <StatsGrid>
             <StatsCard
               label="Total Supply"
-              value={totalSupply ? format(totalSupply) + " Union" : "NaN"}
+              value={
+                totalSupply ? formatDetailed(totalSupply) + " Union" : "NaN"
+              }
             />
             <StatsCard
               label="Reservoir 1 Balance"
               value={
                 reservoir1UnionBalance
-                  ? format(reservoir1UnionBalance) + " Union"
+                  ? formatDetailed(reservoir1UnionBalance) + " Union"
                   : "NaN"
               }
             />
@@ -51,7 +53,7 @@ export default function UnionTokenStatsView() {
               label="Reservoir 2 Balance"
               value={
                 reservoir1UnionBalance
-                  ? format(reservoir2UnionBalance) + " Union"
+                  ? formatDetailed(reservoir2UnionBalance) + " Union"
                   : "NaN"
               }
             />
@@ -59,7 +61,7 @@ export default function UnionTokenStatsView() {
               label="Comptroller Balance"
               value={
                 comptrollerUnionBalance
-                  ? format(comptrollerUnionBalance) + " Union"
+                  ? formatDetailed(comptrollerUnionBalance) + " Union"
                   : "NaN"
               }
             />
@@ -67,13 +69,17 @@ export default function UnionTokenStatsView() {
               label="Actual UPB"
               value={
                 unionInflationPerBlock
-                  ? format(unionInflationPerBlock) + " Union"
+                  ? formatDetailed(unionInflationPerBlock) + " Union"
                   : "NaN"
               }
             />
             <StatsCard
               label="Inflation Index"
-              value={unionInflationIndex ? format(unionInflationIndex) : "NaN"}
+              value={
+                unionInflationIndex
+                  ? formatDetailed(unionInflationIndex)
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Transfers"

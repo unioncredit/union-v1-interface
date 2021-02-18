@@ -5,7 +5,7 @@ import StatsGrid from "components/stats/StatsGrid";
 import StatsHeader from "components/stats/StatsHeader";
 import useUTokenStats from "hooks/stats/uTokenStats";
 import useUserManagerStats from "hooks/stats/userManagerStats";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 
 export default function UTokenStatsView() {
   const {
@@ -39,33 +39,49 @@ export default function UTokenStatsView() {
           <StatsGrid>
             <StatsCard
               label="Total Borrowed"
-              value={totalBorrows ? format(totalBorrows) + " DAI" : "NaN"}
+              value={
+                totalBorrows ? formatDetailed(totalBorrows) + " DAI" : "NaN"
+              }
             />
             <StatsCard
               label="Total Redeemable"
-              value={totalRedeemable ? format(totalRedeemable) + " DAI" : "NaN"}
+              value={
+                totalRedeemable
+                  ? formatDetailed(totalRedeemable) + " DAI"
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Total Reserves"
-              value={totalReserves ? format(totalReserves) + " DAI" : "NaN"}
+              value={
+                totalReserves ? formatDetailed(totalReserves) + " DAI" : "NaN"
+              }
             />
             <StatsCard
               label="Defaulted Loan Amount"
-              value={defaultedAmount ? format(defaultedAmount) + " DAI" : "NaN"}
+              value={
+                defaultedAmount
+                  ? formatDetailed(defaultedAmount) + " DAI"
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Frozen Loan Amount"
               value={
-                totalFrozenStake ? format(totalFrozenStake) + " DAI" : "NaN"
+                totalFrozenStake
+                  ? formatDetailed(totalFrozenStake) + " DAI"
+                  : "NaN"
               }
             />
             <StatsCard
               label="uDAI Supply"
-              value={uTokenSupply ? format(uTokenSupply) + " uDAI" : "NaN"}
+              value={
+                uTokenSupply ? formatDetailed(uTokenSupply) + " uDAI" : "NaN"
+              }
             />
             <StatsCard
               label="DAI/uDAI Exchange Rate"
-              value={format(uTokenRate)}
+              value={formatDetailed(uTokenRate)}
             />
           </StatsGrid>
         </div>

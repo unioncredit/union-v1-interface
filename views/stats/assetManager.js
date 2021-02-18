@@ -4,7 +4,7 @@ import StatsCard from "components/stats/StatsCard";
 import StatsGrid from "components/stats/StatsGrid";
 import StatsHeader from "components/stats/StatsHeader";
 import useAssetManagerStats from "hooks/stats/assetManagerStats";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 
 export default function AssetManagerStatsView() {
   const {
@@ -34,17 +34,19 @@ export default function AssetManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Available Credit"
-              value={loanableAmount ? format(loanableAmount) + " DAI" : "NaN"}
+              value={
+                loanableAmount ? formatDetailed(loanableAmount) + " DAI" : "NaN"
+              }
             />
             <StatsCard
               label="Pool Balance"
-              value={poolBalance ? format(poolBalance) + " DAI" : "NaN"}
+              value={poolBalance ? formatDetailed(poolBalance) + " DAI" : "NaN"}
             />
             <StatsCard
               label="DAI in Contract"
               value={
                 assetManagerDAIBalance
-                  ? format(assetManagerDAIBalance) + " DAI"
+                  ? formatDetailed(assetManagerDAIBalance) + " DAI"
                   : "NaN"
               }
             />
@@ -52,7 +54,7 @@ export default function AssetManagerStatsView() {
               label="DAI In Lending Protocols"
               value={
                 daiInLendingProtocols
-                  ? format(daiInLendingProtocols) + " DAI"
+                  ? formatDetailed(daiInLendingProtocols) + " DAI"
                   : "NaN"
               }
             />

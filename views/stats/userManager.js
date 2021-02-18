@@ -5,7 +5,7 @@ import StatsGrid from "components/stats/StatsGrid";
 import StatsHeader from "components/stats/StatsHeader";
 import useUserManagerStats from "hooks/stats/userManagerStats";
 import useUTokenStats from "hooks/stats/uTokenStats";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 
 export default function UserManagerStatsView() {
   const {
@@ -36,24 +36,32 @@ export default function UserManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Total Stake"
-              value={totalStakedDAI ? format(totalStakedDAI) + " DAI" : "NaN"}
+              value={
+                totalStakedDAI ? formatDetailed(totalStakedDAI) + " DAI" : "NaN"
+              }
             />
             <StatsCard
               label="Effective Total Stake"
               value={
                 effectiveTotalStake
-                  ? format(effectiveTotalStake) + " DAI"
+                  ? formatDetailed(effectiveTotalStake) + " DAI"
                   : "NaN"
               }
             />
             <StatsCard
               label="Defaulted Stake"
-              value={defaultedAmount ? format(defaultedAmount) + " DAI" : "NaN"}
+              value={
+                defaultedAmount
+                  ? formatDetailed(defaultedAmount) + " DAI"
+                  : "NaN"
+              }
             />
             <StatsCard
               label="Total Frozen Stake"
               value={
-                totalFrozenStake ? format(totalFrozenStake) + " DAI" : "NaN"
+                totalFrozenStake
+                  ? formatDetailed(totalFrozenStake) + " DAI"
+                  : "NaN"
               }
             />
           </StatsGrid>

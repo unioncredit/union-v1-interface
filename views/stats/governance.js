@@ -6,7 +6,7 @@ import StatsHeader from "components/stats/StatsHeader";
 import { BLOCK_SPEED } from "constants/variables";
 import useGovernanceStats from "hooks/stats/governanceStats";
 import useChainId from "hooks/useChainId";
-import format from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 
 export default function GovernanceStatsView() {
   const {
@@ -53,39 +53,37 @@ export default function GovernanceStatsView() {
           <StatsGrid>
             <StatsCard
               label="Quorum"
-              value={quorum ? format(quorum) + " Union" : "NaN"}
+              value={quorum ? formatDetailed(quorum) + " Union" : "NaN"}
             />
             <StatsCard
               label="Proposal Threshold"
-              value={threshold ? format(threshold) + " Union" : "NaN"}
+              value={threshold ? formatDetailed(threshold) + " Union" : "NaN"}
             />
             <StatsCard
               label="Voting Period"
               value={
                 votingPeriod
-                  ? votingPeriodHours < 48
-                    ? format(votingPeriod, 0) +
-                      " (" +
-                      votingPeriodHours +
-                      " Hours)"
-                    : format(votingPeriod, 0) +
-                      " (" +
-                      votingPeriodDays +
-                      " Days)"
+                  ? formatDetailed(votingPeriod, 0) +
+                    (votingPeriodHours < 48
+                      ? " (" + votingPeriodHours + " Hours)"
+                      : " (" + votingPeriodDays + " Days)")
                   : "NaN"
               }
             />
             <StatsCard
               label="Delay Period"
-              value={votingDelay ? format(votingDelay, 0) + " Block" : "NaN"}
+              value={
+                votingDelay ? formatDetailed(votingDelay, 0) + " Block" : "NaN"
+              }
             />
             <StatsCard
               label="Timelock"
               value={
                 timelock
-                  ? timelockHours < 48
-                    ? format(timelock, 0) + " (" + timelockHours + " Hours)"
-                    : format(timelock, 0) + " (" + timelockDays + " Days)"
+                  ? formatDetailed(timelock, 0) +
+                    (timelockHours < 48
+                      ? " (" + timelockHours + " Hours)"
+                      : " (" + timelockDays + " Days)")
                   : "NaN"
               }
             />
