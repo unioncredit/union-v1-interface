@@ -29,15 +29,9 @@ export default function GovernanceStatsView() {
     ?.div(86400)
     .toNumber();
 
-  const timelockHours = timelock
-    ?.mul(BLOCK_SPEED[chainId])
-    ?.div(3600)
-    .toNumber();
+  const timelockHours = timelock?.div(3600).toNumber();
 
-  const timelockDays = timelock
-    ?.mul(BLOCK_SPEED[chainId])
-    ?.div(86400)
-    .toNumber();
+  const timelockDays = timelock?.div(86400).toNumber();
 
   return (
     <Fragment>
