@@ -27,41 +27,55 @@ export default function useRepay() {
       );
 
       const repayAmount = parseUnits(String(amount), 18);
-
-      const result = await signDaiPermit(
-        library.provider,
-        DAI,
-        account,
-        uTokenAddress
-      );
-
       let gasLimit: any;
-      try {
-        gasLimit = await uTokenContract.estimateGas.repayBorrowWithPermit(
+      const allowance = await DAIContract.allowance(account, uTokenAddress);
+      if (allowance.lt(repayAmount)) {
+        const result = await signDaiPermit(
+          library.provider,
+          DAI,
+          account,
+          uTokenAddress
+        );
+
+        try {
+          gasLimit = await uTokenContract.estimateGas.repayBorrowWithPermit(
+            account,
+            repayAmount.toString(),
+            result.nonce,
+            result.expiry,
+            result.v,
+            result.r,
+            result.s
+          );
+        } catch (err) {
+          gasLimit = 800000;
+        }
+
+        return uTokenContract.repayBorrowWithPermit(
           account,
           repayAmount.toString(),
           result.nonce,
           result.expiry,
           result.v,
           result.r,
-          result.s
+          result.s,
+          {
+            gasLimit,
+          }
         );
-      } catch (err) {
-        gasLimit = 800000;
-      }
-
-      return uTokenContract.repayBorrowWithPermit(
-        account,
-        repayAmount.toString(),
-        result.nonce,
-        result.expiry,
-        result.v,
-        result.r,
-        result.s,
-        {
-          gasLimit,
+      } else {
+        try {
+          gasLimit = await uTokenContract.estimateGas.repayBorrow(
+            repayAmount.toString()
+          );
+        } catch (err) {
+          gasLimit = 800000;
         }
-      );
+
+        return uTokenContract.repayBorrow(repayAmount.toString(), {
+          gasLimit,
+        });
+      }
     },
     [account, DAI, marketRegistryContract, DAIContract]
   );
