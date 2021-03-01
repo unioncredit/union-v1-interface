@@ -103,11 +103,11 @@ const ApplicationModal = () => {
         <div className="mt-6">
           <Button
             full
-            onClick={unionAllowance < fee ? enableUNION : submit}
+            onClick={submit}
             submitting={isSubmitting}
             disabled={unionBalance < fee || isSubmitting}
           >
-            {unionAllowance < fee ? "Enable UNION" : "Submit application"}
+            {"Submit application"}
           </Button>
         </div>
       </div>
