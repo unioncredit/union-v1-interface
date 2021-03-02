@@ -13,10 +13,8 @@ export default function useApplyMember() {
   const { account, library } = useWeb3React();
   const tokenAddress = useCurrentToken();
   const UNION = useCurrentToken("UNION");
-  const { data = 0.0 } = useMemberFee();
-  const memberFee = parseUnits(String(data), 18).toString();
   const marketRegistryContract = useMarketRegistryContract();
-
+  let memberFee;
   return useCallback(async (): Promise<TransactionResponse> => {
     let gasLimit: any, userManagerContract: Contract, result: any;
     try {
@@ -28,6 +26,8 @@ export default function useApplyMember() {
         USER_MANAGER_ABI,
         signer
       );
+      memberFee = (await userManagerContract.newMemberFee()).toString();
+
       result = await signERC2612Permit(
         library,
         UNION,
