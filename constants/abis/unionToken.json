@@ -202,6 +202,21 @@
   },
   {
     "constant": true,
+    "inputs": [],
+    "name": "allowTransfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -333,6 +348,21 @@
         "internalType": "uint256",
         "name": "votes",
         "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "comptroller",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "payable": false,
@@ -846,11 +876,41 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_comptroller",
+        "type": "address"
+      }
+    ],
+    "name": "setComptroller",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "account",
         "type": "address"
       }
     ],
     "name": "setGuardian",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_allowTransfer",
+        "type": "bool"
+      }
+    ],
+    "name": "setTransferability",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

@@ -28,47 +28,57 @@ export default function useStakeDeposit() {
       );
 
       const stakeAmount = parseUnits(String(amount), 18);
-      // const allowance = await DAIContract.allowance(
-      //   account,
-      //   userManagerAddress
-      // );
-
-      const result = await signDaiPermit(
-        library.provider,
-        DAI,
+      let gasLimit: any;
+      const allowance = await DAIContract.allowance(
         account,
         userManagerAddress
       );
+      //Approve is not required to call stakeWithPermit
+      if (allowance.lt(stakeAmount)) {
+        const result = await signDaiPermit(
+          library.provider,
+          DAI,
+          account,
+          userManagerAddress
+        );
 
-      // Approve is not required to call stakeWithPermit
-      // if (allowance.lt(stakeAmount))
-      //   await DAIContract.approve(userManagerAddress, MaxUint256);
+        try {
+          gasLimit = await userManagerContract.estimateGas.stakeWithPermit(
+            stakeAmount.toString(),
+            result.nonce,
+            result.expiry,
+            result.v,
+            result.r,
+            result.s
+          );
+        } catch (err) {
+          gasLimit = 800000;
+        }
 
-      let gasLimit: any;
-      try {
-        gasLimit = await userManagerContract.estimateGas.stakeWithPermit(
+        return userManagerContract.stakeWithPermit(
           stakeAmount.toString(),
           result.nonce,
           result.expiry,
           result.v,
           result.r,
-          result.s
+          result.s,
+          {
+            gasLimit,
+          }
         );
-      } catch (err) {
-        gasLimit = 800000;
-      }
-
-      return userManagerContract.stakeWithPermit(
-        stakeAmount.toString(),
-        result.nonce,
-        result.expiry,
-        result.v,
-        result.r,
-        result.s,
-        {
-          gasLimit,
+      } else {
+        try {
+          gasLimit = await userManagerContract.estimateGas.stake(
+            stakeAmount.toString()
+          );
+        } catch (err) {
+          gasLimit = 800000;
         }
-      );
+
+        return userManagerContract.stake(stakeAmount.toString(), {
+          gasLimit,
+        });
+      }
     },
     [account, chainId, DAI, DAIContract, marketRegistryContract]
   );
