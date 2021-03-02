@@ -13,3 +13,19 @@ export default function format(number, decimals = 2) {
 
   return commify(Number(number).toFixed(decimals));
 }
+
+export function formatDetailed(number = 0, decimals = 4) {
+  const fullNumber = Number(number);
+  const fixedNumber = Number(fullNumber.toFixed(decimals));
+  const integerPart = Number(fullNumber.toFixed(0));
+  const fixedDecimalPart = fixedNumber - integerPart;
+  const fullDecimalPart = fullNumber - integerPart;
+
+  let result = fixedNumber;
+  // if the decimal part is being rounded to zero then set lowest decimal as 1
+  if (fixedDecimalPart == 0 && fullDecimalPart > 0) {
+    result += Math.pow(10, -1 * decimals);
+  }
+
+  return commify(result);
+}

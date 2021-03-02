@@ -14,6 +14,9 @@ export default function GovernanceView() {
         <section className="pt-16">
           <div className="mb-6 flex items-center justify-between">
             <h2>Statistics</h2>
+            <Link href="/stats">
+              <a className="text-md text-type-lightest">View Detailed Stats</a>
+            </Link>
           </div>
 
           <StatisticGrid />
