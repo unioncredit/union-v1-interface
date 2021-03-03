@@ -57,7 +57,7 @@ const Footer = () => {
                   </a>
                 </li>
               ))}
-              <li>© 2020 Union.Finance</li>
+              <li>© 2021 Union.Finance</li>
             </ul>
           </div>
           <ul className="w-1/4 flex justify-end space-x-4">
