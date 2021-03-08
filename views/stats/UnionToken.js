@@ -15,6 +15,7 @@ export default function UnionTokenStatsView() {
     isUnionTransferPaused,
     unionInflationPerBlock,
     averageInflationPerBlock,
+    halfDecayPoint,
   } = useUnionTokenStats();
 
   return (
@@ -80,6 +81,10 @@ export default function UnionTokenStatsView() {
                   ? formatDetailed(averageInflationPerBlock) + " Union"
                   : "NaN"
               }
+            />
+            <StatsCard
+              label="Half Decay Point"
+              value={halfDecayPoint ? formatDetailed(halfDecayPoint) : "NaN"}
             />
             <StatsCard
               label="Transfers"
