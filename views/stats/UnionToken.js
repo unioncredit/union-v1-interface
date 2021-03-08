@@ -66,7 +66,7 @@ export default function UnionTokenStatsView() {
               }
             />
             <StatsCard
-              label="Actual UPB"
+              label="Inflation Per Block"
               value={
                 unionInflationPerBlock
                   ? formatDetailed(unionInflationPerBlock) + " Union"
