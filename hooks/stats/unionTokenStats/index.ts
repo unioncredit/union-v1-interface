@@ -6,6 +6,7 @@ import useUnionPausedState from "./useUnionPausedState";
 import useUnionInflationPerBlock from "./useUnionInflationPerBlock";
 import useAverageInflationPerBlock from "./useAverageInflationPerBlock";
 import useHalfDecayPoint from "./useHalfDecayPoint";
+import useUnionPerDAIStaked from "./useUnionPerDAIStaked";
 
 export default function useUnionTokenStats() {
   const { data: totalSupply } = useUnionTokenSupply();
@@ -16,6 +17,7 @@ export default function useUnionTokenStats() {
   const { data: unionInflationPerBlock } = useUnionInflationPerBlock();
   const { data: averageInflationPerBlock } = useAverageInflationPerBlock();
   const { data: halfDecayPoint } = useHalfDecayPoint();
+  const { data: unionPerDAIStaked } = useUnionPerDAIStaked();
 
   return {
     totalSupply,
@@ -26,5 +28,6 @@ export default function useUnionTokenStats() {
     unionInflationPerBlock,
     averageInflationPerBlock,
     halfDecayPoint,
+    unionPerDAIStaked,
   };
 }

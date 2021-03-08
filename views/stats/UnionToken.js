@@ -16,6 +16,7 @@ export default function UnionTokenStatsView() {
     unionInflationPerBlock,
     averageInflationPerBlock,
     halfDecayPoint,
+    unionPerDAIStaked,
   } = useUnionTokenStats();
 
   return (
@@ -80,6 +81,12 @@ export default function UnionTokenStatsView() {
                 averageInflationPerBlock
                   ? formatDetailed(averageInflationPerBlock) + " Union"
                   : "NaN"
+              }
+            />
+            <StatsCard
+              label="Union per DAI Staked"
+              value={
+                unionPerDAIStaked ? formatDetailed(unionPerDAIStaked, 6) : "NaN"
               }
             />
             <StatsCard
