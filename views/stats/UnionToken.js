@@ -14,7 +14,9 @@ export default function UnionTokenStatsView() {
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
-    unionInflationIndex,
+    averageInflationPerBlock,
+    halfDecayPoint,
+    unionPerDAIStaked,
   } = useUnionTokenStats();
 
   return (
@@ -66,7 +68,7 @@ export default function UnionTokenStatsView() {
               }
             />
             <StatsCard
-              label="Actual UPB"
+              label="Inflation Per Block"
               value={
                 unionInflationPerBlock
                   ? formatDetailed(unionInflationPerBlock) + " Union"
@@ -74,12 +76,22 @@ export default function UnionTokenStatsView() {
               }
             />
             <StatsCard
-              label="Inflation Index"
+              label="Weekly Average UPB"
               value={
-                unionInflationIndex
-                  ? formatDetailed(unionInflationIndex)
+                averageInflationPerBlock
+                  ? formatDetailed(averageInflationPerBlock) + " Union"
                   : "NaN"
               }
+            />
+            <StatsCard
+              label="Union per DAI Staked"
+              value={
+                unionPerDAIStaked ? formatDetailed(unionPerDAIStaked, 6) : "NaN"
+              }
+            />
+            <StatsCard
+              label="Half Decay Point"
+              value={halfDecayPoint ? formatDetailed(halfDecayPoint) : "NaN"}
             />
             <StatsCard
               label="Transfers"
