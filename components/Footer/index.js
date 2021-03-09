@@ -13,11 +13,7 @@ const FOOTER_LINKS = [
     label: "Faucet",
   },
   {
-    href: "/stats",
-    label: "Stats",
-  },
-  {
-    href: "https://unionfinance.gitbook.io/union-docs/",
+    href: "https://unionfinance.gitbook.io/docs/",
     label: "Documentation",
   },
   // {
