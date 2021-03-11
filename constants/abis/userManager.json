@@ -28,7 +28,7 @@
         "type": "address"
       }
     ],
-    "name": "LogApplyMember",
+    "name": "LogRegisterMember",
     "type": "event"
   },
   {
@@ -231,7 +231,7 @@
         "type": "address"
       }
     ],
-    "name": "applyMember",
+    "name": "registerMember",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -271,7 +271,7 @@
         "type": "bytes32"
       }
     ],
-    "name": "applyMemberWithPermit",
+    "name": "registerMemberWithPermit",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

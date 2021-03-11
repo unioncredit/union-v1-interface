@@ -3,7 +3,7 @@ import { useAutoCallback } from "hooks.macro";
 import useMemberFee from "hooks/data/useMemberFee";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useUnionAllowance from "hooks/data/useUnionAllowance";
-import useApplyMember from "hooks/payables/useApplyMember";
+import useRegisterMember from "hooks/payables/useRegisterMember";
 import useIncreaseUnionAllowance from "hooks/payables/useIncreaseUnionAllowance";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useState } from "react";
@@ -36,7 +36,7 @@ const ApplicationModal = () => {
 
   const { data: fee = 0.0 } = useMemberFee();
 
-  const applyMember = useApplyMember();
+  const registerMember = useRegisterMember();
 
   const increaseUnionAllowance = useIncreaseUnionAllowance();
 
@@ -57,7 +57,7 @@ const ApplicationModal = () => {
     isSubmittingSet(true);
 
     try {
-      const { hash } = await applyMember();
+      const { hash } = await registerMember();
 
       if (open) toggle();
 

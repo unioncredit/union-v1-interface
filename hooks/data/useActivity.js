@@ -59,23 +59,27 @@ const getActivity = (marketRegistryContract) => async (
   );
 
   /**
-   * ApplyMember Logs
+   * RegisterMember Logs
    */
 
-  const applyMemberFilter = userManagerContract.filters.LogApplyMember(account);
-  applyMemberFilter.fromBlock = 0;
+  const registerMemberFilter = userManagerContract.filters.LogRegisterMember(
+    account
+  );
+  registerMemberFilter.fromBlock = 0;
 
-  const applyMemberLogs = await signer.provider.getLogs(applyMemberFilter);
+  const registerMemberLogs = await signer.provider.getLogs(
+    registerMemberFilter
+  );
 
-  const parseApplyMemberLogs = await Promise.all(
-    applyMemberLogs.map(async (log) => {
+  const parseRegisterMemberLogs = await Promise.all(
+    registerMemberLogs.map(async (log) => {
       const block = await signer.provider.getBlock(log.blockNumber);
 
       return {
         ts: block.timestamp * 1000,
         date: dayjs(block.timestamp * 1000).fromNow(),
         hash: log.transactionHash,
-        type: "ApplyMember",
+        type: "RegisterMember",
       };
     })
   );
@@ -117,7 +121,7 @@ const getActivity = (marketRegistryContract) => async (
    */
   const logs = [
     ...personalUpdateTrustLogs,
-    ...parseApplyMemberLogs,
+    ...parseRegisterMemberLogs,
     ...personalCancelVouchLogs,
   ];
 
