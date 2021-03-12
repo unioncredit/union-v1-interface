@@ -9,7 +9,7 @@ import { signERC2612Permit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
-export default function useApplyMember() {
+export default function useRegisterMember() {
   const { account, library } = useWeb3React();
   const tokenAddress = useCurrentToken();
   const UNION = useCurrentToken("UNION");
@@ -36,7 +36,7 @@ export default function useApplyMember() {
         memberFee
       );
 
-      gasLimit = await userManagerContract.estimateGas.applyMemberWithPermit(
+      gasLimit = await userManagerContract.estimateGas.registerMemberWithPermit(
         account,
         memberFee,
         result.deadline,
@@ -48,7 +48,7 @@ export default function useApplyMember() {
       gasLimit = 300000;
     }
 
-    return userManagerContract.applyMemberWithPermit(
+    return userManagerContract.registerMemberWithPermit(
       account,
       memberFee,
       result.deadline,

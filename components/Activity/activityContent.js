@@ -55,7 +55,7 @@ const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
   );
 };
 
-const ApplyMember = ({ date }) => {
+const RegisterMember = ({ date }) => {
   return (
     <li className="text-sm pt-4">
       <div className="flex space-x-4">
@@ -153,7 +153,8 @@ const ActivityContent = ({ data }) => {
       {data.map((log, i) => {
         if (log.type === "UpdateTrust") return <UpdateTrust key={i} {...log} />;
 
-        if (log.type === "ApplyMember") return <ApplyMember key={i} {...log} />;
+        if (log.type === "RegisterMember")
+          return <RegisterMember key={i} {...log} />;
 
         if (log.type === "CancelVouch") return <CancelVouch key={i} {...log} />;
 
