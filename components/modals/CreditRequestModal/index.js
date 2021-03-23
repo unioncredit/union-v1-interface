@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
+import Discord from "svgs/Discord";
 import generateLink from "util/generateLink";
 import Button from "../../button";
 import Input from "../../input";
@@ -30,6 +31,9 @@ const generateTelegramLink = (shareLink) =>
   `https://telegram.me/share/url?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
     shareLink
   )}`;
+
+const generateDiscordLink = (shareLink) =>
+  `https://discord.com/channels/714982388970684468/756236060933226506`;
 
 const CreditRequestModal = () => {
   const open = useCreditRequestModalOpen();
@@ -77,15 +81,13 @@ const CreditRequestModal = () => {
 
           <div className="mt-8 mb-2 flex justify-center">
             <a
-              target="_blank"
               rel="noopener noreferrer"
-              href={generateTwitterLink(shareLink)}
-              className="focus:outline-none bg-white rounded focus:shadow-outline p-2 mx-4"
+              href="#"
+              className="focus:outline-none bg-white btn-disabled rounded focus:shadow-outline p-2 mx-4"
             >
               <VisuallyHidden>Twitter</VisuallyHidden>
               <Twitter />
             </a>
-
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -94,6 +96,16 @@ const CreditRequestModal = () => {
             >
               <VisuallyHidden>Telegram</VisuallyHidden>
               <Telegram />
+            </a>
+            generateDiscordLink
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={generateDiscordLink(shareLink)}
+              className="focus:outline-none bg-white rounded focus:shadow-outline p-2 mx-4"
+            >
+              <VisuallyHidden>Discord</VisuallyHidden>
+              <Discord />
             </a>
           </div>
         </div>
