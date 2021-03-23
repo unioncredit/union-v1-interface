@@ -97,7 +97,6 @@ const CreditRequestModal = () => {
               <VisuallyHidden>Telegram</VisuallyHidden>
               <Telegram />
             </a>
-            generateDiscordLink
             <a
               target="_blank"
               rel="noopener noreferrer"
