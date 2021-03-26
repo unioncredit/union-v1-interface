@@ -4,6 +4,7 @@ import { useAutoEffect } from "hooks.macro";
 import { useState } from "react";
 import Telegram from "svgs/Telegram";
 import Twitter from "svgs/Twitter";
+import Discord from "svgs/Discord";
 import generateLink from "util/generateLink";
 import Modal, { CloseButton } from "../../modal";
 import VouchLink from "../../vouchLink";
@@ -18,6 +19,9 @@ const generateTelegramLink = (shareLink) =>
   `https://telegram.me/share/url?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
     shareLink
   )}`;
+
+const generateDiscordLink = (shareLink) =>
+  `https://discord.com/channels/714982388970684468/756236060933226506`;
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;
 
@@ -96,10 +100,9 @@ const GetInvitedModal = () => {
               </p>
 
               <a
-                target="_blank"
                 rel="noopener noreferrer"
-                href={generateTwitterLink(shareLink)}
-                className="btn btn-invert w-full relative mt-4"
+                href="#"
+                className="btn btn-invert btn-disabled w-full relative mt-4"
               >
                 <div className="btn-icon">
                   <Twitter />
@@ -117,6 +120,18 @@ const GetInvitedModal = () => {
                   <Telegram />
                 </div>
                 Share to Telegram
+              </a>
+
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={generateDiscordLink(shareLink)}
+                className="btn btn-invert w-full relative mt-4"
+              >
+                <div className="btn-icon">
+                  <Discord />
+                </div>
+                Share to Discord
               </a>
             </div>
           </div>
