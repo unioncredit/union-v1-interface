@@ -16,7 +16,7 @@ import Modal, { ModalHeader } from "../../modal";
 import { useTrustModalOpen, useTrustModalToggle } from "./state";
 
 const TrustModal = ({ initialAddress, initialTrust }) => {
-  const { library } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const open = useTrustModalOpen();
   const toggle = useTrustModalToggle();
@@ -95,15 +95,19 @@ const TrustModal = ({ initialAddress, initialTrust }) => {
             ref={register({
               required: errorMessages.required,
               validate: async (value) => {
-                const validation = await validateAddress(value);
-
-                if (validation === errorMessages.knownScam) {
-                  knownScamAddressSet(true);
+                if (value.toLowerCase() === account.toLowerCase()) {
+                  return errorMessages.notVouchSelf;
                 } else {
-                  knownScamAddressSet(false);
-                }
+                  const validation = await validateAddress(value);
 
-                return validation;
+                  if (validation === errorMessages.knownScam) {
+                    knownScamAddressSet(true);
+                  } else {
+                    knownScamAddressSet(false);
+                  }
+
+                  return validation;
+                }
               },
             })}
           />
