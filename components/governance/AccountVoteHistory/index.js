@@ -29,12 +29,8 @@ const ProposalVoteHistoryList = ({ address }) => {
             return <Proposal key={i} {...proposal} vote={formatVote} />;
           })
         ) : (
-          <div className="space-y-8 md:space-y-0">
-            <ProposalSkeleton />
-            <ProposalSkeleton />
-            <ProposalSkeleton />
-            <ProposalSkeleton />
-            <ProposalSkeleton />
+          <div className="text-center p-32 text-type-base">
+            No previous proposals
           </div>
         )}
       </div>
