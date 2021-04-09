@@ -35,17 +35,15 @@ const ProposalsList = ({ showAll = false }) => {
   const [statusFilter, statusFilterSet] = useState("all");
   const [typeFilter, typeFilterSet] = useState("all");
 
-  const noProposalsTip= {
-    "all": "No previous proposals",
-    "active": "No active proposals",
-    "passed": "No passed proposals",
-    "failed": "No failed proposals",
-    "executed": "No executed proposals"
-  }
+  const noProposalsTip = {
+    all: "No previous proposals",
+    active: "No active proposals",
+    passed: "No passed proposals",
+    failed: "No failed proposals",
+    executed: "No executed proposals",
+  };
 
   const data = useFilteredProposalData(statusFilter, typeFilter);
-
-  const hasProposals = data && data.length > 0;
 
   const updateStatusFilter = (type) => () => statusFilterSet(type);
 
@@ -106,13 +104,23 @@ const ProposalsList = ({ showAll = false }) => {
       </div>
 
       <div className="pt-4 md:pt-0 md:p-2">
-        {hasProposals ? (
-          data
-            .slice(0, showAll ? data.length : 5)
-            .map((proposal, i) => <Proposal key={i} {...proposal} />)
+        {data ? (
+          data.length > 0 ? (
+            data
+              .slice(0, showAll ? data.length : 5)
+              .map((proposal, i) => <Proposal key={i} {...proposal} />)
+          ) : (
+            <div className="text-center p-32 text-type-base">
+              {noProposalsTip[statusFilter]}
+            </div>
+          )
         ) : (
-          <div className="text-center p-32 text-type-base">
-            {noProposalsTip[statusFilter]}
+          <div className="space-y-8 md:space-y-0">
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
+            <ProposalSkeleton />
           </div>
         )}
       </div>
