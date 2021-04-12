@@ -4,7 +4,7 @@ import { AddressZero } from "./variables";
 export const GOV_ADDRESS = {
   1: AddressZero,
   4: AddressZero,
-  42: "0x9d8C41bd1e0B2d7dCCa7E3F765459bDa8C3FFb85",
+  42: "0x9045476cCAf43457D8246F1821A340D0E333E15B",
 };
 
 export const GOV_ABI = GOVERNOR_ABI;
@@ -36,7 +36,7 @@ export const TARGETS = {
   },
   42: {
     UToken: {
-      address: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
+      address: "0x1474DDc49655794A479947aA9b3B3563CeaA2e19",
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -49,7 +49,7 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0x485c6a9e364008458853AF0160960C34aC05bebE",
+      address: "0xb31718904B5ed1FD2912Fa18957568f38845cC0f",
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
@@ -58,7 +58,7 @@ export const TARGETS = {
       ],
     },
     FixedInterestRate: {
-      address: "0x5f39644341fed87bcF551b2C09d63a9990de338b",
+      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
       actions: [
         {
           signature: "setInterestRate(uint256)",
