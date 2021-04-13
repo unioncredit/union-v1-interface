@@ -2,8 +2,6 @@ import { addToast, FLAVORS } from "hooks/useToast";
 import isHash from "./isHash";
 
 export default function handleTxError(error) {
-  console.error(error);
-
   let message = "Something went wrong";
 
   if (error?.message === "User rejected request" || error?.code === 4001)

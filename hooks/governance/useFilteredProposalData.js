@@ -15,7 +15,9 @@ export default function useFilteredProposalData(status, type) {
 
       if (status === "active")
         return Boolean(
-          proposal.status === "queued" || proposal.status === "pending"
+          proposal.status === "queued" ||
+            proposal.status === "pending" ||
+            proposal.status === "active"
         );
 
       if (status === "passed") return Boolean(proposal.status === "succeeded");
