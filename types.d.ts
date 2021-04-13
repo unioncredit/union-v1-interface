@@ -8,7 +8,7 @@ export interface Proposal {
       targets: string[];
       values: string[];
       signatures: string[];
-      calldata: [{ type: string; value: string }];
+      calldata: [{ type: string; value: string | string[] }];
     }
   ];
   title: string;
