@@ -1,5 +1,11 @@
 import GOVERNOR_ABI from "./abis/governor.json";
-import { AddressZero } from "./variables";
+import {
+  AddressZero,
+  U_TOKEN_ADDRESSES,
+  USER_MANAGER_ADDRESSES,
+  ASSET_MANAGER_ADDRESSES,
+  COMPOUND_ADAPTER_ADDRESSES,
+} from "./variables";
 
 export const GOV_ADDRESS = {
   1: AddressZero,
@@ -12,7 +18,7 @@ export const GOV_ABI = GOVERNOR_ABI;
 export const TARGETS = {
   4: {
     UToken: {
-      address: "0x567781ecC20da0fd0bA7ff219fBDaE0275c3Ad7f",
+      address: U_TOKEN_ADDRESSES[4],
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -25,7 +31,7 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0x2634854c37C412C63085ACCD10fB0e64b0992357",
+      address: USER_MANAGER_ADDRESSES[4],
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
@@ -36,7 +42,7 @@ export const TARGETS = {
   },
   42: {
     UToken: {
-      address: "0x1474DDc49655794A479947aA9b3B3563CeaA2e19",
+      address: U_TOKEN_ADDRESSES[42],
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -49,11 +55,45 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0xb31718904B5ed1FD2912Fa18957568f38845cC0f",
+      address: USER_MANAGER_ADDRESSES[42],
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
           params: ["uint256"],
+        },
+      ],
+    },
+    AssetManager: {
+      address: ASSET_MANAGER_ADDRESSES[42],
+      actions: [
+        {
+          signature: "upgradeTo(address)",
+          params: ["address"],
+        },
+        {
+          signature: "overwriteAdapters(address[])",
+          params: ["address[]"],
+        },
+        {
+          signature: "changeWithdrawSequence(uint256[])",
+          params: ["uint256[]"],
+        },
+      ],
+    },
+    CompoundAdapter: {
+      address: COMPOUND_ADAPTER_ADDRESSES[42],
+      actions: [
+        {
+          signature: "upgradeTo(address)",
+          params: ["address"],
+        },
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
         },
       ],
     },
