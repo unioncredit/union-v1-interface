@@ -38,6 +38,7 @@ const ProposalActionsModal = ({ addAction }) => {
 
   const onSubmit = async (data) => {
     const address = TARGETS[chainId][data.target].address;
+
     const calldata = Object.keys(data.calldata).map((key) => {
       const type = decodeURIComponent(key).split("_")[0];
       const isArray =
