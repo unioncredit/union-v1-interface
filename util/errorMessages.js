@@ -28,7 +28,7 @@ const OverdueBalanceMessage = () => {
 
 const errorMessages = {
   required: "Please fill out this field",
-  notVouchSelf: "You can't vouch for your self",
+  notVouchSelf: "You can't vouch for yourself",
   notEnoughCredit: "Not enough available credit",
   notEnoughStake: "Insufficient withdrawable stake",
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
