@@ -39,10 +39,18 @@ const ProposalActionsModal = ({ addAction }) => {
   const onSubmit = async (data) => {
     const address = TARGETS[chainId][data.target].address;
 
-    const calldata = Object.keys(data.calldata).map((key) => ({
-      type: key.split("_")[0],
-      value: data.calldata[key],
-    }));
+    const calldata = Object.keys(data.calldata).map((key) => {
+      const type = decodeURIComponent(key).split("_")[0];
+      const isArray =
+        type[type.length - 1] == "]" && type[type.length - 2] == "[";
+      const value = isArray
+        ? data.calldata[key].split(",")
+        : data.calldata[key];
+      return {
+        type,
+        value,
+      };
+    });
 
     const structuredResponse = {
       targets: [address],
@@ -93,7 +101,7 @@ const ProposalActionsModal = ({ addAction }) => {
               return (
                 <Input
                   key={i}
-                  name={`calldata.${param}_${i}`}
+                  name={encodeURIComponent(`calldata.${param}_${i}`)}
                   label="Enter new value"
                   ref={register({ required: errorMessages.required })}
                   placeholder={param}
