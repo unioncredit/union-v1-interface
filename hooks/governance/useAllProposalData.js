@@ -138,8 +138,12 @@ export default function useAllProposalData() {
   // get metadata from past events
   const { data: formattedEvents } = useDataFromEventLogs();
 
+  const shouldFetch = Boolean(
+    govContract && typeof proposalCount !== undefined && formattedEvents
+  );
+
   return useSWR(
-    ["AllProposalData", chainId],
+    shouldFetch ? ["AllProposalData", chainId] : null,
     getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
     {
       shouldRetryOnError: false,
