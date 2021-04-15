@@ -124,7 +124,7 @@ const getAllProposalData = (
 };
 
 export default function useAllProposalData() {
-  const { library } = useWeb3React();
+  const { library, chainId } = useWeb3React();
 
   const govContract = useGovernanceContract();
 
@@ -147,6 +147,7 @@ export default function useAllProposalData() {
           // putting `proposalIndexes.length` and `formattedEvents.length` in cache key
           // so that refetch is triggered when their length changes
           `AllProposalData-${proposalIndexes.length}-${formattedEvents.length}`,
+          chainId,
         ]
       : null,
     getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
