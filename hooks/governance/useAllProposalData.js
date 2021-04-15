@@ -124,7 +124,7 @@ const getAllProposalData = (
 };
 
 export default function useAllProposalData() {
-  const { library, chainId } = useWeb3React();
+  const { library } = useWeb3React();
 
   const govContract = useGovernanceContract();
 
@@ -138,8 +138,17 @@ export default function useAllProposalData() {
   // get metadata from past events
   const { data: formattedEvents } = useDataFromEventLogs();
 
+  const shouldFetch =
+    govContract && library && proposalCount && formattedEvents;
+
   return useSWR(
-    ["AllProposalData", chainId],
+    shouldFetch
+      ? [
+          // putting `proposalIndexes.length` and `formattedEvents.length` in cache key
+          // so that refetch is triggered when their length changes
+          `AllProposalData-${proposalIndexes.length}-${formattedEvents.length}`,
+        ]
+      : null,
     getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
     {
       shouldRetryOnError: false,
