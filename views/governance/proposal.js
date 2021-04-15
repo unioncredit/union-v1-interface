@@ -157,7 +157,23 @@ export default function ProposalView() {
                   {data?.description ? (
                     <ReactMarkdown
                       renderers={{
-                        link: (props) => <a className="underline" {...props} />,
+                        /* eslint-disable no-unused-vars */
+                        link: ({ node, ...props }) => (
+                          <a className="underline" {...props} />
+                        ),
+                        list: ({ ordered, node, ...props }) =>
+                          ordered ? (
+                            <ol className="markdown-ol" {...props} />
+                          ) : (
+                            <ul className="markdown-ul" {...props} />
+                          ),
+                        paragraph: ({ node, ...props }) => (
+                          <p className="markdown-p" {...props} />
+                        ),
+                        listItem: ({ node, ...props }) => (
+                          <li className="markdown-li" {...props} />
+                        ),
+                        /* eslint-enable no-unused-vars */
                       }}
                     >
                       {data?.description}
