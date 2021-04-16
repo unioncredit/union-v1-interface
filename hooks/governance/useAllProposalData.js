@@ -143,7 +143,14 @@ export default function useAllProposalData() {
   );
 
   return useSWR(
-    shouldFetch ? ["AllProposalData", chainId] : null,
+    shouldFetch
+      ? [
+          // putting `proposalIndexes.length` and `formattedEvents.length` in cache key
+          // so that refetch is triggered when their length changes
+          `AllProposalData-${proposalIndexes.length}-${formattedEvents.length}`,
+          chainId,
+        ]
+      : null,
     getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
     {
       shouldRetryOnError: false,

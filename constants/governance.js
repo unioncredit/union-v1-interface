@@ -1,10 +1,16 @@
 import GOVERNOR_ABI from "./abis/governor.json";
-import { AddressZero } from "./variables";
+import {
+  AddressZero,
+  U_TOKEN_ADDRESSES,
+  USER_MANAGER_ADDRESSES,
+  ASSET_MANAGER_ADDRESSES,
+  COMPOUND_ADAPTER_ADDRESSES,
+} from "./variables";
 
 export const GOV_ADDRESS = {
   1: AddressZero,
   4: AddressZero,
-  42: "0x9d8C41bd1e0B2d7dCCa7E3F765459bDa8C3FFb85",
+  42: "0x9045476cCAf43457D8246F1821A340D0E333E15B",
 };
 
 export const GOV_ABI = GOVERNOR_ABI;
@@ -12,7 +18,7 @@ export const GOV_ABI = GOVERNOR_ABI;
 export const TARGETS = {
   4: {
     UToken: {
-      address: "0x567781ecC20da0fd0bA7ff219fBDaE0275c3Ad7f",
+      address: U_TOKEN_ADDRESSES[4],
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -25,7 +31,7 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0x2634854c37C412C63085ACCD10fB0e64b0992357",
+      address: USER_MANAGER_ADDRESSES[4],
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
@@ -36,7 +42,7 @@ export const TARGETS = {
   },
   42: {
     UToken: {
-      address: "0x439923A9B60C90B7C11a12bBB8A4e9D7DbD315cB",
+      address: U_TOKEN_ADDRESSES[42],
       actions: [
         {
           signature: "setOriginationFee(uint256)",
@@ -49,7 +55,7 @@ export const TARGETS = {
       ],
     },
     UserManager: {
-      address: "0x485c6a9e364008458853AF0160960C34aC05bebE",
+      address: USER_MANAGER_ADDRESSES[42],
       actions: [
         {
           signature: "setNewMemberFee(uint256)",
@@ -57,8 +63,42 @@ export const TARGETS = {
         },
       ],
     },
+    AssetManager: {
+      address: ASSET_MANAGER_ADDRESSES[42],
+      actions: [
+        {
+          signature: "upgradeTo(address)",
+          params: ["address"],
+        },
+        {
+          signature: "overwriteAdapters(address[])",
+          params: ["address[]"],
+        },
+        {
+          signature: "changeWithdrawSequence(uint256[])",
+          params: ["uint256[]"],
+        },
+      ],
+    },
+    CompoundAdapter: {
+      address: COMPOUND_ADAPTER_ADDRESSES[42],
+      actions: [
+        {
+          signature: "upgradeTo(address)",
+          params: ["address"],
+        },
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+      ],
+    },
     FixedInterestRate: {
-      address: "0x5f39644341fed87bcF551b2C09d63a9990de338b",
+      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
       actions: [
         {
           signature: "setInterestRate(uint256)",

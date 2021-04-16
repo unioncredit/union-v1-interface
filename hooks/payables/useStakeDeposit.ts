@@ -43,7 +43,7 @@ export default function useStakeDeposit() {
         );
 
         try {
-          gasLimit = await userManagerContract.estimateGas.stakeWithPermit(
+          const estimateGas = await userManagerContract.estimateGas.stakeWithPermit(
             stakeAmount.toString(),
             result.nonce,
             result.expiry,
@@ -51,6 +51,8 @@ export default function useStakeDeposit() {
             result.r,
             result.s
           );
+
+          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
         } catch (err) {
           gasLimit = 800000;
         }
@@ -68,9 +70,10 @@ export default function useStakeDeposit() {
         );
       } else {
         try {
-          gasLimit = await userManagerContract.estimateGas.stake(
+          const estimateGas = await userManagerContract.estimateGas.stake(
             stakeAmount.toString()
           );
+          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
         } catch (err) {
           gasLimit = 800000;
         }

@@ -4,9 +4,6 @@ import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import { useCallback } from "react";
 import type { Proposal } from "types";
 
-const encode = (type: string, value: string) =>
-  defaultAbiCoder.encode([type], [value]);
-
 export default function usePropose() {
   const governanceContract = useGovernanceContract();
 
@@ -15,9 +12,11 @@ export default function usePropose() {
       const targets = data.actions.flatMap((action) => action.targets);
       const values = data.actions.flatMap((action) => action.values);
       const signatures = data.actions.flatMap((action) => action.signatures);
-      const calldatas = data.actions
-        .flatMap((action) => action.calldata)
-        .map((data) => encode(data.type, data.value));
+      const calldatas = data.actions.map((action) => {
+        const types = action.calldata.map((data) => data.type);
+        const values = action.calldata.map((data) => data.value);
+        return defaultAbiCoder.encode(types, values);
+      });
 
       const description = `
 ${data.title}

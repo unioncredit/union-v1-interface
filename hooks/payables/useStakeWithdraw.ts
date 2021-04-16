@@ -25,7 +25,19 @@ export default function useStakeWithdraw() {
         signer
       );
 
-      return userManagerContract.unstake(stakeAmount.toString());
+      let gasLimit: any;
+      try {
+        const estimateGas = await userManagerContract.estimateGas.unstake(
+          stakeAmount.toString()
+        );
+        gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
+      } catch (err) {
+        gasLimit = 800000;
+      }
+
+      return userManagerContract.unstake(stakeAmount.toString(), {
+        gasLimit,
+      });
     },
     [library, marketRegistryContract, tokenAddress]
   );
