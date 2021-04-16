@@ -5,6 +5,7 @@ import {
   USER_MANAGER_ADDRESSES,
   ASSET_MANAGER_ADDRESSES,
   COMPOUND_ADAPTER_ADDRESSES,
+  PURE_TOKEN_ADAPTER_ADDRESSES
 } from "./variables";
 
 export const GOV_ADDRESS = {
@@ -78,6 +79,10 @@ export const TARGETS = {
           signature: "changeWithdrawSequence(uint256[])",
           params: ["uint256[]"],
         },
+        {
+          signature: "newAdmin (address)",
+          params: ["address"],
+        },
       ],
     },
     CompoundAdapter: {
@@ -94,6 +99,31 @@ export const TARGETS = {
         {
           signature: "setCeiling(address,uint256)",
           params: ["address", "uint256"],
+        },
+        {
+          signature: "newAdmin (address)",
+          params: ["address"],
+        },
+      ],
+    },
+    PureTokenAdapter: {
+      address: PURE_TOKEN_ADAPTER_ADDRESSES[42],
+      actions: [
+        {
+          signature: "upgradeTo(address)",
+          params: ["address"],
+        },
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "newAdmin (address)",
+          params: ["address"],
         },
       ],
     },

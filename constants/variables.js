@@ -84,6 +84,12 @@ export const COMPOUND_ADAPTER_ADDRESSES = {
   42: "0xaf7bbAc0284a3b5D7472c10dDF37Cc23c4c20EAC",
 };
 
+export const PURE_TOKEN_ADAPTER_ADDRESSES = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x4aa4B980C67F5A482046E0309333130cA7bFC483",
+};
+
 export const SCALE = 10 ** 18;
 
 export const BLOCK_SPEED = {
