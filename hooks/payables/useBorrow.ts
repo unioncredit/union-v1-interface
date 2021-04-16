@@ -27,9 +27,10 @@ export default function useBorrow() {
 
       let gasLimit: any;
       try {
-        gasLimit = await uTokenContract.estimateGas.borrow(
+        const estimateGas = await uTokenContract.estimateGas.borrow(
           borrowAmount.toString()
         );
+        gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
       } catch (err) {
         gasLimit = 1000000;
       }

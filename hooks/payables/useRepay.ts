@@ -38,7 +38,7 @@ export default function useRepay() {
         );
 
         try {
-          gasLimit = await uTokenContract.estimateGas.repayBorrowWithPermit(
+          const estimateGas = await uTokenContract.estimateGas.repayBorrowWithPermit(
             account,
             repayAmount.toString(),
             result.nonce,
@@ -47,6 +47,7 @@ export default function useRepay() {
             result.r,
             result.s
           );
+          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
         } catch (err) {
           gasLimit = 800000;
         }
@@ -65,9 +66,10 @@ export default function useRepay() {
         );
       } else {
         try {
-          gasLimit = await uTokenContract.estimateGas.repayBorrow(
+          const estimateGas = await uTokenContract.estimateGas.repayBorrow(
             repayAmount.toString()
           );
+          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
         } catch (err) {
           gasLimit = 800000;
         }
