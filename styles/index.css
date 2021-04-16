@@ -569,3 +569,21 @@ input[type="number"] {
     rgba(252, 247, 247, 0) 100%
   );
 }
+
+.markdown-ol {
+  list-style: decimal;
+  margin-left: 1rem;
+}
+
+.markdown-ul {
+  list-style: disc;
+  margin-left: 1rem;
+}
+
+.markdown-li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-p {
+  margin-bottom: 1rem;
+}
