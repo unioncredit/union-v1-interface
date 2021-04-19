@@ -6,6 +6,12 @@ export const BLOCKS_PER_YEAR = {
   42: 2102400,
 };
 
+export const ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x672760099f9752631655dbc6fdf2b88f4890378b",
+};
+
 export const ASSET_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: "0xd0493c674156566f363ff3B6980c1E64742EEde8",

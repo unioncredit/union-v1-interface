@@ -5,7 +5,8 @@ import {
   USER_MANAGER_ADDRESSES,
   ASSET_MANAGER_ADDRESSES,
   COMPOUND_ADAPTER_ADDRESSES,
-  PURE_TOKEN_ADAPTER_ADDRESSES
+  PURE_TOKEN_ADAPTER_ADDRESSES,
+  ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
 } from "./variables";
 
 export const GOV_ADDRESS = {
@@ -42,6 +43,19 @@ export const TARGETS = {
     },
   },
   42: {
+    assetAndAdapterProxyAdmin: {
+      address: ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS[42],
+      actions: [
+        {
+          signature: "changeProxyAdmin(address,address)",
+          params: ["uint256"],
+        },
+        {
+          signature: "upgrade(address,address)",
+          params: ["uint256"],
+        },
+      ],
+    },
     UToken: {
       address: U_TOKEN_ADDRESSES[42],
       actions: [
