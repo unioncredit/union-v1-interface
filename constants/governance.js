@@ -48,11 +48,11 @@ export const TARGETS = {
       actions: [
         {
           signature: "changeProxyAdmin(address,address)",
-          params: ["uint256"],
+          params: ["address", "address"],
         },
         {
           signature: "upgrade(address,address)",
-          params: ["uint256"],
+          params: ["address", "address"],
         },
       ],
     },
