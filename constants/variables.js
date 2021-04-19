@@ -6,6 +6,12 @@ export const BLOCKS_PER_YEAR = {
   42: 2102400,
 };
 
+export const ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x672760099f9752631655dbc6fdf2b88f4890378b",
+};
+
 export const ASSET_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: "0xd0493c674156566f363ff3B6980c1E64742EEde8",
@@ -82,6 +88,12 @@ export const COMPOUND_ADAPTER_ADDRESSES = {
   1: AddressZero,
   4: "0x5522371babA983a6ECd1f04bA2077d5F97F73283",
   42: "0xaf7bbAc0284a3b5D7472c10dDF37Cc23c4c20EAC",
+};
+
+export const PURE_TOKEN_ADAPTER_ADDRESSES = {
+  1: AddressZero,
+  4: AddressZero,
+  42: "0x4aa4B980C67F5A482046E0309333130cA7bFC483",
 };
 
 export const SCALE = 10 ** 18;
