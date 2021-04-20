@@ -66,7 +66,7 @@ const EventSkeleton = () => {
   );
 };
 
-const formatTs = (ts) => dayjs.unix(ts).format("MMMM D, YYYY h:m A");
+const formatTs = (ts) => dayjs.unix(ts).format("MMMM D, YYYY h:mm A");
 
 const ProposalEventHistory = ({ id }) => {
   const { data } = useProposalHistory(id);
