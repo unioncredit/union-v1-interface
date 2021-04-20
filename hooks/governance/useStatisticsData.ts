@@ -29,8 +29,6 @@ const getStatisticsData = (
 
   const currentTotalStaked: BigNumber = await userManagerContract.totalStaked();
 
-  const totalFrozen: BigNumber = await userManagerContract.totalFrozen();
-
   const loanableAmount: BigNumber = await assetContract.getLoanableAmount(DAI);
 
   const totalBorrowed: BigNumber = await uTokenContract.totalBorrows();
@@ -41,7 +39,6 @@ const getStatisticsData = (
 
   return {
     lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
-    totalDefaulted: parseFloat(formatUnits(totalFrozen, 18)),
     totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
     outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
     totalSupply: parseFloat(formatUnits(totalSupply, 18)),

@@ -1,6 +1,7 @@
 import { commify } from "@ethersproject/units";
 import Statistic from "components/governance/Statistic";
 import useStatisticsData from "hooks/governance/useStatisticsData";
+import { useDefaultedAmount } from "hooks/stats/uTokenStats/useDefaultedAmount";
 import { toPercent } from "util/numbers";
 
 /**
@@ -11,12 +12,13 @@ const format = (value) => commify(Number(value ?? 0).toFixed(2));
 
 const StatisticGrid = () => {
   const { data } = useStatisticsData();
+  const { data: defaultedAmount } = useDefaultedAmount();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       <Statistic
         label={"Total defaulted"}
-        value={`${format(data?.totalDefaulted)} DAI`}
+        value={`${format(defaultedAmount)} DAI`}
       />
       <Statistic
         label={"Interest rate"}
