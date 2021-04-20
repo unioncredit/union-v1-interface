@@ -12,6 +12,8 @@ export default function AssetManagerStatsView() {
     poolBalance,
     assetManagerDAIBalance,
     daiInLendingProtocols,
+    daiInCompound,
+    daiInPureAdapter,
   } = useAssetManagerStats();
 
   return (
@@ -55,6 +57,20 @@ export default function AssetManagerStatsView() {
               value={
                 daiInLendingProtocols
                   ? formatDetailed(daiInLendingProtocols) + " DAI"
+                  : "NaN"
+              }
+            />
+            <StatsCard
+              label="DAI In Compound"
+              value={
+                daiInCompound ? formatDetailed(daiInCompound) + " DAI" : "NaN"
+              }
+            />
+            <StatsCard
+              label="DAI In Pure Adapter"
+              value={
+                daiInPureAdapter
+                  ? formatDetailed(daiInPureAdapter) + " DAI"
                   : "NaN"
               }
             />
