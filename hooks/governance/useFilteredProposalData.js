@@ -8,7 +8,6 @@ import useAllProposalData from "./useAllProposalData";
  */
 export default function useFilteredProposalData(status, type) {
   const { data } = useAllProposalData();
-
   return data
     ?.filter((proposal) => {
       if (status === "all") return true;
