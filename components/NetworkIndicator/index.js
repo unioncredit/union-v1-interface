@@ -7,6 +7,8 @@ const NETWORKS = {
   4: { name: "Rinkeby", color: "bg-rinkeby" },
   5: { name: "Görli", color: "bg-goerli" },
   42: { name: "Kovan", color: "bg-kovan" },
+  137: { name: "Polygon", color: "bg-polygon" },
+  80001: { name: "Mumbai", color: "bg-mumbai" },
   1336: { name: "localhost", color: "bg-white" },
 };
 

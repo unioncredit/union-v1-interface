@@ -13,6 +13,8 @@ export const GOV_ADDRESS = {
   1: AddressZero,
   4: AddressZero,
   42: "0x9045476cCAf43457D8246F1821A340D0E333E15B",
+  137: "",
+  80001: "0x58A0cb6a8a0F0d01690136b87b0870e611038B1a",
 };
 
 export const GOV_ABI = GOVERNOR_ABI;
@@ -151,4 +153,6 @@ export const TARGETS = {
       ],
     },
   },
+  137: {},
+  80001: {},
 };
