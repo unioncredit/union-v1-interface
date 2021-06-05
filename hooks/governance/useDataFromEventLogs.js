@@ -3,15 +3,17 @@ import { useWeb3React } from "@web3-react/core";
 import { GOV_ABI } from "constants/governance";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
+import { getLogs } from "lib/logs";
 
-const fetchData = (contract, library) => async () => {
+const fetchData = (contract, provider, chainId) => async () => {
   const filter = {
     ...contract?.filters?.["ProposalCreated"](),
     fromBlock: 0,
     toBlock: "latest",
   };
 
-  const pastEvents = await library.getLogs(filter);
+  const pastEvents = await getLogs(provider, chainId, filter);
 
   const eventParser = new Interface(GOV_ABI);
 
@@ -47,14 +49,15 @@ const fetchData = (contract, library) => async () => {
 };
 
 export function useDataFromEventLogs() {
-  const { library } = useWeb3React();
+  const { chainId } = useWeb3React();
+  const readProvider = useReadProvider();
   const govContract = useGovernanceContract();
 
-  const shouldFetch = govContract && library;
+  const shouldFetch = govContract && chainId && readProvider;
 
   return useSWR(
     shouldFetch ? ["EventLogsData"] : null,
-    fetchData(govContract, library),
+    fetchData(govContract, readProvider, chainId),
     {
       shouldRetryOnError: false,
       refreshWhenHidden: false,
