@@ -7,22 +7,24 @@ import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import useReadProvider from "hooks/useReadProvider";
+import { getLogs } from "lib/logs";
 
 dayjs.extend(relativeTime);
 
 const getActivity = (marketRegistryContract) => async (
   _,
   account,
-  library,
+  provider,
+  chainId,
   tokenAddress
 ) => {
-  const signer = library.getSigner();
   const res = await marketRegistryContract.tokens(tokenAddress);
   const userManagerAddress = res.userManager;
   const userManagerContract = new Contract(
     userManagerAddress,
     USER_MANAGER_ABI,
-    signer
+    provider
   );
 
   /**
@@ -30,18 +32,13 @@ const getActivity = (marketRegistryContract) => async (
    */
 
   const updateTrustFilter = userManagerContract.filters.LogUpdateTrust();
-  updateTrustFilter.fromBlock = 0;
-
-  const updateTrustLogs = await signer.provider.getLogs(updateTrustFilter);
+  const updateTrustLogs = await getLogs(provider, chainId, updateTrustFilter);
 
   const parseUpdateTrustLogs = await Promise.all(
     updateTrustLogs.map(async (log) => {
-      const block = await signer.provider.getBlock(log.blockNumber);
-
+      const block = await provider.getBlock(log.blockNumber);
       const logData = userManagerContract.interface.parseLog(log);
-
-      const [borrower, staker, , trustAmount] = logData.args;
-
+      const { borrower, staker, trustAmount } = logData.args;
       return {
         borrower,
         ts: block.timestamp * 1000,
@@ -65,15 +62,16 @@ const getActivity = (marketRegistryContract) => async (
   const registerMemberFilter = userManagerContract.filters.LogRegisterMember(
     account
   );
-  registerMemberFilter.fromBlock = 0;
 
-  const registerMemberLogs = await signer.provider.getLogs(
+  const registerMemberLogs = await getLogs(
+    provider,
+    chainId,
     registerMemberFilter
   );
 
   const parseRegisterMemberLogs = await Promise.all(
     registerMemberLogs.map(async (log) => {
-      const block = await signer.provider.getBlock(log.blockNumber);
+      const block = await provider.getBlock(log.blockNumber);
 
       return {
         ts: block.timestamp * 1000,
@@ -89,13 +87,12 @@ const getActivity = (marketRegistryContract) => async (
    */
 
   const cancelVouchFilter = userManagerContract.filters.LogCancelVouch();
-  cancelVouchFilter.fromBlock = 0;
 
-  const cancelVouchLogs = await signer.provider.getLogs(cancelVouchFilter);
+  const cancelVouchLogs = await getLogs(provider, chainId, cancelVouchFilter);
 
   const parseCancelVouchLogs = await Promise.all(
     cancelVouchLogs.map(async (log) => {
-      const block = await signer.provider.getBlock(log.blockNumber);
+      const block = await provider.getBlock(log.blockNumber);
 
       const logData = userManagerContract.interface.parseLog(log);
 
@@ -134,15 +131,19 @@ const getActivity = (marketRegistryContract) => async (
 };
 
 export default function useActivity() {
-  const { account, library } = useWeb3React();
+  const { account, chainId } = useWeb3React();
+  const readProvider = useReadProvider();
   const curToken = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
 
   const shouldFetch =
-    !!marketRegistryContract && typeof account === "string" && !!library;
+    !!marketRegistryContract &&
+    typeof account === "string" &&
+    !!readProvider &&
+    !!chainId;
 
   return useSWR(
-    shouldFetch ? ["Activity", account, library, curToken] : null,
+    shouldFetch ? ["Activity", account, readProvider, chainId, curToken] : null,
     getActivity(marketRegistryContract)
   );
 }

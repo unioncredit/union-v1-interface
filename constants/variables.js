@@ -8,6 +8,24 @@ export const BLOCKS_PER_YEAR = {
   80001: 15768000,
 };
 
+// due to block range restriction on polygon rpc
+export const EVENT_START_BLOCK = {
+  1: 0,
+  4: 0,
+  42: 0,
+  1337: 0,
+  80001: 14530840,
+};
+
+// due to block range restriction on polygon rpc
+export const EVENT_BLOCK_INTERVAL = {
+  1: 10000000,
+  4: 10000000,
+  42: 10000000,
+  1337: 10000000,
+  80001: 10000000,
+};
+
 export const ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS = {
   1: AddressZero,
   4: AddressZero,

@@ -7,33 +7,34 @@ import dayjs from "dayjs";
 import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import useReadProvider from "hooks/useReadProvider";
+import { getLogs } from "lib/logs";
 
 const getTransactions = (marketRegistryContract) => async (
   _,
   account,
   tokenAddress,
-  library,
+  provider,
+  chainId,
   count
 ) => {
-  const signer = library.getSigner();
-
   const res = await marketRegistryContract.tokens(tokenAddress);
   const uTokenAddress = res.uToken;
-  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
+  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
   const borrowFilter = uTokenContract.filters.LogBorrow(account);
   borrowFilter.fromBlock = 0;
 
-  const borrowLogs = await signer.provider.getLogs(borrowFilter);
+  const borrowLogs = await getLogs(provider, chainId, borrowFilter);
 
   const repayFilter = uTokenContract.filters.LogRepay(account);
   repayFilter.fromBlock = 0;
 
-  const repayLogs = await signer.provider.getLogs(repayFilter);
+  const repayLogs = await getLogs(provider, chainId, repayFilter);
 
   const txs = await Promise.all([
     ...repayLogs.map(async (log) => {
-      const block = await signer.provider.getBlock(log.blockNumber);
+      const block = await provider.getBlock(log.blockNumber);
 
       const logData = uTokenContract.interface.parseLog(log);
 
@@ -50,7 +51,7 @@ const getTransactions = (marketRegistryContract) => async (
       };
     }),
     ...borrowLogs.map(async (log) => {
-      const block = await signer.provider.getBlock(log.blockNumber);
+      const block = await provider.getBlock(log.blockNumber);
 
       const logData = uTokenContract.interface.parseLog(log);
 
@@ -85,7 +86,8 @@ const getTransactions = (marketRegistryContract) => async (
  * @param {Number} count The number of txs to return in the array
  */
 export default function useTransactions(count = 5) {
-  const { account, library } = useWeb3React();
+  const { account, chainId } = useWeb3React();
+  const readProvider = useReadProvider();
 
   const curToken = useCurrentToken();
 
@@ -95,10 +97,13 @@ export default function useTransactions(count = 5) {
     !!marketRegistryContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
-    !!library;
+    !!readProvider &&
+    !!chainId;
 
   return useSWR(
-    shouldFetch ? ["Transactions", account, curToken, library, count] : null,
+    shouldFetch
+      ? ["Transactions", account, curToken, readProvider, chainId, count]
+      : null,
     getTransactions(marketRegistryContract)
   );
 }
