@@ -80,3 +80,11 @@ export const TransactionSkeleton = () => (
     </div>
   </div>
 );
+
+export const NoTransactions = () => {
+  return (
+    <div className="mt-4 bg-white border rounded p-4 sm:p-6 items-center focus:shadow-outline focus:outline-none hover:bg-border-light focus:bg-border-light transition-colors duration-150 text-center">
+      No Transactions
+    </div>
+  );
+};
