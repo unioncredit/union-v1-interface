@@ -6,11 +6,6 @@ const ETHERSCAN_PREFIXES = {
   42: "kovan.",
 };
 
-const MATICVIGIL_PREFIXES = {
-  137: "explorer-mainnet.",
-  80001: "explorer-mumbai.",
-};
-
 /**
  * @name getEtherscanLink
  *
@@ -22,8 +17,10 @@ const MATICVIGIL_PREFIXES = {
  */
 export default function getEtherscanLink(networkId, data, type) {
   let prefix;
-  if (networkId == 137 || networkId == 80001) {
-    prefix = `https://${MATICVIGIL_PREFIXES[networkId]}maticvigil.com`;
+  if (networkId == 137) {
+    prefix = "https://polygonscan.com";
+  } else if (networkId == 80001) {
+    prefix = `https://explorer-mumbai.maticvigil.com`;
   } else {
     prefix = `https://${
       ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
