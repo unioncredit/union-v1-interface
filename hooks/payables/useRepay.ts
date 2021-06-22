@@ -8,6 +8,8 @@ import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 import { signDaiPermit } from "eth-permit";
+import { makeTxWithGasEstimate } from "../../util/gasEstimation";
+import { MaxUint256 } from "@ethersproject/constants";
 
 export default function useRepay() {
   const { library, account } = useWeb3React();
@@ -27,57 +29,43 @@ export default function useRepay() {
       );
 
       const repayAmount = parseUnits(String(amount), 18);
-      let gasLimit: any;
       const allowance = await DAIContract.allowance(account, uTokenAddress);
       if (allowance.lt(repayAmount)) {
-        const result = await signDaiPermit(
-          library.provider,
-          DAI,
-          account,
-          uTokenAddress
-        );
-
         try {
-          const estimateGas = await uTokenContract.estimateGas.repayBorrowWithPermit(
+          const result = await signDaiPermit(
+            library.provider,
+            DAI,
             account,
-            repayAmount.toString(),
-            result.nonce,
-            result.expiry,
-            result.v,
-            result.r,
-            result.s
+            uTokenAddress
           );
-          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
-        } catch (err) {
-          gasLimit = 800000;
-        }
-
-        return uTokenContract.repayBorrowWithPermit(
-          account,
-          repayAmount.toString(),
-          result.nonce,
-          result.expiry,
-          result.v,
-          result.r,
-          result.s,
-          {
-            gasLimit,
-          }
-        );
-      } else {
-        try {
-          const estimateGas = await uTokenContract.estimateGas.repayBorrow(
-            repayAmount.toString()
+  
+          return makeTxWithGasEstimate(
+            uTokenContract,
+            'repayBorrowWithPermit',
+            [
+              account,
+              repayAmount.toString(),
+              result.nonce,
+              result.expiry,
+              result.v,
+              result.r,
+              result.s
+            ]
           );
-          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
         } catch (err) {
-          gasLimit = 800000;
+          await makeTxWithGasEstimate(
+            DAIContract,
+            'approve',
+            [uTokenAddress, MaxUint256]
+          )
         }
-
-        return uTokenContract.repayBorrow(repayAmount.toString(), {
-          gasLimit,
-        });
       }
+
+      return makeTxWithGasEstimate(
+        uTokenContract,
+        'repayBorrow',
+        [repayAmount]
+      );
     },
     [account, DAI, marketRegistryContract, DAIContract]
   );

@@ -8,6 +8,8 @@ import { Contract } from "@ethersproject/contracts";
 import { signERC2612Permit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import { makeTxWithGasEstimate } from "../../util/gasEstimation";
+import useUnionContract from '../contracts/useUnionContract';
 
 export default function useRegisterMember() {
   const { account, library } = useWeb3React();
@@ -16,19 +18,17 @@ export default function useRegisterMember() {
   const marketRegistryContract = useMarketRegistryContract();
   let memberFee;
   return useCallback(async (): Promise<TransactionResponse> => {
-    let gasLimit: any, userManagerContract: Contract, result: any;
+    const signer = library.getSigner();
+    const { userManager: userManagerAddress } = await marketRegistryContract.tokens(tokenAddress);
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
+    );
+    const unionContract: Contract = useUnionContract();
+    memberFee = (await userManagerContract.newMemberFee()).toString();
     try {
-      const signer = library.getSigner();
-      const res = await marketRegistryContract.tokens(tokenAddress);
-      const userManagerAddress = res.userManager;
-      userManagerContract = new Contract(
-        userManagerAddress,
-        USER_MANAGER_ABI,
-        signer
-      );
-      memberFee = (await userManagerContract.newMemberFee()).toString();
-
-      result = await signERC2612Permit(
+      const result = await signERC2612Permit(
         library,
         UNION,
         account,
@@ -36,28 +36,29 @@ export default function useRegisterMember() {
         memberFee
       );
 
-      gasLimit = await userManagerContract.estimateGas.registerMemberWithPermit(
-        account,
-        memberFee,
-        result.deadline,
-        result.v,
-        result.r,
-        result.s
+      return makeTxWithGasEstimate(
+        userManagerContract,
+        'registerMemberWithPermit',
+        [
+          account,
+          memberFee,
+          result.deadline,
+          result.v,
+          result.r,
+          result.s
+        ]
       );
     } catch (err) {
-      gasLimit = 300000;
+      await makeTxWithGasEstimate(
+        unionContract,
+        'approve',
+        [userManagerAddress, memberFee]
+      );
+      return await makeTxWithGasEstimate(
+        userManagerContract,
+        'registerMember',
+        [account]
+      );
     }
-
-    return userManagerContract.registerMemberWithPermit(
-      account,
-      memberFee,
-      result.deadline,
-      result.v,
-      result.r,
-      result.s,
-      {
-        gasLimit,
-      }
-    );
   }, [account, library, tokenAddress, marketRegistryContract]);
 }

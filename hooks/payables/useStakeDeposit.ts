@@ -10,6 +10,7 @@ import { signDaiPermit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { BigNumberish } from "@ethersproject/bignumber";
+import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
@@ -49,7 +50,7 @@ export default function useStakeDeposit() {
             [stakeAmount, nonce, expiry, v, r, s]
           )
         } catch (err) {
-          makeTxWithGasEstimate(
+          await makeTxWithGasEstimate(
             DAIContract,
             'approve',
             [userManagerAddress, MaxUint256]
@@ -65,20 +66,4 @@ export default function useStakeDeposit() {
     },
     [account, chainId, DAI, DAIContract, marketRegistryContract]
   );
-}
-
-const makeTxWithGasEstimate = async (
-  contract: Contract,
-  func: string,
-  params: Array<string | number | BigNumberish>
-): Promise<TransactionResponse> => {
-  let gasLimit: BigNumberish
-  try {
-    const estimateGas = await contract.estimateGas[func](...params);
-    gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
-  } catch (err) {
-    gasLimit = 800000;
-  }
-
-  return contract[func](...params, { gasLimit });
 }
