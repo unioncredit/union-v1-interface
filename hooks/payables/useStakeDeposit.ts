@@ -9,6 +9,8 @@ import { useCallback } from "react";
 import { signDaiPermit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import { BigNumberish } from "@ethersproject/bignumber";
+import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
@@ -28,60 +30,39 @@ export default function useStakeDeposit() {
       );
 
       const stakeAmount = parseUnits(String(amount), 18);
-      let gasLimit: any;
+
       const allowance = await DAIContract.allowance(
         account,
         userManagerAddress
       );
       //Approve is not required to call stakeWithPermit
       if (allowance.lt(stakeAmount)) {
-        const result = await signDaiPermit(
-          library.provider,
-          DAI,
-          account,
-          userManagerAddress
-        );
-
         try {
-          const estimateGas = await userManagerContract.estimateGas.stakeWithPermit(
-            stakeAmount.toString(),
-            result.nonce,
-            result.expiry,
-            result.v,
-            result.r,
-            result.s
+          const {nonce, expiry, v, r, s} = await signDaiPermit(
+            library.provider,
+            DAI,
+            account,
+            userManagerAddress
           );
-
-          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
+          return makeTxWithGasEstimate(
+            userManagerContract,
+            "stakeWithPermit",
+            [stakeAmount, nonce, expiry, v, r, s]
+          )
         } catch (err) {
-          gasLimit = 800000;
+          await makeTxWithGasEstimate(
+            DAIContract,
+            'approve',
+            [userManagerAddress, MaxUint256]
+          )
         }
-
-        return userManagerContract.stakeWithPermit(
-          stakeAmount.toString(),
-          result.nonce,
-          result.expiry,
-          result.v,
-          result.r,
-          result.s,
-          {
-            gasLimit,
-          }
-        );
-      } else {
-        try {
-          const estimateGas = await userManagerContract.estimateGas.stake(
-            stakeAmount.toString()
-          );
-          gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
-        } catch (err) {
-          gasLimit = 800000;
-        }
-
-        return userManagerContract.stake(stakeAmount.toString(), {
-          gasLimit,
-        });
       }
+
+      return makeTxWithGasEstimate(
+        userManagerContract,
+        "stake",
+        [stakeAmount]
+      )
     },
     [account, chainId, DAI, DAIContract, marketRegistryContract]
   );

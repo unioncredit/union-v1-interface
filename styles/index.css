@@ -348,6 +348,12 @@ input[type="number"] {
 .bg-rinkeby {
   background: #f6c343;
 }
+.bg-polygon {
+  background: #9064ff;
+}
+.bg-mumbai {
+  background: #3099f2;
+}
 
 @screen md {
   .md\:460px {

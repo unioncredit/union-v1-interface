@@ -1,6 +1,9 @@
 import { Fragment } from "react";
 import createArray from "util/createArray";
-import Transaction, { TransactionSkeleton } from "../Transaction";
+import Transaction, {
+  TransactionSkeleton,
+  NoTransactions,
+} from "../Transaction";
 
 /**
  * @name TransactionList
@@ -18,11 +21,15 @@ const TransactionList = ({ data, count = 5 }) => {
         <h2 className="h-12 leading-12">Transactions</h2>
       </div>
 
-      {data
-        ? hasTransactions
-          ? data.map((tx, i) => <Transaction key={i} {...tx} />)
-          : null
-        : createArray(count).map((_, i) => <TransactionSkeleton key={i} />)}
+      {data ? (
+        hasTransactions ? (
+          data.map((tx, i) => <Transaction key={i} {...tx} />)
+        ) : (
+          <NoTransactions />
+        )
+      ) : (
+        createArray(count).map((_, i) => <TransactionSkeleton key={i} />)
+      )}
     </Fragment>
   );
 };

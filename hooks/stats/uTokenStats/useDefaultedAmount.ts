@@ -1,11 +1,13 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract, EventFilter, Event } from "@ethersproject/contracts";
+import { Contract, EventFilter } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import useUserContract from "hooks/contracts/useUserContract";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 import useDAIDecimals from "hooks/useDAIDecimals";
-import { string } from "prop-types";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
+import { getLogs } from "lib/logs";
+import { useWeb3React } from "@web3-react/core";
 
 declare type borrowerStakerPair = {
   borrower: string;
@@ -15,13 +17,15 @@ declare type borrowerStakerPair = {
 const getDefaultedAmount = (
   uTokenContract: Contract,
   userContract: Contract
-) => async (_: any, decimals: BigNumber) => {
+) => async (_: any, decimals: BigNumber, chainId: number, provider: any) => {
   const eventFilter: EventFilter = uTokenContract.filters.LogBorrow();
-  const eventList: Array<Event> = await uTokenContract.queryFilter(eventFilter);
+  const logList = await getLogs(provider, chainId, eventFilter);
 
-  const borrowerList: Array<string> = eventList.map(
-    (event) => event.args.account
-  );
+  const borrowerList: Array<string> = logList.map((log) => {
+    const event = uTokenContract.interface.parseLog(log);
+    return event.args.account;
+  });
+
   const uniqueBorrowerList: Array<string> = Array.from(new Set(borrowerList));
 
   const overdueBorrowerList: Array<string> = [];
@@ -61,10 +65,16 @@ export function useDefaultedAmount() {
   const uTokenContract: Contract = useUTokenContract();
   const userContract: Contract = useUserContract();
   const { data: decimals } = useDAIDecimals();
-  const shouldFetch = !!uTokenContract && !!userContract;
+  const { chainId } = useWeb3React();
+  const readProvider = useReadProvider();
+
+  const shouldFetch =
+    !!uTokenContract && !!userContract && !!chainId && !!readProvider;
 
   return useSWR(
-    shouldFetch ? ["totalDefaultedAmount", decimals] : null,
+    shouldFetch
+      ? ["totalDefaultedAmount", decimals, chainId, readProvider]
+      : null,
     getDefaultedAmount(uTokenContract, userContract)
   );
 }
