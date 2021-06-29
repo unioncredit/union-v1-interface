@@ -3,6 +3,8 @@ import Tooltip from "@reach/tooltip";
 import { useWeb3React } from "@web3-react/core";
 import Button from "components/button";
 import { useProposalVoteModalToggle } from "components/governance/modals/ProposalVoteModal/state";
+import { useProposalQueueModalToggle } from "components/governance/modals/ProposalQueueModal/state";
+import { useProposalExecuteModalToggle } from "components/governance/modals/ProposalExecuteModal/state";
 import VoteBar from "components/governance/VoteBar";
 import Skeleton from "components/Skeleton";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
@@ -38,6 +40,8 @@ const ProposalVotePanel = ({ forCount, againstCount, status, proposalId }) => {
   const { data: totalSupply } = useGovernanceTokenSupply();
 
   const toggleProposalVoteModal = useProposalVoteModalToggle();
+  const toggleProposalQueueModal = useProposalQueueModalToggle();
+  const toggleProposalExecuteModal = useProposalExecuteModalToggle();
 
   const totalVotePercent = totalVotes / totalSupply;
 
@@ -145,16 +149,38 @@ const ProposalVotePanel = ({ forCount, againstCount, status, proposalId }) => {
 
         {status === "active" && !voteReceipt?.hasVoted && (
           <Fragment>
-            {/* Spacer */}
             <div className="h-6" />
 
             <div className="divider" />
 
-            {/* Spacer */}
             <div className="h-10" />
 
             <Button onClick={toggleProposalVoteModal} full>
               Vote for this proposal
+            </Button>
+          </Fragment>
+        )}
+        {status === "Succeeded" && (
+          <Fragment>
+            {/* Spacer */}
+            <div className="h-6" />
+            <div className="divider" />
+            {/* Spacer */}
+            <div className="h-10" />
+            <Button onClick={toggleProposalQueueModal} full>
+              Queue this proposal
+            </Button>
+          </Fragment>
+        )}
+        {status === "Queued" && (
+          <Fragment>
+            {/* Spacer */}
+            <div className="h-6" />
+            <div className="divider" />
+            {/* Spacer */}
+            <div className="h-10" />
+            <Button onClick={toggleProposalExecuteModal} full>
+              Execute this proposal
             </Button>
           </Fragment>
         )}
