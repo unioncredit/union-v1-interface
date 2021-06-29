@@ -70,21 +70,19 @@ export default function MarketSettingsStatsView() {
             />
             <StatsCard
               label="Membership Fee"
-              value={
-                newMemberFee ? formatDetailed(newMemberFee) + " Union" : "NaN"
-              }
+              value={formatDetailed(newMemberFee, "Union")}
             />
             <StatsCard
               label="Max Borrow"
-              value={maxBorrow ? formatDetailed(maxBorrow) + " DAI" : "NaN"}
+              value={formatDetailed(maxBorrow, "DAI")}
             />
             <StatsCard
               label="Min Borrow"
-              value={minBorrow ? formatDetailed(minBorrow) + " DAI" : "NaN"}
+              value={formatDetailed(minBorrow, "DAI")}
             />
             <StatsCard
               label="Current Debt Ceiling"
-              value={debtCeiling ? formatDetailed(debtCeiling) + " DAI" : "NaN"}
+              value={formatDetailed(debtCeiling, "DAI")}
             />
           </StatsGrid>
         </div>

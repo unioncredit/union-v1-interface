@@ -39,59 +39,35 @@ export default function UnionTokenStatsView() {
           <StatsGrid>
             <StatsCard
               label="Total Supply"
-              value={
-                totalSupply ? formatDetailed(totalSupply) + " Union" : "NaN"
-              }
+              value={formatDetailed(totalSupply, "Union")}
             />
             <StatsCard
               label="Reservoir 1 Balance"
-              value={
-                reservoir1UnionBalance
-                  ? formatDetailed(reservoir1UnionBalance) + " Union"
-                  : "NaN"
-              }
+              value={formatDetailed(reservoir1UnionBalance, "Union")}
             />
             <StatsCard
               label="Reservoir 2 Balance"
-              value={
-                reservoir1UnionBalance
-                  ? formatDetailed(reservoir2UnionBalance) + " Union"
-                  : "NaN"
-              }
+              value={formatDetailed(reservoir2UnionBalance, "Union")}
             />
             <StatsCard
               label="Comptroller Balance"
-              value={
-                comptrollerUnionBalance
-                  ? formatDetailed(comptrollerUnionBalance) + " Union"
-                  : "NaN"
-              }
+              value={formatDetailed(comptrollerUnionBalance, "Union", 0)}
             />
             <StatsCard
               label="Inflation Per Block"
-              value={
-                unionInflationPerBlock
-                  ? formatDetailed(unionInflationPerBlock) + " Union"
-                  : "NaN"
-              }
+              value={formatDetailed(unionInflationPerBlock, "Union")}
             />
             <StatsCard
               label="Weekly Average UPB"
-              value={
-                averageInflationPerBlock
-                  ? formatDetailed(averageInflationPerBlock) + " Union"
-                  : "NaN"
-              }
+              value={formatDetailed(averageInflationPerBlock, "Union")}
             />
             <StatsCard
               label="Union per DAI Staked"
-              value={
-                unionPerDAIStaked ? formatDetailed(unionPerDAIStaked, 6) : "NaN"
-              }
+              value={formatDetailed(unionPerDAIStaked, null, 6)}
             />
             <StatsCard
               label="Half Decay Point"
-              value={halfDecayPoint ? formatDetailed(halfDecayPoint) : "NaN"}
+              value={formatDetailed(halfDecayPoint)}
             />
             <StatsCard
               label="Transfers"

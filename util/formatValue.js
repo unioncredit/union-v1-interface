@@ -14,7 +14,8 @@ export default function format(number, decimals = 2) {
   return commify(Number(number).toFixed(decimals));
 }
 
-export function formatDetailed(number = 0, decimals = 4) {
+export function formatDetailed(number, unit = null, decimals = 4) {
+  if (number === null || number === undefined) return "NaN";
   const fullNumber = Number(number);
   const fixedNumber = Number(fullNumber.toFixed(decimals));
   const integerPart = Number(fullNumber.toFixed(0));
@@ -27,5 +28,5 @@ export function formatDetailed(number = 0, decimals = 4) {
     result += Math.pow(10, -1 * decimals);
   }
 
-  return commify(result);
+  return commify(result) + (unit ? " " + unit : "");
 }
