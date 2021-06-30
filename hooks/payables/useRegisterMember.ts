@@ -16,6 +16,7 @@ export default function useRegisterMember() {
   const tokenAddress = useCurrentToken();
   const UNION = useCurrentToken("UNION");
   const marketRegistryContract = useMarketRegistryContract();
+  const unionContract: Contract = useUnionContract();
   let memberFee;
   return useCallback(async (): Promise<TransactionResponse> => {
     const signer = library.getSigner();
@@ -25,7 +26,6 @@ export default function useRegisterMember() {
       USER_MANAGER_ABI,
       signer
     );
-    const unionContract: Contract = useUnionContract();
     memberFee = (await userManagerContract.newMemberFee()).toString();
     try {
       const result = await signERC2612Permit(
