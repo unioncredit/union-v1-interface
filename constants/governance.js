@@ -148,5 +148,15 @@ export const TARGETS = {
     },
   },
   137: {},
-  80001: {},
+  80001: {
+    FixedInterestRate: {
+      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
+      actions: [
+        {
+          signature: "setInterestRate(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
+  },
 };
