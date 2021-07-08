@@ -9,15 +9,17 @@ export default function useReadProvider() {
   useEffect(() => {
     if (chainId && library) {
       if (chainId == 137) {
-        setProvider(null);
+        setProvider(
+          new JsonRpcProvider(
+            `https://polygon-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+          )
+        );
       } else if (chainId === 80001) {
-        // TODO: move network info to config
-        var networkInfo = {
-          url: "https://nd-057-472-350.p2pify.com",
-          user: "gifted-bassi",
-          password: "aged-comply-bony-chump-dusk-droop",
-        };
-        setProvider(new JsonRpcProvider(networkInfo));
+        setProvider(
+          new JsonRpcProvider(
+            `https://polygon-mumbai.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+          )
+        );
       } else {
         setProvider(library.getSigner().provider);
       }
