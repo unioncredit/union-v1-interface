@@ -20,7 +20,7 @@ export default function getEtherscanLink(networkId, data, type) {
   if (networkId == 137) {
     prefix = "https://polygonscan.com";
   } else if (networkId == 80001) {
-    prefix = `https://explorer-mumbai.maticvigil.com`;
+    prefix = `https://mumbai.polygonscan.com`;
   } else {
     prefix = `https://${
       ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
