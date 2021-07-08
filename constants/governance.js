@@ -1,21 +1,15 @@
 import GOVERNOR_ABI from "./abis/governor.json";
 import {
-  AddressZero,
   U_TOKEN_ADDRESSES,
   USER_MANAGER_ADDRESSES,
   ASSET_MANAGER_ADDRESSES,
   COMPOUND_ADAPTER_ADDRESSES,
   PURE_TOKEN_ADAPTER_ADDRESSES,
   ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
+  GOVERNOR_ADDRESSES,
 } from "./variables";
 
-export const GOV_ADDRESS = {
-  1: AddressZero,
-  4: AddressZero,
-  42: "0x9045476cCAf43457D8246F1821A340D0E333E15B",
-  137: "",
-  80001: "0x58A0cb6a8a0F0d01690136b87b0870e611038B1a",
-};
+export const GOV_ADDRESS = GOVERNOR_ADDRESSES;
 
 export const GOV_ABI = GOVERNOR_ABI;
 
@@ -154,5 +148,15 @@ export const TARGETS = {
     },
   },
   137: {},
-  80001: {},
+  80001: {
+    FixedInterestRate: {
+      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
+      actions: [
+        {
+          signature: "setInterestRate(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
+  },
 };

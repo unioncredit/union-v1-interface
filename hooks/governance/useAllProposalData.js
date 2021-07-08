@@ -27,10 +27,6 @@ const getAllProposalData = (
   proposalIndexes,
   formattedEvents
 ) => async () => {
-  console.log(
-    "getAllProposalData start",
-    parseInt(new Date().getTime() / 1000)
-  );
   const allProposals = await Promise.all(
     proposalIndexes.map(async (proposalID) => {
       const res = await govContract.proposals(proposalID);
@@ -123,8 +119,7 @@ const getAllProposalData = (
       };
     })
   );
-  console.log("getAllProposalData end", parseInt(new Date().getTime() / 1000));
-  console.log("proposalData", formattedAllProposalsWithTimestamp);
+
   return formattedAllProposalsWithTimestamp;
 };
 
@@ -145,7 +140,6 @@ export default function useAllProposalData() {
   const shouldFetch = Boolean(
     govContract && typeof proposalCount !== undefined && formattedEvents
   );
-  console.log(proposalCount, shouldFetch);
 
   return useSWR(
     shouldFetch

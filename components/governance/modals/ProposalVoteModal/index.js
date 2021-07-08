@@ -97,7 +97,7 @@ const ProposalVoteModal = ({ id }) => {
    */
   const onSubmit = async (values) => {
     try {
-      const support = values.vote === "For" ? true : false;
+      const support = values.vote === "For" ? 1 : 0;
 
       const { hash } = await castVote(id, support);
 
