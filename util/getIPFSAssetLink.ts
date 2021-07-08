@@ -1,5 +1,5 @@
-export default function getIPFSAssetLink(imageArray: any) {
+export default function getIPFSAssetLink(image: Object) {
   return `https://ipfs.infura.io/ipfs/${
-    imageArray?.original?.src?.split("ipfs://")[1]
+    image?.original?.src?.split("ipfs://")[1]
   }`;
 }
