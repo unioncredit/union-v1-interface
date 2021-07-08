@@ -1,8 +1,5 @@
-import type { IPFSImage } from "hooks/use3BoxPublicData";
-
-export default function getIPFSAssetLink(imageArray: [IPFSImage]) {
-  const { contentUrl } = imageArray[0];
-  const hash = contentUrl["/"];
-
-  return `https://ipfs.infura.io/ipfs/${hash}`;
+export default function getIPFSAssetLink(imageArray: any) {
+  return `https://ipfs.infura.io/ipfs/${
+    imageArray?.original?.src?.split("ipfs://")[1]
+  }`;
 }

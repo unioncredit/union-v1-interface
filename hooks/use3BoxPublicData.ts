@@ -1,4 +1,10 @@
 import useSWR from "swr";
+import Ceramic from "@ceramicnetwork/http-client";
+import { IDX } from "@ceramicstudio/idx";
+import useChainId from "hooks/useChainId";
+
+const ceramic = new Ceramic("https://gateway-clay.ceramic.network");
+const idx = new IDX({ ceramic });
 
 export interface IPFSImage {
   "@type": "ImageObject";
@@ -18,22 +24,22 @@ interface Profile {
   proof_twitter: string;
 }
 
-const fetcher = async (address: string): Promise<Profile> => {
-  const res = await fetch("https://ipfs.3box.io/profile?address=" + address);
-
-  if (res.ok) {
-    return res.json();
+const fetcher = async (address: string, chainId: number): Promise<Profile> => {
+  try {
+    return idx.get(
+      "basicProfile",
+      address.toLowerCase() + "@eip155:" + chainId
+    );
+  } catch (error) {
+    console.error(error);
   }
-
-  const { message } = await res.json();
-
-  throw new Error(message);
 };
 
 export default function use3BoxPublicData(address: string) {
+  const chainId = useChainId();
   const shouldFetch = typeof address === "string";
 
-  return useSWR(shouldFetch ? address : null, fetcher, {
+  return useSWR(shouldFetch ? [address, chainId] : null, fetcher, {
     shouldRetryOnError: false,
     refreshWhenHidden: false,
     revalidateOnFocus: false,

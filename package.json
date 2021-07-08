@@ -24,6 +24,8 @@
     ]
   },
   "dependencies": {
+    "@ceramicnetwork/http-client": "^1.0.7",
+    "@ceramicstudio/idx": "^0.12.1",
     "@ethersproject/address": "^5.0.5",
     "@ethersproject/bignumber": "^5.0.8",
     "@ethersproject/contracts": "^5.0.5",
