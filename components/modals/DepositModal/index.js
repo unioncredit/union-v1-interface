@@ -95,14 +95,17 @@ const DepositModal = ({ totalStake, onComplete }) => {
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={flooredDaiBalance}
+          setMaxValue={flooredDaiBalance < 500 ? flooredDaiBalance : 500}
           setMax={handleSetMax}
           error={errors.amount}
           ref={register({
             required: errorMessages.required,
             max: {
-              value: flooredDaiBalance,
-              message: errorMessages.notEnoughBalanceDAI,
+              value: flooredDaiBalance < 500 ? flooredDaiBalance : 500,
+              message:
+                flooredDaiBalance < 500
+                  ? errorMessages.notEnoughBalanceDAI
+                  : errorMessages.stakeLimitHit,
             },
             min: {
               value: 0.01,

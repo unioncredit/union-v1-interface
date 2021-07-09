@@ -32,6 +32,7 @@ const errorMessages = {
   notEnoughCredit: "Not enough available credit",
   notEnoughStake: "Insufficient withdrawable stake",
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
+  stakeLimitHit: "Cannot stake more than limit",
   notEnoughPoolDAI: "Insufficient DAI available",
   overdueBalance: <OverdueBalanceMessage />,
   maxBorrow: (max) =>

@@ -6,6 +6,7 @@ import {
   COMPOUND_ADAPTER_ADDRESSES,
   PURE_TOKEN_ADAPTER_ADDRESSES,
   ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
+  FIXED_INTEREST_RATE_MODEL_ADDRESSES,
   GOVERNOR_ADDRESSES,
 } from "./variables";
 
@@ -138,7 +139,7 @@ export const TARGETS = {
       ],
     },
     FixedInterestRate: {
-      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
+      address: FIXED_INTEREST_RATE_MODEL_ADDRESSES[42],
       actions: [
         {
           signature: "setInterestRate(uint256)",
@@ -150,7 +151,7 @@ export const TARGETS = {
   137: {},
   80001: {
     FixedInterestRate: {
-      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
+      address: FIXED_INTEREST_RATE_MODEL_ADDRESSES[80001],
       actions: [
         {
           signature: "setInterestRate(uint256)",
