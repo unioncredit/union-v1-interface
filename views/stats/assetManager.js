@@ -36,43 +36,27 @@ export default function AssetManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Available Credit"
-              value={
-                loanableAmount ? formatDetailed(loanableAmount) + " DAI" : "NaN"
-              }
+              value={formatDetailed(loanableAmount, "DAI")}
             />
             <StatsCard
               label="Pool Balance"
-              value={poolBalance ? formatDetailed(poolBalance) + " DAI" : "NaN"}
+              value={formatDetailed(poolBalance, "DAI")}
             />
             <StatsCard
               label="DAI in Contract"
-              value={
-                assetManagerDAIBalance
-                  ? formatDetailed(assetManagerDAIBalance) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(assetManagerDAIBalance, "DAI")}
             />
             <StatsCard
               label="DAI In Lending Protocols"
-              value={
-                daiInLendingProtocols
-                  ? formatDetailed(daiInLendingProtocols) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(daiInLendingProtocols, "DAI")}
             />
             <StatsCard
               label="DAI In Compound"
-              value={
-                daiInCompound ? formatDetailed(daiInCompound) + " DAI" : "NaN"
-              }
+              value={formatDetailed(daiInCompound, "DAI")}
             />
             <StatsCard
               label="DAI In Pure Adapter"
-              value={
-                daiInPureAdapter
-                  ? formatDetailed(daiInPureAdapter) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(daiInPureAdapter, "DAI")}
             />
           </StatsGrid>
         </div>

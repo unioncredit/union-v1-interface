@@ -51,19 +51,16 @@ export default function GovernanceStatsView() {
       <section className="mb-8">
         <div className="container">
           <StatsGrid>
-            <StatsCard
-              label="Quorum"
-              value={quorum ? formatDetailed(quorum) + " Union" : "NaN"}
-            />
+            <StatsCard label="Quorum" value={formatDetailed(quorum, "Union")} />
             <StatsCard
               label="Proposal Threshold"
-              value={threshold ? formatDetailed(threshold) + " Union" : "NaN"}
+              value={formatDetailed(threshold, "Union")}
             />
             <StatsCard
               label="Voting Period"
               value={
                 votingPeriod
-                  ? formatDetailed(votingPeriod, 0) +
+                  ? formatDetailed(votingPeriod, "", 0) +
                     (votingPeriodHours < 48
                       ? " (" + votingPeriodHours + " Hours)"
                       : " (" + votingPeriodDays + " Days)")
@@ -72,9 +69,7 @@ export default function GovernanceStatsView() {
             />
             <StatsCard
               label="Delay Period"
-              value={
-                votingDelay ? formatDetailed(votingDelay, 0) + " Block" : "NaN"
-              }
+              value={formatDetailed(votingDelay, "Block", 0)}
             />
             <StatsCard
               label="Timelock"
