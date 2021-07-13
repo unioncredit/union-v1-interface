@@ -23,12 +23,9 @@ const getTransactions = (marketRegistryContract) => async (
   const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
   const borrowFilter = uTokenContract.filters.LogBorrow(account);
-  borrowFilter.fromBlock = 0;
 
   const borrowLogs = await getLogs(provider, chainId, borrowFilter);
-
   const repayFilter = uTokenContract.filters.LogRepay(account);
-  repayFilter.fromBlock = 0;
 
   const repayLogs = await getLogs(provider, chainId, repayFilter);
 
