@@ -42,11 +42,11 @@ export default function UnionTokenStatsView() {
               value={formatDetailed(totalSupply, "Union")}
             />
             <StatsCard
-              label="Reservoir 1 Balance"
+              label="Treasury 1 Balance"
               value={formatDetailed(reservoir1UnionBalance, "Union")}
             />
             <StatsCard
-              label="Reservoir 2 Balance"
+              label="Treasury 2 Balance"
               value={formatDetailed(reservoir2UnionBalance, "Union")}
             />
             <StatsCard
