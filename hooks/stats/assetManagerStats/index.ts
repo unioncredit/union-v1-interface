@@ -3,6 +3,7 @@ import usePoolBalance from "./usePoolBalance";
 import useAssetManagerDAIBalance from "./useAssetManagerDAIBalance";
 import useDAIInLendingProtocols from "./useDAIInLendingProtocols";
 import useDAIInCompound from "./useDAIInCompound";
+import useDAIInAave from "./useDAIInAave";
 import useDAIInPureAdapter from "./useDAIInPureAdapter";
 
 export default function useAssetManagerStats() {
@@ -11,6 +12,7 @@ export default function useAssetManagerStats() {
   const { data: assetManagerDAIBalance } = useAssetManagerDAIBalance();
   const { data: daiInLendingProtocols } = useDAIInLendingProtocols();
   const { data: daiInCompound } = useDAIInCompound();
+  const { data: daiInAave } = useDAIInAave();
   const { data: daiInPureAdapter } = useDAIInPureAdapter();
 
   return {
@@ -19,6 +21,7 @@ export default function useAssetManagerStats() {
     assetManagerDAIBalance,
     daiInLendingProtocols,
     daiInCompound,
+    daiInAave,
     daiInPureAdapter,
   };
 }

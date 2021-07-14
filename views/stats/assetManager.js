@@ -13,6 +13,7 @@ export default function AssetManagerStatsView() {
     assetManagerDAIBalance,
     daiInLendingProtocols,
     daiInCompound,
+    daiInAave,
     daiInPureAdapter,
   } = useAssetManagerStats();
 
@@ -53,6 +54,10 @@ export default function AssetManagerStatsView() {
             <StatsCard
               label="DAI In Compound"
               value={formatDetailed(daiInCompound, "DAI")}
+            />
+            <StatsCard
+              label="DAI In Aave"
+              value={daiInAave ? formatDetailed(daiInAave) + " DAI" : "NaN"}
             />
             <StatsCard
               label="DAI In Pure Adapter"
