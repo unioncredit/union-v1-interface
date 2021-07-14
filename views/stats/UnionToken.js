@@ -71,7 +71,13 @@ export default function UnionTokenStatsView() {
             />
             <StatsCard
               label="Transfers"
-              value={isUnionTransferPaused ? "Off" : "On"}
+              value={
+                isUnionTransferPaused === undefined
+                  ? "NaN"
+                  : isUnionTransferPaused
+                  ? "Off"
+                  : "On"
+              }
             />
           </StatsGrid>
         </div>
