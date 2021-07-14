@@ -21,7 +21,7 @@ export default function useENSName(address) {
     } else {
       let stale = false;
       library
-        .lookupAddress(validated)
+        .lookupAddress(address.toLowerCase())
         .then((name) => {
           if (!stale) {
             if (name) {
