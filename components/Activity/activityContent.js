@@ -8,12 +8,17 @@ import Spinner from "svgs/Spinner";
 import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
 
-const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
-  const { chainId } = useWeb3React();
+const UpdateTrust = ({ staker, borrower, trustAmount, hash, date }) => {
+  const { account, chainId } = useWeb3React();
 
-  const { data, error } = use3BoxPublicData(borrower);
-  const has3BoxName = !!data && !error && data?.name;
-  const has3BoxProfileImage = !!data && !error && data?.image;
+  const { data: stakerData, error: stakerError } = use3BoxPublicData(staker);
+  const { data: borrowerData, error: borrowerError } = use3BoxPublicData(
+    borrower
+  );
+  const has3BoxName = !!stakerData && !stakerError && stakerData?.name;
+  const has3BoxProfileImage = !!stakerData && !stakerError && stakerData?.image;
+  const has3BorrowerBoxName =
+    !!borrowerData && !borrowerError && borrowerData?.name;
 
   return (
     <li className="text-sm pt-4">
@@ -21,20 +26,30 @@ const UpdateTrust = ({ borrower, trustAmount, hash, date }) => {
         <div>
           {has3BoxProfileImage ? (
             <ProfileImage
-              alt={has3BoxName ? data.name : borrower}
-              image={data.image}
+              alt={has3BoxName ? stakerData.name : staker}
+              image={stakerData.image}
               size={32}
             />
           ) : (
-            <Identicon address={borrower} size={32} />
+            <Identicon address={staker} size={32} />
           )}
         </div>
         <div className="flex-1">
           <p className="whitespace-normal leading-snug crop-snug mb-2">
             <strong>
-              {has3BoxName ? data.name : truncateAddress(borrower)}
+              {staker.toLowerCase() === account.toLowerCase()
+                ? "you"
+                : has3BoxName
+                ? stakerData.name
+                : truncateAddress(staker)}
             </strong>{" "}
-            now trusts you with <strong>{trustAmount} DAI</strong>
+            now trusts{" "}
+            {borrower.toLowerCase() === account.toLowerCase()
+              ? "you"
+              : has3BorrowerBoxName
+              ? borrowerData.name
+              : truncateAddress(borrower)}{" "}
+            with <strong>{trustAmount} DAI</strong>
           </p>
           <div className="flex justify-between leading-none text-type-light space-x-2">
             <p>
