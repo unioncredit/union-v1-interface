@@ -8,6 +8,7 @@ import {
   ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
   FIXED_INTEREST_RATE_MODEL_ADDRESSES,
   GOVERNOR_ADDRESSES,
+  AAVE_ADAPTER_ADDRESSES,
 } from "./variables";
 
 export const GOV_ADDRESS = GOVERNOR_ADDRESSES;
@@ -148,7 +149,43 @@ export const TARGETS = {
       ],
     },
   },
-  137: {},
+  137: {
+    UToken: {
+      address: U_TOKEN_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setOriginationFee(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
+    AaveAdapter: {
+      address: AAVE_ADAPTER_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+      ],
+    },
+    PureTokenAdapter: {
+      address: PURE_TOKEN_ADAPTER_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+      ],
+    },
+  },
   80001: {
     FixedInterestRate: {
       address: FIXED_INTEREST_RATE_MODEL_ADDRESSES[80001],
