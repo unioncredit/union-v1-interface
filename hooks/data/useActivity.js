@@ -33,7 +33,6 @@ const getActivity = (marketRegistryContract) => async (
 
   const updateTrustFilter = userManagerContract.filters.LogUpdateTrust();
   const updateTrustLogs = await getLogs(provider, chainId, updateTrustFilter);
-
   const parseUpdateTrustLogs = await Promise.all(
     updateTrustLogs.map(async (log) => {
       const block = await provider.getBlock(log.blockNumber);
@@ -52,7 +51,7 @@ const getActivity = (marketRegistryContract) => async (
   );
 
   const personalUpdateTrustLogs = parseUpdateTrustLogs.filter(
-    (log) => log.staker === account
+    (log) => log.staker === account || log.borrower === account
   );
 
   /**
