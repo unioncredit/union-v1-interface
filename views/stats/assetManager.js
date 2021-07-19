@@ -13,8 +13,14 @@ export default function AssetManagerStatsView() {
     assetManagerDAIBalance,
     daiInLendingProtocols,
     daiInCompound,
+    compoundFloor,
+    compoundCeiling,
     daiInAave,
+    aaveFloor,
+    aaveCeiling,
     daiInPureAdapter,
+    pureFloor,
+    pureCeiling,
   } = useAssetManagerStats();
 
   return (
@@ -62,6 +68,30 @@ export default function AssetManagerStatsView() {
             <StatsCard
               label="DAI In Pure Adapter"
               value={formatDetailed(daiInPureAdapter, "DAI")}
+            />
+            <StatsCard
+              label="Pure Adapter Floor"
+              value={formatDetailed(pureFloor, "DAI")}
+            />
+            <StatsCard
+              label="Pure Adapter Ceiling"
+              value={formatDetailed(pureCeiling, "DAI")}
+            />
+            <StatsCard
+              label="Aave Floor"
+              value={formatDetailed(aaveFloor, "DAI")}
+            />
+            <StatsCard
+              label="Aave Ceiling"
+              value={formatDetailed(aaveCeiling, "DAI")}
+            />
+            <StatsCard
+              label="Compound Floor"
+              value={formatDetailed(compoundFloor, "DAI")}
+            />
+            <StatsCard
+              label="Compound Ceiling"
+              value={formatDetailed(compoundCeiling, "DAI")}
             />
           </StatsGrid>
         </div>
