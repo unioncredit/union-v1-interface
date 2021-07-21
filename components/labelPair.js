@@ -1,87 +1,103 @@
+import Tooltip from "@reach/tooltip";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import Info from "svgs/Info";
 
 /**
  * @name LabelPair
  * @description Used to present a piece of information with an accompanying label
  *
- * @param {String} className Any additional classes to spread into the wrapper
- * @param {String} label
- * @param {any} tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
- * @param {String} value
- * @param {Boolean} large Changes the LabelPair to be stacked
- * @param {String} valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
+ * @param {Object} props
+ * @param {String} props.className Any additional classes to spread into the wrapper
+ * @param {String} props.label
+ * @param {String} props.labelColor
+ * @param {Boolean} props.large Changes the LabelPair to be stacked
+ * @param {Boolean} props.outline
+ * @param {Boolean} props.responsive
+ * @param {Node} props.slot
+ * @param {Node} props.tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
+ * @param {any} props.value
+ * @param {Node} props.valueSlot
+ * @param {("DAI"|"UNION"|"FUN")} props.valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  */
 const LabelPair = ({
   className = "",
   label,
+  labelColor,
+  large = false,
+  outline = false,
+  responsive = false,
+  slot,
   tooltip,
   value,
-  large = false,
+  valueSlot,
   valueType,
-  outline = false,
 }) => {
-  const cachedLabelClassNames = classNames("leading-tight whitespace-no-wrap", {
-    "text-lg mb-2": large,
-    "cursor-help": tooltip,
+  const cachedLabelClassNames = classNames(
+    labelColor,
+    "leading-tight whitespace-no-wrap",
+    {
+      "text-lg mb-2": large,
+      "flex justify-between items-center": slot,
+      "mb-4 md:mb-0": responsive,
+    }
+  );
+
+  const cachedValueClassNames = classNames({
+    "flex justify-between items-center": valueSlot,
   });
 
-  const cachedValueClassNames = classNames(
-    `leading-tight whitespace-no-wrap font-semibold text-${
-      outline ? "white" : "black"
-    }-pure`,
-    `text-${large ? "xl" : "lg"}`,
-    `text-${large ? "left" : "right"}`
+  const cachedValueTextClassNames = classNames(
+    "leading-tight whitespace-no-wrap font-semibold font-inter",
+    outline ? "text-white-pure" : "text-black-pure",
+    large
+      ? "text-xl tracking-inter-20 text-left"
+      : "text-lg tracking-inter-18 text-right"
   );
 
   const cachedClassNames = classNames(className, {
-    "flex justify-between items-center py-2": !large,
+    "flex justify-between py-2": !large,
+    "flex-col md:flex-row md:items-center": responsive,
+    "items-center": !responsive,
   });
 
   return (
     <dl className={cachedClassNames}>
       <dt className={cachedLabelClassNames}>
         {tooltip ? (
-          <div className="flex items-center" title={tooltip}>
-            <div className="mr-2">{label}</div>
-            <span
-              className="text-sm leading-none"
-              role="img"
-              aria-label="Information"
-            >
-              ℹ️
-            </span>
-          </div>
+          <Tooltip label={tooltip}>
+            <div className="inline-flex items-center cursor-help">
+              <div className="mr-2">{label}</div>
+              <Info />
+            </div>
+          </Tooltip>
         ) : (
           label
         )}
+        {slot}
       </dt>
       <dd className={cachedValueClassNames}>
-        {Boolean(valueType) ? `${value} ${valueType}` : value}
+        <span className={cachedValueTextClassNames}>
+          {valueType ? `${value} ${valueType}` : value}
+        </span>
+        {valueSlot}
       </dd>
     </dl>
   );
 };
 
 LabelPair.propTypes = {
-  /**
-   * Any additional classes to spread into the wrapper
-   */
   className: PropTypes.string,
-  label: PropTypes.any.isRequired,
-  /**
-   * Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
-   */
-  tooltip: PropTypes.any,
-  value: PropTypes.any.isRequired,
-  /**
-   * Changes the LabelPair to be stacked
-   */
+  label: PropTypes.string.isRequired,
+  labelColor: PropTypes.string,
   large: PropTypes.bool,
-  /**
-   * A secondary piece of information to append to the value, either a currency type of unit of measurement
-   */
-  valueType: PropTypes.oneOf(["DAI", "UNION"]),
+  outline: PropTypes.bool,
+  responsive: PropTypes.bool,
+  slot: PropTypes.node,
+  tooltip: PropTypes.node,
+  value: PropTypes.any,
+  valueSlot: PropTypes.node,
+  valueType: PropTypes.oneOf(["DAI", "UNION", "FUN"]),
 };
 
 export default LabelPair;

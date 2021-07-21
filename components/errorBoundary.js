@@ -5,7 +5,10 @@ import { Component } from "react";
  * @description https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors
  */
 class ErrorBoundary extends Component {
-  state = { hasError: false, error: null };
+  constructor() {
+    super();
+    this.state = { hasError: false, error: null };
+  }
 
   static getDerivedStateFromError(error) {
     return {

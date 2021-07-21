@@ -1,4 +1,4 @@
-export default ({ size = 24 }) => (
+const MetaMask = ({ size = 24 }) => (
   <svg width={size} height={size} fill="none">
     <path
       d="M3.352 2.674l7.496 5.567-1.386-3.284-6.11-2.283z"
@@ -98,3 +98,5 @@ export default ({ size = 24 }) => (
     />
   </svg>
 );
+
+export default MetaMask;

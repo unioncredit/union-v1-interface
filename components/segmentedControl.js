@@ -1,14 +1,14 @@
 import classNames from "classnames";
 
-const SegmentedControlButton = ({ active, onClick, label }) => {
-  const cachedClassNames = classNames(
-    "py-2 rounded w-full font-semibold focus:outline-none transition-colors duration-200",
-    active ? "bg-black-pure text-white" : "bg-transparent"
-  );
+const SegmentedControlButton = ({ active, onClick, label, small }) => {
+  const cachedClassNames = classNames("segmented-control-button", {
+    small,
+    active,
+  });
 
   return (
-    <div className="flex-1 px-2px">
-      <button className={cachedClassNames} onClick={onClick}>
+    <div className="flex-1">
+      <button type="button" className={cachedClassNames} onClick={onClick}>
         {label}
       </button>
     </div>
@@ -16,14 +16,11 @@ const SegmentedControlButton = ({ active, onClick, label }) => {
 };
 
 const SegmentedControlWrapper = ({ className, children }) => {
-  const cachedClassNames = classNames(
-    className,
-    "rounded p-1 bg-grey-light w-full"
-  );
+  const cachedClassNames = classNames(className, "p-1 bg-grey-light w-full");
 
   return (
-    <div className={cachedClassNames}>
-      <div className="flex -mx-2px">{children}</div>
+    <div className={cachedClassNames} style={{ borderRadius: 10 }}>
+      <div className="flex space-x-1">{children}</div>
     </div>
   );
 };

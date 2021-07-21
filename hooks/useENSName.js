@@ -11,13 +11,17 @@ import { useEffect, useState } from "react";
 export default function useENSName(address) {
   const { library } = useWeb3React();
 
-  const [ENSName, setENSName] = useState();
+  const [ENSName, setENSName] = useState(null);
 
   useEffect(() => {
-    if (!!(isAddress(address) && library)) {
+    const validated = isAddress(address);
+    if (!library || !validated) {
+      setENSName(null);
+      return;
+    } else {
       let stale = false;
       library
-        .lookupAddress(address)
+        .lookupAddress(validated)
         .then((name) => {
           if (!stale) {
             if (name) {
@@ -35,7 +39,6 @@ export default function useENSName(address) {
 
       return () => {
         stale = true;
-        setENSName();
       };
     }
   }, [library, address]);

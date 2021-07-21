@@ -1,0 +1,595 @@
+@tailwind base;
+
+:root {
+  --skeleton-base-color: hsl(210deg 9% 95%);
+  --skeleton-highlight-color: hsl(210deg 9% 96%);
+
+  --radius: 4px;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Montserrat-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/Montserrat-500.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/Montserrat-600.woff2) format("woff2");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-Regular.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-Medium.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/subset-Inter-SemiBold.woff2) format("woff2");
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+*,
+::before,
+::after {
+  @apply border-border-pure;
+}
+
+h1,
+h2 {
+  @apply text-xl font-semibold leading-tight;
+}
+@screen sm {
+  h1,
+  h2 {
+    @apply text-2xl;
+  }
+}
+
+strong {
+  @apply font-semibold;
+}
+
+.error-triangle {
+  position: relative;
+}
+.error-triangle::before {
+  position: absolute;
+  top: -8px;
+  left: 1.5rem;
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent rgba(247, 120, 73, 0.1) transparent;
+}
+
+table th {
+  @apply pb-8 pt-4 leading-none border-b select-none font-medium;
+}
+table th:last-of-type > .flex {
+  @apply justify-end;
+}
+table td {
+  @apply py-4 px-0 border-b;
+}
+
+/* Hide number input up/down arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+@tailwind components;
+
+.btn {
+  @apply font-semibold py-2 px-6 leading-7 rounded  duration-150 border-2 inline-block;
+
+  transition-property: background-color, border-color, color, fill, stroke,
+    opacity;
+}
+.btn:focus {
+  @apply outline-none shadow-outline;
+}
+.btn:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+.btn:disabled.waiting {
+  @apply text-black-pure opacity-100;
+  background-color: #ebeff2;
+  border-color: #ebeff2;
+}
+
+@media (width <= 425px) {
+  .btn-full-mobile {
+    @apply w-full;
+  }
+}
+
+.btn-primary {
+  @apply bg-pink-pure text-black-pure border-pink-pure;
+}
+.btn-primary:hover:enabled,
+.btn-primary:focus:enabled {
+  @apply bg-pink-coral-pure border-pink-coral-pure;
+}
+
+.btn-secondary {
+  @apply bg-black-pure text-white border-black-pure;
+}
+.btn-secondary:hover:enabled,
+.btn-secondary:focus:enabled {
+  @apply bg-black-dark border-black-dark;
+}
+
+.btn-tertiary {
+  @apply text-white border-transparent;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-invert {
+  @apply bg-white border-border-pure text-black-pure;
+}
+.btn-invert:hover:enabled,
+.btn-invert:focus:enabled {
+  @apply bg-border-light;
+}
+
+.btn-disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.btn-icon {
+  @apply absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+}
+
+.segmented-control-button {
+  @apply py-2 rounded w-full transition-colors duration-150 font-semibold bg-transparent;
+}
+.segmented-control-button:focus,
+.segmented-control-button:hover {
+  @apply outline-none bg-white bg-opacity-50;
+}
+.segmented-control-button.small {
+  @apply font-medium text-sm;
+}
+.segmented-control-button.active {
+  @apply bg-black-pure text-white;
+}
+.segmented-control-button.active:focus,
+.segmented-control-button.active:hover {
+  @apply bg-black-dark;
+}
+
+.pagination-button {
+  @apply w-6 h-6 leading-none rounded text-type-light text-xs font-semibold flex items-center justify-center;
+}
+.pagination-button:disabled {
+  @apply cursor-not-allowed text-type-base bg-failed-light;
+}
+.pagination-button:first-of-type:disabled,
+.pagination-button:last-of-type:disabled {
+  @apply text-type-light bg-transparent;
+}
+.pagination-button:focus {
+  @apply outline-none shadow-outline;
+}
+
+.active-nav-tab {
+  position: relative;
+}
+.active-nav-tab::after {
+  position: absolute;
+  content: "";
+  left: 0;
+  height: 4px;
+  width: 100%;
+  bottom: calc(-1rem + -4px + 1px);
+  background-color: #f4dbd8;
+}
+
+.text-overflow-clip {
+  text-overflow: ellipsis;
+}
+
+.container {
+  @apply w-full px-4 mx-auto max-w-screen-lg-gutter;
+}
+@screen sm {
+  .container {
+    @apply px-6;
+  }
+}
+
+.container-sm {
+  max-width: calc(1008px + 1.5rem * 2);
+  @apply w-full px-6 mx-auto;
+}
+
+.container-lg {
+  @apply w-full px-4 mx-auto max-w-screen-xl-gutter;
+}
+
+@screen sm {
+  .container-lg {
+    @apply px-6;
+  }
+}
+
+.skew {
+  @apply bg-pink-light absolute bottom-0 left-0 w-full;
+  z-index: -2;
+  transform: skew(0, -5deg) translateY(calc(50vw / 12));
+  height: calc(100vmin - 4rem + 10rem + 8.5rem);
+}
+@media (width >= 338px) {
+  .skew {
+    height: calc(100vmin - 4rem + 10rem + 6rem);
+  }
+}
+@media (width >= 375px) {
+  .skew {
+    height: calc(100vmin - 4rem + 10rem + 5rem);
+  }
+}
+@media (width >= 896px) {
+  .skew {
+    height: 22rem;
+  }
+}
+@media (width >= 968px) {
+  .skew {
+    height: 24rem;
+  }
+}
+@media (width >= 1048px) {
+  .skew {
+    height: 27rem;
+  }
+}
+
+.divider {
+  @apply w-full h-px bg-border-pure;
+}
+
+.vertical-divider {
+  width: 2px;
+  @apply bg-border-pure h-full;
+}
+
+.app {
+  @apply shadow-app;
+  border-radius: 16.3277px;
+  max-width: 150%;
+}
+
+.radius-app {
+  border-radius: 16.3277px;
+}
+
+@screen sm {
+  .app {
+    height: unset;
+    max-width: unset;
+  }
+}
+
+.indicator {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pl-k {
+  color: #a56c9d;
+}
+.pl-en {
+  color: #84cfd1;
+}
+.pl-c1 {
+  color: #f4998e;
+}
+
+.bg-kovan {
+  background: #9064ff;
+}
+.bg-ropsten {
+  background: #ff4a8d;
+}
+.bg-mainnet {
+  background: #29b6af;
+}
+.bg-goerli {
+  background: #3099f2;
+}
+.bg-rinkeby {
+  background: #f6c343;
+}
+.bg-polygon {
+  background: #9064ff;
+}
+.bg-mumbai {
+  background: #3099f2;
+}
+
+@screen md {
+  .md\:460px {
+    max-width: 460px;
+  }
+}
+
+@tailwind utilities;
+
+/*
+ * @reach-ui/dialog Dialog Styles
+ */
+
+:root {
+  --reach-dialog: 1;
+}
+
+/* Default Dialog Overlay Style */
+[data-reach-dialog-overlay] {
+  background: #fff;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+@screen sm {
+  [data-reach-dialog-overlay] {
+    background: hsla(0, 0%, 0%, 0.66);
+  }
+}
+
+@screen sm {
+  [data-reach-dialog-overlay].dialog-overlay-centered {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+/* Default & Fullscreen Dialog Style */
+[data-reach-dialog-content].dialog-style-default,
+[data-reach-dialog-content].dialog-style-fullscreen {
+  @apply bg-white w-full h-full outline-none;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}
+
+@screen sm {
+  [data-reach-dialog-content].dialog-style-default {
+    @apply mx-4 rounded h-auto;
+    max-width: 24rem;
+    margin-top: 12vh;
+  }
+}
+
+@screen sm {
+  [data-reach-dialog-content].dialog-style-is-wide {
+    max-width: 32rem;
+  }
+}
+
+/*
+ * @reach-ui/tooltip Tooltip Styles
+ */
+
+:root {
+  --reach-tooltip: 1;
+}
+
+[data-reach-tooltip] {
+  @apply bg-white border absolute;
+  z-index: 1;
+  padding: calc(1rem - 1px);
+  pointer-events: none;
+  box-shadow: 0px 0px 12px rgba(19, 44, 106, 0.12);
+  max-width: 256px;
+  border-radius: var(--radius);
+}
+
+/* Styles to crop text to X-height */
+.tooltip-text p {
+  @apply text-type-light text-sm;
+  line-height: 1.5;
+}
+.tooltip-text p::before,
+.tooltip-text p::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.tooltip-text p::before {
+  margin-top: calc((1 - 1.5) * 0.5em);
+}
+.tooltip-text p::after {
+  margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
+/* Tooltip Title Styles */
+.tooltip-text p:first-of-type {
+  @apply font-semibold mb-2 text-type-base;
+}
+
+.crop-normal::before,
+.crop-normal::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-normal::before {
+  margin-top: calc((1 - 1.5) * 0.5em);
+}
+.crop-normal::after {
+  margin-bottom: calc((1 - 1.5) * 0.5em);
+}
+
+.crop-snug::before,
+.crop-snug::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-snug::before {
+  margin-top: calc((1 - 1.375) * 0.5em);
+}
+.crop-snug::after {
+  margin-bottom: calc((1 - 1.375) * 0.5em);
+}
+
+.crop-tight::before,
+.crop-tight::after {
+  content: "";
+  display: block;
+  height: 0;
+  width: 0;
+}
+.crop-tight::before {
+  margin-top: calc((1 - 1.25) * 0.5em);
+}
+.crop-tight::after {
+  margin-bottom: calc((1 - 1.25) * 0.5em);
+}
+
+/* Used to detect in JavaScript if apps have loaded styles or not. */
+:root {
+  --reach-menu-button: 1;
+}
+
+[data-reach-menu],
+[data-reach-menu-popover] {
+  @apply block absolute z-50;
+}
+
+[data-reach-menu][hidden],
+[data-reach-menu-popover][hidden] {
+  display: none;
+}
+
+.btn-menu-button[data-reach-menu-button] {
+  @apply font-medium px-3 py-3 rounded border bg-border-light leading-snug transition-colors duration-150 inline-flex items-center;
+}
+.btn-menu-button[data-reach-menu-button]:focus {
+  @apply shadow-outline outline-none;
+}
+
+@screen sm {
+  .btn-menu-button[data-reach-menu-button] {
+    @apply px-4;
+  }
+}
+
+[data-reach-menu-list],
+[data-reach-menu-items] {
+  @apply block rounded whitespace-no-wrap border bg-white outline-none;
+}
+
+/*
+ The dom structure of a MenuLink is reach-menu-item > a,
+ so to target all items we can use `data-reach-menu-item`
+*/
+[data-reach-menu-item] {
+  @apply transition-colors duration-150 select-none block w-full px-3 rounded-sm py-2 leading-5 font-medium;
+
+  /*
+    These are styled in one rule instead of something like a[data-reach-menu-item]
+    and li[data-reach-menu-item] so that apps don't have to fight specificity and
+    can style both li and a menu items with one rule,
+    ie: `[data-selected] { background: red; }`.
+    Otherwise they'd have to define two styles, one for a and one for li.
+  */
+
+  /* reach-menu-item */
+  cursor: pointer;
+}
+
+/* pseudo pseudo selector */
+[data-reach-menu-item][data-selected] {
+  @apply bg-border-light outline-none;
+}
+
+.hero-gradient {
+  background: linear-gradient(#fff, #fcf4f3);
+  background: linear-gradient(to bottom, #fff, ease-in, #fcf4f3);
+}
+
+.gradient-pink-2-light {
+  background: linear-gradient(#f7eaeb, #fff);
+  background: linear-gradient(to bottom, #f7eaeb, ease-in, #fff);
+}
+
+.gradient-governance {
+  background: linear-gradient(
+    to bottom,
+    #fcf7f7 20%,
+    rgba(252, 247, 247, 0) 100%
+  );
+}
+
+.markdown-ol {
+  list-style: decimal;
+  margin-left: 1rem;
+}
+
+.markdown-ul {
+  list-style: disc;
+  margin-left: 1rem;
+}
+
+.markdown-li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-p {
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,139 @@
+import { useWeb3React } from "@web3-react/core";
+import useStakeDeposit from "hooks/payables/useStakeDeposit";
+import useCurrentToken from "hooks/useCurrentToken";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import errorMessages from "util/errorMessages";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import { roundDown } from "util/numbers";
+import Button from "../../button";
+import Input from "../../input";
+import LabelPair from "../../labelPair";
+import Modal, { ModalHeader } from "../../modal";
+import { useDepositModalOpen, useDepositModalToggle } from "./state";
+
+const DepositModal = ({ totalStake, onComplete }) => {
+  const { library } = useWeb3React();
+
+  const open = useDepositModalOpen();
+  const toggle = useDepositModalToggle();
+
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    errors,
+    formState,
+    reset,
+  } = useForm();
+
+  const { isDirty, isSubmitting } = formState;
+
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
+
+  const DAI = useCurrentToken();
+
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
+    DAI
+  );
+
+  useEffect(() => {
+    reset();
+    updateDaiBalance();
+  }, [open]);
+
+  const flooredDaiBalance = roundDown(daiBalance);
+  const maxAllowed = Math.min(500 - parseFloat(totalStake), flooredDaiBalance);
+  const newTotalStake = Number(
+    parseFloat(amount || 0) + parseFloat(totalStake)
+  );
+  const formatNewTotalStake = newTotalStake.toFixed(2);
+
+  const deposit = useStakeDeposit();
+
+  const onSubmit = async (values) => {
+    try {
+      const { hash } = await deposit(values.amount);
+
+      if (open) toggle();
+
+      await getReceipt(hash, library);
+
+      await onComplete();
+    } catch (err) {
+      handleTxError(err);
+    }
+  };
+
+  const handleSetMax = () =>
+    setValue("amount", maxAllowed, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
+  return (
+    <Modal isOpen={open} onDismiss={toggle}>
+      <ModalHeader title="Deposit" onDismiss={toggle} />
+      <form
+        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
+        className="px-4 sm:px-6 pb-6 sm:pb-8 pt-4 sm:pt-6"
+      >
+        <dl className="flex justify-between items-center mb-4">
+          <dt>Current total stake</dt>
+          <dd className="text-right">{`${totalStake} DAI`}</dd>
+        </dl>
+
+        <Input
+          autoFocus
+          chip="DAI"
+          id="amount"
+          step="0.01"
+          type="number"
+          label="Amount"
+          placeholder="0.00"
+          setMaxValue={maxAllowed}
+          setMax={handleSetMax}
+          error={errors.amount}
+          ref={register({
+            required: errorMessages.required,
+            max: {
+              value: maxAllowed,
+              message: errorMessages.stakeLimitHit,
+            },
+            min: {
+              value: 0.01,
+              message: errorMessages.minValuePointZeroOne,
+            },
+          })}
+        />
+
+        <LabelPair
+          className="mt-4 mb-2"
+          label="New total stake"
+          value={formatNewTotalStake}
+          valueType="DAI"
+        />
+
+        <div className="divider" />
+
+        <div className="mt-6">
+          <Button
+            full
+            type="submit"
+            submitting={isSubmitting}
+            disabled={isSubmitting || !isDirty || newTotalStake > 500}
+          >
+            Confirm
+          </Button>
+        </div>
+      </form>
+    </Modal>
+  );
+};
+
+export default DepositModal;

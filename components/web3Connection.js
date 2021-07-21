@@ -1,50 +1,74 @@
-import { useWalletModalToggle } from "@contexts/Application";
-import useENSName from "@hooks/useENSName";
-import truncateAddress from "@util/truncateAddress";
-import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import Activity from "./activity";
-import Button from "./button";
+import { Menu, MenuButton, MenuItem, MenuList } from "@reach/menu-button";
+import { useWeb3React } from "@web3-react/core";
+import use3BoxPublicData from "hooks/use3BoxPublicData";
+import useCopy from "hooks/useCopy";
+import useENSName from "hooks/useENSName";
+import useToast, { FLAVORS } from "hooks/useToast";
+import { logout } from "lib/auth";
+import { walletconnect } from "lib/connectors";
+import { useRouter } from "next/router";
+import Arrow from "svgs/Arrow";
+import truncateAddress from "util/truncateAddress";
 import Identicon from "./identicon";
-import Web3Button from "./web3Button";
+import ProfileImage from "./ProfileImage";
 
 const Web3Connection = () => {
-  const { account, error } = useWeb3React();
+  const { account, connector, deactivate } = useWeb3React();
 
   const ENSName = useENSName(account);
 
-  const toggleWalletModal = useWalletModalToggle();
+  const { data: threeBox, error } = use3BoxPublicData(account);
+  const has3BoxProfileImage = !!threeBox && !error && threeBox?.image;
 
-  if (account)
-    return (
-      <ul className="flex items-center">
-        <li>
-          <Activity />
-        </li>
-        <li className="ml-6 md:ml-8">
-          <Web3Button onClick={toggleWalletModal} error={Boolean(error)}>
-            {Boolean(error) ? (
-              error instanceof UnsupportedChainIdError ? (
-                "Wrong Network"
-              ) : (
-                "Error"
-              )
-            ) : (
-              <div className="ml-1 flex items-center">
-                <Identicon address={account} />
-                <div className="ml-3">
-                  {ENSName ?? truncateAddress(account)}
-                </div>
-              </div>
-            )}
-          </Web3Button>
-        </li>
-      </ul>
-    );
+  const { push } = useRouter();
+  const handleMyAccount = () => push("/account");
+
+  const addToast = useToast();
+
+  const handleSignOut = () => {
+    if (connector === walletconnect) connector.close();
+
+    deactivate();
+    addToast(FLAVORS.LOGGED_OUT);
+    logout();
+  };
+
+  const [isCopied, copy] = useCopy();
+  const handleCopyAddress = () => copy(account);
+  const copyAddressText = isCopied ? "Address copied" : "Copy address";
 
   return (
-    <Button secondary onClick={toggleWalletModal}>
-      Start now
-    </Button>
+    <Menu>
+      <MenuButton className="btn-menu-button">
+        <div className="ml-1 flex" aria-hidden>
+          {has3BoxProfileImage ? (
+            <ProfileImage
+              alt={ENSName ?? account}
+              image={threeBox.image}
+              size={18}
+            />
+          ) : (
+            <Identicon address={account} />
+          )}
+        </div>
+        <div className="ml-3 mr-2">
+          <span className="hidden sm:inline">
+            {ENSName ?? truncateAddress(account)}
+          </span>{" "}
+          <span className="sm:hidden">
+            {ENSName ?? truncateAddress(account, 2)}
+          </span>
+        </div>
+        <span className="mr-2px" aria-hidden>
+          <Arrow />
+        </span>
+      </MenuButton>
+      <MenuList className="mt-2 w-56 space-y-2 p-2 shadow-input">
+        <MenuItem onSelect={handleMyAccount}>My account</MenuItem>
+        <MenuItem onSelect={handleCopyAddress}>{copyAddressText}</MenuItem>
+        <MenuItem onSelect={handleSignOut}>Sign out</MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
 

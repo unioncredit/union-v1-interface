@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import PropTypes from "prop-types";
+import Spinner from "../svgs/Spinner";
 
 /**
  * @name Button
@@ -16,6 +17,7 @@ import PropTypes from "prop-types";
  * @param {Boolean} secondary
  * @param {Boolean} tertiary
  * @param {Boolean} invert
+ * @param {Boolean} submitting
  */
 const Button = ({
   as,
@@ -28,6 +30,8 @@ const Button = ({
   wide,
   icon,
   full,
+  submitting,
+  submittingText = "Waiting for confirmation...",
   ...props
 }) => {
   const cachedClassNames = classNames(className, "btn", {
@@ -35,9 +39,10 @@ const Button = ({
     "btn-secondary": secondary,
     "btn-tertiary": tertiary,
     "btn-invert": invert,
-    "px-10": wide,
+    "sm:px-10": wide,
     "w-full": full,
-    relative: icon,
+    relative: icon || submitting,
+    waiting: submitting,
   });
 
   if (href) {
@@ -57,6 +62,16 @@ const Button = ({
       </Link>
     );
   }
+
+  if (submitting)
+    return (
+      <button className={cachedClassNames} {...props}>
+        <div className="btn-icon">
+          <Spinner />
+        </div>
+        <span className="ml-4">{submittingText}</span>
+      </button>
+    );
 
   if (icon)
     return (
@@ -103,6 +118,7 @@ Button.propTypes = {
   tertiary: PropTypes.bool,
   invert: PropTypes.bool,
   icon: PropTypes.any,
+  submitting: PropTypes.bool,
 };
 
 export default Button;

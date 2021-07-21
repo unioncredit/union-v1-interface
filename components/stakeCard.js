@@ -1,221 +1,141 @@
-import { useDepositModalToggle, useWithdrawModalToggle } from "@contexts/Stake";
-import useCurrentToken from "@hooks/useCurrentToken";
-import { getErc20Balance } from "@lib/contracts/getErc20Balance";
-import { getRewards } from "@lib/contracts/getRewards";
-import { getRewardsMultiplier } from "@lib/contracts/getRewardsMultiplier";
-import { getRewardsPerYear } from "@lib/contracts/getRewardsPerYear";
-import { getStakeAmount } from "@lib/contracts/getStakeAmount";
-import { stake } from "@lib/contracts/stake";
-import { TOKENS } from "@constants/";
-import { unstake } from "@lib/contracts/unstake";
-import { useWeb3React } from "@web3-react/core";
-import { useEffect, useState } from "react";
-import { withdrawRewards } from "@lib/contracts/withdrawRewards";
-import { placeholderTip } from "../text/tooltips";
+import useCurrentToken from "hooks/useCurrentToken";
+import useRewardsData from "hooks/data/useRewardsData";
+import useStakeData from "hooks/data/useStakeData";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import { Fragment } from "react";
+import format from "util/formatValue";
+import {
+  defaultedStakeTip,
+  utilizedStakeTip,
+  withdrawableStakeTip,
+} from "../util/tooltips";
 import Button from "./button";
-import DepositModal from "./depositModal";
+import DepositModal from "./modals/DepositModal";
+import { useDepositModalToggle } from "./modals/DepositModal/state";
 import LabelPair from "./labelPair";
-import WithdrawModal from "./withdrawModal";
+import WithdrawModal from "./modals/WithdrawModal";
+import { useWithdrawModalToggle } from "./modals/WithdrawModal/state";
+import WithdrawRewards from "./withdrawRewards";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
-  const { account, library, chainId } = useWeb3React();
 
-  const curToken = useCurrentToken();
+  const UNION = useCurrentToken("UNION");
+  const { data: unionSymbol } = useUnionSymbol();
 
-  const [totalStake, setTotalStake] = useState(0);
-  const [utilizedStake, setUtilizedStake] = useState(0);
-  const [defaultedStake, setDefaultedStake] = useState(0);
-  const [unionBalance, setUnionBalance] = useState(0);
-  const [withdrawableStake, setWithdrawableStake] = useState(0);
-  const [rewards, setRewards] = useState(0);
-  const [upy, setUpy] = useState(0);
-  const [rewardsMultiplier, setRewardsMultiplier] = useState(0);
+  const {
+    data: unionBalance = 0.0,
+    mutate: updateUnionBalance,
+  } = useTokenBalance(UNION);
 
-  useEffect(() => {
-    if (library && account) {
-      getStakeData();
-      getRewardData();
-      getUpyData();
-      getUnionBalance();
-      getRewardsMultiplierData();
-    }
-  }, [library, account, chainId]);
+  const { data: stakeData, mutate: updateStakeData } = useStakeData();
 
-  const getUnionBalance = async () => {
-    try {
-      const res = await getErc20Balance(
-        TOKENS[chainId]["UNION"],
-        library.getSigner(),
-        chainId
-      );
+  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
-      setUnionBalance(res.toFixed(3));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const {
+    totalStake = 0.0,
+    utilizedStake = 0.0,
+    defaultedStake = 0.0,
+    withdrawableStake = 0.0,
+  } = !!stakeData && stakeData;
 
-  const getStakeData = async () => {
-    try {
-      const res = await getStakeAmount(account, curToken, library, chainId);
+  const { rewards = 0.0, rewardsMultiplier = "0.00" } =
+    !!rewardsData && rewardsData;
 
-      setTotalStake(res.stakingAmount);
-      setUtilizedStake(res.creditUsed);
-      setDefaultedStake(res.freezeAmount);
-      setWithdrawableStake(res.stakingAmount - res.vouchingAmount);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getRewardData = async () => {
-    try {
-      const res = await getRewards(curToken, library.getSigner(), chainId);
-
-      setRewards(res.toFixed(3));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getUpyData = async () => {
-    try {
-      const res = await getRewardsPerYear(
-        curToken,
-        library.getSigner(),
-        chainId
-      );
-
-      setUpy(res.toFixed(2));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const getRewardsMultiplierData = async () => {
-    try {
-      const res = await getRewardsMultiplier(
-        curToken,
-        library.getSigner(),
-        chainId
-      );
-
-      setRewardsMultiplier(res.toFixed(2));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onDeposit = async (amount) => {
-    try {
-      await stake(curToken, amount, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onWithdraw = async (amount) => {
-    try {
-      await unstake(curToken, amount, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onWithdrawRewards = async () => {
-    try {
-      await withdrawRewards(curToken, library.getSigner(), chainId);
-    } catch (err) {
-      console.error(err);
-    }
+  const onComplete = async () => {
+    await updateUnionBalance();
+    await updateStakeData();
+    await updateRewardsData();
   };
 
   return (
-    <div className="bg-pink-light border border-pink-pure rounded p-6">
-      <LabelPair
-        className="mb-4"
-        label="Your total stake"
-        large
-        value={totalStake}
-        valueType="DAI"
-      />
+    <Fragment>
+      <div>
+        <div className="bg-pink-light border border-pink-pure rounded-t px-6 pt-6 pb-5">
+          <LabelPair
+            className="mb-4"
+            label="Your total stake"
+            large
+            value={format(totalStake)}
+            valueType="DAI"
+            valueSlot={
+              <div className="text-sm font-inter font-semibold py-1 px-3 leading-tight rounded-full bg-pink-2-pure bg-opacity-25">
+                Earning at {rewardsMultiplier}x
+              </div>
+            }
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Utilized Stake"
+            tooltip={utilizedStakeTip}
+            value={format(utilizedStake)}
+            valueType="DAI"
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Defaulted Stake"
+            tooltip={defaultedStakeTip(unionSymbol)}
+            value={format(defaultedStake)}
+            valueType="DAI"
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Withdrawable Stake"
+            tooltip={withdrawableStakeTip}
+            value={format(withdrawableStake)}
+            valueType="DAI"
+          />
 
-      <LabelPair
-        className="text-grey-pure"
-        label="Utilized Stake"
-        tooltip={placeholderTip}
-        value={utilizedStake}
-        valueType="DAI"
-      />
-      <LabelPair
-        className="text-grey-pure"
-        label="Defaulted Stake"
-        tooltip={placeholderTip}
-        value={defaultedStake}
-        valueType="DAI"
-      />
-      <LabelPair
-        className="text-grey-pure"
-        label="Withdrawable Stake"
-        tooltip={placeholderTip}
-        value={withdrawableStake}
-        valueType="DAI"
-      />
+          <div className="divider bg-pink-pure my-8" />
 
-      <LabelPair
-        className="mb-4 mt-16"
-        label="Rewards multiplier"
-        large
-        value={`${rewardsMultiplier}x`}
-      />
+          <dl className="py-1 flex justify-between items-center">
+            <dt className="leading-tight whitespace-no-wrap text-lg mb-2">
+              Your {unionSymbol}
+            </dt>
+            <dd>
+              <WithdrawRewards onComplete={onComplete} />
+            </dd>
+          </dl>
 
-      <LabelPair
-        className="text-grey-pure"
-        label="Rewards"
-        tooltip={placeholderTip}
-        value={rewards}
-        valueType="UNION"
-      />
-
-      <LabelPair
-        className="text-grey-pure"
-        label="Earned Per Year"
-        tooltip={placeholderTip}
-        value={upy}
-        valueType="UNION"
-      />
-
-      <LabelPair
-        className="text-grey-pure"
-        label="Wallet Balance"
-        tooltip={placeholderTip}
-        value={unionBalance}
-        valueType="UNION"
-      />
-
-      <div className="flex -mx-2 mt-12">
-        <div className="flex-1 px-2">
-          <Button secondary full onClick={toggleDepositModal}>
-            Deposit
-          </Button>
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Balance"
+            value={format(unionBalance, 3)}
+            valueType={unionSymbol}
+          />
+          <LabelPair
+            labelColor="text-grey-pure"
+            label="Unclaimed"
+            value={format(rewards, 3)}
+            valueType={unionSymbol}
+          />
         </div>
-        <div className="flex-1 px-2">
-          <Button invert full onClick={toggleWithdrawModal}>
-            Withdraw
-          </Button>
+
+        <div className="bg-pink-light border border-pink-pure border-t-0 rounded-b p-4">
+          <div className="flex space-x-4">
+            <div className="flex-1">
+              <Button secondary full onClick={toggleDepositModal}>
+                Deposit
+              </Button>
+            </div>
+            <div className="flex-1">
+              <Button invert full onClick={toggleWithdrawModal}>
+                Withdraw
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mt-4">
-        <Button invert full onClick={onWithdrawRewards}>
-          Withdraw Rewards
-        </Button>
-      </div>
 
-      <DepositModal totalStake={totalStake} onDeposit={onDeposit} />
-      <WithdrawModal totalStake={totalStake} onWithdraw={onWithdraw} />
-    </div>
+      <DepositModal totalStake={totalStake} onComplete={onComplete} />
+      <WithdrawModal
+        totalStake={totalStake}
+        withdrawableStake={withdrawableStake}
+        onComplete={onComplete}
+      />
+    </Fragment>
   );
 };
 

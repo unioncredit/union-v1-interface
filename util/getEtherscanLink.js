@@ -9,16 +9,23 @@ const ETHERSCAN_PREFIXES = {
 /**
  * @name getEtherscanLink
  *
- * @param {Number} networkId The chain id of the network to link to
+ * @param {(1|3|4|5|42|137|80001)} networkId The chain id of the network to link to
  * @param {String} data The hash of the transaction or address
  * @param {("TRANSACTION"|"ADDRESS")} type
  *
  * @returns {String}
  */
 export default function getEtherscanLink(networkId, data, type) {
-  const prefix = `https://${
-    ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
-  }etherscan.io`;
+  let prefix;
+  if (networkId == 137) {
+    prefix = "https://polygonscan.com";
+  } else if (networkId == 80001) {
+    prefix = `https://mumbai.polygonscan.com`;
+  } else {
+    prefix = `https://${
+      ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
+    }etherscan.io`;
+  }
 
   switch (type) {
     case "TRANSACTION": {

@@ -1,8 +1,8 @@
 import Head from "next/head";
 
-export default function Custom404() {
+export default function Custom404Page() {
   return (
-    <div>
+    <div className="my-8 md:my-10">
       <Head>
         <title>404 | Union</title>
         <meta property="og:title" content="404 | Union" />

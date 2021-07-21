@@ -1,8 +1,0 @@
-{
-  "github": {
-    "silent": true
-  },
-  "env": {
-    "FORTMATIC_API_KEY_TEST": "@fortmatic-api-key-test"
-  }
-}

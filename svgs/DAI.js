@@ -1,4 +1,4 @@
-export default ({ size = 16 }) => (
+const DAI = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
     <path
       fillRule="evenodd"
@@ -12,3 +12,5 @@ export default ({ size = 16 }) => (
     />
   </svg>
 );
+
+export default DAI;
