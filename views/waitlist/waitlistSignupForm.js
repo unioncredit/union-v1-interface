@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import EMAIL_REGEX from "util/emailRegex";
 import errorMessages from "util/errorMessages";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const ENDPOINT = "https://api.union.finance/api";
 
@@ -50,6 +51,8 @@ const TWEET = `https://twitter.com/intent/tweet?url=https%3A%2F%2Funion.finance%
 
 const WaitlistSignupForm = () => {
   const [placeData, placeDataSet] = useState(null);
+
+  const { data: unionSymbol } = useUnionSymbol();
 
   const { handleSubmit, register, errors, formState, watch } = useForm();
 
@@ -100,7 +103,7 @@ const WaitlistSignupForm = () => {
 
       <p className="text-lg mb-6 md:mb-10 md:max-w-lg">
         Join the waitlist to become an Alpha tester of Union. Lend or borrow
-        cash from friends and stake your digital dollars to earn UNION tokens.
+        cash from friends and stake your digital dollars to earn {unionSymbol} tokens.
       </p>
 
       <form

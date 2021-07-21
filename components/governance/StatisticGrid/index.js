@@ -3,6 +3,7 @@ import Statistic from "components/governance/Statistic";
 import useStatisticsData from "hooks/governance/useStatisticsData";
 import { useDefaultedAmount } from "hooks/stats/uTokenStats/useDefaultedAmount";
 import { toPercent } from "util/numbers";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 /**
  * @name format
@@ -13,6 +14,7 @@ const format = (value) => commify(Number(value ?? 0).toFixed(2));
 const StatisticGrid = () => {
   const { data } = useStatisticsData();
   const { data: defaultedAmount } = useDefaultedAmount();
+  const { data: unionSymbol } = useUnionSymbol();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -30,7 +32,7 @@ const StatisticGrid = () => {
       />
       <Statistic
         label={"Total supply"}
-        value={`${format(data?.totalSupply)} UNION`}
+        value={`${format(data?.totalSupply)} ${unionSymbol}`}
       />
       <Statistic
         label={"Outstanding loans"}

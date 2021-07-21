@@ -16,12 +16,14 @@ import LabelPair from "./labelPair";
 import WithdrawModal from "./modals/WithdrawModal";
 import { useWithdrawModalToggle } from "./modals/WithdrawModal/state";
 import WithdrawRewards from "./withdrawRewards";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const StakeCard = () => {
   const toggleDepositModal = useDepositModalToggle();
   const toggleWithdrawModal = useWithdrawModalToggle();
 
   const UNION = useCurrentToken("UNION");
+  const { data: unionSymbol } = useUnionSymbol();
 
   const {
     data: unionBalance = 0.0,
@@ -74,7 +76,7 @@ const StakeCard = () => {
           <LabelPair
             labelColor="text-grey-pure"
             label="Defaulted Stake"
-            tooltip={defaultedStakeTip}
+            tooltip={defaultedStakeTip(unionSymbol)}
             value={format(defaultedStake)}
             valueType="DAI"
           />
@@ -90,7 +92,7 @@ const StakeCard = () => {
 
           <dl className="py-1 flex justify-between items-center">
             <dt className="leading-tight whitespace-no-wrap text-lg mb-2">
-              Your UNION
+              Your {unionSymbol}
             </dt>
             <dd>
               <WithdrawRewards onComplete={onComplete} />
@@ -101,13 +103,13 @@ const StakeCard = () => {
             labelColor="text-grey-pure"
             label="Balance"
             value={format(unionBalance, 3)}
-            valueType="UNION"
+            valueType={unionSymbol}
           />
           <LabelPair
             labelColor="text-grey-pure"
             label="Unclaimed"
             value={format(rewards, 3)}
-            valueType="UNION"
+            valueType={unionSymbol}
           />
         </div>
 
