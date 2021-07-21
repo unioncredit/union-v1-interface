@@ -14,6 +14,7 @@ import LabelPair from "../../labelPair";
 import Modal, { ModalHeader } from "../../modal";
 import { useSuccessModalToggle } from "../SuccessModal/state";
 import { useApplicationModalOpen, useApplicationModalToggle } from "./state";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const ApplicationModal = () => {
   const { library } = useWeb3React();
@@ -33,6 +34,7 @@ const ApplicationModal = () => {
   } = useUnionAllowance();
 
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { data: unionSymbol } = useUnionSymbol();
 
   const { data: fee = 0.0 } = useMemberFee();
 
@@ -81,21 +83,21 @@ const ApplicationModal = () => {
         <p>
           You've collected all three vouches and are ready to become a member.{" "}
           {unionBalance <= "0.00" &&
-            "You'll need to deposit DAI in order to earn UNION to become a member"}
+            `You'll need to deposit DAI in order to earn ${unionSymbol} to become a member`}
         </p>
 
         <LabelPair
           className="mt-4"
           label="Wallet Balance"
           value={Number(unionBalance).toFixed(2)}
-          valueType="UNION"
+          valueType={unionSymbol}
         />
 
         <LabelPair
           className="mt-8 mb-4"
           label="Membership Fee"
           value={fee.toFixed(2)}
-          valueType="UNION"
+          valueType={unionSymbol}
         />
 
         <div className="divider"></div>

@@ -18,7 +18,7 @@ import Info from "svgs/Info";
  * @param {Node} props.tooltip Renders a tooltip and an icon next to the label to indicate more information, accepts anything to be placed in the tooltip body
  * @param {any} props.value
  * @param {Node} props.valueSlot
- * @param {("DAI"|"UNION")} props.valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
+ * @param {("DAI"|"UNION"|"FUN")} props.valueType A secondary piece of information to append to the value, either a currency type of unit of measurement
  */
 const LabelPair = ({
   className = "",
@@ -97,7 +97,7 @@ LabelPair.propTypes = {
   tooltip: PropTypes.node,
   value: PropTypes.any,
   valueSlot: PropTypes.node,
-  valueType: PropTypes.oneOf(["DAI", "UNION"]),
+  valueType: PropTypes.oneOf(["DAI", "UNION", "FUN"]),
 };
 
 export default LabelPair;

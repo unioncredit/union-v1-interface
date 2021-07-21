@@ -10,6 +10,7 @@ import handleTxError from "util/handleTxError";
 import { useDelegateVotingModalToggle } from "../DelegateVotingModal/state";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { AddressZero } from "constants/variables";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const Manual = () => (
   <svg width={24} height={24} viewBox="0 0 24 24" fill="none">
@@ -43,6 +44,8 @@ const ChooseDelegationModal = () => {
   const { account, library } = useWeb3React();
 
   const { data: votingWalletData } = useVotingWalletData(account);
+
+  const { data: unionSymbol } = useUnionSymbol();
 
   const isDelegating = Boolean(
     votingWalletData?.delegates !== "Self" &&
@@ -124,7 +127,7 @@ const ChooseDelegationModal = () => {
 
             <p className="text-sm font-medium leading-tight">
               This options allows you to delegate your votes to another Ethereum
-              address. You never send UNION, only your voting rights, and can
+              address. You never send {unionSymbol}, only your voting rights, and can
               undelegate at any time.
             </p>
           </div>

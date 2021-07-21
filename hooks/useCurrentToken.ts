@@ -3,7 +3,7 @@ import { AddressZero, TOKENS } from "constants/variables";
 import { useMemo } from "react";
 
 export default function useCurrentToken(
-  symbol: "DAI" | "UNION" = "DAI"
+  symbol: "DAI" | "UNION" | "FUN" = "DAI"
 ): string {
   const { chainId } = useWeb3React();
 

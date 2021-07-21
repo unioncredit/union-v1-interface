@@ -8,12 +8,12 @@ export const utilizedStakeTip = (
   </div>
 );
 
-export const defaultedStakeTip = (
+export const defaultedStakeTip = (unionSymbol) => (
   <div className="tooltip-text">
     <p>Defaulted Stake</p>
     <p>
       This part shows the total amount of people which have not paid on time.
-      Funds that are locked in defaulted stake are not earning UNION.
+      Funds that are locked in defaulted stake are not earning {unionSymbol}.
     </p>
   </div>
 );
@@ -40,11 +40,11 @@ export const vouchingTip = (
   </div>
 );
 
-export const rewardsTip = (
+export const rewardsTip = (unionSymbol) => (
   <div className="tooltip-text">
     <p>Rewards</p>
     <p>
-      This is the total number of UNION Tokens you’ve accumulated so far since
+      This is the total number of {unionSymbol} Tokens you’ve accumulated so far since
       the last claim action.
     </p>
   </div>
@@ -81,9 +81,9 @@ export const minimumPaymentDueTip = (
   </div>
 );
 
-export const unionPerYearTip = (
+export const unionPerYearTip = (unionSymbol) => (
   <div className="tooltip-text">
-    <p>UNION Per Year</p>
+    <p>{unionSymbol} Per Year</p>
     <p>
       This is the token that the staking contract returns to the user that is
       based on the DAI staked and reward multiplier algorithm. Each block
