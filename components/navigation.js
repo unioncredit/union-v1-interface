@@ -20,7 +20,7 @@ const Navigation = () => {
           <LogoLink />
 
           <li className="ml-auto">
-            <Button href="/waitlist" secondary>
+            <Button href="https://beta.union.finance/stake" secondary>
               Get started
             </Button>
           </li>

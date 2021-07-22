@@ -24,7 +24,11 @@ export default function HomePage() {
                   revealing personal information on a public ledger.
                 </p>
 
-                <Button href="/waitlist" className="btn-full-mobile" wide>
+                <Button
+                  href="https://beta.union.finance/stake"
+                  className="btn-full-mobile"
+                  wide
+                >
                   Get started
                 </Button>
 
