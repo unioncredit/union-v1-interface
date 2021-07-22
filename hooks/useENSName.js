@@ -1,6 +1,6 @@
 import { isAddress } from "@ethersproject/address";
-import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 /**
  * @name useENSName
@@ -9,19 +9,22 @@ import { useEffect, useState } from "react";
  * @returns {String}
  */
 export default function useENSName(address) {
-  const { library } = useWeb3React();
+  //Fixed getting ens data from the main network
+  const library = new JsonRpcProvider(
+    `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+  );
 
   const [ENSName, setENSName] = useState(null);
 
   useEffect(() => {
     const validated = isAddress(address);
-    if (!library || !validated) {
+    if (!validated) {
       setENSName(null);
       return;
     } else {
       let stale = false;
       library
-        .lookupAddress(validated)
+        .lookupAddress(address.toLowerCase())
         .then((name) => {
           if (!stale) {
             if (name) {
@@ -31,7 +34,8 @@ export default function useENSName(address) {
             }
           }
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error);
           if (!stale) {
             setENSName(null);
           }
