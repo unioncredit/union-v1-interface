@@ -7,10 +7,14 @@ const FOOTER_LINKS = [
   //   href: "",
   //   label: "White paper",
   // },
-  // {
-  //   href: "",
-  //   label: "Documentation",
-  // },
+  {
+    href: "https://beta.union.finance/stats",
+    label: "Stats",
+  },
+  {
+    href: "https://unionfinance.gitbook.io/docs/",
+    label: "Documentation",
+  },
   // {
   //   href: "",
   //   label: "Terms of Service",
@@ -65,7 +69,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="https://discord.gg/XCUvHeREa3" aria-label="Discord">
+              <a href="https://discord.gg/cZagzJ3p8G" aria-label="Discord">
                 <div className="p-2px">
                   <Discord size={20} color="currentColor" />
                 </div>
