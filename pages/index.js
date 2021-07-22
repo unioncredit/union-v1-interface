@@ -29,7 +29,7 @@ export default function HomePage() {
                   className="btn-full-mobile"
                   wide
                 >
-                  Get started
+                  Experimental Release
                 </Button>
 
                 <div className="mt-12">

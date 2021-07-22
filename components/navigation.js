@@ -21,7 +21,7 @@ const Navigation = () => {
 
           <li className="ml-auto">
             <Button href="https://beta.union.finance/stake" secondary>
-              Get started
+              Experimental Release
             </Button>
           </li>
         </ul>
