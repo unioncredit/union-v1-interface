@@ -18,9 +18,9 @@ const NetworkDot = ({ color }) => {
 };
 
 const NetworkIndicator = () => {
-  const { chainId } = useWeb3React();
+  const { chainId, account } = useWeb3React();
 
-  if (chainId === 1 || !chainId) return null;
+  if (chainId === 1 || !chainId || !account) return null;
 
   return (
     <div className="py-3 flex justify-center font-semibold text-center text-sm bg-black-pure text-white select-none">
