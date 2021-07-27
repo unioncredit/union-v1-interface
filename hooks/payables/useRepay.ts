@@ -7,15 +7,16 @@ import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
-import { signDaiPermit } from "eth-permit";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 import { MaxUint256 } from "@ethersproject/constants";
+import useDaiPermit from "hooks/payables/useDaiPermit";
 
 export default function useRepay() {
   const { library, account } = useWeb3React();
   const DAI = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
   const DAIContract = useERC20Contract(DAI);
+  const daiPermit = useDaiPermit();
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {
@@ -32,40 +33,29 @@ export default function useRepay() {
       const allowance = await DAIContract.allowance(account, uTokenAddress);
       if (allowance.lt(repayAmount)) {
         try {
-          const result = await signDaiPermit(
+          const { nonce, expiry, v, r, s } = await daiPermit(
             library.provider,
             DAI,
             account,
             uTokenAddress
           );
-  
+
           return makeTxWithGasEstimate(
             uTokenContract,
-            'repayBorrowWithPermit',
-            [
-              account,
-              repayAmount.toString(),
-              result.nonce,
-              result.expiry,
-              result.v,
-              result.r,
-              result.s
-            ]
+            "repayBorrowWithPermit",
+            [account, repayAmount.toString(), nonce, expiry, v, r, s]
           );
         } catch (err) {
-          await makeTxWithGasEstimate(
-            DAIContract,
-            'approve',
-            [uTokenAddress, MaxUint256]
-          )
+          await makeTxWithGasEstimate(DAIContract, "approve", [
+            uTokenAddress,
+            MaxUint256,
+          ]);
         }
       }
 
-      return makeTxWithGasEstimate(
-        uTokenContract,
-        'repayBorrow',
-        [repayAmount]
-      );
+      return makeTxWithGasEstimate(uTokenContract, "repayBorrow", [
+        repayAmount,
+      ]);
     },
     [account, DAI, marketRegistryContract, DAIContract]
   );

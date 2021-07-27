@@ -6,17 +6,18 @@ import { useWeb3React } from "@web3-react/core";
 import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
-import { signDaiPermit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { BigNumberish } from "@ethersproject/bignumber";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
+import useDaiPermit from "hooks/payables/useDaiPermit";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
   const marketRegistryContract = useMarketRegistryContract();
   const DAI = useCurrentToken();
   const DAIContract = useERC20Contract(DAI);
+  const daiPermit = useDaiPermit();
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {
@@ -38,31 +39,30 @@ export default function useStakeDeposit() {
       //Approve is not required to call stakeWithPermit
       if (allowance.lt(stakeAmount)) {
         try {
-          const {nonce, expiry, v, r, s} = await signDaiPermit(
+          const { nonce, expiry, v, r, s } = await daiPermit(
             library.provider,
             DAI,
             account,
             userManagerAddress
           );
-          return makeTxWithGasEstimate(
-            userManagerContract,
-            "stakeWithPermit",
-            [stakeAmount, nonce, expiry, v, r, s]
-          )
+          return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+            stakeAmount,
+            nonce,
+            expiry,
+            v,
+            r,
+            s,
+          ]);
         } catch (err) {
-          await makeTxWithGasEstimate(
-            DAIContract,
-            'approve',
-            [userManagerAddress, MaxUint256]
-          )
+          console.log("err", err);
+          await makeTxWithGasEstimate(DAIContract, "approve", [
+            userManagerAddress,
+            MaxUint256,
+          ]);
         }
       }
 
-      return makeTxWithGasEstimate(
-        userManagerContract,
-        "stake",
-        [stakeAmount]
-      )
+      return makeTxWithGasEstimate(userManagerContract, "stake", [stakeAmount]);
     },
     [account, chainId, DAI, DAIContract, marketRegistryContract]
   );
