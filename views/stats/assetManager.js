@@ -13,7 +13,14 @@ export default function AssetManagerStatsView() {
     assetManagerDAIBalance,
     daiInLendingProtocols,
     daiInCompound,
+    compoundFloor,
+    compoundCeiling,
+    daiInAave,
+    aaveFloor,
+    aaveCeiling,
     daiInPureAdapter,
+    pureFloor,
+    pureCeiling,
   } = useAssetManagerStats();
 
   return (
@@ -36,43 +43,55 @@ export default function AssetManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Available Credit"
-              value={
-                loanableAmount ? formatDetailed(loanableAmount) + " DAI" : "NaN"
-              }
+              value={formatDetailed(loanableAmount, "DAI")}
             />
             <StatsCard
               label="Pool Balance"
-              value={poolBalance ? formatDetailed(poolBalance) + " DAI" : "NaN"}
+              value={formatDetailed(poolBalance, "DAI")}
             />
             <StatsCard
               label="DAI in Contract"
-              value={
-                assetManagerDAIBalance
-                  ? formatDetailed(assetManagerDAIBalance) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(assetManagerDAIBalance, "DAI")}
             />
             <StatsCard
               label="DAI In Lending Protocols"
-              value={
-                daiInLendingProtocols
-                  ? formatDetailed(daiInLendingProtocols) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(daiInLendingProtocols, "DAI")}
             />
             <StatsCard
               label="DAI In Compound"
-              value={
-                daiInCompound ? formatDetailed(daiInCompound) + " DAI" : "NaN"
-              }
+              value={formatDetailed(daiInCompound, "DAI")}
+            />
+            <StatsCard
+              label="DAI In Aave"
+              value={daiInAave ? formatDetailed(daiInAave) + " DAI" : "NaN"}
             />
             <StatsCard
               label="DAI In Pure Adapter"
-              value={
-                daiInPureAdapter
-                  ? formatDetailed(daiInPureAdapter) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(daiInPureAdapter, "DAI")}
+            />
+            <StatsCard
+              label="Pure Adapter Floor"
+              value={formatDetailed(pureFloor, "DAI")}
+            />
+            <StatsCard
+              label="Pure Adapter Ceiling"
+              value={formatDetailed(pureCeiling, "DAI")}
+            />
+            <StatsCard
+              label="Aave Floor"
+              value={formatDetailed(aaveFloor, "DAI")}
+            />
+            <StatsCard
+              label="Aave Ceiling"
+              value={formatDetailed(aaveCeiling, "DAI")}
+            />
+            <StatsCard
+              label="Compound Floor"
+              value={formatDetailed(compoundFloor, "DAI")}
+            />
+            <StatsCard
+              label="Compound Ceiling"
+              value={formatDetailed(compoundCeiling, "DAI")}
             />
           </StatsGrid>
         </div>

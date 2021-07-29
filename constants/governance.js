@@ -1,21 +1,17 @@
 import GOVERNOR_ABI from "./abis/governor.json";
 import {
-  AddressZero,
   U_TOKEN_ADDRESSES,
   USER_MANAGER_ADDRESSES,
   ASSET_MANAGER_ADDRESSES,
   COMPOUND_ADAPTER_ADDRESSES,
   PURE_TOKEN_ADAPTER_ADDRESSES,
   ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
+  FIXED_INTEREST_RATE_MODEL_ADDRESSES,
+  GOVERNOR_ADDRESSES,
+  AAVE_ADAPTER_ADDRESSES,
 } from "./variables";
 
-export const GOV_ADDRESS = {
-  1: AddressZero,
-  4: AddressZero,
-  42: "0x9045476cCAf43457D8246F1821A340D0E333E15B",
-  137: "",
-  80001: "0x58A0cb6a8a0F0d01690136b87b0870e611038B1a",
-};
+export const GOV_ADDRESS = GOVERNOR_ADDRESSES;
 
 export const GOV_ABI = GOVERNOR_ABI;
 
@@ -144,7 +140,7 @@ export const TARGETS = {
       ],
     },
     FixedInterestRate: {
-      address: "0xb7F122E01A2eB8c94f93b5cFA6853768c06f686B",
+      address: FIXED_INTEREST_RATE_MODEL_ADDRESSES[42],
       actions: [
         {
           signature: "setInterestRate(uint256)",
@@ -153,6 +149,52 @@ export const TARGETS = {
       ],
     },
   },
-  137: {},
-  80001: {},
+  137: {
+    UToken: {
+      address: U_TOKEN_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setOriginationFee(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
+    AaveAdapter: {
+      address: AAVE_ADAPTER_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+      ],
+    },
+    PureTokenAdapter: {
+      address: PURE_TOKEN_ADAPTER_ADDRESSES[137],
+      actions: [
+        {
+          signature: "setFloor(address,uint256)",
+          params: ["address", "uint256"],
+        },
+        {
+          signature: "setCeiling(address,uint256)",
+          params: ["address", "uint256"],
+        },
+      ],
+    },
+  },
+  80001: {
+    FixedInterestRate: {
+      address: FIXED_INTEREST_RATE_MODEL_ADDRESSES[80001],
+      actions: [
+        {
+          signature: "setInterestRate(uint256)",
+          params: ["uint256"],
+        },
+      ],
+    },
+  },
 };

@@ -86,7 +86,7 @@ const Footer = () => {
             <li>
               <a
                 className="block hover:opacity-75 duration-150 transition-opacity"
-                href="https://discord.gg/XCUvHeREa3"
+                href="https://discord.gg/cZagzJ3p8G"
                 aria-label="Discord"
               >
                 <div className="p-2px">

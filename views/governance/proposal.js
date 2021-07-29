@@ -2,6 +2,8 @@ import { isAddress } from "@ethersproject/address";
 import { useWeb3React } from "@web3-react/core";
 import Back from "components/Back";
 import ProposalVoteModal from "components/governance/modals/ProposalVoteModal";
+import ProposalQueueModal from "components/governance/modals/ProposalQueueModal";
+import ProposalExecuteModal from "components/governance/modals/ProposalExecuteModal";
 import {
   ProposalStatusBadge,
   ProposalTypeBadge,
@@ -204,6 +206,8 @@ export default function ProposalView() {
       </div>
 
       <ProposalVoteModal id={id} />
+      <ProposalQueueModal id={id} />
+      <ProposalExecuteModal id={id} />
     </Fragment>
   );
 }

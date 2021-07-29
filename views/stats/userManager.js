@@ -36,33 +36,19 @@ export default function UserManagerStatsView() {
           <StatsGrid>
             <StatsCard
               label="Total Stake"
-              value={
-                totalStakedDAI ? formatDetailed(totalStakedDAI) + " DAI" : "NaN"
-              }
+              value={formatDetailed(totalStakedDAI, "DAI")}
             />
             <StatsCard
               label="Effective Total Stake"
-              value={
-                effectiveTotalStake
-                  ? formatDetailed(effectiveTotalStake) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(effectiveTotalStake, "DAI")}
             />
             <StatsCard
               label="Defaulted Stake"
-              value={
-                defaultedAmount
-                  ? formatDetailed(defaultedAmount) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(defaultedAmount, "DAI")}
             />
             <StatsCard
               label="Total Frozen Stake"
-              value={
-                totalFrozenStake
-                  ? formatDetailed(totalFrozenStake) + " DAI"
-                  : "NaN"
-              }
+              value={formatDetailed(totalFrozenStake, "DAI")}
             />
           </StatsGrid>
         </div>

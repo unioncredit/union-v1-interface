@@ -21,6 +21,7 @@ import { toPercent } from "util/numbers";
 import truncateAddress from "util/truncateAddress";
 import { useChooseDelegationModalToggle } from "../modals/ChooseDelegationModal/state";
 import { useCreateProposalModalToggle } from "../modals/CreateProposalModal/state";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const DisplayDelegating = ({ delegates, address }) => {
   if (delegates === address) return "Self";
@@ -128,6 +129,8 @@ const AccountVotingWallet = ({ address }) => {
   const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
   const { data: proposalThreshold = 0 } = useProposalThreshold();
 
+  const { data: unionSymbol } = useUnionSymbol();
+
   const notReadyToVote = delegates === AddressZero;
   const isDelegatingToSelf = delegates === address;
 
@@ -144,7 +147,7 @@ const AccountVotingWallet = ({ address }) => {
       <div className="space-y-4">
         <VotingWalletRow
           label="Wallet balance"
-          value={`${commify(balanceOf.toFixed(4))} UNION`}
+          value={`${commify(balanceOf.toFixed(4))} ${unionSymbol}`}
         />
         <VotingWalletRow
           label="Votes delegated to you"
@@ -157,7 +160,7 @@ const AccountVotingWallet = ({ address }) => {
         />
         <VotingWalletRow
           label="Unclaimed balance"
-          value={`${commify(unclaimedBalance.toFixed(4))} UNION`}
+          value={`${commify(unclaimedBalance.toFixed(4))} ${unionSymbol}`}
           slotBottomRight={<WithdrawRewards style="Underline" />}
         />
         {notReadyToVote ? (
@@ -196,6 +199,8 @@ export const ProfileVotingWallet = ({ address }) => {
   const { data: votingWalletData } = useVotingWalletData(address);
   const { balanceOf = 0, currentVotes = 0, delegates } =
     !!votingWalletData && votingWalletData;
+
+  const { data: unionSymbol } = useUnionSymbol();
 
   const { data: threeBoxData } = use3BoxPublicData(address);
 
@@ -240,7 +245,7 @@ export const ProfileVotingWallet = ({ address }) => {
         <div className="space-y-4">
           <VotingWalletRow
             label="Wallet balance"
-            value={`${commify(balanceOf.toFixed(4))} UNION`}
+            value={`${commify(balanceOf.toFixed(4))} ${unionSymbol}`}
           />
           <VotingWalletRow
             label="Votes delegated"

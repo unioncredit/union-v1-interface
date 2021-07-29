@@ -51,7 +51,7 @@ export const ToastContent = ({ message, hash }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          View on Etherscan
+          View Transaction
         </a>
       </Fragment>
     );

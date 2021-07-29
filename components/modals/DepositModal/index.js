@@ -47,6 +47,11 @@ const DepositModal = ({ totalStake, onComplete }) => {
   }, [open]);
 
   const flooredDaiBalance = roundDown(daiBalance);
+  const maxAllowed = Math.min(500 - parseFloat(totalStake), flooredDaiBalance);
+  const newTotalStake = Number(
+    parseFloat(amount || 0) + parseFloat(totalStake)
+  );
+  const formatNewTotalStake = newTotalStake.toFixed(2);
 
   const deposit = useStakeDeposit();
 
@@ -64,12 +69,8 @@ const DepositModal = ({ totalStake, onComplete }) => {
     }
   };
 
-  const formatNewTotalStake = Number(
-    parseFloat(amount || 0) + parseFloat(totalStake)
-  ).toFixed(2);
-
   const handleSetMax = () =>
-    setValue("amount", flooredDaiBalance, {
+    setValue("amount", maxAllowed, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -95,14 +96,14 @@ const DepositModal = ({ totalStake, onComplete }) => {
           type="number"
           label="Amount"
           placeholder="0.00"
-          setMaxValue={flooredDaiBalance}
+          setMaxValue={maxAllowed}
           setMax={handleSetMax}
           error={errors.amount}
           ref={register({
             required: errorMessages.required,
             max: {
-              value: flooredDaiBalance,
-              message: errorMessages.notEnoughBalanceDAI,
+              value: maxAllowed,
+              message: errorMessages.stakeLimitHit,
             },
             min: {
               value: 0.01,
@@ -125,7 +126,7 @@ const DepositModal = ({ totalStake, onComplete }) => {
             full
             type="submit"
             submitting={isSubmitting}
-            disabled={isSubmitting || !isDirty}
+            disabled={isSubmitting || !isDirty || newTotalStake > 500}
           >
             Confirm
           </Button>

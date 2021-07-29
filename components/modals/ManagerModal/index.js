@@ -3,10 +3,12 @@ import Button from "../../button";
 import Input from "../../input";
 import Modal, { ModalHeader } from "../../modal";
 import { useManagerModalOpen, useManagerModalToggle } from "./state";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
   const open = useManagerModalOpen();
   const toggle = useManagerModalToggle();
+  const { data: unionSymbol } = useUnionSymbol();
 
   const { register, watch } = useForm();
 
@@ -23,7 +25,7 @@ const ManagerModal = ({ onSetNewMemberFee, onAddMember }) => {
           className="mb-8"
           id="fee"
           label="New Member Fee"
-          placeholder="UNION"
+          placeholder={unionSymbol}
           min={0}
           ref={register}
           required

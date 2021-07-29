@@ -10,6 +10,7 @@ import ProfileImage from "../ProfileImage";
 
 const Address = ({ address, copyable = false }) => {
   const ENSName = useENSName(address);
+  const hasENSName = !!ENSName;
 
   const [copied, copy] = useCopy();
 
@@ -43,18 +44,18 @@ const Address = ({ address, copyable = false }) => {
         )}
       </div>
 
-      {has3BoxName || hasLabel ? (
+      {hasLabel || hasENSName || has3BoxName ? (
         <p className="ml-4 flex-auto leading-none">
           <span className="block text-sm mb-2px font-semibold whitespace-no-wrap">
-            {hasLabel ? label : data.name}
+            {hasLabel ? label : hasENSName ? ENSName : data.name}
           </span>
           <span className="text-xs text-type-light">
-            {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
+            {copied ? "Copied!" : truncateAddress(address)}
           </span>
         </p>
       ) : (
         <p className="flex-auto leading-loose ml-4">
-          {copied ? "Copied!" : ENSName ?? truncateAddress(address)}
+          {copied ? "Copied!" : truncateAddress(address)}
         </p>
       )}
 
