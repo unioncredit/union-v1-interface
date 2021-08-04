@@ -15,6 +15,8 @@ import {
 import Web3Connection from "../web3Connection";
 import Activity from "../Activity";
 
+import { Nav, NavItem } from "union-ui";
+
 const GetInvitedModal = dynamic(() => import("../modals/GetInvitedModal"));
 
 const LearnMoreModal = dynamic(() => import("../modals/LearnMoreModal"));
@@ -60,86 +62,24 @@ const Navigation = () => {
   useChainIdUpdater();
 
   return (
-    <nav className="border-b bg-white">
-      <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
-        {/* Desktop */}
-        <ul className="flex items-center md:justify-between">
-          <LogoLink />
-
-          {account && library ? (
-            <Fragment>
-              <li className="py-4 h-20 hidden md:flex flex-1 lg:justify-center">
-                <ul className="flex justify-center items-center">
-                  <li>
-                    <NavigationLink href="/stake">Stake</NavigationLink>
-                  </li>
-                  <li>
-                    <NavigationLink href="/borrow">Borrow</NavigationLink>
-                  </li>
-                  <li>
-                    <NavigationLink href="/vouch">Vouch</NavigationLink>
-                  </li>
-                  <li>
-                    <NavigationLink href="/governance">Vote</NavigationLink>
-                  </li>
-                </ul>
-              </li>
-
-              <li className="flex ml-auto lg:w-1/4 justify-end py-4">
-                <ul className="flex items-center">
-                  <li>
-                    <Activity />
-                  </li>
-                  <li className="ml-4 sm:ml-6 md:ml-8">
-                    <Web3Connection />
-                  </li>
-                </ul>
-              </li>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <li className="ml-auto mr-4">
-                <button
-                  className="btn border-transparent font-medium px-4"
-                  onClick={toggleSignInModal}
-                >
-                  Sign in
-                </button>
-              </li>
-              <li>
-                <Button secondary onClick={toggleCreateModal}>
-                  Start now
-                </Button>
-              </li>
-            </Fragment>
-          )}
-        </ul>
-
-        {/* Mobile */}
-        {!!(account && library) && (
-          <ul className="flex md:hidden justify-between sm:justify-evenly whitespace-no-wrap overflow-x-scroll items-center pt-4 pb-6">
-            <li>
-              <NavigationLink href="/stake">Stake</NavigationLink>
-            </li>
-            <li>
-              <NavigationLink href="/borrow">Borrow</NavigationLink>
-            </li>
-            <li>
-              <NavigationLink href="/vouch">Vouch</NavigationLink>
-            </li>
-            <li>
-              <NavigationLink href="/governance">Vote</NavigationLink>
-            </li>
-          </ul>
-        )}
-      </div>
-
+    <>
+      <Nav>
+        <NavItem
+          label="Get Started"
+          icon="credit"
+          active
+          description="Get vouched for to become a member and stake your DAI to collect UNION "
+        />
+        <NavItem label="Credit" icon="credit" />
+        <NavItem label="Contacts" icon="contacts" />
+        <NavItem label="Vote" icon="vote" />
+      </Nav>
       <WalletModal />
       <GetInvitedModal />
       <LearnMoreModal />
 
       {!!(account && library) && <ApplicationModal />}
-    </nav>
+    </>
   );
 };
 
