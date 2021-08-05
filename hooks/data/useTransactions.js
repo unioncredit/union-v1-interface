@@ -1,10 +1,7 @@
-import { isAddress } from "@ethersproject/address";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import dayjs from "dayjs";
 import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
-import useReadProvider from "hooks/useReadProvider";
 import { request, gql } from "graphql-request";
 import { GRAPHQL_URL } from "constants/variables";
 
@@ -15,6 +12,7 @@ const getTransactions = () => async (_, account, chainId, count) => {
       id,
       account,
       amount,
+      timestamp,
       fee
     }
   }
@@ -28,7 +26,8 @@ const getTransactions = () => async (_, account, chainId, count) => {
     repays(where : {account:"${account}"}) {
       id,
       account,
-      amount
+      amount,
+      timestamp
     }
   }
   `;
