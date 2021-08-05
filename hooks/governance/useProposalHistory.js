@@ -31,7 +31,7 @@ const getProposalHistory = (chainId) => async (_, id) => {
       return formattedEvent;
     })
   );
-  return pastEvents.flat();
+  return pastEvents.flat().sort((a, b) => a.timestamp - b.timestamp);
 };
 
 export default function useProposalHistory(id) {
