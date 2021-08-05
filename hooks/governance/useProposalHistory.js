@@ -2,11 +2,10 @@ import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useGovernanceContract from "../contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
-import { getLogs } from "lib/logs";
 import { request, gql } from "graphql-request";
 import { GRAPHQL_URL } from "constants/variables";
 
-const getProposalHistory = (contract, provider, chainId) => async (_, id) => {
+const getProposalHistory = (chainId) => async (_, id) => {
   const query = gql`
     {
       proposalUpdates(where : {pid:${id}}) {
@@ -32,7 +31,6 @@ const getProposalHistory = (contract, provider, chainId) => async (_, id) => {
       return formattedEvent;
     })
   );
-  console.log(pastEvents);
   return pastEvents.flat();
 };
 
@@ -46,6 +44,6 @@ export default function useProposalHistory(id) {
 
   return useSWR(
     shouldFetch ? ["ProposalHistory", id] : null,
-    getProposalHistory(govContract, readProvider, chainId)
+    getProposalHistory(chainId)
   );
 }
