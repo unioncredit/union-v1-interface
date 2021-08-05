@@ -10,4 +10,7 @@ export * from "./PageHead";
 export * from "./TabLink";
 export * from "./AddressLabel";
 export * from "./Identicon";
-
+export * from "./ContactsSummary";
+export * from "./TransactionHistory";
+export * from "./Avatar";
+export * from "./OutstandingLoans";

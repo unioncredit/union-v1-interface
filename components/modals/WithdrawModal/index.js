@@ -17,15 +17,8 @@ const WithdrawModal = ({ withdrawableStake, totalStake, onComplete }) => {
   const open = useWithdrawModalOpen();
   const toggle = useWithdrawModalToggle();
 
-  const {
-    handleSubmit,
-    register,
-    watch,
-    setValue,
-    formState,
-    errors,
-    reset,
-  } = useForm();
+  const { handleSubmit, register, watch, setValue, formState, errors, reset } =
+    useForm();
 
   useEffect(() => reset(), [open]);
 

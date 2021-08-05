@@ -22,6 +22,7 @@ import useVouchData from "hooks/data/useVouchData";
 import { config } from "./config";
 
 export default function MembershipView() {
+  const { data: isMember = null } = useIsMember();
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: vouchData = [] } = useVouchData();
 
@@ -81,7 +82,7 @@ export default function MembershipView() {
                   <Text mb="21px" size="large">
                     Get access to your $184 credit line
                   </Text>
-                  <Button label="Pay 1 UNION" />
+                  <Button label="Pay 1 UNION" disabled={!isMember} />
                   <Label as="p" mt="21px">
                     Get UNION by{" "}
                     <Link href="/get-started/stake">staking DAI</Link>
