@@ -1,6 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
 import WalletOption from "./WalletOption";
-import ChangeNetwork from "./ChangeNetwork";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
@@ -8,7 +7,7 @@ import { login } from "lib/auth";
 import { CONNECTORS, walletconnect } from "lib/connectors";
 import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import Modal from "../../modal";
 import {
   useUpdateWalletModalView,
@@ -28,11 +27,6 @@ const WalletOptions = ({
   const router = useRouter();
 
   const toggle = useWalletModalToggle();
-
-  const [metamaskChainId, setMetamaskChainId] = useState(0);
-  useEffect(() => {
-    setMetamaskChainId(parseInt(window?.ethereum?.chainId || 0));
-  }, [window?.ethereum?.chainId]);
 
   return (
     <Fragment>
@@ -64,18 +58,6 @@ const WalletOptions = ({
 
         if (name === "Injected" && !(window?.ethereum || window?.web3))
           return null;
-
-        const isMetaMaskValid = metamaskChainId == 137;
-
-        if (name === "Injected" && !isMetaMaskValid) {
-          return (
-            <ChangeNetwork
-              disabled={disabled}
-              activating={activating}
-              key="ChangeNetwork"
-            />
-          );
-        }
 
         return (
           <WalletOption
