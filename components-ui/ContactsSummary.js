@@ -30,7 +30,7 @@ function ContactsSummaryRow({ address, vouched, utilized }) {
         <Label as="p" size="small" mb="6px">
           {utilized}% Utilized
         </Label>
-        <Bar size="small" percentage={utilized} />
+        <Bar percentage={utilized} />
       </TableCell>
     </TableRow>
   );
@@ -59,8 +59,8 @@ export function ContactsSummary({ data }) {
   return (
     <Table>
       {isLoading
-        ? createArray(3).map(() => <ContactsSummaryRowSkeleton />)
-        : data.map((item) => <ContactsSummaryRow {...item} />)}
+        ? createArray(3).map((_, i) => <ContactsSummaryRowSkeleton key={i} />)
+        : data.map((item, i) => <ContactsSummaryRow {...item} key={i} />)}
       <TableRow>
         <TableCell align="right" span={1}>
           <Button

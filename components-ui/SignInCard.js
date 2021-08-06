@@ -35,6 +35,7 @@ const WalletOptions = ({
         );
 
         const handleSignIn = async () => {
+          debugger;
           setActivatingConnector(currentConnector);
 
           await activate(CONNECTORS[name]);

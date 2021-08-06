@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { Nav, NavItem } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
 
@@ -39,12 +40,10 @@ export const Navigation = () => {
 
   const filteredNavItems = useMemo(() => {
     if (isMember) {
-      return navItems
-        .slice(1)
-        .map((item) => ({
-          ...item,
-          active: item.pathname === router.pathname,
-        }));
+      return navItems.slice(1).map((item) => ({
+        ...item,
+        active: router.pathname.startsWith(item.pathname),
+      }));
     }
     return navItems.map((item) => ({
       ...item,
@@ -55,7 +54,9 @@ export const Navigation = () => {
   return (
     <Nav>
       {filteredNavItems.map((item) => (
-        <NavItem {...item} />
+        <Link key={item.id} href={item.pathname} passHref>
+          <NavItem {...item} />
+        </Link>
       ))}
     </Nav>
   );
