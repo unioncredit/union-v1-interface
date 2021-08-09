@@ -12,8 +12,6 @@ import {
   Label,
   Badge,
   Table,
-  TableRow,
-  TableCell,
 } from "union-ui";
 import {
   Wrapper,

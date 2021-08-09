@@ -62,7 +62,7 @@ export function Wrapper({ children, tabItems, title }) {
           )}
         </Layout.Header>
         {tabItems && (
-          <Box mb="40px">
+          <Box mb="24px">
             <Tabs initialActive={initialTab} items={tabItemLinks} />
           </Box>
         )}

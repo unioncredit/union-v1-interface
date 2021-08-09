@@ -30,7 +30,7 @@ const navItems = [
     id: "vote",
     icon: "vote",
     label: "Vote",
-    pathname: "/vote",
+    pathname: "/governance",
   },
 ];
 

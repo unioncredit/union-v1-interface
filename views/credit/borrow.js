@@ -1,9 +1,9 @@
-import format from "util/formatValue";
-import { TransactionHistory, Wrapper, ContactsSummary } from "components-ui";
-import { roundDown, roundUp } from "util/numbers";
-import useBorrowData from "hooks/data/useBorrowData";
-import useCreditLimit from "hooks/data/useCreditLimit";
-import useVouchData from "hooks/data/useVouchData";
+import {
+  TransactionHistory,
+  Wrapper,
+  ContactsSummaryRow,
+  ContactsSummaryRowSkeleton,
+} from "components-ui";
 import {
   Text,
   Stats,
@@ -18,7 +18,16 @@ import {
   Col,
   Box,
   Heading,
+  Table,
+  TableRow,
+  TableCell,
 } from "union-ui";
+import format from "util/formatValue";
+import { roundDown, roundUp } from "util/numbers";
+import useBorrowData from "hooks/data/useBorrowData";
+import useCreditLimit from "hooks/data/useCreditLimit";
+import useVouchData from "hooks/data/useVouchData";
+import createArray from "util/createArray";
 
 import { config } from "./config";
 
@@ -41,6 +50,7 @@ export default function BorrowView() {
   const pctUsed = getPctUsed(borrowedRounded, roundDown(creditLimit));
   // TODO: what should this actually be?
   const unavailable = creditLimit - creditLimit;
+  const isVouchLoading = !vouchData;
 
   return (
     <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -104,7 +114,26 @@ export default function BorrowView() {
           <Col md={4}>
             <Heading level={2}>Credit providers</Heading>
             <Text mb="12px">Accounts providing you with credit</Text>
-            <ContactsSummary data={vouchData} />
+            <Table>
+              {isVouchLoading
+                ? createArray(3).map((_, i) => (
+                    <ContactsSummaryRowSkeleton key={i} />
+                  ))
+                : vouchData.map((item, i) => (
+                    <ContactsSummaryRow {...item} key={i} />
+                  ))}
+              <TableRow>
+                <TableCell align="right" span={1}>
+                  <Button
+                    inline
+                    label="All contacts"
+                    variant="pill"
+                    icon="chevron"
+                    iconPosition="end"
+                  />
+                </TableCell>
+              </TableRow>
+            </Table>
           </Col>
           <Col md={8}>
             <Heading level={2}>Transaction History</Heading>

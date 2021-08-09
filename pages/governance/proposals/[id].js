@@ -1,16 +1,15 @@
-import Head from "next/head";
+import { useWeb3React } from "@web3-react/core";
+import LoggedOutView from "views/loggedOut";
+import { PageHead } from "components-ui";
 import ProposalView from "views/governance/proposal";
 
-export default function ProposalPage() {
-  return (
-    <div className="gradient-governance pb-8 md:pb-10">
-      <Head>
-        <title>Proposal | Union</title>
-        <meta property="og:title" content="Proposal | Union" />
-        <meta name="twitter:title" content="Proposal | Union" />
-      </Head>
+export default function ProposalsPage() {
+  const { account, library } = useWeb3React();
 
-      <ProposalView />
-    </div>
+  return (
+    <>
+      <PageHead title="Proposal | Union" />
+      {account && library ? <ProposalView /> : <LoggedOutView />}
+    </>
   );
 }

@@ -14,3 +14,8 @@ export * from "./ContactsSummary";
 export * from "./TransactionHistory";
 export * from "./Avatar";
 export * from "./OutstandingLoans";
+export * from "./UserVotingOverview";
+export * from "./LiveProposals";
+export * from "./ProposalsTable";
+export * from "./VotingCard";
+export * from "./ProposalHistoryCard";
