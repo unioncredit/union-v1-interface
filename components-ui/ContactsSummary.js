@@ -1,24 +1,20 @@
 import usePublicData from "hooks/usePublicData";
 import {
-  Heading,
   Text,
-  Table,
   TableCell,
   TableRow,
   Bar,
-  Button,
   Label,
   Avatar as UIAvatar,
   Skeleton,
 } from "union-ui";
 import { Avatar } from "components-ui";
-import createArray from "util/createArray";
 
-function ContactsSummaryRow({ address, vouched, utilized }) {
+export function ContactsSummaryRow({ address, vouched, utilized, onClick }) {
   const { name } = usePublicData(address);
 
   return (
-    <TableRow>
+    <TableRow onClick={onClick}>
       <TableCell>
         <Avatar address={address} />
       </TableCell>
@@ -36,7 +32,7 @@ function ContactsSummaryRow({ address, vouched, utilized }) {
   );
 }
 
-function ContactsSummaryRowSkeleton() {
+export function ContactsSummaryRowSkeleton() {
   return (
     <TableRow>
       <TableCell>
@@ -50,28 +46,5 @@ function ContactsSummaryRowSkeleton() {
         <Skeleton size="small" variant="secondary" />
       </TableCell>
     </TableRow>
-  );
-}
-
-export function ContactsSummary({ data }) {
-  const isLoading = !data;
-
-  return (
-    <Table>
-      {isLoading
-        ? createArray(3).map((_, i) => <ContactsSummaryRowSkeleton key={i} />)
-        : data.map((item, i) => <ContactsSummaryRow {...item} key={i} />)}
-      <TableRow>
-        <TableCell align="right" span={1}>
-          <Button
-            inline
-            label="All contacts"
-            variant="pill"
-            icon="chevron"
-            iconPosition="end"
-          />
-        </TableCell>
-      </TableRow>
-    </Table>
   );
 }

@@ -11,19 +11,35 @@ import {
   ToggleMenu,
   Label,
   Badge,
+  Table,
+  TableRow,
+  TableCell,
 } from "union-ui";
-import { Wrapper, Avatar } from "components-ui";
+import {
+  Wrapper,
+  Avatar,
+  ContactsSummaryRow,
+  ContactsSummaryRowSkeleton,
+} from "components-ui";
+import useTrustData from "hooks/data/useTrustData";
+import createArray from "util/createArray";
 
 import { config } from "./config";
 
 export default function ContactsView() {
+  const { data: trustData } = useTrustData();
+
+  const isTrustLoading = !trustData;
+
   return (
     <Wrapper title={config.title} tabItems={config.tabItems}>
       <Card size="fluid" noGutter>
         <Grid bordered>
           <Row nogutter>
             <Col md={4}>
-              <ToggleMenu items={config.toggleItems} />
+              <Box>
+                <ToggleMenu items={config.toggleItems} />
+              </Box>
             </Col>
             <Col>
               <Box align="center">
@@ -42,8 +58,31 @@ export default function ContactsView() {
               </Box>
             </Col>
           </Row>
-          <Row nogutter>
-            <Col md={4}>No contacts</Col>
+          <Row noGutter>
+            <Col md={4} noPadding>
+              <Table noBorder noPadding>
+                {isTrustLoading
+                  ? createArray(3).map((_, i) => (
+                      <ContactsSummaryRowSkeleton key={i} />
+                    ))
+                  : trustData.map((item, i) => (
+                      <ContactsSummaryRow
+                        {...item}
+                        key={i}
+                        onClick={() => alert("row-clicked")}
+                      />
+                    ))}
+              </Table>
+
+              <Box mt="auto" mb="24px" ml="auto" mr="auto">
+                <Button
+                  rounded
+                  icon="vouch"
+                  variant="floating"
+                  label="Vouch for someone"
+                />
+              </Box>
+            </Col>
             <Col md={8}>
               <Box mb="20px">
                 <Stat label="Credit Limit" value="$2,500" />
@@ -65,7 +104,14 @@ export default function ContactsView() {
               </Box>
               <Box mb="24px" direction="vertical">
                 <Label size="small">Account History</Label>
-                <Text>No history</Text>
+                <Box mt="8px" direction="vertical">
+                  <Text>Borrowed $250</Text>
+                  <Label size="small">11:14am · 22 November 2020</Label>
+                </Box>
+                <Box mt="8px" direction="vertical">
+                  <Text>Repayed $40</Text>
+                  <Label size="small">11:14am · 22 November 2020</Label>
+                </Box>
               </Box>
             </Col>
           </Row>

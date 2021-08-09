@@ -1,6 +1,6 @@
 import format from "util/formatValue";
 import { TransactionHistory, Wrapper, ContactsSummary } from "components-ui";
-import { roundDown } from "util/numbers";
+import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -90,7 +90,7 @@ export default function BorrowView() {
                 />
               </Text>
             }
-            value={interest}
+            value={roundUp(interest)}
             caption={paymentDueDate}
           />
         </Box>

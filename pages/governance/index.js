@@ -1,25 +1,15 @@
-import GovernanceNavigation from "components/governance/GovernanceNavigation";
-import Head from "next/head";
-import GovernanceView from "views/governance/governance";
+import { useWeb3React } from "@web3-react/core";
+import LoggedOutView from "views/loggedOut";
+import GovernanceView from "views/governance";
+import { PageHead } from "components-ui";
 
 export default function GovernancePage() {
+  const { account, library } = useWeb3React();
+
   return (
     <div className="gradient-governance pb-8 md:pb-10">
-      <Head>
-        <title>Governance | Union</title>
-        <meta property="og:title" content="Governance | Union" />
-        <meta name="twitter:title" content="Governance | Union" />
-      </Head>
-
-      <div className="container">
-        <h1 hidden>Governance</h1>
-
-        <nav className="pt-6">
-          <GovernanceNavigation />
-        </nav>
-      </div>
-
-      <GovernanceView />
+      <PageHead title="Governance | Union" />
+      {account && library ? <GovernanceView /> : <LoggedOutView />}
     </div>
   );
 }

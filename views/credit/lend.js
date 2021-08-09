@@ -10,18 +10,29 @@ import {
   Box,
   Heading,
   Text,
+  Table,
+  TableRow,
+  TableCell,
 } from "union-ui";
 import format from "util/formatValue";
 import { roundDown } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
-import { OutstandingLoans, Wrapper, ContactsSummary } from "components-ui";
+import {
+  OutstandingLoans,
+  Wrapper,
+  ContactsSummaryRow,
+  ContactsSummaryRowSkeleton,
+} from "components-ui";
 import useTrustData from "hooks/data/useTrustData";
+import createArray from "util/createArray";
 
 import { config } from "./config";
 
 export default function LendView() {
   const { data: stakeData } = useStakeData();
   const { data: trustData } = useTrustData();
+
+  const isTrustLoading = !trustData;
 
   const {
     totalStake = 0.0,
@@ -77,7 +88,26 @@ export default function LendView() {
           <Col md={4}>
             <Heading level={2}>Contacts you trust</Heading>
             <Text mb="12px">Accounts you’re providing credit to</Text>
-            <ContactsSummary data={trustData} />
+            <Table>
+              {isTrustLoading
+                ? createArray(3).map((_, i) => (
+                    <ContactsSummaryRowSkeleton key={i} />
+                  ))
+                : trustData.map((item, i) => (
+                    <ContactsSummaryRow {...item} key={i} />
+                  ))}
+              <TableRow>
+                <TableCell align="right" span={1}>
+                  <Button
+                    inline
+                    label="All contacts"
+                    variant="pill"
+                    icon="chevron"
+                    iconPosition="end"
+                  />
+                </TableCell>
+              </TableRow>
+            </Table>
           </Col>
           <Col md={8}>
             <Heading level={2}>Outstanding Loans</Heading>
