@@ -44,10 +44,12 @@ export function Wrapper({ children, tabItems, title }) {
         </Layout.Sidebar>
       )}
       <Layout.Main {...mainProps}>
-        <Layout.Header {...headerProps}>
+        <Layout.Header {...headerProps} align="center">
           {isLoggedIn ? (
             <>
-              <Heading>{title}</Heading>
+              <Heading size="large" m={0}>
+                {title}
+              </Heading>
               <Box>
                 <Button
                   variant="secondary"

@@ -9,7 +9,13 @@ import {
   Divider,
   Label,
 } from "union-ui";
-import { VotingCard, Wrapper, AddressLabel, ProposalHistoryCard } from "components-ui";
+import {
+  VotingCard,
+  Wrapper,
+  AddressLabel,
+  ProposalHistoryCard,
+} from "components-ui";
+import Link from "next/link";
 
 import { config } from "./config";
 
@@ -17,7 +23,9 @@ export default function ProposalView() {
   return (
     <Wrapper title={config.title}>
       <Box mb="40px">
-        <Button variant="secondary" label="Back to proposals" />
+        <Link href="/governance/proposals">
+          <Button variant="secondary" label="Back to proposals" />
+        </Link>
       </Box>
       <Grid>
         <Row>
@@ -66,7 +74,7 @@ export default function ProposalView() {
           </Col>
           <Col md={4}>
             <VotingCard />
-            <ProposalHistoryCard/>
+            <ProposalHistoryCard />
           </Col>
         </Row>
       </Grid>

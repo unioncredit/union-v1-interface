@@ -11,7 +11,7 @@ import {
 
 export function VotingCard() {
   return (
-    <Card>
+    <Card mb="16px">
       <Card.Header title="Voting" />
       <Card.Body>
         <Box justify="space-between">

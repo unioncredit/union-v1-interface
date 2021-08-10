@@ -1,7 +1,7 @@
 @import "union-ui/lib";
 
 body {
-  background-color: white;
+  background-color: #fbfbfb;
 }
 
 a {
@@ -31,3 +31,4 @@ a {
   top: 50%;
   transform: translateY(-50%);
 }
+

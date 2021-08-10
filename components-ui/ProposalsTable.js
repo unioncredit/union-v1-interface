@@ -8,6 +8,7 @@ import {
   Button,
   Bar,
 } from "union-ui";
+import Link from "next/link";
 
 function ProposalsTableRow() {
   return (
@@ -29,13 +30,15 @@ function ProposalsTableRow() {
         <Bar percentage={76} secondaryBar />
       </TableCell>
       <TableCell span={1}>
-        <Button
-          variant="pill"
-          label="Cast vote"
-          icon="chevron"
-          iconPosition="end"
-          ml="auto"
-        />
+        <Link href="/governance/proposals/1">
+          <Button
+            variant="pill"
+            label="Cast vote"
+            icon="chevron"
+            iconPosition="end"
+            ml="auto"
+          />
+        </Link>
       </TableCell>
     </TableRow>
   );
