@@ -3,11 +3,20 @@ import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import { TabLink, Footer, Navigation } from "components-ui";
+import {
+  WalletModal,
+  useWalletModal,
+  AccountModal,
+  useAccountModal,
+} from "components-ui/modals";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import { Tabs, Layout, Heading, Box, Button, Wallet, Logo } from "union-ui";
 
 export function Wrapper({ children, tabItems, title }) {
+  const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
+  const { isOpen: isAccountModalOpen, open: openAccountModal } =
+    useAccountModal();
   const { library, account } = useWeb3React();
   const router = useRouter();
 
@@ -37,40 +46,45 @@ export function Wrapper({ children, tabItems, title }) {
   );
 
   return (
-    <Layout>
-      {isLoggedIn && (
-        <Layout.Sidebar>
-          <Navigation />
-        </Layout.Sidebar>
-      )}
-      <Layout.Main {...mainProps}>
-        <Layout.Header {...headerProps} align="center">
-          {isLoggedIn ? (
-            <>
-              <Heading size="large" m={0}>
-                {title}
-              </Heading>
-              <Box>
-                <Button
-                  variant="secondary"
-                  icon="vouch"
-                  label={`${format(unionBalance, 2)} ${unionSymbol}`}
-                />
-                <Wallet />
-              </Box>
-            </>
-          ) : (
-            <Logo width="26px" />
-          )}
-        </Layout.Header>
-        {tabItems && (
-          <Box mb="24px">
-            <Tabs initialActive={initialTab} items={tabItemLinks} />
-          </Box>
+    <>
+      <Layout>
+        {isLoggedIn && (
+          <Layout.Sidebar>
+            <Navigation />
+          </Layout.Sidebar>
         )}
-        {children}
-        <Footer />
-      </Layout.Main>
-    </Layout>
+        <Layout.Main {...mainProps}>
+          <Layout.Header {...headerProps} align="center">
+            {isLoggedIn ? (
+              <>
+                <Heading size="large" m={0}>
+                  {title}
+                </Heading>
+                <Box>
+                  <Button
+                    variant="secondary"
+                    icon="vouch"
+                    label={`${format(unionBalance, 2)} ${unionSymbol}`}
+                    onClick={openWalletModal}
+                  />
+                  <Wallet onClick={openAccountModal} />
+                </Box>
+              </>
+            ) : (
+              <Logo width="26px" />
+            )}
+          </Layout.Header>
+          {tabItems && (
+            <Box mb="24px">
+              <Tabs initialActive={initialTab} items={tabItemLinks} />
+            </Box>
+          )}
+          {children}
+          <Footer />
+        </Layout.Main>
+      </Layout>
+      {isWalletModalOpen && <WalletModal />}
+      {isAccountModalOpen && <AccountModal />}
+    </>
   );
 }

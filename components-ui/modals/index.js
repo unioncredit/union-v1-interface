@@ -4,3 +4,6 @@ export * from "./CreditRequestModal";
 export * from "./StakeModal";
 export * from "./VouchModal";
 export * from "./ManageContactModal";
+export * from "./VoteDelegationModal";
+export * from "./WalletModal";
+export * from "./AccountModal";
