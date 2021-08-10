@@ -1,4 +1,4 @@
-import { ModalOverlay, Modal } from "union-ui";
+import { ModalOverlay, Modal, Label, Button, ButtonRow, Text } from "union-ui";
 import { useModal } from "hooks/useModal";
 
 export const CREDIT_REQUEST_MODAL = "credit-request-modal";
@@ -10,7 +10,13 @@ export function CreditRequestModal() {
 	return (
 		<ModalOverlay>
 			<Modal title="Credit Request" onClose={close}>
-				Content
+				<Text size="large" align="center" mb="12px">Share your credit request link</Text>
+				<Label>https://union.finance/..=0x3535fae254978224</Label>
+				<ButtonRow justify="center" mt="12px" fullWidth>
+					<Button rounded variant="secondary" label="Copy link" icon="link" />
+					<Button rounded label="Twitter" icon="twitter" />
+					<Button rounded label="Telegram" icon="telegram" />
+				</ButtonRow>
 			</Modal>
 		</ModalOverlay>
 	)

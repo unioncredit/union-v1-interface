@@ -19,7 +19,7 @@ const toggleMenuOptions = [
   { id: StakeType.WITHDRAW, label: "Withdraw" },
 ];
 
-export const StakeCard = () => {
+export const StakeCardContent = () => {
   const [stakeType, setStakeType] = useState("deposit");
 
   const UNION = useCurrentToken("UNION");
@@ -43,26 +43,34 @@ export const StakeCard = () => {
   };
 
   return (
+    <>
+      <Box align="center" justify="space-between">
+        <div>
+          <Label as="p" size="small">
+            Currently Staked
+          </Label>
+          <Heading size="large">{format(totalStake)} DAI</Heading>
+          <Label as="p" size="small">
+            Earning at {rewardsMultiplier}x
+          </Label>
+        </div>
+        <ToggleMenu onChange={onToggleChange} items={toggleMenuOptions} />
+      </Box>
+      {stakeType === StakeType.DEPOSIT ? (
+        <DepositInput {...{ totalStake, onComplete }} />
+      ) : (
+        <WithdrawInput {...{ withdrawableStake, totalStake, onComplete }} />
+      )}
+    </>
+  );
+}
+
+export const StakeCard = () => {
+  return (
     <Card>
       <Card.Header title="Stake" />
       <Card.Body>
-        <Box align="center" justify="space-between">
-          <div>
-            <Label as="p" size="small">
-              Currently Staked
-            </Label>
-            <Heading size="large">{format(totalStake)} DAI</Heading>
-            <Label as="p" size="small">
-              Earning at {rewardsMultiplier}x
-            </Label>
-          </div>
-          <ToggleMenu onChange={onToggleChange} items={toggleMenuOptions} />
-        </Box>
-        {stakeType === StakeType.DEPOSIT ? (
-          <DepositInput {...{ totalStake, onComplete }} />
-        ) : (
-          <WithdrawInput {...{ withdrawableStake, totalStake, onComplete }} />
-        )}
+        <StakeCardContent />
       </Card.Body>
     </Card>
   );
