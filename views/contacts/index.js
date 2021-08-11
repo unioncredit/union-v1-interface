@@ -16,6 +16,7 @@ import {
 import {
   Wrapper,
   Avatar,
+  ContactDetails,
   ContactsSummaryRow,
   ContactsSummaryRowSkeleton,
 } from "components-ui";
@@ -25,18 +26,31 @@ import {
   useManageContactModal,
   ManageContactModal,
 } from "components-ui/modals";
+import { useState } from "react";
 import useTrustData from "hooks/data/useTrustData";
+import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
 
-import { config } from "./config";
+import { config, ContactsType } from "./config";
 
 export default function ContactsView() {
+  const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
+  const [selectedContact, setSelectedContact] = useState(null);
   const { isOpen: isVouchModalOpen, open: openVouchModal } = useVouchModal();
   const { isOpen: isManageContactModalOpen, open: openManageContactModal } =
     useManageContactModal();
-  const { data: trustData } = useTrustData();
 
-  const isTrustLoading = !trustData;
+  const { data: trustData } = useTrustData();
+  const { data: vouchData } = useVouchData();
+
+  const handleToggleContactType = (item) => {
+    setSelectedContact(null);
+    setContactsType(item.id);
+  };
+
+  const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
+
+  const isLoading = !data;
 
   return (
     <>
@@ -46,15 +60,20 @@ export default function ContactsView() {
             <Row nogutter>
               <Col md={4}>
                 <Box>
-                  <ToggleMenu items={config.toggleItems} />
+                  <ToggleMenu
+                    items={config.toggleItems}
+                    onChange={handleToggleContactType}
+                  />
                 </Box>
               </Col>
               <Col>
                 <Box align="center">
-                  <Avatar size={54} address="0x000000000000000000" />
+                  {selectedContact && (
+                    <Avatar size={54} address={selectedContact.address} />
+                  )}
                   <Box direction="vertical" mx="16px">
-                    <Heading level={2}>Beth C</Heading>
-                    <Text mb={0}>al.eth • 0x000000000000000000</Text>
+                    <Heading level={2}>{selectedContact?.name}</Heading>
+                    <Text mb={0}>{selectedContact?.address}</Text>
                   </Box>
                   <Button
                     ml="auto"
@@ -69,16 +88,16 @@ export default function ContactsView() {
             </Row>
             <Row noGutter>
               <Col md={4} noPadding>
-                <Table noBorder noPadding>
-                  {isTrustLoading
+                <Table noBorder noPadding mb="20px">
+                  {isLoading
                     ? createArray(3).map((_, i) => (
                         <ContactsSummaryRowSkeleton key={i} />
                       ))
-                    : trustData.map((item, i) => (
+                    : data.map((item, i) => (
                         <ContactsSummaryRow
                           {...item}
                           key={i}
-                          onClick={() => alert("row-clicked")}
+                          onClick={setSelectedContact}
                         />
                       ))}
                 </Table>
@@ -94,35 +113,9 @@ export default function ContactsView() {
                 </Box>
               </Col>
               <Col md={8}>
-                <Box mb="20px">
-                  <Stat label="Credit Limit" value="$2,500" />
-                  <Stat label="Utilized" value="$500" />
-                  <Stat label="Available Credit" value="$2,500" />
-                </Box>
-                <Box mb="24px">
-                  <Stat label="Balance owed" value="$250.92" />
-                  <Stat label="Due today" value="$28.13" />
-                  <Stat label="Payment due" value="~12 days" />
-                </Box>
-                <Box mb="24px" direction="vertical">
-                  <Label size="small">Trusted since</Label>
-                  <Heading level={3}>8th November 2020</Heading>
-                </Box>
-                <Box mb="24px" direction="vertical">
-                  <Label size="small">Loan staus</Label>
-                  <Badge label="Healthy" color="blue" />
-                </Box>
-                <Box mb="24px" direction="vertical">
-                  <Label size="small">Account History</Label>
-                  <Box mt="8px" direction="vertical">
-                    <Text>Borrowed $250</Text>
-                    <Label size="small">11:14am · 22 November 2020</Label>
-                  </Box>
-                  <Box mt="8px" direction="vertical">
-                    <Text>Repayed $40</Text>
-                    <Label size="small">11:14am · 22 November 2020</Label>
-                  </Box>
-                </Box>
+                {selectedContact && (
+                  <ContactDetails variant={contactsType} {...selectedContact} />
+                )}
               </Col>
             </Row>
           </Grid>

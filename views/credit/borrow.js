@@ -59,6 +59,9 @@ export default function BorrowView() {
     borrowedRounded = 0,
     interest = 0,
     paymentDueDate = "-",
+    paymentPeriod = "-",
+    fee = 0,
+    isOverdue = false,
   } = !!borrowData && borrowData;
 
   const pctUsed = getPctUsed(borrowedRounded, roundDown(creditLimit));
@@ -170,8 +173,27 @@ export default function BorrowView() {
           </Row>
         </Grid>
       </Wrapper>
-      {isBorrowModalOpen && <BorrowModal />}
-      {isPaymentModalOpen && <PaymentModal />}
+      {isBorrowModalOpen && (
+        <BorrowModal
+          {...{
+            fee,
+            isOverdue,
+            creditLimit,
+            paymentDueDate,
+            paymentPeriod,
+            balanceOwed: borrowedRounded,
+          }}
+        />
+      )}
+      {isPaymentModalOpen && (
+        <PaymentModal
+          {...{
+            paymentDueDate,
+            balanceOwed: borrowedRounded,
+            interest,
+          }}
+        />
+      )}
       {isCreditRequestOpen && <CreditRequestModal />}
     </>
   );

@@ -10,11 +10,16 @@ import {
 } from "union-ui";
 import { Avatar } from "components-ui";
 
-export function ContactsSummaryRow({ address, vouched, utilized, onClick }) {
-  const { name } = usePublicData(address);
+export function ContactsSummaryRow(props) {
+  const { address, vouched, utilized, onClick } = props;
+  const { name, ...publicData } = usePublicData(address);
+
+  const handleClick = () => {
+    onClick && onClick({ ...props, name, ...publicData });
+  };
 
   return (
-    <TableRow onClick={onClick}>
+    <TableRow onClick={handleClick}>
       <TableCell>
         <Avatar address={address} />
       </TableCell>
