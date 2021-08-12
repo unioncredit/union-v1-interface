@@ -4,8 +4,8 @@ import { injected } from "lib/connectors";
 
 const MetamaskSwitcher = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line
   const [metamaskChainId, setMetamaskChainId] = useState(
+    // eslint-disable-next-line
     parseInt(ethereum.chainId)
   );
 
@@ -31,7 +31,16 @@ const MetamaskSwitcher = () => {
           await window.ethereum.request({
             method: "wallet_addEthereumChain",
             params: [
-              { chainId: "0x89", rpcUrl: "https://rpc-mainnet.matic.network" },
+              {
+                chainId: "0x89",
+                rpcUrls: ["https://rpc-mainnet.matic.network"],
+                chainName: "Matic(Polygon) Mainnet",
+                nativeCurrency: {
+                  name: "Matic",
+                  symbol: "MATIC",
+                  decimals: 18,
+                },
+              },
             ],
           });
         } catch (e) {
