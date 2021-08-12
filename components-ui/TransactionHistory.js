@@ -1,5 +1,4 @@
 import {
-  Heading,
   Text,
   Table,
   TableCell,
@@ -8,19 +7,38 @@ import {
   Avatar,
   Skeleton,
 } from "union-ui";
+import useAsyncTransactions from "hooks/data/useAsyncTransactions";
+import createArray from "util/createArray";
 
-function TransactionHistoryRow() {
+function TransactionHistoryRow({ address, amount, type, date }) {
+  return (
+    <TableRow>
+      <TableCell>
+        <Avatar address={address} />
+      </TableCell>
+      <TableCell span={4}>
+        <Text>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
+        <Label>{date}</Label>
+      </TableCell>
+      <TableCell span={1} align="right">
+        <Text>${amount}</Text>
+      </TableCell>
+    </TableRow>
+  );
+}
+
+function TransactionHistorySkeletonRow() {
   return (
     <TableRow>
       <TableCell>
         <Avatar />
       </TableCell>
       <TableCell span={4}>
-        <Text>Repayment</Text>
-        <Label>10:30am - 29 October</Label>
+        <Skeleton size="medium" variant="primary" />
+        <Skeleton size="small" variant="secondary" />
       </TableCell>
       <TableCell span={1} align="right">
-        <Text>$1,200</Text>
+        <Skeleton size="small" variant="secondary" />
       </TableCell>
     </TableRow>
   );
@@ -37,9 +55,32 @@ function TransactionHistoryEmpty() {
 }
 
 export function TransactionHistory() {
+  const { data, toBlock, fromBlock } = useAsyncTransactions();
+
+  const isLoading = toBlock < fromBlock;
+  const isEmpty = !isLoading && data.length <= 0;
+  const loadingCount = isLoading && 5 - data?.length;
+
   return (
     <Table>
-      <TransactionHistoryEmpty />
+      {isEmpty && <TransactionHistoryEmpty />}
+
+      {data.map((tx) => (
+        <TransactionHistoryRow {...tx} />
+      ))}
+
+      {loadingCount > 0 &&
+        createArray(loadingCount).map(() => <TransactionHistorySkeletonRow />)}
+
+      {isLoading && (
+        <TableRow>
+          <TableCell span={1}>
+            <Text align="center" mt="8px">
+              Loading blocks #{fromBlock} to #{toBlock}
+            </Text>
+          </TableCell>
+        </TableRow>
+      )}
     </Table>
   );
 }

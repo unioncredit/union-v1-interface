@@ -10,72 +10,67 @@ import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useReadProvider from "hooks/useReadProvider";
 import { getLogs } from "lib/logs";
 
-const getTransactions = (marketRegistryContract) => async (
-  _,
-  account,
-  tokenAddress,
-  provider,
-  chainId,
-  count
-) => {
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const uTokenAddress = res.uToken;
-  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
+const getTransactions =
+  (marketRegistryContract) =>
+  async (_, account, tokenAddress, provider, chainId, count) => {
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const uTokenAddress = res.uToken;
+    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
-  const borrowFilter = uTokenContract.filters.LogBorrow(account);
+    const borrowFilter = uTokenContract.filters.LogBorrow(account);
 
-  const borrowLogs = await getLogs(provider, chainId, borrowFilter);
-  const repayFilter = uTokenContract.filters.LogRepay(account);
+    const borrowLogs = await getLogs(provider, chainId, borrowFilter);
+    const repayFilter = uTokenContract.filters.LogRepay(account);
 
-  const repayLogs = await getLogs(provider, chainId, repayFilter);
+    const repayLogs = await getLogs(provider, chainId, repayFilter);
 
-  const txs = await Promise.all([
-    ...repayLogs.map(async (log) => {
-      const block = await provider.getBlock(log.blockNumber);
+    const txs = await Promise.all([
+      ...repayLogs.map(async (log) => {
+        const block = await provider.getBlock(log.blockNumber);
 
-      const logData = uTokenContract.interface.parseLog(log);
+        const logData = uTokenContract.interface.parseLog(log);
 
-      const [account, amount] = logData.args;
+        const [account, amount] = logData.args;
 
-      return {
-        account,
-        amount: Number(formatUnits(amount, 18)),
-        blockNumber: log.blockNumber,
-        date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
-        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
-        hash: log.transactionHash,
-        type: "REPAY",
-      };
-    }),
-    ...borrowLogs.map(async (log) => {
-      const block = await provider.getBlock(log.blockNumber);
+        return {
+          account,
+          amount: Number(formatUnits(amount, 18)),
+          blockNumber: log.blockNumber,
+          date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
+          dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
+          hash: log.transactionHash,
+          type: "REPAY",
+        };
+      }),
+      ...borrowLogs.map(async (log) => {
+        const block = await provider.getBlock(log.blockNumber);
 
-      const logData = uTokenContract.interface.parseLog(log);
+        const logData = uTokenContract.interface.parseLog(log);
 
-      const [account, amount, fee] = logData.args;
+        const [account, amount, fee] = logData.args;
 
-      return {
-        account,
-        amount: Number(formatUnits(amount, 18)),
-        blockNumber: log.blockNumber,
-        date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
-        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
-        fee: Number(formatUnits(fee, 18)),
-        hash: log.transactionHash,
-        type: "BORROW",
-      };
-    }),
-  ]);
+        return {
+          account,
+          amount: Number(formatUnits(amount, 18)),
+          blockNumber: log.blockNumber,
+          date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
+          dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
+          fee: Number(formatUnits(fee, 18)),
+          hash: log.transactionHash,
+          type: "BORROW",
+        };
+      }),
+    ]);
 
-  /**
-   * Sort transactions by blockNumber and only return the first 5
-   */
-  const sortedTxs = txs
-    .sort((a, b) => b.blockNumber - a.blockNumber)
-    .slice(0, count);
+    /**
+     * Sort transactions by blockNumber and only return the first 5
+     */
+    const sortedTxs = txs
+      .sort((a, b) => b.blockNumber - a.blockNumber)
+      .slice(0, count);
 
-  return sortedTxs;
-};
+    return sortedTxs;
+  };
 
 /**
  * @name useTransactions

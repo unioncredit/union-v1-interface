@@ -4,10 +4,30 @@ import {
   useVoteDelegationModal,
 } from "components-ui/modals";
 import { Card, Box, Button, Divider, Text, Label, Heading } from "union-ui";
+import { commify } from "@ethersproject/units";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import useUnionSymbol from "hooks/useUnionSymbol";
+import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 
-export function UserVotingOverview({ variant }) {
+export function UserVotingOverview({ variant, address }) {
   const { isOpen: isVoteDelegationOpen, open: openVoteDelegationModal } =
     useVoteDelegationModal();
+
+  const { data: votingWalletData } = useVotingWalletData(address);
+  const {
+    balanceOf = 0,
+    currentVotes = 0,
+    delegates,
+  } = !!votingWalletData && votingWalletData;
+
+  const { data: unionSymbol } = useUnionSymbol();
+  const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
+
+  const isDelegatingToSelf = delegates === address;
+
+  const votesDelegated = isDelegatingToSelf
+    ? currentVotes - balanceOf
+    : currentVotes;
 
   return (
     <>
@@ -21,10 +41,12 @@ export function UserVotingOverview({ variant }) {
               </Button>
             )}
           </Box>
-          <Heading m={0}>16,000 votes</Heading>
-          <Label size="small">0 delegated to you</Label>
+          <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
+          <Label size="small">
+            {commify(votesDelegated.toFixed(4))} delegated to you
+          </Label>
           <Text mt="16px">Wallet balance</Text>
-          <Heading m={0}>16,000 UNION</Heading>
+          <Heading m={0}>{commify(balanceOf.toFixed(4))} UNION</Heading>
           <Text mt="16px">Delegating to</Text>
           <Heading m={0}>Self</Heading>
           {variant === "primary" && (
@@ -34,7 +56,9 @@ export function UserVotingOverview({ variant }) {
                 <Text m={0}>Unclaimed Tokens</Text>
                 <Button variant="pill">Claim tokens</Button>
               </Box>
-              <Heading m={0}>813 UNION</Heading>
+              <Heading m={0}>
+                {commify(unclaimedBalance.toFixed(4))} {unionSymbol}
+              </Heading>
               <Label size="small">12.2 tokens per day</Label>
             </>
           )}

@@ -38,63 +38,60 @@ const getPaymentDue = async (account, chainId, contract, library) => {
   return formatDueDate(seconds);
 };
 
-const getCreditLimit = (contract) => async (
-  _,
-  account,
-  tokenAddress,
-  chainId,
-  library
-) => {
-  const res = await contract.tokens(tokenAddress);
-  const uTokenAddress = res.uToken;
+const getCreditLimit =
+  (contract) => async (_, account, tokenAddress, chainId, library) => {
+    const res = await contract.tokens(tokenAddress);
+    const uTokenAddress = res.uToken;
 
-  const uTokenContract = new Contract(
-    uTokenAddress,
-    U_TOKEN_ABI,
-    library.getSigner()
-  );
+    const uTokenContract = new Contract(
+      uTokenAddress,
+      U_TOKEN_ABI,
+      library.getSigner()
+    );
 
-  const apr = await uTokenContract.borrowRatePerBlock();
+    const apr = await uTokenContract.borrowRatePerBlock();
 
-  const borrowed = await uTokenContract.getBorrowed(account);
+    const borrowed = await uTokenContract.getBorrowed(account);
 
-  const fee = await uTokenContract.originationFee();
+    const fee = await uTokenContract.originationFee();
 
-  const interest = await uTokenContract.calculatingInterest(account);
+    const interest = await uTokenContract.calculatingInterest(account);
 
-  const overdueBlocks = await uTokenContract.overdueBlocks();
+    const overdueBlocks = await uTokenContract.overdueBlocks();
 
-  const isOverdue = await uTokenContract.checkIsOverdue(account);
+    const isOverdue = await uTokenContract.checkIsOverdue(account);
 
-  const paymentDueDate = await getPaymentDue(
-    account,
-    chainId,
-    uTokenContract,
-    library
-  );
+    const paymentDueDate = await getPaymentDue(
+      account,
+      chainId,
+      uTokenContract,
+      library
+    );
 
-  const paymentPeriod = formatDueDate(
-    overdueBlocks.mul(BLOCK_SPEED[chainId]).toNumber()
-  );
+    const paymentPeriod = formatDueDate(
+      overdueBlocks.mul(BLOCK_SPEED[chainId]).toNumber()
+    );
 
-  return {
-    apr: Number(formatUnits(apr, 18)) * BLOCKS_PER_YEAR[chainId],
-    borrowedRounded: roundUp(
-      Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
-    ),
-    borrowedRaw:
-      Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18)),
-    fee: Number(formatUnits(fee, 18)),
-    interest: Number(formatUnits(interest, 18)),
-    paymentDueDate,
-    paymentPeriod,
-    isOverdue,
+    return {
+      apr: Number(formatUnits(apr, 18)) * BLOCKS_PER_YEAR[chainId],
+      borrowedRounded: roundUp(
+        Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
+      ),
+      borrowedRaw:
+        Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18)),
+      fee: Number(formatUnits(fee, 18)),
+      interest: Number(formatUnits(interest, 18)),
+      paymentDueDate,
+      paymentPeriod,
+      isOverdue,
+    };
   };
-};
 
-export default function useBorrowData() {
-  const { account, library, chainId } = useWeb3React();
+export default function useBorrowData(address) {
+  const { account: connectedAccount, library, chainId } = useWeb3React();
   const curToken = useCurrentToken();
+
+  const account = address || connectedAccount;
 
   const marketRegistryContract = useMarketRegistryContract();
 

@@ -32,7 +32,7 @@ import {
 } from "components-ui/modals";
 import Link from "next/link";
 import format from "util/formatValue";
-import { roundDown, roundUp } from "util/numbers";
+import { roundDown, roundUp, toPercent } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -90,7 +90,12 @@ export default function BorrowView() {
             <Stat
               label="Balance owed"
               value={`DAI ${borrowedRounded}`}
-              caption={<Bar label={`${pctUsed}%`} percentage={pctUsed} />}
+              caption={
+                <Bar
+                  label={`${toPercent(pctUsed)}`}
+                  percentage={pctUsed * 100}
+                />
+              }
             />
             <Stat
               label="Available Credit"
@@ -119,7 +124,7 @@ export default function BorrowView() {
                   />
                 </Text>
               }
-              value={roundUp(interest)}
+              value={`DAI ${roundUp(interest)}`}
               caption={paymentDueDate}
             />
           </Box>

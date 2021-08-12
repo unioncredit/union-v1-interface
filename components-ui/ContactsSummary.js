@@ -15,11 +15,11 @@ export function ContactsSummaryRow(props) {
   const { name, ...publicData } = usePublicData(address);
 
   const handleClick = () => {
-    onClick && onClick({ ...props, name, ...publicData });
+    onClick({ ...props, name, ...publicData });
   };
 
   return (
-    <TableRow onClick={handleClick}>
+    <TableRow onClick={onClick && handleClick}>
       <TableCell>
         <Avatar address={address} />
       </TableCell>
