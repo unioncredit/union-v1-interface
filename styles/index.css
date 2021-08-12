@@ -354,6 +354,9 @@ input[type="number"] {
 .bg-mumbai {
   background: #3099f2;
 }
+.bg-unsupported {
+  background: #eb5d5f;
+}
 
 @screen md {
   .md\:460px {
@@ -531,9 +534,9 @@ input[type="number"] {
 
 .btn-network {
   display: flex;
-  background: #F6F9FC;
+  background: #f6f9fc;
   padding: 0.75rem 1rem;
-  border: 1px solid #F3F4F7;
+  border: 1px solid #f3f4f7;
   box-sizing: border-box;
   border-radius: 4px;
   font-weight: 500;
@@ -544,8 +547,8 @@ input[type="number"] {
   height: 24px;
   width: 24px;
   margin: auto 0.5rem auto 0;
-  background: #FFFFFF;
-  border: 1px solid #E1E0E6;
+  background: #ffffff;
+  border: 1px solid #e1e0e6;
   box-sizing: border-box;
   border-radius: 12px;
 }
@@ -553,6 +556,14 @@ input[type="number"] {
 .btn-network .icon-wrapper .icon {
   margin: auto;
   height: 16px;
+}
+
+.network-switch-wrapper {
+  color: #f8f8f8;
+  background: #032437;
+}
+.network-switch-button {
+  background: #35505f;
 }
 
 [data-reach-menu-list],
