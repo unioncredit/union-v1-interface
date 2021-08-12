@@ -8,12 +8,10 @@ import { Fragment } from "react";
 import Button from "../button";
 import Logo from "./logo";
 import WalletModal from "../modals/WalletModal";
-import {
-  useToggleCreateModal,
-  useToggleSignInModal,
-} from "../modals/WalletModal/state";
+import { useToggleSignInModal } from "../modals/WalletModal/state";
 import Web3Connection from "../web3Connection";
 import Activity from "../Activity";
+import MetamaskNetworkIndicator from "components/MetamaskNetworkIndicator";
 
 const GetInvitedModal = dynamic(() => import("../modals/GetInvitedModal"));
 
@@ -55,7 +53,6 @@ const Navigation = () => {
   const { account, library } = useWeb3React();
 
   const toggleSignInModal = useToggleSignInModal();
-  const toggleCreateModal = useToggleCreateModal();
 
   useChainIdUpdater();
 
@@ -98,17 +95,19 @@ const Navigation = () => {
             </Fragment>
           ) : (
             <Fragment>
-              <li className="ml-auto mr-4">
-                <button
-                  className="btn border-transparent font-medium px-4"
-                  onClick={toggleSignInModal}
-                >
-                  Sign in
-                </button>
+              <li className="ml-auto mr-4" suppressHydrationWarning={true}>
+                {
+                  // eslint-disable-next-line
+                  typeof ethereum !== "undefined" &&
+                  ethereum &&
+                  ethereum.chainId ? (
+                    <MetamaskNetworkIndicator />
+                  ) : null
+                }
               </li>
               <li>
-                <Button secondary onClick={toggleCreateModal}>
-                  Start now
+                <Button secondary onClick={toggleSignInModal}>
+                  Sign in
                 </Button>
               </li>
             </Fragment>

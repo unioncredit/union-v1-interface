@@ -529,6 +529,32 @@ input[type="number"] {
   }
 }
 
+.btn-network {
+  display: flex;
+  background: #F6F9FC;
+  padding: 0.75rem 1rem;
+  border: 1px solid #F3F4F7;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.btn-network .icon-wrapper {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  margin: auto 0.5rem auto 0;
+  background: #FFFFFF;
+  border: 1px solid #E1E0E6;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.btn-network .icon-wrapper .icon {
+  margin: auto;
+  height: 16px;
+}
+
 [data-reach-menu-list],
 [data-reach-menu-items] {
   @apply block rounded whitespace-no-wrap border bg-white outline-none;
