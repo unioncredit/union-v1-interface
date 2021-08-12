@@ -2,7 +2,6 @@ import { Web3ReactProvider } from "@web3-react/core";
 import ErrorBoundary from "components/errorBoundary";
 import Footer from "components/Footer";
 import Navigation from "components/Navigation";
-import NetworkIndicator from "components/NetworkIndicator";
 import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";
 import type { AppProps } from "next/app";
@@ -23,8 +22,6 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary fallback={<Error />}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <div className="flex flex-col min-h-screen">
-          <NetworkIndicator />
-
           <header>
             <Navigation />
           </header>
