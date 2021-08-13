@@ -7,10 +7,7 @@ import {
   Grid,
   Row,
   Col,
-  Stat,
   ToggleMenu,
-  Label,
-  Badge,
   Table,
 } from "union-ui";
 import {
@@ -25,6 +22,11 @@ import {
   VouchModal,
   useManageContactModal,
   ManageContactModal,
+  EditAliasModal,
+  useEditAliasModal,
+  EditVouchModal,
+  useEditVouchModal,
+  VouchModalManager,
 } from "components-ui/modals";
 import { useState } from "react";
 import useTrustData from "hooks/data/useTrustData";
@@ -36,7 +38,10 @@ import { config, ContactsType } from "./config";
 export default function ContactsView() {
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
-  const { isOpen: isVouchModalOpen, open: openVouchModal } = useVouchModal();
+
+  const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
+  const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
+  const { open: openVouchModal } = useVouchModal();
   const { isOpen: isManageContactModalOpen, open: openManageContactModal } =
     useManageContactModal();
 
@@ -75,14 +80,17 @@ export default function ContactsView() {
                     <Heading level={2}>{selectedContact?.name}</Heading>
                     <Text mb={0}>{selectedContact?.address}</Text>
                   </Box>
-                  <Button
-                    ml="auto"
-                    rounded
-                    variant="secondary"
-                    label="Manage contact"
-                    icon="manage"
-                    onClick={openManageContactModal}
-                  />
+                  {selectedContact &&
+                    contactsType === ContactsType.YOU_TRUST && (
+                      <Button
+                        ml="auto"
+                        rounded
+                        variant="secondary"
+                        label="Manage contact"
+                        icon="manage"
+                        onClick={openManageContactModal}
+                      />
+                    )}
                 </Box>
               </Col>
             </Row>
@@ -121,8 +129,12 @@ export default function ContactsView() {
           </Grid>
         </Card>
       </Wrapper>
-      {isVouchModalOpen && <VouchModal />}
-      {isManageContactModalOpen && <ManageContactModal />}
+
+      {/* modals */}
+      <VouchModalManager />
+      {isManageContactModalOpen && <ManageContactModal {...selectedContact} />}
+      {isEditAliasModalOpen && <EditAliasModal {...selectedContact} />}
+      {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
     </>
   );
 }

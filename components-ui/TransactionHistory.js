@@ -57,7 +57,7 @@ function TransactionHistoryEmpty() {
 export function TransactionHistory() {
   const { data, toBlock, fromBlock } = useAsyncTransactions();
 
-  const isLoading = toBlock < fromBlock;
+  const isLoading = toBlock < fromBlock || fromBlock === "latest";
   const isEmpty = !isLoading && data.length <= 0;
   const loadingCount = isLoading && 5 - data?.length;
 
@@ -71,16 +71,6 @@ export function TransactionHistory() {
 
       {loadingCount > 0 &&
         createArray(loadingCount).map(() => <TransactionHistorySkeletonRow />)}
-
-      {isLoading && (
-        <TableRow>
-          <TableCell span={1}>
-            <Text align="center" mt="8px">
-              Loading blocks #{fromBlock} to #{toBlock}
-            </Text>
-          </TableCell>
-        </TableRow>
-      )}
     </Table>
   );
 }

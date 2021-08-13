@@ -7,27 +7,55 @@ import {
   TableCell,
   Button,
   Bar,
+  Skeleton,
 } from "union-ui";
 import Link from "next/link";
+import { toPercent } from "util/numbers";
 
-function ProposalsTableRow() {
+function ProposalsTableRowSkeleton() {
   return (
     <TableRow>
       <TableCell span={3}>
-        <Text>Formalize the UIP Voting Process</Text>
-        <Label>10:30am - 29 October</Label>
+        <Skeleton size="medium" variant="primary" />
+        <Skeleton size="small" variant="secondary" />
+      </TableCell>
+      <TableCell span={1} align="center">
+        <Skeleton size="small" />
+      </TableCell>
+      <TableCell span={1} align="center">
+        <Skeleton size="medium" variant="secondary" />
+      </TableCell>
+      <TableCell span={1} align="right">
+        <Skeleton size="medium" variant="secondary" />
+      </TableCell>
+      <TableCell>
+        <Skeleton size="small" />
+      </TableCell>
+    </TableRow>
+  );
+}
+
+function ProposalsTableRow({ againstCount, forCount, date, type, title }) {
+  const total = againstCount + forCount;
+  const percentageFor = forCount / total;
+
+  return (
+    <TableRow>
+      <TableCell span={3}>
+        <Text>{title}</Text>
+        <Label>{date}</Label>
       </TableCell>
       <TableCell span={1} align="center">
         <Badge color="blue" label="Live" />
       </TableCell>
       <TableCell span={1} align="center">
-        <Text>on-chain</Text>
+        <Text>{type}</Text>
       </TableCell>
       <TableCell span={1} align="right">
         <Label as="p" size="small">
-          75% yes
+          {toPercent(percentageFor)} yes
         </Label>
-        <Bar percentage={76} secondaryBar />
+        <Bar percentage={percentageFor * 100} secondaryBar />
       </TableCell>
       <TableCell span={1}>
         <Link href="/governance/proposals/1">
@@ -44,10 +72,16 @@ function ProposalsTableRow() {
   );
 }
 
-export function ProposalsTable() {
+export function ProposalsTable({ data }) {
   return (
     <Table>
-      <ProposalsTableRow />
+      {!data && <ProposalsTableRowSkeleton />}
+      {data && data.length <= 0 && (
+        <TableRow>
+          <TableCell>No proposals</TableCell>
+        </TableRow>
+      )}
+      {data && data.map((row) => <ProposalsTableRow {...row} />)}
     </Table>
   );
 }

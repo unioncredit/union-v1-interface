@@ -88,7 +88,15 @@ export default function useAsyncTransactions() {
 
     (async () => {
       const sortTxs = (txs) =>
-        txs.sort((a, b) => b.blockNumber - a.blockNumber);
+        txs
+          .sort((a, b) => b.blockNumber - a.blockNumber)
+          // remove duplicates
+          .reduce((acc, item) => {
+            if (acc.some((x) => x.hash === item.hash)) {
+              return acc;
+            }
+            return [...acc, item];
+          }, []);
 
       const iterator = await getTransactions(marketRegistryContract)(
         account,

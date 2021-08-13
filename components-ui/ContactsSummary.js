@@ -9,6 +9,7 @@ import {
   Skeleton,
 } from "union-ui";
 import { Avatar } from "components-ui";
+import { toPercent } from "util/numbers";
 
 export function ContactsSummaryRow(props) {
   const { address, vouched, utilized, onClick } = props;
@@ -17,6 +18,8 @@ export function ContactsSummaryRow(props) {
   const handleClick = () => {
     onClick({ ...props, name, ...publicData });
   };
+
+  console.log({ props });
 
   return (
     <TableRow onClick={onClick && handleClick}>
@@ -29,9 +32,9 @@ export function ContactsSummaryRow(props) {
       </TableCell>
       <TableCell span={1} align="right">
         <Label as="p" size="small" mb="6px">
-          {utilized}% Utilized
+          {toPercent(utilized)} Utilized
         </Label>
-        <Bar percentage={utilized} />
+        <Bar percentage={utilized * 100} />
       </TableCell>
     </TableRow>
   );

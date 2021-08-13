@@ -21,3 +21,4 @@ export * from "./VotingCard";
 export * from "./ProposalHistoryCard";
 export * from "./UserVotingHistory";
 export * from "./ContactDetails";
+export * from "./Health";

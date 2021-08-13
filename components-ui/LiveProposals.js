@@ -1,27 +1,5 @@
-import { Text, Table, TableCell, TableRow } from "union-ui";
+import { ProposalsTable } from "./ProposalsTable";
 
-function LiveProposalsRow() {
-  return (
-    <TableRow>
-      <TableCell>Not implemented</TableCell>
-    </TableRow>
-  );
-}
-
-function LiveProposalsEmpty() {
-  return (
-    <TableRow>
-      <TableCell>
-        <Text>No proposals</Text>
-      </TableCell>
-    </TableRow>
-  );
-}
-
-export function LiveProposals() {
-  return (
-    <Table>
-      <LiveProposalsEmpty />
-    </Table>
-  );
+export function LiveProposals({ data }) {
+  return <ProposalsTable data={data} />;
 }

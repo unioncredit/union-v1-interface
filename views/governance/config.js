@@ -6,7 +6,7 @@ export const config = {
   ],
   proposals: {
     types: [
-      { id: "live", label: "Live" },
+      { id: "active", label: "Live" },
       { id: "passed", label: "Passed" },
       { id: "failed", label: "Failed" },
       { id: "defeated", label: "Defeated" },

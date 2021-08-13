@@ -7,3 +7,7 @@ export * from "./ManageContactModal";
 export * from "./VoteDelegationModal";
 export * from "./WalletModal";
 export * from "./AccountModal";
+export * from "./EditAliasModal";
+export * from "./NewVouchModal";
+export * from "./EditVouchModal";
+export * from "./VouchModalManager";

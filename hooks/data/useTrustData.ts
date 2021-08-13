@@ -49,7 +49,7 @@ const getTrust =
 
         const trust = Number(formatUnits(res.trustAmount, 18));
 
-        const percentage = vouched < 0 ? used / vouched : 0;
+        const percentage = vouched > 0 ? used / vouched : 0;
 
         const isOverdue: boolean = await uTokenContract.checkIsOverdue(address);
 
@@ -62,7 +62,7 @@ const getTrust =
           percentage,
           trust,
           used,
-          utilized: used,
+          utilized: percentage,
           vouched,
         };
       })

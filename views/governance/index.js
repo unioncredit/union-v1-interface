@@ -17,11 +17,13 @@ import format from "util/formatValue";
 import { toPercent } from "util/numbers";
 
 import { config } from "./config";
+import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 
 export default function GovernanceView() {
   const { account } = useWeb3React();
   const { data } = useStatisticsData();
   const { data: defaultedAmount } = useDefaultedAmount();
+  const liveProposalData = useFilteredProposalData("active", "all");
 
   return (
     <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -58,7 +60,7 @@ export default function GovernanceView() {
           <Col md={8}>
             <Heading level={2}>Live Proposals</Heading>
             <Text mb="12px">Proposals currently collecting votes</Text>
-            <LiveProposals />
+            <LiveProposals data={liveProposalData} />
           </Col>
         </Row>
       </Grid>

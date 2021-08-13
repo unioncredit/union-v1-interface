@@ -16,7 +16,7 @@ import {
 } from "union-ui";
 import Link from "next/link";
 import format from "util/formatValue";
-import { roundDown } from "util/numbers";
+import { roundDown, toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
 import {
   OutstandingLoans,
@@ -50,6 +50,8 @@ export default function LendView() {
     withdrawableStake = 0.0,
   } = !!stakeData && stakeData;
 
+  const percentageStake = utilizedStake / totalStake;
+
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -71,7 +73,12 @@ export default function LendView() {
             <Stat
               label="Utilized"
               value={`$${format(roundDown(utilizedStake))}`}
-              caption={<Bar label={`48%`} percentage={48} />}
+              caption={
+                <Bar
+                  label={toPercent(percentageStake)}
+                  percentage={percentageStake * 100}
+                />
+              }
             />
             <Stat
               label="Withdrawable"
@@ -130,7 +137,7 @@ export default function LendView() {
             <Col md={8}>
               <Heading level={2}>Outstanding Loans</Heading>
               <Text mb="12px">Outstanding debt from contacts you trust</Text>
-              <OutstandingLoans />
+              <OutstandingLoans data={trustData} />
             </Col>
           </Row>
         </Grid>

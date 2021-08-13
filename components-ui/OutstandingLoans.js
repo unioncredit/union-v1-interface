@@ -1,17 +1,36 @@
-import { Text, Table, TableCell, TableRow, Label, Avatar } from "union-ui";
+import {
+  Badge,
+  Button,
+  Text,
+  Table,
+  TableCell,
+  TableRow,
+  Label,
+} from "union-ui";
+import usePublicData from "hooks/usePublicData";
+import { Avatar } from "components-ui";
 
-function OutstandingLoansRow() {
+function OutstandingLoansRow({ address, used }) {
+  const { name } = usePublicData(address);
   return (
     <TableRow>
       <TableCell>
-        <Avatar />
+        <Avatar address={address} />
       </TableCell>
-      <TableCell span={4}>
-        <Text>Repayment</Text>
-        <Label>10:30am - 29 October</Label>
+      <TableCell span={1}>
+        <Text>DAI {used}</Text>
+        <Label>{name}</Label>
       </TableCell>
-      <TableCell span={1} align="right">
-        <Text>$1,200</Text>
+      <TableCell span={1}>
+        <Badge label="Healthy" color="blue" />
+      </TableCell>
+      <TableCell align="right">
+        <Button
+          variant="pill"
+          icon="chevron"
+          iconPosition="end"
+          label="Manage"
+        />
       </TableCell>
     </TableRow>
   );
@@ -27,10 +46,15 @@ function OutstandingLoansEmpty() {
   );
 }
 
-export function OutstandingLoans() {
+export function OutstandingLoans({ data }) {
+  const loans = data ? data.filter((item) => item.used > 0) : [];
+
   return (
     <Table>
-      <OutstandingLoansEmpty />
+      {!loans || (loans.length < 0 && <OutstandingLoansEmpty />)}
+      {loans.map((row) => (
+        <OutstandingLoansRow {...row} />
+      ))}
     </Table>
   );
 }
