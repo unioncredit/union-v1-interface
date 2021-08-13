@@ -1,15 +1,24 @@
+import dayjs from "dayjs";
 import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import U_TOKEN_ABI from "constants/abis/uToken.json";
-import { EVENT_START_BLOCK } from "constants/variables";
-import dayjs from "dayjs";
 import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useReadProvider from "hooks/useReadProvider";
 import { getAsyncLogs } from "lib/asyncLogs";
+import { useLocalStorage } from "react-use";
+
+const sortTxs = (txs) =>
+  txs
+    .sort((a, b) => b.blockNumber - a.blockNumber)
+    .reduce(
+      (acc, item) =>
+        acc.some((x) => x.hash === item.hash) ? acc : [...acc, item],
+      []
+    );
 
 const parseTransactionsLog = (provider, uTokenContract) => async (logs) => {
   const borrowFilter = uTokenContract.filters.LogBorrow();
@@ -44,23 +53,27 @@ const parseTransactionsLog = (provider, uTokenContract) => async (logs) => {
   return txs;
 };
 
-const getTransactions =
-  (marketRegistryContract) =>
-  async (account, tokenAddress, provider, chainId) => {
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const uTokenAddress = res.uToken;
-    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
+const getTransactions = async (
+  marketRegistryContract,
+  account,
+  tokenAddress,
+  provider,
+  chainId
+) => {
+  const res = await marketRegistryContract.tokens(tokenAddress);
+  const uTokenAddress = res.uToken;
+  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
-    const borrowFilter = uTokenContract.filters.LogBorrow(account);
-    const repayFilter = uTokenContract.filters.LogRepay(account);
+  const borrowFilter = uTokenContract.filters.LogBorrow(account);
+  const repayFilter = uTokenContract.filters.LogRepay(account);
 
-    return getAsyncLogs(
-      provider,
-      chainId,
-      [repayFilter, borrowFilter],
-      parseTransactionsLog(provider, uTokenContract)
-    );
-  };
+  return getAsyncLogs(
+    provider,
+    chainId,
+    [repayFilter, borrowFilter],
+    parseTransactionsLog(provider, uTokenContract)
+  );
+};
 
 /**
  * @name useTransactions
@@ -71,7 +84,10 @@ export default function useAsyncTransactions() {
   const { account, chainId } = useWeb3React();
   const readProvider = useReadProvider();
   const [transactions, setTransactions] = useState([]);
-  const [fromBlock, setFromBlock] = useState("latest");
+  const [meta, setMeta] = useState({});
+  const [storedLogs, save] = useLocalStorage("union:logs", {});
+
+  console.log({ storedLogs });
 
   const curToken = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
@@ -84,21 +100,9 @@ export default function useAsyncTransactions() {
     !!chainId;
 
   useEffect(() => {
-    if (!shouldFetch) return;
-
-    (async () => {
-      const sortTxs = (txs) =>
-        txs
-          .sort((a, b) => b.blockNumber - a.blockNumber)
-          // remove duplicates
-          .reduce((acc, item) => {
-            if (acc.some((x) => x.hash === item.hash)) {
-              return acc;
-            }
-            return [...acc, item];
-          }, []);
-
-      const iterator = await getTransactions(marketRegistryContract)(
+    async function load() {
+      const iterator = await getTransactions(
+        marketRegistryContract,
         account,
         curToken,
         readProvider,
@@ -109,14 +113,28 @@ export default function useAsyncTransactions() {
         if (item && item?.data.length > 0) {
           setTransactions((arr) => sortTxs([...arr, ...item.data]));
         }
-        setFromBlock(item.fromBlock);
+        setMeta((x) => ({ ...x, ...item }));
       }
-    })();
+    }
+
+    shouldFetch && load();
   }, [shouldFetch]);
 
+  useEffect(
+    () => () => {
+      save((state) => {
+        const currentData = state[meta.key];
+        return {
+          ...storedLogs,
+          [meta.key]: { ...currentData, ...meta, data: transactions },
+        };
+      });
+    },
+    [meta]
+  );
+
   return {
+    ...meta,
     data: transactions,
-    toBlock: EVENT_START_BLOCK[chainId],
-    fromBlock,
   };
 }

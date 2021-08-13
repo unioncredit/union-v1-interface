@@ -4,16 +4,19 @@ import { ModalOverlay, Modal, Text, Input, Button, Divider } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useNewVouchModal } from "components-ui/modals";
 import validateAddress from "util/validateAddress";
+import { useWeb3React } from "@web3-react/core";
+import errorMessages from "util/errorMessages";
 
 export const VOUCH_MODAL = "vouch-modal";
 
 export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export function VouchModal({ onNext }) {
+  const { account } = useWeb3React();
   const { close } = useVouchModal();
   const { open: openNewVouchModal } = useNewVouchModal();
 
-  const { handleSubmit, watch, register, errors } = useForm({
+  const { handleSubmit, register, errors } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -25,10 +28,9 @@ export function VouchModal({ onNext }) {
   };
 
   const validate = (address) => {
+    if (address === account) return errorMessages.notVouchSelf;
     return validateAddress(address);
   };
-
-  console.log({ errors });
 
   return (
     <ModalOverlay>

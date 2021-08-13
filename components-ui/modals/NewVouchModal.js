@@ -14,6 +14,9 @@ import { useModal } from "hooks/useModal";
 import { AddressLabel } from "components-ui";
 import { useVouchModal } from "components-ui/modals";
 import format from "util/formatValue";
+import useIsMember from "hooks/data/useIsMember";
+import useBorrowData from "hooks/data/useBorrowData";
+import useCreditLimit from "hooks/data/useCreditLimit";
 
 export const NEW_VOUCH_MODAL = "new-vouch-modal";
 
@@ -22,30 +25,36 @@ export const useNewVouchModal = () => useModal(NEW_VOUCH_MODAL);
 export function NewVouchModal({ address }) {
   const { close } = useNewVouchModal();
   const { open: openVouchModal } = useVouchModal();
+  const { data: isMember } = useIsMember(address);
+  const { data: borrowData } = useBorrowData(address);
+  const { data: creditLimit = 0 } = useCreditLimit(address);
 
   const handleBack = () => {
     close();
     openVouchModal();
   };
 
-  const vouched = 0;
-  const used = 0;
+  const { borrowedRounded = 0 } = !!borrowData && borrowData;
 
   return (
     <ModalOverlay>
       <Modal title="New vouch" onClose={close}>
         <Box mb="24px" justify="space-between">
           <AddressLabel address={address} />
-          <Badge label="Trusted contact" color="green" />
+          {isMember ? (
+            <Badge label="Trusted contact" color="green" />
+          ) : (
+            <Badge label="Not yet a member" color="blue" />
+          )}
         </Box>
         <Box>
           <Box direction="vertical">
             <Text>Credit limit</Text>
-            <Heading>DAI {format(vouched)}</Heading>
+            <Heading>DAI {format(creditLimit)}</Heading>
           </Box>
           <Box direction="vertical" ml="32px">
             <Text>Unpaid Debt</Text>
-            <Heading>DAI {format(used)}</Heading>
+            <Heading>DAI {format(borrowedRounded)}</Heading>
           </Box>
         </Box>
         <Divider />

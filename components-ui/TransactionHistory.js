@@ -55,11 +55,12 @@ function TransactionHistoryEmpty() {
 }
 
 export function TransactionHistory() {
-  const { data, toBlock, fromBlock } = useAsyncTransactions();
+  const { data, chunk, chunks } = useAsyncTransactions();
 
-  const isLoading = toBlock < fromBlock || fromBlock === "latest";
+  const isLoading = chunk < chunks;
   const isEmpty = !isLoading && data.length <= 0;
-  const loadingCount = isLoading && 5 - data?.length;
+  const loadingMaxCount = 3 - data?.length;
+  const loadingCount = isLoading && loadingMaxCount <= 0 ? 1 : loadingMaxCount;
 
   return (
     <Table>
@@ -71,6 +72,16 @@ export function TransactionHistory() {
 
       {loadingCount > 0 &&
         createArray(loadingCount).map(() => <TransactionHistorySkeletonRow />)}
+
+      {isLoading && (
+        <TableRow>
+          <TableCell>
+            <Label size="small">
+              Loading chunk {chunk}/{chunks}
+            </Label>
+          </TableCell>
+        </TableRow>
+      )}
     </Table>
   );
 }

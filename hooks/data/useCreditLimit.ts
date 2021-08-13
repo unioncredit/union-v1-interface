@@ -7,30 +7,29 @@ import useCurrentToken from "../useCurrentToken";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
-const getCreditLimit = (marketRegistryContract: Contract) => async (
-  _: any,
-  library: any,
-  account: string,
-  tokenAddress: string
-) => {
-  const signer = library.getSigner();
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const userManagerAddress = res.userManager;
-  const userManagerContract = new Contract(
-    userManagerAddress,
-    USER_MANAGER_ABI,
-    signer
-  );
+const getCreditLimit =
+  (marketRegistryContract: Contract) =>
+  async (_: any, library: any, account: string, tokenAddress: string) => {
+    const signer = library.getSigner();
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const userManagerAddress = res.userManager;
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
+    );
 
-  const limit = await userManagerContract.getCreditLimit(account);
+    const limit = await userManagerContract.getCreditLimit(account);
 
-  return Number(formatUnits(limit, 18));
-};
+    return Number(formatUnits(limit, 18));
+  };
 
-export default function useCreditLimit() {
-  const { account, library } = useWeb3React();
+export default function useCreditLimit(address: string) {
+  const { account: connectedAccount, library } = useWeb3React();
   const curToken = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
+
+  const account = address || connectedAccount;
 
   const shouldFetch =
     !!marketRegistryContract &&
