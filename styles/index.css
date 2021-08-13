@@ -593,3 +593,7 @@ input[type="number"] {
 .markdown-p {
   margin-bottom: 1rem;
 }
+
+.font-capitalize {
+  text-transform: capitalize;
+}

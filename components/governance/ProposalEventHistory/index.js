@@ -17,7 +17,9 @@ const Event = ({ name, date, tx }) => {
       <div className="mt-2 h-2 w-2 rounded-full bg-grey-light" />
       <div className="flex justify-between items-center">
         <div className="mr-4">
-          <div className="text-lg leading-tight font-semibold">{name}</div>
+          <div className="text-lg leading-tight font-semibold font-capitalize">
+            {name}
+          </div>
 
           {/* Spacer */}
           <div className="h-2" />
