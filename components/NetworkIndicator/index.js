@@ -1,5 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { network as networkConnector } from "lib/connectors";
 
 const NETWORKS = {
   1: { name: "Mainnet", color: "bg-mainnet" },
@@ -18,9 +20,28 @@ const NetworkDot = ({ color }) => {
 };
 
 const NetworkIndicator = () => {
-  const { chainId, account } = useWeb3React();
+  const { chainId: web3ReactChainId, connector } = useWeb3React();
 
-  if (chainId === 1 || !chainId || !account) return null;
+  const [chainId, setChainId] = useState(0);
+
+  useEffect(() => {
+    if (typeof ethereum !== "undefined") {
+      // eslint-disable-line no-undef
+      setChainId(parseInt(ethereum.chainId)); // eslint-disable-line no-undef
+      ethereum.on("chainChanged", (metamaskChainId) => {
+        // eslint-disable-line no-undef
+        setChainId(parseInt(metamaskChainId));
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (connector && connector !== networkConnector) {
+      setChainId(parseInt(web3ReactChainId));
+    }
+  }, [web3ReactChainId, connector]);
+
+  if (chainId === 1 || chainId === 137 || !chainId) return null;
 
   return (
     <div className="py-3 flex justify-center font-semibold text-center text-sm bg-black-pure text-white select-none">
