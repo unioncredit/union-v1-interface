@@ -35,7 +35,7 @@ function ProposalsTableRowSkeleton() {
   );
 }
 
-function ProposalsTableRow({ againstCount, forCount, date, type, title }) {
+function ProposalsTableRow({ id, againstCount, forCount, date, type, title }) {
   const total = againstCount + forCount;
   const percentageFor = forCount / total;
 
@@ -58,7 +58,7 @@ function ProposalsTableRow({ againstCount, forCount, date, type, title }) {
         <Bar percentage={percentageFor * 100} secondaryBar />
       </TableCell>
       <TableCell span={1}>
-        <Link href="/governance/proposals/1">
+        <Link href={`/governance/proposals/${id}`}>
           <Button
             variant="pill"
             label="Cast vote"

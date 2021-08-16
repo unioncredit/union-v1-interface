@@ -87,8 +87,6 @@ export default function useAsyncTransactions() {
   const [meta, setMeta] = useState({});
   const [storedLogs, save] = useLocalStorage("union:logs", {});
 
-  console.log({ storedLogs });
-
   const curToken = useCurrentToken();
   const marketRegistryContract = useMarketRegistryContract();
 
