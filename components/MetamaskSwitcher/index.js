@@ -31,34 +31,24 @@ const MetamaskSwitcher = () => {
   const handleChangeNetwork = async () => {
     setIsLoading(true);
     try {
-      // eslint-disable-next-line no-undef
       await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x89" }],
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x89",
+            rpcUrls: ["https://rpc-mainnet.matic.network"],
+            chainName: "Matic(Polygon) Mainnet",
+            nativeCurrency: {
+              name: "Matic",
+              symbol: "MATIC",
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://polygonscan.com"],
+          },
+        ],
       });
-    } catch (error) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (error.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: "0x89",
-                rpcUrls: ["https://rpc-mainnet.matic.network"],
-                chainName: "Matic(Polygon) Mainnet",
-                nativeCurrency: {
-                  name: "Matic",
-                  symbol: "MATIC",
-                  decimals: 18,
-                },
-              },
-            ],
-          });
-        } catch (e) {
-          console.error("Error while changing network", e);
-        }
-      }
+    } catch (e) {
+      console.error("Error while changing network", e);
     }
     timer.current = setTimeout(() => {
       setIsLoading(false);
