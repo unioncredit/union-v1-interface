@@ -2,6 +2,17 @@ import Spinner from "svgs/Spinner";
 import { useState, useEffect, useRef } from "react";
 import { injected } from "lib/connectors";
 
+const NETWORKS = {
+  1: { name: "Ethereum Mainnet" },
+  3: { name: "Ropsten Testnet" },
+  4: { name: "Rinkeby Testnet" },
+  5: { name: "Görli Testnet" },
+  42: { name: "Kovan Testnet" },
+  137: { name: "Polygon Mainnet" },
+  80001: { name: "Mumbai Testnet" },
+  1336: { name: "localhost" },
+};
+
 const MetamaskSwitcher = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [metamaskChainId, setMetamaskChainId] = useState(
@@ -68,7 +79,7 @@ const MetamaskSwitcher = () => {
       <div className="flex mb-3">
         <div className="h-2 w-2 rounded-full bg-unsupported m-auto mr-0"></div>
         <div className="text-sm m-auto ml-3 font-medium">
-          Ethereum Mainnet not supported
+          {NETWORKS[metamaskChainId].name} not supported
         </div>
       </div>
       <button
