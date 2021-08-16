@@ -2,18 +2,12 @@ import { useEffect, useState } from "react";
 
 const NETWORKS = {
   1: { name: "Mainnet", logo: "/images/ethereum-logo.png" },
-  3: { name: "Ropsten", logo: "/images/ethereum-logo.png" },
-  4: { name: "Rinkeby", logo: "/images/ethereum-logo.png" },
-  5: { name: "Görli", logo: "/images/ethereum-logo.png" },
-  42: { name: "Kovan", logo: "/images/ethereum-logo.png" },
   137: { name: "Polygon", logo: "/images/polygon-logo.png" },
-  80001: { name: "Mumbai", logo: "/images/polygon-logo.png" },
-  1336: { name: "localhost", logo: "/images/ethereum-logo.png" },
 };
 
 const MetamaskNetworkIndicator = () => {
-  // eslint-disable-next-line
   const [metamaskChainId, setMetamaskChainId] = useState(
+    // eslint-disable-next-line
     parseInt(ethereum.chainId)
   );
 
@@ -23,6 +17,8 @@ const MetamaskNetworkIndicator = () => {
       setMetamaskChainId(parseInt(chainId));
     });
   });
+
+  if (metamaskChainId !== 1 && metamaskChainId !== 137) return null;
 
   return (
     <div className="btn btn-network">
