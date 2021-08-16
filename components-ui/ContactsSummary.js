@@ -19,8 +19,6 @@ export function ContactsSummaryRow(props) {
     onClick({ ...props, name, ...publicData });
   };
 
-  console.log({ props });
-
   return (
     <TableRow onClick={onClick && handleClick}>
       <TableCell>

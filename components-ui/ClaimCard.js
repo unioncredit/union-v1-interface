@@ -1,21 +1,10 @@
 import useCurrentToken from "hooks/useCurrentToken";
 import useRewardsData from "hooks/data/useRewardsData";
-import useStakeData from "hooks/data/useStakeData";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import format from "util/formatValue";
 import useUnionSymbol from "hooks/useUnionSymbol";
 
-import {
-  Card,
-  Text,
-  Button,
-  Box,
-  Label,
-  Heading,
-  ToggleMenu,
-  InputRow,
-  Input,
-} from "union-ui";
+import { Card, Text, Button, Box, Label, Heading } from "union-ui";
 
 export const ClaimCard = () => {
   const UNION = useCurrentToken("UNION");
@@ -26,8 +15,7 @@ export const ClaimCard = () => {
 
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
-  const { rewards = 0.0, rewardsMultiplier = "0.00" } =
-    !!rewardsData && rewardsData;
+  const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
   const onComplete = async () => {
     await updateUnionBalance();
@@ -47,7 +35,7 @@ export const ClaimCard = () => {
               {format(rewards, 3)} {unionSymbol}
             </Heading>
           </div>
-          <Button label="Claim Tokens" variant="secondary" />
+          <Button label="Claim Tokens" variant="secondary" onClick={() => alert()} />
         </Box>
         <Box direction="vertical">
           <Label as="p" size="small">

@@ -7,22 +7,22 @@ import {
   Button,
   Text,
 } from "union-ui";
+import { AccountActivity } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useWeb3React } from "@web3-react/core";
 import usePublicData from "hooks/usePublicData";
-import useActivity from "hooks/data/useActivity";
+import useAsyncActivity from "hooks/data/useAsyncActivity";
 
 export const ACCOUNT_MODAL = "account-modal";
 
 export const useAccountModal = () => useModal(ACCOUNT_MODAL);
 
 export function AccountModal() {
-  const data = useActivity();
+  const { data } = useAsyncActivity();
   const { account } = useWeb3React();
   const { name } = usePublicData(account);
   const { close } = useAccountModal();
 
-  console.log("Activity", data);
   return (
     <ModalOverlay>
       <Modal title="Account" onClose={close}>
@@ -32,6 +32,7 @@ export function AccountModal() {
         </Box>
         <Heading m={0}>{name}</Heading>
         <Label size="small">{account}</Label>
+        <AccountActivity data={data} />
       </Modal>
     </ModalOverlay>
   );

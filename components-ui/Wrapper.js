@@ -12,6 +12,7 @@ import {
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import { Tabs, Layout, Heading, Box, Button, Wallet, Logo } from "union-ui";
+import usePublicData from "hooks/usePublicData";
 
 export function Wrapper({ children, tabItems, title }) {
   const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
@@ -23,6 +24,8 @@ export function Wrapper({ children, tabItems, title }) {
   const UNION = useCurrentToken("UNION");
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
   const { data: unionSymbol } = useUnionSymbol();
+
+  const { name } = usePublicData(account);
 
   const isLoggedIn = library && account;
 
@@ -67,7 +70,7 @@ export function Wrapper({ children, tabItems, title }) {
                     label={`${format(unionBalance, 2)} ${unionSymbol}`}
                     onClick={openWalletModal}
                   />
-                  <Wallet onClick={openAccountModal} />
+                  <Wallet onClick={openAccountModal} name={name} />
                 </Box>
               </>
             ) : (

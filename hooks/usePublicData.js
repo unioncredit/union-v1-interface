@@ -16,8 +16,11 @@ export default function usePublicData(address) {
   const has3BoxName = !!data && !error && data?.name;
 
   return {
-    name: hasENSName ? ENSName : has3BoxName ? data.name : truncate(address),
+    name: hasENSName
+      ? ENSName
+      : has3BoxName
+      ? data.name
+      : address && truncate(address),
     image: data?.image,
   };
 }
-

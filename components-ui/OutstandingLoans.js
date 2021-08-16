@@ -47,14 +47,15 @@ function OutstandingLoansEmpty() {
 }
 
 export function OutstandingLoans({ data }) {
-  const loans = data ? data.filter((item) => item.used > 0) : [];
+  const loans = data && data.filter((item) => item.used > 0);
 
   return (
     <Table>
-      {!loans || (loans.length < 0 && <OutstandingLoansEmpty />)}
-      {loans.map((row) => (
-        <OutstandingLoansRow {...row} />
-      ))}
+      {loans && loans.length > 0 ? (
+        loans.map((row) => <OutstandingLoansRow {...row} />)
+      ) : (
+        <OutstandingLoansEmpty />
+      )}
     </Table>
   );
 }

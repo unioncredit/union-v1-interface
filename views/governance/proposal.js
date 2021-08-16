@@ -36,8 +36,6 @@ export default function ProposalView() {
     details = [],
   } = !!data && data;
 
-  console.log({ details });
-
   return (
     <Wrapper title={config.title}>
       <Box mb="40px">

@@ -9,13 +9,49 @@ import {
   Heading,
 } from "union-ui";
 import { useModal } from "hooks/useModal";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import useRewardsData from "hooks/data/useRewardsData";
+import useUnionSymbol from "hooks/useUnionSymbol";
+import useCurrentToken from "hooks/useCurrentToken";
+import format from "util/formatValue";
+import { commify } from "@ethersproject/units";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { useWeb3React } from "@web3-react/core";
 
 export const WALLET_MODAL = "wallet-modal";
 
 export const useWalletModal = () => useModal(WALLET_MODAL);
 
 export function WalletModal() {
+  const { account } = useWeb3React();
   const { close } = useWalletModal();
+
+  const UNION = useCurrentToken("UNION");
+  const { data: unionSymbol } = useUnionSymbol();
+  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
+  const { data: unionBalance = 0.0, mutate: updateUnionBalance } =
+    useTokenBalance(UNION);
+
+  const { rewards = 0.0 } = !!rewardsData && rewardsData;
+
+  const { data: votingWalletData } = useVotingWalletData(account);
+  const {
+    balanceOf = 0,
+    currentVotes = 0,
+    delegates,
+  } = !!votingWalletData && votingWalletData;
+
+  const isDelegatingToSelf = delegates === account;
+
+  const votesDelegated = isDelegatingToSelf
+    ? currentVotes - balanceOf
+    : currentVotes;
+
+  const onComplete = async () => {
+    await updateUnionBalance();
+    await updateRewardsData();
+  };
+
   return (
     <ModalOverlay>
       <Modal title="Wallet" onClose={close}>
@@ -23,10 +59,13 @@ export function WalletModal() {
           <Text m={0}>Unclaimed Tokens</Text>
           <Button variant="pill">Claim tokens</Button>
         </Box>
-        <Heading m={0}>813 UNION</Heading>
-        <Label size="small">12.2 tokens per day</Label>
+        <Heading m={0}>
+          {format(rewards)} {unionSymbol}
+        </Heading>
         <Text mt="16px">Wallet balance</Text>
-        <Heading m={0}>16,000 UNION</Heading>
+        <Heading m={0}>
+          {format(unionBalance)} {unionSymbol}
+        </Heading>
         <Divider />
         <Box align="center" justify="space-between" mt="20px">
           <Text mb={0}>Voting Power</Text>
@@ -34,12 +73,13 @@ export function WalletModal() {
             Voting profile
           </Button>
         </Box>
-        <Heading m={0}>16,000 votes</Heading>
-        <Label size="small">0 delegated to you</Label>
+        <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
+        <Label size="small">
+          {commify(votesDelegated.toFixed(4))} delegated to you
+        </Label>
         <Text mt="16px">Delegating to</Text>
         <Heading m={0}>Self</Heading>
       </Modal>
     </ModalOverlay>
   );
 }
-

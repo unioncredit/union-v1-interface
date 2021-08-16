@@ -17,8 +17,6 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
     }
   }, []);
 
-  console.log({ pageProps });
-
   return (
     <ErrorBoundary fallback={<Error />}>
       <Web3ReactProvider getLibrary={getLibrary}>
