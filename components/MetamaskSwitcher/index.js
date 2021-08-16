@@ -1,5 +1,5 @@
 import Spinner from "svgs/Spinner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { injected } from "lib/connectors";
 
 const MetamaskSwitcher = () => {
@@ -9,12 +9,14 @@ const MetamaskSwitcher = () => {
     parseInt(ethereum.chainId)
   );
 
+  const timer = useRef(null);
+
   useEffect(() => {
     // eslint-disable-next-line
     ethereum.on("chainChanged", (chainId) => {
       setMetamaskChainId(parseInt(chainId));
     });
-  });
+  }, []);
 
   const handleChangeNetwork = async () => {
     setIsLoading(true);
@@ -48,10 +50,17 @@ const MetamaskSwitcher = () => {
         }
       }
     }
-    setTimeout(() => {
+    timer.current = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
   };
+
+  useEffect(() => {
+    return () => {
+      // clean up the timer when the component un-mounts
+      timer.current && clearTimeout(timer.current);
+    };
+  }, []);
 
   if (injected.supportedChainIds.includes(metamaskChainId)) return null;
 
