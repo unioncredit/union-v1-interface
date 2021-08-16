@@ -65,11 +65,15 @@ const MetamaskSwitcher = () => {
   if (injected.supportedChainIds.includes(metamaskChainId)) return null;
 
   return (
-    <div className="network-switch-wrapper rounded mx-auto max-w-md flex py-3 pr-3 pl-4 mb-3">
-      <div className="h-2 w-2 rounded-full bg-unsupported my-auto mr-2"></div>
-      <div className="text-sm my-auto">Unsupported Network</div>
+    <div className="network-switch-wrapper rounded py-4">
+      <div className="flex mb-3">
+        <div className="h-2 w-2 rounded-full bg-unsupported m-auto mr-0"></div>
+        <div className="text-sm m-auto ml-3 font-medium">
+          Ethereum Mainnet not supported
+        </div>
+      </div>
       <button
-        className={`network-switch-button rounded flex ml-auto px-3 py-2 ${
+        className={`network-switch-button rounded flex mx-auto px-3 py-2 ${
           isLoading ? "disabled pointer-events-none" : ""
         }`}
         onClick={handleChangeNetwork}
@@ -78,12 +82,16 @@ const MetamaskSwitcher = () => {
         {isLoading ? (
           <>
             <Spinner className="icon h-6 my-auto" />
-            <div className="text-base ml-2.5">Switching Network</div>
+            <div className="text-base ml-2.5 font-medium">
+              Switching Network
+            </div>
           </>
         ) : (
           <>
             <img className="icon h-4 my-auto" src="/images/polygon-logo.png" />
-            <div className="text-base ml-2.5">Switch to Polygon</div>
+            <div className="text-base ml-2.5 font-medium">
+              Switch to Polygon
+            </div>
           </>
         )}
       </button>

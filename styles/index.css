@@ -355,7 +355,7 @@ input[type="number"] {
   background: #3099f2;
 }
 .bg-unsupported {
-  background: #eb5d5f;
+  background: #e61744;
 }
 
 @screen md {
@@ -559,11 +559,17 @@ input[type="number"] {
 }
 
 .network-switch-wrapper {
-  color: #f8f8f8;
-  background: #032437;
+  color: #e61744;
+  background: #edeff1;
 }
 .network-switch-button {
-  background: #35505f;
+  color: #032437;
+  background: #ffffff;
+  border: 1px solid #c5ced5;
+}
+
+.network-switch-button:focus {
+  outline: none;
 }
 
 [data-reach-menu-list],
