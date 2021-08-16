@@ -25,11 +25,12 @@ const NetworkIndicator = () => {
   const [chainId, setChainId] = useState(0);
 
   useEffect(() => {
+    // eslint-disable-next-line no-undef
     if (typeof ethereum !== "undefined") {
-      // eslint-disable-line no-undef
-      setChainId(parseInt(ethereum.chainId)); // eslint-disable-line no-undef
+      // eslint-disable-next-line no-undef
+      setChainId(parseInt(ethereum.chainId));
+      // eslint-disable-next-line no-undef
       ethereum.on("chainChanged", (metamaskChainId) => {
-        // eslint-disable-line no-undef
         setChainId(parseInt(metamaskChainId));
       });
     }

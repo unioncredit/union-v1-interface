@@ -126,12 +126,9 @@ const WalletModal = () => {
         </div>
 
         <div className="mb-4" suppressHydrationWarning={true}>
-          {
-            // eslint-disable-next-line
-            typeof ethereum !== "undefined" && ethereum && ethereum.chainId ? (
-              <MetamaskSwitcher />
-            ) : null
-          }
+          {typeof ethereum !== "undefined" && ethereum && ethereum.chainId ? ( // eslint-disable-line no-undef
+            <MetamaskSwitcher />
+          ) : null}
         </div>
 
         <div className="mb-6 space-y-2">

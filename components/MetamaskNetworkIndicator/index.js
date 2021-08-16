@@ -12,17 +12,16 @@ const NETWORKS = {
 };
 
 const MetamaskNetworkIndicator = () => {
-  // eslint-disable-next-line
   const [metamaskChainId, setMetamaskChainId] = useState(
-    parseInt(ethereum.chainId)
+    parseInt(ethereum.chainId) // eslint-disable-line no-undef
   );
 
   useEffect(() => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-undef
     ethereum.on("chainChanged", (chainId) => {
       setMetamaskChainId(parseInt(chainId));
     });
-  });
+  }, []);
 
   return (
     <div className="btn btn-network">

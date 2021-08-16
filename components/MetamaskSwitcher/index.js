@@ -5,14 +5,13 @@ import { injected } from "lib/connectors";
 const MetamaskSwitcher = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [metamaskChainId, setMetamaskChainId] = useState(
-    // eslint-disable-next-line
-    parseInt(ethereum.chainId)
+    parseInt(ethereum.chainId) // eslint-disable-line no-undef
   );
 
   const timer = useRef(null);
 
   useEffect(() => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-undef
     ethereum.on("chainChanged", (chainId) => {
       setMetamaskChainId(parseInt(chainId));
     });
@@ -21,7 +20,7 @@ const MetamaskSwitcher = () => {
   const handleChangeNetwork = async () => {
     setIsLoading(true);
     try {
-      // eslint-disable-next-line
+      // eslint-disable-next-line no-undef
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0x89" }],
