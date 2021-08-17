@@ -38,44 +38,47 @@ export function NewVouchModal({ address }) {
 
   return (
     <ModalOverlay>
-      <Modal title="New vouch" onClose={close}>
-        <Box mb="24px" justify="space-between">
-          <AddressLabel address={address} />
-          {isMember ? (
-            <Badge label="Trusted contact" color="green" />
-          ) : (
-            <Badge label="Not yet a member" color="blue" />
-          )}
-        </Box>
-        <Box>
-          <Box direction="vertical">
-            <Text>Credit limit</Text>
-            <Heading>DAI {format(creditLimit)}</Heading>
+      <Modal title="New vouch" onClose={close} drawer>
+        <Modal.Body>
+          <Box mb="24px" justify="space-between">
+            <AddressLabel address={address} />
+            {isMember ? (
+              <Badge label="Trusted contact" color="green" />
+            ) : (
+              <Badge label="Not yet a member" color="blue" />
+            )}
           </Box>
-          <Box direction="vertical" ml="32px">
-            <Text>Unpaid Debt</Text>
-            <Heading>DAI {format(borrowedRounded)}</Heading>
+          <Box>
+            <Box direction="vertical">
+              <Text>Credit limit</Text>
+              <Heading>DAI {format(creditLimit)}</Heading>
+            </Box>
+            <Box direction="vertical" ml="32px">
+              <Text>Unpaid Debt</Text>
+              <Heading>DAI {format(borrowedRounded)}</Heading>
+            </Box>
           </Box>
-        </Box>
-        <Divider />
-        <Heading mt="28px" mb="4px">
-          Set contacts trust
-        </Heading>
-        <Text size="large" mb="16px">
-          What’s the total value of credit you’d like to make available for this
-          contact?
-        </Text>
-        <Input name="amount" label="Value" placeholder="0" />
-        <Divider />
-        <ButtonRow mt="16px">
-          <Button
-            fluid
-            label="Go back"
-            variant="secondary"
-            onClick={handleBack}
-          />
-          <Button fluid label="Submit vouch" />
-        </ButtonRow>
+          <Divider />
+          <Heading mt="28px" mb="4px">
+            Set contacts trust
+          </Heading>
+          <Text size="large" mb="16px">
+            What’s the total value of credit you’d like to make available for
+            this contact?
+          </Text>
+          <Input name="amount" label="Value" placeholder="0" />
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonRow mt="16px" fluid>
+            <Button
+              fluid
+              label="Go back"
+              variant="secondary"
+              onClick={handleBack}
+            />
+            <Button fluid label="Submit vouch" />
+          </ButtonRow>
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );

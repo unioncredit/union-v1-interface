@@ -7,10 +7,12 @@ import {
   TableRow,
   Label,
 } from "union-ui";
+import { useEditVouchModal, EditVouchModal } from "components-ui/modals";
+import { useState } from "react";
 import usePublicData from "hooks/usePublicData";
 import { Avatar } from "components-ui";
 
-function OutstandingLoansRow({ address, used }) {
+function OutstandingLoansRow({ address, used, onManage }) {
   const { name } = usePublicData(address);
   return (
     <TableRow>
@@ -30,6 +32,7 @@ function OutstandingLoansRow({ address, used }) {
           icon="chevron"
           iconPosition="end"
           label="Manage"
+          onClick={onManage}
         />
       </TableCell>
     </TableRow>
@@ -47,15 +50,28 @@ function OutstandingLoansEmpty() {
 }
 
 export function OutstandingLoans({ data }) {
+  const { open: openEditVouchModal, isOpen: isEditVouchModalOpen } =
+    useEditVouchModal();
+  const [selectedContact, setSelectedContact] = useState(null);
   const loans = data && data.filter((item) => item.used > 0);
 
+  const handleManage = (contact) => () => {
+    setSelectedContact(contact);
+    openEditVouchModal();
+  };
+
   return (
-    <Table>
-      {loans && loans.length > 0 ? (
-        loans.map((row) => <OutstandingLoansRow {...row} />)
-      ) : (
-        <OutstandingLoansEmpty />
-      )}
-    </Table>
+    <>
+      <Table>
+        {loans && loans.length > 0 ? (
+          loans.map((row) => (
+            <OutstandingLoansRow {...row} onManage={handleManage(row)} />
+          ))
+        ) : (
+          <OutstandingLoansEmpty />
+        )}
+      </Table>
+      {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
+    </>
   );
 }

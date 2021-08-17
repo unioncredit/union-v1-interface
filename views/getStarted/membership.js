@@ -18,6 +18,8 @@ import { Wrapper, AddressLabel } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import useVouchData from "hooks/data/useVouchData";
+import useCreditLimit from "hooks/data/useCreditLimit";
+import format from "util/formatValue";
 
 import { config } from "./config";
 
@@ -25,6 +27,7 @@ export default function MembershipView() {
   const { data: isMember = null } = useIsMember();
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: vouchData = [] } = useVouchData();
+  const { data: creditLimit = 0 } = useCreditLimit();
 
   const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
 
@@ -80,7 +83,7 @@ export default function MembershipView() {
                     to credit with Union
                   </Text>
                   <Text mb="21px" size="large">
-                    Get access to your $184 credit line
+                    Get access to your DAI {format(creditLimit)} credit line
                   </Text>
                   <Button label="Pay 1 UNION" disabled={!isMember} />
                   <Label as="p" mt="21px">

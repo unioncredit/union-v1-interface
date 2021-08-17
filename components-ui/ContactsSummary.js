@@ -8,7 +8,7 @@ import {
   Avatar as UIAvatar,
   Skeleton,
 } from "union-ui";
-import { Avatar } from "components-ui";
+import { Avatar, Dai } from "components-ui";
 import { toPercent } from "util/numbers";
 
 export function ContactsSummaryRow(props) {
@@ -25,7 +25,9 @@ export function ContactsSummaryRow(props) {
         <Avatar address={address} />
       </TableCell>
       <TableCell span={4}>
-        <Text>{vouched} DAI</Text>
+        <Text>
+          <Dai value={vouched} />
+        </Text>
         <Label>{name}</Label>
       </TableCell>
       <TableCell span={1} align="right">

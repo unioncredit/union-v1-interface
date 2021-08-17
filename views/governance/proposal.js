@@ -40,7 +40,7 @@ export default function ProposalView() {
     <Wrapper title={config.title}>
       <Box mb="40px">
         <Link href="/governance/proposals">
-          <Button variant="secondary" label="Back to proposals" />
+          <Button variant="secondary" label="Back to proposals" icon="arrow-left" />
         </Link>
       </Box>
       <Grid>

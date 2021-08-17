@@ -19,9 +19,10 @@ import format from "util/formatValue";
 import { roundDown, toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
 import {
-  OutstandingLoans,
+  Dai,
   Wrapper,
   ContactsSummaryRow,
+  OutstandingLoans,
   ContactsSummaryRowSkeleton,
 } from "components-ui";
 import {
@@ -29,6 +30,7 @@ import {
   StakeModal,
   useVouchModal,
   VouchModal,
+  VouchModalManager,
 } from "components-ui/modals";
 import useTrustData from "hooks/data/useTrustData";
 import createArray from "util/createArray";
@@ -36,10 +38,11 @@ import createArray from "util/createArray";
 import { config } from "./config";
 
 export default function LendView() {
-  const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
-  const { isOpen: isVouchModalOpen, open: openVouchModal } = useVouchModal();
   const { data: stakeData } = useStakeData();
   const { data: trustData } = useTrustData();
+
+  const { open: openVouchModal } = useVouchModal();
+  const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
 
   const isTrustLoading = !trustData;
 
@@ -56,10 +59,10 @@ export default function LendView() {
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
         <Stats mb="40px">
-          <Box>
+          <Box minw="65%">
             <Stat
               label="Staked"
-              value={`$${format(roundDown(totalStake))}`}
+              value={<Dai value={format(roundDown(totalStake))} />}
               cta={
                 <Button
                   variant="pill"
@@ -72,7 +75,7 @@ export default function LendView() {
             />
             <Stat
               label="Utilized"
-              value={`$${format(roundDown(utilizedStake))}`}
+              value={<Dai value={format(roundDown(utilizedStake))} />}
               caption={
                 <Bar
                   label={toPercent(percentageStake)}
@@ -82,7 +85,7 @@ export default function LendView() {
             />
             <Stat
               label="Withdrawable"
-              value={`$${format(roundDown(withdrawableStake))}`}
+              value={<Dai value={format(roundDown(withdrawableStake))} />}
               cta={
                 <Button
                   variant="pill"
@@ -95,7 +98,7 @@ export default function LendView() {
             />
             <Stat
               label="Defaulted"
-              value={`$${format(roundDown(defaultedStake))}`}
+              value={<Dai value={format(roundDown(defaultedStake))} />}
             />
           </Box>
           <ButtonRow direction="vertical">
@@ -142,8 +145,8 @@ export default function LendView() {
           </Row>
         </Grid>
       </Wrapper>
+      <VouchModalManager />
       {isStakeModalOpen && <StakeModal />}
-      {isVouchModalOpen && <VouchModal />}
     </>
   );
 }

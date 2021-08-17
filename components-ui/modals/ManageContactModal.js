@@ -52,41 +52,43 @@ export function ManageContactModal({ address, vouched }) {
   return (
     <ModalOverlay>
       <Modal title="Manage contact" onClose={close}>
-        <Box mb="24px" justify="space-between">
-          <AddressLabel address={address} />
-          <Badge label="Trusted contact" color="green" />
-        </Box>
-        {data.map(({ label, value, buttonLabel, onClick }) => (
-          <Card variant="packed" mb="8px">
-            <Card.Body>
-              <Label>{label}</Label>
-              <Box align="center">
-                <Text size="large" mb={0}>
-                  {value}
-                </Text>
-                <Button
-                  ml="auto"
-                  variant="secondary"
-                  rounded
-                  label={buttonLabel}
-                  onClick={onClick}
-                />
-              </Box>
-            </Card.Body>
-          </Card>
-        ))}
+        <Modal.Body>
+          <Box mb="24px" justify="space-between">
+            <AddressLabel address={address} />
+            <Badge label="Trusted contact" color="green" />
+          </Box>
+          {data.map(({ label, value, buttonLabel, onClick }) => (
+            <Card variant="packed" mb="8px">
+              <Card.Body>
+                <Label>{label}</Label>
+                <Box align="center">
+                  <Text size="large" mb={0}>
+                    {value}
+                  </Text>
+                  <Button
+                    ml="auto"
+                    variant="secondary"
+                    rounded
+                    label={buttonLabel}
+                    onClick={onClick}
+                  />
+                </Box>
+              </Card.Body>
+            </Card>
+          ))}
 
-        <Divider />
-        <Button
-          fluid
-          mt="16px"
-          variant="secondary"
-          color="red"
-          label="Remove from contacts"
-        />
-        <Label as="p" size="small" align="center" mt="24px">
-          Contacts with outstanding balance can’t be removed
-        </Label>
+          <Divider />
+          <Button
+            fluid
+            mt="16px"
+            variant="secondary"
+            color="red"
+            label="Remove from contacts"
+          />
+          <Label as="p" size="small" align="center" mt="24px">
+            Contacts with outstanding balance can’t be removed
+          </Label>
+        </Modal.Body>
       </Modal>
     </ModalOverlay>
   );

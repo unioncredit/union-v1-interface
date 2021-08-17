@@ -62,7 +62,8 @@ const WalletOptions = ({
               label={getWalletName(name)}
               onClick={handleSignIn}
               disabled={disabled}
-              // loading={activating}
+              fontSize="large"
+              loading={activating}
             />
           </ButtonRow>
         );
@@ -110,7 +111,7 @@ export const SignInCard = () => {
           setActivatingConnector={setActivatingConnector}
           triedEager={triedEager}
         />
-        <Label mt="8px" mb="0" as="p" size="small">
+        <Label mt="8px" mb="0" as="p" size="small" grey={400}>
           Union never has access to your private keys and we’ll never ask for
           them.
         </Label>

@@ -63,47 +63,50 @@ export function PaymentModal({ paymentDueDate, balanceOwed, interest }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Make a payment" onClose={close}>
-        <Box>
-          <Box direction="vertical">
-            <Text>Balance owed</Text>
-            <Heading>DAI {calculateBalanceOwed}</Heading>
+      <Modal title="Make a payment" onClose={close} drawer>
+        <Modal.Body>
+          <Box>
+            <Box direction="vertical">
+              <Text>Balance owed</Text>
+              <Heading>DAI {calculateBalanceOwed}</Heading>
+            </Box>
+            <Box direction="vertical" ml="30px">
+              <Text>Min. due</Text>
+              <Heading>DAI {roundUp(interest)}</Heading>
+            </Box>
+            <Box direction="vertical" ml="30px">
+              <Text>Default in</Text>
+              <Heading>{nextPaymentDue}</Heading>
+            </Box>
           </Box>
-          <Box direction="vertical" ml="30px">
-            <Text>Min. due</Text>
-            <Heading>DAI {roundUp(interest)}</Heading>
+          <Divider />
+          <Heading mt="20px">Amount to repay</Heading>
+          <Text size="large">How much are you paying today?</Text>
+          <Box mt="16px">
+            <Input
+              ref={register({ validate })}
+              name="amount"
+              suffix="DAI"
+              label="Repay"
+              placeholder="$0"
+              caption={`Pay minimum (${roundUp(interest)} DAI)`}
+              onCaptionClick={handlePayMinimum}
+              error={errors.amount?.message || false}
+            />
           </Box>
-          <Box direction="vertical" ml="30px">
-            <Text>Default in</Text>
-            <Heading>{nextPaymentDue}</Heading>
+          <Box mt="24px">
+            <Box direction="vertical">
+              <Text>New balance owed</Text>
+              <Heading>DAI {formatNewBalance}</Heading>
+            </Box>
           </Box>
-        </Box>
-        <Divider />
-        <Heading mt="20px">Amount to repay</Heading>
-        <Text size="large">How much are you paying today?</Text>
-        <Box mt="16px">
-          <Input
-            ref={register({ validate })}
-            name="amount"
-            suffix="DAI"
-            label="Repay"
-            placeholder="$0"
-            caption={`Pay minimum (${roundUp(interest)} DAI)`}
-            onCaptionClick={handlePayMinimum}
-            error={errors.amount?.message || false}
-          />
-        </Box>
-        <Box mt="24px">
-          <Box direction="vertical">
-            <Text>New balance owed</Text>
-            <Heading>DAI {formatNewBalance}</Heading>
-          </Box>
-        </Box>
-        <Divider />
-        <ButtonRow>
-          <Button label="Allow repayment" fluid mt="16px" />
-          <Button label="Make payment" fluid mt="16px" />
-        </ButtonRow>
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonRow fluid>
+            <Button label="Allow repayment" fluid mt="16px" />
+            <Button label="Make payment" fluid mt="16px" />
+          </ButtonRow>
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );

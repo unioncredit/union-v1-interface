@@ -89,10 +89,10 @@ export default function useAsyncActivity() {
   const readProvider = useReadProvider();
   const userManagerContract = useUserContract();
 
-  const updateTrustFilter = userManagerContract.filters.LogUpdateTrust();
-  const cancelVouchFilter = userManagerContract.filters.LogCancelVouch();
+  const updateTrustFilter = userManagerContract?.filters.LogUpdateTrust();
+  const cancelVouchFilter = userManagerContract?.filters.LogCancelVouch();
   const registerMemberFilter =
-    userManagerContract.filters.LogRegisterMember(account);
+    userManagerContract?.filters.LogRegisterMember(account);
 
   const filters = [updateTrustFilter, cancelVouchFilter, registerMemberFilter];
 
@@ -103,5 +103,7 @@ export default function useAsyncActivity() {
     account
   );
 
-  return account && userManagerContract && useAsyncLogs(filters, parser);
+  const data = account && userManagerContract && useAsyncLogs(filters, parser);
+
+  return data || {};
 }

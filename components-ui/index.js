@@ -23,3 +23,4 @@ export * from "./UserVotingHistory";
 export * from "./ContactDetails";
 export * from "./Health";
 export * from "./AccountActivity";
+export * from "./Dai";

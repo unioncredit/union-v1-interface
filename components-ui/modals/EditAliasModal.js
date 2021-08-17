@@ -26,23 +26,25 @@ export function EditAliasModal() {
   return (
     <ModalOverlay>
       <Modal title="Edit contact name" onClose={close}>
-        <Text size="large" mb="16px">
-          Choose a name that helps you identify this contact within the Union
-          app.
-        </Text>
-        <Input label="Contact name" placeholder="0x..." />
-        <Divider />
-        <ButtonRow mt="20px">
-          <Button
-            label="Go back"
-            variant="secondary"
-            fluid
-            onClick={handleGoBack}
-          />
-          <Button label="Save" fluid />
-        </ButtonRow>
+        <Modal.Body>
+          <Text size="large" mb="16px">
+            Choose a name that helps you identify this contact within the Union
+            app.
+          </Text>
+          <Input label="Contact name" placeholder="0x..." />
+        </Modal.Body>
+        <Modal.Footer>
+          <ButtonRow mt="20px" fluid>
+            <Button
+              label="Go back"
+              variant="secondary"
+              fluid
+              onClick={handleGoBack}
+            />
+            <Button label="Save" fluid />
+          </ButtonRow>
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );
 }
-

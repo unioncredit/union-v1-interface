@@ -75,43 +75,46 @@ export function BorrowModal({
 
   return (
     <ModalOverlay>
-      <Modal title="Borrow funds" onClose={close}>
-        <Box>
-          <Box direction="vertical">
-            <Text>Available credit</Text>
-            <Heading>DAI {format(roundDown(creditLimit))}</Heading>
+      <Modal title="Borrow funds" onClose={close} drawer>
+        <Modal.Body>
+          <Box>
+            <Box direction="vertical">
+              <Text>Available credit</Text>
+              <Heading>DAI {format(roundDown(creditLimit))}</Heading>
+            </Box>
+            <Box direction="vertical" ml="30px">
+              <Text>Balance owed</Text>
+              <Heading>DAI {balanceOwed}</Heading>
+            </Box>
           </Box>
-          <Box direction="vertical" ml="30px">
-            <Text>Balance owed</Text>
-            <Heading>DAI {balanceOwed}</Heading>
+          <Divider />
+          <Heading mt="20px">Amount to borrow</Heading>
+          <Text size="large">How much are you borrowing today?</Text>
+          <Box mt="16px">
+            <Input
+              ref={register({ validate })}
+              name="amount"
+              label="borrow"
+              placeholder="$0"
+              suffix="DAI"
+              caption={`${amountWithFee} DAI including fee`}
+              error={errors.amount?.message || false}
+            />
           </Box>
-        </Box>
-        <Divider />
-        <Heading mt="20px">Amount to borrow</Heading>
-        <Text size="large">How much are you borrowing today?</Text>
-        <Box mt="16px">
-          <Input
-            ref={register({ validate })}
-            name="amount"
-            label="borrow"
-            placeholder="$0"
-            suffix="DAI"
-            caption={`${amountWithFee} DAI including fee`}
-            error={errors.amount?.message || false}
-          />
-        </Box>
-        <Box mt="24px">
-          <Box direction="vertical">
-            <Text>New balance owed</Text>
-            <Heading>DAI {newBalanceOwed}</Heading>
+          <Box mt="24px">
+            <Box direction="vertical">
+              <Text>New balance owed</Text>
+              <Heading>DAI {newBalanceOwed}</Heading>
+            </Box>
+            <Box direction="vertical" ml="30px">
+              <Text>Repayment due</Text>
+              <Heading>{nextPaymentDue}</Heading>
+            </Box>
           </Box>
-          <Box direction="vertical" ml="30px">
-            <Text>Repayment due</Text>
-            <Heading>{nextPaymentDue}</Heading>
-          </Box>
-        </Box>
-        <Divider />
-        <Button label="Confirm Borrow" fluid mt="16px" />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button label="Confirm Borrow" fluid />
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );

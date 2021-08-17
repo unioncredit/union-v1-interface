@@ -32,3 +32,62 @@ a {
   transform: translateY(-50%);
 }
 
+.qrcode {
+  border-radius: 5px;
+  border: 0.625px solid #e1e0e6;
+  padding: 7.5px;
+}
+
+.card.all-contacts-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card.all-contacts-card .grid {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card.all-contacts-card .grid .grid-row + .grid-row {
+  flex-grow: 1 !important;
+}
+
+.card.card.all-contacts-card .contact-summary-col {
+  position: relative;
+}
+
+.card.card.all-contacts-card .contact-summary-col-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  bottom: 70px;
+  overflow-y: scroll;
+}
+
+.card.card.all-contacts-card .contact-summary-col:before {
+  position: absolute;
+  content: "";
+  display: block;
+  left: 0;
+  bottom: 70px;
+  width: 100%;
+  height: 50px;
+  z-index: 8;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0);
+  background: linear-gradient(
+    360deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.contact-summary-vouch-buton {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}

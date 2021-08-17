@@ -22,6 +22,7 @@ export function VouchModal({ onNext }) {
   });
 
   const handleNext = (values) => {
+    debugger;
     close();
     openNewVouchModal();
     onNext && onNext(values.address);
@@ -34,22 +35,30 @@ export function VouchModal({ onNext }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Vouch for someone" onClose={close}>
-        <Text size="large" mb="16px">
-          Tap in or paste the Ethereum address for a contact you want to vouch
-          for.
-        </Text>
-        <form onSubmit={handleSubmit(handleNext)}>
-          <Input
-            ref={register({ validate })}
-            name="address"
-            label="Ethereum address"
-            placeholder="0x..."
-            error={errors.address?.message}
+      <Modal title="Vouch for someone" onClose={close} drawer>
+        <Modal.Body>
+          <form onSubmit={handleSubmit(handleNext)}>
+            <Text size="large" mb="16px">
+              Tap in or paste the Ethereum address for a contact you want to
+              vouch for.
+            </Text>
+            <Input
+              ref={register({ validate })}
+              name="address"
+              label="Ethereum address"
+              placeholder="0x..."
+              error={errors.address?.message}
+            />
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            mt="16px"
+            fluid
+            label="Next"
+            onClick={handleSubmit(handleNext)}
           />
-          <Divider />
-          <Button type="submit" mt="16px" fluid label="Next" />
-        </form>
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );

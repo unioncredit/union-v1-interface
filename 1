@@ -11,10 +11,8 @@ import {
 } from "components-ui/modals";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
-import useAsyncActivity from "hooks/data/useAsyncActivity";
 import { Tabs, Layout, Heading, Box, Button, Wallet, Logo } from "union-ui";
 import usePublicData from "hooks/usePublicData";
-import { Avatar } from "./Avatar";
 
 export function Wrapper({ children, tabItems, title }) {
   const { data: activityData } = useAsyncActivity();
@@ -73,14 +71,7 @@ export function Wrapper({ children, tabItems, title }) {
                     label={`${format(unionBalance, 2)} ${unionSymbol}`}
                     onClick={openWalletModal}
                   />
-                  <Wallet
-                    onClick={openAccountModal}
-                    name={name}
-                    indicator={
-                      activityData?.length > 99 ? "99+" : activityData?.length
-                    }
-                    avatar={<Avatar address={account} />}
-                  />
+                  <Wallet onClick={openAccountModal} name={name} />
                 </Box>
               </>
             ) : (

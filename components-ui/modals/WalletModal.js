@@ -55,30 +55,32 @@ export function WalletModal() {
   return (
     <ModalOverlay>
       <Modal title="Wallet" onClose={close}>
-        <Box align="center" justify="space-between">
-          <Text m={0}>Unclaimed Tokens</Text>
-          <Button variant="pill">Claim tokens</Button>
-        </Box>
-        <Heading m={0}>
-          {format(rewards)} {unionSymbol}
-        </Heading>
-        <Text mt="16px">Wallet balance</Text>
-        <Heading m={0}>
-          {format(unionBalance)} {unionSymbol}
-        </Heading>
-        <Divider />
-        <Box align="center" justify="space-between" mt="20px">
-          <Text mb={0}>Voting Power</Text>
-          <Button variant="pill" onClick={() => alert()}>
-            Voting profile
-          </Button>
-        </Box>
-        <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
-        <Label size="small">
-          {commify(votesDelegated.toFixed(4))} delegated to you
-        </Label>
-        <Text mt="16px">Delegating to</Text>
-        <Heading m={0}>Self</Heading>
+        <Modal.Body>
+          <Box align="center" justify="space-between">
+            <Text m={0}>Unclaimed Tokens</Text>
+            <Button variant="pill">Claim tokens</Button>
+          </Box>
+          <Heading m={0}>
+            {format(rewards)} {unionSymbol}
+          </Heading>
+          <Text mt="16px">Wallet balance</Text>
+          <Heading m={0}>
+            {format(unionBalance)} {unionSymbol}
+          </Heading>
+          <Divider />
+          <Box align="center" justify="space-between" mt="20px">
+            <Text mb={0}>Voting Power</Text>
+            <Button variant="pill" onClick={() => alert()}>
+              Voting profile
+            </Button>
+          </Box>
+          <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
+          <Label size="small">
+            {commify(votesDelegated.toFixed(4))} delegated to you
+          </Label>
+          <Text mt="16px">Delegating to</Text>
+          <Heading m={0}>Self</Heading>
+        </Modal.Body>
       </Modal>
     </ModalOverlay>
   );

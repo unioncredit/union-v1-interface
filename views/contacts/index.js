@@ -19,7 +19,6 @@ import {
 } from "components-ui";
 import {
   useVouchModal,
-  VouchModal,
   useManageContactModal,
   ManageContactModal,
   EditAliasModal,
@@ -28,30 +27,67 @@ import {
   useEditVouchModal,
   VouchModalManager,
 } from "components-ui/modals";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
+import truncateAddress from "util/truncateAddress";
 
 import { config, ContactsType } from "./config";
+import usePublicData from "hooks/usePublicData";
+
+function ContactDetailsHeader({ address, name: passedName, contactsType }) {
+  const { name } = usePublicData(address);
+  const { open: openManageContactModal } = useManageContactModal();
+
+  return (
+    <Box align="center">
+      {address && <Avatar size={54} address={address} />}
+      <Box direction="vertical" mx="16px">
+        <Heading level={2}>{name || passedName}</Heading>
+        <Text mb={0}>{address && truncateAddress(address)}</Text>
+      </Box>
+      {contactsType === ContactsType.YOU_TRUST && (
+        <Button
+          ml="auto"
+          rounded
+          variant="secondary"
+          label="Manage contact"
+          icon="manage"
+          onClick={openManageContactModal}
+        />
+      )}
+    </Box>
+  );
+}
 
 export default function ContactsView() {
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  const { isOpen: isManageContactModalOpen } = useManageContactModal();
   const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
   const { open: openVouchModal } = useVouchModal();
-  const { isOpen: isManageContactModalOpen, open: openManageContactModal } =
-    useManageContactModal();
 
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
 
   const handleToggleContactType = (item) => {
+    if (item.id === contactsType) return;
     setSelectedContact(null);
     setContactsType(item.id);
   };
+
+  useEffect(() => {
+    if (!vouchData || !trustData || selectedContact) return;
+
+    if (contactsType === ContactsType.TRUSTS_YOU) {
+      setSelectedContact(vouchData[0]);
+    } else {
+      setSelectedContact(trustData[0]);
+    }
+  }, [vouchData, trustData, contactsType]);
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
@@ -60,7 +96,7 @@ export default function ContactsView() {
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Card size="fluid" noGutter>
+        <Card size="fluid" noGutter className="all-contacts-card">
           <Grid bordered>
             <Row nogutter>
               <Col md={4}>
@@ -72,53 +108,43 @@ export default function ContactsView() {
                 </Box>
               </Col>
               <Col>
-                <Box align="center">
-                  {selectedContact && (
-                    <Avatar size={54} address={selectedContact.address} />
-                  )}
-                  <Box direction="vertical" mx="16px">
-                    <Heading level={2}>{selectedContact?.name}</Heading>
-                    <Text mb={0}>{selectedContact?.address}</Text>
-                  </Box>
-                  {selectedContact &&
-                    contactsType === ContactsType.YOU_TRUST && (
-                      <Button
-                        ml="auto"
-                        rounded
-                        variant="secondary"
-                        label="Manage contact"
-                        icon="manage"
-                        onClick={openManageContactModal}
-                      />
-                    )}
-                </Box>
+                {selectedContact && (
+                  <ContactDetailsHeader
+                    {...selectedContact}
+                    contactsType={contactsType}
+                  />
+                )}
               </Col>
             </Row>
             <Row noGutter>
-              <Col md={4} noPadding>
-                <Table noBorder noPadding mb="20px">
-                  {isLoading
-                    ? createArray(3).map((_, i) => (
-                        <ContactsSummaryRowSkeleton key={i} />
-                      ))
-                    : data.map((item, i) => (
-                        <ContactsSummaryRow
-                          {...item}
-                          key={i}
-                          onClick={setSelectedContact}
-                        />
-                      ))}
-                </Table>
+              <Col md={4} noPadding className="contact-summary-col">
+                <div className="contact-summary-col-inner">
+                  <Table noBorder noPadding mb="20px">
+                    {isLoading
+                      ? createArray(3).map((_, i) => (
+                          <ContactsSummaryRowSkeleton key={i} />
+                        ))
+                      : [...data, ...data, ...data].map((item, i) => (
+                          <ContactsSummaryRow
+                            {...item}
+                            key={`${i}-${contactsType}`}
+                            onClick={setSelectedContact}
+                          />
+                        ))}
+                  </Table>
+                </div>
 
-                <Box mt="auto" mb="24px" ml="auto" mr="auto">
-                  <Button
-                    rounded
-                    icon="vouch"
-                    variant="floating"
-                    label="Vouch for someone"
-                    onClick={openVouchModal}
-                  />
-                </Box>
+                <div className="contact-summary-vouch-buton">
+                  <Box justify="center" mb="24px">
+                    <Button
+                      rounded
+                      icon="vouch"
+                      variant="floating"
+                      label="Vouch for someone"
+                      onClick={openVouchModal}
+                    />
+                  </Box>
+                </div>
               </Col>
               <Col md={8}>
                 {selectedContact && (

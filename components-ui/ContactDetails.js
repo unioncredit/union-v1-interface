@@ -1,7 +1,7 @@
 import useBorrowData from "hooks/data/useBorrowData";
 import PropTypes from "prop-types";
 import { Text, Box, Stat, Label, Badge } from "union-ui";
-import { Health } from "components-ui";
+import { Health, Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
 
@@ -9,11 +9,11 @@ function TrustsYouContactDetails({ used, utilized, vouched, isOverdue }) {
   return (
     <>
       <Box mb="20px">
-        <Stat label="Providing you" value={`DAI ${vouched}`} />
+        <Stat label="Providing you" value={<Dai value={vouched} />} />
         <Stat label="Utilized" value={`${toPercent(utilized)}`} />
         <Stat
           label="Available Credit"
-          value={`DAI ${format(vouched - used)}`}
+          value={<Dai value={format(vouched - used)} />}
         />
       </Box>
       <Box mb="24px" direction="vertical">
@@ -44,16 +44,16 @@ function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
   return (
     <>
       <Box mb="20px">
-        <Stat label="Credit Limit" value={`DAI ${vouched}`} />
+        <Stat label="Credit Limit" value={<Dai value={vouched} />} />
         <Stat label="Utilized" value={`${toPercent(utilized)}`} />
         <Stat
           label="Available Credit"
-          value={`DAI ${format(vouched - used)}`}
+          value={<Dai value={format(vouched - used)} />}
         />
       </Box>
       <Box mb="24px">
-        <Stat label="Balance owed" value={`DAI ${format(used)}`} />
-        <Stat label="Min payment" value={`DAI ${roundUp(interest)}`} />
+        <Stat label="Balance owed" value={<Dai value={format(used)} />} />
+        <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
         <Stat label="Payment due" value={paymentDueDate} />
       </Box>
       <Box mb="24px" direction="vertical">

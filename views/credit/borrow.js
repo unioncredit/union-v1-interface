@@ -1,6 +1,7 @@
 import {
-  TransactionHistory,
+  Dai,
   Wrapper,
+  TransactionHistory,
   ContactsSummaryRow,
   ContactsSummaryRowSkeleton,
 } from "components-ui";
@@ -65,9 +66,15 @@ export default function BorrowView() {
   } = !!borrowData && borrowData;
 
   const pctUsed = getPctUsed(borrowedRounded, roundDown(creditLimit));
-  // TODO: what should this actually be?
-  const unavailable = creditLimit - creditLimit;
   const isVouchLoading = !vouchData;
+
+  const actualCreditLimit = vouchData
+    ? vouchData.reduce(
+        (acc, data) => acc + Number(data.trust) - Number(data.used),
+        0
+      )
+    : 0;
+  const unavailable = actualCreditLimit - creditLimit;
 
   return (
     <>
@@ -76,7 +83,7 @@ export default function BorrowView() {
           <Box>
             <Stat
               label="Credit Limit"
-              value={`DAI ${format(roundDown(creditLimit))}`}
+              value={<Dai value={format(roundDown(actualCreditLimit))} />}
               cta={
                 <Button
                   variant="pill"
@@ -89,7 +96,7 @@ export default function BorrowView() {
             />
             <Stat
               label="Balance owed"
-              value={`DAI ${borrowedRounded}`}
+              value={<Dai value={borrowedRounded} />}
               caption={
                 <Bar
                   label={`${toPercent(pctUsed)}`}
@@ -99,8 +106,7 @@ export default function BorrowView() {
             />
             <Stat
               label="Available Credit"
-              // TODO: what should this actually be?
-              value={`DAI ${format(roundDown(creditLimit))}`}
+              value={<Dai value={format(roundDown(creditLimit))} />}
               caption={
                 <Label as="p" size="small">
                   {format(unavailable)} Unavailable{" "}
@@ -124,7 +130,7 @@ export default function BorrowView() {
                   />
                 </Text>
               }
-              value={`DAI ${roundUp(interest)}`}
+              value={<Dai value={roundUp(interest)} />}
               caption={paymentDueDate}
             />
           </Box>
