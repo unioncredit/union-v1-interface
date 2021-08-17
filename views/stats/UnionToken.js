@@ -9,6 +9,7 @@ import { formatDetailed } from "util/formatValue";
 export default function UnionTokenStatsView() {
   const {
     totalSupply,
+    treasuryVestorBalance,
     reservoir1UnionBalance,
     reservoir2UnionBalance,
     comptrollerUnionBalance,
@@ -40,6 +41,10 @@ export default function UnionTokenStatsView() {
             <StatsCard
               label="Total Supply"
               value={formatDetailed(totalSupply, "Union")}
+            />
+            <StatsCard
+              label="Treasury Vestor Balance"
+              value={formatDetailed(treasuryVestorBalance, "Union")}
             />
             <StatsCard
               label="Treasury 1 Balance"

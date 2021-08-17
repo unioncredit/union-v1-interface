@@ -1,4 +1,5 @@
 import useUnionTokenSupply from "./useUnionTokenSupply";
+import useTreasuryVestorBalance from "./useTreasuryVestorBalance";
 import useReservoir1UnionBalance from "./useReservoir1UnionBalance";
 import useReservoir2UnionBalance from "./useReservoir2UnionBalance";
 import useComptrollerUnionBalance from "./useComptrollerUnionBalance";
@@ -10,6 +11,7 @@ import useUnionPerDAIStaked from "./useUnionPerDAIStaked";
 
 export default function useUnionTokenStats() {
   const { data: totalSupply } = useUnionTokenSupply();
+  const { data: treasuryVestorBalance } = useTreasuryVestorBalance();
   const { data: reservoir1UnionBalance } = useReservoir1UnionBalance();
   const { data: reservoir2UnionBalance } = useReservoir2UnionBalance();
   const { data: comptrollerUnionBalance } = useComptrollerUnionBalance();
@@ -21,6 +23,7 @@ export default function useUnionTokenStats() {
 
   return {
     totalSupply,
+    treasuryVestorBalance,
     reservoir1UnionBalance,
     reservoir2UnionBalance,
     comptrollerUnionBalance,
