@@ -9,6 +9,7 @@ import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import Modal from "../../modal";
+import MetamaskSwitcher from "components/MetamaskSwitcher";
 import {
   useUpdateWalletModalView,
   useWalletModalOpen,
@@ -117,14 +118,20 @@ const WalletModal = () => {
       dangerouslyBypassFocusLock={Boolean(activatingConnector)}
     >
       <div className="px-4 py-6 sm:px-6 sm:py-8">
-        <div className="mb-10">
+        <div className="mb-4">
           <p className="text-center text-xl mb-3">
             {walletView === "SIGN_IN" ? "Sign in" : "Create an account"}
           </p>
           <div className="w-full h-1 bg-pink-pure" />
         </div>
 
-        <div className="mb-6 space-y-4">
+        <div className="mb-4" suppressHydrationWarning={true}>
+          {typeof ethereum !== "undefined" && ethereum && ethereum.chainId ? ( // eslint-disable-line no-undef
+            <MetamaskSwitcher />
+          ) : null}
+        </div>
+
+        <div className="mb-6 space-y-2">
           <WalletOptions
             activatingConnector={activatingConnector}
             setActivatingConnector={setActivatingConnector}
