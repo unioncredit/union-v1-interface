@@ -15,6 +15,10 @@ import { useForm } from "react-hook-form";
 import errorMessages from "util/errorMessages";
 import useMaxBorrow from "hooks/data/useMaxBorrow";
 import useLoanableAmount from "hooks/data/useLoanableAmount";
+import useBorrow from "hooks/payables/useBorrow";
+import handleTxError from "util/handleTxError";
+import getReceipt from "util/getReceipt";
+import { useWeb3React } from "@web3-react/core";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -27,12 +31,15 @@ export function BorrowModal({
   paymentDueDate,
   paymentPeriod,
   isOverdue,
+  onComplete,
 }) {
+  const { library } = useWeb3React();
+  const borrow = useBorrow();
   const { close } = useBorrowModal();
   const { data: maxBorrow } = useMaxBorrow();
   const { data: loanableAmount } = useLoanableAmount();
 
-  const { errors, formState, register, watch } = useForm({
+  const { errors, formState, register, watch, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -65,6 +72,7 @@ export function BorrowModal({
   const validate = async (val) => {
     if (!val) return errorMessages.required;
     if (isOverdue) return errorMessages.overdueBalance;
+    if (isNaN(val)) return errorMessages.notANumber;
     if (Number(val) > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
     if (Number(val) > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
     if (Number(val) > loanableAmount) return errorMessages.notEnoughPoolDAI;
@@ -73,47 +81,67 @@ export function BorrowModal({
     return true;
   };
 
+  const handleBorrow = async (data) => {
+    try {
+      const { amount } = data;
+      const { hash } = await borrow(amount);
+      await getReceipt(hash, library);
+      if (typeof onComplete === "function") onComplete();
+      close();
+    } catch (err) {
+      console.log("handleBorrow error", err);
+      handleTxError(err);
+    }
+  };
+
   return (
     <ModalOverlay>
       <Modal title="Borrow funds" onClose={close} drawer>
         <Modal.Body>
-          <Box>
-            <Box direction="vertical">
-              <Text>Available credit</Text>
-              <Heading>DAI {format(roundDown(creditLimit))}</Heading>
+          <form onSubmit={handleSubmit(handleBorrow)}>
+            <Box>
+              <Box direction="vertical">
+                <Text>Available credit</Text>
+                <Heading>DAI {format(roundDown(creditLimit))}</Heading>
+              </Box>
+              <Box direction="vertical" ml="30px">
+                <Text>Balance owed</Text>
+                <Heading>DAI {balanceOwed}</Heading>
+              </Box>
             </Box>
-            <Box direction="vertical" ml="30px">
-              <Text>Balance owed</Text>
-              <Heading>DAI {balanceOwed}</Heading>
+            <Divider />
+            <Heading mt="20px">Amount to borrow</Heading>
+            <Text size="large">How much are you borrowing today?</Text>
+            <Box mt="16px">
+              <Input
+                ref={register({ validate })}
+                name="amount"
+                label="borrow"
+                placeholder="$0"
+                suffix="DAI"
+                caption={`${amountWithFee} DAI including fee`}
+                error={errors.amount?.message || false}
+              />
             </Box>
-          </Box>
-          <Divider />
-          <Heading mt="20px">Amount to borrow</Heading>
-          <Text size="large">How much are you borrowing today?</Text>
-          <Box mt="16px">
-            <Input
-              ref={register({ validate })}
-              name="amount"
-              label="borrow"
-              placeholder="$0"
-              suffix="DAI"
-              caption={`${amountWithFee} DAI including fee`}
-              error={errors.amount?.message || false}
-            />
-          </Box>
-          <Box mt="24px">
-            <Box direction="vertical">
-              <Text>New balance owed</Text>
-              <Heading>DAI {newBalanceOwed}</Heading>
+            <Box mt="24px">
+              <Box direction="vertical">
+                <Text>New balance owed</Text>
+                <Heading>DAI {newBalanceOwed}</Heading>
+              </Box>
+              <Box direction="vertical" ml="30px">
+                <Text>Repayment due</Text>
+                <Heading>{nextPaymentDue}</Heading>
+              </Box>
             </Box>
-            <Box direction="vertical" ml="30px">
-              <Text>Repayment due</Text>
-              <Heading>{nextPaymentDue}</Heading>
-            </Box>
-          </Box>
+          </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button label="Confirm Borrow" fluid />
+          <Button
+            label="Confirm Borrow"
+            fluid
+            disabled={!isDirty || isSubmitting}
+            onClick={handleSubmit(handleBorrow)}
+          />
         </Modal.Footer>
       </Modal>
     </ModalOverlay>

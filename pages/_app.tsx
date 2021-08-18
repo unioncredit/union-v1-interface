@@ -1,6 +1,6 @@
 import { Web3ReactProvider, useWeb3React } from "@web3-react/core";
 import ErrorBoundary from "components/errorBoundary";
-import Footer from "components/Footer";
+import { Notifications } from "components-ui";
 import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";
 import type { AppProps } from "next/app";
@@ -21,6 +21,7 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary fallback={<Error />}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Component {...pageProps} />
+        <Notifications />
       </Web3ReactProvider>
     </ErrorBoundary>
   );

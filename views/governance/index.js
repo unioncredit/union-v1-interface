@@ -30,10 +30,6 @@ export default function GovernanceView() {
       <Stats mb="40px" title="Protocol Statistics">
         <Box>
           <Stat
-            label="Interest rate"
-            value={toPercent(data?.interestRate ?? 0)}
-          />
-          <Stat
             label="Lending pool"
             value={`${format(data?.lendingPoolBalance)} DAI`}
           />
@@ -42,6 +38,10 @@ export default function GovernanceView() {
             value={`${format(data?.outstandingLoans)} DAI`}
           />
           <Stat label="Defaulted" value={`${format(defaultedAmount)} DAI`} />
+          <Stat
+            label="Interest rate"
+            value={toPercent(data?.interestRate ?? 0)}
+          />
         </Box>
         <Button
           ml="auto"

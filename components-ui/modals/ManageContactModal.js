@@ -51,7 +51,7 @@ export function ManageContactModal({ address, vouched }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Manage contact" onClose={close}>
+      <Modal title="Manage contact" onClose={close} drawer>
         <Modal.Body>
           <Box mb="24px" justify="space-between">
             <AddressLabel address={address} />
@@ -76,19 +76,19 @@ export function ManageContactModal({ address, vouched }) {
               </Card.Body>
             </Card>
           ))}
-
-          <Divider />
+        </Modal.Body>
+        <Modal.Footer>
           <Button
             fluid
             mt="16px"
-            variant="secondary"
             color="red"
+            variant="secondary"
             label="Remove from contacts"
           />
           <Label as="p" size="small" align="center" mt="24px">
             Contacts with outstanding balance can’t be removed
           </Label>
-        </Modal.Body>
+        </Modal.Footer>
       </Modal>
     </ModalOverlay>
   );

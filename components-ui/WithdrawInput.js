@@ -9,8 +9,11 @@ import { Button, InputRow, Input } from "union-ui";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
-  const { handleSubmit, register, watch, setValue, formState, errors, reset } =
-    useForm();
+  const { handleSubmit, register, setValue, formState, errors, reset } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   const { isDirty, isSubmitting } = formState;
 
@@ -21,6 +24,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       const { hash } = await withdraw(values.amount);
       await getReceipt(hash, library);
       await onComplete();
+      reset();
     } catch (err) {
       handleTxError(err);
     }
@@ -48,13 +52,13 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
               message: errorMessages.minValuePointZeroOne,
             },
           })}
-          type="number"
           name="amount"
           label="Amout to withdraw"
           caption={`${withdrawableStake} DAI Available`}
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
           suffix="DAI"
+          error={errors?.amount?.message}
           cta={
             <Button
               type="submit"

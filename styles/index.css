@@ -67,6 +67,10 @@ a {
   overflow-y: scroll;
 }
 
+.card.card.all-contacts-card .contact-summary-col-inner::-webkit-scrollbar {
+  display: none;
+}
+
 .card.card.all-contacts-card .contact-summary-col:before {
   position: absolute;
   content: "";
@@ -90,4 +94,8 @@ a {
   position: absolute;
   left: 0;
   bottom: 0;
+}
+
+.notification-stack {
+  z-index: 999999;
 }

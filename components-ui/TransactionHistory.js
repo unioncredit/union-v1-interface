@@ -7,27 +7,33 @@ import {
   Avatar,
   Skeleton,
 } from "union-ui";
+import { Dai } from "components-ui";
 import useAsyncTransactions from "hooks/data/useAsyncTransactions";
 import createArray from "util/createArray";
 import Repayment from "svgs/Repayment";
 import Borrowed from "svgs/Borrowed";
+import format from "util/formatValue";
 
 function TransactionHistoryRow({ address, amount, type, date }) {
   return (
     <TableRow>
       <TableCell>
-        {address 
-          ? <Avatar address={address} />
-          : type === "BORROW" 
-          ? <Borrowed /> 
-          : <Repayment />}
+        {address ? (
+          <Avatar address={address} />
+        ) : type === "BORROW" ? (
+          <Borrowed />
+        ) : (
+          <Repayment />
+        )}
       </TableCell>
       <TableCell span={4}>
         <Text>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
         <Label>{date}</Label>
       </TableCell>
       <TableCell span={1} align="right">
-        <Text>${amount}</Text>
+        <Text>
+          <Dai value={format(amount, 2)} />
+        </Text>
       </TableCell>
     </TableRow>
   );

@@ -46,6 +46,7 @@ const errorMessages = {
   knownScam: "This address is associated with a known scam",
   validAddress: "Please input a valid Ethereum address",
   cantRemoveStake: "You can't remove used stake",
+  notANumber: "Please input a valid number",
 };
 
 export default errorMessages;

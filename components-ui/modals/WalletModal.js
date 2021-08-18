@@ -8,6 +8,7 @@ import {
   Label,
   Heading,
 } from "union-ui";
+import { ClaimButton } from "components-ui";
 import { useModal } from "hooks/useModal";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
@@ -58,7 +59,9 @@ export function WalletModal() {
         <Modal.Body>
           <Box align="center" justify="space-between">
             <Text m={0}>Unclaimed Tokens</Text>
-            <Button variant="pill">Claim tokens</Button>
+            <ClaimButton variant="pill" onComplete={onComplete}>
+              Claim tokens
+            </ClaimButton>
           </Box>
           <Heading m={0}>
             {format(rewards)} {unionSymbol}

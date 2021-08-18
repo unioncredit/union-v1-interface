@@ -13,6 +13,7 @@ import {
   StatusIcon,
   CircleProgress,
 } from "union-ui";
+import { useState } from "react";
 import Link from "next/link";
 import { Wrapper, AddressLabel } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
@@ -20,16 +21,35 @@ import useTrustCountData from "hooks/data/useTrustCountData";
 import useVouchData from "hooks/data/useVouchData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import format from "util/formatValue";
+import useRegisterMember from "hooks/payables/useRegisterMember";
+import handleTxError from "util/handleTxError";
+import getReceipt from "util/getReceipt";
+import { useWeb3React } from "@web3-react/core";
 
 import { config } from "./config";
 
 export default function MembershipView() {
+  const { library } = useWeb3React();
+  const [registering, setRegistering] = useState(false);
   const { data: isMember = null } = useIsMember();
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: vouchData = [] } = useVouchData();
   const { data: creditLimit = 0 } = useCreditLimit();
+  const registerMember = useRegisterMember();
 
   const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
+
+  const handleRegister = async () => {
+    try {
+      setRegistering(true);
+      const { hash } = await registerMember();
+      await getReceipt(hash, library);
+      setRegistering(false);
+    } catch (err) {
+      setRegistering(false);
+      handleTxError(err);
+    }
+  };
 
   return (
     <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -85,7 +105,12 @@ export default function MembershipView() {
                   <Text mb="21px" size="large">
                     Get access to your DAI {format(creditLimit)} credit line
                   </Text>
-                  <Button label="Pay 1 UNION" disabled={!isMember} />
+                  <Button
+                    label="Pay 1 UNION"
+                    disabled={!isMember}
+                    loading={registering}
+                    onClick={handleRegister}
+                  />
                   <Label as="p" mt="21px">
                     Get UNION by{" "}
                     <Link href="/get-started/stake">staking DAI</Link>

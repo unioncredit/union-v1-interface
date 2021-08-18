@@ -35,16 +35,20 @@ import truncateAddress from "util/truncateAddress";
 
 import { config, ContactsType } from "./config";
 import usePublicData from "hooks/usePublicData";
+import useAddressLabels from "hooks/useAddressLabels";
 
 function ContactDetailsHeader({ address, name: passedName, contactsType }) {
   const { name } = usePublicData(address);
   const { open: openManageContactModal } = useManageContactModal();
+  const { getLabel } = useAddressLabels();
 
   return (
     <Box align="center">
       {address && <Avatar size={54} address={address} />}
       <Box direction="vertical" mx="16px">
-        <Heading level={2}>{name || passedName}</Heading>
+        <Heading level={2}>
+          {getLabel(address)} • {name || passedName}
+        </Heading>
         <Text mb={0}>{address && truncateAddress(address)}</Text>
       </Box>
       {contactsType === ContactsType.YOU_TRUST && (
@@ -124,7 +128,7 @@ export default function ContactsView() {
                       ? createArray(3).map((_, i) => (
                           <ContactsSummaryRowSkeleton key={i} />
                         ))
-                      : [...data, ...data, ...data].map((item, i) => (
+                      : data.map((item, i) => (
                           <ContactsSummaryRow
                             {...item}
                             key={`${i}-${contactsType}`}

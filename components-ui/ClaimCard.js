@@ -3,7 +3,7 @@ import useRewardsData from "hooks/data/useRewardsData";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import format from "util/formatValue";
 import useUnionSymbol from "hooks/useUnionSymbol";
-
+import { ClaimButton } from "components-ui";
 import { Card, Text, Button, Box, Label, Heading } from "union-ui";
 
 export const ClaimCard = () => {
@@ -35,7 +35,11 @@ export const ClaimCard = () => {
               {format(rewards, 3)} {unionSymbol}
             </Heading>
           </div>
-          <Button label="Claim Tokens" variant="secondary" onClick={() => alert()} />
+          <ClaimButton
+            label="Claim Tokens"
+            variant="secondary"
+            onComplete={onComplete}
+          />
         </Box>
         <Box direction="vertical">
           <Label as="p" size="small">

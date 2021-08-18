@@ -24,3 +24,5 @@ export * from "./ContactDetails";
 export * from "./Health";
 export * from "./AccountActivity";
 export * from "./Dai";
+export * from "./ClaimButton";
+export * from "./Notifications";

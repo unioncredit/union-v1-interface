@@ -16,7 +16,8 @@ const getTrust =
     _: any,
     account: string,
     tokenAddress: string,
-    library: Web3Provider
+    library: Web3Provider,
+    count: number
   ) => {
     const res = await marketRegistryContract.tokens(tokenAddress);
     const signer = library.getSigner();
@@ -35,8 +36,10 @@ const getTrust =
       account
     );
 
+    const size = count ?? addresses.length;
+
     const data = await Promise.all(
-      addresses.map(async (address) => {
+      addresses.slice(0, size).map(async (address) => {
         const res: {
           vouchingAmount: BigNumber;
           lockedStake: BigNumber;

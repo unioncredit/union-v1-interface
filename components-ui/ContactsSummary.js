@@ -10,14 +10,18 @@ import {
 } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import { toPercent } from "util/numbers";
+import useAddressLabels from "hooks/useAddressLabels";
 
 export function ContactsSummaryRow(props) {
   const { address, vouched, utilized, onClick } = props;
   const { name, ...publicData } = usePublicData(address);
+  const { getLabel } = useAddressLabels();
 
   const handleClick = () => {
     onClick({ ...props, name, ...publicData });
   };
+
+  const label = getLabel(address);
 
   return (
     <TableRow onClick={onClick && handleClick}>
@@ -28,7 +32,9 @@ export function ContactsSummaryRow(props) {
         <Text>
           <Dai value={vouched} />
         </Text>
-        <Label>{name}</Label>
+        <Label>
+          {name} {label && `• ${label}`}
+        </Label>
       </TableCell>
       <TableCell span={1} align="right">
         <Label as="p" size="small" mb="6px">

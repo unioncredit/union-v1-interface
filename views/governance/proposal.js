@@ -8,6 +8,7 @@ import {
   Heading,
   Divider,
   Label,
+  Skeleton,
 } from "union-ui";
 import {
   VotingCard,
@@ -20,6 +21,7 @@ import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 
 import { config } from "./config";
+import createArray from "util/createArray";
 
 export default function ProposalView() {
   const { query } = useRouter();
@@ -36,24 +38,45 @@ export default function ProposalView() {
     details = [],
   } = !!data && data;
 
+  const isLoading = !data;
+
   return (
     <Wrapper title={config.title}>
       <Box mb="40px">
         <Link href="/governance/proposals">
-          <Button variant="secondary" label="Back to proposals" icon="arrow-left" />
+          <Button
+            variant="secondary"
+            label="Back to proposals"
+            icon="arrow-left"
+          />
         </Link>
       </Box>
       <Grid>
         <Row>
           <Col md={8}>
-            <Heading level={2} mb="8px">
+            <Heading level={2} mb="8px" grey={400}>
               UIP-{id}
             </Heading>
-            <Heading size="xlarge" mb="16px">
-              {title}
-            </Heading>
-            <Label as="p">Proposed by</Label>
-            {proposer ? <AddressLabel address={proposer} /> : "-"}
+            {isLoading ? (
+              <Skeleton size="medium" mb="16px" />
+            ) : (
+              <Heading size="xlarge" mb="16px">
+                {title}
+              </Heading>
+            )}
+            {isLoading ? (
+              <>
+                <Skeleton size="small" variant="secondary" />
+                <Skeleton size="medium" variant="secondary" />
+              </>
+            ) : (
+              <>
+                <Label as="p" size="small">
+                  Proposed by
+                </Label>
+                {proposer ? <AddressLabel address={proposer} /> : "-"}
+              </>
+            )}
             <Divider />
             <Box mt="16px">
               <Button
@@ -64,17 +87,29 @@ export default function ProposalView() {
               />
             </Box>
             <Box direction="vertical" mt="24px">
-              <Heading level={3}>Description</Heading>
-              <Text>{description}</Text>
+              <Heading level={3} mb="12px">
+                Description
+              </Heading>
+              {isLoading ? (
+                createArray(5).map(() => (
+                  <Skeleton size="small" variant="secondary" w="100%" />
+                ))
+              ) : (
+                <Text>{description}</Text>
+              )}
             </Box>
 
             <Box direction="vertical" mt="24px">
               <Heading level={3}>Details</Heading>
-              {details.map((detail) => (
-                <Text>
-                  {detail.target}.{detail.functionSig}(<br />&emsp;{detail.callData})
-                </Text>
-              ))}
+              {isLoading
+                ? createArray(5).map(() => (
+                    <Skeleton size="small" variant="secondary" w="100%" />
+                  ))
+                : details.map((detail) => (
+                    <Text w="100%" style={{ wordWrap: "break-word" }}>
+                      {detail.target}.{detail.functionSig}({detail.callData})
+                    </Text>
+                  ))}
             </Box>
           </Col>
           <Col md={4}>

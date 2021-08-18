@@ -9,77 +9,76 @@ import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 
-const getVouch = (marketRegistryContract) => async (
-  _,
-  account,
-  tokenAddress,
-  library
-) => {
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const signer = library.getSigner();
-  const uTokenAddress = res.uToken;
-  const userManagerAddress = res.userManager;
+const getVouch =
+  (marketRegistryContract) =>
+  async (_, account, tokenAddress, library, count) => {
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const signer = library.getSigner();
+    const uTokenAddress = res.uToken;
+    const userManagerAddress = res.userManager;
 
-  const userManagerContract = new Contract(
-    userManagerAddress,
-    USER_MANAGER_ABI,
-    signer
-  );
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
+    );
 
-  const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
+    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
 
-  const addresses = await userManagerContract.getStakerAddresses(account);
+    const addresses = await userManagerContract.getStakerAddresses(account);
 
-  const list = await Promise.all(
-    addresses.map(async (address) => {
-      const {
-        vouchingAmount,
-        lockedStake,
-        trustAmount,
-      } = await userManagerContract.getStakerAsset(account, address);
+    const size = count ?? addresses.length;
 
-      const totalUsed = Number(
-        formatUnits(await userManagerContract.getTotalLockedStake(address), 18)
-      );
+    const list = await Promise.all(
+      addresses.slice(0, size).map(async (address) => {
+        const { vouchingAmount, lockedStake, trustAmount } =
+          await userManagerContract.getStakerAsset(account, address);
 
-      const stakingAmount = Number(
-        formatUnits(await userManagerContract.getStakerBalance(address), 18)
-      );
+        const totalUsed = Number(
+          formatUnits(
+            await userManagerContract.getTotalLockedStake(address),
+            18
+          )
+        );
 
-      const isOverdue = await uTokenContract.checkIsOverdue(address);
+        const stakingAmount = Number(
+          formatUnits(await userManagerContract.getStakerBalance(address), 18)
+        );
 
-      const vouched = parseRes(vouchingAmount);
+        const isOverdue = await uTokenContract.checkIsOverdue(address);
 
-      const used = parseRes(lockedStake);
+        const vouched = parseRes(vouchingAmount);
 
-      const trust = parseRes(trustAmount);
+        const used = parseRes(lockedStake);
 
-      const freeStakingAmount =
-        stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
+        const trust = parseRes(trustAmount);
 
-      const available =
-        Number(vouched) - Number(used) > freeStakingAmount
-          ? freeStakingAmount.toFixed(2)
-          : Number(vouched - used).toFixed(2);
+        const freeStakingAmount =
+          stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
 
-      const utilized = used / vouched;
+        const available =
+          Number(vouched) - Number(used) > freeStakingAmount
+            ? freeStakingAmount.toFixed(2)
+            : Number(vouched - used).toFixed(2);
 
-      return {
-        address,
-        available,
-        isOverdue,
-        trust,
-        used,
-        utilized,
-        vouched,
-      };
-    })
-  );
+        const utilized = used / vouched;
 
-  return list;
-};
+        return {
+          address,
+          available,
+          isOverdue,
+          trust,
+          used,
+          utilized,
+          vouched,
+        };
+      })
+    );
 
-export default function useVouchData() {
+    return list;
+  };
+
+export default function useVouchData(count) {
   const { library, account } = useWeb3React();
 
   const curToken = useCurrentToken();
@@ -93,7 +92,7 @@ export default function useVouchData() {
     !!library;
 
   return useSWR(
-    shouldFetch ? ["Vouch", account, curToken, library] : null,
+    shouldFetch ? ["Vouch", account, curToken, library, count] : null,
     getVouch(marketRegistryContract)
   );
 }

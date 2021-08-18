@@ -17,17 +17,36 @@ import format from "util/formatValue";
 import useIsMember from "hooks/data/useIsMember";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
+import { useForm } from "react-hook-form";
+import useTrustData from "hooks/data/useTrustData";
+import useAdjustTrust from "hooks/payables/useAdjustTrust";
+import { Dai } from "components-ui/Dai";
+import { useWeb3React } from "@web3-react/core";
+import handleTxError from "util/handleTxError";
+import getReceipt from "util/getReceipt";
+import errorMessages from "util/errorMessages";
 
 export const NEW_VOUCH_MODAL = "new-vouch-modal";
 
 export const useNewVouchModal = () => useModal(NEW_VOUCH_MODAL);
 
 export function NewVouchModal({ address }) {
+  const { library } = useWeb3React();
   const { close } = useNewVouchModal();
   const { open: openVouchModal } = useVouchModal();
   const { data: isMember } = useIsMember(address);
-  const { data: borrowData } = useBorrowData(address);
-  const { data: creditLimit = 0 } = useCreditLimit(address);
+  const { mutate: updateTrustData } = useTrustData();
+  const { data: borrowData, mutate: updateBorrowData } = useBorrowData(address);
+  const { data: creditLimit = 0, mutate: updateCreditLimit } =
+    useCreditLimit(address);
+
+  const adjustTrust = useAdjustTrust();
+
+  const { register, errors, handleSubmit, formState } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+  const { isDirty, isSubmitting } = formState;
 
   const handleBack = () => {
     close();
@@ -36,37 +55,70 @@ export function NewVouchModal({ address }) {
 
   const { borrowedRounded = 0 } = !!borrowData && borrowData;
 
+  const handleNewVouch = async (data) => {
+    try {
+      const { hash } = await adjustTrust(address, data.amount);
+      await getReceipt(hash, library);
+      await updateTrustData();
+      await updateCreditLimit();
+      await updateBorrowData();
+      close();
+    } catch (err) {
+      console.log("handleVouch error", err);
+      handleTxError(err);
+    }
+  };
+
   return (
     <ModalOverlay>
       <Modal title="New vouch" onClose={close} drawer>
         <Modal.Body>
-          <Box mb="24px" justify="space-between">
-            <AddressLabel address={address} />
-            {isMember ? (
-              <Badge label="Trusted contact" color="green" />
-            ) : (
-              <Badge label="Not yet a member" color="blue" />
-            )}
-          </Box>
-          <Box>
-            <Box direction="vertical">
-              <Text>Credit limit</Text>
-              <Heading>DAI {format(creditLimit)}</Heading>
+          <form onSubmit={handleSubmit(handleNewVouch)}>
+            <Box mb="24px" justify="space-between">
+              <AddressLabel address={address} />
+              {isMember ? (
+                <Badge label="Trusted contact" color="green" />
+              ) : (
+                <Badge label="Not yet a member" color="blue" />
+              )}
             </Box>
-            <Box direction="vertical" ml="32px">
-              <Text>Unpaid Debt</Text>
-              <Heading>DAI {format(borrowedRounded)}</Heading>
+            <Box>
+              <Box direction="vertical">
+                <Text>Credit limit</Text>
+                <Heading>
+                  <Dai value={format(creditLimit)} />
+                </Heading>
+              </Box>
+              <Box direction="vertical" ml="32px">
+                <Text>Unpaid Debt</Text>
+                <Heading>
+                  <Dai value={format(borrowedRounded)} />
+                </Heading>
+              </Box>
             </Box>
-          </Box>
-          <Divider />
-          <Heading mt="28px" mb="4px">
-            Set contacts trust
-          </Heading>
-          <Text size="large" mb="16px">
-            What’s the total value of credit you’d like to make available for
-            this contact?
-          </Text>
-          <Input name="amount" label="Value" placeholder="0" />
+            <Divider />
+            <Heading mt="28px" mb="4px">
+              Set contacts trust
+            </Heading>
+            <Text size="large" mb="16px">
+              What’s the total value of credit you’d like to make available for
+              this contact?
+            </Text>
+            <Input
+              ref={register({
+                required: errorMessages.required,
+                min: {
+                  value: 1.0,
+                  message: errorMessages.minValueOnePointZero,
+                },
+              })}
+              suffix="DAI"
+              name="amount"
+              label="Value"
+              placeholder="0"
+              error={errors?.amount?.message}
+            />
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <ButtonRow mt="16px" fluid>
@@ -74,9 +126,16 @@ export function NewVouchModal({ address }) {
               fluid
               label="Go back"
               variant="secondary"
+              disabled={isSubmitting}
               onClick={handleBack}
             />
-            <Button fluid label="Submit vouch" />
+            <Button
+              fluid
+              label="Submit vouch"
+              disabled={!isDirty}
+              loading={isSubmitting}
+              onClick={handleSubmit(handleNewVouch)}
+            />
           </ButtonRow>
         </Modal.Footer>
       </Modal>

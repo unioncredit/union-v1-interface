@@ -29,17 +29,18 @@ import {
   useStakeModal,
   StakeModal,
   useVouchModal,
-  VouchModal,
   VouchModalManager,
 } from "components-ui/modals";
 import useTrustData from "hooks/data/useTrustData";
 import createArray from "util/createArray";
 
 import { config } from "./config";
+import { useState } from "react";
 
 export default function LendView() {
+  const [stakeType, setStakeType] = useState("deposit");
   const { data: stakeData } = useStakeData();
-  const { data: trustData } = useTrustData();
+  const { data: trustData } = useTrustData(8);
 
   const { open: openVouchModal } = useVouchModal();
   const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
@@ -55,6 +56,11 @@ export default function LendView() {
 
   const percentageStake = utilizedStake / totalStake;
 
+  const handleOpenStakeModal = (type) => () => {
+    setStakeType(type);
+    openStakeModal();
+  };
+
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -69,7 +75,7 @@ export default function LendView() {
                   icon="chevron"
                   iconPosition="end"
                   label="Adjust stake"
-                  onClick={openStakeModal}
+                  onClick={handleOpenStakeModal("deposit")}
                 />
               }
             />
@@ -92,7 +98,7 @@ export default function LendView() {
                   icon="chevron"
                   iconPosition="end"
                   label="Withdraw"
-                  onClick={openStakeModal}
+                  onClick={handleOpenStakeModal("withdraw")}
                 />
               }
             />
@@ -146,7 +152,7 @@ export default function LendView() {
         </Grid>
       </Wrapper>
       <VouchModalManager />
-      {isStakeModalOpen && <StakeModal />}
+      {isStakeModalOpen && <StakeModal type={stakeType} />}
     </>
   );
 }

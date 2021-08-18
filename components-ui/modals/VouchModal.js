@@ -22,7 +22,6 @@ export function VouchModal({ onNext }) {
   });
 
   const handleNext = (values) => {
-    debugger;
     close();
     openNewVouchModal();
     onNext && onNext(values.address);

@@ -52,9 +52,10 @@ export default function BorrowView() {
     usePaymentModal();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
-  const { data: creditLimit = 0 } = useCreditLimit();
-  const { data: borrowData } = useBorrowData();
-  const { data: vouchData } = useVouchData();
+
+  const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
+  const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
+  const { data: vouchData, mutate: updateVouchData } = useVouchData(8);
 
   const {
     borrowedRounded = 0,
@@ -75,6 +76,12 @@ export default function BorrowView() {
       )
     : 0;
   const unavailable = actualCreditLimit - creditLimit;
+
+  const onComplete = async () => {
+    await updateCreditLimit();
+    await updateVouchData();
+    await updateBorrowData();
+  };
 
   return (
     <>
@@ -109,7 +116,7 @@ export default function BorrowView() {
               value={<Dai value={format(roundDown(creditLimit))} />}
               caption={
                 <Label as="p" size="small">
-                  {format(unavailable)} Unavailable{" "}
+                  <Dai value={format(unavailable)} /> Unavailable{" "}
                   <Tooltip
                     position="top"
                     content={`
@@ -193,6 +200,7 @@ export default function BorrowView() {
             paymentDueDate,
             paymentPeriod,
             balanceOwed: borrowedRounded,
+            onComplete,
           }}
         />
       )}
@@ -202,6 +210,7 @@ export default function BorrowView() {
             paymentDueDate,
             balanceOwed: borrowedRounded,
             interest,
+            onComplete,
           }}
         />
       )}

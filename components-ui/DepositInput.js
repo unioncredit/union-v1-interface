@@ -14,7 +14,11 @@ import { Button, InputRow, Input } from "union-ui";
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
 
-  const { handleSubmit, register, watch, setValue, formState } = useForm();
+  const { handleSubmit, register, watch, setValue, formState, errors, reset } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   const { isDirty, isSubmitting } = formState;
 
@@ -50,6 +54,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       const { hash } = await deposit(values.amount);
       await getReceipt(hash, library);
       await onComplete();
+      reset();
     } catch (err) {
       handleTxError(err);
     }
@@ -59,13 +64,13 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputRow mt="20px">
         <Input
-          type="number"
           name="amount"
           label="Amout to deposit"
           caption={`${daiBalance} DAI Available`}
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
           suffix="DAI"
+          error={errors?.amount?.message}
           cta={
             <Button
               type="submit"

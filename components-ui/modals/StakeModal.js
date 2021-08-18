@@ -6,16 +6,16 @@ export const STAKE_MODAL = "stake-modal";
 
 export const useStakeModal = () => useModal(STAKE_MODAL);
 
-export function StakeModal() {
+export function StakeModal({ type }) {
   const { close } = useStakeModal();
+
   return (
     <ModalOverlay>
       <Modal title="Stake" onClose={close}>
-      	<Modal.Body>
-	        <StakeCardContent />
-	    </Modal.Body>
+        <Modal.Body>
+          <StakeCardContent type={type} onComplete={close} />
+        </Modal.Body>
       </Modal>
     </ModalOverlay>
   );
 }
-

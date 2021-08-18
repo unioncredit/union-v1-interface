@@ -1,3 +1,12 @@
+import {
+  Skeleton,
+  ButtonRow,
+  Card,
+  Button,
+  Text,
+  Label,
+  Heading,
+} from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
@@ -8,7 +17,6 @@ import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { getWalletName, getWalletIcon } from "util/formatWalletDetails";
-import { ButtonRow, Card, Button, Text, Label, Heading } from "union-ui";
 
 const WalletOptions = ({
   activatingConnector,
@@ -98,6 +106,20 @@ export const SignInCard = () => {
   });
 
   const triedEager = useEagerConnect();
+
+  if (!triedEager) {
+    return (
+      <Card size="small">
+        <Card.Body>
+          <Skeleton size="large" />
+          <Skeleton size="small" variant="secondary" w="100%" />
+          <Skeleton size="small" variant="secondary" w="100%" />
+          <Skeleton size="large" variant="secondary" w="100%" />
+          <Skeleton size="small" variant="secondary" />
+        </Card.Body>
+      </Card>
+    );
+  }
 
   return (
     <Card size="small">

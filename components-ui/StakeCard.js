@@ -19,8 +19,8 @@ const toggleMenuOptions = [
   { id: StakeType.WITHDRAW, label: "Withdraw" },
 ];
 
-export const StakeCardContent = () => {
-  const [stakeType, setStakeType] = useState("deposit");
+export const StakeCardContent = ({ type, onComplete: handleOnComplete }) => {
+  const [stakeType, setStakeType] = useState(type);
 
   const UNION = useCurrentToken("UNION");
   const { mutate: updateUnionBalance } = useTokenBalance(UNION);
@@ -36,11 +36,18 @@ export const StakeCardContent = () => {
     await updateUnionBalance();
     await updateStakeData();
     await updateRewardsData();
+    if (typeof handleOnComplete === "function") {
+      handleOnComplete();
+    }
   };
 
   const onToggleChange = (item) => {
     setStakeType(item.id);
   };
+
+  const initialActiveIndex = toggleMenuOptions.findIndex(
+    ({ id }) => id === type
+  );
 
   return (
     <>
@@ -54,7 +61,11 @@ export const StakeCardContent = () => {
             Earning at {rewardsMultiplier}x
           </Label>
         </div>
-        <ToggleMenu onChange={onToggleChange} items={toggleMenuOptions} />
+        <ToggleMenu
+          onChange={onToggleChange}
+          items={toggleMenuOptions}
+          initialActive={initialActiveIndex}
+        />
       </Box>
       {stakeType === StakeType.DEPOSIT ? (
         <DepositInput {...{ totalStake, onComplete }} />
@@ -63,7 +74,7 @@ export const StakeCardContent = () => {
       )}
     </>
   );
-}
+};
 
 export const StakeCard = () => {
   return (
