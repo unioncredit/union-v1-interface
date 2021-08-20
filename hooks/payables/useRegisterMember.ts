@@ -28,6 +28,7 @@ export default function useRegisterMember() {
     );
     memberFee = (await userManagerContract.newMemberFee()).toString();
     try {
+      console.log("requesting signature", library.provider.chainId, UNION, account, userManagerAddress, memberFee);
       const result = await signERC2612Permit(
         library,
         UNION,
@@ -35,6 +36,8 @@ export default function useRegisterMember() {
         userManagerAddress,
         memberFee
       );
+      const {deadline, nonce, owner, spender, value, r, s, v} = result;
+      console.log("signature result", deadline, nonce, owner, spender, value, r, s, v)
 
       return makeTxWithGasEstimate(
         userManagerContract,
