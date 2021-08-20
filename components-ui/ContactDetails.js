@@ -4,8 +4,18 @@ import { Text, Box, Stat, Label, Badge } from "union-ui";
 import { Health, Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
+import useAsyncActivity from "hooks/data/useAsyncActivity";
+import { AccountActivity } from "./AccountActivity";
 
-function TrustsYouContactDetails({ used, utilized, vouched, isOverdue }) {
+function TrustsYouContactDetails({
+  address,
+  used,
+  utilized,
+  vouched,
+  isOverdue,
+}) {
+  const activity = useAsyncActivity(address);
+
   return (
     <>
       <Box mb="20px">
@@ -24,16 +34,17 @@ function TrustsYouContactDetails({ used, utilized, vouched, isOverdue }) {
           <Badge color="blue" label="Healthy" />
         )}
       </Box>
-      <Box mb="24px" direction="vertical">
+      <Box direction="vertical">
         <Label size="small">Account History</Label>
-        <Text>No history</Text>
       </Box>
+      <AccountActivity {...activity} />
     </>
   );
 }
 
 function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
   const { data: borrowData } = useBorrowData(address);
+  const activity = useAsyncActivity(address);
 
   const {
     interest = 0,
@@ -60,10 +71,10 @@ function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
         <Label size="small">Loan status</Label>
         <Health health={health} isOverdue={isOverdue} />
       </Box>
-      <Box mb="24px" direction="vertical">
+      <Box direction="vertical">
         <Label size="small">Account History</Label>
-        <Text>No history</Text>
       </Box>
+      <AccountActivity {...activity} />
     </>
   );
 }

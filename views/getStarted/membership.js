@@ -56,7 +56,7 @@ export default function MembershipView() {
       <Grid gutterWidth={0}>
         <Row>
           <Col xs={12} md={6}>
-            <Card>
+            <Card mb="20px">
               <Card.Body>
                 <Box align="center" direction="vertical" my="12px">
                   <Heading>Get trusted on Union</Heading>
@@ -94,7 +94,7 @@ export default function MembershipView() {
             </Card>
           </Col>
           <Col xs={12} md={6}>
-            <Card>
+            <Card mb="20px">
               <Card.Body>
                 <Box align="center" direction="vertical" my="12px">
                   <Heading>Become a Member</Heading>
@@ -103,7 +103,8 @@ export default function MembershipView() {
                     to credit with Union
                   </Text>
                   <Text mb="21px" size="large">
-                    Get access to your DAI {format(creditLimit)} credit line
+                    Get access to your <Dai value={format(creditLimit)} />{" "}
+                    credit line
                   </Text>
                   <Button
                     label="Pay 1 UNION"

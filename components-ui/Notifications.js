@@ -1,5 +1,6 @@
 import { NotificationStack, Notification, Text, Label } from "union-ui";
 import { toastState, removeToast } from "hooks/useToast";
+import useIsDrawerOpen from "hooks/useIsDrawerOpen";
 
 const defaultTitles = {
   success: "Transaction successful",
@@ -9,6 +10,7 @@ const defaultTitles = {
 
 export function Notifications() {
   const toasts = toastState.useValue();
+  const isDrawerOpen = useIsDrawerOpen();
 
   if (toasts.length <= 0) return null;
 
@@ -16,8 +18,12 @@ export function Notifications() {
     removeToast(id);
   };
 
+  const style = isDrawerOpen
+    ? { right: "400px", transition: "all 500ms" }
+    : undefined;
+
   return (
-    <NotificationStack>
+    <NotificationStack style={style}>
       {toasts.map(({ id, body, type, hash, title }) => (
         <Notification key={id} variant={type} onClose={handleClose(id)}>
           <Text>{title || defaultTitles[type]}</Text>
@@ -29,4 +35,3 @@ export function Notifications() {
     </NotificationStack>
   );
 }
-

@@ -1,0 +1,81 @@
+.home .main-page {
+  width: 95%;
+  max-width: 646px;
+  margin: 0 auto;
+}
+
+.home .main-page-footer {
+  width: 95%;
+  max-width: 954px;
+  margin: 0 auto;
+}
+
+.home header {
+  padding: 43px 0;
+}
+
+.home .main-page-logo,
+.home .footer-logo {
+  width: 30px;
+  margin: 0 auto;
+}
+
+.home .heading--bold {
+  font-size: 56px;
+  font-weight: 700;
+}
+
+.home .heading--purple {
+  color: #5143b6;
+  font-weight: 700;
+}
+
+.home .main-page-footer img {
+  display: block;
+  margin: 0 auto;
+}
+
+.home .button {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.home .button--primary {
+  background-color: #5143b6;
+}
+
+.home .main-page .tabs {
+  text-align: center;
+}
+
+.home .main-page-footer .card .button {
+  margin: 0 auto;
+}
+
+.home footer {
+  background-color: white;
+  box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.1);
+  padding: 64px 0;
+  margin-top: 156px;
+}
+
+.home .footer-nav {
+  text-align: center;
+}
+
+.home .footer-nav-item {
+  display: inline-block;
+  margin: 0 32px;
+  margin-top: 24px;
+  font-size: 13px;
+}
+
+.home .footer-nav-item.secondary {
+  opacity: 0.5;
+}
+
+.home .bullet-header img {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}

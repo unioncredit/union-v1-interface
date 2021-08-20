@@ -7,7 +7,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 
 import { Card, Box, Label, Heading, ToggleMenu } from "union-ui";
-import { DepositInput, WithdrawInput } from "components-ui";
+import { DepositInput, WithdrawInput, Dai } from "components-ui";
 
 const StakeType = {
   DEPOSIT: "deposit",
@@ -56,7 +56,9 @@ export const StakeCardContent = ({ type, onComplete: handleOnComplete }) => {
           <Label as="p" size="small">
             Currently Staked
           </Label>
-          <Heading size="large">{format(totalStake)} DAI</Heading>
+          <Heading size="large">
+            <Dai value={format(totalStake)} />
+          </Heading>
           <Label as="p" size="small">
             Earning at {rewardsMultiplier}x
           </Label>
@@ -76,12 +78,12 @@ export const StakeCardContent = ({ type, onComplete: handleOnComplete }) => {
   );
 };
 
-export const StakeCard = () => {
+export const StakeCard = ({ type }) => {
   return (
-    <Card>
+    <Card mb="20px">
       <Card.Header title="Stake" />
       <Card.Body>
-        <StakeCardContent />
+        <StakeCardContent type={type} />
       </Card.Body>
     </Card>
   );

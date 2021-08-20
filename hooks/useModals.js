@@ -5,19 +5,18 @@ const initialState = {};
 export const modalState = newRidgeState(initialState);
 
 export function useModals() {
-	const [modals, setModals] = modalState.use();
+  const updateModal = (modal, open) => {
+    modalState.set((x) => ({ ...x, [modal]: open }));
+  };
 
-	const updateModal = (modal, open) => {
-		setModals(x => ({...x, [modal]: open }));
-	}
+  const toggleModal = (modal) => {
+    modalState.set((x) => ({ ...x, [modal]: !x[modal] }));
+  };
 
-	const toggleModal = (modal) => {
-		setModals(x => ({...x, [modal]: !x[modal]}));
-	}
+  const openModal = (modal) => updateModal(modal, true);
 
-	const openModal = (modal) => updateModal(modal, true);
+  const closeModal = (modal) => updateModal(modal, false);
 
-	const closeModal = (modal) => updateModal(modal, false);
-
-	return { modals, toggleModal, openModal, closeModal };
+  return { toggleModal, openModal, closeModal };
 }
+

@@ -6,6 +6,7 @@ import handleTxError from "util/handleTxError";
 import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 import { Button, InputRow, Input } from "union-ui";
+import { Dai } from "components-ui";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -54,7 +55,11 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
           })}
           name="amount"
           label="Amout to withdraw"
-          caption={`${withdrawableStake} DAI Available`}
+          caption={
+            <>
+              <Dai value={withdrawableStake} /> Available
+            </>
+          }
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
           suffix="DAI"

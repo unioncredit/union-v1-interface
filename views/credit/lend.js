@@ -64,61 +64,67 @@ export default function LendView() {
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Stats mb="40px">
-          <Box minw="65%">
-            <Stat
-              label="Staked"
-              value={<Dai value={format(roundDown(totalStake))} />}
-              cta={
-                <Button
-                  variant="pill"
-                  icon="chevron"
-                  iconPosition="end"
-                  label="Adjust stake"
-                  onClick={handleOpenStakeModal("deposit")}
-                />
-              }
-            />
-            <Stat
-              label="Utilized"
-              value={<Dai value={format(roundDown(utilizedStake))} />}
-              caption={
-                <Bar
-                  label={toPercent(percentageStake)}
-                  percentage={percentageStake * 100}
-                />
-              }
-            />
-            <Stat
-              label="Withdrawable"
-              value={<Dai value={format(roundDown(withdrawableStake))} />}
-              cta={
-                <Button
-                  variant="pill"
-                  icon="chevron"
-                  iconPosition="end"
-                  label="Withdraw"
-                  onClick={handleOpenStakeModal("withdraw")}
-                />
-              }
-            />
-            <Stat
-              label="Defaulted"
-              value={<Dai value={format(roundDown(defaultedStake))} />}
-            />
-          </Box>
-          <ButtonRow direction="vertical">
-            <Button
-              icon="vouch"
-              label="Vouch for new contact"
-              onClick={openVouchModal}
-            />
-          </ButtonRow>
-        </Stats>
         <Grid>
           <Row>
-            <Col md={4}>
-              <Heading level={2}>Contacts you trust</Heading>
+            <Col>
+              <Stats
+                buttons={[
+                  <Button
+                    icon="vouch"
+                    label="Vouch for new contact"
+                    onClick={openVouchModal}
+                  />,
+                ]}
+              >
+                <Stat
+                  label="Staked"
+                  value={<Dai value={format(roundDown(totalStake))} />}
+                  cta={
+                    <Button
+                      variant="pill"
+                      icon="chevron"
+                      iconPosition="end"
+                      label="Adjust stake"
+                      onClick={handleOpenStakeModal("deposit")}
+                    />
+                  }
+                />
+                <Stat
+                  label="Utilized"
+                  value={<Dai value={format(roundDown(utilizedStake))} />}
+                  caption={
+                    <Bar
+                      label={toPercent(percentageStake)}
+                      percentage={percentageStake * 100}
+                    />
+                  }
+                />
+                <Stat
+                  label="Withdrawable"
+                  value={<Dai value={format(roundDown(withdrawableStake))} />}
+                  cta={
+                    <Button
+                      variant="pill"
+                      icon="chevron"
+                      iconPosition="end"
+                      label="Withdraw"
+                      onClick={handleOpenStakeModal("withdraw")}
+                    />
+                  }
+                />
+                <Stat
+                  label="Defaulted"
+                  value={<Dai value={format(roundDown(defaultedStake))} />}
+                />
+              </Stats>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md={6} lg={4}>
+              <Heading level={2} mt="40px">
+                Contacts you trust
+              </Heading>
               <Text mb="12px">Accounts you’re providing credit to</Text>
               <Table>
                 {isTrustLoading
@@ -129,6 +135,7 @@ export default function LendView() {
                       <ContactsSummaryRow {...item} key={i} />
                     ))}
                 <TableRow>
+                  <TableCell />
                   <TableCell align="right" span={1}>
                     <Link href="/contacts">
                       <Button
@@ -143,8 +150,10 @@ export default function LendView() {
                 </TableRow>
               </Table>
             </Col>
-            <Col md={8}>
-              <Heading level={2}>Outstanding Loans</Heading>
+            <Col md={6} lg={8}>
+              <Heading level={2} mt="40px">
+                Outstanding Loans
+              </Heading>
               <Text mb="12px">Outstanding debt from contacts you trust</Text>
               <OutstandingLoans data={trustData} />
             </Col>

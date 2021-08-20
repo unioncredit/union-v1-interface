@@ -1,6 +1,5 @@
 import {
   ModalOverlay,
-  Modal,
   Text,
   Input,
   Button,
@@ -11,7 +10,7 @@ import {
   Badge,
 } from "union-ui";
 import { useModal } from "hooks/useModal";
-import { AddressLabel } from "components-ui";
+import { AddressLabel, Modal } from "components-ui";
 import { useVouchModal } from "components-ui/modals";
 import format from "util/formatValue";
 import useIsMember from "hooks/data/useIsMember";
@@ -42,11 +41,15 @@ export function NewVouchModal({ address }) {
 
   const adjustTrust = useAdjustTrust();
 
-  const { register, errors, handleSubmit, formState } = useForm({
+  const { register, errors, handleSubmit, formState, watch } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
   const { isDirty, isSubmitting } = formState;
+
+  const watchAmount = watch("amount");
+  const amount = Number(watchAmount || 0);
+  const newCreditLimit = amount + creditLimit;
 
   const handleBack = () => {
     close();
@@ -74,7 +77,7 @@ export function NewVouchModal({ address }) {
       <Modal title="New vouch" onClose={close} drawer>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleNewVouch)}>
-            <Box mb="24px" justify="space-between">
+            <Box mb="26px" justify="space-between">
               <AddressLabel address={address} />
               {isMember ? (
                 <Badge label="Trusted contact" color="green" />
@@ -118,6 +121,14 @@ export function NewVouchModal({ address }) {
               placeholder="0"
               error={errors?.amount?.message}
             />
+            <Box mt="32px">
+              <Box direction="vertical">
+                <Text>New credit limit</Text>
+                <Heading>
+                  <Dai value={format(newCreditLimit)} />
+                </Heading>
+              </Box>
+            </Box>
           </form>
         </Modal.Body>
         <Modal.Footer>

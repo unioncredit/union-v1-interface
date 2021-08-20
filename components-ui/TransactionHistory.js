@@ -5,6 +5,7 @@ import {
   TableRow,
   Label,
   Avatar,
+  Box,
   Skeleton,
 } from "union-ui";
 import { Dai } from "components-ui";
@@ -17,20 +18,22 @@ import format from "util/formatValue";
 function TransactionHistoryRow({ address, amount, type, date }) {
   return (
     <TableRow>
-      <TableCell>
-        {address ? (
-          <Avatar address={address} />
-        ) : type === "BORROW" ? (
-          <Borrowed />
-        ) : (
-          <Repayment />
-        )}
+      <TableCell span={1}>
+        <Box align="center">
+          {address ? (
+            <Avatar address={address} />
+          ) : type === "BORROW" ? (
+            <Borrowed />
+          ) : (
+            <Repayment />
+          )}
+          <Box direction="vertical" ml="16px">
+            <Text>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
+            <Label>{date}</Label>
+          </Box>
+        </Box>
       </TableCell>
-      <TableCell span={4}>
-        <Text>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
-        <Label>{date}</Label>
-      </TableCell>
-      <TableCell span={1} align="right">
+      <TableCell align="right">
         <Text>
           <Dai value={format(amount, 2)} />
         </Text>
@@ -67,16 +70,11 @@ function TransactionHistoryEmpty() {
 }
 
 export function TransactionHistory() {
-  const { data, chunk, chunks } = useAsyncTransactions();
-
-  const isLoading = chunk < chunks;
-  const isEmpty = !isLoading && data.length <= 0;
-  const loadingMaxCount = 3 - data?.length;
-  const loadingCount =
-    isLoading && (loadingMaxCount <= 0 ? 1 : loadingMaxCount);
+  const { data, isLoading, isEmpty, loadingCount, chunk, chunks } =
+    useAsyncTransactions();
 
   return (
-    <Table>
+    <Table disableCondensed>
       {isEmpty && !isLoading && <TransactionHistoryEmpty />}
 
       {data.map((tx) => (

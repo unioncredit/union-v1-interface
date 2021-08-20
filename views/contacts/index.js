@@ -103,7 +103,7 @@ export default function ContactsView() {
         <Card size="fluid" noGutter className="all-contacts-card">
           <Grid bordered>
             <Row nogutter>
-              <Col md={4}>
+              <Col md={5} lg={4}>
                 <Box>
                   <ToggleMenu
                     items={config.toggleItems}
@@ -111,7 +111,7 @@ export default function ContactsView() {
                   />
                 </Box>
               </Col>
-              <Col>
+              <Col md={7} lg={8} className="hide-lt-1000">
                 {selectedContact && (
                   <ContactDetailsHeader
                     {...selectedContact}
@@ -121,7 +121,7 @@ export default function ContactsView() {
               </Col>
             </Row>
             <Row noGutter>
-              <Col md={4} noPadding className="contact-summary-col">
+              <Col md={5} lg={4} noPadding className="contact-summary-col">
                 <div className="contact-summary-col-inner">
                   <Table noBorder noPadding mb="20px">
                     {isLoading
@@ -150,9 +150,13 @@ export default function ContactsView() {
                   </Box>
                 </div>
               </Col>
-              <Col md={8}>
+              <Col md={7} lg={8} className="hide-lt-1000">
                 {selectedContact && (
-                  <ContactDetails variant={contactsType} {...selectedContact} />
+                  <ContactDetails
+                    key={selectedContact.address}
+                    variant={contactsType}
+                    {...selectedContact}
+                  />
                 )}
               </Col>
             </Row>

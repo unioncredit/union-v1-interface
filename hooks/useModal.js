@@ -1,12 +1,14 @@
-import { useModals } from "./useModals";
+import { modalState, useModals } from "./useModals";
 
 export const useModal = (modal) => {
-	const { modals, toggleModal, openModal, closeModal } = useModals();
+  const { toggleModal, openModal, closeModal } = useModals();
 
-	return {
-		isOpen: modals[modal],
-		toggle: () => toggleModal(modal),
-		open: () => openModal(modal),
-		close: () => closeModal(modal),
-	}
-}
+  const isOpen = modalState.useSelector((modals) => modals[modal]);
+
+  return {
+    isOpen,
+    toggle: () => toggleModal(modal),
+    open: () => openModal(modal),
+    close: () => closeModal(modal),
+  };
+};

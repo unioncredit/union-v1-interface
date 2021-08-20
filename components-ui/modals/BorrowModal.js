@@ -1,6 +1,5 @@
 import {
   ModalOverlay,
-  Modal,
   Box,
   Text,
   Heading,
@@ -8,6 +7,7 @@ import {
   Input,
   Button,
 } from "union-ui";
+import { Modal, Dai } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
 import { roundDown } from "util/numbers";
@@ -99,34 +99,44 @@ export function BorrowModal({
       <Modal title="Borrow funds" onClose={close} drawer>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleBorrow)}>
-            <Box>
+            <Box mb="16px">
               <Box direction="vertical">
                 <Text>Available credit</Text>
-                <Heading>DAI {format(roundDown(creditLimit))}</Heading>
+                <Heading>
+                  <Dai value={format(roundDown(creditLimit))} />
+                </Heading>
               </Box>
               <Box direction="vertical" ml="30px">
                 <Text>Balance owed</Text>
-                <Heading>DAI {balanceOwed}</Heading>
+                <Heading>
+                  <Dai value={balanceOwed} />
+                </Heading>
               </Box>
             </Box>
             <Divider />
-            <Heading mt="20px">Amount to borrow</Heading>
+            <Heading mt="36px">Amount to borrow</Heading>
             <Text size="large">How much are you borrowing today?</Text>
             <Box mt="16px">
               <Input
                 ref={register({ validate })}
                 name="amount"
-                label="borrow"
+                label="Borrow"
                 placeholder="$0"
                 suffix="DAI"
-                caption={`${amountWithFee} DAI including fee`}
+                caption={
+                  <>
+                    <Dai value={amountWithFee} /> including fee
+                  </>
+                }
                 error={errors.amount?.message || false}
               />
             </Box>
-            <Box mt="24px">
+            <Box mt="42px">
               <Box direction="vertical">
                 <Text>New balance owed</Text>
-                <Heading>DAI {newBalanceOwed}</Heading>
+                <Heading>
+                  <Dai value={newBalanceOwed} />
+                </Heading>
               </Box>
               <Box direction="vertical" ml="30px">
                 <Text>Repayment due</Text>

@@ -1,6 +1,5 @@
 import {
   ModalOverlay,
-  Modal,
   Box,
   Button,
   Divider,
@@ -8,7 +7,7 @@ import {
   Label,
   Heading,
 } from "union-ui";
-import { ClaimButton } from "components-ui";
+import { ClaimButton, Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
@@ -59,9 +58,11 @@ export function WalletModal() {
         <Modal.Body>
           <Box align="center" justify="space-between">
             <Text m={0}>Unclaimed Tokens</Text>
-            <ClaimButton variant="pill" onComplete={onComplete}>
-              Claim tokens
-            </ClaimButton>
+            <ClaimButton
+              variant="pill"
+              onComplete={onComplete}
+              label="Claim tokens"
+            />
           </Box>
           <Heading m={0}>
             {format(rewards)} {unionSymbol}
@@ -73,9 +74,11 @@ export function WalletModal() {
           <Divider />
           <Box align="center" justify="space-between" mt="20px">
             <Text mb={0}>Voting Power</Text>
-            <Button variant="pill" onClick={() => alert()}>
-              Voting profile
-            </Button>
+            <Button
+              variant="pill"
+              onClick={() => alert()}
+              label="Voting profile"
+            />
           </Box>
           <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
           <Label size="small">

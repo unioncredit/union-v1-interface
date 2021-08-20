@@ -36,9 +36,11 @@ export function UserVotingOverview({ variant, address }) {
           <Box align="center" justify="space-between">
             <Text m={0}>Voting Power</Text>
             {variant === "primary" && (
-              <Button variant="pill" onClick={openVoteDelegationModal}>
-                Delegate votes
-              </Button>
+              <Button
+                variant="pill"
+                onClick={openVoteDelegationModal}
+                label="Delegate votes"
+              />
             )}
           </Box>
           <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
@@ -54,7 +56,7 @@ export function UserVotingOverview({ variant, address }) {
               <Divider />
               <Box align="center" justify="space-between" mt="20px">
                 <Text m={0}>Unclaimed Tokens</Text>
-                <Button variant="pill">Claim tokens</Button>
+                <Button variant="pill" label="Claim tokens" />
               </Box>
               <Heading m={0}>
                 {commify(unclaimedBalance.toFixed(4))} {unionSymbol}

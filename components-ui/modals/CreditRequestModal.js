@@ -1,12 +1,12 @@
 import {
   ModalOverlay,
   Box,
-  Modal,
   Label,
   Button,
   ButtonRow,
   Text,
 } from "union-ui";
+import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import dynamic from "next/dynamic";
 

@@ -1,5 +1,5 @@
-import { ModalOverlay, Modal } from "union-ui";
-import { StakeCardContent } from "components-ui";
+import { ModalOverlay } from "union-ui";
+import { StakeCardContent, Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 
 export const STAKE_MODAL = "stake-modal";

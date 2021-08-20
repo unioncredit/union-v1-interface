@@ -7,6 +7,7 @@ import {
   Label,
   Avatar as UIAvatar,
   Skeleton,
+  Box,
 } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import { toPercent } from "util/numbers";
@@ -25,16 +26,18 @@ export function ContactsSummaryRow(props) {
 
   return (
     <TableRow onClick={onClick && handleClick}>
-      <TableCell>
-        <Avatar address={address} />
-      </TableCell>
       <TableCell span={4}>
-        <Text>
-          <Dai value={vouched} />
-        </Text>
-        <Label>
-          {name} {label && `• ${label}`}
-        </Label>
+        <Box align="center">
+          <Avatar address={address} />
+          <Box direction="vertical" ml="16px">
+            <Text>
+              <Dai value={vouched} />
+            </Text>
+            <Label>
+              {name} {label && `• ${label}`}
+            </Label>
+          </Box>
+        </Box>
       </TableCell>
       <TableCell span={1} align="right">
         <Label as="p" size="small" mb="6px">

@@ -1,6 +1,5 @@
 import {
   ModalOverlay,
-  Modal,
   Box,
   Text,
   Heading,
@@ -9,6 +8,7 @@ import {
   Button,
   ButtonRow,
 } from "union-ui";
+import { Modal, Dai } from "components-ui";
 import { useForm } from "react-hook-form";
 import { useModal } from "hooks/useModal";
 import { REPAY_MARGIN } from "constants/variables";
@@ -100,14 +100,18 @@ export function PaymentModal({
       <Modal title="Make a payment" onClose={close} drawer>
         <Modal.Body>
           <form onSubmit={handleSubmit(handlePayment)}>
-            <Box>
+            <Box mb="16px">
               <Box direction="vertical">
                 <Text>Balance owed</Text>
-                <Heading>DAI {calculateBalanceOwed}</Heading>
+                <Heading>
+                  <Dai value={calculateBalanceOwed} />
+                </Heading>
               </Box>
               <Box direction="vertical" ml="30px">
                 <Text>Min. due</Text>
-                <Heading>DAI {roundUp(interest)}</Heading>
+                <Heading>
+                  <Dai value={roundUp(interest)} />
+                </Heading>
               </Box>
               <Box direction="vertical" ml="30px">
                 <Text>Default in</Text>
@@ -115,7 +119,7 @@ export function PaymentModal({
               </Box>
             </Box>
             <Divider />
-            <Heading mt="20px">Amount to repay</Heading>
+            <Heading mt="36px">Amount to repay</Heading>
             <Text size="large">How much are you paying today?</Text>
             <Box mt="16px">
               <Input
@@ -124,22 +128,27 @@ export function PaymentModal({
                 suffix="DAI"
                 label="Repay"
                 placeholder="$0"
-                caption={`Pay minimum (${roundUp(interest)} DAI)`}
+                caption={
+                  <>
+                    Pay minimum (<Dai value={roundUp(interest)} />)
+                  </>
+                }
                 onCaptionClick={handlePayMinimum}
                 error={errors.amount?.message || false}
               />
             </Box>
-            <Box mt="24px">
+            <Box mt="42px">
               <Box direction="vertical">
                 <Text>New balance owed</Text>
-                <Heading>DAI {formatNewBalance}</Heading>
+                <Heading>
+                  <Dai value={formatNewBalance} />
+                </Heading>
               </Box>
             </Box>
           </form>
         </Modal.Body>
         <Modal.Footer>
           <ButtonRow fluid>
-            {/* <Button label="Allow repayment" fluid mt="16px" /> */}
             <Button
               label="Make payment"
               fluid

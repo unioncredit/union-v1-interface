@@ -12,12 +12,23 @@ import {
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useAsyncActivity from "hooks/data/useAsyncActivity";
-import { Tabs, Layout, Heading, Box, Button, Wallet, Logo } from "union-ui";
+import {
+  Tabs,
+  Layout,
+  Heading,
+  Box,
+  Button,
+  Wallet,
+  Logo,
+  Grid,
+  Row,
+  Col,
+} from "union-ui";
 import usePublicData from "hooks/usePublicData";
 import { Avatar } from "./Avatar";
 
 export function Wrapper({ children, tabItems, title }) {
-  const { data: activityData } = useAsyncActivity();
+  const activity = useAsyncActivity();
   const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
@@ -60,44 +71,51 @@ export function Wrapper({ children, tabItems, title }) {
           </Layout.Sidebar>
         )}
         <Layout.Main {...mainProps}>
-          <Layout.Header {...headerProps} align="center">
-            {isLoggedIn ? (
-              <>
-                <Heading size="large" m={0}>
-                  {title}
-                </Heading>
-                <Box>
-                  <Button
-                    variant="secondary"
-                    icon="vouch"
-                    label={`${format(unionBalance, 2)} ${unionSymbol}`}
-                    onClick={openWalletModal}
-                  />
-                  <Wallet
-                    onClick={openAccountModal}
-                    name={name}
-                    indicator={
-                      activityData?.length > 99 ? "99+" : activityData?.length
-                    }
-                    avatar={<Avatar address={account} />}
-                  />
-                </Box>
-              </>
-            ) : (
-              <Logo width="26px" />
-            )}
-          </Layout.Header>
-          {tabItems && (
-            <Box mb="24px">
-              <Tabs initialActive={initialTab} items={tabItemLinks} />
-            </Box>
-          )}
-          {children}
-          <Footer />
+          <Grid style={{ display: "flex", flexGrow: 1 }}>
+            <Row style={{ width: "100%", margin: 0 }}>
+              <Col>
+                <Layout.Header {...headerProps} align="center">
+                  {isLoggedIn ? (
+                    <>
+                      <Heading size="large" m={0}>
+                        {title}
+                      </Heading>
+                      <Box>
+                        <Button
+                          variant="secondary"
+                          icon="vouch"
+                          label={`${format(unionBalance, 2)} ${unionSymbol}`}
+                          onClick={openWalletModal}
+                        />
+                        <Wallet
+                          onClick={openAccountModal}
+                          name={name}
+                          indicator={
+                            activity.data?.length > 99
+                              ? "99+"
+                              : activity.data?.length
+                          }
+                          avatar={<Avatar address={account} />}
+                        />
+                      </Box>
+                    </>
+                  ) : (
+                    <Logo width="26px" />
+                  )}
+                </Layout.Header>
+                {tabItems && (
+                  <Box mb="24px">
+                    <Tabs initialActive={initialTab} items={tabItemLinks} />
+                  </Box>
+                )}
+                {children}
+              </Col>
+            </Row>
+          </Grid>
         </Layout.Main>
       </Layout>
       {isWalletModalOpen && <WalletModal />}
-      {isAccountModalOpen && <AccountModal activity={activityData} />}
+      {isAccountModalOpen && <AccountModal activity={activity} />}
     </>
   );
 }

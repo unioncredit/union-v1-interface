@@ -14,7 +14,13 @@ const sortTxs = (txs) =>
       []
     );
 
-export default function useAsyncLogs(filters, parser = identityFn) {
+const identityFn = (d) => d;
+
+export default function useAsyncLogs(
+  filters,
+  parser = identityFn,
+  shouldSave = true
+) {
   const { account, chainId } = useWeb3React();
   const readProvider = useReadProvider();
   const [logs, setLogs] = useState([]);
@@ -26,12 +32,7 @@ export default function useAsyncLogs(filters, parser = identityFn) {
 
   useEffect(() => {
     async function load() {
-      const iterator = await getAsyncLogs(
-        readProvider,
-        chainId,
-        filters,
-        parser
-      );
+      const iterator = getAsyncLogs(readProvider, chainId, filters, parser);
 
       for await (const item of iterator) {
         if (item && item?.data.length > 0) {
@@ -46,19 +47,29 @@ export default function useAsyncLogs(filters, parser = identityFn) {
 
   useEffect(
     () => () => {
-      save((state) => {
-        const currentData = state[meta.key];
-        return {
-          ...storedLogs,
-          [meta.key]: { ...currentData, ...meta, data: logs },
-        };
-      });
+      shouldSave &&
+        save((state) => {
+          const currentData = state[meta.key];
+          return {
+            ...storedLogs,
+            [meta.key]: { ...currentData, ...meta, data: logs },
+          };
+        });
     },
     [meta]
   );
 
+  const isLoading = !meta.chunk || !meta.chunks || meta.chunk < meta.chunks;
+  const isEmpty = !isLoading && logs.length <= 0;
+  const loadingMaxCount = 3 - logs?.length;
+  const loadingCount =
+    isLoading && (loadingMaxCount <= 0 ? 1 : loadingMaxCount);
+
   return {
     ...meta,
+    isLoading,
+    isEmpty,
+    loadingCount,
     data: logs,
   };
 }

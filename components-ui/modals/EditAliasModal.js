@@ -3,12 +3,12 @@ import {
   Divider,
   Button,
   ModalOverlay,
-  Modal,
   Input,
   Text,
 } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
+import { Modal } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import useToast, { FLAVORS } from "hooks/useToast";
 import errorMessages from "util/errorMessages";

@@ -3,7 +3,6 @@ import {
   Divider,
   Button,
   ModalOverlay,
-  Modal,
   Input,
   Heading,
   Text,
@@ -12,7 +11,7 @@ import {
 } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
-import { AddressLabel, Dai } from "components-ui";
+import { AddressLabel, Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
 import { useForm } from "react-hook-form";

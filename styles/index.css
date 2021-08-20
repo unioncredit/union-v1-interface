@@ -9,6 +9,12 @@ a {
   text-decoration: inherit;
 }
 
+@media screen and (max-width: 750px) {
+  .layout-sidebar {
+    display: none;
+  }
+}
+
 .footer {
   width: 100%;
   margin-top: auto;
@@ -67,6 +73,21 @@ a {
   overflow-y: scroll;
 }
 
+@media screen and (max-width: 750px) {
+  .card.card.all-contacts-card .contact-summary-col-inner {
+    position: relative;
+    padding-bottom: 70px;
+  }
+
+  .card.all-contacts-card .grid {
+    display: block;
+  }
+
+  .card.all-contacts-card {
+    flex: unset;
+  }
+}
+
 .card.card.all-contacts-card .contact-summary-col-inner::-webkit-scrollbar {
   display: none;
 }
@@ -98,4 +119,34 @@ a {
 
 .notification-stack {
   z-index: 999999;
+}
+
+.all-contacts-card .account-activity {
+  flex-grow: 1;
+  position: relative;
+}
+
+.all-contacts-card .account-activity-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: grey white;
+}
+
+.all-contacts-card .account-activity-inner::-webkit-scrollbar {
+  width: 11px;
+}
+
+.all-contacts-card .account-activity-inner::-webkit-scrollbar-track {
+  background: white;
+}
+
+.all-contacts-card .account-activity-inner::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 10px;
+  border: 3px solid white;
 }

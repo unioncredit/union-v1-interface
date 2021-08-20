@@ -10,6 +10,7 @@ import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import errorMessages from "util/errorMessages";
 import { roundDown } from "util/numbers";
 import { Button, InputRow, Input } from "union-ui";
+import { Dai } from "components-ui";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -66,7 +67,11 @@ export const DepositInput = ({ totalStake, onComplete }) => {
         <Input
           name="amount"
           label="Amout to deposit"
-          caption={`${daiBalance} DAI Available`}
+          caption={
+            <>
+              <Dai value={daiBalance} /> Available
+            </>
+          }
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
           suffix="DAI"

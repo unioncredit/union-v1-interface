@@ -86,79 +86,84 @@ export default function BorrowView() {
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Stats mb="40px">
-          <Box>
-            <Stat
-              label="Credit Limit"
-              value={<Dai value={format(roundDown(actualCreditLimit))} />}
-              cta={
-                <Button
-                  variant="pill"
-                  icon="chevron"
-                  iconPosition="end"
-                  label="Request extra"
-                  onClick={openCreditRequest}
+        <Grid>
+          <Row>
+            <Col>
+              <Stats
+                buttons={[
+                  <Button
+                    icon="borrow"
+                    label="Borrow funds"
+                    onClick={openBorrowModal}
+                  />,
+                  <Button
+                    icon="repayment"
+                    variant="secondary"
+                    label="Make a payment"
+                    onClick={openPaymentModal}
+                  />,
+                ]}
+              >
+                <Stat
+                  label="Credit Limit"
+                  value={<Dai value={format(roundDown(actualCreditLimit))} />}
+                  cta={
+                    <Button
+                      variant="pill"
+                      icon="chevron"
+                      iconPosition="end"
+                      label="Request extra"
+                      onClick={openCreditRequest}
+                    />
+                  }
                 />
-              }
-            />
-            <Stat
-              label="Balance owed"
-              value={<Dai value={borrowedRounded} />}
-              caption={
-                <Bar
-                  label={`${toPercent(pctUsed)}`}
-                  percentage={pctUsed * 100}
+                <Stat
+                  label="Balance owed"
+                  value={<Dai value={borrowedRounded} />}
+                  caption={
+                    <Bar
+                      label={`${toPercent(pctUsed)}`}
+                      percentage={pctUsed * 100}
+                    />
+                  }
                 />
-              }
-            />
-            <Stat
-              label="Available Credit"
-              value={<Dai value={format(roundDown(creditLimit))} />}
-              caption={
-                <Label as="p" size="small">
-                  <Dai value={format(unavailable)} /> Unavailable{" "}
-                  <Tooltip
-                    position="top"
-                    content={`
+                <Stat
+                  label="Available Credit"
+                  value={<Dai value={format(roundDown(creditLimit))} />}
+                  caption={
+                    <Label as="p" size="small">
+                      <Dai value={format(unavailable)} /> Unavailable{" "}
+                      <Tooltip
+                        position="top"
+                        content={`
                   These are funds which are currently tied up elsewhere and as a 
                   result, not available to borrow at this time
                 `}
-                  />
-                </Label>
-              }
-            />
-            <Stat
-              label={
-                <Text mb={0}>
-                  Minimum Payment{" "}
-                  <Tooltip
-                    position="top"
-                    content="Represents the amount due now in order to repay your loan on time"
-                  />
-                </Text>
-              }
-              value={<Dai value={roundUp(interest)} />}
-              caption={paymentDueDate}
-            />
-          </Box>
-          <ButtonRow direction="vertical">
-            <Button
-              icon="borrow"
-              label="Borrow funds"
-              onClick={openBorrowModal}
-            />
-            <Button
-              icon="repayment"
-              variant="secondary"
-              label="Make a payment"
-              onClick={openPaymentModal}
-            />
-          </ButtonRow>
-        </Stats>
-        <Grid>
+                      />
+                    </Label>
+                  }
+                />
+                <Stat
+                  label={
+                    <Text mb={0}>
+                      Minimum Payment{" "}
+                      <Tooltip
+                        position="top"
+                        content="Represents the amount due now in order to repay your loan on time"
+                      />
+                    </Text>
+                  }
+                  value={<Dai value={roundUp(interest)} />}
+                  caption={paymentDueDate}
+                />
+              </Stats>
+            </Col>
+          </Row>
           <Row>
-            <Col md={4}>
-              <Heading level={2}>Credit providers</Heading>
+            <Col md={6} lg={4}>
+              <Heading level={2} mt="40px">
+                Credit providers
+              </Heading>
               <Text mb="12px">Accounts providing you with credit</Text>
               <Table>
                 {isVouchLoading
@@ -169,6 +174,7 @@ export default function BorrowView() {
                       <ContactsSummaryRow {...item} key={i} />
                     ))}
                 <TableRow>
+                  <TableCell />
                   <TableCell align="right" span={1}>
                     <Link href="/contacts">
                       <Button
@@ -183,8 +189,10 @@ export default function BorrowView() {
                 </TableRow>
               </Table>
             </Col>
-            <Col md={8}>
-              <Heading level={2}>Transaction History</Heading>
+            <Col md={6} lg={8}>
+              <Heading level={2} mt="40px">
+                Transaction History
+              </Heading>
               <Text mb="12px">Your credit based transaction history</Text>
               <TransactionHistory />
             </Col>

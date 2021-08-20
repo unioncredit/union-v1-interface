@@ -23,7 +23,7 @@ export const ClaimCard = () => {
   };
 
   return (
-    <Card>
+    <Card mb="20px">
       <Card.Header title="UNION Token" />
       <Card.Body>
         <Box align="center" justify="space-between">

@@ -6,23 +6,30 @@ import {
   TableCell,
   TableRow,
   Label,
+  Box,
 } from "union-ui";
 import { useEditVouchModal, EditVouchModal } from "components-ui/modals";
 import { useState } from "react";
 import usePublicData from "hooks/usePublicData";
-import { Avatar } from "components-ui";
+import { Avatar, Dai } from "components-ui";
 
-function OutstandingLoansRow({ address, used, onManage }) {
+function OutstandingLoansRow({ address, used, onManage, ...props }) {
+  console.log({ props });
   const { name } = usePublicData(address);
   return (
     <TableRow>
-      <TableCell>
-        <Avatar address={address} />
-      </TableCell>
       <TableCell span={1}>
-        <Text>DAI {used}</Text>
-        <Label>{name}</Label>
+        <Box align="center">
+          <Avatar address={address} />
+          <Box direction="vertical" ml="16px">
+            <Text>
+              <Dai value={used} />
+            </Text>
+            <Label mb={0}>{name}</Label>
+          </Box>
+        </Box>
       </TableCell>
+      <TableCell></TableCell>
       <TableCell span={1}>
         <Badge label="Healthy" color="blue" />
       </TableCell>

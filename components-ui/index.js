@@ -26,3 +26,4 @@ export * from "./AccountActivity";
 export * from "./Dai";
 export * from "./ClaimButton";
 export * from "./Notifications";
+export * from "./Modal";

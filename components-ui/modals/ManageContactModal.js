@@ -1,8 +1,6 @@
 import {
-  Divider,
   Button,
   ModalOverlay,
-  Modal,
   Card,
   Text,
   Label,
@@ -12,7 +10,7 @@ import {
 import { useModal } from "hooks/useModal";
 import useAddressLabels from "hooks/useAddressLabels";
 import { useEditAliasModal, useEditVouchModal } from "components-ui/modals";
-import { AddressLabel } from "components-ui";
+import { AddressLabel, Modal, Dai } from "components-ui";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
@@ -43,7 +41,7 @@ export function ManageContactModal({ address, vouched }) {
     },
     {
       label: "Credit limit",
-      value: `${vouched} DAI`,
+      value: <Dai value={vouched} />,
       buttonLabel: "Change limit",
       onClick: handleEditVouch,
     },

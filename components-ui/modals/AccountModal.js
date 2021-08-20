@@ -1,13 +1,5 @@
-import {
-  ModalOverlay,
-  Modal,
-  Label,
-  Heading,
-  Box,
-  Button,
-  Text,
-} from "union-ui";
-import { AccountActivity } from "components-ui";
+import { ModalOverlay, Label, Heading, Box, Button, Text } from "union-ui";
+import { AccountActivity, Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useWeb3React } from "@web3-react/core";
 import usePublicData from "hooks/usePublicData";
@@ -41,13 +33,16 @@ export function AccountModal({ activity }) {
         <Modal.Body>
           <Box align="center" justify="space-between">
             <Text m={0}>Wallet Connect</Text>
-            <Button variant="pill" onClick={handleSignOut}>
-              Disconnect
-            </Button>
+            <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
           </Box>
           <Heading m={0}>{name}</Heading>
           <Label size="small">{account}</Label>
-          <AccountActivity data={activity} />
+          <Box align="center" justify="space-between" mt="20px" mb="16px">
+            <Text m={0} size="large">
+              Transactions
+            </Text>
+          </Box>
+          <AccountActivity {...activity} limit={5} />
         </Modal.Body>
       </Modal>
     </ModalOverlay>

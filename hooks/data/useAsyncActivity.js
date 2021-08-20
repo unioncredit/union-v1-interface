@@ -54,17 +54,8 @@ const parseRegisterMember = (provider) => async (log) => {
   };
 };
 
-const logsFilter = (account) => (log) => {
-  if (log.type === "UpdateTrust") {
-    return log.staker === account || log.borrower === account;
-  } else if (log.type === "CancelVouch") {
-    return log.borrower === account;
-  }
-  return Boolean(log);
-};
-
 const parseActivityLog =
-  (provider, userManagerContract, filters, account) => async (logs) => {
+  (provider, userManagerContract, filters) => async (logs) => {
     const [updateTrustFilter, cancelVouchFilter, registerMemberFilter] =
       filters;
 
@@ -81,27 +72,26 @@ const parseActivityLog =
       })
     );
 
-    return data.filter(logsFilter(account));
+    return data;
   };
 
-export default function useAsyncActivity() {
-  const { account } = useWeb3React();
+export default function useAsyncActivity(address) {
+  const { account: connectedAccount } = useWeb3React();
   const readProvider = useReadProvider();
   const userManagerContract = useUserContract();
 
-  const updateTrustFilter = userManagerContract?.filters.LogUpdateTrust();
-  const cancelVouchFilter = userManagerContract?.filters.LogCancelVouch();
+  const account = address || connectedAccount;
+
+  const updateTrustFilter =
+    userManagerContract?.filters.LogUpdateTrust(account);
+  const cancelVouchFilter =
+    userManagerContract?.filters.LogCancelVouch(account);
   const registerMemberFilter =
     userManagerContract?.filters.LogRegisterMember(account);
 
   const filters = [updateTrustFilter, cancelVouchFilter, registerMemberFilter];
 
-  const parser = parseActivityLog(
-    readProvider,
-    userManagerContract,
-    filters,
-    account
-  );
+  const parser = parseActivityLog(readProvider, userManagerContract, filters);
 
   const data = account && userManagerContract && useAsyncLogs(filters, parser);
 

@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { ModalOverlay, Modal, Text, Input, Button, Divider } from "union-ui";
+import { ModalOverlay, Text, Input, Button, Divider } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useNewVouchModal } from "components-ui/modals";
+import { Modal } from "components-ui";
 import validateAddress from "util/validateAddress";
 import { useWeb3React } from "@web3-react/core";
 import errorMessages from "util/errorMessages";
