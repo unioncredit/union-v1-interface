@@ -1,6 +1,8 @@
 import { NotificationStack, Notification, Text, Label } from "union-ui";
 import { toastState, removeToast } from "hooks/useToast";
 import useIsDrawerOpen from "hooks/useIsDrawerOpen";
+import useChainId from "hooks/useChainId";
+import getEtherscanLink from "util/getEtherscanLink";
 
 const defaultTitles = {
   success: "Transaction successful",
@@ -9,6 +11,7 @@ const defaultTitles = {
 };
 
 export function Notifications() {
+  const chainId = useChainId();
   const toasts = toastState.useValue();
   const isDrawerOpen = useIsDrawerOpen();
 
@@ -28,7 +31,16 @@ export function Notifications() {
         <Notification key={id} variant={type} onClose={handleClose(id)}>
           <Text>{title || defaultTitles[type]}</Text>
           <Label as="p" size="small">
-            {body} {hash && "link"}
+            {body}{" "}
+            {hash && (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+              >
+                View transaction
+              </a>
+            )}
           </Label>
         </Notification>
       ))}

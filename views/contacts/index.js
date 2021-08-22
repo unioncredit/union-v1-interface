@@ -37,30 +37,30 @@ import { config, ContactsType } from "./config";
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 
-function ContactDetailsHeader({ address, name: passedName, contactsType }) {
+function ContactDetailsHeader({ address, name: passedName }) {
   const { name } = usePublicData(address);
   const { open: openManageContactModal } = useManageContactModal();
   const { getLabel } = useAddressLabels();
 
   return (
-    <Box align="center">
-      {address && <Avatar size={54} address={address} />}
-      <Box direction="vertical" mx="16px">
-        <Heading level={2}>
-          {getLabel(address)} • {name || passedName}
-        </Heading>
-        <Text mb={0}>{address && truncateAddress(address)}</Text>
+    <Box align="center" className="contact-details-header">
+      <Box>
+        {address && <Avatar size={54} address={address} />}
+        <Box direction="vertical" mx="16px">
+          <Heading level={2}>
+            {getLabel(address)} • {name || passedName}
+          </Heading>
+          <Text mb={0}>{address && truncateAddress(address)}</Text>
+        </Box>
       </Box>
-      {contactsType === ContactsType.YOU_TRUST && (
-        <Button
-          ml="auto"
-          rounded
-          variant="secondary"
-          label="Manage contact"
-          icon="manage"
-          onClick={openManageContactModal}
-        />
-      )}
+      <Button
+        ml="auto"
+        rounded
+        variant="secondary"
+        label="Manage contact"
+        icon="manage"
+        onClick={openManageContactModal}
+      />
     </Box>
   );
 }
@@ -103,7 +103,7 @@ export default function ContactsView() {
         <Card size="fluid" noGutter className="all-contacts-card">
           <Grid bordered>
             <Row nogutter>
-              <Col md={5} lg={4}>
+              <Col sm={6} md={5} lg={4}>
                 <Box>
                   <ToggleMenu
                     items={config.toggleItems}
@@ -111,7 +111,7 @@ export default function ContactsView() {
                   />
                 </Box>
               </Col>
-              <Col md={7} lg={8} className="hide-lt-1000">
+              <Col sm={6} md={7} lg={8} className="hide-lt-600">
                 {selectedContact && (
                   <ContactDetailsHeader
                     {...selectedContact}
@@ -121,9 +121,15 @@ export default function ContactsView() {
               </Col>
             </Row>
             <Row noGutter>
-              <Col md={5} lg={4} noPadding className="contact-summary-col">
+              <Col
+                sm={6}
+                md={5}
+                lg={4}
+                noPadding
+                className="contact-summary-col"
+              >
                 <div className="contact-summary-col-inner">
-                  <Table noBorder noPadding mb="20px">
+                  <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
                       ? createArray(3).map((_, i) => (
                           <ContactsSummaryRowSkeleton key={i} />
@@ -150,7 +156,7 @@ export default function ContactsView() {
                   </Box>
                 </div>
               </Col>
-              <Col md={7} lg={8} className="hide-lt-1000">
+              <Col sm={6} md={7} lg={8} className="hide-lt-600">
                 {selectedContact && (
                   <ContactDetails
                     key={selectedContact.address}
@@ -166,7 +172,12 @@ export default function ContactsView() {
 
       {/* modals */}
       <VouchModalManager />
-      {isManageContactModalOpen && <ManageContactModal {...selectedContact} />}
+      {isManageContactModalOpen && (
+        <ManageContactModal
+          {...selectedContact}
+          isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
+        />
+      )}
       {isEditAliasModalOpen && <EditAliasModal {...selectedContact} />}
       {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
     </>

@@ -18,7 +18,7 @@ function TrustsYouContactDetails({
 
   return (
     <>
-      <Box mb="20px">
+      <Box mb="20px" className="contact-details-stats">
         <Stat label="Providing you" value={<Dai value={vouched} />} />
         <Stat label="Utilized" value={`${toPercent(utilized)}`} />
         <Stat
@@ -54,7 +54,7 @@ function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
 
   return (
     <>
-      <Box mb="20px">
+      <Box mb="20px" className="contact-details-stats">
         <Stat label="Credit Limit" value={<Dai value={vouched} />} />
         <Stat label="Utilized" value={`${toPercent(utilized)}`} />
         <Stat
@@ -62,7 +62,7 @@ function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
           value={<Dai value={format(vouched - used)} />}
         />
       </Box>
-      <Box mb="24px">
+      <Box mb="24px" className="contact-details-stats">
         <Stat label="Balance owed" value={<Dai value={format(used)} />} />
         <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
         <Stat label="Payment due" value={paymentDueDate} />

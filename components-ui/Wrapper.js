@@ -112,6 +112,7 @@ export function Wrapper({ children, tabItems, title }) {
               </Col>
             </Row>
           </Grid>
+          <Box mb="80px" />
         </Layout.Main>
       </Layout>
       {isWalletModalOpen && <WalletModal />}

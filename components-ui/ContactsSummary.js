@@ -53,11 +53,13 @@ export function ContactsSummaryRowSkeleton() {
   return (
     <TableRow>
       <TableCell>
-        <UIAvatar />
-      </TableCell>
-      <TableCell span={1}>
-        <Skeleton size="medium" variant="primary" />
-        <Skeleton size="small" variant="secondary" />
+        <Box>
+          <UIAvatar />
+          <Box direction="vertical" ml="16px">
+            <Skeleton size="medium" variant="primary" />
+            <Skeleton size="small" variant="secondary" />
+          </Box>
+        </Box>
       </TableCell>
       <TableCell span={1} align="right">
         <Skeleton size="small" variant="secondary" />
