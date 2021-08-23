@@ -15,7 +15,7 @@ import {
 } from "union-ui";
 import { useState } from "react";
 import Link from "next/link";
-import { Wrapper, AddressLabel } from "components-ui";
+import { Wrapper, AddressLabel, Dai } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import useVouchData from "hooks/data/useVouchData";

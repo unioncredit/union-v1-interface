@@ -1,10 +1,10 @@
 import useBorrowData from "hooks/data/useBorrowData";
 import PropTypes from "prop-types";
-import { Text, Box, Stat, Label, Badge } from "union-ui";
+import { Box, Stat, Label, Badge } from "union-ui";
 import { Health, Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
-import useAsyncActivity from "hooks/data/useAsyncActivity";
+import useAccountHistory from "hooks/data/useAccountHistory";
 import { AccountActivity } from "./AccountActivity";
 
 function TrustsYouContactDetails({
@@ -14,7 +14,7 @@ function TrustsYouContactDetails({
   vouched,
   isOverdue,
 }) {
-  const activity = useAsyncActivity(address);
+  const activity = useAccountHistory(address);
 
   return (
     <>
@@ -44,7 +44,7 @@ function TrustsYouContactDetails({
 
 function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
   const { data: borrowData } = useBorrowData(address);
-  const activity = useAsyncActivity(address);
+  const activity = useAccountHistory(address);
 
   const {
     interest = 0,

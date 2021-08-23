@@ -2,7 +2,7 @@ import format from "util/formatValue";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import useUnionSymbol from "hooks/useUnionSymbol";
-import { TabLink, Footer, Navigation } from "components-ui";
+import { TabLink, Navigation } from "components-ui";
 import {
   WalletModal,
   useWalletModal,
@@ -11,24 +11,22 @@ import {
 } from "components-ui/modals";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
-import useAsyncActivity from "hooks/data/useAsyncActivity";
 import {
   Tabs,
   Layout,
   Heading,
   Box,
   Button,
-  Wallet,
   Logo,
   Grid,
   Row,
   Col,
 } from "union-ui";
+import { Wallet } from "components-ui";
 import usePublicData from "hooks/usePublicData";
 import { Avatar } from "./Avatar";
 
 export function Wrapper({ children, tabItems, title }) {
-  const activity = useAsyncActivity();
   const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
@@ -90,11 +88,6 @@ export function Wrapper({ children, tabItems, title }) {
                         <Wallet
                           onClick={openAccountModal}
                           name={name}
-                          indicator={
-                            activity.data?.length > 99
-                              ? "99+"
-                              : activity.data?.length
-                          }
                           avatar={<Avatar address={account} />}
                         />
                       </Box>
@@ -116,7 +109,7 @@ export function Wrapper({ children, tabItems, title }) {
         </Layout.Main>
       </Layout>
       {isWalletModalOpen && <WalletModal />}
-      {isAccountModalOpen && <AccountModal activity={activity} />}
+      {isAccountModalOpen && <AccountModal />}
     </>
   );
 }

@@ -14,7 +14,6 @@ import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";
 
 function OutstandingLoansRow({ address, used, onManage, ...props }) {
-  console.log({ props });
   const { name } = usePublicData(address);
   return (
     <TableRow>

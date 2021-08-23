@@ -75,7 +75,7 @@ const parseActivityLog =
     return data;
   };
 
-export default function useAsyncActivity(address) {
+export default function useAccountHistory(address) {
   const { account: connectedAccount } = useWeb3React();
   const readProvider = useReadProvider();
   const userManagerContract = useUserContract();

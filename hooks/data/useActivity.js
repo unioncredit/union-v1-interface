@@ -1,148 +1,35 @@
-import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
-import { Contract } from "@ethersproject/contracts";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import useReadProvider from "hooks/useReadProvider";
-import { getLogs } from "lib/logs";
+import { useEffect } from "react";
+import { newRidgeState } from "react-ridge-state";
 
-dayjs.extend(relativeTime);
+const MAX_SIZE = 8;
+const activityStorageKey = "union:activity";
 
-const getActivity = (marketRegistryContract) => async (
-  _,
-  account,
-  provider,
-  chainId,
-  tokenAddress
-) => {
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const userManagerAddress = res.userManager;
-  const userManagerContract = new Contract(
-    userManagerAddress,
-    USER_MANAGER_ABI,
-    provider
-  );
+const initialState =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem(activityStorageKey))
+    : [];
 
-  /**
-   * UpdateTrust Logs
-   */
+const activityState = newRidgeState(initialState || []);
 
-  const updateTrustFilter = userManagerContract.filters.LogUpdateTrust();
-  const updateTrustLogs = await getLogs(provider, chainId, updateTrustFilter);
-  const parseUpdateTrustLogs = await Promise.all(
-    updateTrustLogs.map(async (log) => {
-      const block = await provider.getBlock(log.blockNumber);
-      const logData = userManagerContract.interface.parseLog(log);
-      const { borrower, staker, trustAmount } = logData.args;
-      return {
-        borrower,
-        ts: block.timestamp * 1000,
-        date: dayjs(block.timestamp * 1000).fromNow(),
-        hash: log.transactionHash,
-        staker,
-        trustAmount: formatUnits(trustAmount, 18),
-        type: "UpdateTrust",
-      };
-    })
-  );
-
-  const personalUpdateTrustLogs = parseUpdateTrustLogs.filter(
-    (log) => log.staker === account || log.borrower === account
-  );
-
-  /**
-   * RegisterMember Logs
-   */
-
-  const registerMemberFilter = userManagerContract.filters.LogRegisterMember(
-    account
-  );
-
-  const registerMemberLogs = await getLogs(
-    provider,
-    chainId,
-    registerMemberFilter
-  );
-
-  const parseRegisterMemberLogs = await Promise.all(
-    registerMemberLogs.map(async (log) => {
-      const block = await provider.getBlock(log.blockNumber);
-
-      return {
-        ts: block.timestamp * 1000,
-        date: dayjs(block.timestamp * 1000).fromNow(),
-        hash: log.transactionHash,
-        type: "RegisterMember",
-      };
-    })
-  );
-
-  /**
-   * CancelVouch Logs
-   */
-
-  const cancelVouchFilter = userManagerContract.filters.LogCancelVouch();
-
-  const cancelVouchLogs = await getLogs(provider, chainId, cancelVouchFilter);
-
-  const parseCancelVouchLogs = await Promise.all(
-    cancelVouchLogs.map(async (log) => {
-      const block = await provider.getBlock(log.blockNumber);
-
-      const logData = userManagerContract.interface.parseLog(log);
-
-      const [account, borrower] = logData.args;
-
-      return {
-        ts: block.timestamp * 1000,
-        date: dayjs(block.timestamp * 1000).fromNow(),
-        hash: log.transactionHash,
-        type: "CancelVouch",
-        account,
-        borrower,
-      };
-    })
-  );
-
-  const personalCancelVouchLogs = parseCancelVouchLogs.filter(
-    (log) => log.borrower === account
-  );
-
-  /**
-   * Compiled Logs
-   */
-  const logs = [
-    ...personalUpdateTrustLogs,
-    ...parseRegisterMemberLogs,
-    ...personalCancelVouchLogs,
-  ];
-
-  /**
-   * Sort logs by timestamp
-   */
-  const sortedLogs = logs.sort((a, b) => b.ts - a.ts);
-
-  return sortedLogs;
+export const addActivity = (activity) => {
+  activityState.set((x) => {
+    if (x.length >= MAX_SIZE) {
+      return [activity, ...x.slice(0, MAX_SIZE - 1)];
+    }
+    return [activity, ...x];
+  });
 };
 
+export const clearActivity = () => activityState.set([]);
+
 export default function useActivity() {
-  const { account, chainId } = useWeb3React();
-  const readProvider = useReadProvider();
-  const curToken = useCurrentToken();
-  const marketRegistryContract = useMarketRegistryContract();
+  const activity = activityState.useValue();
 
-  const shouldFetch =
-    !!marketRegistryContract &&
-    typeof account === "string" &&
-    !!readProvider &&
-    !!chainId;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(activityStorageKey, JSON.stringify(activity));
+    }
+  }, [activity]);
 
-  return useSWR(
-    shouldFetch ? ["Activity", account, readProvider, chainId, curToken] : null,
-    getActivity(marketRegistryContract)
-  );
+  return activity;
 }

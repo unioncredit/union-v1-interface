@@ -52,7 +52,7 @@ export function AccountActivity({
   return (
     <>
       {isEmpty ? (
-        <Text>No activity</Text>
+        <Text>No history</Text>
       ) : (
         <div className="account-activity">
           <div className="account-activity-inner">

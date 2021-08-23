@@ -7,6 +7,8 @@ import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 import { Button, InputRow, Input } from "union-ui";
 import { Dai } from "components-ui";
+import { addActivity } from "hooks/data/useActivity";
+import activityLabels from "util/activityLabels";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -25,8 +27,10 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       const { hash } = await withdraw(values.amount);
       await getReceipt(hash, library);
       await onComplete();
+      addActivity(activityLabels.withdraw({ amount: values.amount }));
       reset();
     } catch (err) {
+      addActivity(activityLabels.withdraw({ amount: values.amount }, true));
       handleTxError(err);
     }
   };

@@ -20,6 +20,8 @@ import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
 import useRepay from "hooks/payables/useRepay";
+import { addActivity } from "hooks/data/useActivity";
+import activityLabels from "util/activityLabels";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -78,19 +80,21 @@ export function PaymentModal({
   };
 
   const handlePayment = async (values) => {
-    try {
-      const amountToRepay =
-        Number(values.amount) === calculateMaxValue
-          ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
-            ? flooredDaiBalance
-            : Number(values.amount * REPAY_MARGIN)
-          : Number(values.amount);
+    const amountToRepay =
+      Number(values.amount) === calculateMaxValue
+        ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
+          ? flooredDaiBalance
+          : Number(values.amount * REPAY_MARGIN)
+        : Number(values.amount);
 
+    try {
       const { hash } = await repay(amountToRepay);
       await getReceipt(hash, library);
+      addActivity(activityLabels.repay({ amount: amountToRepay }));
       if (typeof onComplete === "function") await onComplete();
       close();
     } catch (err) {
+      addActivity(activityLabels.repay({ amount: amountToRepay }, true));
       handleTxError(err);
     }
   };

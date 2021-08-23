@@ -19,6 +19,8 @@ import useBorrow from "hooks/payables/useBorrow";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
+import { addActivity } from "hooks/data/useActivity";
+import activityLabels from "util/activityLabels";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -87,9 +89,10 @@ export function BorrowModal({
       const { hash } = await borrow(amount);
       await getReceipt(hash, library);
       if (typeof onComplete === "function") onComplete();
+      addActivity(activityLabels.borrow({ amount }));
       close();
     } catch (err) {
-      console.log("handleBorrow error", err);
+      addActivity(activityLabels.borrow({ amount: data.amount }, true));
       handleTxError(err);
     }
   };

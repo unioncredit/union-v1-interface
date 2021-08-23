@@ -24,6 +24,8 @@ import { useWeb3React } from "@web3-react/core";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import errorMessages from "util/errorMessages";
+import { addActivity } from "hooks/data/useActivity";
+import activityLabels from "util/activityLabels";
 
 export const NEW_VOUCH_MODAL = "new-vouch-modal";
 
@@ -62,12 +64,15 @@ export function NewVouchModal({ address }) {
     try {
       const { hash } = await adjustTrust(address, data.amount);
       await getReceipt(hash, library);
+      addActivity(activityLabels.newVouch({ address, amount: values.amount }));
       await updateTrustData();
       await updateCreditLimit();
       await updateBorrowData();
       close();
     } catch (err) {
-      console.log("handleVouch error", err);
+      addActivity(
+        activityLabels.newVouch({ address, amount: values.amount }, true)
+      );
       handleTxError(err);
     }
   };

@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { useForm } from "react-hook-form";
 
+import { Dai } from "components-ui";
+import { Button, InputRow, Input } from "union-ui";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import useCurrentToken from "hooks/useCurrentToken";
@@ -9,8 +11,8 @@ import useTokenBalance from "hooks/data/useTokenBalance";
 import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import errorMessages from "util/errorMessages";
 import { roundDown } from "util/numbers";
-import { Button, InputRow, Input } from "union-ui";
-import { Dai } from "components-ui";
+import activityLabels from "util/activityLabels";
+import { addActivity } from "hooks/data/useActivity";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -54,9 +56,11 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     try {
       const { hash } = await deposit(values.amount);
       await getReceipt(hash, library);
+      addActivity(activityLabels.borrow({ amount: values.amount, hash }));
       await onComplete();
       reset();
     } catch (err) {
+      addActivity(activityLabels.borrow({ amount: values.amount }, true));
       handleTxError(err);
     }
   };
