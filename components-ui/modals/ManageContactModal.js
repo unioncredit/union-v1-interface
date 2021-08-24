@@ -4,17 +4,30 @@ import useAddressLabels from "hooks/useAddressLabels";
 import { useEditAliasModal, useEditVouchModal } from "components-ui/modals";
 import { AddressLabel, Modal, Dai } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
+import { useState } from "react";
+import { addActivity } from "hooks/data/useActivity";
+import activityLabels from "util/activityLabels";
+import handleTxError from "util/handleTxError";
+import getReceipt from "util/getReceipt";
+import { useWeb3React } from "@web3-react/core";
+import useTrustData from "hooks/data/useTrustData";
+import useRemoveVouch from "hooks/payables/useRemoveVouch";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
 export const useManageContactModal = () => useModal(MANAGE_CONTACT_MODAL);
 
 export function ManageContactModal({ address, vouched, isLabelOnly }) {
+  const isMember = useIsMember();
+  const { library } = useWeb3React();
+  const removeVouch = useRemoveVouch();
+  const { getLabel } = useAddressLabels();
+  const [removing, setRemoving] = useState(false);
+  const { mutate: updateTrustData } = useTrustData();
+
   const { close } = useManageContactModal();
   const { open: openEditAliasModal } = useEditAliasModal();
   const { open: openEditVouchModal } = useEditVouchModal();
-  const { getLabel } = useAddressLabels();
-  const isMember = useIsMember();
 
   const handleEditName = () => {
     close();
@@ -46,6 +59,21 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
           onClick: handleEditVouch,
         },
       ];
+
+  const handleRemoveContact = async () => {
+    try {
+      setRemoving(true);
+      const { hash } = await removeVouch(address);
+      await getReceipt(hash, library);
+      addActivity(activityLabels.removeContact({ address }));
+      await updateTrustData();
+    } catch (err) {
+      addActivity(activityLabels.removeContact({ address }, true));
+      handleTxError(err);
+    } finally {
+      setRemoving(false);
+    }
+  };
 
   return (
     <ModalOverlay>
@@ -85,6 +113,8 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
             color="red"
             variant="secondary"
             label="Remove from contacts"
+            loading={removing}
+            onClick={handleRemoveContact}
           />
           <Label as="p" size="small" align="center" mt="24px">
             Contacts with outstanding balance can’t be removed

@@ -52,7 +52,7 @@ const ChooseDelegationModal = () => {
       votingWalletData?.delegates !== AddressZero
   );
 
-  const delegate = useDelegate();
+  const delegate = useDelegate()
 
   const handleManualVoting = async () => {
     try {

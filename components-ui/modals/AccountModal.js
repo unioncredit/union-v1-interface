@@ -66,41 +66,37 @@ export function AccountModal() {
             <Text>No activity</Text>
           ) : (
             activity.map(({ amount, label, hash, failed }) => {
-              if (amount && label) {
-                const daiValue = (
+              const text =
+                amount && label ? (
                   <>
                     {label} <Dai value={amount} />
                   </>
+                ) : (
+                  label
                 );
 
-                return (
-                  <Box align="center" justify="space-between" mt="10px">
-                    <div>
-                      <Text color={failed && "orange"}>
-                        {hash ? (
-                          <a
-                            target="_blank"
-                            href={getEtherscanLink(
-                              chainId,
-                              hash,
-                              "TRANSACTION"
-                            )}
-                          >
-                            {daiValue}
-                          </a>
-                        ) : (
-                          daiValue
-                        )}
-                      </Text>
-                    </div>
-                    <StatusIcon
-                      variant="wire"
-                      name={failed ? "error" : "success"}
-                    />
-                  </Box>
-                );
-              }
-              return label;
+              return (
+                <Box align="center" justify="space-between" mt="8px">
+                  <div>
+                    <Text color={failed && "orange"} m={0}>
+                      {hash ? (
+                        <a
+                          target="_blank"
+                          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                        >
+                          {text}
+                        </a>
+                      ) : (
+                        text
+                      )}
+                    </Text>
+                  </div>
+                  <StatusIcon
+                    variant="wire"
+                    name={failed ? "error" : "success"}
+                  />
+                </Box>
+              );
             })
           )}
         </Modal.Body>

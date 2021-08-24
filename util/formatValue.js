@@ -10,8 +10,8 @@ import toK from "./toK";
  */
 export default function format(number, decimals = 2) {
   if (String(number).length > 8) return toK(number, true, 2);
-
-  return commify(Number(number).toFixed(decimals));
+  const n = Number(Number(number).toFixed(decimals));
+  return commify(n);
 }
 
 export function formatDetailed(number, unit = null, decimals = 4) {

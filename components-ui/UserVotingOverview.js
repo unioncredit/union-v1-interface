@@ -8,6 +8,7 @@ import { commify } from "@ethersproject/units";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
+import format from "util/formatValue";
 
 export function UserVotingOverview({ variant, address }) {
   const { isOpen: isVoteDelegationOpen, open: openVoteDelegationModal } =
@@ -43,12 +44,10 @@ export function UserVotingOverview({ variant, address }) {
               />
             )}
           </Box>
-          <Heading m={0}>{commify(currentVotes.toFixed(4))} votes</Heading>
-          <Label size="small">
-            {commify(votesDelegated.toFixed(4))} delegated to you
-          </Label>
+          <Heading m={0}>{format(currentVotes)} votes</Heading>
+          <Label size="small">{format(votesDelegated)} delegated to you</Label>
           <Text mt="16px">Wallet balance</Text>
-          <Heading m={0}>{commify(balanceOf.toFixed(4))} UNION</Heading>
+          <Heading m={0}>{format(balanceOf)} UNION</Heading>
           <Text mt="16px">Delegating to</Text>
           <Heading m={0}>Self</Heading>
           {variant === "primary" && (
@@ -59,7 +58,7 @@ export function UserVotingOverview({ variant, address }) {
                 <Button variant="pill" label="Claim tokens" />
               </Box>
               <Heading m={0}>
-                {commify(unclaimedBalance.toFixed(4))} {unionSymbol}
+                {format(unclaimedBalance)} {unionSymbol}
               </Heading>
               <Label size="small">12.2 tokens per day</Label>
             </>

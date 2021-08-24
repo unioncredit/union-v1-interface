@@ -1,11 +1,14 @@
+import format from "./formatValue";
+import truncateAddress from "./truncateAddress";
+
 const activityLabels = {
   becomeMember: { label: "Registered" },
   claim: ({ amount }, failed) => ({
-    label: `Claimed ${amount} UNION`,
+    label: `Claimed ${format(amount)} UNION`,
     failed,
   }),
   delegate: ({ address }, failed) => ({
-    label: `Delegated to ${address}`,
+    label: `Delegated to ${truncateAddress(address)}`,
     failed,
   }),
   repay: ({ amount }, failed) => ({
@@ -30,13 +33,17 @@ const activityLabels = {
     failed,
   }),
   newVouch: ({ address, amount }, failed) => ({
-    label: `Trusted ${address} with`,
+    label: `Trusted ${truncateAddress(address)} with`,
     amount,
     failed,
   }),
   adjustVouch: ({ address, amount }, failed) => ({
-    label: `Trusted ${address} with`,
+    label: `Trusted ${truncateAddress(address)} with`,
     amount,
+    failed,
+  }),
+  removeContact: ({ address }, failed) => ({
+    label: `Removed contact ${truncateAddress(address)}`,
     failed,
   }),
 };
