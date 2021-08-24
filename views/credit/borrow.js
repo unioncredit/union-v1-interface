@@ -165,7 +165,7 @@ export default function BorrowView() {
                 Credit providers
               </Heading>
               <Text mb="12px">Accounts providing you with credit</Text>
-              <Table>
+              <Table disableCondensed>
                 {isVouchLoading
                   ? createArray(3).map((_, i) => (
                       <ContactsSummaryRowSkeleton key={i} />

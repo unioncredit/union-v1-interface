@@ -65,7 +65,7 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
       setRemoving(true);
       const { hash } = await removeVouch(address);
       await getReceipt(hash, library);
-      addActivity(activityLabels.removeContact({ address }));
+      addActivity(activityLabels.removeContact({ address, hash }));
       await updateTrustData();
     } catch (err) {
       addActivity(activityLabels.removeContact({ address }, true));

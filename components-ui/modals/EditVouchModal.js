@@ -62,7 +62,7 @@ export function EditVouchModal({ address, used, vouched }) {
       const { hash } = await adjustTrust(address, values.amount);
       await getReceipt(hash, library);
       addActivity(
-        activityLabels.adjustVouch({ address, amount: values.amount })
+        activityLabels.adjustVouch({ address, amount: values.amount, hash })
       );
       await updateTrustData();
       await updateCreditLimit();

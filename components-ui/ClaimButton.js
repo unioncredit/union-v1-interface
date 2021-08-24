@@ -20,7 +20,7 @@ export function ClaimButton({ onComplete, label, ...props }) {
       setLoading(true);
       const { hash } = await withdrawRewards();
       await getReceipt(hash, library);
-      addActivity(activityLabels.claim(rewards));
+      addActivity(activityLabels.claim({ amount: rewards, hash }));
       setLoading(false);
       if (typeof onComplete === "function") {
         await onComplete();

@@ -44,7 +44,7 @@ export function VoteDelegationModal() {
     try {
       const { hash } = await delegate(delegateTo);
       await getReceipt(hash, library);
-      addActivity(activityLabels.delegate({ address: delegateTo }));
+      addActivity(activityLabels.delegate({ address: delegateTo, hash }));
       close();
     } catch (error) {
       handleTxError(error);

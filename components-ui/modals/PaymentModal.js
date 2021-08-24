@@ -90,7 +90,7 @@ export function PaymentModal({
     try {
       const { hash } = await repay(amountToRepay);
       await getReceipt(hash, library);
-      addActivity(activityLabels.repay({ amount: amountToRepay }));
+      addActivity(activityLabels.repay({ amount: amountToRepay, hash }));
       if (typeof onComplete === "function") await onComplete();
       close();
     } catch (err) {

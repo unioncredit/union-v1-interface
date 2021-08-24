@@ -28,3 +28,5 @@ export * from "./ClaimButton";
 export * from "./Notifications";
 export * from "./Modal";
 export * from "./Wallet";
+export * from "./NetworkSwitcher";
+export * from "./NetworkSelect";

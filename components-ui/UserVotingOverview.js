@@ -11,9 +11,7 @@ import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTok
 import format from "util/formatValue";
 
 export function UserVotingOverview({ variant, address }) {
-  const { isOpen: isVoteDelegationOpen, open: openVoteDelegationModal } =
-    useVoteDelegationModal();
-
+  const { open: openVoteDelegationModal } = useVoteDelegationModal();
   const { data: votingWalletData } = useVotingWalletData(address);
   const {
     balanceOf = 0,
@@ -74,7 +72,6 @@ export function UserVotingOverview({ variant, address }) {
           )}
         </Card.Body>
       </Card>
-      {isVoteDelegationOpen && <VoteDelegationModal />}
     </>
   );
 }

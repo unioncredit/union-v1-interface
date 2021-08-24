@@ -7,7 +7,7 @@ import {
   Label,
   Heading,
 } from "union-ui";
-import { useWeb3React } from "@web3-react/core";
+import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
@@ -17,6 +17,7 @@ import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { getWalletName, getWalletIcon } from "util/formatWalletDetails";
+import { NetworkSwitcher } from "./NetworkSwitcher";
 
 const WalletOptions = ({
   activatingConnector,
@@ -98,15 +99,15 @@ export const SignInCard = () => {
     if (error) {
       if (connector === walletconnect) connector.close();
 
-      deactivate();
-      window.alert(getErrorMessage(error));
-
-      setActivatingConnector(undefined);
+      if (!error instanceof UnsupportedChainIdError) {
+        deactivate();
+        setActivatingConnector(undefined);
+      }
     }
   });
 
-  const triedEager = useEagerConnect();
-
+  //const triedEager = useEagerConnect();
+  const triedEager = true;
   if (!triedEager) {
     return (
       <Card size="small">
@@ -121,22 +122,30 @@ export const SignInCard = () => {
     );
   }
 
+  const isUnsupportedChainId = error instanceof UnsupportedChainIdError;
+
   return (
     <Card size="small">
       <Card.Body>
         <Heading mb="8px">Log In</Heading>
-        <Text mb="12px">
-          Connect your wallet with one of the available wallet providers.{" "}
-        </Text>
-        <WalletOptions
-          activatingConnector={activatingConnector}
-          setActivatingConnector={setActivatingConnector}
-          triedEager={triedEager}
-        />
-        <Label mt="8px" mb="0" as="p" size="small" grey={400}>
-          Union never has access to your private keys and we’ll never ask for
-          them.
-        </Label>
+        {isUnsupportedChainId ? (
+          <NetworkSwitcher />
+        ) : (
+          <>
+            <Text mb="12px">
+              Connect your wallet with one of the available wallet providers.{" "}
+            </Text>
+            <WalletOptions
+              activatingConnector={activatingConnector}
+              setActivatingConnector={setActivatingConnector}
+              triedEager={triedEager}
+            />
+            <Label mt="8px" mb="0" as="p" size="small" grey={400}>
+              Union never has access to your private keys and we’ll never ask
+              for them.
+            </Label>
+          </>
+        )}
       </Card.Body>
     </Card>
   );

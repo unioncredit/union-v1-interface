@@ -7,8 +7,10 @@ import {
   Text,
   Divider,
   StatusIcon,
+  Icon,
+  NetworkIndicator,
 } from "union-ui";
-import { Modal } from "components-ui";
+import { Modal, NetworkSelect } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useWeb3React } from "@web3-react/core";
 import usePublicData from "hooks/usePublicData";
@@ -25,7 +27,7 @@ export const ACCOUNT_MODAL = "account-modal";
 export const useAccountModal = () => useModal(ACCOUNT_MODAL);
 
 export function AccountModal() {
-  const { account, connector, deactivate } = useWeb3React();
+  const { chainId, account, connector, deactivate } = useWeb3React();
   const { name } = usePublicData(account);
   const { close } = useAccountModal();
   const activity = useActivity();
@@ -47,8 +49,11 @@ export function AccountModal() {
     <ModalOverlay>
       <Modal title="Account" onClose={close}>
         <Modal.Body>
+          <Box mb="20px">
+            <NetworkSelect />
+          </Box>
           <Box align="center" justify="space-between">
-            <Text mb="9px">Wallet Connect</Text>
+            <Text mb="9px">Connected</Text>
             <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
           </Box>
           <Heading mt="4px">{name}</Heading>
@@ -57,7 +62,7 @@ export function AccountModal() {
           </Label>
           <Divider />
           <Box align="center" justify="space-between" mt="20px" mb="16px">
-            <Text m={0} size="large">
+            <Text m={0} size="large" grey={700}>
               Activity
             </Text>
             <Button variant="pill" label="clear" onClick={clearActivity} />
@@ -84,7 +89,7 @@ export function AccountModal() {
                           target="_blank"
                           href={getEtherscanLink(chainId, hash, "TRANSACTION")}
                         >
-                          {text}
+                          {text} <Icon name="external" />
                         </a>
                       ) : (
                         text
@@ -99,6 +104,7 @@ export function AccountModal() {
               );
             })
           )}
+          <NetworkIndicator chainId={chainId} mt="24px" mb="4px" />
         </Modal.Body>
       </Modal>
     </ModalOverlay>

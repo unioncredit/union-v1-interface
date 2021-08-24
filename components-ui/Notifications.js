@@ -31,8 +31,7 @@ export function Notifications() {
         <Notification key={id} variant={type} onClose={handleClose(id)}>
           <Text>{title || defaultTitles[type]}</Text>
           <Label as="p" size="small">
-            {body}{" "}
-            {hash && (
+            {hash ? (
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -40,6 +39,8 @@ export function Notifications() {
               >
                 View transaction
               </a>
+            ) : (
+              body
             )}
           </Label>
         </Notification>

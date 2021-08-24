@@ -89,7 +89,7 @@ export function BorrowModal({
       const { hash } = await borrow(amount);
       await getReceipt(hash, library);
       if (typeof onComplete === "function") onComplete();
-      addActivity(activityLabels.borrow({ amount }));
+      addActivity(activityLabels.borrow({ amount, hash }));
       close();
     } catch (err) {
       addActivity(activityLabels.borrow({ amount: data.amount }, true));

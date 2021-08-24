@@ -8,6 +8,8 @@ import {
   useWalletModal,
   AccountModal,
   useAccountModal,
+  VoteDelegationModal,
+  useVoteDelegationModal,
 } from "components-ui/modals";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
@@ -27,6 +29,7 @@ import usePublicData from "hooks/usePublicData";
 import { Avatar } from "./Avatar";
 
 export function Wrapper({ children, tabItems, title }) {
+  const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
@@ -110,6 +113,7 @@ export function Wrapper({ children, tabItems, title }) {
       </Layout>
       {isWalletModalOpen && <WalletModal />}
       {isAccountModalOpen && <AccountModal />}
+      {isVoteDelegationOpen && <VoteDelegationModal />}
     </>
   );
 }

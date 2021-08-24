@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import { useCallback } from "react";
 import { newRidgeState } from "react-ridge-state";
 
 const initialState = [];
@@ -53,6 +53,11 @@ export const FLAVORS = {
   SUCCESS: (message) => ({
     body: message,
     type: "success",
+    hideAfter: 20,
+  }),
+  ERROR: (message) => ({
+    body: message,
+    type: "error",
     hideAfter: 20,
   }),
 };

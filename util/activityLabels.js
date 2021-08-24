@@ -3,18 +3,21 @@ import truncateAddress from "./truncateAddress";
 
 const activityLabels = {
   becomeMember: { label: "Registered" },
-  claim: ({ amount }, failed) => ({
+  claim: ({ amount, hash }, failed) => ({
+    hash,
     label: `Claimed ${format(amount)} UNION`,
     failed,
   }),
-  delegate: ({ address }, failed) => ({
+  delegate: ({ address, hash }, failed) => ({
     label: `Delegated to ${truncateAddress(address)}`,
     failed,
+    hash,
   }),
-  repay: ({ amount }, failed) => ({
+  repay: ({ hash, amount }, failed) => ({
     label: "Repaid",
     amount,
     failed,
+    hash,
   }),
   deposit: ({ hash, amount }, failed) => ({
     label: "Staked",
@@ -22,29 +25,34 @@ const activityLabels = {
     amount,
     failed,
   }),
-  borrow: ({ amount }, failed) => ({
+  borrow: ({ amount, hash }, failed) => ({
     label: "Borrowed",
     amount,
     failed,
+    hash,
   }),
-  withdraw: ({ amount }, failed) => ({
+  withdraw: ({ hash, amount }, failed) => ({
     label: "Withdraw",
     amount,
     failed,
+    hash,
   }),
-  newVouch: ({ address, amount }, failed) => ({
+  newVouch: ({ hash, address, amount }, failed) => ({
     label: `Trusted ${truncateAddress(address)} with`,
     amount,
+    hash,
     failed,
   }),
-  adjustVouch: ({ address, amount }, failed) => ({
+  adjustVouch: ({ hash, address, amount }, failed) => ({
     label: `Trusted ${truncateAddress(address)} with`,
     amount,
+    hash,
     failed,
   }),
-  removeContact: ({ address }, failed) => ({
+  removeContact: ({ hash, address }, failed) => ({
     label: `Removed contact ${truncateAddress(address)}`,
     failed,
+    hash,
   }),
 };
 

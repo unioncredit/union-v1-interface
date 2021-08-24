@@ -8,6 +8,7 @@ import {
   Heading,
 } from "union-ui";
 import { ClaimButton, Modal } from "components-ui";
+import { useVoteDelegationModal } from "components-ui/modals";
 import { useModal } from "hooks/useModal";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
@@ -29,6 +30,7 @@ export function WalletModal() {
   const UNION = useCurrentToken("UNION");
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
+  const { open: openVoteDelegationModal } = useVoteDelegationModal();
   const { data: unionBalance = 0.0, mutate: updateUnionBalance } =
     useTokenBalance(UNION);
 
@@ -50,6 +52,11 @@ export function WalletModal() {
   const onComplete = async () => {
     await updateUnionBalance();
     await updateRewardsData();
+  };
+
+  const handleOpenVoteDelegationModal = () => {
+    close();
+    openVoteDelegationModal();
   };
 
   return (
@@ -76,7 +83,7 @@ export function WalletModal() {
             <Text mb={0}>Voting Power</Text>
             <Button
               variant="pill"
-              onClick={() => alert()}
+              onClick={handleOpenVoteDelegationModal}
               label="Voting profile"
             />
           </Box>

@@ -27,7 +27,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       const { hash } = await withdraw(values.amount);
       await getReceipt(hash, library);
       await onComplete();
-      addActivity(activityLabels.withdraw({ amount: values.amount }));
+      addActivity(activityLabels.withdraw({ amount: values.amount, hash }));
       reset();
     } catch (err) {
       addActivity(activityLabels.withdraw({ amount: values.amount }, true));
