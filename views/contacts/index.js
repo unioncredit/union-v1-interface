@@ -36,6 +36,7 @@ import truncateAddress from "util/truncateAddress";
 import { config, ContactsType } from "./config";
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
+import usePopTrustModal from "hooks/usePopTrustModal";
 
 function ContactDetailsHeader({ address, name: passedName }) {
   const { name } = usePublicData(address);
@@ -92,6 +93,8 @@ export default function ContactsView() {
       setSelectedContact(trustData[0]);
     }
   }, [vouchData, trustData, contactsType]);
+
+  usePopTrustModal();
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 

@@ -7,12 +7,14 @@ import { Modal } from "components-ui";
 import validateAddress from "util/validateAddress";
 import { useWeb3React } from "@web3-react/core";
 import errorMessages from "util/errorMessages";
+import { useRouter } from "next/router";
 
 export const VOUCH_MODAL = "vouch-modal";
 
 export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export function VouchModal({ onNext }) {
+  const { query } = useRouter();
   const { account } = useWeb3React();
   const { close } = useVouchModal();
   const { open: openNewVouchModal } = useNewVouchModal();
@@ -45,6 +47,7 @@ export function VouchModal({ onNext }) {
             <Input
               ref={register({ validate })}
               name="address"
+              value={query?.address}
               label="Ethereum address"
               placeholder="0x..."
               error={errors.address?.message}

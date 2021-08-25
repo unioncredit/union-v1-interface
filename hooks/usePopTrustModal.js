@@ -1,15 +1,14 @@
-import { useTrustModalToggle } from "components/modals/TrustModal/state";
+import { useVouchModal } from "components-ui/modals";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function usePopTrustModal() {
   const { query } = useRouter();
-
-  const toggleTrustModal = useTrustModalToggle();
+  const { open: openVouchModal } = useVouchModal();
 
   useEffect(() => {
     if (query.address || query.trust) {
-      toggleTrustModal();
+      openVouchModal();
     }
   }, []);
 }
