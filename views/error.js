@@ -1,46 +1,34 @@
-import Footer from "components/Footer";
-import Logo from "components/Navigation/logo";
+import Head from "next/head";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Box, Heading, Layout, Button } from "union-ui";
 
 export default function ErrorView() {
   return (
-    <Fragment>
-      <header>
-        <nav className="border-b bg-white">
-          <div className="w-full mx-auto px-4 max-w-screen-xl-gutter">
-            <ul className="flex items-center justify-between">
-              <li className="py-4 h-20 flex items-center justify-start">
-                <Link href="/">
-                  <a>
-                    <Logo />
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </header>
+    <Layout>
+      <Layout.Main>
+        <Head>
+          <title>Error | Union</title>
+          <meta property="og:title" content="404 | Union" />
+          <meta name="twitter:title" content="404 | Union" />
+        </Head>
 
-      <main className="flex-1">
-        <div className="my-8 md:my-10">
-          <div className="container">
-            <div className="text-center pt-32 pb-64">
-              <h1>Something went wrong</h1>
-
-              <p className="text-lg mt-4">
-                An unexpected error occurred{" "}
-                <a className="underline" href="mailto:support@union.finance">
-                  contact Support
-                </a>
-                .
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-
-      <Footer />
-    </Fragment>
+        <Box
+          justify="center"
+          align="center"
+          my="auto"
+          direction="vertical"
+          fluid
+        >
+          <Heading align="center">An unexpected error occurred</Heading>
+          <Link href="/">
+            <Button
+              label="Take me home"
+              variant="secondary"
+              icon="arrow-left"
+            />
+          </Link>
+        </Box>
+      </Layout.Main>
+    </Layout>
   );
 }
