@@ -21,7 +21,7 @@ import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import useTrustData from "hooks/data/useTrustData";
 import { useWeb3React } from "@web3-react/core";
 import useCreditLimit from "hooks/data/useCreditLimit";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
@@ -29,6 +29,7 @@ export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 export const useEditVouchModal = () => useModal(EDIT_VOUCH_MODAL);
 
 export function EditVouchModal({ address, used, vouched }) {
+  const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const { close } = useEditVouchModal();
   const adjustTrust = useAdjustTrust();

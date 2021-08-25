@@ -106,8 +106,8 @@ export const SignInCard = () => {
     }
   });
 
-  //const triedEager = useEagerConnect();
-  const triedEager = true;
+  const triedEager = useEagerConnect();
+
   if (!triedEager) {
     return (
       <Card size="small">

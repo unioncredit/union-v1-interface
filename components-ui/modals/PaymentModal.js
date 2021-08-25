@@ -20,7 +20,7 @@ import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
 import useRepay from "hooks/payables/useRepay";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 
 export const PAYMENT_MODAL = "payment-modal";
@@ -33,6 +33,7 @@ export function PaymentModal({
   interest,
   onComplete,
 }) {
+  const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const { close } = usePaymentModal();
   const curToken = useCurrentToken();

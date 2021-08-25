@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import { useWeb3React } from "@web3-react/core";
 import useDelegate from "hooks/payables/useDelegate";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import getReceipt from "util/getReceipt";
 
@@ -29,6 +29,7 @@ const radioOptions = [
 ];
 
 export function VoteDelegationModal() {
+  const addActivity = useAddActivity();
   const { library, account } = useWeb3React();
   const [selected, setSelected] = useState(null);
   const { close } = useVoteDelegationModal();

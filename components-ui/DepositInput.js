@@ -12,10 +12,11 @@ import useStakeDeposit from "hooks/payables/useStakeDeposit";
 import errorMessages from "util/errorMessages";
 import { roundDown } from "util/numbers";
 import activityLabels from "util/activityLabels";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
+  const addActivity = useAddActivity();
 
   const { handleSubmit, register, watch, setValue, formState, errors, reset } =
     useForm({

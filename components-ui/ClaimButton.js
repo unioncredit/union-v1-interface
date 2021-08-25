@@ -4,11 +4,12 @@ import { useWeb3React } from "@web3-react/core";
 import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useRewardsData from "hooks/data/useRewardsData";
 
 export function ClaimButton({ onComplete, label, ...props }) {
+  const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const withdrawRewards = useWithdrawRewards();

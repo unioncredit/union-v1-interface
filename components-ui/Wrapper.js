@@ -12,6 +12,7 @@ import {
   useVoteDelegationModal,
 } from "components-ui/modals";
 import useCurrentToken from "hooks/useCurrentToken";
+import useInactiveListener from "hooks/useInactiveListener";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import {
   Tabs,
@@ -62,6 +63,8 @@ export function Wrapper({ children, tabItems, title }) {
   const initialTab = tabItemLinks.findIndex(
     (item) => item.href === router.pathname
   );
+
+  useInactiveListener();
 
   return (
     <>

@@ -5,7 +5,7 @@ import { useEditAliasModal, useEditVouchModal } from "components-ui/modals";
 import { AddressLabel, Modal, Dai } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { useState } from "react";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
@@ -20,6 +20,7 @@ export const useManageContactModal = () => useModal(MANAGE_CONTACT_MODAL);
 export function ManageContactModal({ address, vouched, isLabelOnly }) {
   const isMember = useIsMember();
   const { library } = useWeb3React();
+  const addActivity = useAddActivity();
   const removeVouch = useRemoveVouch();
   const { getLabel } = useAddressLabels();
   const [removing, setRemoving] = useState(false);

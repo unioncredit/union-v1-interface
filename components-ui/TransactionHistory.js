@@ -70,30 +70,21 @@ function TransactionHistoryEmpty() {
 }
 
 export function TransactionHistory() {
-  const { data, isLoading, isEmpty, loadingCount, chunk, chunks } =
-    useAsyncTransactions();
+  const { data, isLoading, isEmpty, loadingCount = 1 } = useAsyncTransactions();
 
   return (
     <Table disableCondensed>
       {isEmpty && !isLoading && <TransactionHistoryEmpty />}
 
       {data.map((tx) => (
-        <TransactionHistoryRow {...tx} />
+        <TransactionHistoryRow key={tx.hash} {...tx} />
       ))}
 
       {loadingCount &&
         loadingCount > 0 &&
-        createArray(loadingCount).map(() => <TransactionHistorySkeletonRow />)}
-
-      {isLoading && process.env.NODE_ENV === "development" && (
-        <TableRow>
-          <TableCell>
-            <Label size="small">
-              Loading chunk {chunk}/{chunks}
-            </Label>
-          </TableCell>
-        </TableRow>
-      )}
+        createArray(loadingCount).map((_, i) => (
+          <TransactionHistorySkeletonRow key={i} />
+        ))}
     </Table>
   );
 }

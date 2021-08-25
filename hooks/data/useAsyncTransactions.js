@@ -5,6 +5,8 @@ import useReadProvider from "hooks/useReadProvider";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 import useAsyncLogs from "hooks/data/useAsyncLogs";
 
+import useLogs from "hooks/data/useLogs";
+
 const parseTransactionsLog = (provider, uTokenContract) => async (logs) => {
   const borrowFilter = uTokenContract.filters.LogBorrow();
 
@@ -55,6 +57,6 @@ export default function useAsyncTransactions() {
   return (
     account &&
     uTokenContract &&
-    useAsyncLogs([borrowFilter, repayFilter], parser)
+    useLogs([borrowFilter, repayFilter], parser)
   );
 }

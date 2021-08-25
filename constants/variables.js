@@ -20,11 +20,9 @@ export const EVENT_START_BLOCK = {
 
 // due to block range restriction on polygon rpc
 export const EVENT_BLOCK_INTERVAL = {
-  1: 10000000,
-  4: 10000000,
-  42: 10000000,
+  1: 100000,
+  42: 100000,
   137: 100000,
-  // 137: 1000,
   80001: 10000000,
 };
 

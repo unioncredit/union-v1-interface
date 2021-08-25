@@ -44,6 +44,7 @@ export function AccountModal() {
   };
 
   const isEmpty = !activity || activity.length <= 0;
+  console.log({ activity });
 
   return (
     <ModalOverlay>

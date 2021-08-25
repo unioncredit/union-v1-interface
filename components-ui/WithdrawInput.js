@@ -7,11 +7,12 @@ import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 import { Button, InputRow, Input } from "union-ui";
 import { Dai } from "components-ui";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
+  const addActivity = useAddActivity();
   const { handleSubmit, register, setValue, formState, errors, reset } =
     useForm({
       mode: "onChange",

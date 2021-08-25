@@ -24,7 +24,7 @@ import { useWeb3React } from "@web3-react/core";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import errorMessages from "util/errorMessages";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 
 export const NEW_VOUCH_MODAL = "new-vouch-modal";
@@ -34,6 +34,7 @@ export const useNewVouchModal = () => useModal(NEW_VOUCH_MODAL);
 export function NewVouchModal({ address }) {
   const { library } = useWeb3React();
   const { close } = useNewVouchModal();
+  const addActivity = useAddActivity();
   const { open: openVouchModal } = useVouchModal();
   const { data: isMember } = useIsMember(address);
   const { mutate: updateTrustData } = useTrustData();

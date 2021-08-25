@@ -19,7 +19,7 @@ import useBorrow from "hooks/payables/useBorrow";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
-import { addActivity } from "hooks/data/useActivity";
+import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 
 export const BORROW_MODAL = "borrow-modal";
@@ -35,6 +35,7 @@ export function BorrowModal({
   isOverdue,
   onComplete,
 }) {
+  const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const borrow = useBorrow();
   const { close } = useBorrowModal();
