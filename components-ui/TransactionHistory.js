@@ -9,7 +9,7 @@ import {
   Skeleton,
 } from "union-ui";
 import { Dai } from "components-ui";
-import useAsyncTransactions from "hooks/data/useAsyncTransactions";
+import useTransactions from "hooks/data/useTransactions";
 import createArray from "util/createArray";
 import Repayment from "svgs/Repayment";
 import Borrowed from "svgs/Borrowed";
@@ -70,7 +70,7 @@ function TransactionHistoryEmpty() {
 }
 
 export function TransactionHistory() {
-  const { data, isLoading, isEmpty, loadingCount = 1 } = useAsyncTransactions();
+  const { data, isLoading, isEmpty, loadingCount = 1 } = useTransactions();
 
   return (
     <Table disableCondensed>

@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import useReadProvider from "hooks/useReadProvider";
 import useUserContract from "hooks/contracts/useUserContract";
-import useAsyncLogs from "./useAsyncLogs";
+import useLogs from "./useLogs";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { formatUnits } from "@ethersproject/units";
@@ -93,7 +93,7 @@ export default function useAccountHistory(address) {
 
   const parser = parseActivityLog(readProvider, userManagerContract, filters);
 
-  const data = account && userManagerContract && useAsyncLogs(filters, parser);
+  const data = account && userManagerContract && useLogs(filters, parser);
 
   return data || {};
 }

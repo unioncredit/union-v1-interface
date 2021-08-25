@@ -66,7 +66,7 @@ export function NewVouchModal({ address }) {
       const { hash } = await adjustTrust(address, data.amount);
       await getReceipt(hash, library);
       addActivity(
-        activityLabels.newVouch({ address, amount: values.amount, hash })
+        activityLabels.newVouch({ address, amount: data.amount, hash })
       );
       await updateTrustData();
       await updateCreditLimit();
@@ -74,7 +74,7 @@ export function NewVouchModal({ address }) {
       close();
     } catch (err) {
       addActivity(
-        activityLabels.newVouch({ address, amount: values.amount }, true)
+        activityLabels.newVouch({ address, amount: data.amount }, true)
       );
       handleTxError(err);
     }

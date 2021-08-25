@@ -43,7 +43,7 @@ export function AccountActivity({
   data,
   isLoading,
   isEmpty,
-  loadingCount,
+  loadingCount = 1,
   limit,
 }) {
   const { account } = useWeb3React();

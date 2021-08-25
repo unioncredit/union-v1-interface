@@ -1,101 +1,60 @@
-import { isAddress } from "@ethersproject/address";
-import { Contract } from "@ethersproject/contracts";
+import dayjs from "dayjs";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
-import U_TOKEN_ABI from "constants/abis/uToken.json";
-import dayjs from "dayjs";
-import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useReadProvider from "hooks/useReadProvider";
-import { getLogs } from "lib/logs";
+import useUTokenContract from "hooks/contracts/useUTokenContract";
+import useLogs from "hooks/data/useLogs";
 
-const getTransactions =
-  (marketRegistryContract) =>
-  async (_, account, tokenAddress, provider, chainId, count) => {
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const uTokenAddress = res.uToken;
-    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
+const parseTransactionsLog = (provider, uTokenContract) => async (logs) => {
+  const borrowFilter = uTokenContract.filters.LogBorrow();
 
-    const borrowFilter = uTokenContract.filters.LogBorrow(account);
+  const txs = await Promise.all(
+    logs.map(async (log) => {
+      const block = await provider.getBlock(log.blockNumber);
 
-    const borrowLogs = await getLogs(provider, chainId, borrowFilter);
-    const repayFilter = uTokenContract.filters.LogRepay(account);
+      const logData = uTokenContract.interface.parseLog(log);
 
-    const repayLogs = await getLogs(provider, chainId, repayFilter);
+      const [account, amount, fee] = logData.args;
 
-    const txs = await Promise.all([
-      ...repayLogs.map(async (log) => {
-        const block = await provider.getBlock(log.blockNumber);
+      const type =
+        borrowFilter.topics[0] === log.topics[0] ? "BORROW" : "REPAY";
 
-        const logData = uTokenContract.interface.parseLog(log);
+      const data = {
+        account,
+        amount: Number(formatUnits(amount, 18)),
+        blockNumber: log.blockNumber,
+        date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
+        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
+        hash: log.transactionHash,
+        type,
+      };
 
-        const [account, amount] = logData.args;
+      if (fee) data.fee = Number(formatUnits(fee, 18));
 
-        return {
-          account,
-          amount: Number(formatUnits(amount, 18)),
-          blockNumber: log.blockNumber,
-          date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
-          dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
-          hash: log.transactionHash,
-          type: "REPAY",
-        };
-      }),
-      ...borrowLogs.map(async (log) => {
-        const block = await provider.getBlock(log.blockNumber);
+      return data;
+    })
+  );
 
-        const logData = uTokenContract.interface.parseLog(log);
-
-        const [account, amount, fee] = logData.args;
-
-        return {
-          account,
-          amount: Number(formatUnits(amount, 18)),
-          blockNumber: log.blockNumber,
-          date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
-          dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
-          fee: Number(formatUnits(fee, 18)),
-          hash: log.transactionHash,
-          type: "BORROW",
-        };
-      }),
-    ]);
-
-    /**
-     * Sort transactions by blockNumber and only return the first 5
-     */
-    const sortedTxs = txs
-      .sort((a, b) => b.blockNumber - a.blockNumber)
-      .slice(0, count);
-
-    return sortedTxs;
-  };
+  return txs;
+};
 
 /**
  * @name useTransactions
  *
  * @param {Number} count The number of txs to return in the array
  */
-export default function useTransactions(count = 5) {
-  const { account, chainId } = useWeb3React();
+export default function useTransactions() {
+  const { account } = useWeb3React();
+  const uTokenContract = useUTokenContract();
   const readProvider = useReadProvider();
 
-  const curToken = useCurrentToken();
+  const borrowFilter = uTokenContract.filters.LogBorrow(account);
+  const repayFilter = uTokenContract.filters.LogRepay(account);
+  const parser = parseTransactionsLog(readProvider, uTokenContract);
 
-  const marketRegistryContract = useMarketRegistryContract();
-
-  const shouldFetch =
-    !!marketRegistryContract &&
-    typeof account === "string" &&
-    isAddress(curToken) &&
-    !!readProvider &&
-    !!chainId;
-
-  return useSWR(
-    shouldFetch
-      ? ["Transactions", account, curToken, readProvider, chainId, count]
-      : null,
-    getTransactions(marketRegistryContract)
+  return (
+    account &&
+    uTokenContract &&
+    useLogs([borrowFilter, repayFilter], parser)
   );
 }
