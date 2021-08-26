@@ -6,13 +6,17 @@ export const makeTxWithGasEstimate = async (
   contract: Contract,
   func: string,
   params: Array<string | number | BigNumberish>,
-  fallbackLimit?: number
+  fallbackLimit?: number,
+  avoidFallback?: boolean
 ): Promise<TransactionResponse> => {
   let gasLimit: BigNumberish
   try {
     const estimateGas = await contract.estimateGas[func](...params);
     gasLimit = (parseFloat(estimateGas.toString()) * 1.1).toFixed(0);
   } catch (err) {
+    if (avoidFallback) {
+      throw err;
+    }
     gasLimit = fallbackLimit || 800000;
   }
 

@@ -44,11 +44,14 @@ export default function useStakeDeposit() {
             account,
             userManagerAddress
           );
-          return makeTxWithGasEstimate(
+          const txResponse = await makeTxWithGasEstimate(
             userManagerContract,
             "stakeWithPermit",
-            [stakeAmount, nonce, expiry, v, r, s]
+            [stakeAmount, nonce, expiry, v, r, s],
+            null,
+            true
           )
+          return txResponse;
         } catch (err) {
           await makeTxWithGasEstimate(
             DAIContract,

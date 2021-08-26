@@ -39,7 +39,7 @@ export default function useRepay() {
             uTokenAddress
           );
   
-          return makeTxWithGasEstimate(
+          const txResponse = await  makeTxWithGasEstimate(
             uTokenContract,
             'repayBorrowWithPermit',
             [
@@ -50,8 +50,11 @@ export default function useRepay() {
               result.v,
               result.r,
               result.s
-            ]
+            ],
+            null,
+            true
           );
+          return txResponse;
         } catch (err) {
           await makeTxWithGasEstimate(
             DAIContract,

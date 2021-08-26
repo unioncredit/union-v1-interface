@@ -36,7 +36,7 @@ export default function useRegisterMember() {
         memberFee
       );
 
-      return makeTxWithGasEstimate(
+      const txResponse = await makeTxWithGasEstimate(
         userManagerContract,
         'registerMemberWithPermit',
         [
@@ -46,8 +46,11 @@ export default function useRegisterMember() {
           result.v,
           result.r,
           result.s
-        ]
+        ],
+        null,
+        true
       );
+      return txResponse;
     } catch (err) {
       await makeTxWithGasEstimate(
         unionContract,
