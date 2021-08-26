@@ -168,3 +168,11 @@ a {
     grid-template-columns: repeat(1, 1fr);
   }
 }
+
+.loading-screen {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}

@@ -11,9 +11,6 @@ import {
   VoteDelegationModal,
   useVoteDelegationModal,
 } from "components-ui/modals";
-import useCurrentToken from "hooks/useCurrentToken";
-import useInactiveListener from "hooks/useInactiveListener";
-import useTokenBalance from "hooks/data/useTokenBalance";
 import {
   Tabs,
   Layout,
@@ -24,9 +21,14 @@ import {
   Grid,
   Row,
   Col,
+  LoadingSpinner,
 } from "union-ui";
+import useCurrentToken from "hooks/useCurrentToken";
+import useInactiveListener from "hooks/useInactiveListener";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import { Wallet } from "components-ui";
 import usePublicData from "hooks/usePublicData";
+import useMemberCheck from "hooks/useMemberCheck";
 import { Avatar } from "./Avatar";
 
 export function Wrapper({ children, tabItems, title }) {
@@ -43,18 +45,6 @@ export function Wrapper({ children, tabItems, title }) {
 
   const { name } = usePublicData(account);
 
-  const isLoggedIn = library && account;
-
-  const mainProps = {
-    ...(!isLoggedIn ? { justify: "space-between" } : {}),
-    ...(!isLoggedIn ? { align: "center" } : {}),
-  };
-
-  const headerProps = {
-    ...mainProps,
-    ...(!isLoggedIn ? { justify: "center" } : {}),
-  };
-
   const tabItemLinks =
     tabItems?.length > 0
       ? tabItems.map((item) => ({ ...item, as: TabLink }))
@@ -65,42 +55,43 @@ export function Wrapper({ children, tabItems, title }) {
   );
 
   useInactiveListener();
+  const { isLoading } = useMemberCheck();
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <LoadingSpinner size={30} />
+      </div>
+    );
+  }
 
   return (
     <>
       <Layout>
-        {isLoggedIn && (
-          <Layout.Sidebar>
-            <Navigation />
-          </Layout.Sidebar>
-        )}
-        <Layout.Main {...mainProps}>
+        <Layout.Sidebar>
+          <Navigation />
+        </Layout.Sidebar>
+        <Layout.Main>
           <Grid style={{ display: "flex", flexGrow: 1 }}>
             <Row style={{ width: "100%", margin: 0 }}>
               <Col>
-                <Layout.Header {...headerProps} align="center">
-                  {isLoggedIn ? (
-                    <>
-                      <Heading size="large" m={0}>
-                        {title}
-                      </Heading>
-                      <Box>
-                        <Button
-                          variant="secondary"
-                          icon="vouch"
-                          label={`${format(unionBalance, 2)} ${unionSymbol}`}
-                          onClick={openWalletModal}
-                        />
-                        <Wallet
-                          onClick={openAccountModal}
-                          name={name}
-                          avatar={<Avatar address={account} />}
-                        />
-                      </Box>
-                    </>
-                  ) : (
-                    <Logo width="26px" />
-                  )}
+                <Layout.Header align="center">
+                  <Heading size="large" m={0}>
+                    {title}
+                  </Heading>
+                  <Box>
+                    <Button
+                      variant="secondary"
+                      icon="vouch"
+                      label={`${format(unionBalance, 2)} ${unionSymbol}`}
+                      onClick={openWalletModal}
+                    />
+                    <Wallet
+                      onClick={openAccountModal}
+                      name={name}
+                      avatar={<Avatar address={account} />}
+                    />
+                  </Box>
                 </Layout.Header>
                 {tabItems && (
                   <Box mb="24px">

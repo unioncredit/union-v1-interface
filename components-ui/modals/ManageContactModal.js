@@ -1,7 +1,11 @@
+import {
+  useEditAliasModal,
+  useEditVouchModal,
+  useWriteOffDebtModal,
+} from "components-ui/modals";
 import { Button, ModalOverlay, Card, Text, Label, Badge, Box } from "union-ui";
 import { useModal } from "hooks/useModal";
 import useAddressLabels from "hooks/useAddressLabels";
-import { useEditAliasModal, useEditVouchModal } from "components-ui/modals";
 import { AddressLabel, Modal, Dai } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { useState } from "react";
@@ -12,13 +16,20 @@ import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
 import useTrustData from "hooks/data/useTrustData";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
+import format from "util/formatValue";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
 export const useManageContactModal = () => useModal(MANAGE_CONTACT_MODAL);
 
-export function ManageContactModal({ address, vouched, isLabelOnly }) {
-  const isMember = useIsMember();
+export function ManageContactModal({
+  address,
+  used,
+  vouched,
+  isLabelOnly,
+  isOverdue,
+}) {
+  const { data: isMember } = useIsMember();
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const removeVouch = useRemoveVouch();
@@ -29,6 +40,7 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
   const { close } = useManageContactModal();
   const { open: openEditAliasModal } = useEditAliasModal();
   const { open: openEditVouchModal } = useEditVouchModal();
+  const { open: openWriteOffDebtModalOpen } = useWriteOffDebtModal();
 
   const handleEditName = () => {
     close();
@@ -40,11 +52,16 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
     openEditVouchModal();
   };
 
+  const handleWriteOffDebt = () => {
+    close();
+    openWriteOffDebtModalOpen();
+  };
+
   const defaultData = [
     {
       label: "Contact name",
       value: getLabel(address) || "-",
-      buttonLabel: "Edit",
+      buttonProps: { label: "Edit" },
       onClick: handleEditName,
     },
   ];
@@ -56,8 +73,17 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
         {
           label: "Credit limit",
           value: <Dai value={vouched} />,
-          buttonLabel: "Change limit",
+          buttonProps: { label: "Change limit" },
           onClick: handleEditVouch,
+        },
+        {
+          label: "Outstanding debt",
+          value: <Dai value={format(used)} />,
+          buttonProps: {
+            label: "Write-off debt",
+            disabled: used <= 0 || !isOverdue,
+          },
+          onClick: handleWriteOffDebt,
         },
       ];
 
@@ -87,7 +113,7 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
               color={isMember ? "green" : "orange"}
             />
           </Box>
-          {data.map(({ label, value, buttonLabel, onClick }) => (
+          {data.map(({ label, value, onClick, buttonProps }) => (
             <Card variant="packed" mb="8px">
               <Card.Body>
                 <Label>{label}</Label>
@@ -99,7 +125,7 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
                     ml="auto"
                     variant="secondary"
                     rounded
-                    label={buttonLabel}
+                    {...buttonProps}
                     onClick={onClick}
                   />
                 </Box>
@@ -117,7 +143,7 @@ export function ManageContactModal({ address, vouched, isLabelOnly }) {
             loading={removing}
             onClick={handleRemoveContact}
           />
-          <Label as="p" size="small" align="center" mt="24px">
+          <Label as="p" size="small" align="center" mt="24px" w="100%">
             Contacts with outstanding balance can’t be removed
           </Label>
         </Modal.Footer>

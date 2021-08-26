@@ -86,7 +86,7 @@ export function NewVouchModal({ address }) {
         <Modal.Body>
           <form onSubmit={handleSubmit(handleNewVouch)}>
             <Box mb="26px" justify="space-between">
-              <AddressLabel address={address} />
+              <AddressLabel address={address} showAddress />
               {isMember ? (
                 <Badge label="Trusted contact" color="green" />
               ) : (

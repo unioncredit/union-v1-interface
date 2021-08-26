@@ -13,7 +13,6 @@ import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { login } from "lib/auth";
 import { CONNECTORS, walletconnect } from "lib/connectors";
-import getErrorMessage from "lib/getErrorMessage";
 import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { getWalletName, getWalletIcon } from "util/formatWalletDetails";

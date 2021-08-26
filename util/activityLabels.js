@@ -54,6 +54,11 @@ const activityLabels = {
     failed,
     hash,
   }),
+  writeOffDebt: ({ address, hash, amount }, failed) => ({
+    label: `Wrote-off ${amount} DAI debt from ${truncateAddress(address)}`,
+    failed,
+    hash,
+  }),
 };
 
 export default activityLabels;

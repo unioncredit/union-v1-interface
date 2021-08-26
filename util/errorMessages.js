@@ -47,6 +47,8 @@ const errorMessages = {
   validAddress: "Please input a valid Ethereum address",
   cantRemoveStake: "You can't remove used stake",
   notANumber: "Please input a valid number",
+  maxWriteOff: "You can't write off more than debt",
+  notOverDue: "Borrower is not overdue",
 };
 
 export default errorMessages;

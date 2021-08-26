@@ -26,6 +26,8 @@ import {
   EditVouchModal,
   useEditVouchModal,
   VouchModalManager,
+  useWriteOffDebtModal,
+  WriteOffDebtModal,
 } from "components-ui/modals";
 import { useState, useEffect } from "react";
 import useTrustData from "hooks/data/useTrustData";
@@ -42,6 +44,7 @@ function ContactDetailsHeader({ address, name: passedName }) {
   const { name } = usePublicData(address);
   const { open: openManageContactModal } = useManageContactModal();
   const { getLabel } = useAddressLabels();
+  const label = getLabel(address);
 
   return (
     <Box align="center" className="contact-details-header">
@@ -49,7 +52,8 @@ function ContactDetailsHeader({ address, name: passedName }) {
         {address && <Avatar size={54} address={address} />}
         <Box direction="vertical" mx="16px">
           <Heading level={2}>
-            {getLabel(address)} • {name || passedName}
+            {label && `${label} • `}
+            {name || passedName}
           </Heading>
           <Text mb={0}>{address && truncateAddress(address)}</Text>
         </Box>
@@ -74,6 +78,7 @@ export default function ContactsView() {
   const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
   const { open: openVouchModal } = useVouchModal();
+  const { isOpen: isWriteOffDebtModalOpen } = useWriteOffDebtModal();
 
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
@@ -183,6 +188,7 @@ export default function ContactsView() {
       )}
       {isEditAliasModalOpen && <EditAliasModal {...selectedContact} />}
       {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
+      {isWriteOffDebtModalOpen && <WriteOffDebtModal {...selectedContact} />}
     </>
   );
 }

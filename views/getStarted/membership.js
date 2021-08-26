@@ -25,17 +25,23 @@ import useRegisterMember from "hooks/payables/useRegisterMember";
 import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
+import {
+  CongratulationsModal,
+  useCongratulationsModal,
+} from "components-ui/modals/ContratulationsModal";
 
 import { config } from "./config";
 
 export default function MembershipView() {
   const { library } = useWeb3React();
   const [registering, setRegistering] = useState(false);
-  const { data: isMember = null } = useIsMember();
+  const { data: isMember = null, mutate: updateIsMember } = useIsMember();
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: vouchData = [] } = useVouchData();
   const { data: creditLimit = 0 } = useCreditLimit();
   const registerMember = useRegisterMember();
+  const { isOpen: isCongratulationsModalOpen, open: openCongratulationsModal } =
+    useCongratulationsModal();
 
   const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
 
@@ -44,11 +50,16 @@ export default function MembershipView() {
       setRegistering(true);
       const { hash } = await registerMember();
       await getReceipt(hash, library);
+      openCongratulationsModal();
       setRegistering(false);
     } catch (err) {
       setRegistering(false);
       handleTxError(err);
     }
+  };
+
+  const onComplete = async () => {
+    await updateIsMember();
   };
 
   return (
@@ -122,6 +133,9 @@ export default function MembershipView() {
           </Col>
         </Row>
       </Grid>
+      {isCongratulationsModalOpen && (
+        <CongratulationsModal creditLimit={creditLimit} onClose={onComplete} />
+      )}
     </Wrapper>
   );
 }

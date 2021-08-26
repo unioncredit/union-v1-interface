@@ -17,9 +17,9 @@ export const addActivity = (chainId) => (activity) => {
   const getUpdatedState = (chainState, activity) => {
     if (!chainState) return [activity];
     if (chainState.length >= MAX_SIZE) {
-      return [activity, ...x.slice(0, MAX_SIZE - 1)];
+      return [activity, ...chainState.slice(0, MAX_SIZE - 1)];
     }
-    return [activity, ...x];
+    return [activity, ...chainState];
   };
 
   activityState.set((state) => {

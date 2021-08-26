@@ -66,7 +66,11 @@ export function AccountModal() {
             <Text m={0} size="large" grey={700}>
               Activity
             </Text>
-            <Button variant="pill" label="clear" onClick={clearActivity} />
+            <Button
+              variant="pill"
+              label="clear"
+              onClick={() => clearActivity(chainId)}
+            />
           </Box>
           {isEmpty ? (
             <Text>No activity</Text>

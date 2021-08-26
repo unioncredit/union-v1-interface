@@ -36,20 +36,21 @@ const navItems = [
 
 export const Navigation = () => {
   const router = useRouter();
-  const isMember = useIsMember();
+  const { data: isMember } = useIsMember();
+  const pathname = router.pathname;
 
   const filteredNavItems = useMemo(() => {
     if (isMember) {
       return navItems.slice(1).map((item) => ({
         ...item,
-        active: router.pathname.startsWith(item.pathname),
+        active: pathname.startsWith(item.pathname),
       }));
     }
     return navItems.map((item) => ({
       ...item,
       disabled: item.id !== "get-started",
     }));
-  }, []);
+  }, [isMember, pathname]);
 
   return (
     <Nav>
