@@ -28,7 +28,6 @@ export default function useRegisterMember() {
     );
     memberFee = (await userManagerContract.newMemberFee()).toString();
     try {
-      console.log("requesting signature", library.provider.chainId, UNION, account, userManagerAddress, memberFee);
       const result = await signERC2612Permit(
         library,
         UNION,
