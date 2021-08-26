@@ -4,14 +4,12 @@ import useAssetContract from "hooks/contracts/useAssetContract";
 import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
 
-const getLoanableAmount = (contract: Contract) => async (
-  _: any,
-  tokenAddress: string
-) => {
-  const res = await contract.getLoanableAmount(tokenAddress);
+const getLoanableAmount =
+  (contract: Contract) => async (_: any, tokenAddress: string) => {
+    const res = await contract.getLoanableAmount(tokenAddress);
 
-  return Number(formatUnits(res, 18));
-};
+    return Number(formatUnits(res, 18));
+  };
 
 export default function useLoanableAmount() {
   const assetContract = useAssetContract();

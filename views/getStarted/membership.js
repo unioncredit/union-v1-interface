@@ -91,6 +91,7 @@ export default function MembershipView() {
                   <Divider />
                   {vouchData.slice(0, 3).map((data, i) => (
                     <Box
+                      key={data.address}
                       mt={i === 0 ? "21px" : "8px"}
                       justify="space-between"
                       align="center"

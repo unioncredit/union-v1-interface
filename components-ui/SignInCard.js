@@ -30,7 +30,7 @@ const WalletOptions = ({
 
   return (
     <Fragment>
-      {Object.keys(CONNECTORS).map((name, i) => {
+      {Object.keys(CONNECTORS).map((name) => {
         const currentConnector = CONNECTORS[name];
         const activating = currentConnector === activatingConnector;
         const connected = currentConnector === connector;
@@ -98,7 +98,7 @@ export const SignInCard = () => {
     if (error) {
       if (connector === walletconnect) connector.close();
 
-      if (!error instanceof UnsupportedChainIdError) {
+      if (!(error instanceof UnsupportedChainIdError)) {
         deactivate();
         setActivatingConnector(undefined);
       }

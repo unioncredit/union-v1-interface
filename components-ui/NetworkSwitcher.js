@@ -1,4 +1,4 @@
-import { Button, ButtonRow, Text } from "union-ui";
+import { Text } from "union-ui";
 import { NetworkSelect } from "components-ui";
 
 export function NetworkSwitcher() {

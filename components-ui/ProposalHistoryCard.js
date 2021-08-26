@@ -1,12 +1,6 @@
 import useProposalHistory from "hooks/governance/useProposalHistory";
 import { Heading, Card, Steps } from "union-ui";
 
-// TODO: dummy items
-const items = [
-  { title: "Active", subTitle: "November 30th 2020 • 14:44" },
-  { title: "Proposed", subTitle: "November 29th 2020 • 10:00" },
-];
-
 function parseData(data) {
   if (!data) return [];
 

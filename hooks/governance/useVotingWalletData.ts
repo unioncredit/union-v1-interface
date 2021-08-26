@@ -4,24 +4,23 @@ import { formatUnits } from "@ethersproject/units";
 import useUnionContract from "hooks/contracts/useUnionContract";
 import useSWR from "swr";
 
-const getVotingWalletData = (governanceTokenContract: Contract) => async (
-  _: any,
-  address: string
-) => {
-  const balanceOf: BigNumber = await governanceTokenContract.balanceOf(address);
+const getVotingWalletData =
+  (governanceTokenContract: Contract) => async (_: any, address: string) => {
+    const balanceOf: BigNumber = await governanceTokenContract.balanceOf(
+      address
+    );
 
-  const currentVotes: BigNumber = await governanceTokenContract.getCurrentVotes(
-    address
-  );
+    const currentVotes: BigNumber =
+      await governanceTokenContract.getCurrentVotes(address);
 
-  const delegates: string = await governanceTokenContract.delegates(address);
+    const delegates: string = await governanceTokenContract.delegates(address);
 
-  return {
-    balanceOf: parseFloat(formatUnits(balanceOf, 18)),
-    currentVotes: parseFloat(formatUnits(currentVotes, 18)),
-    delegates: delegates,
+    return {
+      balanceOf: parseFloat(formatUnits(balanceOf, 18)),
+      currentVotes: parseFloat(formatUnits(currentVotes, 18)),
+      delegates: delegates,
+    };
   };
-};
 
 export default function useVotingWalletData(address: string) {
   const contract = useUnionContract();

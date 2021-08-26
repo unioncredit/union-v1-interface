@@ -17,7 +17,6 @@ import {
   Heading,
   Box,
   Button,
-  Logo,
   Grid,
   Row,
   Col,
@@ -36,7 +35,7 @@ export function Wrapper({ children, tabItems, title }) {
   const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
   const router = useRouter();
 
   const UNION = useCurrentToken("UNION");

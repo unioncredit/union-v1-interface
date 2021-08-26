@@ -7,16 +7,14 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getLoanableAmount = (assetContract: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const loanableAmount: BigNumber = await assetContract.getLoanableAmount(
-    daiAddress
-  );
-  return formatUnits(loanableAmount, decimals);
-};
+const getLoanableAmount =
+  (assetContract: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const loanableAmount: BigNumber = await assetContract.getLoanableAmount(
+      daiAddress
+    );
+    return formatUnits(loanableAmount, decimals);
+  };
 
 export default function useLoanableAmount() {
   const assetContract: Contract = useAssetContract();

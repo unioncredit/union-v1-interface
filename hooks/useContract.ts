@@ -10,7 +10,11 @@ export default function useContract(address: string, ABI: ContractInterface) {
   return useMemo(
     () =>
       isAddress(address) && !!ABI && !!library
-        ? new Contract(address, ABI, account ? library.getSigner(account) : library)
+        ? new Contract(
+            address,
+            ABI,
+            account ? library.getSigner(account) : library
+          )
         : undefined,
     [address, ABI, library, account]
   );

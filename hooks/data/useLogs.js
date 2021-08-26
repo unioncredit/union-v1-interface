@@ -94,7 +94,6 @@ export default function useLogs(filters, parser) {
           updateLogs(parsedResult);
           i++;
         } catch (error) {
-          console.log(error);
           await sleep(5);
         }
       }

@@ -7,24 +7,22 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useCurrentToken from "../useCurrentToken";
 
-const getMemberFee = (marketRegistryContract: Contract) => async (
-  _: any,
-  library: Web3Provider,
-  tokenAddress: string
-) => {
-  const signer = library.getSigner();
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const userManagerAddress = res.userManager;
-  const userManagerContract = new Contract(
-    userManagerAddress,
-    USER_MANAGER_ABI,
-    signer
-  );
+const getMemberFee =
+  (marketRegistryContract: Contract) =>
+  async (_: any, library: Web3Provider, tokenAddress: string) => {
+    const signer = library.getSigner();
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const userManagerAddress = res.userManager;
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
+    );
 
-  const fee = await userManagerContract.newMemberFee();
+    const fee = await userManagerContract.newMemberFee();
 
-  return Number(formatUnits(fee, 18));
-};
+    return Number(formatUnits(fee, 18));
+  };
 
 export default function useMemberFee() {
   const { library } = useWeb3React();

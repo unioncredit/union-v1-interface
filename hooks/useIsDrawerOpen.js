@@ -7,4 +7,3 @@ export const drawerOpenState = newRidgeState(initialState);
 export default function useIsDrawerOpen() {
   return drawerOpenState.useValue();
 }
-

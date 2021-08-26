@@ -7,14 +7,12 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getAaveCeiling = (aaveAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const aaveCeiling: BigNumber = await aaveAdapter.ceilingMap(daiAddress);
-  return formatUnits(aaveCeiling, decimals);
-};
+const getAaveCeiling =
+  (aaveAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const aaveCeiling: BigNumber = await aaveAdapter.ceilingMap(daiAddress);
+    return formatUnits(aaveCeiling, decimals);
+  };
 
 export default function useAaveCeiling() {
   const aaveAdapter: Contract = useAaveAdapterContract();

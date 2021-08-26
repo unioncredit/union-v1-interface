@@ -6,17 +6,16 @@ import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import useChainId from "hooks/useChainId";
 
-const getInterestRate = (uTokenContract: Contract) => async (
-  _: any,
-  chainId: string
-) => {
-  const borrowRatePerBlock: BigNumber = await uTokenContract.borrowRatePerBlock();
-  const decimals = BigNumber.from(18);
-  return formatUnits(
-    borrowRatePerBlock.mul(BLOCKS_PER_YEAR[chainId]),
-    decimals
-  );
-};
+const getInterestRate =
+  (uTokenContract: Contract) => async (_: any, chainId: string) => {
+    const borrowRatePerBlock: BigNumber =
+      await uTokenContract.borrowRatePerBlock();
+    const decimals = BigNumber.from(18);
+    return formatUnits(
+      borrowRatePerBlock.mul(BLOCKS_PER_YEAR[chainId]),
+      decimals
+    );
+  };
 
 export default function useInterestRate() {
   const uTokenContract: Contract = useUTokenContract();

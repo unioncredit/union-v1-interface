@@ -1,1 +1,0 @@
-TrustedContacts.js

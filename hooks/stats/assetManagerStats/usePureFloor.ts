@@ -7,14 +7,12 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getPureFloor = (pureAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const pureFloor: BigNumber = await pureAdapter.floorMap(daiAddress);
-  return formatUnits(pureFloor, decimals);
-};
+const getPureFloor =
+  (pureAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const pureFloor: BigNumber = await pureAdapter.floorMap(daiAddress);
+    return formatUnits(pureFloor, decimals);
+  };
 
 export default function usePureFloor() {
   const pureAdapter: Contract = usePureTokenAdapterContract();

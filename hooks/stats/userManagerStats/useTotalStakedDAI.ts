@@ -5,13 +5,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getTotalStakedDAI = (userContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const totalStaked: BigNumber = await userContract.totalStaked();
-  return formatUnits(totalStaked, decimals);
-};
+const getTotalStakedDAI =
+  (userContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const totalStaked: BigNumber = await userContract.totalStaked();
+    return formatUnits(totalStaked, decimals);
+  };
 
 export default function useTotalStakedDAI() {
   const userContract: Contract = useUserContract();

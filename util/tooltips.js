@@ -44,8 +44,8 @@ export const rewardsTip = (unionSymbol) => (
   <div className="tooltip-text">
     <p>Rewards</p>
     <p>
-      This is the total number of {unionSymbol} Tokens you’ve accumulated so far since
-      the last claim action.
+      This is the total number of {unionSymbol} Tokens you’ve accumulated so far
+      since the last claim action.
     </p>
   </div>
 );

@@ -44,7 +44,6 @@ export function AccountModal() {
   };
 
   const isEmpty = !activity || activity.length <= 0;
-  console.log({ activity });
 
   return (
     <ModalOverlay>
@@ -86,12 +85,13 @@ export function AccountModal() {
                 );
 
               return (
-                <Box align="center" justify="space-between" mt="8px">
+                <Box key={hash} align="center" justify="space-between" mt="8px">
                   <div>
                     <Text color={failed && "orange"} m={0}>
                       {hash ? (
                         <a
                           target="_blank"
+                          rel="noreferrer"
                           href={getEtherscanLink(chainId, hash, "TRANSACTION")}
                         >
                           {text} <Icon name="external" />

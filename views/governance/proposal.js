@@ -91,8 +91,8 @@ export default function ProposalView() {
                 Description
               </Heading>
               {isLoading ? (
-                createArray(5).map(() => (
-                  <Skeleton size="small" variant="secondary" w="100%" />
+                createArray(5).map((_, i) => (
+                  <Skeleton key={i} size="small" variant="secondary" w="100%" />
                 ))
               ) : (
                 <Text>{description}</Text>
@@ -102,11 +102,20 @@ export default function ProposalView() {
             <Box direction="vertical" mt="24px">
               <Heading level={3}>Details</Heading>
               {isLoading
-                ? createArray(5).map(() => (
-                    <Skeleton size="small" variant="secondary" w="100%" />
+                ? createArray(5).map((_, i) => (
+                    <Skeleton
+                      key={i}
+                      size="small"
+                      variant="secondary"
+                      w="100%"
+                    />
                   ))
                 : details.map((detail) => (
-                    <Text w="100%" style={{ wordWrap: "break-word" }}>
+                    <Text
+                      w="100%"
+                      key={`${detail.target}${detail.functionSig}${detail.callData}`}
+                      style={{ wordWrap: "break-word" }}
+                    >
                       {detail.target}.{detail.functionSig}({detail.callData})
                     </Text>
                   ))}

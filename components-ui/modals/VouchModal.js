@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { ModalOverlay, Text, Input, Button, Divider } from "union-ui";
+import { ModalOverlay, Text, Input, Button } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useNewVouchModal } from "components-ui/modals";
 import { Modal } from "components-ui";

@@ -1,11 +1,4 @@
-import {
-  ButtonRow,
-  Divider,
-  Button,
-  ModalOverlay,
-  Input,
-  Text,
-} from "union-ui";
+import { ButtonRow, Button, ModalOverlay, Input, Text } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
 import { Modal } from "components-ui";

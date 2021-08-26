@@ -5,13 +5,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getTotalRedeemable = (uTokenContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const totalSupply: BigNumber = await uTokenContract.totalRedeemable();
-  return formatUnits(totalSupply, decimals);
-};
+const getTotalRedeemable =
+  (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const totalSupply: BigNumber = await uTokenContract.totalRedeemable();
+    return formatUnits(totalSupply, decimals);
+  };
 
 export default function useTotalRedeemable() {
   const uTokenContract: Contract = useUTokenContract();

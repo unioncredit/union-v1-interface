@@ -17,10 +17,8 @@ import errorMessages from "util/errorMessages";
 import { useForm } from "react-hook-form";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
-import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import useTrustData from "hooks/data/useTrustData";
 import { useWeb3React } from "@web3-react/core";
-import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useWriteOffDebt from "hooks/payables/useWriteOffDebt";
@@ -37,7 +35,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   const { open: openManageContactModal } = useManageContactModal();
   const writeOffDebt = useWriteOffDebt();
 
-  const { register, formState, errors, watch, handleSubmit } = useForm({
+  const { register, formState, errors, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -67,7 +65,6 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
       await updateTrustData();
       handleGoBack();
     } catch (err) {
-      console.log("write off debt error", err);
       addActivity(
         activityLabels.writeOffDebt({ address, amount: values.amount }, true)
       );

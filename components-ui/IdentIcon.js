@@ -13,10 +13,7 @@ const jazziconTheme = [
   "#48666A",
 ];
 
-export const Identicon = memo(({
-  address,
-  size = 18,
-}) => {
+export const Identicon = memo(({ address, size = 18 }) => {
   return (
     <Jazzicon
       colors={jazziconTheme}

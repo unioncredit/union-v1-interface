@@ -11,13 +11,11 @@ import {
   Stat,
   Button,
   Bar,
-  ButtonRow,
   Label,
   Tooltip,
   Grid,
   Row,
   Col,
-  Box,
   Heading,
   Table,
   TableRow,
@@ -94,12 +92,14 @@ export default function BorrowView() {
                   <Button
                     icon="borrow"
                     label="Borrow funds"
+                    key="borrow-funds"
                     onClick={openBorrowModal}
                   />,
                   <Button
                     icon="repayment"
                     variant="secondary"
                     label="Make a payment"
+                    key="make-a-payment"
                     onClick={openPaymentModal}
                   />,
                 ]}

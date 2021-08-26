@@ -38,31 +38,29 @@ export default function useStakeDeposit() {
       //Approve is not required to call stakeWithPermit
       if (allowance.lt(stakeAmount)) {
         try {
-          const {nonce, expiry, v, r, s} = await signDaiPermit(
+          const { nonce, expiry, v, r, s } = await signDaiPermit(
             library.provider,
             DAI,
             account,
             userManagerAddress
           );
-          return makeTxWithGasEstimate(
-            userManagerContract,
-            "stakeWithPermit",
-            [stakeAmount, nonce, expiry, v, r, s]
-          )
+          return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+            stakeAmount,
+            nonce,
+            expiry,
+            v,
+            r,
+            s,
+          ]);
         } catch (err) {
-          await makeTxWithGasEstimate(
-            DAIContract,
-            'approve',
-            [userManagerAddress, MaxUint256]
-          )
+          await makeTxWithGasEstimate(DAIContract, "approve", [
+            userManagerAddress,
+            MaxUint256,
+          ]);
         }
       }
 
-      return makeTxWithGasEstimate(
-        userManagerContract,
-        "stake",
-        [stakeAmount]
-      )
+      return makeTxWithGasEstimate(userManagerContract, "stake", [stakeAmount]);
     },
     [account, chainId, DAI, DAIContract, marketRegistryContract]
   );

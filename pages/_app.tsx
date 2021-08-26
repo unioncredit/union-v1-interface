@@ -1,5 +1,5 @@
 import { Web3ReactProvider } from "@web3-react/core";
-import ErrorBoundary from "components/errorBoundary";
+import ErrorBoundary from "components-ui/ErrorBoundary";
 import { Notifications } from "components-ui";
 import useFathom from "hooks/useFathom";
 import getLibrary from "lib/getLibrary";

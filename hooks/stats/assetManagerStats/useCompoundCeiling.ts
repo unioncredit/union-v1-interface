@@ -7,16 +7,14 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getCompoundCeiling = (compoundAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const compoundCeiling: BigNumber = await compoundAdapter.ceilingMap(
-    daiAddress
-  );
-  return formatUnits(compoundCeiling, decimals);
-};
+const getCompoundCeiling =
+  (compoundAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const compoundCeiling: BigNumber = await compoundAdapter.ceilingMap(
+      daiAddress
+    );
+    return formatUnits(compoundCeiling, decimals);
+  };
 
 export default function useCompoundCeiling() {
   const compoundAdapter: Contract = useCompoundAdapterContract();

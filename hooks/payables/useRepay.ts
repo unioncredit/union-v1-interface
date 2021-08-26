@@ -38,10 +38,10 @@ export default function useRepay() {
             account,
             uTokenAddress
           );
-  
+
           return makeTxWithGasEstimate(
             uTokenContract,
-            'repayBorrowWithPermit',
+            "repayBorrowWithPermit",
             [
               account,
               repayAmount.toString(),
@@ -49,23 +49,20 @@ export default function useRepay() {
               result.expiry,
               result.v,
               result.r,
-              result.s
+              result.s,
             ]
           );
         } catch (err) {
-          await makeTxWithGasEstimate(
-            DAIContract,
-            'approve',
-            [uTokenAddress, MaxUint256]
-          )
+          await makeTxWithGasEstimate(DAIContract, "approve", [
+            uTokenAddress,
+            MaxUint256,
+          ]);
         }
       }
 
-      return makeTxWithGasEstimate(
-        uTokenContract,
-        'repayBorrow',
-        [repayAmount]
-      );
+      return makeTxWithGasEstimate(uTokenContract, "repayBorrow", [
+        repayAmount,
+      ]);
     },
     [account, DAI, marketRegistryContract, DAIContract]
   );

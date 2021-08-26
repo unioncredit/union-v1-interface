@@ -7,14 +7,12 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getDAIInAave = (AaveAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const daiInAave: BigNumber = await AaveAdapter.getSupplyView(daiAddress);
-  return formatUnits(daiInAave, decimals);
-};
+const getDAIInAave =
+  (AaveAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const daiInAave: BigNumber = await AaveAdapter.getSupplyView(daiAddress);
+    return formatUnits(daiInAave, decimals);
+  };
 
 export default function useDAIInAave() {
   const AaveAdapter: Contract = useAaveAdapterContract();

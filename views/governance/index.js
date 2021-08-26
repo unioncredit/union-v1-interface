@@ -21,6 +21,7 @@ export default function GovernanceView() {
         title="Protocol Statistics"
         buttons={[
           <Button
+            key="view-all-stats"
             ml="auto"
             variant="secondary"
             icon="stats"

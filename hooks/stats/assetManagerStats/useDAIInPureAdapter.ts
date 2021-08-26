@@ -7,16 +7,14 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getDAIInPureAdapter = (pureAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const daiInPureAdapter: BigNumber = await pureAdapter.getSupplyView(
-    daiAddress
-  );
-  return formatUnits(daiInPureAdapter, decimals);
-};
+const getDAIInPureAdapter =
+  (pureAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const daiInPureAdapter: BigNumber = await pureAdapter.getSupplyView(
+      daiAddress
+    );
+    return formatUnits(daiInPureAdapter, decimals);
+  };
 
 export default function useDAIInPureAdapter() {
   const pureAdapter: Contract = usePureTokenAdapterContract();
@@ -26,9 +24,7 @@ export default function useDAIInPureAdapter() {
   const shouldFetch =
     !!pureAdapter && chainId && TOKENS[chainId] && TOKENS[chainId].DAI;
   return useSWR(
-    shouldFetch
-      ? ["daiInPureAdapter", decimals, TOKENS[chainId].DAI]
-      : null,
+    shouldFetch ? ["daiInPureAdapter", decimals, TOKENS[chainId].DAI] : null,
     getDAIInPureAdapter(pureAdapter)
   );
 }

@@ -7,14 +7,12 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getPureCeiling = (pureAdapter: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const pureCeiling: BigNumber = await pureAdapter.ceilingMap(daiAddress);
-  return formatUnits(pureCeiling, decimals);
-};
+const getPureCeiling =
+  (pureAdapter: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const pureCeiling: BigNumber = await pureAdapter.ceilingMap(daiAddress);
+    return formatUnits(pureCeiling, decimals);
+  };
 
 export default function usePureCeiling() {
   const pureAdapter: Contract = usePureTokenAdapterContract();

@@ -13,7 +13,7 @@ import { useState } from "react";
 import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";
 
-function OutstandingLoansRow({ address, used, onManage, ...props }) {
+function OutstandingLoansRow({ address, used, onManage }) {
   const { name } = usePublicData(address);
   return (
     <TableRow>
@@ -70,8 +70,12 @@ export function OutstandingLoans({ data }) {
     <>
       <Table>
         {loans && loans.length > 0 ? (
-          loans.map((row) => (
-            <OutstandingLoansRow {...row} onManage={handleManage(row)} />
+          loans.map((row, i) => (
+            <OutstandingLoansRow
+              key={i}
+              {...row}
+              onManage={handleManage(row)}
+            />
           ))
         ) : (
           <OutstandingLoansEmpty />

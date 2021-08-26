@@ -114,7 +114,7 @@ export function ManageContactModal({
             />
           </Box>
           {data.map(({ label, value, onClick, buttonProps }) => (
-            <Card variant="packed" mb="8px">
+            <Card key={label} variant="packed" mb="8px">
               <Card.Body>
                 <Label>{label}</Label>
                 <Box align="center">

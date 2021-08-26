@@ -19,4 +19,3 @@ export function useModals() {
 
   return { toggleModal, openModal, closeModal };
 }
-

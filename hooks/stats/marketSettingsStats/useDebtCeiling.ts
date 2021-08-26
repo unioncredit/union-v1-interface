@@ -5,13 +5,11 @@ import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 
-const getDebtCeiling = (uTokenContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const debtCeiling: BigNumber = await uTokenContract.debtCeiling();
-  return formatUnits(debtCeiling, decimals);
-};
+const getDebtCeiling =
+  (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const debtCeiling: BigNumber = await uTokenContract.debtCeiling();
+    return formatUnits(debtCeiling, decimals);
+  };
 
 export default function useDebtCeiling() {
   const uTokenContract: Contract = useUTokenContract();

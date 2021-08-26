@@ -5,13 +5,11 @@ import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 
-const getMaxBorrow = (uTokenContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const maxBorrow: BigNumber = await uTokenContract.maxBorrow();
-  return formatUnits(maxBorrow, decimals);
-};
+const getMaxBorrow =
+  (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const maxBorrow: BigNumber = await uTokenContract.maxBorrow();
+    return formatUnits(maxBorrow, decimals);
+  };
 
 export default function useMaxBorrow() {
   const uTokenContract: Contract = useUTokenContract();

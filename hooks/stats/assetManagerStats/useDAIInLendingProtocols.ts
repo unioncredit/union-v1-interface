@@ -7,16 +7,13 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getDAIInLendingProtocols = (assetContract: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const daiInLendingProtocols: BigNumber = await assetContract.totalSupplyView(
-    daiAddress
-  );
-  return formatUnits(daiInLendingProtocols, decimals);
-};
+const getDAIInLendingProtocols =
+  (assetContract: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const daiInLendingProtocols: BigNumber =
+      await assetContract.totalSupplyView(daiAddress);
+    return formatUnits(daiInLendingProtocols, decimals);
+  };
 
 export default function useDAIInLendingProtocols() {
   const assetContract: Contract = useAssetContract();

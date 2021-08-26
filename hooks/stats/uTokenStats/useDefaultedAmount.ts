@@ -14,52 +14,51 @@ declare type borrowerStakerPair = {
   staker: string;
 };
 
-const getDefaultedAmount = (
-  uTokenContract: Contract,
-  userContract: Contract
-) => async (_: any, decimals: BigNumber, chainId: number, provider: any) => {
-  const eventFilter: EventFilter = uTokenContract.filters.LogBorrow();
-  const logList = await getLogs(provider, chainId, eventFilter);
+const getDefaultedAmount =
+  (uTokenContract: Contract, userContract: Contract) =>
+  async (_: any, decimals: BigNumber, chainId: number, provider: any) => {
+    const eventFilter: EventFilter = uTokenContract.filters.LogBorrow();
+    const logList = await getLogs(provider, chainId, eventFilter);
 
-  const borrowerList: Array<string> = logList.map((log) => {
-    const event = uTokenContract.interface.parseLog(log);
-    return event.args.account;
-  });
+    const borrowerList: Array<string> = logList.map((log) => {
+      const event = uTokenContract.interface.parseLog(log);
+      return event.args.account;
+    });
 
-  const uniqueBorrowerList: Array<string> = Array.from(new Set(borrowerList));
+    const uniqueBorrowerList: Array<string> = Array.from(new Set(borrowerList));
 
-  const overdueBorrowerList: Array<string> = [];
-  await Promise.all(
-    uniqueBorrowerList.map(async (borrower) => {
-      const isOverdue = await uTokenContract.checkIsOverdue(borrower);
-      if (isOverdue) {
-        overdueBorrowerList.push(borrower);
-      }
-    })
-  );
+    const overdueBorrowerList: Array<string> = [];
+    await Promise.all(
+      uniqueBorrowerList.map(async (borrower) => {
+        const isOverdue = await uTokenContract.checkIsOverdue(borrower);
+        if (isOverdue) {
+          overdueBorrowerList.push(borrower);
+        }
+      })
+    );
 
-  const overdueBSList: Array<borrowerStakerPair> = [];
-  await Promise.all(
-    overdueBorrowerList.map(async (borrower) => {
-      const stakers = await userContract.getStakerAddresses(borrower);
-      stakers.forEach((staker) => {
-        overdueBSList.push({ borrower, staker });
-      });
-    })
-  );
+    const overdueBSList: Array<borrowerStakerPair> = [];
+    await Promise.all(
+      overdueBorrowerList.map(async (borrower) => {
+        const stakers = await userContract.getStakerAddresses(borrower);
+        stakers.forEach((staker) => {
+          overdueBSList.push({ borrower, staker });
+        });
+      })
+    );
 
-  const defaultedAmountList: Array<BigNumber> = await Promise.all(
-    overdueBSList.map(async (bs) => {
-      return userContract.getLockedStake(bs.staker, bs.borrower);
-    })
-  );
+    const defaultedAmountList: Array<BigNumber> = await Promise.all(
+      overdueBSList.map(async (bs) => {
+        return userContract.getLockedStake(bs.staker, bs.borrower);
+      })
+    );
 
-  const totalDefaulted = defaultedAmountList.reduce((sum, num) => {
-    return sum.add(num);
-  }, BigNumber.from(0));
+    const totalDefaulted = defaultedAmountList.reduce((sum, num) => {
+      return sum.add(num);
+    }, BigNumber.from(0));
 
-  return formatUnits(totalDefaulted, decimals);
-};
+    return formatUnits(totalDefaulted, decimals);
+  };
 
 export function useDefaultedAmount() {
   const uTokenContract: Contract = useUTokenContract();

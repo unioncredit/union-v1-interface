@@ -7,20 +7,19 @@ export function Modal(props) {
     if (props.drawer) {
       drawerOpenState.set(true);
     } else {
-		drawerOpenState.set(false);
+      drawerOpenState.set(false);
     }
   }, [props.drawer]);
 
   const handleClose = () => {
-  	drawerOpenState.set(false);
-  	if(typeof props.onClose === "function") {
-  		props.onClose();
-  	}
-  }
+    drawerOpenState.set(false);
+    if (typeof props.onClose === "function") {
+      props.onClose();
+    }
+  };
 
   return <UIModal {...props} onClose={handleClose} />;
 }
 
 Modal.Footer = UIModal.Footer;
 Modal.Body = UIModal.Body;
-

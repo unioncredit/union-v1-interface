@@ -6,44 +6,41 @@ import useCurrentToken from "../useCurrentToken";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 
-const getTrustCount = (marketRegistryContract: Contract) => async (
-  _: any,
-  account: string,
-  library: any,
-  tokenAddress: string
-) => {
-  let count = 0;
+const getTrustCount =
+  (marketRegistryContract: Contract) =>
+  async (_: any, account: string, library: any, tokenAddress: string) => {
+    let count = 0;
 
-  const signer = library.getSigner();
-  const res = await marketRegistryContract.tokens(tokenAddress);
-  const userManagerAddress = res.userManager;
-  const userManagerContract = new Contract(
-    userManagerAddress,
-    USER_MANAGER_ABI,
-    signer
-  );
+    const signer = library.getSigner();
+    const res = await marketRegistryContract.tokens(tokenAddress);
+    const userManagerAddress = res.userManager;
+    const userManagerContract = new Contract(
+      userManagerAddress,
+      USER_MANAGER_ABI,
+      signer
+    );
 
-  const addresses: string[] = await userManagerContract.getStakerAddresses(
-    account
-  );
+    const addresses: string[] = await userManagerContract.getStakerAddresses(
+      account
+    );
 
-  await Promise.all(
-    addresses.map(async (stakerAddress) => {
-      const trustAmount: number = await userManagerContract.getVouchingAmount(
-        stakerAddress,
-        account
-      );
+    await Promise.all(
+      addresses.map(async (stakerAddress) => {
+        const trustAmount: number = await userManagerContract.getVouchingAmount(
+          stakerAddress,
+          account
+        );
 
-      const isMember: boolean = await userManagerContract.checkIsMember(
-        stakerAddress
-      );
+        const isMember: boolean = await userManagerContract.checkIsMember(
+          stakerAddress
+        );
 
-      if (trustAmount > 0 && isMember) count++;
-    })
-  );
+        if (trustAmount > 0 && isMember) count++;
+      })
+    );
 
-  return count;
-};
+    return count;
+  };
 
 export default function useTrustCountData() {
   const { account, library } = useWeb3React();

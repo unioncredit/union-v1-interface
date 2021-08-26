@@ -5,13 +5,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getNewMemberFee = (userContract: Contract) => async (
-  _: any,
-  decimals: number
-) => {
-  const newMemberFee: BigNumber = await userContract.newMemberFee();
-  return formatUnits(newMemberFee, decimals);
-};
+const getNewMemberFee =
+  (userContract: Contract) => async (_: any, decimals: number) => {
+    const newMemberFee: BigNumber = await userContract.newMemberFee();
+    return formatUnits(newMemberFee, decimals);
+  };
 
 export default function useNewMemberFee() {
   const userContract: Contract = useUserContract();

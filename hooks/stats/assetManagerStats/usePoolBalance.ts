@@ -7,14 +7,14 @@ import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
 
-const getPoolBalance = (assetContract: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  daiAddress: String
-) => {
-  const poolBalance: BigNumber = await assetContract.getPoolBalance(daiAddress);
-  return formatUnits(poolBalance, decimals);
-};
+const getPoolBalance =
+  (assetContract: Contract) =>
+  async (_: any, decimals: BigNumber, daiAddress: String) => {
+    const poolBalance: BigNumber = await assetContract.getPoolBalance(
+      daiAddress
+    );
+    return formatUnits(poolBalance, decimals);
+  };
 
 export default function usePoolBalance() {
   const assetContract: Contract = useAssetContract();

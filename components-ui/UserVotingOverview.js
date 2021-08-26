@@ -1,10 +1,6 @@
 import PropTypes from "prop-types";
-import {
-  VoteDelegationModal,
-  useVoteDelegationModal,
-} from "components-ui/modals";
+import { useVoteDelegationModal } from "components-ui/modals";
 import { Card, Box, Button, Divider, Text, Label, Heading } from "union-ui";
-import { commify } from "@ethersproject/units";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";

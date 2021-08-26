@@ -1,12 +1,12 @@
 import { Text, Table, TableCell, TableRow } from "union-ui";
 
-function UserVotingHistoryRow() {
-  return (
-    <TableRow>
-      <TableCell>Not implemented</TableCell>
-    </TableRow>
-  );
-}
+// function UserVotingHistoryRow() {
+//   return (
+//     <TableRow>
+//       <TableCell>Not implemented</TableCell>
+//     </TableRow>
+//   );
+// }
 
 function UserVotingHistoryEmpty() {
   return (

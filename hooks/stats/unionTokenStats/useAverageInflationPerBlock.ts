@@ -11,29 +11,26 @@ import { getLogs } from "lib/logs";
 
 // Calculates average reward distributed per block in past week
 // avg = total_reward_per_week / total_blocks_per_week
-const getAverageInflationPerBlock = (comptroller: Contract) => async (
-  _: any,
-  decimals: BigNumber,
-  provider: any,
-  chainId: number
-) => {
-  const blocknumber = await provider.getBlockNumber();
-  const blockSpeed = BLOCK_SPEED[chainId];
-  const weekInBlocks = (60 * 60 * 24 * 7) / blockSpeed;
-  const fromBlock = blocknumber - weekInBlocks;
+const getAverageInflationPerBlock =
+  (comptroller: Contract) =>
+  async (_: any, decimals: BigNumber, provider: any, chainId: number) => {
+    const blocknumber = await provider.getBlockNumber();
+    const blockSpeed = BLOCK_SPEED[chainId];
+    const weekInBlocks = (60 * 60 * 24 * 7) / blockSpeed;
+    const fromBlock = blocknumber - weekInBlocks;
 
-  const eventFilter: EventFilter = comptroller.filters.LogWithdrawRewards();
-  const rewardLogs = await getLogs(provider, chainId, eventFilter, fromBlock);
+    const eventFilter: EventFilter = comptroller.filters.LogWithdrawRewards();
+    const rewardLogs = await getLogs(provider, chainId, eventFilter, fromBlock);
 
-  const totalReward = rewardLogs.reduce((sum: BigNumber, log: any) => {
-    const event = comptroller.interface.parseLog(log);
-    return sum.add(event.args.amount);
-  }, BigNumber.from(0));
+    const totalReward = rewardLogs.reduce((sum: BigNumber, log: any) => {
+      const event = comptroller.interface.parseLog(log);
+      return sum.add(event.args.amount);
+    }, BigNumber.from(0));
 
-  const rewardPerBlock = totalReward.div(weekInBlocks);
+    const rewardPerBlock = totalReward.div(weekInBlocks);
 
-  return formatUnits(rewardPerBlock, decimals);
-};
+    return formatUnits(rewardPerBlock, decimals);
+  };
 
 export default function useAverageInflationPerBlock() {
   const comptroller: Contract = useComptrollerContract();

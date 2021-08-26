@@ -4,25 +4,23 @@ import { formatUnits } from "@ethersproject/units";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
-const getProposalVoteReceipt = (govContract: Contract) => async (
-  _: any,
-  address: string,
-  proposalId: string
-) => {
-  const receipt: {
-    hasVoted: boolean;
-    support: boolean;
-    votes: BigNumber;
-  } = await govContract.getReceipt(proposalId, address);
+const getProposalVoteReceipt =
+  (govContract: Contract) =>
+  async (_: any, address: string, proposalId: string) => {
+    const receipt: {
+      hasVoted: boolean;
+      support: boolean;
+      votes: BigNumber;
+    } = await govContract.getReceipt(proposalId, address);
 
-  const formattedReceipt = {
-    hasVoted: receipt.hasVoted,
-    support: receipt.support,
-    votes: formatUnits(receipt.votes, 18),
+    const formattedReceipt = {
+      hasVoted: receipt.hasVoted,
+      support: receipt.support,
+      votes: formatUnits(receipt.votes, 18),
+    };
+
+    return formattedReceipt;
   };
-
-  return formattedReceipt;
-};
 
 export default function useProposalVoteReceipt(
   address: string,

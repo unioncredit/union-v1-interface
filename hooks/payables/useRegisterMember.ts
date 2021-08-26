@@ -9,7 +9,7 @@ import { signERC2612Permit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
-import useUnionContract from '../contracts/useUnionContract';
+import useUnionContract from "../contracts/useUnionContract";
 
 export default function useRegisterMember() {
   const { account, library } = useWeb3React();
@@ -20,7 +20,8 @@ export default function useRegisterMember() {
   let memberFee;
   return useCallback(async (): Promise<TransactionResponse> => {
     const signer = library.getSigner();
-    const { userManager: userManagerAddress } = await marketRegistryContract.tokens(tokenAddress);
+    const { userManager: userManagerAddress } =
+      await marketRegistryContract.tokens(tokenAddress);
     const userManagerContract = new Contract(
       userManagerAddress,
       USER_MANAGER_ABI,
@@ -38,25 +39,17 @@ export default function useRegisterMember() {
 
       return makeTxWithGasEstimate(
         userManagerContract,
-        'registerMemberWithPermit',
-        [
-          account,
-          memberFee,
-          result.deadline,
-          result.v,
-          result.r,
-          result.s
-        ]
+        "registerMemberWithPermit",
+        [account, memberFee, result.deadline, result.v, result.r, result.s]
       );
     } catch (err) {
-      await makeTxWithGasEstimate(
-        unionContract,
-        'approve',
-        [userManagerAddress, memberFee]
-      );
+      await makeTxWithGasEstimate(unionContract, "approve", [
+        userManagerAddress,
+        memberFee,
+      ]);
       return await makeTxWithGasEstimate(
         userManagerContract,
-        'registerMember',
+        "registerMember",
         [account]
       );
     }

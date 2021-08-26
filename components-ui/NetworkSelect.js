@@ -43,7 +43,7 @@ export function NetworkSelect() {
   const handleChangeNetwork = async (value) => {
     try {
       setIsLoading(true);
-      await ethereum.request({
+      await window.ethereum.request({
         method: "wallet_switchEthereumChain",
         params: [{ chainId: value.networkData.chainId }],
       });
@@ -71,4 +71,3 @@ export function NetworkSelect() {
     />
   );
 }
-

@@ -5,18 +5,15 @@ import useSWR from "swr";
 import parseRes from "util/parseRes";
 import useUnionContract from "../contracts/useUnionContract";
 
-const getUnionAllowance = (contract: Contract) => async (
-  _: any,
-  account: string,
-  chainId: number
-) => {
-  const res = await contract.allowance(
-    account,
-    USER_MANAGER_ADDRESSES[chainId]
-  );
+const getUnionAllowance =
+  (contract: Contract) => async (_: any, account: string, chainId: number) => {
+    const res = await contract.allowance(
+      account,
+      USER_MANAGER_ADDRESSES[chainId]
+    );
 
-  return parseRes(res);
-};
+    return parseRes(res);
+  };
 
 export default function useUnionAllowance() {
   const { account, chainId } = useWeb3React();

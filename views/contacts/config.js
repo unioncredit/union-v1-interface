@@ -10,4 +10,3 @@ export const config = {
     { id: ContactsType.YOU_TRUST, label: "You trust" },
   ],
 };
-

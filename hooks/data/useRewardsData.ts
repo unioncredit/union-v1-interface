@@ -6,28 +6,26 @@ import parseRes from "util/parseRes";
 import useComptrollerContract from "../contracts/useComptrollerContract";
 import useCurrentToken from "../useCurrentToken";
 
-const getRewardsData = (contract: Contract) => async (
-  _: any,
-  account: string,
-  tokenAddress: string
-) => {
-  try {
-    const rewardsMultiplier = await contract.getRewardsMultiplier(
-      account,
-      tokenAddress
-    );
+const getRewardsData =
+  (contract: Contract) =>
+  async (_: any, account: string, tokenAddress: string) => {
+    try {
+      const rewardsMultiplier = await contract.getRewardsMultiplier(
+        account,
+        tokenAddress
+      );
 
-    const rewards = await contract.calculateRewards(account, tokenAddress);
+      const rewards = await contract.calculateRewards(account, tokenAddress);
 
-    return {
-      rewards: parseRes(rewards, 3),
-      rewardsMultiplier: parseRes(rewardsMultiplier),
-    };
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+      return {
+        rewards: parseRes(rewards, 3),
+        rewardsMultiplier: parseRes(rewardsMultiplier),
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
 export default function useRewardsData() {
   const { account, chainId } = useWeb3React();

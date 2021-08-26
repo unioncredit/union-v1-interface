@@ -81,7 +81,7 @@ export function ProposalsTable({ data }) {
           <TableCell>No proposals</TableCell>
         </TableRow>
       )}
-      {data && data.map((row) => <ProposalsTableRow {...row} />)}
+      {data && data.map((row, i) => <ProposalsTableRow key={i} {...row} />)}
     </Table>
   );
 }

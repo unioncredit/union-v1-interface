@@ -9,41 +9,42 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useCurrentToken from "../useCurrentToken";
 
-const getStakeData = (marketRegistryContract: Contract) => async (
-  _: any,
-  account: string,
-  tokenAddress: string,
-  library
-) => {
-  try {
-    const signer = library.getSigner();
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const userManagerAddress = res.userManager;
-    const userManagerContract = new Contract(
-      userManagerAddress,
-      USER_MANAGER_ABI,
-      signer
-    );
+const getStakeData =
+  (marketRegistryContract: Contract) =>
+  async (_: any, account: string, tokenAddress: string, library) => {
+    try {
+      const signer = library.getSigner();
+      const res = await marketRegistryContract.tokens(tokenAddress);
+      const userManagerAddress = res.userManager;
+      const userManagerContract = new Contract(
+        userManagerAddress,
+        USER_MANAGER_ABI,
+        signer
+      );
 
-    const totalStake = await userManagerContract.getStakerBalance(account);
+      const totalStake = await userManagerContract.getStakerBalance(account);
 
-    const totalLocked = await userManagerContract.getTotalLockedStake(account);
+      const totalLocked = await userManagerContract.getTotalLockedStake(
+        account
+      );
 
-    const totalFrozen = await userManagerContract.getTotalFrozenAmount(account);
+      const totalFrozen = await userManagerContract.getTotalFrozenAmount(
+        account
+      );
 
-    return {
-      totalStake: parseRes(totalStake),
-      utilizedStake: parseRes(totalLocked.sub(totalFrozen)),
-      withdrawableStake: roundDown(
-        formatUnits(totalStake.sub(totalLocked), 18)
-      ),
-      defaultedStake: parseRes(totalFrozen),
-    };
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+      return {
+        totalStake: parseRes(totalStake),
+        utilizedStake: parseRes(totalLocked.sub(totalFrozen)),
+        withdrawableStake: roundDown(
+          formatUnits(totalStake.sub(totalLocked), 18)
+        ),
+        defaultedStake: parseRes(totalFrozen),
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
 
 export default function useStakeData() {
   const { account, library } = useWeb3React();

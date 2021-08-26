@@ -5,13 +5,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getTotalFrozenStake = (userContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const totalFrozen: BigNumber = await userContract.totalFrozen();
-  return formatUnits(totalFrozen, decimals);
-};
+const getTotalFrozenStake =
+  (userContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const totalFrozen: BigNumber = await userContract.totalFrozen();
+    return formatUnits(totalFrozen, decimals);
+  };
 
 export default function useTotalFrozenStake() {
   const userContract: Contract = useUserContract();

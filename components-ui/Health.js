@@ -13,4 +13,3 @@ export function Health({ health, isOverdue }) {
 
   return <Badge color={fillColor} label={label} />;
 }
-

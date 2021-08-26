@@ -3,11 +3,9 @@ import {
   Stat,
   Button,
   Bar,
-  ButtonRow,
   Grid,
   Row,
   Col,
-  Box,
   Heading,
   Text,
   Table,
@@ -72,6 +70,7 @@ export default function LendView() {
                   <Button
                     icon="vouch"
                     label="Vouch for new contact"
+                    key="vouch-new-contact"
                     onClick={openVouchModal}
                   />,
                 ]}

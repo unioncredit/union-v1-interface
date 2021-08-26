@@ -5,13 +5,11 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
 
-const getTotalReserves = (uTokenContract: Contract) => async (
-  _: any,
-  decimals: BigNumber
-) => {
-  const totalSupply: BigNumber = await uTokenContract.totalReserves();
-  return formatUnits(totalSupply, decimals);
-};
+const getTotalReserves =
+  (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
+    const totalSupply: BigNumber = await uTokenContract.totalReserves();
+    return formatUnits(totalSupply, decimals);
+  };
 
 export default function useTotalReserves() {
   const uTokenContract: Contract = useUTokenContract();

@@ -53,8 +53,6 @@ export default function useTransactions() {
   const parser = parseTransactionsLog(readProvider, uTokenContract);
 
   return (
-    account &&
-    uTokenContract &&
-    useLogs([borrowFilter, repayFilter], parser)
+    account && uTokenContract && useLogs([borrowFilter, repayFilter], parser)
   );
 }

@@ -4,18 +4,15 @@ import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
 import useComptrollerContract from "../contracts/useComptrollerContract";
 
-const getUserGovernanceTokenRewards = (contract) => async (
-  _,
-  address,
-  tokenAddress
-) => {
-  const calculateRewards = await contract.calculateRewards(
-    address,
-    tokenAddress
-  );
+const getUserGovernanceTokenRewards =
+  (contract) => async (_, address, tokenAddress) => {
+    const calculateRewards = await contract.calculateRewards(
+      address,
+      tokenAddress
+    );
 
-  return parseFloat(formatUnits(calculateRewards, 18));
-};
+    return parseFloat(formatUnits(calculateRewards, 18));
+  };
 
 export default function useUserGovernanceTokenRewards(address) {
   const comptrollerContract = useComptrollerContract();
