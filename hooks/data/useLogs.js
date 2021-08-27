@@ -39,7 +39,14 @@ const sortTxs = (txs) =>
       []
     );
 
-export default function useLogs(filters, parser) {
+/**
+ * @params {Array} filters
+ * @params {Function} praser
+ * @params {Object} opts
+ * @params {Object} opts.startBlock
+ * @params {Object} opts.startPosition START, END
+ */
+export default function useLogs(filters, parser, opts = {}) {
   const [loading, setLoading] = useState(false);
   const [completeLogs, setLogs] = usePersistentState("union:logs:v1", {});
   const { chainId } = useWeb3React();
@@ -62,18 +69,23 @@ export default function useLogs(filters, parser) {
       setLoading(true);
       const logs = completeLogs[logKey] || [];
       const latestBlock = await readProvider.getBlockNumber();
-      const startBlock = EVENT_START_BLOCK[chainId];
+      const startBlock = opts.startBlock || EVENT_START_BLOCK[chainId];
       const interval = EVENT_BLOCK_INTERVAL[chainId] - 1;
       const latestDataBlock = logs[0]?.blockNumber || latestBlock;
       const oldestDataBlock = logs[logs.length - 1]?.blockNumber || latestBlock;
 
-      const ranges = getRanges({
+      const unSortedRanges = getRanges({
         latestBlock,
         latestDataBlock,
         oldestDataBlock,
         startBlock,
         interval,
       });
+
+      const ranges =
+        opts.startPosition === "START"
+          ? unSortedRanges.reverse()
+          : unSortedRanges;
 
       let i = 0;
       while (i < ranges.length) {

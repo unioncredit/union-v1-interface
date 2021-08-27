@@ -59,6 +59,11 @@ const activityLabels = {
     failed,
     hash,
   }),
+  vote: ({ proposalId, type, hash }, failed) => ({
+    label: `Voted ${type} proposal ${proposalId}`,
+    failed,
+    hash,
+  }),
 };
 
 export default activityLabels;

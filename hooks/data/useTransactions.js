@@ -52,7 +52,5 @@ export default function useTransactions() {
   const repayFilter = uTokenContract.filters.LogRepay(account);
   const parser = parseTransactionsLog(readProvider, uTokenContract);
 
-  return (
-    account && uTokenContract && useLogs([borrowFilter, repayFilter], parser)
-  );
+  return useLogs([borrowFilter, repayFilter], parser);
 }

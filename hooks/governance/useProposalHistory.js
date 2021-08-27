@@ -1,73 +1,45 @@
-import { useWeb3React } from "@web3-react/core";
-import useSWR from "swr";
 import useGovernanceContract from "../contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
-import { getLogs } from "lib/logs";
+import useLogs from "hooks/data/useLogs";
 
-const getProposalHistory = (contract, provider, chainId) => async (_, id) => {
-  const params = { fromBlock: 9601459, toBlock: "latest" };
+const parseHistory = (contract, provider, id) => async (logs) => {
+  const eventsWithLogs = await Promise.all(
+    logs.map(async (event) => {
+      const block = await provider.getBlock(event.blockNumber);
 
-  const filters = [
-    {
-      ...contract.filters["ProposalCreated"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalCanceled"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalExecuted"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalQueued"](),
-      ...params,
-    },
-  ];
+      const eventParsed = contract.interface.parseLog(event);
 
-  const pastEvents = await Promise.all(
-    filters.map(async (filter) => {
-      const events = await getLogs(provider, chainId, filter);
+      const formattedEvent = {
+        args: eventParsed.args,
+        id: eventParsed.args?.id.toString(),
+        name: eventParsed.name,
+        timestamp: block.timestamp.toString(),
+        transactionHash: event.transactionHash,
+      };
 
-      const eventsWithLogs = await Promise.all(
-        events.map(async (event) => {
-          const block = await provider.getBlock(event.blockNumber);
-
-          const eventParsed = contract.interface.parseLog(event);
-
-          const formattedEvent = {
-            args: eventParsed.args,
-            id: eventParsed.args?.id.toString(),
-            name: eventParsed.name,
-            timestamp: block.timestamp.toString(),
-            transactionHash: event.transactionHash,
-          };
-
-          return formattedEvent;
-        })
-      );
-
-      return eventsWithLogs;
+      return formattedEvent;
     })
   );
 
-  return pastEvents
-    .flat()
+  return eventsWithLogs
     .filter((event) => event.id === id)
-    .sort((a, b) => a.timestamp - b.timestamp);
+    .sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
 };
 
-export default function useProposalHistory(id) {
-  const { chainId } = useWeb3React();
+export default function useProposalHistory(id, blockNumber) {
   const readProvider = useReadProvider();
-
   const govContract = useGovernanceContract();
+  const parser = parseHistory(govContract, readProvider, id);
 
-  const shouldFetch = govContract && readProvider && chainId && id;
+  const filters = [
+    govContract.filters["ProposalCreated"](),
+    govContract.filters["ProposalCanceled"](),
+    govContract.filters["ProposalExecuted"](),
+    govContract.filters["ProposalQueued"](),
+  ];
 
-  return useSWR(
-    shouldFetch ? ["ProposalHistory", id] : null,
-    getProposalHistory(govContract, readProvider, chainId)
-  );
+  return useLogs(filters, parser, {
+    startBlock: blockNumber,
+    startPosition: "START",
+  });
 }

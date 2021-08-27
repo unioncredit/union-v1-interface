@@ -56,6 +56,7 @@ const getAllProposalData =
       })
       .map((p, i) => {
         const formattedProposal = {
+          blockNumber: formattedEvents[i].blockNumber,
           id: allProposals[i]?.result?.id.toString(),
           title:
             String(formattedEvents[i].description)

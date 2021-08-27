@@ -36,6 +36,8 @@ export default function ProposalView() {
     forCount,
     againstCount,
     details = [],
+    status,
+    blockNumber,
   } = !!data && data;
 
   const isLoading = !data;
@@ -122,8 +124,13 @@ export default function ProposalView() {
             </Box>
           </Col>
           <Col md={4}>
-            <VotingCard forCount={forCount} againstCount={againstCount} />
-            <ProposalHistoryCard id={id} />
+            <VotingCard
+              forCount={forCount}
+              againstCount={againstCount}
+              status={status}
+              proposalId={id}
+            />
+            <ProposalHistoryCard id={id} blockNumber={blockNumber} />
           </Col>
         </Row>
       </Grid>

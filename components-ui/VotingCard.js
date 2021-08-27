@@ -1,3 +1,4 @@
+import { useAddActivity } from "hooks/data/useActivity";
 import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
 import useProposalQuorum from "hooks/governance/useProposalQuorum";
 import {
@@ -12,10 +13,25 @@ import {
 } from "union-ui";
 import format from "util/formatValue";
 import { toPercent } from "util/numbers";
+import useCastVote from "hooks/payables/useCastVote";
+import useProposalVoteReceipt from "hooks/governance/useProposalVoteReceipt";
+import { useWeb3React } from "@web3-react/core";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import activityLabels from "util/activityLabels";
 
-export function VotingCard({ forCount, againstCount }) {
+const VoteType = {
+  FOR: "for",
+  AGAINST: "against",
+};
+
+export function VotingCard({ forCount, againstCount, proposalId, status }) {
+  const { account, library } = useWeb3React();
   const { data: quorum } = useProposalQuorum();
   const { data: totalSupply } = useGovernanceTokenSupply();
+  const castVote = useCastVote();
+  const addActivity = useAddActivity();
+  const { data: voteReceipt } = useProposalVoteReceipt(account, proposalId);
 
   const totalCount = forCount + againstCount;
   const percentageFor = (forCount / totalCount) * 100;
@@ -23,6 +39,21 @@ export function VotingCard({ forCount, againstCount }) {
 
   const totalVotePercent = totalCount / totalSupply;
   const quorumPercent = quorum / totalSupply;
+
+  const handleCastVote = (type) => async () => {
+    try {
+      const support = type === VoteType.FOR ? 1 : 0;
+      const { hash } = await castVote(proposalId, support);
+
+      await getReceipt(hash, library);
+      addActivity(activityLabels.vote({ type, hash, proposalId }));
+    } catch (err) {
+      addActivity(activityLabels.vote({ type, proposalId }, true));
+      handleTxError(err);
+    }
+  };
+
+  const canVote = !voteReceipt?.hasVoted && status === "active";
 
   return (
     <Card mb="16px">
@@ -63,6 +94,8 @@ export function VotingCard({ forCount, againstCount }) {
             variant="secondary"
             rounded
             color="green"
+            disabled={!canVote}
+            onClick={handleCastVote(VoteType.FOR)}
           />
           <Button
             fluid
@@ -71,6 +104,8 @@ export function VotingCard({ forCount, againstCount }) {
             variant="secondary"
             rounded
             color="red"
+            disabled={!canVote}
+            onClick={handleCastVote(VoteType.AGAINST)}
           />
         </ButtonRow>
       </Card.Body>
