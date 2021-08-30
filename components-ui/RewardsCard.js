@@ -1,15 +1,4 @@
-import {
-  Nav,
-  NavItem,
-  Card,
-  Multiplier,
-  NavIcon,
-  Text,
-  Heading,
-  Button,
-  Label,
-  Box,
-} from "union-ui";
+import { Card, Multiplier, NavIcon, Text, Heading, Label, Box } from "union-ui";
 import { ClaimButton } from "components-ui";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";

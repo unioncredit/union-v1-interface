@@ -1,7 +1,5 @@
 import {
   Button,
-  Heading,
-  Text,
   Box,
   Card,
   Grid,
@@ -13,7 +11,6 @@ import {
 } from "union-ui";
 import {
   Modal,
-  Avatar,
   Wrapper,
   ContactDetails,
   ContactsSummaryRow,
@@ -37,11 +34,8 @@ import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
-import truncateAddress from "util/truncateAddress";
 
 import { config, ContactsType } from "./config";
-import usePublicData from "hooks/usePublicData";
-import useAddressLabels from "hooks/useAddressLabels";
 import usePopTrustModal from "hooks/usePopTrustModal";
 
 const withMobileView =
