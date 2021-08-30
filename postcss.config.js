@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ["tailwindcss", "postcss-preset-env", "postcss-easing-gradients"],
+  plugins: ["postcss-preset-env", "postcss-easing-gradients"],
 };
