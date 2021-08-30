@@ -2,7 +2,7 @@ import format from "util/formatValue";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import useUnionSymbol from "hooks/useUnionSymbol";
-import { TabLink, Navigation } from "components-ui";
+import { TabLink, Navigation, Sidebar } from "components-ui";
 import {
   WalletModal,
   useWalletModal,
@@ -21,6 +21,7 @@ import {
   Row,
   Col,
   LoadingSpinner,
+  ContextMenu,
 } from "union-ui";
 import useCurrentToken from "hooks/useCurrentToken";
 import useInactiveListener from "hooks/useInactiveListener";
@@ -29,6 +30,14 @@ import { Wallet } from "components-ui";
 import usePublicData from "hooks/usePublicData";
 import useMemberCheck from "hooks/useMemberCheck";
 import { Avatar } from "./Avatar";
+
+const contextMenuItems = [
+  { label: "Docs", target: "_blank", href: "https://unionfinance.gitbook.io/docs/" },
+  { label: "Blog", target: "_blank", href: "https://medium.com/union-finance" },
+  { label: "Twitter", target: "_blank", href: "https://twitter.com/unionprotocol" },
+  { label: "Discord", target: "_blank", href: "https://discord.gg/cZagzJ3p8G" },
+  { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
+]
 
 export function Wrapper({ children, tabItems, title }) {
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
@@ -67,9 +76,7 @@ export function Wrapper({ children, tabItems, title }) {
   return (
     <>
       <Layout>
-        <Layout.Sidebar>
-          <Navigation />
-        </Layout.Sidebar>
+        <Sidebar />
         <Layout.Main>
           <Grid style={{ display: "flex", flexGrow: 1 }}>
             <Row style={{ width: "100%", margin: 0 }}>
@@ -79,17 +86,15 @@ export function Wrapper({ children, tabItems, title }) {
                     {title}
                   </Heading>
                   <Box>
-                    <Button
-                      variant="secondary"
-                      icon="vouch"
-                      label={`${format(unionBalance, 2)} ${unionSymbol}`}
-                      onClick={openWalletModal}
-                    />
-                    <Wallet
-                      onClick={openAccountModal}
-                      name={name}
-                      avatar={<Avatar address={account} />}
-                    />
+                    <Box mr="8px">
+                      <Wallet
+                        onClick={openAccountModal}
+                        name={name}
+                        avatar={<Avatar address={account} />}
+                        mr="8px"
+                      />
+                    </Box>
+                    <ContextMenu items={contextMenuItems} />
                   </Box>
                 </Layout.Header>
                 {tabItems && (

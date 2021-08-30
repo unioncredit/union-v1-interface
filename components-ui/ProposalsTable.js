@@ -35,7 +35,21 @@ function ProposalsTableRowSkeleton() {
   );
 }
 
-function ProposalsTableRow({ id, againstCount, forCount, date, type, title }) {
+const statusColorMap = {
+  executed: "green",
+  live: "blue",
+  cancelled: "red",
+};
+
+function ProposalsTableRow({
+  id,
+  againstCount,
+  forCount,
+  date,
+  type,
+  title,
+  status,
+}) {
   const total = againstCount + forCount;
   const percentageFor = forCount / total;
 
@@ -46,7 +60,7 @@ function ProposalsTableRow({ id, againstCount, forCount, date, type, title }) {
         <Label>{date}</Label>
       </TableCell>
       <TableCell span={1} align="center">
-        <Badge color="blue" label="Live" />
+        <Badge color={statusColorMap[status] || "blue"} label={status} />
       </TableCell>
       <TableCell span={1} align="center">
         <Text>{type}</Text>

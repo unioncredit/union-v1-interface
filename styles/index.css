@@ -10,9 +10,9 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
-  .layout-sidebar {
+  /*.layout-sidebar {
     display: none;
-  }
+  }*/
 }
 
 .footer {
@@ -175,4 +175,21 @@ a {
   height: 100vh;
   align-items: center;
   justify-content: center;
+}
+
+.nav--mobile {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999;
+  background: #FBFBFB;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow: inset 0px 1px 0px #e1e0e6;
+}
+
+@media screen and (max-width: 650px) {
+  .tooltip { display: none; }
 }

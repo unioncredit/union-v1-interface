@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Nav, NavItem } from "union-ui";
+import { Nav, NavItem, Box } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
+import { RewardsCard } from "components-ui";
 
 const navItems = [
   {
@@ -34,10 +35,11 @@ const navItems = [
   },
 ];
 
-export const Navigation = () => {
+export const Navigation = ({ mobile }) => {
   const router = useRouter();
-  const { data: isMember } = useIsMember();
   const pathname = router.pathname;
+
+  const { data: isMember } = useIsMember();
 
   const filteredNavItems = useMemo(() => {
     if (isMember) {
@@ -53,12 +55,19 @@ export const Navigation = () => {
   }, [isMember, pathname]);
 
   return (
-    <Nav>
-      {filteredNavItems.map((item) => (
+    <Nav mobile={mobile}>
+      {filteredNavItems.map(({ label, ...item }) => (
         <Link key={item.id} href={item.pathname} passHref>
-          <NavItem {...item} />
+          <NavItem label={!mobile && label} {...item} />
         </Link>
       ))}
+      {mobile ? (
+        <NavItem icon="union-token" label="124.5" bordered />
+      ) : (
+        <Box mt="auto" mb="16px">
+          <RewardsCard />
+        </Box>
+      )}
     </Nav>
   );
 };

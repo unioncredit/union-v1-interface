@@ -9,12 +9,15 @@ import {
   Col,
   ToggleMenu,
   Table,
+  ModalOverlay,
 } from "union-ui";
 import {
-  Wrapper,
+  Modal,
   Avatar,
+  Wrapper,
   ContactDetails,
   ContactsSummaryRow,
+  ContactDetailsHeader,
   ContactsSummaryRowSkeleton,
 } from "components-ui";
 import {
@@ -30,6 +33,7 @@ import {
   WriteOffDebtModal,
 } from "components-ui/modals";
 import { useState, useEffect } from "react";
+import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
@@ -40,37 +44,24 @@ import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 import usePopTrustModal from "hooks/usePopTrustModal";
 
-function ContactDetailsHeader({ address, name: passedName }) {
-  const { name } = usePublicData(address);
-  const { open: openManageContactModal } = useManageContactModal();
-  const { getLabel } = useAddressLabels();
-  const label = getLabel(address);
-
-  return (
-    <Box align="center" className="contact-details-header">
-      <Box>
-        {address && <Avatar size={54} address={address} />}
-        <Box direction="vertical" mx="16px">
-          <Heading level={2}>
-            {label && `${label} • `}
-            {name || passedName}
-          </Heading>
-          <Text mb={0}>{address && truncateAddress(address)}</Text>
-        </Box>
-      </Box>
-      <Button
-        ml="auto"
-        rounded
-        variant="secondary"
-        label="Manage contact"
-        icon="manage"
-        onClick={openManageContactModal}
-      />
-    </Box>
-  );
-}
+const withMobileView =
+  (Component) =>
+  ({ onClose, contactsType, ...props }) =>
+    (
+      <ModalOverlay>
+        <Modal title="Contact details" onClose={onClose}>
+          <ContactDetailsHeader
+            {...props}
+            contactsType={contactsType}
+            mobile={true}
+          />
+          <Component {...props} variant={contactsType} />
+        </Modal>
+      </ModalOverlay>
+    );
 
 export default function ContactsView() {
+  const { width } = useWindowSize();
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -89,8 +80,10 @@ export default function ContactsView() {
     setContactsType(item.id);
   };
 
+  const isMobile = width <= 600;
+
   useEffect(() => {
-    if (!vouchData || !trustData || selectedContact) return;
+    if (!vouchData || !trustData || selectedContact || isMobile) return;
 
     if (contactsType === ContactsType.TRUSTS_YOU) {
       setSelectedContact(vouchData[0]);
@@ -104,6 +97,10 @@ export default function ContactsView() {
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
   const isLoading = !data;
+
+  const ContactDetailsVariant = isMobile
+    ? withMobileView(ContactDetails)
+    : ContactDetails;
 
   return (
     <>
@@ -164,12 +161,12 @@ export default function ContactsView() {
                   </Box>
                 </div>
               </Col>
-              <Col sm={6} md={7} lg={8} className="hide-lt-600">
+              <Col sm={6} md={7} lg={8}>
                 {selectedContact && (
-                  <ContactDetails
-                    key={selectedContact.address}
-                    variant={contactsType}
+                  <ContactDetailsVariant
                     {...selectedContact}
+                    contactsType={contactsType}
+                    onClose={() => setSelectedContact(null)}
                   />
                 )}
               </Col>
