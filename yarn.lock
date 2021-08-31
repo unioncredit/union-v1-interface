@@ -6197,9 +6197,9 @@ unified@^9.0.0:
     vfile "^4.0.0"
 
 union-ui@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.1.1.tgz#c209099f491da9946a31d98736d1a2ac92ac9e23"
-  integrity sha512-9ehOtxJaOHt1oRIrd0KLNp6UoRnW8rjMd17XOIPls4/v7Y30KCscEUT2j7ORY3Q9YIEwWTp67jQ7zEkCVWORPA==
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.1.2.tgz#7cdafc4050bbf90038355ba7d4ae7adc9af8e89a"
+  integrity sha512-2nVkwzVJVGLhv5+eqWMSdxefXwk9S9oviMdwaNTQCWEQyaawlHIEoxB3UTS9wK8jiiedAVMnga2hWg2ZXkR79Q==
   dependencies:
     classnames "^2.3.1"
     react-grid-system "^7.2.0"
