@@ -184,12 +184,18 @@ a {
   width: 100%;
   height: auto;
   z-index: 9999;
-  background: #FBFBFB;
+  background: #fbfbfb;
   padding: 16px;
   box-sizing: border-box;
   box-shadow: inset 0px 1px 0px #e1e0e6;
 }
 
 @media screen and (max-width: 650px) {
-  .tooltip { display: none; }
+  .tooltip {
+    display: none;
+  }
+
+  .layout-header .heading {
+    font-size: 21px;
+  }
 }

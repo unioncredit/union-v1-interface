@@ -1,7 +1,8 @@
+import { useWeb3React } from "@web3-react/core";
 import { Wallet as UIWallet } from "union-ui";
-import useActivity from "hooks/data/useActivity";
+import { networkImages } from "lib/connectors";
 
 export function Wallet(props) {
-  const activity = useActivity();
-  return <UIWallet {...props} indicator={activity?.length ?? 0} />;
+  const { chainId } = useWeb3React();
+  return <UIWallet {...props} networkSrc={networkImages[chainId]} />;
 }

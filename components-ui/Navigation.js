@@ -4,12 +4,16 @@ import Link from "next/link";
 import { Nav, NavItem, Box } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { RewardsCard } from "components-ui";
+import { WalletModal, useWalletModal } from "./modals";
+import useCurrentToken from "hooks/useCurrentToken";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import format from "util/formatValue";
 
 const navItems = [
   {
     id: "get-started",
     label: "Get Started",
-    icon: "credit",
+    icon: "get-started",
     pathname: "/get-started",
     active: true,
     description:
@@ -40,6 +44,9 @@ export const Navigation = ({ mobile }) => {
   const pathname = router.pathname;
 
   const { data: isMember } = useIsMember();
+  const UNION = useCurrentToken("UNION");
+  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
 
   const filteredNavItems = useMemo(() => {
     if (isMember) {
@@ -55,19 +62,27 @@ export const Navigation = ({ mobile }) => {
   }, [isMember, pathname]);
 
   return (
-    <Nav mobile={mobile}>
-      {filteredNavItems.map(({ label, ...item }) => (
-        <Link key={item.id} href={item.pathname} passHref>
-          <NavItem label={!mobile && label} {...item} />
-        </Link>
-      ))}
-      {mobile ? (
-        <NavItem icon="union-token" label="124.5" bordered />
-      ) : (
-        <Box mt="auto" mb="16px">
-          <RewardsCard />
-        </Box>
-      )}
-    </Nav>
+    <>
+      <Nav mobile={mobile}>
+        {filteredNavItems.map(({ label, ...item }) => (
+          <Link key={item.id} href={item.pathname} passHref>
+            <NavItem label={!mobile && label} {...item} />
+          </Link>
+        ))}
+        {mobile ? (
+          <NavItem
+            bordered
+            icon="union-token"
+            label={format(unionBalance)}
+            onClick={openWalletModal}
+          />
+        ) : (
+          <Box mt="auto" mb="16px">
+            <RewardsCard />
+          </Box>
+        )}
+      </Nav>
+      {mobile && isWalletModalOpen && <WalletModal />}
+    </>
   );
 };
