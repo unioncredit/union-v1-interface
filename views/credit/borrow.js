@@ -2,8 +2,8 @@ import {
   Dai,
   Wrapper,
   TransactionHistory,
-  ContactsSummaryRow,
-  ContactsSummaryRowSkeleton,
+  CreditContactsRow,
+  CreditContactsRowSkeleton,
 } from "components-ui";
 import {
   Text,
@@ -169,14 +169,14 @@ export default function BorrowView() {
               <Table disableCondensed>
                 {isVouchLoading
                   ? createArray(3).map((_, i) => (
-                      <ContactsSummaryRowSkeleton key={i} />
+                      <CreditContactsRowSkeleton key={i} />
                     ))
                   : vouchData.slice(0, 8).map((item) => (
                       <Link
                         key={item.address}
                         href={`/contacts?contactsType=${ContactsType.TRUSTS_YOU}&contact=${item.address}`}
                       >
-                        <ContactsSummaryRow {...item} />
+                        <CreditContactsRow {...item} />
                       </Link>
                     ))}
                 <TableRow>

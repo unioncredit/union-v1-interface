@@ -19,9 +19,9 @@ import useStakeData from "hooks/data/useStakeData";
 import {
   Dai,
   Wrapper,
-  ContactsSummaryRow,
+  CreditContactsRow,
   OutstandingLoans,
-  ContactsSummaryRowSkeleton,
+  CreditContactsRowSkeleton,
 } from "components-ui";
 import {
   useStakeModal,
@@ -129,14 +129,14 @@ export default function LendView() {
               <Table>
                 {isTrustLoading
                   ? createArray(3).map((_, i) => (
-                      <ContactsSummaryRowSkeleton key={i} />
+                      <CreditContactsRowSkeleton key={i} />
                     ))
                   : trustData.slice(0, 8).map((item) => (
                       <Link
                         key={item.address}
                         href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
                       >
-                        <ContactsSummaryRow {...item} valueCaption="Trust" />
+                        <CreditContactsRow {...item} valueCaption="Trust" />
                       </Link>
                     ))}
                 <TableRow>

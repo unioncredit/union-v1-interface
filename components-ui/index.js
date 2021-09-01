@@ -11,7 +11,7 @@ export * from "./PageHead";
 export * from "./TabLink";
 export * from "./AddressLabel";
 export * from "./IdentIcon";
-export * from "./ContactsSummaryRow";
+export * from "./CreditContactsRow";
 export * from "./TransactionHistory";
 export * from "./Avatar";
 export * from "./OutstandingLoans";
