@@ -17,6 +17,8 @@ export default function useAddressLabels() {
    * @param {String} label
    */
   const setLabel = async (address, label) => {
+    if (!address) return;
+
     const key = address.toLowerCase();
 
     if (!label) {
@@ -44,6 +46,8 @@ export default function useAddressLabels() {
    * @returns {String|undefined}
    */
   const getLabel = (address) => {
+    if (!address) return;
+
     const key = address.toLowerCase();
     if (data && Object.prototype.hasOwnProperty.call(data, key))
       return data[key];
