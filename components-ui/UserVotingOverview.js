@@ -5,6 +5,7 @@ import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 import format from "util/formatValue";
+import { ClaimButton } from "./ClaimButton";
 
 export function UserVotingOverview({ variant, address }) {
   const { open: openVoteDelegationModal } = useVoteDelegationModal();
@@ -49,7 +50,7 @@ export function UserVotingOverview({ variant, address }) {
               <Divider />
               <Box align="center" justify="space-between" mt="20px">
                 <Text m={0}>Unclaimed Tokens</Text>
-                <Button variant="pill" label="Claim tokens" />
+                <ClaimButton variant="pill" label="Claim tokens" />
               </Box>
               <Heading m={0}>
                 {format(unclaimedBalance)} {unionSymbol}
