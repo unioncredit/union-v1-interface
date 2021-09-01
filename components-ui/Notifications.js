@@ -1,4 +1,4 @@
-import { NotificationStack, Notification, Text, Label } from "union-ui";
+import { NotificationStack, Notification, Text, Label, Icon } from "union-ui";
 import { toastState, removeToast } from "hooks/useToast";
 import useIsDrawerOpen from "hooks/useIsDrawerOpen";
 import useChainId from "hooks/useChainId";
@@ -37,7 +37,7 @@ export function Notifications() {
                 rel="noopener noreferrer"
                 href={getEtherscanLink(chainId, hash, "TRANSACTION")}
               >
-                View transaction
+                View transaction <Icon name="external" />
               </a>
             ) : (
               body

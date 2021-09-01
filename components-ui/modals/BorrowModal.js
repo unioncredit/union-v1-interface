@@ -122,6 +122,7 @@ export function BorrowModal({
             <Text size="large">How much are you borrowing today?</Text>
             <Box mt="16px">
               <Input
+                type="number"
                 ref={register({ validate })}
                 name="amount"
                 label="Borrow"

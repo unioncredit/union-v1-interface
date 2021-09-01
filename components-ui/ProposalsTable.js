@@ -62,7 +62,7 @@ function ProposalsTableRow({
       <TableCell span={1} align="center">
         <Badge color={statusColorMap[status] || "blue"} label={status} />
       </TableCell>
-      <TableCell span={1} align="center">
+      <TableCell span={1} align="center" className="hide-lt-600">
         <Text>{type}</Text>
       </TableCell>
       <TableCell span={1} align="right">

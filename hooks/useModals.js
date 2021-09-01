@@ -4,6 +4,8 @@ const initialState = {};
 
 export const modalState = newRidgeState(initialState);
 
+export const closeAllModals = () => modalState.set(initialState);
+
 export function useModals() {
   const updateModal = (modal, open) => {
     modalState.set((x) => ({ ...x, [modal]: open }));

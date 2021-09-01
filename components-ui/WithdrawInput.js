@@ -47,6 +47,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputRow mt="20px">
         <Input
+          type="number"
           ref={register({
             required: errorMessages.required,
             max: {

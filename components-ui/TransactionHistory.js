@@ -28,13 +28,15 @@ function TransactionHistoryRow({ address, amount, type, date }) {
             <Repayment />
           )}
           <Box direction="vertical" ml="16px">
-            <Text>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
-            <Label>{date}</Label>
+            <Text grey={700}>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
+            <Label size="small" grey={400}>
+              {date}
+            </Label>
           </Box>
         </Box>
       </TableCell>
       <TableCell align="right">
-        <Text>
+        <Text grey={700}>
           <Dai value={format(amount, 2)} />
         </Text>
       </TableCell>

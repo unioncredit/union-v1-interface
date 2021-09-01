@@ -4,11 +4,11 @@ import { drawerOpenState } from "hooks/useIsDrawerOpen";
 
 export function Modal(props) {
   useEffect(() => {
-    if (props.drawer) {
-      drawerOpenState.set(true);
-    } else {
-      drawerOpenState.set(false);
-    }
+    document.body.style = "overflow:hidden";
+    drawerOpenState.set(Boolean(props.drawer));
+    return () => {
+      document.body.style = "overflow:unset";
+    };
   }, [props.drawer]);
 
   const handleClose = () => {

@@ -108,6 +108,7 @@ export function EditVouchModal({ address, used, vouched }) {
               this contact?
             </Text>
             <Input
+              type="number"
               ref={register({ validate })}
               name="amount"
               label="Credit limit"

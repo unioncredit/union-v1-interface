@@ -199,3 +199,7 @@ a {
     font-size: 21px;
   }
 }
+
+.copyable {
+  cursor: pointer;
+}

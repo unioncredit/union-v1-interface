@@ -103,6 +103,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
               Permanently write-off this contacts debt and discard locked funds.
             </Text>
             <Input
+              type="number"
               ref={register({ validate })}
               name="amount"
               label="Value"

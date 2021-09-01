@@ -1,5 +1,5 @@
 import { Button, Heading, Text, Box } from "union-ui";
-import { Avatar } from "components-ui";
+import { Avatar, Copyable } from "components-ui";
 import { useManageContactModal } from "components-ui/modals";
 import truncateAddress from "util/truncateAddress";
 
@@ -30,7 +30,8 @@ export function ContactDetailsHeader({ address, mobile }) {
             </Heading>
           )}
           <Text mb={0}>
-            {name && `${name} •`} {truncateAddress(address)}
+            {name && `${name} •`}{" "}
+            <Copyable value={address}>{truncateAddress(address)}</Copyable>
           </Text>
         </Box>
       </Box>

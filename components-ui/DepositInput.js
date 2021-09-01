@@ -70,6 +70,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputRow mt="20px">
         <Input
+          type="number"
           name="amount"
           label="Amout to deposit"
           caption={

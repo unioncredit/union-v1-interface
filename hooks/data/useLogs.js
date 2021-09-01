@@ -48,18 +48,22 @@ const sortTxs = (txs) =>
  */
 export default function useLogs(filters, parser, opts = {}) {
   const [loading, setLoading] = useState(false);
-  const [completeLogs, setLogs] = usePersistentState("union:logs:v1", {});
+  const [completeLogs, setLogs] = usePersistentState("union:logs:v1.1", {});
   const { chainId } = useWeb3React();
   const readProvider = useReadProvider();
 
   const logKey = chainId && generateStorageKey(chainId, filters);
 
   const updateLogs = useCallback(
-    (newLogs) => {
-      setLogs((state) => ({
-        ...state,
-        [logKey]: sortTxs([...(state[logKey] || []), ...newLogs]),
-      }));
+    ({ data: newLogs }) => {
+      setLogs((state) => {
+        const current = state[logKey];
+        const currentData = current?.data || [];
+        return {
+          ...state,
+          [logKey]: { ...current, data: sortTxs([...currentData, ...newLogs]) },
+        };
+      });
     },
     [chainId]
   );
@@ -67,12 +71,14 @@ export default function useLogs(filters, parser, opts = {}) {
   useEffect(() => {
     async function fetchLogs() {
       setLoading(true);
-      const logs = completeLogs[logKey] || [];
+      const logs = completeLogs[logKey] || {};
+      const logsData = logs?.data || [];
+
       const latestBlock = await readProvider.getBlockNumber();
       const startBlock = opts.startBlock || EVENT_START_BLOCK[chainId];
       const interval = EVENT_BLOCK_INTERVAL[chainId] - 1;
-      const latestDataBlock = logs[0]?.blockNumber || latestBlock;
-      const oldestDataBlock = logs[logs.length - 1]?.blockNumber || latestBlock;
+      const latestDataBlock = logsData[0]?.blockNumber || latestBlock;
+      const oldestDataBlock = logs.oldestDataBlock || latestBlock;
 
       const unSortedRanges = getRanges({
         latestBlock,
@@ -103,7 +109,7 @@ export default function useLogs(filters, parser, opts = {}) {
 
           const flattened = [].concat.apply([], result);
           const parsedResult = await parser(flattened);
-          updateLogs(parsedResult);
+          updateLogs({ data: parsedResult, oldestDataBlock: to });
           i++;
         } catch (error) {
           await sleep(5);
@@ -116,7 +122,7 @@ export default function useLogs(filters, parser, opts = {}) {
     chainId && readProvider && fetchLogs().catch(console.error);
   }, [readProvider, chainId, updateLogs, logKey]);
 
-  const data = completeLogs[logKey] || [];
+  const data = completeLogs[logKey]?.data || [];
 
   return {
     data,

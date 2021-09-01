@@ -136,7 +136,7 @@ export default function LendView() {
                         key={item.address}
                         href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
                       >
-                        <ContactsSummaryRow {...item} />
+                        <ContactsSummaryRow {...item} valueCaption="Trust" />
                       </Link>
                     ))}
                 <TableRow>

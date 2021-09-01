@@ -21,10 +21,12 @@ function OutstandingLoansRow({ address, used, onManage }) {
         <Box align="center">
           <Avatar address={address} />
           <Box direction="vertical" ml="16px">
-            <Text>
+            <Text grey={700}>
               <Dai value={used} />
             </Text>
-            <Label mb={0}>{name}</Label>
+            <Label size="small" mb={0} grey={400}>
+              {name}
+            </Label>
           </Box>
         </Box>
       </TableCell>

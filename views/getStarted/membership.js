@@ -29,11 +29,16 @@ import {
   CongratulationsModal,
   useCongratulationsModal,
 } from "components-ui/modals/ContratulationsModal";
-
+import generateLink, {
+  generateTwitterLink,
+  generateTelegramLink,
+} from "util/generateLink";
 import { config } from "./config";
+import useCopy from "hooks/useCopy";
 
 export default function MembershipView() {
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
+  const [isCopied, copy] = useCopy(2000);
   const [registering, setRegistering] = useState(false);
   const { data: isMember = null, mutate: updateIsMember } = useIsMember();
   const { data: trustCount = 0 } = useTrustCountData();
@@ -62,6 +67,8 @@ export default function MembershipView() {
     await updateIsMember();
   };
 
+  const url = generateLink(account);
+
   return (
     <Wrapper title={config.title} tabItems={config.tabItems}>
       <Grid gutterWidth={0}>
@@ -84,9 +91,18 @@ export default function MembershipView() {
                     Share your link with members to get vouches
                   </Label>
                   <ButtonRow mt="8px">
-                    <Button rounded label="Copy link" icon="link" />
-                    <Button variant="secondary" rounded icon="twitter" />
-                    <Button variant="secondary" rounded icon="telegram" />
+                    <Button
+                      rounded
+                      label={isCopied ? "Copied" : "Copy link"}
+                      icon={isCopied ? "check" : "link"}
+                      onClick={() => copy(url)}
+                    />
+                    <Link href={generateTwitterLink(url)}>
+                      <Button variant="secondary" rounded icon="twitter" />
+                    </Link>
+                    <Link href={generateTelegramLink(url)}>
+                      <Button variant="secondary" rounded icon="telegram" />
+                    </Link>
                   </ButtonRow>
                   <Divider />
                   {vouchData.slice(0, 3).map((data, i) => (

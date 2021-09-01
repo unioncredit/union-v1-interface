@@ -128,6 +128,7 @@ export function PaymentModal({
             <Text size="large">How much are you paying today?</Text>
             <Box mt="16px">
               <Input
+                type="number"
                 ref={register({ validate })}
                 name="amount"
                 suffix="DAI"
