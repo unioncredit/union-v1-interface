@@ -34,6 +34,7 @@ import createArray from "util/createArray";
 
 import { config } from "./config";
 import { useState } from "react";
+import { ContactsType } from "views/contacts/config";
 
 export default function LendView() {
   const [stakeType, setStakeType] = useState("deposit");
@@ -130,8 +131,13 @@ export default function LendView() {
                   ? createArray(3).map((_, i) => (
                       <ContactsSummaryRowSkeleton key={i} />
                     ))
-                  : trustData.map((item, i) => (
-                      <ContactsSummaryRow {...item} key={i} />
+                  : trustData.slice(0, 8).map((item) => (
+                      <Link
+                        key={item.address}
+                        href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
+                      >
+                        <ContactsSummaryRow {...item} />
+                      </Link>
                     ))}
                 <TableRow>
                   <TableCell />

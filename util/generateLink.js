@@ -12,3 +12,15 @@ export default function generateLink(address, amount) {
   }
   return `${window.location.origin}/contacts?address=${address}`;
 }
+
+const SHARE_MESSAGE = `Please vouch for me on Union!`;
+
+export const generateTwitterLink = (shareLink) =>
+  `https://twitter.com/intent/tweet?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}&via=unionprotocol`;
+
+export const generateTelegramLink = (shareLink) =>
+  `https://telegram.me/share/url?text=${SHARE_MESSAGE}&url=${encodeURIComponent(
+    shareLink
+  )}`;

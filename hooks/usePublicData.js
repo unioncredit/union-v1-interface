@@ -22,5 +22,7 @@ export default function usePublicData(address) {
       ? data.name
       : address && truncate(address),
     image: data?.image,
+    ENSName,
+    BoxName: data?.name,
   };
 }

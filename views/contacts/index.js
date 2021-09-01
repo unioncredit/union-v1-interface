@@ -37,6 +37,7 @@ import createArray from "util/createArray";
 
 import { config, ContactsType } from "./config";
 import usePopTrustModal from "hooks/usePopTrustModal";
+import { useRouter } from "next/router";
 
 const withMobileView =
   (Component) =>
@@ -56,6 +57,7 @@ const withMobileView =
 
 export default function ContactsView() {
   const { width } = useWindowSize();
+  const router = useRouter();
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -68,6 +70,10 @@ export default function ContactsView() {
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
 
+  const query = router.query;
+  const contactsTypeOverride = query?.contactsType;
+  const queryContact = query?.contact;
+
   const handleToggleContactType = (item) => {
     if (item.id === contactsType) return;
     setSelectedContact(null);
@@ -77,14 +83,28 @@ export default function ContactsView() {
   const isMobile = width <= 600;
 
   useEffect(() => {
-    if (!vouchData || !trustData || selectedContact || isMobile) return;
-
-    if (contactsType === ContactsType.TRUSTS_YOU) {
-      setSelectedContact(vouchData[0]);
-    } else {
-      setSelectedContact(trustData[0]);
+    if (contactsType !== contactsTypeOverride) {
+      setContactsType(contactsTypeOverride);
     }
-  }, [vouchData, trustData, contactsType]);
+  }, [contactsTypeOverride]);
+
+  useEffect(() => {
+    if (!vouchData || !trustData || isMobile) return;
+
+    const data =
+      contactsType === ContactsType.TRUSTS_YOU ||
+      contactsTypeOverride === ContactsType.TRUSTS_YOU
+        ? vouchData
+        : trustData;
+
+    if (queryContact) {
+      const contact = data.find(({ address }) => address === queryContact);
+      setSelectedContact(contact || data[0]);
+      return;
+    }
+
+    setSelectedContact(data[0]);
+  }, [vouchData, trustData, contactsType, contactsTypeOverride, queryContact]);
 
   usePopTrustModal();
 
@@ -103,10 +123,12 @@ export default function ContactsView() {
           <Grid bordered>
             <Row nogutter>
               <Col sm={6} md={5} lg={4}>
-                <Box>
+                <Box fluid>
                   <ToggleMenu
+                    fluid
                     items={config.toggleItems}
                     onChange={handleToggleContactType}
+                    value={contactsType}
                   />
                 </Box>
               </Col>
@@ -137,7 +159,7 @@ export default function ContactsView() {
                           <ContactsSummaryRow
                             {...item}
                             key={`${i}-${contactsType}`}
-                            onClick={setSelectedContact}
+                            onClick={(_, data) => setSelectedContact(data)}
                           />
                         ))}
                   </Table>

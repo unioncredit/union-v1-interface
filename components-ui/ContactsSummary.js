@@ -18,14 +18,16 @@ export function ContactsSummaryRow(props) {
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
-  const handleClick = () => {
-    onClick({ ...props, name, ...publicData });
-  };
-
   const label = getLabel(address);
 
+  const handleClick = (event) => {
+    if (typeof onClick === "function") {
+      onClick(event, { ...props, name, ...publicData });
+    }
+  };
+
   return (
-    <TableRow onClick={onClick && handleClick}>
+    <TableRow onClick={handleClick}>
       <TableCell span={4}>
         <Box align="center">
           <Avatar address={address} />
@@ -34,7 +36,7 @@ export function ContactsSummaryRow(props) {
               <Dai value={vouched} />
             </Text>
             <Label>
-              {name} {label && `• ${label}`}
+              {name} {label && <>&bull; {label}</>}
             </Label>
           </Box>
         </Box>

@@ -36,6 +36,7 @@ import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
+import { ContactsType } from "../contacts/config";
 
 import { config } from "./config";
 
@@ -170,8 +171,13 @@ export default function BorrowView() {
                   ? createArray(3).map((_, i) => (
                       <ContactsSummaryRowSkeleton key={i} />
                     ))
-                  : vouchData.map((item, i) => (
-                      <ContactsSummaryRow {...item} key={i} />
+                  : vouchData.slice(0, 8).map((item) => (
+                      <Link
+                        key={item.address}
+                        href={`/contacts?contactsType=${ContactsType.TRUSTS_YOU}&contact=${item.address}`}
+                      >
+                        <ContactsSummaryRow {...item} />
+                      </Link>
                     ))}
                 <TableRow>
                   <TableCell />
