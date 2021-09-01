@@ -72,7 +72,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
         <Input
           type="number"
           name="amount"
-          label="Amout to deposit"
+          label="Amount to deposit"
           caption={
             <>
               <Dai value={daiBalance} /> Available

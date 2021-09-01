@@ -27,38 +27,39 @@ export const FLAVORS = {
     body: "Transaction successful.",
     hash,
     type: "success",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
   TX_SUCCESS_ENABLED: (hash) => ({
     body: "Token enabled successfully.",
     hash,
     type: "success",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
   TX_ERROR: (message = "Transaction failed", hash) => ({
     body: message,
     hash,
     type: "error",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
   LOGGED_OUT: {
     body: "You’ve succesfully logged out",
     type: "success",
+    hideAfter: 15,
   },
   WALLET_ERROR: (message) => ({
     body: message,
     type: "error",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
   SUCCESS: (message) => ({
     body: message,
     type: "success",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
   ERROR: (message) => ({
     body: message,
     type: "error",
-    hideAfter: 20,
+    hideAfter: 15,
   }),
 };
 

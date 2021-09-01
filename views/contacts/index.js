@@ -13,9 +13,9 @@ import {
   Modal,
   Wrapper,
   ContactDetails,
-  ContactsSummaryRow,
+  ContactsListItem,
   ContactDetailsHeader,
-  ContactsSummaryRowSkeleton,
+  ContactsListItemSkeleton,
 } from "components-ui";
 import {
   useVouchModal,
@@ -83,7 +83,7 @@ export default function ContactsView() {
   const isMobile = width <= 600;
 
   useEffect(() => {
-    if (contactsType !== contactsTypeOverride) {
+    if (contactsTypeOverride && contactsType !== contactsTypeOverride) {
       setContactsType(contactsTypeOverride);
     }
   }, [contactsTypeOverride]);
@@ -153,12 +153,13 @@ export default function ContactsView() {
                   <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
                       ? createArray(3).map((_, i) => (
-                          <ContactsSummaryRowSkeleton key={i} />
+                          <ContactsListItemSkeleton key={i} />
                         ))
-                      : data.map((item, i) => (
-                          <ContactsSummaryRow
+                      : data.map((item) => (
+                          <ContactsListItem
                             {...item}
-                            key={`${i}-${contactsType}`}
+                            variant={contactsType}
+                            key={`${item.address}-${contactsType}`}
                             onClick={(_, data) => setSelectedContact(data)}
                           />
                         ))}

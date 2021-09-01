@@ -8,13 +8,17 @@ import {
   Avatar as UIAvatar,
   Skeleton,
   Box,
+  Badge,
 } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import { toPercent } from "util/numbers";
 import useAddressLabels from "hooks/useAddressLabels";
+import format from "util/formatValue";
+import { ContactsType } from "views/contacts/config";
 
-export function ContactsSummaryRow(props) {
-  const { address, vouched, utilized, onClick } = props;
+export function ContactsListItem(props) {
+  const { address, vouched, utilized, onClick, isOverdue, used, variant } =
+    props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -32,26 +36,41 @@ export function ContactsSummaryRow(props) {
         <Box align="center">
           <Avatar address={address} />
           <Box direction="vertical" ml="16px">
-            <Text>
-              <Dai value={vouched} />
-            </Text>
-            <Label>
+            <Text grey={700} mt="5px">
               {name} {label && <>&bull; {label}</>}
+            </Text>
+            <Label size="small">
+              <Dai value={vouched} /> Limit
             </Label>
           </Box>
         </Box>
       </TableCell>
       <TableCell span={1} align="right">
-        <Label as="p" size="small" mb="6px">
-          {toPercent(utilized)} Utilized
-        </Label>
-        <Bar percentage={utilized * 100} />
+        {variant === ContactsType.TRUSTS_YOU ? (
+          <>
+            <Bar percentage={utilized * 100} />
+            <Label as="p" size="small" mt="6px">
+              Utilizing {toPercent(utilized)}
+            </Label>
+          </>
+        ) : (
+          <>
+            {isOverdue ? (
+              <Badge color="red" label="Overdue" />
+            ) : (
+              <Badge color="blue" label="Healthy" />
+            )}
+            <Label size="small" as="p" mt="4px" grey={700}>
+              <Dai value={format(used)} /> owed
+            </Label>
+          </>
+        )}
       </TableCell>
     </TableRow>
   );
 }
 
-export function ContactsSummaryRowSkeleton() {
+export function ContactsListItemSkeleton() {
   return (
     <TableRow>
       <TableCell>

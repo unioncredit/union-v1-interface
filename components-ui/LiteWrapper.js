@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Layout, Box, Logo, Grid, Row, Col } from "union-ui";
 
 export function LiteWrapper({ children }) {
@@ -8,7 +9,9 @@ export function LiteWrapper({ children }) {
           <Row style={{ width: "100%", margin: 0 }}>
             <Col>
               <Layout.Header align="center" justify="center">
-                <Logo width="26px" />
+                <Link href="/">
+                  <Logo width="36px" withText />
+                </Link>
               </Layout.Header>
               {children}
             </Col>

@@ -17,7 +17,7 @@ const navItems = [
     pathname: "/get-started",
     active: true,
     description:
-      "Get vouched for to become a member and stake your DAI to collect UNION ",
+      "Get vouched for to become a member and stake your DAI to collect UNION",
   },
   {
     id: "credit",

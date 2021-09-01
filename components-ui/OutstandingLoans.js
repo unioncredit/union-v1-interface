@@ -12,6 +12,7 @@ import { useEditVouchModal, EditVouchModal } from "components-ui/modals";
 import { useState } from "react";
 import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";
+import format from "util/formatValue";
 
 function OutstandingLoansRow({ address, used, onManage }) {
   const { name } = usePublicData(address);
@@ -22,7 +23,7 @@ function OutstandingLoansRow({ address, used, onManage }) {
           <Avatar address={address} />
           <Box direction="vertical" ml="16px">
             <Text grey={700}>
-              <Dai value={used} />
+              <Dai value={format(used)} />
             </Text>
             <Label size="small" mb={0} grey={400}>
               {name}
@@ -31,7 +32,7 @@ function OutstandingLoansRow({ address, used, onManage }) {
         </Box>
       </TableCell>
       <TableCell></TableCell>
-      <TableCell span={1}>
+      <TableCell>
         <Badge label="Healthy" color="blue" />
       </TableCell>
       <TableCell align="right">

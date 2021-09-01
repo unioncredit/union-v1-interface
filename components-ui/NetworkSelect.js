@@ -5,12 +5,12 @@ import { addToast, FLAVORS } from "hooks/useToast";
 
 const options = [
   {
-    value: "ethereum",
-    label: "Ethereum",
+    value: "kovan",
+    label: "Kovan",
     imageSrc: "/images/ethereum.png",
-    chainId: 1,
+    chainId: 42,
     networkData: {
-      chainId: "0x1",
+      chainId: "0x2A",
     },
   },
   {

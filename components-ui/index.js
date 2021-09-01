@@ -35,3 +35,4 @@ export * from "./NetworkSelect";
 export * from "./RewardsCard";
 export * from "./Sidebar";
 export * from "./Copyable";
+export * from "./ContactsListItem";

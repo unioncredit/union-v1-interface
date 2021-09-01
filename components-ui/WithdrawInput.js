@@ -60,7 +60,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
             },
           })}
           name="amount"
-          label="Amout to withdraw"
+          label="Amount to withdraw"
           caption={
             <>
               <Dai value={withdrawableStake} /> Available
