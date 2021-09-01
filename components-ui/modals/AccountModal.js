@@ -21,6 +21,7 @@ import truncateAddress from "util/truncateAddress";
 import useActivity, { clearActivity } from "hooks/data/useActivity";
 import { Dai } from "components-ui/Dai";
 import getEtherscanLink from "util/getEtherscanLink";
+import { Copyable } from "components-ui/Copyable";
 
 export const ACCOUNT_MODAL = "account-modal";
 
@@ -58,7 +59,7 @@ export function AccountModal() {
           </Box>
           <Heading mt="4px">{name}</Heading>
           <Label size="small" grey={600}>
-            {truncateAddress(account)}
+            <Copyable value={account}>{truncateAddress(account)}</Copyable>
           </Label>
           <Divider />
           <Box align="center" justify="space-between" mt="20px" mb="16px">
