@@ -59,6 +59,7 @@ export function EditAliasModal({ address }) {
             <Button
               label="Go back"
               variant="secondary"
+              icon="arrow-left"
               fluid
               onClick={handleGoBack}
               disabled={isSubmitting}

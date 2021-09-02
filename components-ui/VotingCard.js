@@ -19,6 +19,7 @@ import { useWeb3React } from "@web3-react/core";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 const VoteType = {
   FOR: "for",
@@ -48,7 +49,8 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
       await getReceipt(hash, library);
       addActivity(activityLabels.vote({ type, hash, proposalId }));
     } catch (err) {
-      addActivity(activityLabels.vote({ type, proposalId }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.vote({ type, proposalId, hash }, true));
       handleTxError(err);
     }
   };

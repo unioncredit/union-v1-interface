@@ -17,6 +17,7 @@ import { useWeb3React } from "@web3-react/core";
 import useTrustData from "hooks/data/useTrustData";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import format from "util/formatValue";
+import isHash from "util/isHash";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
@@ -95,7 +96,8 @@ export function ManageContactModal({
       addActivity(activityLabels.removeContact({ address, hash }));
       await updateTrustData();
     } catch (err) {
-      addActivity(activityLabels.removeContact({ address }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.removeContact({ address, hash }, true));
       handleTxError(err);
     } finally {
       setRemoving(false);

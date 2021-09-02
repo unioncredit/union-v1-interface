@@ -17,8 +17,16 @@ import format from "util/formatValue";
 import { ContactsType } from "views/contacts/config";
 
 export function ContactsListItem(props) {
-  const { address, vouched, utilized, onClick, isOverdue, used, variant } =
-    props;
+  const {
+    address,
+    vouched,
+    utilized,
+    onClick,
+    isOverdue,
+    used,
+    variant,
+    active,
+  } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -31,7 +39,7 @@ export function ContactsListItem(props) {
   };
 
   return (
-    <TableRow onClick={handleClick}>
+    <TableRow onClick={handleClick} active={active}>
       <TableCell span={4}>
         <Box align="center">
           <Avatar address={address} />

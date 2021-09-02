@@ -21,6 +21,7 @@ import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -93,7 +94,8 @@ export function BorrowModal({
       addActivity(activityLabels.borrow({ amount, hash }));
       close();
     } catch (err) {
-      addActivity(activityLabels.borrow({ amount: data.amount }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.borrow({ amount: data.amount, hash }, true));
       handleTxError(err);
     }
   };

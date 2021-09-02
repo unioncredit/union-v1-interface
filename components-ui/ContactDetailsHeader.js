@@ -12,7 +12,15 @@ export function ContactDetailsHeader({ address, mobile }) {
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
 
-  const name = ENSName || BoxName;
+  const truncatedAddress = (
+    <Copyable value={address}>{truncateAddress(address)}</Copyable>
+  );
+
+  const [label1, label2 = null, label3 = null] = [
+    label,
+    ENSName || BoxName,
+    truncatedAddress,
+  ].filter(Boolean);
 
   return (
     <Box
@@ -24,14 +32,11 @@ export function ContactDetailsHeader({ address, mobile }) {
       <Box align="center">
         {address && <Avatar size={54} address={address} />}
         <Box direction="vertical" mx="16px">
-          {label && (
-            <Heading level={2} m={0}>
-              {label}
-            </Heading>
-          )}
+          <Heading level={2} m={0}>
+            {label1}
+          </Heading>
           <Text mb={0}>
-            {name && `${name} •`}{" "}
-            <Copyable value={address}>{truncateAddress(address)}</Copyable>
+            {label2} {label3 && <>&bull; {label3}</>}
           </Text>
         </Box>
       </Box>

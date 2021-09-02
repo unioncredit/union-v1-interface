@@ -26,6 +26,7 @@ import getReceipt from "util/getReceipt";
 import errorMessages from "util/errorMessages";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 export const NEW_VOUCH_MODAL = "new-vouch-modal";
 
@@ -73,8 +74,9 @@ export function NewVouchModal({ address }) {
       await updateBorrowData();
       close();
     } catch (err) {
+      const hash = isHash(err.message) && err.message;
       addActivity(
-        activityLabels.newVouch({ address, amount: data.amount }, true)
+        activityLabels.newVouch({ address, amount: data.amount, hash }, true)
       );
       handleTxError(err);
     }
@@ -144,6 +146,7 @@ export function NewVouchModal({ address }) {
             <Button
               fluid
               label="Go back"
+              icon="arrow-left"
               variant="secondary"
               disabled={isSubmitting}
               onClick={handleBack}

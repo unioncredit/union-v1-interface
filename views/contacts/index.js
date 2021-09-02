@@ -158,6 +158,7 @@ export default function ContactsView() {
                       : data.map((item) => (
                           <ContactsListItem
                             {...item}
+                            active={item.address === selectedContact?.address}
                             variant={contactsType}
                             key={`${item.address}-${contactsType}`}
                             onClick={(_, data) => setSelectedContact(data)}

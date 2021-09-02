@@ -7,6 +7,7 @@ import handleTxError from "util/handleTxError";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useRewardsData from "hooks/data/useRewardsData";
+import isHash from "util/isHash";
 
 export function ClaimButton({ onComplete, label, ...props }) {
   const addActivity = useAddActivity();
@@ -28,7 +29,8 @@ export function ClaimButton({ onComplete, label, ...props }) {
       }
     } catch (err) {
       setLoading(false);
-      addActivity(activityLabels.claim({ amount: rewards }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.claim({ amount: rewards, hash }, true));
       handleTxError(err);
     }
   };

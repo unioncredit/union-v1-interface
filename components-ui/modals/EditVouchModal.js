@@ -23,6 +23,7 @@ import { useWeb3React } from "@web3-react/core";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -69,8 +70,12 @@ export function EditVouchModal({ address, used, vouched }) {
       await updateCreditLimit();
       handleGoBack();
     } catch (err) {
+      const hash = isHash(err.message) && err.message;
       addActivity(
-        activityLabels.adjustVouch({ address, amount: values.amount }, true)
+        activityLabels.adjustVouch(
+          { address, amount: values.amount, hash },
+          true
+        )
       );
       handleTxError(err);
     }
@@ -128,6 +133,7 @@ export function EditVouchModal({ address, used, vouched }) {
             <Button
               fluid
               label="Go back"
+              icon="arrow-left"
               variant="secondary"
               onClick={handleGoBack}
             />

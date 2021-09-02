@@ -18,6 +18,7 @@ import useDelegate from "hooks/payables/useDelegate";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import getReceipt from "util/getReceipt";
+import isHash from "util/isHash";
 
 export const VOTE_DELEGATION_MODAL = "vote-delegation-modal";
 
@@ -47,9 +48,10 @@ export function VoteDelegationModal() {
       await getReceipt(hash, library);
       addActivity(activityLabels.delegate({ address: delegateTo, hash }));
       close();
-    } catch (error) {
-      handleTxError(error);
-      addActivity(activityLabels.delegate({ address: delegateTo }, true));
+    } catch (err) {
+      const hash = isHash(err.message) && err.message;
+      handleTxError(err);
+      addActivity(activityLabels.delegate({ address: delegateTo, hash }, true));
     }
   };
 

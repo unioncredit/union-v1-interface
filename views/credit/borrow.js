@@ -137,9 +137,9 @@ export default function BorrowView() {
                       <Tooltip
                         position="top"
                         content={`
-                  These are funds which are currently tied up elsewhere and as a 
-                  result, not available to borrow at this time
-                `}
+                          These are funds which are currently tied up elsewhere and as a 
+                          result, not available to borrow at this time
+                        `}
                       />
                     </Label>
                   }

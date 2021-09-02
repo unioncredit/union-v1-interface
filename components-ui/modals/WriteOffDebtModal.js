@@ -22,6 +22,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useWriteOffDebt from "hooks/payables/useWriteOffDebt";
+import isHash from "util/isHash";
 
 export const WRITE_OFF_DEBT = "write-off-debt-modal";
 
@@ -65,8 +66,12 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
       await updateTrustData();
       handleGoBack();
     } catch (err) {
+      const hash = isHash(err.message) && err.message;
       addActivity(
-        activityLabels.writeOffDebt({ address, amount: values.amount }, true)
+        activityLabels.writeOffDebt(
+          { address, amount: values.amount, hash },
+          true
+        )
       );
       handleTxError(err);
     }
@@ -117,6 +122,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
             <Button
               fluid
               label="Go back"
+              icon="arrow-left"
               variant="secondary"
               onClick={handleGoBack}
             />

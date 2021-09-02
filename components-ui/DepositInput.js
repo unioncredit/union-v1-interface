@@ -13,6 +13,7 @@ import errorMessages from "util/errorMessages";
 import { roundDown } from "util/numbers";
 import activityLabels from "util/activityLabels";
 import { useAddActivity } from "hooks/data/useActivity";
+import isHash from "util/isHash";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -61,7 +62,8 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       await onComplete();
       reset();
     } catch (err) {
-      addActivity(activityLabels.borrow({ amount: values.amount }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.borrow({ amount: values.amount, hash }, true));
       handleTxError(err);
     }
   };

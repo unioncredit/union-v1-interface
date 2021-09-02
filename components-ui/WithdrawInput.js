@@ -9,6 +9,7 @@ import { Button, InputRow, Input } from "union-ui";
 import { Dai } from "components-ui";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -31,7 +32,10 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       addActivity(activityLabels.withdraw({ amount: values.amount, hash }));
       reset();
     } catch (err) {
-      addActivity(activityLabels.withdraw({ amount: values.amount }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(
+        activityLabels.withdraw({ amount: values.amount, hash }, true)
+      );
       handleTxError(err);
     }
   };

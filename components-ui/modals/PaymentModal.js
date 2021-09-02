@@ -22,6 +22,7 @@ import { useWeb3React } from "@web3-react/core";
 import useRepay from "hooks/payables/useRepay";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
+import isHash from "util/isHash";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -95,7 +96,8 @@ export function PaymentModal({
       if (typeof onComplete === "function") await onComplete();
       close();
     } catch (err) {
-      addActivity(activityLabels.repay({ amount: amountToRepay }, true));
+      const hash = isHash(err.message) && err.message;
+      addActivity(activityLabels.repay({ amount: amountToRepay, hash }, true));
       handleTxError(err);
     }
   };
