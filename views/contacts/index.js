@@ -34,7 +34,7 @@ import { useState, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
-import useSearch from "hooks/useSearch";
+import useContactsSearch from "hooks/useContactsSearch";
 import createArray from "util/createArray";
 
 import { config, ContactsType } from "./config";
@@ -77,7 +77,7 @@ export default function ContactsView() {
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
   const isLoading = !data;
 
-  const { data: searchData, register } = useSearch(data);
+  const { data: searchData, register } = useContactsSearch(data);
 
   const ContactDetailsVariant = isMobile
     ? withMobileView(ContactDetails)
@@ -137,7 +137,7 @@ export default function ContactsView() {
                 <SearchInput
                   name="query"
                   ref={register}
-                  placeholder="Search address"
+                  placeholder="Alias or address"
                 />
               </Col>
               <Col sm={6} md={7} lg={8} className="hide-lt-600">

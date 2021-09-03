@@ -163,6 +163,7 @@ export function PaymentModal({
               mt="16px"
               disabled={!isDirty || isSubmitting}
               onClick={handleSubmit(handlePayment)}
+              fontSize="large"
             />
           </ButtonRow>
         </Modal.Footer>

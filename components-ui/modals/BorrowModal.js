@@ -158,6 +158,7 @@ export function BorrowModal({
             fluid
             disabled={!isDirty || isSubmitting}
             onClick={handleSubmit(handleBorrow)}
+            fontSize="large"
           />
         </Modal.Footer>
       </Modal>
