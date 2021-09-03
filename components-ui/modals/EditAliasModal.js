@@ -61,12 +61,14 @@ export function EditAliasModal({ address }) {
               variant="secondary"
               icon="arrow-left"
               fluid
+              fontSize="large"
               onClick={handleGoBack}
               disabled={isSubmitting}
             />
             <Button
               label="Save"
               fluid
+              fontSize="large"
               disabled={!isDirty}
               loading={isSubmitting}
               onClick={handleSubmit(handleUpdateAlias)}

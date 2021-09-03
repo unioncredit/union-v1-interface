@@ -146,6 +146,7 @@ export function NewVouchModal({ address }) {
             <Button
               fluid
               label="Go back"
+              fontSize="large"
               icon="arrow-left"
               variant="secondary"
               disabled={isSubmitting}
@@ -153,6 +154,7 @@ export function NewVouchModal({ address }) {
             />
             <Button
               fluid
+              fontSize="large"
               label="Submit vouch"
               disabled={!isDirty}
               loading={isSubmitting}

@@ -56,6 +56,7 @@ export function VouchModal({ onNext }) {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            fontSize="large"
             mt="16px"
             fluid
             label="Next"

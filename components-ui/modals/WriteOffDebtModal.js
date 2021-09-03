@@ -121,14 +121,16 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
           <ButtonRow mt="20px" fluid>
             <Button
               fluid
+              fontSize="large"
               label="Go back"
               icon="arrow-left"
               variant="secondary"
               onClick={handleGoBack}
             />
             <Button
-              label="Save"
               fluid
+              label="Save"
+              fontSize="large"
               disabled={!isDirty}
               loading={isSubmitting}
               onClick={handleSubmit(handleWriteOffDebt)}

@@ -132,6 +132,7 @@ export function EditVouchModal({ address, used, vouched }) {
           <ButtonRow mt="20px" fluid>
             <Button
               fluid
+              fontSize="large"
               label="Go back"
               icon="arrow-left"
               variant="secondary"
@@ -140,6 +141,7 @@ export function EditVouchModal({ address, used, vouched }) {
             <Button
               label="Save"
               fluid
+              fontSize="large"
               disabled={!isDirty}
               loading={isSubmitting}
               onClick={handleSubmit(handleAdjustTrust)}

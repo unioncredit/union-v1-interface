@@ -8,6 +8,7 @@ import {
   ToggleMenu,
   Table,
   ModalOverlay,
+  SearchInput,
 } from "union-ui";
 import {
   Modal,
@@ -33,6 +34,7 @@ import { useState, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
+import useSearch from "hooks/useSearch";
 import createArray from "util/createArray";
 
 import { config, ContactsType } from "./config";
@@ -70,6 +72,17 @@ export default function ContactsView() {
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
 
+  const isMobile = width <= 600;
+
+  const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
+  const isLoading = !data;
+
+  const { data: searchData, register } = useSearch(data);
+
+  const ContactDetailsVariant = isMobile
+    ? withMobileView(ContactDetails)
+    : ContactDetails;
+
   const query = router.query;
   const contactsTypeOverride = query?.contactsType;
   const queryContact = query?.contact;
@@ -79,8 +92,6 @@ export default function ContactsView() {
     setSelectedContact(null);
     setContactsType(item.id);
   };
-
-  const isMobile = width <= 600;
 
   useEffect(() => {
     if (contactsTypeOverride && contactsType !== contactsTypeOverride) {
@@ -108,14 +119,6 @@ export default function ContactsView() {
 
   usePopTrustModal();
 
-  const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
-
-  const isLoading = !data;
-
-  const ContactDetailsVariant = isMobile
-    ? withMobileView(ContactDetails)
-    : ContactDetails;
-
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
@@ -123,7 +126,7 @@ export default function ContactsView() {
           <Grid bordered>
             <Row nogutter>
               <Col sm={6} md={5} lg={4}>
-                <Box fluid>
+                <Box fluid mb="8px">
                   <ToggleMenu
                     fluid
                     items={config.toggleItems}
@@ -131,6 +134,11 @@ export default function ContactsView() {
                     value={contactsType}
                   />
                 </Box>
+                <SearchInput
+                  name="query"
+                  ref={register}
+                  placeholder="Search address"
+                />
               </Col>
               <Col sm={6} md={7} lg={8} className="hide-lt-600">
                 {selectedContact && (
@@ -155,7 +163,7 @@ export default function ContactsView() {
                       ? createArray(3).map((_, i) => (
                           <ContactsListItemSkeleton key={i} />
                         ))
-                      : data.map((item) => (
+                      : searchData.map((item) => (
                           <ContactsListItem
                             {...item}
                             active={item.address === selectedContact?.address}
