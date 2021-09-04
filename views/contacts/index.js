@@ -30,6 +30,7 @@ import {
   useWriteOffDebtModal,
   WriteOffDebtModal,
 } from "components-ui/modals";
+import cn from "classnames";
 import { useState, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
@@ -52,7 +53,9 @@ const withMobileView =
             contactsType={contactsType}
             mobile={true}
           />
-          <Component {...props} variant={contactsType} />
+          <Modal.Body>
+            <Component {...props} variant={contactsType} />
+          </Modal.Body>
         </Modal>
       </ModalOverlay>
     );
@@ -100,7 +103,7 @@ export default function ContactsView() {
   }, [contactsTypeOverride]);
 
   useEffect(() => {
-    if (!vouchData || !trustData || isMobile) return;
+    if (!vouchData || !trustData) return;
 
     const data =
       contactsType === ContactsType.TRUSTS_YOU ||
@@ -114,7 +117,7 @@ export default function ContactsView() {
       return;
     }
 
-    setSelectedContact(data[0]);
+    !isMobile && setSelectedContact(data[0]);
   }, [vouchData, trustData, contactsType, contactsTypeOverride, queryContact]);
 
   usePopTrustModal();
@@ -122,7 +125,13 @@ export default function ContactsView() {
   return (
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Card size="fluid" noGutter className="all-contacts-card">
+        <Card
+          size="fluid"
+          noGutter
+          className={cn("all-contacts-card", {
+            "all-contacts-card--mobile": isMobile,
+          })}
+        >
           <Grid bordered>
             <Row nogutter>
               <Col sm={6} md={5} lg={4}>

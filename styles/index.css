@@ -49,6 +49,9 @@ a {
   display: flex;
   flex-direction: column;
 }
+.card.all-contacts-card--mobile .grid-col:not(:last-of-type) {
+  border-right: 0 !important;
+}
 
 .card.all-contacts-card .grid {
   flex-grow: 1;
@@ -135,6 +138,12 @@ a {
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: grey white;
+}
+
+@media screen and (max-width: 520px) {
+  .all-contacts-card .account-activity-inner {
+    position: relative;
+  }
 }
 
 .all-contacts-card .account-activity-inner::-webkit-scrollbar {

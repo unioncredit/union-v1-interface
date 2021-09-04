@@ -140,6 +140,7 @@ export function ManageContactModal({
             fluid
             mt="16px"
             color="red"
+            fontSize="large"
             variant="secondary"
             label="Remove from contacts"
             loading={removing}
