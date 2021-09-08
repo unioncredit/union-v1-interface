@@ -57,12 +57,13 @@ export default function useLogs(filters, parser, opts = {}) {
   const updateLogs = useCallback(
     ({ data: newLogs, oldestDataBlock }) => {
       setLogs((state) => {
-        const current = state[logKey];
-        const currentData = current?.data || [];
+        const current = state[logKey] || {};
+        const currentData = current.data || [];
         const newOldestDataBlock =
           current.oldestDataBlock < oldestDataBlock
             ? current.oldestDataBlock
             : oldestDataBlock;
+
         return {
           ...state,
           [logKey]: {
