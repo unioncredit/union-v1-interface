@@ -10,7 +10,7 @@ export default class UnionDocument extends Document {
     return (
       <Html lang="en" className="font-medium antialiased text-type-base">
         <Head>
-          <link rel="icon" href="/favicon.png" />
+          <link rel="icon" href="/favicon.ico" />
           <meta property="og:type" content="website" />
           <meta
             name="twitter:image"

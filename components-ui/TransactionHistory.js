@@ -82,7 +82,8 @@ export function TransactionHistory() {
         <TransactionHistoryRow key={tx.hash} {...tx} />
       ))}
 
-      {loadingCount &&
+      {isLoading &&
+        loadingCount &&
         loadingCount > 0 &&
         createArray(loadingCount).map((_, i) => (
           <TransactionHistorySkeletonRow key={i} />

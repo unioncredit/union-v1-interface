@@ -55,13 +55,21 @@ export default function useLogs(filters, parser, opts = {}) {
   const logKey = chainId && generateStorageKey(chainId, filters);
 
   const updateLogs = useCallback(
-    ({ data: newLogs }) => {
+    ({ data: newLogs, oldestDataBlock }) => {
       setLogs((state) => {
         const current = state[logKey];
         const currentData = current?.data || [];
+        const newOldestDataBlock =
+          current.oldestDataBlock < oldestDataBlock
+            ? current.oldestDataBlock
+            : oldestDataBlock;
         return {
           ...state,
-          [logKey]: { ...current, data: sortTxs([...currentData, ...newLogs]) },
+          [logKey]: {
+            ...current,
+            oldestDataBlock: newOldestDataBlock,
+            data: sortTxs([...currentData, ...newLogs]),
+          },
         };
       });
     },
