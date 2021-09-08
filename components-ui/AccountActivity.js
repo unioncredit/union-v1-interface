@@ -45,10 +45,16 @@ export function AccountActivity({
   isEmpty,
   loadingCount = 1,
   limit,
+  related,
 }) {
   const { account } = useWeb3React();
 
   const items = isNaN(limit) ? data : data?.slice(0, limit);
+
+  const filteredItems = items.filter((item) =>
+    [item.borrower, item.staker].includes(account)
+  );
+
   return (
     <>
       {isEmpty ? (
@@ -56,7 +62,7 @@ export function AccountActivity({
       ) : (
         <div className="account-activity">
           <div className="account-activity-inner">
-            {items?.map((item, i) => {
+            {(related ? filteredItems : items)?.map((item, i) => {
               const renderItem = () => {
                 if (item.type === "UpdateTrust") {
                   return <UpdateTrustActivity {...item} account={account} />;

@@ -10,7 +10,7 @@ export function LiteWrapper({ children }) {
             <Col>
               <Layout.Header align="center" justify="center">
                 <Link href="/">
-                  <Logo width="36px" withText />
+                  <Logo width="50px" withText />
                 </Link>
               </Layout.Header>
               {children}

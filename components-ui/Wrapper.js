@@ -102,7 +102,7 @@ export function Wrapper({ children, tabItems, title }) {
               </Col>
             </Row>
           </Grid>
-          <Box mb="110px" />
+          <Box mb="40px" />
         </Layout.Main>
       </Layout>
       {isAccountModalOpen && <AccountModal />}

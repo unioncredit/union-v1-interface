@@ -52,12 +52,6 @@
   align-items: center;
 }
 
-.home .heading--bold {
-  font-size: 56px;
-  line-height: 64px;
-  font-weight: 700;
-}
-
 .home .heading--purple {
   color: #5143b6;
   font-weight: 700;
@@ -66,15 +60,6 @@
 .home .main-page-footer img {
   display: block;
   margin: 0 auto;
-}
-
-.home .button {
-  padding: 8px 12px;
-  font-size: 13px;
-}
-
-.home .button--primary {
-  background-color: #5143b6;
 }
 
 .home .main-page .tabs {
@@ -135,11 +120,6 @@
 
   .home .bullet-header:first-child {
     margin-top: 0;
-  }
-
-  .home .heading--bold {
-    font-size: 27.34px;
-    line-height: 33.09px;
   }
 
   .home .jumbo:not(.hero) {

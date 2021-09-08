@@ -33,7 +33,7 @@ export default function HomePage() {
       <header>
         <div className="hide-lt-600">{/* empty */}</div>
         <div className="main-page-logo">
-          <Logo withText />
+          <Logo withText width="50px" />
         </div>
         <div className="home-nav">
           <Link href="#">
@@ -47,7 +47,12 @@ export default function HomePage() {
             </Label>
           </Link>
           <Link href="/get-started">
-            <Button label="Open App" />
+            <Button
+              variant="pill"
+              label="Open App"
+              icon="chevron"
+              iconPosition="end"
+            />
           </Link>
         </div>
       </header>
@@ -64,7 +69,12 @@ export default function HomePage() {
           </Row>
           <Row>
             <Col>
-              <Heading mt="29px" size="xlarge" className="intro-title">
+              <Heading
+                mt="29px"
+                weight="medium"
+                size="xxlarge"
+                className="intro-title"
+              >
                 The global credit union
               </Heading>
               <Text mt="16px">
@@ -95,7 +105,8 @@ export default function HomePage() {
                 mt="148px"
                 mb="15px"
                 align="center"
-                size="xlarge"
+                size="xxlarge"
+                weight="medium"
                 className="bullet-title"
               >
                 Credit, with a twist
@@ -104,7 +115,7 @@ export default function HomePage() {
           </Row>
           <Row>
             <Col sm={12} md={4}>
-              <Heading mb="20px" className="bullet-header">
+              <Heading mb="20px" weight="medium" className="bullet-header">
                 <img src="/images/efficient.png" alt="efficient" /> Efficient
               </Heading>
               <Text>
@@ -113,7 +124,7 @@ export default function HomePage() {
               </Text>
             </Col>
             <Col sm={12} md={4}>
-              <Heading mb="20px" className="bullet-header">
+              <Heading mb="20px" weight="medium" className="bullet-header">
                 <img src="/images/lock.png" alt="open" /> Open
               </Heading>
               <Text>
@@ -122,7 +133,7 @@ export default function HomePage() {
               </Text>
             </Col>
             <Col sm={12} md={4}>
-              <Heading mb="20px" className="bullet-header">
+              <Heading mb="20px" weight="medium" className="bullet-header">
                 <img src="/images/people.png" alt="open" /> Yours
               </Heading>
               <Text>
@@ -136,11 +147,11 @@ export default function HomePage() {
               <Heading
                 mt="162px"
                 align="center"
-                className="heading--purple heading--preSubTitle"
+                className="heading--preSubTitle"
               >
                 Credit is...
               </Heading>
-              <Heading align="center" mt="8px" className="heading--bold">
+              <Heading align="center" mt="8px" size="xxxlarge">
                 “Exchanging present value for the possibility of future value”
               </Heading>
             </Col>
@@ -156,7 +167,7 @@ export default function HomePage() {
               </Box>
             </Col>
             <Col xs={12}>
-              <Heading mt="8px" align="center" size="xlarge">
+              <Heading mt="8px" align="center" size="xxlarge">
                 No credit score, just your friend circle
               </Heading>
             </Col>
@@ -175,7 +186,7 @@ export default function HomePage() {
                 mt="196px"
                 mb="24px"
                 align="center"
-                size="xlarge"
+                size="xxlarge"
                 className="tabs-title"
               >
                 Credit is more fluid with Union
@@ -195,7 +206,8 @@ export default function HomePage() {
                 mt="148px"
                 mb="24px"
                 align="center"
-                className="heading--bold"
+                size="xxxlarge"
+                weight="bold"
               >
                 Get started with Union
               </Heading>
@@ -210,14 +222,21 @@ export default function HomePage() {
               <Card mb="20px">
                 <Card.Body>
                   <img src="/images/ring.png" alt="union-member-ring" />
-                  <Heading align="center" mb="12px" mt="24px">
+                  <Heading align="center" weight="regular" mb="12px" mt="24px">
                     Become a Union member
                   </Heading>
                   <Text align="center">
                     Get vouched for, lend to your friends and take part in votes
                     to define the future of your Union.
                   </Text>
-                  <Button label="Open App" mt="12px" />
+                  <Button
+                    mb="12px"
+                    variant="pill"
+                    iconPosition="end"
+                    icon="chevron"
+                    label="Open App"
+                    mt="12px"
+                  />
                 </Card.Body>
               </Card>
             </Col>
@@ -225,14 +244,21 @@ export default function HomePage() {
               <Card mb="20px">
                 <Card.Body>
                   <img src="/images/hands.png" alt="union-member-ring" />
-                  <Heading align="center" mb="12px" mt="24px">
+                  <Heading align="center" weight="regular" mb="12px" mt="24px">
                     Start building with Union
                   </Heading>
                   <Text align="center">
                     Create open, credit reliant financial tools for the masses.
                     All on top of Ethereum.
                   </Text>
-                  <Button label="Build with Union" mt="12px" />
+                  <Button
+                    mb="12px"
+                    variant="pill"
+                    iconPosition="end"
+                    icon="chevron"
+                    label="Build with Union"
+                    mt="12px"
+                  />
                 </Card.Body>
               </Card>
             </Col>

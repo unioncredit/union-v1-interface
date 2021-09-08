@@ -37,7 +37,7 @@ function TrustsYouContactDetails({
       <Box direction="vertical">
         <Label size="small">Account History</Label>
       </Box>
-      <AccountActivity {...activity} />
+      <AccountActivity {...activity} related />
     </>
   );
 }
@@ -74,7 +74,7 @@ function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
       <Box direction="vertical">
         <Label size="small">Account History</Label>
       </Box>
-      <AccountActivity {...activity} />
+      <AccountActivity {...activity} related />
     </>
   );
 }

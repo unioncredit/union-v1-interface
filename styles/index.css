@@ -13,6 +13,10 @@ a {
   /*.layout-sidebar {
     display: none;
   }*/
+  .layout-main-wrapper {
+    padding-bottom: 60px;
+    box-sizing: border-box;
+  }
 }
 
 .footer {
