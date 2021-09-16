@@ -33,6 +33,7 @@ export * from "./Wallet";
 export * from "./NetworkSwitcher";
 export * from "./NetworkSelect";
 export * from "./RewardsCard";
-export * from "./Sidebar";
 export * from "./Copyable";
 export * from "./ContactsListItem";
+export * from "./BorrowStatsCard";
+export * from "./ShareCard";

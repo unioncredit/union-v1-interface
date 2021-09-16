@@ -28,24 +28,18 @@ export function CreditContactsRow(props) {
 
   return (
     <TableRow onClick={handleClick}>
-      <TableCell span={4}>
+      <TableCell>
         <Box align="center">
           <Avatar address={address} />
-          <Box direction="vertical" ml="16px">
-            <Text grey={700}>
-              <Dai value={vouched} /> {valueCaption}
-            </Text>
-            <Label size="small">
-              {name} {label && <>&bull; {label}</>}
-            </Label>
-          </Box>
+          <Text ml="8px">
+            {name} {label && <>&bull; {label}</>}
+          </Text>
         </Box>
       </TableCell>
-      <TableCell span={1} align="right">
-        <Label as="p" size="small" mb="6px">
-          {toPercent(utilized)} Utilized
-        </Label>
-        <Bar percentage={utilized * 100} />
+      <TableCell align="right">
+        <Text grey={700}>
+          <Dai value={vouched} /> {valueCaption}
+        </Text>
       </TableCell>
     </TableRow>
   );

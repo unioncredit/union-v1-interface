@@ -18,8 +18,8 @@ import format from "util/formatValue";
 function TransactionHistoryRow({ address, amount, type, date }) {
   return (
     <TableRow>
-      <TableCell span={1}>
-        <Box align="center">
+      <TableCell>
+        <Box>
           {address ? (
             <Avatar address={address} />
           ) : type === "BORROW" ? (
@@ -27,13 +27,15 @@ function TransactionHistoryRow({ address, amount, type, date }) {
           ) : (
             <Repayment />
           )}
-          <Box direction="vertical" ml="16px">
-            <Text grey={700}>{type === "BORROW" ? "Borrow" : "Repayment"}</Text>
-            <Label size="small" grey={400}>
-              {date}
-            </Label>
-          </Box>
+          <Text grey={700} ml="8px">
+            {type === "BORROW" ? "Borrow" : "Repayment"}
+          </Text>
         </Box>
+      </TableCell>
+      <TableCell>
+        <Label size="small" grey={400}>
+          {date}
+        </Label>
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
@@ -50,11 +52,7 @@ function TransactionHistorySkeletonRow() {
       <TableCell>
         <Avatar />
       </TableCell>
-      <TableCell span={4}>
-        <Skeleton size="medium" variant="primary" />
-        <Skeleton size="small" variant="secondary" />
-      </TableCell>
-      <TableCell span={1} align="right">
+      <TableCell align="right">
         <Skeleton size="small" variant="secondary" />
       </TableCell>
     </TableRow>
@@ -64,7 +62,7 @@ function TransactionHistorySkeletonRow() {
 function TransactionHistoryEmpty() {
   return (
     <TableRow>
-      <TableCell>
+      <TableCell span={2}>
         <Text>No transactions</Text>
       </TableCell>
     </TableRow>

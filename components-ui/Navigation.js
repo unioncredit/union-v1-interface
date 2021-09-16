@@ -16,8 +16,6 @@ const navItems = [
     icon: "get-started",
     pathname: "/get-started",
     active: true,
-    description:
-      "Get vouched for to become a member and stake your DAI to collect UNION",
   },
   {
     id: "credit",
@@ -62,27 +60,12 @@ export const Navigation = ({ mobile }) => {
   }, [isMember, pathname]);
 
   return (
-    <>
-      <Nav mobile={mobile}>
-        {filteredNavItems.map(({ label, ...item }) => (
-          <Link key={item.id} href={item.pathname} passHref>
-            <NavItem label={!mobile && label} {...item} />
-          </Link>
-        ))}
-        {mobile ? (
-          <NavItem
-            bordered
-            icon="union-token"
-            label={format(unionBalance)}
-            onClick={openWalletModal}
-          />
-        ) : (
-          <Box mt="auto" mb="16px">
-            <RewardsCard />
-          </Box>
-        )}
-      </Nav>
-      {mobile && isWalletModalOpen && <WalletModal />}
-    </>
+    <Nav mobile={mobile}>
+      {filteredNavItems.map(({ label, ...item }) => (
+        <Link key={item.id} href={item.pathname} passHref>
+          <NavItem label={!mobile && label} {...item} />
+        </Link>
+      ))}
+    </Nav>
   );
 };

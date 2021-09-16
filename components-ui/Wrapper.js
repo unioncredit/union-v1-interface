@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { TabLink, Sidebar } from "components-ui";
+import { TabLink, Navigation } from "components-ui";
 import {
   AccountModal,
   useAccountModal,
@@ -17,6 +17,7 @@ import {
   Col,
   LoadingSpinner,
   ContextMenu,
+  ToggleMenu,
 } from "union-ui";
 import useInactiveListener from "hooks/useInactiveListener";
 import { Wallet } from "components-ui";
@@ -40,23 +41,13 @@ const contextMenuItems = [
   { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
 ];
 
-export function Wrapper({ children, tabItems, title }) {
+export function Wrapper({ children, title, tabItems }) {
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
   const { account } = useWeb3React();
-  const router = useRouter();
 
   const { name } = usePublicData(account);
-
-  const tabItemLinks =
-    tabItems?.length > 0
-      ? tabItems.map((item) => ({ ...item, as: TabLink }))
-      : [];
-
-  const initialTab = tabItemLinks.findIndex(
-    (item) => item.href === router.pathname
-  );
 
   useInactiveListener();
   const { isLoading } = useMemberCheck();
@@ -72,15 +63,12 @@ export function Wrapper({ children, tabItems, title }) {
   return (
     <>
       <Layout>
-        <Sidebar />
         <Layout.Main>
           <Grid style={{ display: "flex", flexGrow: 1 }}>
             <Row style={{ width: "100%", margin: 0 }}>
               <Col>
                 <Layout.Header align="center">
-                  <Heading size="large" m={0}>
-                    {title}
-                  </Heading>
+                  <Navigation />
                   <Box>
                     <Box mr="8px">
                       <Wallet
@@ -93,12 +81,10 @@ export function Wrapper({ children, tabItems, title }) {
                     <ContextMenu items={contextMenuItems} />
                   </Box>
                 </Layout.Header>
-                {tabItems && (
-                  <Box mb="24px">
-                    <Tabs initialActive={initialTab} items={tabItemLinks} />
+                  <Box fluid align="center" direction="vertical">
+                    <ToggleMenu items={tabItems} />
+                    {children}
                   </Box>
-                )}
-                {children}
               </Col>
             </Row>
           </Grid>

@@ -4,10 +4,9 @@ import {
   TransactionHistory,
   CreditContactsRow,
   CreditContactsRowSkeleton,
-} from "components-ui";
+  BorrowStatsCard,ShareCard} from "components-ui";
 import {
   Text,
-  Stats,
   Stat,
   Button,
   Bar,
@@ -20,6 +19,8 @@ import {
   Table,
   TableRow,
   TableCell,
+  Card,
+  Box,
 } from "union-ui";
 import {
   BorrowModal,
@@ -86,121 +87,43 @@ export default function BorrowView() {
     <>
       <Wrapper title={config.title} tabItems={config.tabItems}>
         <Grid>
-          <Row>
-            <Col>
-              <Stats
-                buttons={[
-                  <Button
-                    icon="borrow"
-                    label="Borrow funds"
-                    key="borrow-funds"
-                    onClick={openBorrowModal}
-                  />,
-                  <Button
-                    icon="repayment"
-                    variant="secondary"
-                    label="Make a payment"
-                    key="make-a-payment"
-                    onClick={openPaymentModal}
-                  />,
-                ]}
-              >
-                <Stat
-                  label="Credit Limit"
-                  value={<Dai value={format(roundDown(actualCreditLimit))} />}
-                  cta={
-                    <Button
-                      variant="pill"
-                      icon="chevron"
-                      iconPosition="end"
-                      label="Request extra"
-                      onClick={openCreditRequest}
-                    />
-                  }
+          <Row justify="center">
+            <Col xs={6}>
+              <Box mt="24px">
+                <BorrowStatsCard />
+              </Box>
+              <Card mt="24px">
+                <Card.Header
+                  title="Credit providers"
+                  subTitle="Accounts providing you with credit"
                 />
-                <Stat
-                  label="Balance owed"
-                  value={<Dai value={borrowedRounded} />}
-                  caption={
-                    <Bar
-                      label={`${toPercent(pctUsed)}`}
-                      percentage={pctUsed * 100}
-                    />
-                  }
+                <Card.Body>
+                  <Table disableCondensed>
+                    {isVouchLoading
+                      ? createArray(3).map((_, i) => (
+                          <CreditContactsRowSkeleton key={i} />
+                        ))
+                      : vouchData.slice(0, 8).map((item) => (
+                          <Link
+                            key={item.address}
+                            href={`/contacts?contactsType=${ContactsType.TRUSTS_YOU}&contact=${item.address}`}
+                          >
+                            <CreditContactsRow {...item} />
+                          </Link>
+                        ))}
+                  </Table>
+                </Card.Body>
+              </Card>
+              <ShareCard />
+              <Card mt="24px">
+                <Card.Header
+                  title="Transaction History"
+                  subTitle="Your credit based transaction history"
                 />
-                <Stat
-                  label="Available Credit"
-                  value={<Dai value={format(roundDown(creditLimit))} />}
-                  caption={
-                    <Label as="p" size="small">
-                      <Dai value={format(unavailable)} /> Unavailable{" "}
-                      <Tooltip
-                        position="top"
-                        content={`
-                          These are funds which are currently tied up elsewhere and as a 
-                          result, not available to borrow at this time
-                        `}
-                      />
-                    </Label>
-                  }
-                />
-                <Stat
-                  label={
-                    <Text mb={0}>
-                      Minimum Payment{" "}
-                      <Tooltip
-                        position="top"
-                        content="Represents the amount due now in order to repay your loan on time"
-                      />
-                    </Text>
-                  }
-                  value={<Dai value={roundUp(interest)} />}
-                  caption={paymentDueDate}
-                />
-              </Stats>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6} lg={4}>
-              <Heading level={2} mt="40px">
-                Credit providers
-              </Heading>
-              <Text mb="12px">Accounts providing you with credit</Text>
-              <Table disableCondensed>
-                {isVouchLoading
-                  ? createArray(3).map((_, i) => (
-                      <CreditContactsRowSkeleton key={i} />
-                    ))
-                  : vouchData.slice(0, 8).map((item) => (
-                      <Link
-                        key={item.address}
-                        href={`/contacts?contactsType=${ContactsType.TRUSTS_YOU}&contact=${item.address}`}
-                      >
-                        <CreditContactsRow {...item} />
-                      </Link>
-                    ))}
-                <TableRow>
-                  <TableCell />
-                  <TableCell align="right" span={1}>
-                    <Link href="/contacts">
-                      <Button
-                        inline
-                        label="All contacts"
-                        variant="pill"
-                        icon="chevron"
-                        iconPosition="end"
-                      />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </Col>
-            <Col md={6} lg={8}>
-              <Heading level={2} mt="40px">
-                Transaction History
-              </Heading>
-              <Text mb="12px">Your credit based transaction history</Text>
-              <TransactionHistory />
+                <Card.Body>
+                  <TransactionHistory />
+                </Card.Body>
+              </Card>
             </Col>
           </Row>
         </Grid>
