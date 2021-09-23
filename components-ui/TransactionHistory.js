@@ -7,23 +7,26 @@ import {
   Avatar,
   Box,
   Skeleton,
+  Borrow,
+  Repayment,
+  Pagination,
 } from "union-ui";
 import { Dai } from "components-ui";
 import useTransactions from "hooks/data/useTransactions";
+import usePagination from "hooks/usePagination";
 import createArray from "util/createArray";
-import Repayment from "svgs/Repayment";
-import Borrowed from "svgs/Borrowed";
 import format from "util/formatValue";
+import formatDateTime from "util/formatDateTime";
 
-function TransactionHistoryRow({ address, amount, type, date }) {
+function TransactionHistoryRow({ address, amount, type, ts }) {
   return (
     <TableRow>
       <TableCell>
-        <Box>
+        <Box align="center">
           {address ? (
             <Avatar address={address} />
           ) : type === "BORROW" ? (
-            <Borrowed />
+            <Borrow />
           ) : (
             <Repayment />
           )}
@@ -34,7 +37,7 @@ function TransactionHistoryRow({ address, amount, type, date }) {
       </TableCell>
       <TableCell>
         <Label size="small" grey={400}>
-          {date}
+          {formatDateTime(ts)}
         </Label>
       </TableCell>
       <TableCell align="right">
@@ -52,6 +55,9 @@ function TransactionHistorySkeletonRow() {
       <TableCell>
         <Avatar />
       </TableCell>
+      <TableCell>
+        <Skeleton size="small" variant="secondary" />
+      </TableCell>
       <TableCell align="right">
         <Skeleton size="small" variant="secondary" />
       </TableCell>
@@ -62,7 +68,7 @@ function TransactionHistorySkeletonRow() {
 function TransactionHistoryEmpty() {
   return (
     <TableRow>
-      <TableCell span={2}>
+      <TableCell span={3}>
         <Text>No transactions</Text>
       </TableCell>
     </TableRow>
@@ -71,21 +77,30 @@ function TransactionHistoryEmpty() {
 
 export function TransactionHistory() {
   const { data, isLoading, isEmpty, loadingCount = 1 } = useTransactions();
+  const { data: pagedData, page, maxPages, setPage } = usePagination(data);
 
   return (
-    <Table disableCondensed>
-      {isEmpty && !isLoading && <TransactionHistoryEmpty />}
+    <>
+      <Table disableCondensed>
+        {isEmpty && !isLoading && <TransactionHistoryEmpty />}
 
-      {data.map((tx) => (
-        <TransactionHistoryRow key={tx.hash} {...tx} />
-      ))}
-
-      {isLoading &&
-        loadingCount &&
-        loadingCount > 0 &&
-        createArray(loadingCount).map((_, i) => (
-          <TransactionHistorySkeletonRow key={i} />
+        {pagedData.map((tx) => (
+          <TransactionHistoryRow key={tx.hash} {...tx} />
         ))}
-    </Table>
+
+        {isLoading &&
+          loadingCount &&
+          loadingCount > 0 &&
+          createArray(loadingCount).map((_, i) => (
+            <TransactionHistorySkeletonRow key={i} />
+          ))}
+      </Table>
+      <Pagination
+        mt="24px"
+        pages={maxPages}
+        activePage={page}
+        onClick={setPage}
+      />
+    </>
   );
 }

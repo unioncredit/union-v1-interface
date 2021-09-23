@@ -14,7 +14,7 @@ import { toPercent } from "util/numbers";
 import useAddressLabels from "hooks/useAddressLabels";
 
 export function CreditContactsRow(props) {
-  const { address, vouched, utilized, onClick, valueCaption } = props;
+  const { address, vouched, utilized, onClick } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -38,7 +38,7 @@ export function CreditContactsRow(props) {
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
-          <Dai value={vouched} /> {valueCaption}
+          <Dai value={vouched} />
         </Text>
       </TableCell>
     </TableRow>

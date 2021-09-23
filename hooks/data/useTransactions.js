@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useReadProvider from "hooks/useReadProvider";
@@ -23,8 +22,7 @@ const parseTransactionsLog = (provider, uTokenContract) => async (logs) => {
         account,
         amount: Number(formatUnits(amount, 18)),
         blockNumber: log.blockNumber,
-        date: dayjs(block.timestamp * 1000).format("MMMM D, YYYY h:mm A"),
-        dateShort: dayjs(block.timestamp * 1000).format("MM/DD/YY"),
+        ts: block.timestamp * 1000,
         hash: log.transactionHash,
         type,
       };

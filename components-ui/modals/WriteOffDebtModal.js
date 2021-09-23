@@ -1,17 +1,7 @@
-import {
-  ButtonRow,
-  Divider,
-  Button,
-  ModalOverlay,
-  Input,
-  Heading,
-  Text,
-  Box,
-  Badge,
-} from "union-ui";
+import { Label, Stat, Grid, Button, ModalOverlay, Input, Box } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
-import { AddressLabel, Dai, Modal } from "components-ui";
+import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
 import { useForm } from "react-hook-form";
@@ -36,11 +26,14 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   const { open: openManageContactModal } = useManageContactModal();
   const writeOffDebt = useWriteOffDebt();
 
-  const { register, formState, errors, handleSubmit } = useForm({
+  const { register, watch, formState, errors, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
   const { isDirty, isSubmitting } = formState;
+
+  const watchAmount = watch("amount");
+  const amount = Number(watchAmount || 0);
 
   const validate = (val) => {
     if (!isOverdue) return errorMessages.notOverDue;
@@ -79,64 +72,56 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Change credit limit" onClose={close} drawer>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handleWriteOffDebt)}>
-            <Box mb="24px" justify="space-between">
-              <AddressLabel address={address} />
-              <Badge label="Trusted contact" color="green" />
-            </Box>
-            <Box>
-              <Box direction="vertical">
-                <Text>Credit limit</Text>
-                <Heading>
-                  <Dai value={format(vouched)} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="32px">
-                <Text>Unpaid Debt</Text>
-                <Heading>
-                  <Dai value={format(used)} />
-                </Heading>
-              </Box>
-            </Box>
-            <Divider />
-            <Heading mt="28px" mb="4px">
-              Write-off debt
-            </Heading>
-            <Text mb="16px" size="large">
-              Permanently write-off this contacts debt and discard locked funds.
-            </Text>
-            <Input
-              type="number"
-              ref={register({ validate })}
-              name="amount"
-              label="Value"
-              suffix="DAI"
-              error={errors.amount?.message}
-            />
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <ButtonRow mt="20px" fluid>
-            <Button
-              fluid
-              fontSize="large"
-              label="Go back"
-              icon="arrow-left"
-              variant="secondary"
-              onClick={handleGoBack}
-            />
-            <Button
-              fluid
-              label="Save"
-              fontSize="large"
-              disabled={!isDirty}
-              loading={isSubmitting}
-              onClick={handleSubmit(handleWriteOffDebt)}
-            />
-          </ButtonRow>
-        </Modal.Footer>
+      <Modal title="Write-off debt" onClose={close} drawer>
+        <form onSubmit={handleSubmit(handleWriteOffDebt)}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Col>
+                <Stat
+                  size="medium"
+                  align="center"
+                  label="Credit limit"
+                  value={<Dai value={format(vouched)} />}
+                />
+              </Grid.Col>
+              <Grid.Col>
+                <Stat
+                  size="medium"
+                  align="center"
+                  label="Unpaid debt"
+                  value={<Dai value={format(used)} />}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          </Grid>
+          <Input
+            type="number"
+            ref={register({ validate })}
+            name="amount"
+            label="Value"
+            suffix={<Dai />}
+            error={errors.amount?.message}
+          />
+          <Box justify="space-between" mt="16px">
+            <Label as="p" size="small" m={0}>
+              New balance owed
+            </Label>
+            <Label as="p" size="small" m={0}>
+              {format(used - amount)}
+            </Label>
+          </Box>
+          <Label align="center" as="p" size="small" color="red500" mt="16px">
+            When you write-off debt, your locked funds are consumed, this action
+            cannot be undone.
+          </Label>
+          <Button
+            fluid
+            label="Write-off debt"
+            type="submit"
+            loading={isSubmitting}
+            disabled={!isDirty}
+          />
+        </form>
       </Modal>
     </ModalOverlay>
   );

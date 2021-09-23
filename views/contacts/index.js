@@ -3,12 +3,13 @@ import {
   Box,
   Card,
   Grid,
-  Row,
-  Col,
   ToggleMenu,
   Table,
   ModalOverlay,
-  SearchInput,
+  Input,
+  Divider,
+  Pagination,
+  Icon,
 } from "union-ui";
 import {
   Modal,
@@ -36,6 +37,7 @@ import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import useContactsSearch from "hooks/useContactsSearch";
+import usePagination from "hooks/usePagination";
 import createArray from "util/createArray";
 
 import { config, ContactsType } from "./config";
@@ -66,7 +68,8 @@ export default function ContactsView() {
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
-  const { isOpen: isManageContactModalOpen } = useManageContactModal();
+  const { open: openManageContactModal, isOpen: isManageContactModalOpen } =
+    useManageContactModal();
   const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
   const { open: openVouchModal } = useVouchModal();
@@ -81,6 +84,12 @@ export default function ContactsView() {
   const isLoading = !data;
 
   const { data: searchData, register } = useContactsSearch(data);
+  const {
+    data: pagedData,
+    page,
+    maxPages,
+    setPage,
+  } = usePagination(searchData);
 
   const ContactDetailsVariant = isMobile
     ? withMobileView(ContactDetails)
@@ -122,57 +131,50 @@ export default function ContactsView() {
 
   usePopTrustModal();
 
+  const title =
+    contactsType === ContactsType.TRUSTS_YOU
+      ? "Contacts who trust you"
+      : "Contacts you trust";
+
   return (
     <>
-      <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Card
-          size="fluid"
-          noGutter
-          className={cn("all-contacts-card", {
-            "all-contacts-card--mobile": isMobile,
-          })}
-        >
-          <Grid bordered>
-            <Row nogutter>
-              <Col sm={6} md={5} lg={4}>
-                <Box fluid mb="8px">
-                  <ToggleMenu
-                    fluid
-                    items={config.toggleItems}
-                    onChange={handleToggleContactType}
-                    value={contactsType}
-                  />
-                </Box>
-                <SearchInput
-                  name="query"
-                  ref={register}
-                  placeholder="Alias or address"
-                />
-              </Col>
-              <Col sm={6} md={7} lg={8} className="hide-lt-600">
-                {selectedContact && (
-                  <ContactDetailsHeader
-                    {...selectedContact}
-                    contactsType={contactsType}
-                  />
-                )}
-              </Col>
-            </Row>
-            <Row noGutter>
-              <Col
-                sm={6}
-                md={5}
-                lg={4}
-                noPadding
-                className="contact-summary-col"
-              >
-                <div className="contact-summary-col-inner">
+      <Wrapper title={config.title}>
+        <ToggleMenu
+          items={config.toggleItems}
+          initialActive={0}
+          onChange={handleToggleContactType}
+        />
+        <Grid>
+          <Grid.Row justify="center">
+            <Grid.Col md={6}>
+              <Card mt="24px">
+                <Card.Header title={title} />
+                <Card.Body>
+                  {contactsType === ContactsType.YOU_TRUST && (
+                    <>
+                      <Button
+                        fluid
+                        label="Vouch for new contact"
+                        icon="vouch"
+                        onClick={openVouchModal}
+                      />
+                      <Divider mt="16px" mb="16px" />
+                    </>
+                  )}
+                  <Box mb="16px">
+                    <Input
+                      ref={register}
+                      name="query"
+                      suffix={<Icon name="search" />}
+                      placeholder="Filter by ENS or address"
+                    />
+                  </Box>
                   <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
                       ? createArray(3).map((_, i) => (
                           <ContactsListItemSkeleton key={i} />
                         ))
-                      : searchData.map((item) => (
+                      : pagedData.map((item) => (
                           <ContactsListItem
                             {...item}
                             active={item.address === selectedContact?.address}
@@ -182,32 +184,35 @@ export default function ContactsView() {
                           />
                         ))}
                   </Table>
-                </div>
-
-                <div className="contact-summary-vouch-buton">
-                  <Box justify="center" mb="24px">
-                    <Button
-                      rounded
-                      icon="vouch"
-                      variant="floating"
-                      label="Vouch for someone"
-                      onClick={openVouchModal}
-                    />
-                  </Box>
-                </div>
-              </Col>
-              <Col sm={6} md={7} lg={8}>
-                {selectedContact && (
-                  <ContactDetailsVariant
-                    {...selectedContact}
-                    contactsType={contactsType}
-                    onClose={() => setSelectedContact(null)}
+                  <Pagination
+                    mt="24px"
+                    pages={maxPages}
+                    activePage={page}
+                    onClick={setPage}
                   />
-                )}
-              </Col>
-            </Row>
-          </Grid>
-        </Card>
+                </Card.Body>
+              </Card>
+            </Grid.Col>
+            <Grid.Col md={6}>
+              {selectedContact && (
+                <Card mt="24px">
+                  <Card.Body>
+                    <ContactDetailsHeader
+                      {...selectedContact}
+                      contactsType={contactsType}
+                    />
+                    <ContactDetailsVariant
+                      {...selectedContact}
+                      contactsType={contactsType}
+                      onClose={() => setSelectedContact(null)}
+                      manageContact={openManageContactModal}
+                    />
+                  </Card.Body>
+                </Card>
+              )}
+            </Grid.Col>
+          </Grid.Row>
+        </Grid>
       </Wrapper>
 
       {/* modals */}

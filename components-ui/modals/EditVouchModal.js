@@ -1,17 +1,7 @@
-import {
-  ButtonRow,
-  Divider,
-  Button,
-  ModalOverlay,
-  Input,
-  Heading,
-  Text,
-  Box,
-  Badge,
-} from "union-ui";
+import { Grid, Button, ModalOverlay, Input, Stat } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
-import { AddressLabel, Dai, Modal } from "components-ui";
+import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
 import { useForm } from "react-hook-form";
@@ -43,8 +33,6 @@ export function EditVouchModal({ address, used, vouched }) {
     reValidateMode: "onChange",
   });
   const { isDirty, isSubmitting } = formState;
-
-  const amount = watch("amount", 0);
 
   const validate = (val) => {
     if (Number(val) <= used) return errorMessages.cantRemoveStake;
@@ -83,71 +71,48 @@ export function EditVouchModal({ address, used, vouched }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Change credit limit" onClose={close} drawer>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handleAdjustTrust)}>
-            <Box mb="24px" justify="space-between">
-              <AddressLabel address={address} />
-              <Badge label="Trusted contact" color="green" />
-            </Box>
-            <Box>
-              <Box direction="vertical">
-                <Text>Credit limit</Text>
-                <Heading>
-                  <Dai value={format(vouched)} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="32px">
-                <Text>Unpaid Debt</Text>
-                <Heading>
-                  <Dai value={format(used)} />
-                </Heading>
-              </Box>
-            </Box>
-            <Divider />
-            <Heading mt="28px" mb="4px">
-              Set contacts trust
-            </Heading>
-            <Text mb="16px" size="large">
-              What’s the total value of credit you’d like to make available for
-              this contact?
-            </Text>
-            <Input
-              type="number"
-              ref={register({ validate })}
-              name="amount"
-              label="Credit limit"
-              suffix="DAI"
-              error={errors.amount?.message}
-            />
-            <Text mt="16px" mb="4px">
-              New credit limit
-            </Text>
-            <Heading>
-              <Dai value={amount} />
-            </Heading>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <ButtonRow mt="20px" fluid>
-            <Button
-              fluid
-              fontSize="large"
-              label="Go back"
-              icon="arrow-left"
-              variant="secondary"
-              onClick={handleGoBack}
-            />
-            <Button
-              label="Save"
-              fluid
-              fontSize="large"
-              disabled={!isDirty}
-              loading={isSubmitting}
-              onClick={handleSubmit(handleAdjustTrust)}
-            />
-          </ButtonRow>
-        </Modal.Footer>
+      <Modal title="Change credit limit" onClose={close}>
+        <form onSubmit={handleSubmit(handleAdjustTrust)}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Col>
+                <Stat
+                  mb="24px"
+                  size="medium"
+                  align="center"
+                  label="Credit limit"
+                  value={<Dai value={format(vouched)} />}
+                />
+              </Grid.Col>
+              <Grid.Col>
+                <Stat
+                  mb="24px"
+                  size="medium"
+                  align="center"
+                  label="Unpaid debt"
+                  value={<Dai value={format(used)} />}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          </Grid>
+          <Input
+            type="number"
+            ref={register({ validate })}
+            name="amount"
+            label="Credit limit"
+            suffix={<Dai />}
+            error={errors.amount?.message}
+          />
+          <Button
+            mt="18px"
+            fluid
+            label="Save"
+            fontSize="large"
+            type="submit"
+            disabled={!isDirty}
+            loading={isSubmitting}
+          />
+        </form>
       </Modal>
     </ModalOverlay>
   );

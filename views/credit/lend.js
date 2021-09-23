@@ -11,163 +11,90 @@ import {
   Table,
   TableRow,
   TableCell,
+  Box,
+  Card,
+  Pagination,
 } from "union-ui";
 import Link from "next/link";
-import format from "util/formatValue";
-import { roundDown, toPercent } from "util/numbers";
-import useStakeData from "hooks/data/useStakeData";
 import {
-  Dai,
   Wrapper,
   CreditContactsRow,
   OutstandingLoans,
   CreditContactsRowSkeleton,
+  LendStatsCard,
+  NewVouchCard,
 } from "components-ui";
-import {
-  useStakeModal,
-  StakeModal,
-  useVouchModal,
-  VouchModalManager,
-} from "components-ui/modals";
 import useTrustData from "hooks/data/useTrustData";
 import createArray from "util/createArray";
 
 import { config } from "./config";
-import { useState } from "react";
 import { ContactsType } from "views/contacts/config";
+import usePagination from "hooks/usePagination";
 
 export default function LendView() {
-  const [stakeType, setStakeType] = useState("deposit");
-  const { data: stakeData } = useStakeData();
   const { data: trustData } = useTrustData(8);
 
-  const { open: openVouchModal } = useVouchModal();
-  const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
+  const {
+    data: pagedTrustData,
+    maxPages,
+    page,
+    setPage,
+  } = usePagination(trustData);
 
   const isTrustLoading = !trustData;
 
-  const {
-    totalStake = 0.0,
-    utilizedStake = 0.0,
-    defaultedStake = 0.0,
-    withdrawableStake = 0.0,
-  } = !!stakeData && stakeData;
-
-  const percentageStake = utilizedStake / totalStake;
-
-  const handleOpenStakeModal = (type) => () => {
-    setStakeType(type);
-    openStakeModal();
-  };
-
   return (
-    <>
-      <Wrapper title={config.title} tabItems={config.tabItems}>
-        <Grid>
-          <Row>
-            <Col>
-              <Stats
-                buttons={[
-                  <Button
-                    icon="vouch"
-                    label="Vouch for new contact"
-                    key="vouch-new-contact"
-                    onClick={openVouchModal}
-                  />,
-                ]}
-              >
-                <Stat
-                  label="Staked"
-                  value={<Dai value={format(roundDown(totalStake))} />}
-                  cta={
-                    <Button
-                      variant="pill"
-                      icon="chevron"
-                      iconPosition="end"
-                      label="Adjust stake"
-                      onClick={handleOpenStakeModal("deposit")}
-                    />
-                  }
-                />
-                <Stat
-                  label="Utilized"
-                  value={<Dai value={format(roundDown(utilizedStake))} />}
-                  caption={
-                    <Bar
-                      label={toPercent(percentageStake)}
-                      percentage={percentageStake * 100}
-                    />
-                  }
-                />
-                <Stat
-                  label="Withdrawable"
-                  value={<Dai value={format(roundDown(withdrawableStake))} />}
-                  cta={
-                    <Button
-                      variant="pill"
-                      icon="chevron"
-                      iconPosition="end"
-                      label="Withdraw"
-                      onClick={handleOpenStakeModal("withdraw")}
-                    />
-                  }
-                />
-                <Stat
-                  label="Defaulted"
-                  value={<Dai value={format(roundDown(defaultedStake))} />}
-                />
-              </Stats>
-            </Col>
-          </Row>
+    <Wrapper title={config.title} tabItems={config.tabItems}>
+      <Grid>
+        <Grid.Row justify="center">
+          <Grid.Col xs={6}>
+            <Box mt="24px">
+              <LendStatsCard />
+            </Box>
 
-          <Row>
-            <Col md={6} lg={4}>
-              <Heading level={2} mt="40px">
-                Contacts you trust
-              </Heading>
-              <Text mb="12px">Accounts you’re providing credit to</Text>
-              <Table>
-                {isTrustLoading
-                  ? createArray(3).map((_, i) => (
-                      <CreditContactsRowSkeleton key={i} />
-                    ))
-                  : trustData.slice(0, 8).map((item) => (
-                      <Link
-                        key={item.address}
-                        href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
-                      >
-                        <CreditContactsRow {...item} valueCaption="Trust" />
-                      </Link>
-                    ))}
-                <TableRow>
-                  <TableCell />
-                  <TableCell align="right" span={1}>
-                    <Link href="/contacts">
-                      <Button
-                        inline
-                        label="All contacts"
-                        variant="pill"
-                        icon="chevron"
-                        iconPosition="end"
-                      />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </Col>
-            <Col md={6} lg={8}>
-              <Heading level={2} mt="40px">
-                Outstanding Loans
-              </Heading>
-              <Text mb="12px">Outstanding debt from contacts you trust</Text>
-              <OutstandingLoans data={trustData} />
-            </Col>
-          </Row>
-        </Grid>
-      </Wrapper>
-      <VouchModalManager />
-      {isStakeModalOpen && <StakeModal type={stakeType} />}
-    </>
+            <NewVouchCard />
+
+            <Card mt="24px">
+              <Card.Header
+                title="Active Borrowers"
+                subTitle="Contacts actively borrowing from your stake"
+              />
+              <Card.Body>
+                <OutstandingLoans data={trustData} />
+              </Card.Body>
+            </Card>
+
+            <Card mt="24px">
+              <Card.Header
+                title="Contacts you trust"
+                subTitle="Accounts you’re providing credit to"
+              />
+              <Card.Body>
+                <Table>
+                  {isTrustLoading
+                    ? createArray(3).map((_, i) => (
+                        <CreditContactsRowSkeleton key={i} />
+                      ))
+                    : pagedTrustData.slice(0, 8).map((item) => (
+                        <Link
+                          key={item.address}
+                          href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
+                        >
+                          <CreditContactsRow {...item} />
+                        </Link>
+                      ))}
+                </Table>
+                <Pagination
+                  mt="18px"
+                  pages={maxPages}
+                  activePage={page}
+                  onClick={setPage}
+                />
+              </Card.Body>
+            </Card>
+          </Grid.Col>
+        </Grid.Row>
+      </Grid>
+    </Wrapper>
   );
 }
-``;

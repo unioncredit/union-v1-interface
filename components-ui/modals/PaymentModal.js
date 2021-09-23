@@ -1,12 +1,11 @@
 import {
   ModalOverlay,
   Box,
-  Text,
-  Heading,
-  Divider,
   Input,
+  Stat,
   Button,
   ButtonRow,
+  Grid,
 } from "union-ui";
 import { Modal, Dai } from "components-ui";
 import { useForm } from "react-hook-form";
@@ -104,61 +103,51 @@ export function PaymentModal({
 
   return (
     <ModalOverlay>
-      <Modal title="Make a payment" onClose={close} drawer>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handlePayment)}>
-            <Box mb="16px">
-              <Box direction="vertical">
-                <Text>Balance owed</Text>
-                <Heading>
-                  <Dai value={calculateBalanceOwed} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="30px">
-                <Text>Min. due</Text>
-                <Heading>
-                  <Dai value={roundUp(interest)} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="30px">
-                <Text>Default in</Text>
-                <Heading>{nextPaymentDue}</Heading>
-              </Box>
-            </Box>
-            <Divider />
-            <Heading mt="36px">Amount to repay</Heading>
-            <Text size="large">How much are you paying today?</Text>
-            <Box mt="16px">
-              <Input
-                type="number"
-                ref={register({ validate })}
-                name="amount"
-                suffix="DAI"
-                label="Repay"
-                placeholder="$0"
-                caption={
-                  <>
-                    Pay minimum (<Dai value={roundUp(interest)} />)
-                  </>
-                }
-                onCaptionClick={handlePayMinimum}
-                error={errors.amount?.message || false}
-              />
-            </Box>
-            <Box mt="42px">
-              <Box direction="vertical">
-                <Text>New balance owed</Text>
-                <Heading>
-                  <Dai value={formatNewBalance} />
-                </Heading>
-              </Box>
-            </Box>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
+      <Modal title="Make a payment" onClose={close}>
+        <form onSubmit={handleSubmit(handlePayment)}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Col xs={12}>
+                <Stat
+                  mb="16px"
+                  align="center"
+                  size="medium"
+                  label="Balance owed"
+                  value={<Dai value={calculateBalanceOwed} />}
+                />
+              </Grid.Col>
+              <Grid.Col xs={6}>
+                <Stat
+                  align="center"
+                  label="Min due"
+                  value={<Dai value={roundUp(interest)} />}
+                />
+              </Grid.Col>
+              <Grid.Col xs={6}>
+                <Stat
+                  align="center"
+                  label="Defaults in"
+                  value={nextPaymentDue}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          </Grid>
+          <Box mt="16px">
+            <Input
+              type="number"
+              ref={register({ validate })}
+              name="amount"
+              suffix={<Dai />}
+              label="Repay"
+              placeholder="0"
+              caption={`Pay minimum ${roundUp(interest)}`}
+              onCaptionClick={handlePayMinimum}
+              error={errors.amount?.message || false}
+            />
+          </Box>
           <ButtonRow fluid>
             <Button
-              label="Make payment"
+              label={`Repay ${amount} DAI`}
               fluid
               mt="16px"
               disabled={!isDirty || isSubmitting}
@@ -166,7 +155,7 @@ export function PaymentModal({
               fontSize="large"
             />
           </ButtonRow>
-        </Modal.Footer>
+        </form>
       </Modal>
     </ModalOverlay>
   );

@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { EVENT_START_BLOCK, EVENT_BLOCK_INTERVAL } from "constants/variables";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import useReadProvider from "hooks/useReadProvider";
 import usePersistentState from "hooks/usePersistentState";
 import { sleep } from "util/sleep";
@@ -48,7 +48,10 @@ const sortTxs = (txs) =>
  */
 export default function useLogs(filters, parser, opts = {}) {
   const [loading, setLoading] = useState(false);
-  const [completeLogs, setLogs] = usePersistentState("union:logs:v1.1", {});
+  const [completeLogs, setLogs] = usePersistentState(
+    "union:logs:v1.1-test.4",
+    {}
+  );
   const { chainId } = useWeb3React();
   const readProvider = useReadProvider();
 
@@ -117,8 +120,8 @@ export default function useLogs(filters, parser, opts = {}) {
           );
 
           const flattened = [].concat.apply([], result);
-          const parsedResult = await parser(flattened);
-          updateLogs({ data: parsedResult, oldestDataBlock: to });
+          const parsed = await parser(flattened);
+          updateLogs({ data: parsed, oldestDataBlock: to });
           i++;
         } catch (error) {
           await sleep(5);

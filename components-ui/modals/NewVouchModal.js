@@ -85,83 +85,79 @@ export function NewVouchModal({ address }) {
   return (
     <ModalOverlay>
       <Modal title="New vouch" onClose={close} drawer>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handleNewVouch)}>
-            <Box mb="26px" justify="space-between">
-              <AddressLabel address={address} showAddress />
-              {isMember ? (
-                <Badge label="Trusted contact" color="green" />
-              ) : (
-                <Badge label="Not yet a member" color="blue" />
-              )}
+        <form onSubmit={handleSubmit(handleNewVouch)}>
+          <Box mb="26px" justify="space-between">
+            <AddressLabel address={address} showAddress />
+            {isMember ? (
+              <Badge label="Trusted contact" color="green" />
+            ) : (
+              <Badge label="Not yet a member" color="blue" />
+            )}
+          </Box>
+          <Box>
+            <Box direction="vertical">
+              <Text>Credit limit</Text>
+              <Heading>
+                <Dai value={format(creditLimit)} />
+              </Heading>
             </Box>
-            <Box>
-              <Box direction="vertical">
-                <Text>Credit limit</Text>
-                <Heading>
-                  <Dai value={format(creditLimit)} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="32px">
-                <Text>Unpaid Debt</Text>
-                <Heading>
-                  <Dai value={format(borrowedRounded)} />
-                </Heading>
-              </Box>
+            <Box direction="vertical" ml="32px">
+              <Text>Unpaid Debt</Text>
+              <Heading>
+                <Dai value={format(borrowedRounded)} />
+              </Heading>
             </Box>
-            <Divider />
-            <Heading mt="28px" mb="4px">
-              Set contacts trust
-            </Heading>
-            <Text size="large" mb="16px">
-              What’s the total value of credit you’d like to make available for
-              this contact?
-            </Text>
-            <Input
-              ref={register({
-                required: errorMessages.required,
-                min: {
-                  value: 1.0,
-                  message: errorMessages.minValueOnePointZero,
-                },
-              })}
-              suffix="DAI"
-              name="amount"
-              label="Value"
-              placeholder="0"
-              error={errors?.amount?.message}
-            />
-            <Box mt="32px">
-              <Box direction="vertical">
-                <Text>New credit limit</Text>
-                <Heading>
-                  <Dai value={format(newCreditLimit)} />
-                </Heading>
-              </Box>
+          </Box>
+          <Divider />
+          <Heading mt="28px" mb="4px">
+            Set contacts trust
+          </Heading>
+          <Text size="large" mb="16px">
+            What’s the total value of credit you’d like to make available for
+            this contact?
+          </Text>
+          <Input
+            ref={register({
+              required: errorMessages.required,
+              min: {
+                value: 1.0,
+                message: errorMessages.minValueOnePointZero,
+              },
+            })}
+            suffix="DAI"
+            name="amount"
+            label="Value"
+            placeholder="0"
+            error={errors?.amount?.message}
+          />
+          <Box mt="32px">
+            <Box direction="vertical">
+              <Text>New credit limit</Text>
+              <Heading>
+                <Dai value={format(newCreditLimit)} />
+              </Heading>
             </Box>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <ButtonRow mt="16px" fluid>
-            <Button
-              fluid
-              label="Go back"
-              fontSize="large"
-              icon="arrow-left"
-              variant="secondary"
-              disabled={isSubmitting}
-              onClick={handleBack}
-            />
-            <Button
-              fluid
-              fontSize="large"
-              label="Submit vouch"
-              disabled={!isDirty}
-              loading={isSubmitting}
-              onClick={handleSubmit(handleNewVouch)}
-            />
-          </ButtonRow>
-        </Modal.Footer>
+          </Box>
+        </form>
+        <ButtonRow mt="16px" fluid>
+          <Button
+            fluid
+            label="Go back"
+            fontSize="large"
+            icon="arrow-left"
+            variant="secondary"
+            disabled={isSubmitting}
+            onClick={handleBack}
+          />
+          <Button
+            fluid
+            fontSize="large"
+            label="Submit vouch"
+            disabled={!isDirty}
+            loading={isSubmitting}
+            onClick={handleSubmit(handleNewVouch)}
+          />
+        </ButtonRow>
       </Modal>
     </ModalOverlay>
   );

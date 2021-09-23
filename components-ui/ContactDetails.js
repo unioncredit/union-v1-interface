@@ -1,89 +1,130 @@
 import useBorrowData from "hooks/data/useBorrowData";
 import PropTypes from "prop-types";
-import { Box, Stat, Label, Badge } from "union-ui";
-import { Health, Dai } from "components-ui";
+import { Box, Stat, Grid, Label, Badge, Card, Button } from "union-ui";
+import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
 import useAccountHistory from "hooks/data/useAccountHistory";
+import { useWeb3React } from "@web3-react/core";
 import { AccountActivity } from "./AccountActivity";
 
-function TrustsYouContactDetails({
+function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
+  return (
+    <Grid>
+      <Grid.Row>
+        <Grid.Col xs={4}>
+          <Stat label="Providing you" value={<Dai value={vouched} />} />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat label="Utilized" value={`${toPercent(utilized)}`} />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat
+            label="Available"
+            value={<Dai value={format(vouched - used)} />}
+          />
+        </Grid.Col>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Col xs={12}>
+          <Button
+            mt="18px"
+            fluid
+            label="Manage Contact"
+            onClick={manageContact}
+          />
+        </Grid.Col>
+      </Grid.Row>
+    </Grid>
+  );
+}
+
+function YouTrustContactDetails({
+  manageContact,
   address,
   used,
   utilized,
   vouched,
-  isOverdue,
 }) {
-  const activity = useAccountHistory(address);
-
-  return (
-    <>
-      <Box mb="20px" className="contact-details-stats">
-        <Stat label="Providing you" value={<Dai value={vouched} />} />
-        <Stat label="Utilized" value={`${toPercent(utilized)}`} />
-        <Stat
-          label="Available Credit"
-          value={<Dai value={format(vouched - used)} />}
-        />
-      </Box>
-      <Box mb="24px" direction="vertical">
-        <Label size="small">Loan status</Label>
-        {isOverdue ? (
-          <Badge color="red" label="Overdue" />
-        ) : (
-          <Badge color="blue" label="Healthy" />
-        )}
-      </Box>
-      <Box direction="vertical">
-        <Label size="small">Account History</Label>
-      </Box>
-      <AccountActivity {...activity} related />
-    </>
-  );
-}
-
-function YouTrustContactDetails({ health, address, used, utilized, vouched }) {
   const { data: borrowData } = useBorrowData(address);
-  const activity = useAccountHistory(address);
 
-  const {
-    interest = 0,
-    paymentDueDate = "-",
-    isOverdue = false,
-  } = !!borrowData && borrowData;
+  const { interest = 0, paymentDueDate = "-" } = !!borrowData && borrowData;
 
   return (
-    <>
-      <Box mb="20px" className="contact-details-stats">
-        <Stat label="Credit Limit" value={<Dai value={vouched} />} />
-        <Stat label="Utilized" value={`${toPercent(utilized)}`} />
-        <Stat
-          label="Available Credit"
-          value={<Dai value={format(vouched - used)} />}
-        />
-      </Box>
-      <Box mb="24px" className="contact-details-stats">
-        <Stat label="Balance owed" value={<Dai value={format(used)} />} />
-        <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
-        <Stat label="Payment due" value={paymentDueDate} />
-      </Box>
-      <Box mb="24px" direction="vertical">
-        <Label size="small">Loan status</Label>
-        <Health health={health} isOverdue={isOverdue} />
-      </Box>
-      <Box direction="vertical">
-        <Label size="small">Account History</Label>
-      </Box>
-      <AccountActivity {...activity} related />
-    </>
+    <Grid>
+      <Grid.Row>
+        <Grid.Col xs={4}>
+          <Stat
+            mb="12px"
+            label="Credit Limit"
+            value={<Dai value={vouched} />}
+          />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat mb="12px" label="Utilized" value={`${toPercent(utilized)}`} />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat
+            mb="12px"
+            label="Available"
+            value={<Dai value={format(vouched - used)} />}
+          />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat label="Balance owed" value={<Dai value={format(used)} />} />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
+        </Grid.Col>
+        <Grid.Col xs={4}>
+          <Stat
+            label="Payment due"
+            value={
+              paymentDueDate === "No Payment Due" ? "None" : paymentDueDate
+            }
+          />
+        </Grid.Col>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Col xs={12}>
+          <Button
+            mt="18px"
+            fluid
+            variant="secondary"
+            label="Manage Contact"
+            onClick={manageContact}
+          />
+        </Grid.Col>
+      </Grid.Row>
+    </Grid>
   );
 }
 
-export function ContactDetails({ variant, ...props }) {
-  return variant === "you-trust" ? (
-    <YouTrustContactDetails {...props} />
-  ) : (
-    <TrustsYouContactDetails {...props} />
+export function ContactDetails({ contactsType, ...props }) {
+  const { account } = useWeb3React();
+  const { data, ...activity } = useAccountHistory(props.address);
+
+  const filtered = data.filter((log) => {
+    if (log.borrower && log.staker) {
+      const arr = [log.borrower, log.staker];
+      return arr.includes(props.address) && arr.includes(account);
+    }
+    return true;
+  });
+
+  return (
+    <>
+      <Card mb="24px" variant="packed">
+        <Card.Body>
+          {contactsType === "you-trust" ? (
+            <YouTrustContactDetails {...props} />
+          ) : (
+            <TrustsYouContactDetails {...props} />
+          )}
+        </Card.Body>
+      </Card>
+      <AccountActivity {...activity} data={filtered} />
+    </>
   );
 }
 

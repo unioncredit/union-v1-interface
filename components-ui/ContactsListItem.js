@@ -3,30 +3,17 @@ import {
   Text,
   TableCell,
   TableRow,
-  Bar,
-  Label,
   Avatar as UIAvatar,
   Skeleton,
   Box,
   Badge,
 } from "union-ui";
 import { Avatar, Dai } from "components-ui";
-import { toPercent } from "util/numbers";
 import useAddressLabels from "hooks/useAddressLabels";
-import format from "util/formatValue";
 import { ContactsType } from "views/contacts/config";
 
 export function ContactsListItem(props) {
-  const {
-    address,
-    vouched,
-    utilized,
-    onClick,
-    isOverdue,
-    used,
-    variant,
-    active,
-  } = props;
+  const { address, vouched, onClick, isOverdue, variant, active } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -39,41 +26,29 @@ export function ContactsListItem(props) {
   };
 
   return (
-    <TableRow onClick={handleClick} active={active}>
+    <TableRow onClick={handleClick} active={active} error={isOverdue}>
       <TableCell span={4}>
         <Box align="center">
           <Avatar address={address} />
-          <Box direction="vertical" ml="16px">
-            <Text grey={700} mt="5px">
-              {name} {label && <>&bull; {label}</>}
-            </Text>
-            <Label size="small">
-              <Dai value={vouched} /> Limit
-            </Label>
-          </Box>
+          <Text grey={700} ml="8px">
+            {name} {label && <>&bull; {label}</>}
+          </Text>
         </Box>
       </TableCell>
-      <TableCell span={1} align="right">
-        {variant === ContactsType.TRUSTS_YOU ? (
-          <>
-            <Bar percentage={utilized * 100} />
-            <Label as="p" size="small" mt="6px">
-              Utilizing {toPercent(utilized)}
-            </Label>
-          </>
-        ) : (
-          <>
-            {isOverdue ? (
-              <Badge color="red" label="Overdue" />
-            ) : (
-              <Badge color="blue" label="Healthy" />
-            )}
-            <Label size="small" as="p" mt="4px" grey={700}>
-              <Dai value={format(used)} /> owed
-            </Label>
-          </>
-        )}
+      <TableCell align="right">
+        <Text>
+          <Dai value={vouched} />
+        </Text>
       </TableCell>
+      {variant === ContactsType.YOU_TRUST && (
+        <TableCell align="right">
+          {isOverdue ? (
+            <Badge color="red" label="Overdue" />
+          ) : (
+            <Badge color="blue" label="Healthy" />
+          )}
+        </TableCell>
+      )}
     </TableRow>
   );
 }

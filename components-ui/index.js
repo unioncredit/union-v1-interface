@@ -37,3 +37,6 @@ export * from "./Copyable";
 export * from "./ContactsListItem";
 export * from "./BorrowStatsCard";
 export * from "./ShareCard";
+export * from "./LendStatsCard";
+export * from "./NewVouchCard";
+export * from "./EditLabel";

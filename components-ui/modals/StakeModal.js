@@ -12,9 +12,7 @@ export function StakeModal({ type }) {
   return (
     <ModalOverlay>
       <Modal title="Stake" onClose={close}>
-        <Modal.Body>
-          <StakeCardContent type={type} onComplete={close} />
-        </Modal.Body>
+        <StakeCardContent type={type} onComplete={close} />
       </Modal>
     </ModalOverlay>
   );

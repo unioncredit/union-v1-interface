@@ -1,57 +1,48 @@
 import {
   Badge,
-  Button,
   Text,
   Table,
   TableCell,
   TableRow,
-  Label,
   Box,
+  Pagination,
 } from "union-ui";
-import { useEditVouchModal, EditVouchModal } from "components-ui/modals";
-import { useState } from "react";
+import Link from "next/link";
 import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";
 import format from "util/formatValue";
+import usePagination from "hooks/usePagination";
 
-function OutstandingLoansRow({ address, used, onManage }) {
+function OutstandingLoansRow({ address, used }) {
   const { name } = usePublicData(address);
   return (
-    <TableRow>
-      <TableCell span={1}>
-        <Box align="center">
-          <Avatar address={address} />
-          <Box direction="vertical" ml="16px">
-            <Text grey={700}>
-              <Dai value={format(used)} />
-            </Text>
-            <Label size="small" mb={0} grey={400}>
+    <Link href={`/contacts?contactsType=you-trust&contact=${address}`}>
+      <TableRow>
+        <TableCell span={1}>
+          <Box align="center">
+            <Avatar address={address} />
+            <Text ml="8px" grey={400}>
               {name}
-            </Label>
+            </Text>
           </Box>
-        </Box>
-      </TableCell>
-      <TableCell></TableCell>
-      <TableCell>
-        <Badge label="Healthy" color="blue" />
-      </TableCell>
-      <TableCell align="right">
-        <Button
-          variant="pill"
-          icon="chevron"
-          iconPosition="end"
-          label="Manage"
-          onClick={onManage}
-        />
-      </TableCell>
-    </TableRow>
+        </TableCell>
+        <TableCell>
+          <Badge label="Healthy" color="blue" />
+        </TableCell>
+        <TableCell align="right">
+          <Text grey={700}>
+            <Dai value={format(used)} />
+          </Text>
+        </TableCell>
+      </TableRow>
+    </Link>
   );
 }
 
 function OutstandingLoansEmpty() {
   return (
     <TableRow>
-      <TableCell>
+      <TableCell span={3}>
         <Text>No loans</Text>
       </TableCell>
     </TableRow>
@@ -59,32 +50,25 @@ function OutstandingLoansEmpty() {
 }
 
 export function OutstandingLoans({ data }) {
-  const { open: openEditVouchModal, isOpen: isEditVouchModalOpen } =
-    useEditVouchModal();
-  const [selectedContact, setSelectedContact] = useState(null);
   const loans = data && data.filter((item) => item.used > 0);
 
-  const handleManage = (contact) => () => {
-    setSelectedContact(contact);
-    openEditVouchModal();
-  };
+  const { data: pagedLoans, maxPages, page, setPage } = usePagination(loans);
 
   return (
     <>
       <Table>
         {loans && loans.length > 0 ? (
-          loans.map((row, i) => (
-            <OutstandingLoansRow
-              key={i}
-              {...row}
-              onManage={handleManage(row)}
-            />
-          ))
+          pagedLoans.map((row, i) => <OutstandingLoansRow key={i} {...row} />)
         ) : (
           <OutstandingLoansEmpty />
         )}
       </Table>
-      {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
+      <Pagination
+        mt="18px"
+        pages={maxPages}
+        activePage={page}
+        onClick={setPage}
+      />
     </>
   );
 }

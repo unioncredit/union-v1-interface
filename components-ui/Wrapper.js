@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { TabLink, Navigation } from "components-ui";
+import { Wallet, TabLink, Navigation } from "components-ui";
 import {
   AccountModal,
   useAccountModal,
@@ -8,9 +8,7 @@ import {
   useVoteDelegationModal,
 } from "components-ui/modals";
 import {
-  Tabs,
   Layout,
-  Heading,
   Box,
   Grid,
   Row,
@@ -20,10 +18,10 @@ import {
   ToggleMenu,
 } from "union-ui";
 import useInactiveListener from "hooks/useInactiveListener";
-import { Wallet } from "components-ui";
 import usePublicData from "hooks/usePublicData";
 import useMemberCheck from "hooks/useMemberCheck";
 import { Avatar } from "./Avatar";
+import { ClaimButton } from "./ClaimButton";
 
 const contextMenuItems = [
   {
@@ -42,12 +40,22 @@ const contextMenuItems = [
 ];
 
 export function Wrapper({ children, title, tabItems }) {
+  const router = useRouter();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
   const { account } = useWeb3React();
 
   const { name } = usePublicData(account);
+
+  const tabItemLinks =
+    tabItems?.length > 0
+      ? tabItems.map((item) => ({ ...item, as: TabLink }))
+      : [];
+
+  const initialTab = tabItemLinks.findIndex(
+    (item) => item.href === router.pathname
+  );
 
   useInactiveListener();
   const { isLoading } = useMemberCheck();
@@ -69,7 +77,7 @@ export function Wrapper({ children, title, tabItems }) {
               <Col>
                 <Layout.Header align="center">
                   <Navigation />
-                  <Box>
+                  <Box align="center">
                     <Box mr="8px">
                       <Wallet
                         onClick={openAccountModal}
@@ -78,13 +86,16 @@ export function Wrapper({ children, title, tabItems }) {
                         mr="8px"
                       />
                     </Box>
-                    <ContextMenu items={contextMenuItems} />
+                    <ContextMenu
+                      items={contextMenuItems}
+                      after={<ClaimButton size="small" label="Claim UNION" />}
+                    />
                   </Box>
                 </Layout.Header>
-                  <Box fluid align="center" direction="vertical">
-                    <ToggleMenu items={tabItems} />
-                    {children}
-                  </Box>
+                <Box fluid align="center" direction="vertical">
+                  <ToggleMenu items={tabItemLinks} initialActive={initialTab} />
+                  {children}
+                </Box>
               </Col>
             </Row>
           </Grid>

@@ -6,7 +6,7 @@ import format from "util/formatValue";
 import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 
-import { Card, Box, Label, Heading, ToggleMenu } from "union-ui";
+import { Card, Grid, Stat, ToggleMenu } from "union-ui";
 import { DepositInput, WithdrawInput, Dai } from "components-ui";
 
 const StakeType = {
@@ -51,24 +51,34 @@ export const StakeCardContent = ({ type, onComplete: handleOnComplete }) => {
 
   return (
     <>
-      <Box align="center" justify="space-between">
-        <div>
-          <Label as="p" size="small">
-            Currently Staked
-          </Label>
-          <Heading size="large">
-            <Dai value={format(totalStake)} />
-          </Heading>
-          <Label as="p" size="small">
-            Earning at {rewardsMultiplier}x
-          </Label>
-        </div>
-        <ToggleMenu
-          onChange={onToggleChange}
-          items={toggleMenuOptions}
-          initialActive={initialActiveIndex}
-        />
-      </Box>
+      <Grid>
+        <Grid.Row>
+          <Grid.Col>
+            <Stat
+              size="medium"
+              mb="24px"
+              align="center"
+              label="Dai Staked"
+              value={format(totalStake)}
+            />
+          </Grid.Col>
+          <Grid.Col>
+            <Stat
+              size="medium"
+              mb="24px"
+              align="center"
+              label="Withdrawable"
+              value={format(withdrawableStake)}
+            />
+          </Grid.Col>
+        </Grid.Row>
+      </Grid>
+      <ToggleMenu
+        fluid
+        onChange={onToggleChange}
+        items={toggleMenuOptions}
+        initialActive={initialActiveIndex}
+      />
       {stakeType === StakeType.DEPOSIT ? (
         <DepositInput {...{ totalStake, onComplete }} />
       ) : (

@@ -9,7 +9,7 @@ import {
   Card,
   Box,
   Logo,
-  Tabs,
+  ToggleMenu,
   Label,
 } from "union-ui";
 import Head from "next/head";
@@ -191,7 +191,7 @@ export default function HomePage() {
               >
                 Credit is more fluid with Union
               </Heading>
-              <Tabs items={tabItems} />
+              <ToggleMenu items={tabItems} />
               <Box mt="24px" align="center" justify="center">
                 <img
                   src="/images/one-to-one.png"

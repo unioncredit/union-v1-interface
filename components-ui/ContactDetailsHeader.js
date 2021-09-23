@@ -1,4 +1,4 @@
-import { Button, Heading, Text, Box } from "union-ui";
+import { Button, Heading, Badge, Box } from "union-ui";
 import { Avatar, Copyable } from "components-ui";
 import { useManageContactModal } from "components-ui/modals";
 import truncateAddress from "util/truncateAddress";
@@ -6,7 +6,7 @@ import truncateAddress from "util/truncateAddress";
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
 
-export function ContactDetailsHeader({ address, mobile }) {
+export function ContactDetailsHeader({ address, isOverdue }) {
   const { ENSName, BoxName } = usePublicData(address);
   const { open: openManageContactModal } = useManageContactModal();
   const { getLabel } = useAddressLabels();
@@ -23,29 +23,33 @@ export function ContactDetailsHeader({ address, mobile }) {
   ].filter(Boolean);
 
   return (
-    <Box
-      align={mobile ? "flex-start" : "center"}
-      mt={mobile && "16px"}
-      mb={mobile && "16px"}
-      className="contact-details-header"
-    >
+    <Box mb="24px" align="center">
       <Box align="center">
         {address && <Avatar size={54} address={address} />}
         <Box direction="vertical" mx="16px">
-          <Heading level={2} m={0}>
+          <Heading level={2} mb="4px">
             {label1}
           </Heading>
-          <Text mb={0}>
-            {label2} {label3 && <>&bull; {label3}</>}
-          </Text>
+          <Box>
+            <Badge
+              color="grey"
+              label={<Copyable value={address}>{address.slice(0, 6)}</Copyable>}
+            />
+            <Badge
+              ml="7px"
+              color={isOverdue ? "red" : "blue"}
+              label={isOverdue ? "Overdue" : "Healthy"}
+            />
+          </Box>
         </Box>
       </Box>
       <Button
         ml="auto"
         rounded
         variant="secondary"
-        label="Manage contact"
-        icon="manage"
+        label="View Profile"
+        icon="external"
+        iconPosition="end"
         onClick={openManageContactModal}
       />
     </Box>

@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import useReadProvider from "hooks/useReadProvider";
 import useUserContract from "hooks/contracts/useUserContract";
 import useLogs from "./useLogs";
@@ -16,7 +15,6 @@ const parseUpdateTrust = (provider, userManagerContract) => async (log) => {
   return {
     borrower,
     ts: block.timestamp * 1000,
-    date: dayjs(block.timestamp * 1000).fromNow(),
     hash: log.transactionHash,
     staker,
     trustAmount: formatUnits(trustAmount, 18),
@@ -33,7 +31,6 @@ const parseCancelVouch = (provider, userManagerContract) => async (log) => {
 
   return {
     ts: block.timestamp * 1000,
-    date: dayjs(block.timestamp * 1000).fromNow(),
     hash: log.transactionHash,
     type: "CancelVouch",
     account,
@@ -47,7 +44,6 @@ const parseRegisterMember = (provider) => async (log) => {
 
   return {
     ts: block.timestamp * 1000,
-    date: dayjs(block.timestamp * 1000).fromNow(),
     hash: log.transactionHash,
     type: "RegisterMember",
     blockNumber: log.blockNumber,
@@ -60,40 +56,39 @@ const parseActivityLog =
       filters;
 
     const data = await Promise.all(
-      logs.map((log) => {
-        if (log.topics[0] === updateTrustFilter.topics[0]) {
-          return parseUpdateTrust(provider, userManagerContract)(log);
-        } else if (log.topics[0] === cancelVouchFilter.topics[0]) {
-          return parseCancelVouch(provider, userManagerContract)(log);
-        } else if (log.topics[0] === registerMemberFilter.topics[0]) {
-          return parseRegisterMember(provider, userManagerContract)(log);
-        }
-        return false;
-      })
+      logs
+        .map((log) => {
+          if (log.topics[0] === updateTrustFilter.topics[0]) {
+            return parseUpdateTrust(provider, userManagerContract)(log);
+          } else if (log.topics[0] === cancelVouchFilter.topics[0]) {
+            return parseCancelVouch(provider, userManagerContract)(log);
+          } else if (log.topics[0] === registerMemberFilter.topics[0]) {
+            return parseRegisterMember(provider, userManagerContract)(log);
+          }
+          return false;
+        })
+        .filter(Boolean)
     );
 
     return data;
   };
 
 export default function useAccountHistory(address) {
-  const { account: connectedAccount } = useWeb3React();
   const readProvider = useReadProvider();
   const userManagerContract = useUserContract();
 
-  const account = address || connectedAccount;
-
   const updateTrustFilter =
-    userManagerContract?.filters.LogUpdateTrust(account);
+    userManagerContract?.filters.LogUpdateTrust(address);
   const cancelVouchFilter =
-    userManagerContract?.filters.LogCancelVouch(account);
+    userManagerContract?.filters.LogCancelVouch(address);
   const registerMemberFilter =
-    userManagerContract?.filters.LogRegisterMember(account);
+    userManagerContract?.filters.LogRegisterMember(address);
 
   const filters = [updateTrustFilter, cancelVouchFilter, registerMemberFilter];
 
   const parser = parseActivityLog(readProvider, userManagerContract, filters);
 
-  const data = account && userManagerContract && useLogs(filters, parser);
+  const data = address && userManagerContract && useLogs(filters, parser);
 
   return data || {};
 }

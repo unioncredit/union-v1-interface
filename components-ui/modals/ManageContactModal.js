@@ -1,12 +1,7 @@
-import {
-  useEditAliasModal,
-  useEditVouchModal,
-  useWriteOffDebtModal,
-} from "components-ui/modals";
+import { useEditVouchModal, useWriteOffDebtModal } from "components-ui/modals";
 import { Button, ModalOverlay, Card, Text, Label, Badge, Box } from "union-ui";
 import { useModal } from "hooks/useModal";
-import useAddressLabels from "hooks/useAddressLabels";
-import { AddressLabel, Modal, Dai } from "components-ui";
+import { AddressLabel, Modal, Dai, EditLabel } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { useState } from "react";
 import { useAddActivity } from "hooks/data/useActivity";
@@ -34,19 +29,12 @@ export function ManageContactModal({
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const removeVouch = useRemoveVouch();
-  const { getLabel } = useAddressLabels();
   const [removing, setRemoving] = useState(false);
   const { mutate: updateTrustData } = useTrustData();
 
   const { close } = useManageContactModal();
-  const { open: openEditAliasModal } = useEditAliasModal();
   const { open: openEditVouchModal } = useEditVouchModal();
   const { open: openWriteOffDebtModalOpen } = useWriteOffDebtModal();
-
-  const handleEditName = () => {
-    close();
-    openEditAliasModal();
-  };
 
   const handleEditVouch = () => {
     close();
@@ -58,35 +46,23 @@ export function ManageContactModal({
     openWriteOffDebtModalOpen();
   };
 
-  const defaultData = [
+  const data = [
     {
-      label: "Contact name",
-      value: getLabel(address) || "-",
-      buttonProps: { label: "Edit" },
-      onClick: handleEditName,
+      label: "Credit limit",
+      value: <Dai value={vouched} />,
+      buttonProps: { label: "Change limit" },
+      onClick: handleEditVouch,
+    },
+    {
+      label: "Outstanding debt",
+      value: <Dai value={format(used)} />,
+      buttonProps: {
+        label: "Write-off debt",
+        disabled: used <= 0 || !isOverdue,
+      },
+      onClick: handleWriteOffDebt,
     },
   ];
-
-  const data = isLabelOnly
-    ? defaultData
-    : [
-        ...defaultData,
-        {
-          label: "Credit limit",
-          value: <Dai value={vouched} />,
-          buttonProps: { label: "Change limit" },
-          onClick: handleEditVouch,
-        },
-        {
-          label: "Outstanding debt",
-          value: <Dai value={format(used)} />,
-          buttonProps: {
-            label: "Write-off debt",
-            disabled: used <= 0 || !isOverdue,
-          },
-          onClick: handleWriteOffDebt,
-        },
-      ];
 
   const handleRemoveContact = async () => {
     try {
@@ -107,49 +83,52 @@ export function ManageContactModal({
   return (
     <ModalOverlay>
       <Modal title="Manage contact" onClose={close} drawer>
-        <Modal.Body>
-          <Box mb="24px" justify="space-between">
-            <AddressLabel address={address} />
-            <Badge
-              label={isMember ? "Union member" : "Not a member"}
-              color={isMember ? "green" : "orange"}
-            />
-          </Box>
-          {data.map(({ label, value, onClick, buttonProps }) => (
-            <Card key={label} variant="packed" mb="8px">
-              <Card.Body>
-                <Label>{label}</Label>
-                <Box align="center">
-                  <Text size="large" mb={0}>
-                    {value}
-                  </Text>
-                  <Button
-                    ml="auto"
-                    variant="secondary"
-                    rounded
-                    {...buttonProps}
-                    onClick={onClick}
-                  />
-                </Box>
-              </Card.Body>
-            </Card>
+        <Card mb="24px" variant="packed">
+          <Card.Body>
+            <Box m={0} justify="space-between">
+              <AddressLabel address={address} />
+              <Badge
+                label={isMember ? "Union member" : "Not a member"}
+                color={isMember ? "green" : "orange"}
+              />
+            </Box>
+          </Card.Body>
+        </Card>
+        <EditLabel address={address} />
+        {!isLabelOnly &&
+          data.map(({ label, value, onClick, buttonProps }) => (
+            <Box fluid justify="space-between" align="center" mb="12px">
+              <Box direction="vertical">
+                <Label size="small" grey={400} as="p" m={0}>
+                  {label.toUpperCase()}
+                </Label>
+                <Text size="large" mb={0}>
+                  {value}
+                </Text>
+              </Box>
+              <Box>
+                <Button
+                  ml="auto"
+                  variant="pill"
+                  {...buttonProps}
+                  onClick={onClick}
+                />
+              </Box>
+            </Box>
           ))}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            fluid
-            mt="16px"
-            color="red"
-            fontSize="large"
-            variant="secondary"
-            label="Remove from contacts"
-            loading={removing}
-            onClick={handleRemoveContact}
-          />
-          <Label as="p" size="small" align="center" mt="24px" w="100%">
-            Contacts with outstanding balance can’t be removed
-          </Label>
-        </Modal.Footer>
+        <Label as="p" size="small" align="center" mt="24px" grey={400}>
+          Contacts with outstanding balance can’t be removed
+        </Label>
+        <Button
+          fluid
+          mt="16px"
+          color="red"
+          fontSize="large"
+          variant="secondary"
+          label="Remove from contacts"
+          loading={removing}
+          onClick={handleRemoveContact}
+        />
       </Modal>
     </ModalOverlay>
   );

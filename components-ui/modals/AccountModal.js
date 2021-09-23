@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Text,
-  Divider,
   StatusIcon,
   Icon,
   NetworkIndicator,
@@ -55,69 +54,69 @@ export function AccountModal() {
   return (
     <ModalOverlay>
       <Modal title="Account" onClose={close}>
-        <Modal.Body>
-          <Box mb="20px">
-            <NetworkSelect />
-          </Box>
-          <Box align="center" justify="space-between">
-            <Text mb="9px">{walletName}</Text>
-            <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
-          </Box>
-          <Heading mt="4px">{name}</Heading>
-          <Label size="small" grey={600}>
-            <Copyable value={account}>{account}</Copyable>
+        <Box mb="20px">
+          <NetworkSelect />
+        </Box>
+        <Box align="center" justify="space-between">
+          <Label as="p" size="small" mb="8px" grey={400}>
+            {walletName.toUpperCase()}
           </Label>
-          <Divider />
-          <Box align="center" justify="space-between" mt="20px" mb="16px">
-            <Text m={0} size="large" grey={700}>
-              Activity
-            </Text>
-            <Button
-              variant="pill"
-              label="clear"
-              onClick={() => clearActivity(chainId)}
-            />
-          </Box>
-          {isEmpty ? (
-            <Text>No activity</Text>
-          ) : (
-            activity.map(({ amount, label, hash, failed }) => {
-              const text =
-                amount && label ? (
-                  <>
-                    {label} <Dai value={amount} />
-                  </>
-                ) : (
-                  label
-                );
-
-              return (
-                <Box key={hash} align="center" justify="space-between" mt="8px">
-                  <div>
-                    <Text color={failed && "orange"} m={0}>
-                      {hash ? (
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-                        >
-                          {text} <Icon name="external" />
-                        </a>
-                      ) : (
-                        text
-                      )}
-                    </Text>
-                  </div>
-                  <StatusIcon
-                    variant="wire"
-                    name={failed ? "error" : "success"}
-                  />
-                </Box>
+          <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
+        </Box>
+        <Heading m={0} size="large">
+          {name}
+        </Heading>
+        <Label size="small" grey={600}>
+          <Copyable value={account}>{account}</Copyable>
+        </Label>
+        <Box align="center" justify="space-between" mt="20px" mb="12px">
+          <Label as="p" size="small" mb="8px" grey={400}>
+            {"Activity".toUpperCase()}
+          </Label>
+          <Button
+            variant="pill"
+            label="clear"
+            onClick={() => clearActivity(chainId)}
+          />
+        </Box>
+        {isEmpty ? (
+          <Text>No activity</Text>
+        ) : (
+          activity.map(({ amount, label, hash, failed }) => {
+            const text =
+              amount && label ? (
+                <>
+                  {label} <Dai value={amount} />
+                </>
+              ) : (
+                label
               );
-            })
-          )}
-          <NetworkIndicator chainId={chainId} mt="24px" mb="4px" />
-        </Modal.Body>
+
+            return (
+              <Box key={hash} align="center" justify="space-between" mt="8px">
+                <div>
+                  <Text color={failed && "orange"} m={0}>
+                    {hash ? (
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                      >
+                        {text} <Icon name="external" />
+                      </a>
+                    ) : (
+                      text
+                    )}
+                  </Text>
+                </div>
+                <StatusIcon
+                  variant="wire"
+                  name={failed ? "error" : "success"}
+                />
+              </Box>
+            );
+          })
+        )}
       </Modal>
     </ModalOverlay>
   );

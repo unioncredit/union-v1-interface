@@ -2,35 +2,7 @@ import { Select } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { addToast, FLAVORS } from "hooks/useToast";
-
-const options = [
-  {
-    value: "kovan",
-    label: "Kovan",
-    imageSrc: "/images/ethereum.png",
-    chainId: 42,
-    networkData: {
-      chainId: "0x2A",
-    },
-  },
-  {
-    value: "polygon",
-    label: "Polygon",
-    imageSrc: "/images/polygon.png",
-    chainId: 137,
-    networkData: {
-      chainId: "0x89",
-      rpcUrls: ["https://rpc-mainnet.matic.network"],
-      chainName: "Matic(Polygon) Mainnet",
-      nativeCurrency: {
-        name: "Matic",
-        symbol: "MATIC",
-        decimals: 18,
-      },
-      blockExplorerUrls: ["https://polygonscan.com"],
-    },
-  },
-];
+import { switchChain, options } from "util/switchChain";
 
 export function NetworkSelect() {
   const [loading, setIsLoading] = useState(false);
@@ -41,24 +13,9 @@ export function NetworkSelect() {
   );
 
   const handleChangeNetwork = async (value) => {
-    try {
-      setIsLoading(true);
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: value.networkData.chainId }],
-      });
-    } catch (switchError) {
-      try {
-        await window.ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [value.networkData],
-        });
-      } catch (addError) {
-        addToast(FLAVORS.ERROR("Error switching chain. Please try again."));
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    await switchChain(value);
+    setIsLoading(false);
   };
 
   return (

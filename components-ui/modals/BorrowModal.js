@@ -1,12 +1,4 @@
-import {
-  ModalOverlay,
-  Box,
-  Text,
-  Heading,
-  Divider,
-  Input,
-  Button,
-} from "union-ui";
+import { ModalOverlay, Box, Input, Grid, Stat, Button, Label } from "union-ui";
 import { Modal, Dai } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
@@ -102,65 +94,65 @@ export function BorrowModal({
 
   return (
     <ModalOverlay>
-      <Modal title="Borrow funds" onClose={close} drawer>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handleBorrow)}>
-            <Box mb="16px">
-              <Box direction="vertical">
-                <Text>Available credit</Text>
-                <Heading>
-                  <Dai value={format(roundDown(creditLimit))} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="30px">
-                <Text>Balance owed</Text>
-                <Heading>
-                  <Dai value={balanceOwed} />
-                </Heading>
-              </Box>
-            </Box>
-            <Divider />
-            <Heading mt="36px">Amount to borrow</Heading>
-            <Text size="large">How much are you borrowing today?</Text>
-            <Box mt="16px">
-              <Input
-                type="number"
-                ref={register({ validate })}
-                name="amount"
-                label="Borrow"
-                placeholder="$0"
-                suffix="DAI"
-                caption={
-                  <>
-                    <Dai value={amountWithFee} /> including fee
-                  </>
-                }
-                error={errors.amount?.message || false}
-              />
-            </Box>
-            <Box mt="42px">
-              <Box direction="vertical">
-                <Text>New balance owed</Text>
-                <Heading>
-                  <Dai value={newBalanceOwed} />
-                </Heading>
-              </Box>
-              <Box direction="vertical" ml="30px">
-                <Text>Repayment due</Text>
-                <Heading>{nextPaymentDue}</Heading>
-              </Box>
-            </Box>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
+      <Modal title="Borrow funds" onClose={close}>
+        <form onSubmit={handleSubmit(handleBorrow)}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Col>
+                <Stat
+                  size="medium"
+                  align="center"
+                  label="Available credit"
+                  value={<Dai value={format(roundDown(creditLimit))} />}
+                />
+              </Grid.Col>
+              <Grid.Col>
+                <Stat
+                  size="medium"
+                  align="center"
+                  label="You owe"
+                  value={<Dai value={balanceOwed} />}
+                />
+              </Grid.Col>
+            </Grid.Row>
+          </Grid>
+          <Box mt="24px">
+            <Input
+              type="number"
+              ref={register({ validate })}
+              name="amount"
+              label="Borrow"
+              placeholder="0.0"
+              suffix={<Dai />}
+              caption={`${amountWithFee} including fee`}
+              error={errors.amount?.message || false}
+            />
+          </Box>
+          <Box justify="space-between" mt="16px">
+            <Label as="p" size="small">
+              New balance owed
+            </Label>
+            <Label as="p" size="small">
+              {newBalanceOwed}
+            </Label>
+          </Box>
+          <Box justify="space-between">
+            <Label as="p" size="small">
+              Repayment due
+            </Label>
+            <Label as="p" size="small">
+              {nextPaymentDue}
+            </Label>
+          </Box>
           <Button
-            label="Confirm Borrow"
             fluid
+            mt="18px"
+            label={`Borrow ${amount} DAI`}
             disabled={!isDirty || isSubmitting}
             onClick={handleSubmit(handleBorrow)}
             fontSize="large"
           />
-        </Modal.Footer>
+        </form>
       </Modal>
     </ModalOverlay>
   );

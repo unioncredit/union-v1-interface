@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { useForm } from "react-hook-form";
 
-import { Dai } from "components-ui";
-import { Button, InputRow, Input } from "union-ui";
+import { Button, Dai, InputRow, Input } from "union-ui";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import useCurrentToken from "hooks/useCurrentToken";
@@ -70,28 +69,16 @@ export const DepositInput = ({ totalStake, onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputRow mt="20px">
+      <InputRow mt="18px">
         <Input
           type="number"
           name="amount"
           label="Amount to deposit"
-          caption={
-            <>
-              <Dai value={daiBalance} /> Available
-            </>
-          }
+          caption={`Max. ${maxAllowed} DAI`}
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
-          suffix="DAI"
+          suffix={<Dai />}
           error={errors?.amount?.message}
-          cta={
-            <Button
-              type="submit"
-              loading={isSubmitting}
-              disabled={!isDirty || newTotalStake > 500}
-              label="Deposit"
-            />
-          }
           ref={register({
             required: errorMessages.required,
             max: {
@@ -105,6 +92,14 @@ export const DepositInput = ({ totalStake, onComplete }) => {
           })}
         />
       </InputRow>
+      <Button
+        fluid
+        mt="18px"
+        type="submit"
+        loading={isSubmitting}
+        disabled={!isDirty || newTotalStake > 500}
+        label="Deposit"
+      />
     </form>
   );
 };

@@ -3,11 +3,6 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Nav, NavItem, Box } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
-import { RewardsCard } from "components-ui";
-import { WalletModal, useWalletModal } from "./modals";
-import useCurrentToken from "hooks/useCurrentToken";
-import useTokenBalance from "hooks/data/useTokenBalance";
-import format from "util/formatValue";
 
 const navItems = [
   {
@@ -42,9 +37,6 @@ export const Navigation = ({ mobile }) => {
   const pathname = router.pathname;
 
   const { data: isMember } = useIsMember();
-  const UNION = useCurrentToken("UNION");
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-  const { isOpen: isWalletModalOpen, open: openWalletModal } = useWalletModal();
 
   const filteredNavItems = useMemo(() => {
     if (isMember) {

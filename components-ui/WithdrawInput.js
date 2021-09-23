@@ -5,8 +5,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
-import { Button, InputRow, Input } from "union-ui";
-import { Dai } from "components-ui";
+import { Button, InputRow, Dai, Input } from "union-ui";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
@@ -49,7 +48,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputRow mt="20px">
+      <InputRow mt="18px">
         <Input
           type="number"
           ref={register({
@@ -65,25 +64,21 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
           })}
           name="amount"
           label="Amount to withdraw"
-          caption={
-            <>
-              <Dai value={withdrawableStake} /> Available
-            </>
-          }
+          caption={`Max. ${withdrawableStake} DAI`}
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
-          suffix="DAI"
+          suffix={<Dai />}
           error={errors?.amount?.message}
-          cta={
-            <Button
-              type="submit"
-              label="Withdraw"
-              loading={isSubmitting}
-              disabled={!isDirty}
-            />
-          }
         />
       </InputRow>
+      <Button
+        fluid
+        type="submit"
+        mt="18px"
+        label="Withdraw"
+        loading={isSubmitting}
+        disabled={!isDirty}
+      />
     </form>
   );
 };
