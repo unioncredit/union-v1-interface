@@ -4,6 +4,7 @@ export const options = [
   {
     value: "kovan",
     label: "Kovan",
+    buttonVariant: "ethereum",
     description:
       "Union on mainnet is more frequently used by accounts staking and borrowing larger amounts of DAI.",
     imageSrc: "/images/ethereum.png",
@@ -15,6 +16,7 @@ export const options = [
   {
     value: "polygon",
     label: "Polygon",
+    buttonVariant: "polygon",
     description:
       "Faster and cheaper. Used more frequently by accounts transacting with smaller amounts of DAI.",
     imageSrc: "/images/polygon.png",

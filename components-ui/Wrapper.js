@@ -39,7 +39,7 @@ const contextMenuItems = [
   { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
 ];
 
-export function Wrapper({ children, title, tabItems }) {
+export function Wrapper({ children, tabItems }) {
   const router = useRouter();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
@@ -92,8 +92,17 @@ export function Wrapper({ children, title, tabItems }) {
                     />
                   </Box>
                 </Layout.Header>
-                <Box fluid align="center" direction="vertical">
-                  <ToggleMenu items={tabItemLinks} initialActive={initialTab} />
+                <Box
+                  fluid
+                  align="center"
+                  direction="vertical"
+                  className="inner-wrapper"
+                >
+                  <ToggleMenu
+                    className="wrapper-toggle-menu"
+                    items={tabItemLinks}
+                    initialActive={initialTab}
+                  />
                   {children}
                 </Box>
               </Col>

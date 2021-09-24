@@ -1,13 +1,21 @@
+import {
+  ModalOverlay,
+  Box,
+  Input,
+  Button,
+  Card,
+  Skeleton,
+  Badge,
+} from "union-ui";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { ModalOverlay, Box, Input, Button } from "union-ui";
 import { useModal } from "hooks/useModal";
 import { Modal } from "components-ui";
 import validateAddress from "util/validateAddress";
 import { useWeb3React } from "@web3-react/core";
 import errorMessages from "util/errorMessages";
 import { useRouter } from "next/router";
-import { Dai } from "components-ui/Dai";
+import { Dai, MiniProfileCard } from "components-ui";
 import { useAddActivity } from "hooks/data/useActivity";
 import useTrustData from "hooks/data/useTrustData";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
@@ -15,6 +23,7 @@ import getReceipt from "util/getReceipt";
 import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
+import { isAddress } from "@ethersproject/address";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -29,11 +38,14 @@ export function VouchModal() {
 
   const adjustTrust = useAdjustTrust();
 
-  const { formState, handleSubmit, register, errors } = useForm({
+  const { formState, handleSubmit, register, errors, watch } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
   const { isDirty, isSubmitting } = formState;
+
+  const watchAddress = watch("address");
+  const address = isAddress(watchAddress) && watchAddress;
 
   const handleNewVouch = async (data) => {
     try {
@@ -67,7 +79,8 @@ export function VouchModal() {
 
   return (
     <ModalOverlay>
-      <Modal title="Vouch for someone" onClose={close}>
+      <Modal title="New vouch" onClose={close}>
+        <MiniProfileCard address={address} />
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <Input
             ref={register({ validate: validateAddressInput })}

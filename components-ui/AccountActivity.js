@@ -99,8 +99,14 @@ export function AccountActivity({
             loadingCount > 0 &&
             createArray(loadingCount).map((_, i) => (
               <TableRow key={i}>
-                <TableCell span={3}>
-                  <Skeleton size="small" variant="secondary" w="30%" />
+                <TableCell>
+                  <Box align="center">
+                    <Skeleton variant="circle" size={24} grey={200} />
+                    <Skeleton width={120} height={10} grey={200} ml="8px" />
+                  </Box>
+                </TableCell>
+                <TableCell span={2}>
+                  <Skeleton width={80} height={10} grey={200} />
                 </TableCell>
               </TableRow>
             ))}

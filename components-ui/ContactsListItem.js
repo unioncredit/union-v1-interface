@@ -57,16 +57,13 @@ export function ContactsListItemSkeleton() {
   return (
     <TableRow>
       <TableCell>
-        <Box>
-          <UIAvatar />
-          <Box direction="vertical" ml="16px">
-            <Skeleton size="medium" variant="primary" />
-            <Skeleton size="small" variant="secondary" />
-          </Box>
+        <Box align="center">
+          <Skeleton variant="circle" size={24} grey={200} />
+          <Skeleton width={100} height={10} ml="16px" grey={200} />
         </Box>
       </TableCell>
-      <TableCell span={1} align="right">
-        <Skeleton size="small" variant="secondary" />
+      <TableCell span={1}>
+        <Skeleton width={40} height={10} ml="auto" grey={200} />
       </TableCell>
     </TableRow>
   );

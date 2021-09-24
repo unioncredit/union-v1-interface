@@ -1,8 +1,7 @@
 import { useEditVouchModal, useWriteOffDebtModal } from "components-ui/modals";
-import { Button, ModalOverlay, Card, Text, Label, Badge, Box } from "union-ui";
+import { Button, ModalOverlay, Text, Label, Box } from "union-ui";
 import { useModal } from "hooks/useModal";
-import { AddressLabel, Modal, Dai, EditLabel } from "components-ui";
-import useIsMember from "hooks/data/useIsMember";
+import { MiniProfileCard, Modal, Dai, EditLabel } from "components-ui";
 import { useState } from "react";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
@@ -25,7 +24,6 @@ export function ManageContactModal({
   isLabelOnly,
   isOverdue,
 }) {
-  const { data: isMember } = useIsMember();
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const removeVouch = useRemoveVouch();
@@ -83,17 +81,7 @@ export function ManageContactModal({
   return (
     <ModalOverlay>
       <Modal title="Manage contact" onClose={close} drawer>
-        <Card mb="24px" variant="packed">
-          <Card.Body>
-            <Box m={0} justify="space-between">
-              <AddressLabel address={address} />
-              <Badge
-                label={isMember ? "Union member" : "Not a member"}
-                color={isMember ? "green" : "orange"}
-              />
-            </Box>
-          </Card.Body>
-        </Card>
+        <MiniProfileCard address={address} />
         <EditLabel address={address} />
         {!isLabelOnly &&
           data.map(({ label, value, onClick, buttonProps }) => (

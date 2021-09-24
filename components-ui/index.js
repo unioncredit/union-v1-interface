@@ -40,3 +40,4 @@ export * from "./ShareCard";
 export * from "./LendStatsCard";
 export * from "./NewVouchCard";
 export * from "./EditLabel";
+export * from "./MiniProfileCard";

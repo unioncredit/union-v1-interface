@@ -35,7 +35,8 @@ export default function UnsupportedChainView() {
             <Grid.Col xs={9}>
               <Grid.Row>
                 {options.map((props) => {
-                  const { label, value, imageSrc, description } = props;
+                  const { label, value, imageSrc, description, buttonVariant } =
+                    props;
                   return (
                     <Grid.Col xs={6}>
                       <Card>
@@ -52,6 +53,7 @@ export default function UnsupportedChainView() {
                           <Button
                             fluid
                             mt="24px"
+                            variant={buttonVariant}
                             loading={loading}
                             label={`Switch to ${value}`}
                             onClick={handleChangeNetwork(props)}

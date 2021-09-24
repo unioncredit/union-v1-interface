@@ -48,17 +48,16 @@ export function CreditContactsRow(props) {
 export function CreditContactsRowSkeleton() {
   return (
     <TableRow>
-      <TableCell>
+      <TableCell span={2}>
         <Box>
-          <UIAvatar />
-          <Box direction="vertical" ml="16px">
-            <Skeleton size="medium" variant="primary" />
-            <Skeleton size="small" variant="secondary" />
+          <Box align="center">
+            <Skeleton variant="circle" size={24} grey={200} />
+            <Skeleton width={100} height={10} grey={200} ml="8px" />
           </Box>
         </Box>
       </TableCell>
-      <TableCell span={1} align="right">
-        <Skeleton size="small" variant="secondary" />
+      <TableCell>
+        <Skeleton width={30} height={10} grey={200} ml="auto" />
       </TableCell>
     </TableRow>
   );

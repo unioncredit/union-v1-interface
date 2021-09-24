@@ -90,3 +90,13 @@ a {
   min-height: 28px;
   min-width: 100px;
 }
+
+.button .icon-external {
+  margin-left: 4px;
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper-toggle-menu {
+    align-self: flex-end;
+  }
+}

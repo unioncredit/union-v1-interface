@@ -10,8 +10,7 @@ import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 
 const getVouch =
-  (marketRegistryContract) =>
-  async (_, account, tokenAddress, library, count) => {
+  (marketRegistryContract) => async (_, account, tokenAddress, library) => {
     const res = await marketRegistryContract.tokens(tokenAddress);
     const signer = library.getSigner();
     const uTokenAddress = res.uToken;
@@ -27,10 +26,8 @@ const getVouch =
 
     const addresses = await userManagerContract.getStakerAddresses(account);
 
-    const size = count ?? addresses.length;
-
     const list = await Promise.all(
-      addresses.slice(0, size).map(async (address) => {
+      addresses.map(async (address) => {
         const { vouchingAmount, lockedStake, trustAmount } =
           await userManagerContract.getStakerAsset(account, address);
 
@@ -78,8 +75,9 @@ const getVouch =
     return list;
   };
 
-export default function useVouchData(count) {
-  const { library, account } = useWeb3React();
+export default function useVouchData(address) {
+  const { library, account: connectedAccount } = useWeb3React();
+  const account = address || connectedAccount;
 
   const curToken = useCurrentToken();
 
@@ -92,7 +90,7 @@ export default function useVouchData(count) {
     !!library;
 
   return useSWR(
-    shouldFetch ? ["Vouch", account, curToken, library, count] : null,
+    shouldFetch ? ["Vouch", account, curToken, library] : null,
     getVouch(marketRegistryContract)
   );
 }

@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { Button, Heading, Badge, Box } from "union-ui";
 import { Avatar, Copyable } from "components-ui";
-import { useManageContactModal } from "components-ui/modals";
 import truncateAddress from "util/truncateAddress";
 
 import usePublicData from "hooks/usePublicData";
@@ -8,7 +8,6 @@ import useAddressLabels from "hooks/useAddressLabels";
 
 export function ContactDetailsHeader({ address, isOverdue }) {
   const { ENSName, BoxName } = usePublicData(address);
-  const { open: openManageContactModal } = useManageContactModal();
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
 
@@ -43,15 +42,16 @@ export function ContactDetailsHeader({ address, isOverdue }) {
           </Box>
         </Box>
       </Box>
-      <Button
-        ml="auto"
-        rounded
-        variant="secondary"
-        label="View Profile"
-        icon="external"
-        iconPosition="end"
-        onClick={openManageContactModal}
-      />
+      <Link href={`/profile/${address}`}>
+        <Button
+          ml="auto"
+          rounded
+          variant="secondary"
+          label="View Profile"
+          icon="external"
+          iconPosition="end"
+        />
+      </Link>
     </Box>
   );
 }

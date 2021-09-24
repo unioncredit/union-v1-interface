@@ -53,13 +53,16 @@ function TransactionHistorySkeletonRow() {
   return (
     <TableRow>
       <TableCell>
-        <Avatar />
+        <Box align="center">
+          <Skeleton variant="circle" size={24} grey={200} />
+          <Skeleton width={60} height={10} grey={200} ml="6px" />
+        </Box>
       </TableCell>
       <TableCell>
-        <Skeleton size="small" variant="secondary" />
+        <Skeleton width={80} height={10} grey={200} />
       </TableCell>
       <TableCell align="right">
-        <Skeleton size="small" variant="secondary" />
+        <Skeleton width={30} height={10} grey={200} />
       </TableCell>
     </TableRow>
   );

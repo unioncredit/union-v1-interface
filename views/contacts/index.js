@@ -31,7 +31,6 @@ import {
   useWriteOffDebtModal,
   WriteOffDebtModal,
 } from "components-ui/modals";
-import cn from "classnames";
 import { useState, useEffect } from "react";
 import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
@@ -49,18 +48,25 @@ const withMobileView =
   ({ onClose, contactsType, ...props }) =>
     (
       <ModalOverlay>
-        <Modal title="Contact details" onClose={onClose}>
-          <ContactDetailsHeader
-            {...props}
-            contactsType={contactsType}
-            mobile={true}
-          />
-          <Modal.Body>
-            <Component {...props} variant={contactsType} />
-          </Modal.Body>
+        <Modal title="Contact details" onClose={onClose} size="large">
+          <Component {...props} variant={contactsType} />
         </Modal>
       </ModalOverlay>
     );
+
+const ContactDetailsCard = ({ contactsType, ...props }) => {
+  const { open: openManageContactModal } = useManageContactModal();
+  return (
+    <>
+      <ContactDetailsHeader {...props} contactsType={contactsType} />
+      <ContactDetails
+        {...props}
+        contactsType={contactsType}
+        manageContact={openManageContactModal}
+      />
+    </>
+  );
+};
 
 export default function ContactsView() {
   const { width } = useWindowSize();
@@ -68,8 +74,7 @@ export default function ContactsView() {
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
-  const { open: openManageContactModal, isOpen: isManageContactModalOpen } =
-    useManageContactModal();
+  const { isOpen: isManageContactModalOpen } = useManageContactModal();
   const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
   const { open: openVouchModal } = useVouchModal();
@@ -78,7 +83,7 @@ export default function ContactsView() {
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
 
-  const isMobile = width <= 600;
+  const isMobile = width <= 767;
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
   const isLoading = !data;
@@ -92,8 +97,8 @@ export default function ContactsView() {
   } = usePagination(searchData);
 
   const ContactDetailsVariant = isMobile
-    ? withMobileView(ContactDetails)
-    : ContactDetails;
+    ? withMobileView(ContactDetailsCard)
+    : ContactDetailsCard;
 
   const query = router.query;
   const contactsTypeOverride = query?.contactsType;
@@ -197,15 +202,11 @@ export default function ContactsView() {
               {selectedContact && (
                 <Card mt="24px">
                   <Card.Body>
-                    <ContactDetailsHeader
-                      {...selectedContact}
-                      contactsType={contactsType}
-                    />
                     <ContactDetailsVariant
                       {...selectedContact}
-                      contactsType={contactsType}
                       onClose={() => setSelectedContact(null)}
-                      manageContact={openManageContactModal}
+                      setSelectedContact={setSelectedContact}
+                      contactsType={contactsType}
                     />
                   </Card.Body>
                 </Card>

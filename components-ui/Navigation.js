@@ -3,30 +3,32 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Nav, NavItem, Box } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
+import { useWeb3React } from "@web3-react/core";
 
 const navItems = [
   {
     id: "get-started",
     label: "Get Started",
-    icon: "get-started",
     pathname: "/get-started",
     active: true,
   },
   {
     id: "credit",
-    icon: "credit",
     label: "Credit",
     pathname: "/credit",
   },
   {
     id: "contacts",
-    icon: "contacts",
     label: "Contacts",
     pathname: "/contacts",
   },
   {
+    id: "profile",
+    label: "Profile",
+    pathname: "/profile",
+  },
+  {
     id: "vote",
-    icon: "vote",
     label: "Vote",
     pathname: "/governance",
   },
@@ -34,6 +36,8 @@ const navItems = [
 
 export const Navigation = ({ mobile }) => {
   const router = useRouter();
+  const { account } = useWeb3React();
+
   const pathname = router.pathname;
 
   const { data: isMember } = useIsMember();
@@ -43,6 +47,7 @@ export const Navigation = ({ mobile }) => {
       return navItems.slice(1).map((item) => ({
         ...item,
         active: pathname.startsWith(item.pathname),
+        pathname: item.id === "profile" ? `/profile/${account}` : item.pathname,
       }));
     }
     return navItems.map((item) => ({

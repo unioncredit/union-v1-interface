@@ -74,8 +74,9 @@ const getTrust =
     return data;
   };
 
-export default function useTrustData() {
-  const { library, account } = useWeb3React();
+export default function useTrustData(address: string) {
+  const { library, account: connectedAccount } = useWeb3React();
+  const account = address || connectedAccount;
 
   const curToken = useCurrentToken();
 

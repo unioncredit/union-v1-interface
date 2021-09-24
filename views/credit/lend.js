@@ -47,7 +47,7 @@ export default function LendView() {
     <Wrapper title={config.title} tabItems={config.tabItems}>
       <Grid>
         <Grid.Row justify="center">
-          <Grid.Col xs={6}>
+          <Grid.Col xs={12} md={8} lg={6}>
             <Box mt="24px">
               <LendStatsCard />
             </Box>

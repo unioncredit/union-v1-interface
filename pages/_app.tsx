@@ -7,13 +7,7 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import "../styles/index.css";
 import "../styles/home.css";
-import { setGridConfiguration } from "union-ui";
 import Error from "./_error";
-
-setGridConfiguration({
-  breakpoints: [600, 850, 1250, 1400, 1600],
-  containerWidths: [740, 740, 960, 1140, 1540],
-});
 
 export default function UnionApp({ Component, pageProps }: AppProps) {
   useFathom();

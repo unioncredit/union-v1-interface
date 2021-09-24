@@ -31,7 +31,7 @@ export default function BorrowView() {
     <Wrapper title={config.title} tabItems={config.tabItems}>
       <Grid>
         <Row justify="center">
-          <Col xs={6}>
+          <Col xs={12} md={8} lg={6}>
             <Box mt="24px">
               <BorrowStatsCard />
             </Box>

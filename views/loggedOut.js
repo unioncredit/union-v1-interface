@@ -66,7 +66,7 @@ export default function LoggedOutView() {
         </Text>
         <Grid>
           <Grid.Row justify="center">
-            <Grid.Col xs={9}>
+            <Grid.Col md={12} lg={9}>
               <Grid.Row>
                 {Object.keys(CONNECTORS).map((name) => {
                   const currentConnector = CONNECTORS[name];
@@ -101,15 +101,13 @@ export default function LoggedOutView() {
                   }
 
                   return (
-                    <Grid.Col xs={6}>
-                      <Card>
+                    <Grid.Col xs={12} md={6} key={name}>
+                      <Card mb="24px">
                         <Card.Body>
                           <Box justify="center" mb="24px">
                             {getWalletIcon(name)}
                           </Box>
-                          <Heading size="small" align="center">
-                            {name}
-                          </Heading>
+                          <Heading align="center">{name}</Heading>
                           <Label as="p" align="center">
                             Allows you to connect to web3 products using a
                             browser plugin. It works best with Google Chrome.
