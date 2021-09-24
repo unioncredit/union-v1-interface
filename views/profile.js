@@ -13,7 +13,6 @@ import {
 import { useRouter } from "next/router";
 import { Wrapper, Avatar, Copyable } from "components-ui";
 import useCreditLimit from "hooks/data/useCreditLimit";
-import useIsMember from "hooks/data/useIsMember";
 import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
 import { useWeb3React } from "@web3-react/core";
@@ -29,7 +28,6 @@ export default function ProfileView() {
   const { address } = query;
 
   const { name } = usePublicData(address);
-  const { data: isMember } = useIsMember(address);
   const { data: vouchData = [] } = useVouchData(address);
   const { data: trustData = [] } = useTrustData(address);
   const { data: creditLimit = "0.0" } = useCreditLimit(address);

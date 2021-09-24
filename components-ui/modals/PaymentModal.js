@@ -55,10 +55,6 @@ export function PaymentModal({
 
   const calculateBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
 
-  const calculateNewBalance = calculateBalanceOwed - amount;
-
-  const formatNewBalance = calculateNewBalance.toFixed(2);
-
   const calculateMaxValue =
     flooredDaiBalance <= calculateBalanceOwed
       ? flooredDaiBalance

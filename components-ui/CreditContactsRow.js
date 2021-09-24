@@ -1,20 +1,10 @@
 import usePublicData from "hooks/usePublicData";
-import {
-  Text,
-  TableCell,
-  TableRow,
-  Bar,
-  Label,
-  Avatar as UIAvatar,
-  Skeleton,
-  Box,
-} from "union-ui";
+import { Text, TableCell, TableRow, Skeleton, Box } from "union-ui";
 import { Avatar, Dai } from "components-ui";
-import { toPercent } from "util/numbers";
 import useAddressLabels from "hooks/useAddressLabels";
 
 export function CreditContactsRow(props) {
-  const { address, vouched, utilized, onClick } = props;
+  const { address, vouched, onClick } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 

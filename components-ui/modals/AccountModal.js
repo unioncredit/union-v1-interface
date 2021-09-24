@@ -7,7 +7,6 @@ import {
   Text,
   StatusIcon,
   Icon,
-  NetworkIndicator,
 } from "union-ui";
 import { Modal, NetworkSelect } from "components-ui";
 import { useModal } from "hooks/useModal";

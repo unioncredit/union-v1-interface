@@ -7,7 +7,7 @@ import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 
 import { Card, Grid, Stat, ToggleMenu } from "union-ui";
-import { DepositInput, WithdrawInput, Dai } from "components-ui";
+import { DepositInput, WithdrawInput } from "components-ui";
 
 const StakeType = {
   DEPOSIT: "deposit",
@@ -25,12 +25,10 @@ export const StakeCardContent = ({ type, onComplete: handleOnComplete }) => {
   const UNION = useCurrentToken("UNION");
   const { mutate: updateUnionBalance } = useTokenBalance(UNION);
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
-  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
+  const { mutate: updateRewardsData } = useRewardsData();
 
   const { totalStake = 0.0, withdrawableStake = 0.0 } =
     !!stakeData && stakeData;
-
-  const { rewardsMultiplier = "0.00" } = !!rewardsData && rewardsData;
 
   const onComplete = async () => {
     await updateUnionBalance();

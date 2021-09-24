@@ -1,6 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { EVENT_START_BLOCK, EVENT_BLOCK_INTERVAL } from "constants/variables";
-import { useEffect, useCallback, useState, useRef } from "react";
+import { useEffect, useCallback, useState } from "react";
 import useReadProvider from "hooks/useReadProvider";
 import usePersistentState from "hooks/usePersistentState";
 import { sleep } from "util/sleep";

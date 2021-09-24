@@ -1,15 +1,5 @@
-import {
-  Card,
-  Label,
-  Avatar,
-  Button,
-  Box,
-  Heading,
-  Text,
-  Grid,
-} from "union-ui";
+import { Card, Label, Button, Box, Heading, Text, Grid } from "union-ui";
 import { LiteWrapper } from "components-ui";
-import { options } from "components-ui/NetworkSelect";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";

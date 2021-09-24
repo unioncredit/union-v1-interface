@@ -1,6 +1,6 @@
 import useBorrowData from "hooks/data/useBorrowData";
 import PropTypes from "prop-types";
-import { Box, Stat, Grid, Label, Badge, Card, Button } from "union-ui";
+import { Stat, Grid, Card, Button } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";

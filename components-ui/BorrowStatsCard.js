@@ -91,7 +91,6 @@ export function BorrowStatsCard() {
 
                 <Stat
                   align="center"
-                  align="center"
                   label="Minimum due"
                   mt="24px"
                   value={<Dai value={roundUp(interest)} />}

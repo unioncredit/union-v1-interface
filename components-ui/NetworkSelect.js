@@ -1,7 +1,6 @@
 import { Select } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
-import { addToast, FLAVORS } from "hooks/useToast";
 import { switchChain, options } from "util/switchChain";
 
 export function NetworkSelect() {

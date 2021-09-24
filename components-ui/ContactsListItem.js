@@ -1,13 +1,5 @@
 import usePublicData from "hooks/usePublicData";
-import {
-  Text,
-  TableCell,
-  TableRow,
-  Avatar as UIAvatar,
-  Skeleton,
-  Box,
-  Badge,
-} from "union-ui";
+import { Text, TableCell, TableRow, Skeleton, Box, Badge } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "views/contacts/config";

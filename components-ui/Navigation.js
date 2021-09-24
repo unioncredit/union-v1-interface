@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Nav, NavItem, Box } from "union-ui";
+import { Nav, NavItem } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { useWeb3React } from "@web3-react/core";
 

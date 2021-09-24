@@ -38,7 +38,7 @@ export default function UnsupportedChainView() {
                   const { label, value, imageSrc, description, buttonVariant } =
                     props;
                   return (
-                    <Grid.Col xs={6}>
+                    <Grid.Col xs={6} key={label}>
                       <Card>
                         <Card.Body>
                           <Box justify="center" mb="24px">

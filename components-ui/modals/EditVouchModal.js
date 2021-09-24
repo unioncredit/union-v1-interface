@@ -28,7 +28,7 @@ export function EditVouchModal({ address, used, vouched }) {
   const { mutate: updateCreditLimit } = useCreditLimit();
   const { open: openManageContactModal } = useManageContactModal();
 
-  const { register, formState, errors, watch, handleSubmit } = useForm({
+  const { register, formState, errors, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });

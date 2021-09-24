@@ -15,11 +15,9 @@ export function ContactDetailsHeader({ address, isOverdue }) {
     <Copyable value={address}>{truncateAddress(address)}</Copyable>
   );
 
-  const [label1, label2 = null, label3 = null] = [
-    label,
-    ENSName || BoxName,
-    truncatedAddress,
-  ].filter(Boolean);
+  const [label1] = [label, ENSName || BoxName, truncatedAddress].filter(
+    Boolean
+  );
 
   return (
     <Box mb="24px" align="center">

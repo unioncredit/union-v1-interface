@@ -1,12 +1,4 @@
-import {
-  ModalOverlay,
-  Box,
-  Input,
-  Button,
-  Card,
-  Skeleton,
-  Badge,
-} from "union-ui";
+import { ModalOverlay, Box, Input, Button } from "union-ui";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useModal } from "hooks/useModal";

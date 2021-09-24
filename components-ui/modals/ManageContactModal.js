@@ -85,7 +85,13 @@ export function ManageContactModal({
         <EditLabel address={address} />
         {!isLabelOnly &&
           data.map(({ label, value, onClick, buttonProps }) => (
-            <Box fluid justify="space-between" align="center" mb="12px">
+            <Box
+              key={label}
+              fluid
+              justify="space-between"
+              align="center"
+              mb="12px"
+            >
               <Box direction="vertical">
                 <Label size="small" grey={400} as="p" m={0}>
                   {label.toUpperCase()}

@@ -1,20 +1,4 @@
-import {
-  Stats,
-  Stat,
-  Button,
-  Bar,
-  Grid,
-  Row,
-  Col,
-  Heading,
-  Text,
-  Table,
-  TableRow,
-  TableCell,
-  Box,
-  Card,
-  Pagination,
-} from "union-ui";
+import { Grid, Table, Card, Pagination, Box } from "union-ui";
 import Link from "next/link";
 import {
   Wrapper,
