@@ -63,13 +63,13 @@ const getAllProposalData = (
         id: allProposals[i]?.result?.id.toString(),
         title:
           String(formattedEvents[i].description)
-            ?.split("\n")[1]
+            ?.split("\n")[0]
             ?.replace("#", "") || "Untitled",
         description:
           String(formattedEvents[i].description)
             ?.split("\n")
             ?.slice(2)
-            ?.join("\n") || "No description",
+            ?.join("\n\n") || "No description",
         proposer: allProposals[i]?.result?.proposer,
         status:
           enumerateProposalState(allProposalStates[i]?.result) ??
