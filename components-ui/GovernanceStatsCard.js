@@ -1,26 +1,12 @@
-import {
-  Card,
-  Stat,
-  Stats,
-  Button,
-  Grid,
-  Row,
-  Col,
-  Heading,
-  Text,
-} from "union-ui";
-import { useWeb3React } from "@web3-react/core";
-import { Wrapper, UserVotingOverview, LiveProposals, Dai } from "components-ui";
+import { Card, Stat, Button, Grid } from "union-ui";
+import { Dai } from "components-ui";
 import useStatisticsData from "hooks/governance/useStatisticsData";
 import { useDefaultedAmount } from "hooks/stats/uTokenStats/useDefaultedAmount";
 import format from "util/formatValue";
-import { toPercent } from "util/numbers";
 
 export function GovernanceStatsCard() {
   const { data } = useStatisticsData();
   const { data: defaultedAmount } = useDefaultedAmount();
-
-  console.log(data);
 
   return (
     <Card>
