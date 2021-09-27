@@ -28,8 +28,8 @@ const navItems = [
     pathname: "/profile",
   },
   {
-    id: "vote",
-    label: "Vote",
+    id: "governance",
+    label: "Governance",
     pathname: "/governance",
   },
 ];

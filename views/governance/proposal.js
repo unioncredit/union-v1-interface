@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Heading,
-  Divider,
   Label,
   Skeleton,
 } from "union-ui";
@@ -44,16 +43,20 @@ export default function ProposalView() {
 
   return (
     <Wrapper title={config.title}>
-      <Box mb="40px">
-        <Link href="/governance/proposals">
-          <Button
-            variant="secondary"
-            label="Back to proposals"
-            icon="arrow-left"
-          />
-        </Link>
-      </Box>
       <Grid>
+        <Row>
+          <Col>
+            <Box mb="40px">
+              <Link href="/governance/proposals">
+                <Button
+                  variant="secondary"
+                  label="Back to proposals"
+                  icon="arrow-left"
+                />
+              </Link>
+            </Box>
+          </Col>
+        </Row>
         <Row>
           <Col md={8}>
             <Heading level={2} mb="8px" grey={400}>
@@ -79,7 +82,6 @@ export default function ProposalView() {
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
-            <Divider />
             <Box mt="16px">
               <Button
                 variant="pill"

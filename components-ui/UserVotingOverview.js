@@ -1,13 +1,16 @@
-import PropTypes from "prop-types";
 import { useVoteDelegationModal } from "components-ui/modals";
-import { Card, Box, Button, Divider, Text, Label, Heading } from "union-ui";
+import { Avatar } from "components-ui";
+import { Box, Badge, Heading, Card, Button, Stat, Grid } from "union-ui";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
-import useUnionSymbol from "hooks/useUnionSymbol";
-import useUserGovernanceTokenRewards from "hooks/governance/useUserGovernanceTokenRewards";
 import format from "util/formatValue";
-import { ClaimButton } from "./ClaimButton";
+import { useWeb3React } from "@web3-react/core";
+import usePublicData from "hooks/usePublicData";
+import { Copyable } from "./Copyable";
+import truncateAddress from "util/truncateAddress";
 
-export function UserVotingOverview({ variant, address }) {
+export function UserVotingOverview({ address }) {
+  const { account } = useWeb3React();
+  const { ENSName, BoxName } = usePublicData(account);
   const { open: openVoteDelegationModal } = useVoteDelegationModal();
   const { data: votingWalletData } = useVotingWalletData(address);
   const {
@@ -16,67 +19,67 @@ export function UserVotingOverview({ variant, address }) {
     delegates,
   } = !!votingWalletData && votingWalletData;
 
-  const { data: unionSymbol } = useUnionSymbol();
-  const { data: unclaimedBalance = 0 } = useUserGovernanceTokenRewards(address);
-
   const isDelegatingToSelf = delegates === address;
 
   const votesDelegated = isDelegatingToSelf
     ? currentVotes - balanceOf
     : currentVotes;
 
-  return (
-    <>
-      <Card>
-        <Card.Body>
-          <Box align="center" justify="space-between">
-            <Text m={0}>Voting Power</Text>
-            {variant === "primary" && (
-              <Button
-                variant="pill"
-                onClick={openVoteDelegationModal}
-                label="Delegate votes"
-              />
-            )}
-          </Box>
-          <Heading m={0}>{format(currentVotes)} votes</Heading>
-          <Label size="small">{format(votesDelegated)} delegated to you</Label>
-          <Text mt="16px">Wallet balance</Text>
-          <Heading m={0}>{format(balanceOf)} UNION</Heading>
-          <Text mt="16px">Delegating to</Text>
-          <Heading m={0}>Self</Heading>
-          {variant === "primary" && (
-            <>
-              <Divider />
-              <Box align="center" justify="space-between" mt="20px">
-                <Text m={0}>Unclaimed Tokens</Text>
-                <ClaimButton variant="pill" label="Claim tokens" />
-              </Box>
-              <Heading m={0}>
-                {format(unclaimedBalance)} {unionSymbol}
-              </Heading>
-              <Label size="small">12.2 tokens per day</Label>
-            </>
-          )}
+  const truncatedAddress = (
+    <Copyable value={address}>{truncateAddress(address)}</Copyable>
+  );
 
-          {variant === "secondary" && (
-            <Button
-              icon="vouch"
-              label="Delegate to this account"
-              fluid
-              mt="20px"
-            />
-          )}
-        </Card.Body>
-      </Card>
-    </>
+  const [label1] = [ENSName || BoxName, truncatedAddress].filter(Boolean);
+
+  return (
+    <Card>
+      <Card.Body>
+        <Grid>
+          <Grid.Row>
+            <Grid.Col xs={12}>
+              <Box align="center" mb="24px">
+                <Avatar size={54} address={account} />
+                <Box direction="vertical" mx="16px">
+                  <Heading level={2} mb="4px">
+                    {label1}
+                  </Heading>
+                  <Badge
+                    color="grey"
+                    label={
+                      <Copyable value={address}>{address.slice(0, 6)}</Copyable>
+                    }
+                  />
+                </Box>
+              </Box>
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Col>
+              <Stat label="Total Votes" value={format(currentVotes)} />
+            </Grid.Col>
+            <Grid.Col>
+              <Stat label="Union Balance" value={format(balanceOf)} />
+            </Grid.Col>
+            <Grid.Col>
+              <Stat label="From others" value={format(votesDelegated)} />
+            </Grid.Col>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Col>
+              <Stat mt="28px" label="DELEGATING TO" value={"self"} />
+            </Grid.Col>
+            <Grid.Col>
+              <Button
+                mt="28px"
+                variant="secondary"
+                inline
+                label="Delegate votes"
+                onClick={openVoteDelegationModal}
+              />
+            </Grid.Col>
+          </Grid.Row>
+        </Grid>
+      </Card.Body>
+    </Card>
   );
 }
-
-UserVotingOverview.propTypes = {
-  variant: PropTypes.oneOf(["primary", "secondary"]),
-};
-
-UserVotingOverview.defaultProps = {
-  variant: "primary",
-};

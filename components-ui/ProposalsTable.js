@@ -5,8 +5,6 @@ import {
   Table,
   TableRow,
   TableCell,
-  Button,
-  Bar,
   Skeleton,
 } from "union-ui";
 import Link from "next/link";
@@ -46,7 +44,6 @@ function ProposalsTableRow({
   againstCount,
   forCount,
   date,
-  type,
   title,
   status,
 }) {
@@ -54,35 +51,21 @@ function ProposalsTableRow({
   const percentageFor = forCount / total;
 
   return (
-    <TableRow>
-      <TableCell span={3}>
-        <Text>{title}</Text>
-        <Label>{date}</Label>
-      </TableCell>
-      <TableCell span={1} align="center">
-        <Badge color={statusColorMap[status] || "blue"} label={status} />
-      </TableCell>
-      <TableCell span={1} align="center" className="hide-lt-600">
-        <Text>{type}</Text>
-      </TableCell>
-      <TableCell span={1} align="right">
-        <Label as="p" size="small">
-          {toPercent(percentageFor)} yes
-        </Label>
-        <Bar percentage={percentageFor * 100} secondaryBar />
-      </TableCell>
-      <TableCell span={1}>
-        <Link href={`/governance/proposals/${id}`}>
-          <Button
-            variant="pill"
-            label="Cast vote"
-            icon="chevron"
-            iconPosition="end"
-            ml="auto"
-          />
-        </Link>
-      </TableCell>
-    </TableRow>
+    <Link href={`/governance/proposals/${id}`}>
+      <TableRow>
+        <TableCell>
+          <Text mb="4px">{title}</Text>
+          <Label>
+            <Badge
+              color={statusColorMap[status] || "blue"}
+              label={status}
+              mr="8px"
+            />
+            {toPercent(percentageFor)} yes &bull; {date}
+          </Label>
+        </TableCell>
+      </TableRow>
+    </Link>
   );
 }
 

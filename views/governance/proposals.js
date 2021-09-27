@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Tabs, Grid, Row, Col, Box } from "union-ui";
+import Link from "next/link";
+import { Grid, Card, Button, Box } from "union-ui";
 import { Wrapper, ProposalsTable } from "components-ui";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 
@@ -7,32 +7,34 @@ import { config } from "./config";
 
 export default function ProposalsView() {
   const typeFilter = "all";
-
-  const [statusFilter, setStatusFilter] = useState("all");
+  const statusFilter = "all";
   const data = useFilteredProposalData(statusFilter, typeFilter);
 
-  const handleChangeType = (type) => {
-    setStatusFilter(type.id);
-  };
-
   return (
-    <Wrapper title={config.title} tabItems={config.tabItems}>
-      <Box mb="14px">
-        <Tabs
-          variant="secondary"
-          items={[
-            { id: "all", label: "All Proposals" },
-            ...config.proposals.types,
-          ]}
-          onChange={handleChangeType}
-        />
-      </Box>
+    <Wrapper title={config.title}>
       <Grid>
-        <Row>
-          <Col>
-            <ProposalsTable data={data} />
-          </Col>
-        </Row>
+        <Grid.Row justify="center">
+          <Grid.Col xs={12} md={8} lg={6}>
+            <Box>
+              <Link href="/governance">
+                <Button
+                  inlint
+                  mb="24px"
+                  variant="secondary"
+                  label="Back to overview"
+                  icon="arrow-left"
+                  iconPosition="start"
+                />
+              </Link>
+            </Box>
+            <Card>
+              <Card.Header title="All Proposals" />
+              <Card.Body>
+                <ProposalsTable data={data} />
+              </Card.Body>
+            </Card>
+          </Grid.Col>
+        </Grid.Row>
       </Grid>
     </Wrapper>
   );
