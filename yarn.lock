@@ -6196,8 +6196,10 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-"union-ui@file:../union-ui":
-  version "0.1.10-beta.0"
+union-ui@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.0.tgz#b0aa617242a82d3902e6ec7833748d6d6e949922"
+  integrity sha512-7AsdIPIIcSXT8ovE1ETIl5fVR/R5IBBPcAkePSvYzUGL9urvZhPMPK+tchGuS+1Fu1PKB0tm/nQxPKPpKU+mRA==
   dependencies:
     classnames "^2.3.1"
     react-grid-system "^7.2.0"
