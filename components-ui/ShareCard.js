@@ -36,13 +36,15 @@ export function ShareCard({ vouchCount }) {
             Share your link with other Union members who might be willing to
             vouch for you with their DAI.
           </Text>
-          <Box justify="center" mb="24px" fluid>
-            <CircleProgress
-              percentage={(vouchCount / 3) * 100}
-              complete={vouchCount >= 3}
-              label={`${vouchCount}/3`}
-            />
-          </Box>
+          {vouchCount && (
+            <Box justify="center" mb="24px" fluid>
+              <CircleProgress
+                percentage={(vouchCount / 3) * 100}
+                complete={vouchCount >= 3}
+                label={`${vouchCount}/3`}
+              />
+            </Box>
+          )}
           <Label as="p" align="center" mb="24px">
             <Copyable value={url}>
               {url.slice(0, 16)}...{url.slice(-16)}
