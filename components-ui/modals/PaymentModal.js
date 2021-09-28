@@ -146,7 +146,8 @@ export function PaymentModal({
               label={`Repay ${amount} DAI`}
               fluid
               mt="16px"
-              disabled={!isDirty || isSubmitting}
+              loading={isSubmitting}
+              disabled={!isDirty}
               onClick={handleSubmit(handlePayment)}
               fontSize="large"
             />

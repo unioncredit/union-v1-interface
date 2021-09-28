@@ -8,9 +8,13 @@ import parseRes from "util/parseRes";
 import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 const getVouch =
   (marketRegistryContract) => async (_, account, tokenAddress, library) => {
+    const ethereumRpc = new JsonRpcProvider(
+      `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+    );
     const res = await marketRegistryContract.tokens(tokenAddress);
     const signer = library.getSigner();
     const uTokenAddress = res.uToken;
@@ -60,6 +64,8 @@ const getVouch =
 
         const utilized = used / vouched;
 
+        const ens = await ethereumRpc.lookupAddress(address);
+
         return {
           address,
           available,
@@ -68,6 +74,7 @@ const getVouch =
           used,
           utilized,
           vouched,
+          ens,
         };
       })
     );

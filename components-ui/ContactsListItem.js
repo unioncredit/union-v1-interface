@@ -2,7 +2,7 @@ import usePublicData from "hooks/usePublicData";
 import { Text, TableCell, TableRow, Skeleton, Box, Badge } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
-import { ContactsType } from "views/contacts/config";
+import { ContactsType } from "constants/app";
 
 export function ContactsListItem(props) {
   const { address, vouched, onClick, isOverdue, variant, active } = props;

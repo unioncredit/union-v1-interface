@@ -36,7 +36,7 @@ export function EditAliasModal({ address }) {
 
   return (
     <ModalOverlay>
-      <Modal title="Edit contact name" onClose={close} drawer>
+      <Modal title="Edit contact name" onClose={close}>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleUpdateAlias)}>
             <Text size="large" mb="16px">

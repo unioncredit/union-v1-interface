@@ -19,7 +19,7 @@ export function BorrowStatsCard() {
 
   const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
-  const { data: vouchData, mutate: updateVouchData } = useVouchData(8);
+  const { data: vouchData, mutate: updateVouchData } = useVouchData();
 
   const {
     borrowedRounded = 0,

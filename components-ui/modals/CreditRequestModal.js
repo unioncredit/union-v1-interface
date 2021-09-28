@@ -25,11 +25,13 @@ export function CreditRequestModal() {
           <Box mb="16px">
             <QRCode link={url} />
           </Box>
-          <Copyable value={url}>
-            <Label as="p" title={url} mb="6px">
-              {url.slice(0, 20)}..{url.slice(-20)}
+          <Box mb="16px">
+            <Label as="p" title={url} m={0}>
+              <Copyable value={url}>
+                {url.slice(0, 16)}..{url.slice(-16)}
+              </Copyable>
             </Label>
-          </Copyable>
+          </Box>
         </Box>
       </Modal>
     </ModalOverlay>

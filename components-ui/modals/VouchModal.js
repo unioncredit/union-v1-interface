@@ -93,6 +93,7 @@ export function VouchModal() {
               })}
               suffix={<Dai />}
               name="amount"
+              type="number"
               label="Vouch amount"
               placeholder="0.0"
               error={errors?.amount?.message}

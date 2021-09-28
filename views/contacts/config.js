@@ -1,7 +1,4 @@
-export const ContactsType = {
-  TRUSTS_YOU: "trusts-you",
-  YOU_TRUST: "you-trust",
-};
+import { ContactsType } from "constants/app";
 
 export const config = {
   title: "Contacts",

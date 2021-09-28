@@ -84,7 +84,7 @@ export function NewVouchModal({ address }) {
 
   return (
     <ModalOverlay>
-      <Modal title="New vouch" onClose={close} drawer>
+      <Modal title="New vouch" onClose={close}>
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <Box mb="26px" justify="space-between">
             <AddressLabel address={address} showAddress />

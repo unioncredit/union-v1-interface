@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { Wallet, TabLink, Navigation } from "components-ui";
+import { Wallet, TabLink, Navigation, navItems } from "components-ui";
 import {
   AccountModal,
   useAccountModal,
@@ -16,10 +16,12 @@ import {
   LoadingSpinner,
   ContextMenu,
   ToggleMenu,
+  Button,
 } from "union-ui";
 import useInactiveListener from "hooks/useInactiveListener";
 import usePublicData from "hooks/usePublicData";
 import useMemberCheck from "hooks/useMemberCheck";
+import useIsMobile from "hooks/useIsMobile";
 import { Avatar } from "./Avatar";
 import { ClaimButton } from "./ClaimButton";
 
@@ -41,6 +43,7 @@ const contextMenuItems = [
 
 export function Wrapper({ children, tabItems }) {
   const router = useRouter();
+  const isMobile = useIsMobile();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
@@ -87,6 +90,7 @@ export function Wrapper({ children, tabItems }) {
                       />
                     </Box>
                     <ContextMenu
+                      position="left"
                       items={contextMenuItems}
                       after={<ClaimButton size="small" label="Claim UNION" />}
                     />
@@ -98,11 +102,33 @@ export function Wrapper({ children, tabItems }) {
                   direction="vertical"
                   className="inner-wrapper"
                 >
-                  <ToggleMenu
-                    className="wrapper-toggle-menu"
-                    items={tabItemLinks}
-                    initialActive={initialTab}
-                  />
+                  <Box
+                    {...{
+                      ...(isMobile
+                        ? { justify: "space-between", fluid: true }
+                        : {}),
+                    }}
+                  >
+                    {isMobile && (
+                      <ContextMenu
+                        items={navItems.slice(1)}
+                        button={(toggleOpen) => (
+                          <Button
+                            onClick={toggleOpen}
+                            label="Menu"
+                            variant="secondary"
+                            icon="dropdown-arrow"
+                            iconPosition="end"
+                          />
+                        )}
+                      />
+                    )}
+                    <ToggleMenu
+                      className="wrapper-toggle-menu"
+                      items={tabItemLinks}
+                      initialActive={initialTab}
+                    />
+                  </Box>
                   {children}
                 </Box>
               </Col>

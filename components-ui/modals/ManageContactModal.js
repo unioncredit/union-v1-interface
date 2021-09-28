@@ -12,6 +12,7 @@ import useTrustData from "hooks/data/useTrustData";
 import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import format from "util/formatValue";
 import isHash from "util/isHash";
+import { ContactsType } from "constants/app";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
@@ -23,6 +24,7 @@ export function ManageContactModal({
   vouched,
   isLabelOnly,
   isOverdue,
+  contactType,
 }) {
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
@@ -80,7 +82,7 @@ export function ManageContactModal({
 
   return (
     <ModalOverlay>
-      <Modal title="Manage contact" onClose={close} drawer>
+      <Modal title="Manage contact" onClose={close}>
         <MiniProfileCard address={address} />
         <EditLabel address={address} />
         {!isLabelOnly &&
@@ -110,19 +112,23 @@ export function ManageContactModal({
               </Box>
             </Box>
           ))}
-        <Label as="p" size="small" align="center" mt="24px" grey={400}>
-          Contacts with outstanding balance can’t be removed
-        </Label>
-        <Button
-          fluid
-          mt="16px"
-          color="red"
-          fontSize="large"
-          variant="secondary"
-          label="Remove from contacts"
-          loading={removing}
-          onClick={handleRemoveContact}
-        />
+        {contactType === ContactsType.YOU_TRUST && (
+          <>
+            <Label as="p" size="small" align="center" mt="24px" grey={400}>
+              Contacts with outstanding balance can’t be removed
+            </Label>
+            <Button
+              fluid
+              mt="16px"
+              color="red"
+              fontSize="large"
+              variant="secondary"
+              label="Remove from contacts"
+              loading={removing}
+              onClick={handleRemoveContact}
+            />
+          </>
+        )}
       </Modal>
     </ModalOverlay>
   );

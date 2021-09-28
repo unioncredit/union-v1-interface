@@ -1,8 +1,7 @@
 import { NotificationStack, Notification, Text, Label, Icon } from "union-ui";
 import { toastState, removeToast } from "hooks/useToast";
-import useIsDrawerOpen from "hooks/useIsDrawerOpen";
-import useChainId from "hooks/useChainId";
 import getEtherscanLink from "util/getEtherscanLink";
+import { useWeb3React } from "@web3-react/core";
 
 const defaultTitles = {
   success: "Transaction successful",
@@ -11,9 +10,8 @@ const defaultTitles = {
 };
 
 export function Notifications() {
-  const chainId = useChainId();
+  const { chainId } = useWeb3React();
   const toasts = toastState.useValue();
-  const isDrawerOpen = useIsDrawerOpen();
 
   if (toasts.length <= 0) return null;
 
@@ -21,12 +19,8 @@ export function Notifications() {
     removeToast(id);
   };
 
-  const style = isDrawerOpen
-    ? { right: "400px", transition: "all 500ms" }
-    : undefined;
-
   return (
-    <NotificationStack style={style}>
+    <NotificationStack>
       {toasts.map(({ id, body, type, hash, title }) => (
         <Notification key={id} variant={type} onClose={handleClose(id)}>
           <Text>{title || defaultTitles[type]}</Text>

@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { Modal as UIModal } from "union-ui";
-import { drawerOpenState } from "hooks/useIsDrawerOpen";
+import getScrollbarWidth from "util/getScrollbarWidth";
 
 export function Modal(props) {
   useEffect(() => {
-    document.body.style = "overflow:hidden";
-    drawerOpenState.set(Boolean(props.drawer));
+    const scrollbarWidth = getScrollbarWidth();
+    document.body.style = `overflow:hidden;margin-right:${scrollbarWidth}px;`;
     return () => {
-      document.body.style = "overflow:unset";
+      document.body.style = "overflow:unset;margin-right:0;";
     };
-  }, [props.drawer]);
+  }, []);
 
   const handleClose = () => {
-    drawerOpenState.set(false);
     if (typeof props.onClose === "function") {
       props.onClose();
     }

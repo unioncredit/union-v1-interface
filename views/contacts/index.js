@@ -32,16 +32,17 @@ import {
   WriteOffDebtModal,
 } from "components-ui/modals";
 import { useState, useEffect } from "react";
-import { useWindowSize } from "react-use";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import useContactsSearch from "hooks/useContactsSearch";
 import usePagination from "hooks/usePagination";
 import createArray from "util/createArray";
 
-import { config, ContactsType } from "./config";
+import { config } from "./config";
+import { ContactsType } from "constants/app";
 import usePopTrustModal from "hooks/usePopTrustModal";
 import { useRouter } from "next/router";
+import useIsMobile from "hooks/useIsMobile";
 
 const withMobileView =
   (Component) =>
@@ -69,7 +70,7 @@ const ContactDetailsCard = ({ contactsType, ...props }) => {
 };
 
 export default function ContactsView() {
-  const { width } = useWindowSize();
+  const isMobile = useIsMobile();
   const router = useRouter();
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -82,8 +83,6 @@ export default function ContactsView() {
 
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
-
-  const isMobile = width <= 767;
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
   const isLoading = !data;
@@ -221,6 +220,7 @@ export default function ContactsView() {
       {isManageContactModalOpen && (
         <ManageContactModal
           {...selectedContact}
+          contactsType={contactsType}
           isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
         />
       )}

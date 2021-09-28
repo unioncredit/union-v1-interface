@@ -12,11 +12,11 @@ import useTrustData from "hooks/data/useTrustData";
 import createArray from "util/createArray";
 
 import { config } from "./config";
-import { ContactsType } from "views/contacts/config";
+import { ContactsType } from "constants/app";
 import usePagination from "hooks/usePagination";
 
 export default function LendView() {
-  const { data: trustData } = useTrustData(8);
+  const { data: trustData } = useTrustData();
 
   const {
     data: pagedTrustData,

@@ -24,9 +24,12 @@ export default function useContactsSearch(data) {
 
     return data.filter((item) => {
       const address = item.address.toString().toLowerCase();
+      const ens = item.ens && item.ens.toString().toLowerCase();
+
       return (
         address.includes(lowerCaseQuery) ||
-        matchingLabelsAddresses.includes(address)
+        matchingLabelsAddresses.includes(address) ||
+        ens?.includes(lowerCaseQuery)
       );
     });
   }, [data, query, labels]);

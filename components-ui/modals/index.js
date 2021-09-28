@@ -12,3 +12,4 @@ export * from "./NewVouchModal";
 export * from "./EditVouchModal";
 export * from "./VouchModalManager";
 export * from "./WriteOffDebtModal";
+export * from "./ContratulationsModal";

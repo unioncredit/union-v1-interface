@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Stat, Button, Bar, Grid, Card } from "union-ui";
 import format from "util/formatValue";
 import { roundDown, toPercent } from "util/numbers";
@@ -9,7 +8,6 @@ import { useStakeModal, StakeModal } from "components-ui/modals";
 export function LendStatsCard() {
   const { data: stakeData } = useStakeData();
   const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
-  const [stakeType, setStakeType] = useState("deposit");
 
   const {
     totalStake = 0.0,
@@ -21,8 +19,7 @@ export function LendStatsCard() {
   const percentageStake = utilizedStake / totalStake;
 
   const handleOpenStakeModal = (type) => () => {
-    setStakeType(type);
-    openStakeModal();
+    openStakeModal(type);
   };
 
   return (
@@ -94,7 +91,7 @@ export function LendStatsCard() {
           </Grid>
         </Card.Body>
       </Card>
-      {isStakeModalOpen && <StakeModal type={stakeType} />}
+      {isStakeModalOpen && <StakeModal />}
     </>
   );
 }

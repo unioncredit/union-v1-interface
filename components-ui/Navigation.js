@@ -5,7 +5,7 @@ import { Nav, NavItem } from "union-ui";
 import useIsMember from "hooks/data/useIsMember";
 import { useWeb3React } from "@web3-react/core";
 
-const navItems = [
+export const navItems = [
   {
     id: "get-started",
     label: "Get Started",
@@ -50,10 +50,7 @@ export const Navigation = ({ mobile }) => {
         pathname: item.id === "profile" ? `/profile/${account}` : item.pathname,
       }));
     }
-    return navItems.map((item) => ({
-      ...item,
-      disabled: item.id !== "get-started",
-    }));
+    return navItems.slice(0, 1);
   }, [isMember, pathname]);
 
   return (

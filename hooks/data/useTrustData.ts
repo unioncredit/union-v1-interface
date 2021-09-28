@@ -1,7 +1,7 @@
 import { isAddress } from "@ethersproject/address";
 import type { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
-import type { Web3Provider } from "@ethersproject/providers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import U_TOKEN_ABI from "constants/abis/uToken.json";
@@ -19,6 +19,9 @@ const getTrust =
     library: Web3Provider,
     count: number
   ) => {
+    const ethereumRpc = new JsonRpcProvider(
+      `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+    );
     const res = await marketRegistryContract.tokens(tokenAddress);
     const signer = library.getSigner();
     const uTokenAddress = res.uToken;
@@ -58,6 +61,8 @@ const getTrust =
 
         const health = isOverdue ? 0 : ((vouched - used) / vouched) * 100;
 
+        const ens = await ethereumRpc.lookupAddress(address);
+
         return {
           address,
           health,
@@ -67,6 +72,7 @@ const getTrust =
           used,
           utilized: percentage,
           vouched,
+          ens,
         };
       })
     );
