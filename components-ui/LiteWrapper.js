@@ -1,6 +1,13 @@
+import { links } from "constants/app";
 import Link from "next/link";
 import { Layout, Box, Logo, Grid, Row, Col, Label } from "union-ui";
 
+const externalLinks = [
+  { label: "Website", href: links.website },
+  { label: "Twitter", href: links.twitter },
+  { label: "Docs", href: links.docs },
+  { label: "Blog", href: links.blog },
+];
 export function LiteWrapper({ children }) {
   return (
     <Layout>
@@ -17,26 +24,11 @@ export function LiteWrapper({ children }) {
                   <Logo width="50px" withText />
                 </Link>
                 <Box mt="42px">
-                  <Link href="#">
-                    <Label as="a" mx="21px">
-                      Website
+                  {externalLinks.map(({ label, ...props }) => (
+                    <Label as="a" mx="21px" {...props} target="_blank">
+                      {label}
                     </Label>
-                  </Link>
-                  <Link href="#">
-                    <Label as="a" mx="21px">
-                      Twitter
-                    </Label>
-                  </Link>
-                  <Link href="#">
-                    <Label as="a" mx="21px">
-                      Docs
-                    </Label>
-                  </Link>
-                  <Link href="#">
-                    <Label as="a" mx="21px">
-                      Governance
-                    </Label>
-                  </Link>
+                  ))}
                 </Box>
               </Layout.Header>
               {children}
