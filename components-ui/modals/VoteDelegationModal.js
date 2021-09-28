@@ -1,11 +1,11 @@
 import {
   ModalOverlay,
   Divider,
-  ControlGroup,
   Text,
   Button,
   Input,
   Box,
+  ToggleMenu,
 } from "union-ui";
 import { useState } from "react";
 import { Modal } from "components-ui";
@@ -24,25 +24,27 @@ export const VOTE_DELEGATION_MODAL = "vote-delegation-modal";
 
 export const useVoteDelegationModal = () => useModal(VOTE_DELEGATION_MODAL);
 
-const radioOptions = [
-  { type: "radio", label: "Vote as self", id: "self" },
-  { type: "radio", label: "Delegate votes to another account", id: "delegate" },
+const options = [
+  { label: "To self", id: "self" },
+  { label: "Third party", id: "delegate" },
 ];
 
 export function VoteDelegationModal() {
   const addActivity = useAddActivity();
   const { library, account } = useWeb3React();
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState("self");
   const { close } = useVoteDelegationModal();
   const delegate = useDelegate();
 
-  const { handleSubmit, register, errors } = useForm({
+  const { handleSubmit, register, errors, formState } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
 
+  const { isSubmitting } = formState;
+
   const handleDelegation = async (values) => {
-    const delegateTo = values?.address || account;
+    const delegateTo = selected === "self" ? account : values.address;
     try {
       const { hash } = await delegate(delegateTo);
       await getReceipt(hash, library);
@@ -56,37 +58,45 @@ export function VoteDelegationModal() {
   };
 
   const validate = (address) => {
+    if (!address) return true;
     return validateAddress(address);
   };
 
   return (
     <ModalOverlay>
-      <Modal title="Voting wallet setup" onClose={close}>
-        <Modal.Body>
-          <form onSubmit={handleSubmit(handleDelegation)}>
-            <Text size="large" mb="14px">
-              Voting method
-            </Text>
-            <ControlGroup items={radioOptions} onChange={setSelected} />
-            {selected === "delegate" && (
-              <Box mt="2px">
-                <Input
-                  ref={register({ validate })}
-                  name="address"
-                  error={errors?.address?.message}
-                  placeholder="Ethereum address"
-                />
-              </Box>
-            )}
-            <Divider />
-            <Button
-              fluid
-              mt="20px"
-              type="submit"
-              label="Submit voting preferences"
+      <Modal title="Delegate votes" align="center" onClose={close}>
+        <Text mb="16px">
+          Vote as yourself or choose a trustworthy third party whom you’d like
+          to vote on your behalf.
+        </Text>
+        <ToggleMenu
+          fluid
+          items={options}
+          onChange={({ id }) => setSelected(id)}
+        />
+        <form onSubmit={handleSubmit(handleDelegation)}>
+          <Box mt="18px">
+            <Input
+              disabled={selected !== "delegate"}
+              ref={register({ validate })}
+              name="address"
+              label="Wallet address"
+              error={errors?.address?.message}
+              placeholder="Ethereum address"
             />
-          </form>
-        </Modal.Body>
+          </Box>
+          <Button
+            fluid
+            mt="20px"
+            type="submit"
+            loading={isSubmitting}
+            label={
+              selected === "delegate"
+                ? "Delegate to third party"
+                : "Vote as self"
+            }
+          />
+        </form>
       </Modal>
     </ModalOverlay>
   );

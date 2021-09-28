@@ -1,12 +1,17 @@
+import { useWeb3React } from "@web3-react/core";
 import { Card, Stat, Button, Grid } from "union-ui";
 import { Dai } from "components-ui";
 import useStatisticsData from "hooks/governance/useStatisticsData";
 import { useDefaultedAmount } from "hooks/stats/uTokenStats/useDefaultedAmount";
 import format from "util/formatValue";
+import { duneAnalytics } from "constants/app";
 
 export function GovernanceStatsCard() {
+  const { chainId } = useWeb3React();
   const { data } = useStatisticsData();
   const { data: defaultedAmount } = useDefaultedAmount();
+
+  const duneAnalyticsUrl = duneAnalytics[chainId] || "#";
 
   return (
     <Card>
@@ -53,6 +58,9 @@ export function GovernanceStatsCard() {
           <Grid.Row>
             <Grid.Col xs={12}>
               <Button
+                as="a"
+                href={duneAnalyticsUrl}
+                target="_blank"
                 mt="32px"
                 variant="secondary"
                 label="Dune Analytics"

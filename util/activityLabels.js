@@ -9,7 +9,9 @@ const activityLabels = {
     failed,
   }),
   delegate: ({ address, hash }, failed) => ({
-    label: `Delegated to ${truncateAddress(address)}`,
+    label: address
+      ? `Delegated to ${truncateAddress(address)}`
+      : "Delegation failed",
     failed,
     hash,
   }),
