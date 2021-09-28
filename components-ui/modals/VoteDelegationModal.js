@@ -1,12 +1,4 @@
-import {
-  ModalOverlay,
-  Divider,
-  Text,
-  Button,
-  Input,
-  Box,
-  ToggleMenu,
-} from "union-ui";
+import { ModalOverlay, Text, Button, Input, Box, ToggleMenu } from "union-ui";
 import { useState } from "react";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";

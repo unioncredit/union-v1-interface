@@ -21,11 +21,19 @@ export function LiteWrapper({ children }) {
                 justify="center"
               >
                 <Link href="/">
-                  <Logo width="50px" withText />
+                  <a>
+                    <Logo width="50px" withText />
+                  </a>
                 </Link>
                 <Box mt="42px">
                   {externalLinks.map(({ label, ...props }) => (
-                    <Label as="a" mx="21px" {...props} target="_blank">
+                    <Label
+                      key={label}
+                      as="a"
+                      mx="21px"
+                      {...props}
+                      target="_blank"
+                    >
                       {label}
                     </Label>
                   ))}

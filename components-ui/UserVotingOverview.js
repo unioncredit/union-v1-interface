@@ -19,6 +19,9 @@ export function UserVotingOverview({ address }) {
     delegates,
   } = !!votingWalletData && votingWalletData;
 
+  const { ENSName: delegatesENS, name: delegatesName } =
+    usePublicData(delegates);
+
   const isDelegatingToSelf = delegates === address;
 
   const votesDelegated = isDelegatingToSelf
@@ -66,7 +69,13 @@ export function UserVotingOverview({ address }) {
           </Grid.Row>
           <Grid.Row>
             <Grid.Col>
-              <Stat mt="28px" label="DELEGATING TO" value={"self"} />
+              <Stat
+                mt="28px"
+                label="DELEGATING TO"
+                value={
+                  isDelegatingToSelf ? "self" : delegatesENS || delegatesName
+                }
+              />
             </Grid.Col>
             <Grid.Col>
               <Button
