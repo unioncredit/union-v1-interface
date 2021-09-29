@@ -2,60 +2,36 @@ import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useGovernanceContract from "../contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
-import { getLogs } from "lib/logs";
+import { request, gql } from "graphql-request";
+import { GRAPHQL_URL } from "constants/variables";
 
-const getProposalHistory = (contract, provider, chainId) => async (_, id) => {
-  const params = { fromBlock: 9601459, toBlock: "latest" };
-
-  const filters = [
+const getProposalHistory = (chainId) => async (_, id) => {
+  const query = gql`
     {
-      ...contract.filters["ProposalCreated"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalCanceled"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalExecuted"](),
-      ...params,
-    },
-    {
-      ...contract.filters["ProposalQueued"](),
-      ...params,
-    },
-  ];
-
+      proposalUpdates(where : {pid:${id}}) {
+        id
+        pid
+        proposer
+        action
+        timestamp
+      }
+    }
+  `;
+  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
   const pastEvents = await Promise.all(
-    filters.map(async (filter) => {
-      const events = await getLogs(provider, chainId, filter);
+    logs.proposalUpdates.map(async (log) => {
+      const formattedEvent = {
+        proposer: log.proposer,
+        id: log?.pid.toString(),
+        action: log.action,
+        timestamp: log.timestamp.toString(),
+        transactionHash: log.id.split("-")[0],
+      };
 
-      const eventsWithLogs = await Promise.all(
-        events.map(async (event) => {
-          const block = await provider.getBlock(event.blockNumber);
-
-          const eventParsed = contract.interface.parseLog(event);
-
-          const formattedEvent = {
-            args: eventParsed.args,
-            id: eventParsed.args?.id.toString(),
-            name: eventParsed.name,
-            timestamp: block.timestamp.toString(),
-            transactionHash: event.transactionHash,
-          };
-
-          return formattedEvent;
-        })
-      );
-
-      return eventsWithLogs;
+      return formattedEvent;
     })
   );
-
-  return pastEvents
-    .flat()
-    .filter((event) => event.id === id)
-    .sort((a, b) => a.timestamp - b.timestamp);
+  return pastEvents.flat().sort((a, b) => a.timestamp - b.timestamp);
 };
 
 export default function useProposalHistory(id) {
@@ -68,6 +44,6 @@ export default function useProposalHistory(id) {
 
   return useSWR(
     shouldFetch ? ["ProposalHistory", id] : null,
-    getProposalHistory(govContract, readProvider, chainId)
+    getProposalHistory(chainId)
   );
 }
