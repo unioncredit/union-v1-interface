@@ -17,7 +17,9 @@ const Event = ({ name, date, tx }) => {
       <div className="mt-2 h-2 w-2 rounded-full bg-grey-light" />
       <div className="flex justify-between items-center">
         <div className="mr-4">
-          <div className="text-lg leading-tight font-semibold">{name}</div>
+          <div className="text-lg leading-tight font-semibold font-capitalize">
+            {name}
+          </div>
 
           {/* Spacer */}
           <div className="h-2" />
@@ -85,20 +87,18 @@ const ProposalEventHistory = ({ id }) => {
         {hasHistory ? (
           <Fragment>
             {data.map((event, i) => {
-              let eventName = event.name;
+              let eventName = event.action;
 
-              if (event.name === "ProposalCreated") {
+              if (eventName === "proposed") {
                 return (
                   <Fragment key={i}>
                     <Event
                       name={
                         <span>
                           Proposed by{" "}
-                          <Link
-                            href={`/governance/address/${event.args.proposer}`}
-                          >
+                          <Link href={`/governance/address/${event.proposer}`}>
                             <a>
-                              <u>{truncateAddress(event.args.proposer)}</u>
+                              <u>{truncateAddress(event.proposer)}</u>
                             </a>
                           </Link>
                         </span>
@@ -110,12 +110,6 @@ const ProposalEventHistory = ({ id }) => {
                   </Fragment>
                 );
               }
-
-              if (event.name === "ProposalExecuted") eventName = "Executed";
-
-              if (event.name === "ProposalQueued") eventName = "Queued";
-
-              if (event.name === "ProposalCanceled") eventName = "Cancelled";
 
               return (
                 <Event
