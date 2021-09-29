@@ -354,6 +354,9 @@ input[type="number"] {
 .bg-mumbai {
   background: #3099f2;
 }
+.bg-unsupported {
+  background: #e61744;
+}
 
 @screen md {
   .md\:460px {
@@ -527,6 +530,46 @@ input[type="number"] {
   .btn-menu-button[data-reach-menu-button] {
     @apply px-4;
   }
+}
+
+.btn-network {
+  display: flex;
+  background: #f6f9fc;
+  padding: 0.75rem 1rem;
+  border: 1px solid #f3f4f7;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.btn-network .icon-wrapper {
+  display: flex;
+  height: 24px;
+  width: 24px;
+  margin: auto 0.5rem auto 0;
+  background: #ffffff;
+  border: 1px solid #e1e0e6;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
+
+.btn-network .icon-wrapper .icon {
+  margin: auto;
+  height: 16px;
+}
+
+.network-switch-wrapper {
+  color: #e61744;
+  background: #edeff1;
+}
+.network-switch-button {
+  color: #032437;
+  background: #ffffff;
+  border: 1px solid #c5ced5;
+}
+
+.network-switch-button:focus {
+  outline: none;
 }
 
 [data-reach-menu-list],
