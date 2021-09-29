@@ -22,7 +22,7 @@ const fetchData = (contract, provider, chainId) => async () => {
     }
   `;
   const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
-  console.log(logs);
+
   // reverse events to get them from newest to oldest
   const formattedEventData = logs.proposals
     .map((log) => {
@@ -44,7 +44,7 @@ const fetchData = (contract, provider, chainId) => async () => {
       };
     })
     .reverse();
-  console.log(formattedEventData);
+
   return formattedEventData;
 };
 
