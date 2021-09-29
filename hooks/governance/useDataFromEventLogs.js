@@ -5,36 +5,36 @@ import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 import useReadProvider from "hooks/useReadProvider";
 import { getLogs } from "lib/logs";
+import { request, gql } from "graphql-request";
+import { GRAPHQL_URL } from "constants/variables";
 
 const fetchData = (contract, provider, chainId) => async () => {
-  const filter = {
-    ...contract?.filters?.["ProposalCreated"](),
-    fromBlock: 0,
-    toBlock: "latest",
-  };
-
-  const pastEvents = await getLogs(provider, chainId, filter);
-
-  const eventParser = new Interface(GOV_ABI);
+  const query = gql`
+    {
+      proposals(first: 999) {
+        id
+        proposer
+        description
+        targets
+        signatures
+        calldatas
+      }
+    }
+  `;
+  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
 
   // reverse events to get them from newest to oldest
-  const formattedEventData = pastEvents
-    .map((event) => {
-      const eventParsed = eventParser.parseLog(event).args;
-
+  const formattedEventData = logs.proposals
+    .map((log) => {
       return {
-        description: eventParsed.description,
-        details: eventParsed.targets.map((target, i) => {
-          const signature = eventParsed.signatures[i];
-
+        description: log.description,
+        details: log.targets.map((target, i) => {
+          const signature = log.signatures[i];
           const [name, types] = signature
             .substr(0, signature.length - 1)
             .split("(");
-
-          const calldata = eventParsed.calldatas[i];
-
+          const calldata = log.calldatas[i];
           const decoded = defaultAbiCoder.decode(types.split(","), calldata);
-
           return {
             target,
             functionSig: name,
