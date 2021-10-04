@@ -7,9 +7,10 @@ import {
   Box,
   Text,
   Bar,
-  Label,
+  Stat,
   ButtonRow,
   Button,
+  Badge,
 } from "union-ui";
 import format from "util/formatValue";
 import { toPercent } from "util/numbers";
@@ -24,6 +25,12 @@ import isHash from "util/isHash";
 const VoteType = {
   FOR: "for",
   AGAINST: "against",
+};
+
+const statusColorMap = {
+  executed: "green",
+  live: "blue",
+  cancelled: "red",
 };
 
 export function VotingCard({ forCount, againstCount, proposalId, status }) {
@@ -59,7 +66,12 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
 
   return (
     <Card mb="16px">
-      <Card.Header title="Voting" />
+      <Card.Header
+        title="Voting"
+        action={
+          <Badge label={status} color={statusColorMap[status] || "blue"} />
+        }
+      />
       <Card.Body>
         <Box justify="space-between">
           <Text>For</Text>
@@ -71,28 +83,25 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
           <Text>{format(againstCount)} Votes</Text>
         </Box>
         <Bar percentage={percentageAgainst} size="large" />
-        <Box align="flex-end" mt="22px">
-          <Box direction="vertical" fluid>
-            <Label as="p" size="small">
-              Votes cast
-            </Label>
-            <Text size="large">{toPercent(totalVotePercent)}</Text>
-          </Box>
-          <Box direction="vertical" fluid>
-            <Bar
-              size="large"
-              percentage={percentageFor}
-              marker={quorumPercent * 100}
-              markerLabel={`${toPercent(quorumPercent)} Quorum`}
-            />
-          </Box>
+        <Box mt="22px">
+          <Stat fluid label="Votes cast" value={toPercent(totalVotePercent)} />
+          <Stat
+            fluid
+            label={`${toPercent(quorumPercent)} Quorum`}
+            value={
+              <Bar
+                size="large"
+                percentage={percentageFor}
+                marker={quorumPercent * 100}
+              />
+            }
+          />
         </Box>
         <Divider />
         <ButtonRow mt="16px">
           <Button
             fluid
-            label="for"
-            icon="check"
+            label="Vote for"
             variant="secondary"
             rounded
             color="green"
@@ -101,8 +110,7 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
           />
           <Button
             fluid
-            label="against"
-            icon="no"
+            label="Vote against"
             variant="secondary"
             rounded
             color="red"

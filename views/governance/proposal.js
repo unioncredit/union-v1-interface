@@ -9,6 +9,7 @@ import {
   Label,
   Skeleton,
 } from "union-ui";
+import ReactMarkdown from "react-markdown";
 import {
   VotingCard,
   Wrapper,
@@ -99,7 +100,19 @@ export default function ProposalView() {
                   <Skeleton key={i} size="small" variant="secondary" w="100%" />
                 ))
               ) : (
-                <Text>{description}</Text>
+                <ReactMarkdown
+                  renderers={{
+                    link: (props) => (
+                      <Link href={props.href}>
+                        <Text as="a" {...props} color="blue600" />
+                      </Link>
+                    ),
+                    paragraph: (props) => <Text {...props} />,
+                    listItem: (props) => <Text as="li" {...props} />,
+                  }}
+                >
+                  {description}
+                </ReactMarkdown>
               )}
             </Box>
 

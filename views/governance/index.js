@@ -19,7 +19,9 @@ export default function GovernanceView() {
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col xs={12} md={8} lg={6}>
-            <GovernanceStatsCard />
+            <Box mt="24px">
+              <GovernanceStatsCard />
+            </Box>
             <Box mt="24px">
               <LiveProposals data={liveProposalData} />
             </Box>

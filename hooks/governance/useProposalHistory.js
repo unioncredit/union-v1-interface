@@ -1,45 +1,49 @@
+import { useWeb3React } from "@web3-react/core";
+import useSWR from "swr";
 import useGovernanceContract from "../contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
-import useLogs from "hooks/data/useLogs";
+import { request, gql } from "graphql-request";
+import { GRAPHQL_URL } from "constants/variables";
 
-const parseHistory = (contract, provider, id) => async (logs) => {
-  const eventsWithLogs = await Promise.all(
-    logs.map(async (event) => {
-      const block = await provider.getBlock(event.blockNumber);
-
-      const eventParsed = contract.interface.parseLog(event);
-
+const getProposalHistory = (chainId) => async (_, id) => {
+  const query = gql`
+    {
+      proposalUpdates(where : {pid:${id}}) {
+        id
+        pid
+        proposer
+        action
+        timestamp
+      }
+    }
+  `;
+  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
+  const pastEvents = await Promise.all(
+    logs.proposalUpdates.map(async (log) => {
       const formattedEvent = {
-        args: eventParsed.args,
-        id: eventParsed.args?.id.toString(),
-        name: eventParsed.name,
-        timestamp: block.timestamp.toString(),
-        transactionHash: event.transactionHash,
+        proposer: log.proposer,
+        id: log?.pid.toString(),
+        action: log.action,
+        timestamp: log.timestamp.toString(),
+        transactionHash: log.id.split("-")[0],
       };
 
       return formattedEvent;
     })
   );
-
-  return eventsWithLogs
-    .filter((event) => event.id === id)
-    .sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
+  return pastEvents.flat().sort((a, b) => a.timestamp - b.timestamp);
 };
 
-export default function useProposalHistory(id, blockNumber) {
+export default function useProposalHistory(id) {
+  const { chainId } = useWeb3React();
   const readProvider = useReadProvider();
+
   const govContract = useGovernanceContract();
-  const parser = parseHistory(govContract, readProvider, id);
 
-  const filters = [
-    govContract.filters["ProposalCreated"](),
-    govContract.filters["ProposalCanceled"](),
-    govContract.filters["ProposalExecuted"](),
-    govContract.filters["ProposalQueued"](),
-  ];
+  const shouldFetch = govContract && readProvider && chainId && id;
 
-  return useLogs(filters, parser, {
-    startBlock: blockNumber,
-    startPosition: "START",
-  });
+  return useSWR(
+    shouldFetch ? ["ProposalHistory", id] : null,
+    getProposalHistory(chainId)
+  );
 }

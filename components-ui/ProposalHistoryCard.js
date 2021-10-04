@@ -7,12 +7,14 @@ function parseData(data) {
   return data.map((item) => {
     const subTitle = new Date(Number(item.timestamp * 1000)).toDateString();
 
-    if (item.name === "ProposalQueued") {
-      return { title: "Proposal Queued", subTitle };
-    } else if (item.name === "ProposalCreated") {
-      return { title: "Proposal Created", subTitle };
-    } else if (item.name === "ProposalExecuted") {
-      return { title: "Proposal Executed", subTitle };
+    if (item.action === "queued") {
+      return { title: "Queued", subTitle };
+    } else if (item.action === "proposed") {
+      return { title: "Created", subTitle };
+    } else if (item.action === "executed") {
+      return { title: "Executed", subTitle };
+    } else {
+      return {};
     }
   });
 }

@@ -44,3 +44,4 @@ export * from "./MiniProfileCard";
 export * from "./GovernanceStatsCard";
 export * from "./BecomeMemberCard";
 export * from "./CreditProvidersCard";
+export * from "./Link";

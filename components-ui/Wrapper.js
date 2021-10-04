@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { Wallet, TabLink, Navigation, navItems } from "components-ui";
+import { Wallet, TabLink, Navigation, navItems, Link } from "components-ui";
 import {
   AccountModal,
   useAccountModal,
@@ -41,20 +41,28 @@ const contextMenuItems = [
   { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
 ];
 
-export function Wrapper({ children, tabItems }) {
+export function Wrapper({ children, tabItems, onTabItemsChange }) {
   const router = useRouter();
   const isMobile = useIsMobile();
+  const { account } = useWeb3React();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
-  const { account } = useWeb3React();
 
   const { name } = usePublicData(account);
 
   const tabItemLinks =
     tabItems?.length > 0
-      ? tabItems.map((item) => ({ ...item, as: TabLink }))
+      ? tabItems.map((item) =>
+          onTabItemsChange ? item : { ...item, as: TabLink }
+        )
       : [];
+
+  const navItemLinks = navItems.map((item) => ({
+    ...item,
+    as: Link,
+    href: item.id === "profile" ? `/profile/${account}` : item.pathname,
+  }));
 
   const initialTab = tabItemLinks.findIndex(
     (item) => item.href === router.pathname
@@ -111,7 +119,7 @@ export function Wrapper({ children, tabItems }) {
                   >
                     {isMobile && (
                       <ContextMenu
-                        items={navItems.slice(1)}
+                        items={navItemLinks.slice(1)}
                         button={(toggleOpen) => (
                           <Button
                             onClick={toggleOpen}
@@ -123,11 +131,14 @@ export function Wrapper({ children, tabItems }) {
                         )}
                       />
                     )}
-                    <ToggleMenu
-                      className="wrapper-toggle-menu"
-                      items={tabItemLinks}
-                      initialActive={initialTab}
-                    />
+                    {tabItemLinks && (
+                      <ToggleMenu
+                        className="wrapper-toggle-menu"
+                        items={tabItemLinks}
+                        initialActive={!!~initialTab ? initialTab : 0}
+                        onChange={onTabItemsChange}
+                      />
+                    )}
                   </Box>
                   {children}
                 </Box>

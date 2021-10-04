@@ -1,29 +1,37 @@
-import { defaultAbiCoder, Interface } from "@ethersproject/abi";
-import { GOV_ABI } from "constants/governance";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
-import useLogs from "hooks/data/useLogs";
+import { defaultAbiCoder } from "@ethersproject/abi";
+import { useWeb3React } from "@web3-react/core";
+import useSWR from "swr";
+import { request, gql } from "graphql-request";
+import { GRAPHQL_URL } from "constants/variables";
 
-const parseProposalLogs = async (logs) => {
-  const eventParser = new Interface(GOV_ABI);
+const fetchData = (chainId) => async () => {
+  const query = gql`
+    {
+      proposals(first: 999) {
+        id
+        proposer
+        description
+        targets
+        signatures
+        calldatas
+      }
+    }
+  `;
+
+  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
+
   // reverse events to get them from newest to oldest
-  const formattedEventData = logs
-    .map((event) => {
-      const eventParsed = eventParser.parseLog(event).args;
-
+  const formattedEventData = logs.proposals
+    .map((log) => {
       return {
-        ...event,
-        description: eventParsed.description,
-        details: eventParsed.targets.map((target, i) => {
-          const signature = eventParsed.signatures[i];
-
+        description: log.description,
+        details: log.targets.map((target, i) => {
+          const signature = log.signatures[i];
           const [name, types] = signature
             .substr(0, signature.length - 1)
             .split("(");
-
-          const calldata = eventParsed.calldatas[i];
-
+          const calldata = log.calldatas[i];
           const decoded = defaultAbiCoder.decode(types.split(","), calldata);
-
           return {
             target,
             functionSig: name,
@@ -38,8 +46,15 @@ const parseProposalLogs = async (logs) => {
 };
 
 export function useDataFromEventLogs() {
-  const govContract = useGovernanceContract();
-  const proposalFilter = govContract?.filters.ProposalCreated();
-  const logs = useLogs([proposalFilter], parseProposalLogs);
-  return logs;
+  const { chainId } = useWeb3React();
+
+  const shouldFetch = chainId;
+
+  return useSWR(shouldFetch ? ["EventLogsData"] : null, fetchData(chainId), {
+    shouldRetryOnError: false,
+    refreshWhenHidden: false,
+    refreshWhenOffline: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 }

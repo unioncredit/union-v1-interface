@@ -228,3 +228,7 @@ export const OFAC_SANCTIONED = [
   /* Zimbabwe */
   "ZW",
 ];
+
+export const GRAPHQL_URL = {
+  137: "https://api.thegraph.com/subgraphs/name/unioncredit/union-",
+};
