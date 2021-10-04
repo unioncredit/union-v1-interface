@@ -135,7 +135,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                       <ToggleMenu
                         className="wrapper-toggle-menu"
                         items={tabItemLinks}
-                        initialActive={!!~initialTab ? initialTab : 0}
+                        initialActive={~initialTab ? initialTab : 0}
                         onChange={onTabItemsChange}
                       />
                     )}
