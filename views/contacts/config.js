@@ -2,7 +2,7 @@ import { ContactsType } from "constants/app";
 
 export const config = {
   title: "Contacts",
-  toggleItems: [
+  tabItems: [
     { id: ContactsType.TRUSTS_YOU, label: "Trusts you" },
     {
       id: ContactsType.YOU_TRUST,

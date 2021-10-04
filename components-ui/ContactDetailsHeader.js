@@ -5,8 +5,9 @@ import truncateAddress from "util/truncateAddress";
 
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
+import { ContactsType } from "constants/app";
 
-export function ContactDetailsHeader({ address, isOverdue }) {
+export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
   const { ENSName, BoxName } = usePublicData(address);
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
@@ -18,6 +19,8 @@ export function ContactDetailsHeader({ address, isOverdue }) {
   const [label1] = [label, ENSName || BoxName, truncatedAddress].filter(
     Boolean
   );
+
+  const isYouTrust = contactsType === ContactsType.YOU_TRUST;
 
   return (
     <Box mb="24px" align="center">
@@ -32,11 +35,13 @@ export function ContactDetailsHeader({ address, isOverdue }) {
               color="grey"
               label={<Copyable value={address}>{address.slice(0, 6)}</Copyable>}
             />
-            <Badge
-              ml="7px"
-              color={isOverdue ? "red" : "blue"}
-              label={isOverdue ? "Overdue" : "Healthy"}
-            />
+            {!isYouTrust && (
+              <Badge
+                ml="7px"
+                color={isOverdue ? "red" : "blue"}
+                label={isOverdue ? "Overdue" : "Healthy"}
+              />
+            )}
           </Box>
         </Box>
       </Box>

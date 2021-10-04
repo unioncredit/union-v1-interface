@@ -51,7 +51,7 @@ export default function ProfileView() {
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col xs={12} md={8} lg={6}>
-            <Card>
+            <Card mt="24px">
               <Card.Body>
                 <Box direction="vertical" align="center">
                   <Avatar size={56} address={address} />

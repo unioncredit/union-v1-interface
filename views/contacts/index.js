@@ -142,12 +142,11 @@ export default function ContactsView() {
 
   return (
     <>
-      <Wrapper title={config.title}>
-        <ToggleMenu
-          items={config.toggleItems}
-          initialActive={0}
-          onChange={handleToggleContactType}
-        />
+      <Wrapper
+        title={config.title}
+        tabItems={config.tabItems}
+        onTabItemsChange={handleToggleContactType}
+      >
         <Grid>
           <Grid.Row justify="center">
             <Grid.Col md={6}>

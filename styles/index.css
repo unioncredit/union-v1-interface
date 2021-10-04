@@ -100,3 +100,10 @@ a {
     align-self: flex-end;
   }
 }
+
+ol,
+ul {
+  list-style: normal;
+  padding-left: 20px;
+  box-sizing: border-box;
+}

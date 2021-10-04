@@ -24,22 +24,29 @@ export default function UnsupportedChainView() {
   return (
     <LiteWrapper>
       <Box justify="center" align="center" direction="vertical" fluid mb="10vh">
-        <Heading mb="4px" mt="64px" size="xlarge" weight="medium" grey={800}>
+        <Heading
+          mb="4px"
+          mt="64px"
+          size="xlarge"
+          weight="medium"
+          grey={800}
+          align="center"
+        >
           You’re connect to an unsupported network
         </Heading>
-        <Text grey={500} mb="32px">
+        <Text grey={500} mb="32px" align="center">
           Select one of our major supported networks below
         </Text>
         <Grid>
           <Grid.Row justify="center">
-            <Grid.Col xs={9}>
+            <Grid.Col md={12} lg={9}>
               <Grid.Row>
                 {options.map((props) => {
                   const { label, value, imageSrc, description, buttonVariant } =
                     props;
                   return (
-                    <Grid.Col xs={6} key={label}>
-                      <Card>
+                    <Grid.Col xs={12} md={6} key={label}>
+                      <Card mb="24px">
                         <Card.Body>
                           <Box justify="center" mb="24px">
                             <Avatar size={48} src={imageSrc} />
