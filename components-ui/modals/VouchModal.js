@@ -70,7 +70,7 @@ export function VouchModal() {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
         <MiniProfileCard address={address} />
         <form onSubmit={handleSubmit(handleNewVouch)}>

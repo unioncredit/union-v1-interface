@@ -27,7 +27,7 @@ export function CongratulationsModal({ onClose, creditLimit }) {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Union Membership" onClose={handleClose} size="medium">
         <Modal.Body>
           <Heading align="center">

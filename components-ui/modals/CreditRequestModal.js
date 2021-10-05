@@ -19,7 +19,7 @@ export function CreditRequestModal() {
   const url = generateLink(account);
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Vouch QR Code" onClose={close}>
         <Box direction="vertical" align="center">
           <Box mb="16px">

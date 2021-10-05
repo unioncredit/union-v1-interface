@@ -93,7 +93,7 @@ export function BorrowModal({
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Borrow funds" onClose={close}>
         <form onSubmit={handleSubmit(handleBorrow)}>
           <Grid>

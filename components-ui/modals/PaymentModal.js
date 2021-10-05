@@ -98,7 +98,7 @@ export function PaymentModal({
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Make a payment" onClose={close}>
         <form onSubmit={handleSubmit(handlePayment)}>
           <Grid>

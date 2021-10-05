@@ -83,7 +83,7 @@ export function NewVouchModal({ address }) {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <Box mb="26px" justify="space-between">

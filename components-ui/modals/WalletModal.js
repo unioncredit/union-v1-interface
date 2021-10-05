@@ -11,7 +11,7 @@ export function WalletModal() {
   const { close } = useWalletModal();
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Wallet" onClose={close}>
         <Modal.Body>
           <RewardsCardContent />

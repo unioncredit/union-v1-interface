@@ -51,7 +51,7 @@ export function AccountModal() {
       : null;
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Account" onClose={close}>
         <Box mb="20px">
           <NetworkSelect />

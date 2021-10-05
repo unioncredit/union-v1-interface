@@ -70,7 +70,7 @@ export function EditVouchModal({ address, used, vouched }) {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Change credit limit" onClose={close}>
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>

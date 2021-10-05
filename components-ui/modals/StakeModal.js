@@ -27,7 +27,7 @@ export function StakeModal() {
   const { close, type } = useStakeModal();
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Stake" onClose={close}>
         <StakeCardContent type={type} onComplete={close} />
       </Modal>

@@ -55,7 +55,7 @@ export function VoteDelegationModal() {
   };
 
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={close}>
       <Modal title="Delegate votes" align="center" onClose={close}>
         <Text mb="16px">
           Vote as yourself or choose a trustworthy third party whom you’d like
