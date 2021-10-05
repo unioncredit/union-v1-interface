@@ -20,7 +20,7 @@ export default function UnsupportedChainView() {
       setIsLoading(value.buttonVariant);
       await switchChain(value);
     } catch (error) {
-      console.log(error);
+      return;
     } finally {
       setIsLoading(false);
     }

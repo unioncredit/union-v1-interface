@@ -1,4 +1,4 @@
-import { NotificationStack, Notification, Text, Label, Icon } from "union-ui";
+import { NotificationStack, Notification, Label } from "union-ui";
 import { toastState, removeToast } from "hooks/useToast";
 import getEtherscanLink from "util/getEtherscanLink";
 import { useWeb3React } from "@web3-react/core";
