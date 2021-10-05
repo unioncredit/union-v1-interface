@@ -9,6 +9,7 @@ import {
   Icon,
   Badge,
   Label,
+  Divider,
 } from "union-ui";
 import { useRouter } from "next/router";
 import { Wrapper, Avatar, Copyable } from "components-ui";
@@ -17,6 +18,8 @@ import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
 import { useWeb3React } from "@web3-react/core";
 import usePublicData from "hooks/usePublicData";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import format from "util/formatValue";
 
 const config = {
   title: "Profile page bitch",
@@ -31,6 +34,19 @@ export default function ProfileView() {
   const { data: vouchData = [] } = useVouchData(address);
   const { data: trustData = [] } = useTrustData(address);
   const { data: creditLimit = "0.0" } = useCreditLimit(address);
+  const { data: votingWalletData } = useVotingWalletData(address);
+
+  const {
+    balanceOf = 0,
+    currentVotes = 0,
+    delegates,
+  } = !!votingWalletData && votingWalletData;
+
+  const isDelegatingToSelf = delegates === address;
+
+  const votesDelegated = isDelegatingToSelf
+    ? currentVotes - balanceOf
+    : currentVotes;
 
   const vouchesForYou = trustData.some((x) => x.address === account);
   const vouchedForThem = vouchData.some((x) => x.address === account);
@@ -145,6 +161,39 @@ export default function ProfileView() {
                       />
                     </Grid.Col>
                   </Grid.Row>
+                </Grid>
+                <Divider mt="24px" />
+                <Grid>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Heading mt="24px">Governance</Heading>
+                    </Grid.Col>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Col>
+                      <Stat label="Total Votes" value={format(currentVotes)} />
+                    </Grid.Col>
+                    <Grid.Col>
+                      <Stat label="Union Balance" value={format(balanceOf)} />
+                    </Grid.Col>
+                    <Grid.Col>
+                      <Stat
+                        label="From others"
+                        value={format(votesDelegated)}
+                      />
+                    </Grid.Col>
+                  </Grid.Row>
+                  {address !== account && (
+                    <Grid.Row>
+                      <Grid.Col>
+                        <Button
+                          mt="24px"
+                          variant="secondary"
+                          label={`Delegate votes to ${name}`}
+                        />
+                      </Grid.Col>
+                    </Grid.Row>
+                  )}
                 </Grid>
               </Card.Body>
             </Card>
