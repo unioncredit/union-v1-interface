@@ -16,9 +16,14 @@ export default function UnsupportedChainView() {
   const [loading, setIsLoading] = useState(false);
 
   const handleChangeNetwork = (value) => async () => {
-    setIsLoading(true);
-    await switchChain(value);
-    setIsLoading(false);
+    try {
+      setIsLoading(value.buttonVariant);
+      await switchChain(value);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,7 +66,7 @@ export default function UnsupportedChainView() {
                             fluid
                             mt="24px"
                             variant={buttonVariant}
-                            loading={loading}
+                            loading={loading === buttonVariant}
                             label={`Switch to ${value}`}
                             onClick={handleChangeNetwork(props)}
                           />

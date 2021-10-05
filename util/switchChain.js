@@ -42,6 +42,10 @@ export const switchChain = async (value) => {
       params: [{ chainId: value.networkData.chainId }],
     });
   } catch (switchError) {
+    if (switchError.message === "User rejected the request.") {
+      return;
+    }
+
     try {
       await window.ethereum.request({
         method: "wallet_addEthereumChain",
