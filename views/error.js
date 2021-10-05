@@ -1,34 +1,34 @@
-import Head from "next/head";
 import Link from "next/link";
-import { Box, Heading, Layout, Button } from "union-ui";
+import { Box, Heading, Button, Text, ButtonRow } from "union-ui";
+import { LiteWrapper } from "components-ui";
+import { links } from "constants/app";
 
-export default function ErrorView() {
+export default function ErrorView({ title, content }) {
   return (
-    <Layout>
-      <Layout.Main>
-        <Head>
-          <title>Error | Union</title>
-          <meta property="og:title" content="404 | Union" />
-          <meta name="twitter:title" content="404 | Union" />
-        </Head>
-
-        <Box
-          justify="center"
-          align="center"
-          my="auto"
-          direction="vertical"
-          fluid
-        >
-          <Heading align="center">An unexpected error occurred</Heading>
-          <Link href="/">
-            <Button
-              label="Take me home"
-              variant="secondary"
-              icon="arrow-left"
-            />
-          </Link>
+    <LiteWrapper>
+      <div>
+        <Box fluid justify="center" align="center" h="60vh">
+          <Box
+            justify="center"
+            align="center"
+            direction="vertical"
+            maxw="440px"
+          >
+            <Heading align="center" size="xxlarge" mb="12px">
+              {title}
+            </Heading>
+            <Text align="center">{content}</Text>
+            <ButtonRow mt="24px">
+              <Link href="/">
+                <Button label="Back to app" />
+              </Link>
+              <Link href={links.docs}>
+                <Button label="Read the docs" variant="secondary" />
+              </Link>
+            </ButtonRow>
+          </Box>
         </Box>
-      </Layout.Main>
-    </Layout>
+      </div>
+    </LiteWrapper>
   );
 }

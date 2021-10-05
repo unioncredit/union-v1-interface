@@ -5,12 +5,15 @@ export default function Error() {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>Union</title>
-        <meta property="og:title" content="Union" />
-        <meta name="twitter:title" content="Union" />
+        <title>Error | Union</title>
+        <meta property="og:title" content="404 | Union" />
+        <meta name="twitter:title" content="404 | Union" />
       </Head>
 
-      <ErrorView />
+      <ErrorView
+        title="Oh no! You just came across an error."
+        content="Something broke while you were using the app. Try reloading the page or use one of the helpful links below."
+      />
     </div>
   );
 }
