@@ -24,22 +24,7 @@ import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
 import { Avatar } from "./Avatar";
 import { ClaimButton } from "./ClaimButton";
-
-const contextMenuItems = [
-  {
-    label: "Docs",
-    target: "_blank",
-    href: "https://unionfinance.gitbook.io/docs/",
-  },
-  { label: "Blog", target: "_blank", href: "https://medium.com/union-finance" },
-  {
-    label: "Twitter",
-    target: "_blank",
-    href: "https://twitter.com/unionprotocol",
-  },
-  { label: "Discord", target: "_blank", href: "https://discord.gg/cZagzJ3p8G" },
-  { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
-];
+import { contextMenuItems } from "constants/app";
 
 export function Wrapper({ children, tabItems, onTabItemsChange }) {
   const router = useRouter();

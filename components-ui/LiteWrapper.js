@@ -1,13 +1,8 @@
-import { links } from "constants/app";
 import Link from "next/link";
-import { Layout, Box, Logo, Grid, Row, Col, Label } from "union-ui";
+import { Layout, ContextMenu, Logo, Grid, Row, Col } from "union-ui";
+import { ClaimButton } from "components-ui";
+import { contextMenuItems } from "constants/app";
 
-const externalLinks = [
-  { label: "Website", href: links.website },
-  { label: "Twitter", href: links.twitter },
-  { label: "Docs", href: links.docs },
-  { label: "Blog", href: links.blog },
-];
 export function LiteWrapper({ children }) {
   return (
     <Layout>
@@ -15,35 +10,22 @@ export function LiteWrapper({ children }) {
         <Grid style={{ display: "flex", flexGrow: 1 }}>
           <Row style={{ width: "100%", margin: 0 }}>
             <Col>
-              <Layout.Header
-                align="center"
-                direction="vertical"
-                justify="center"
-              >
+              <Layout.Header align="center">
                 <Link href="/">
                   <a>
-                    <Logo width="50px" withText />
+                    <Logo width="50px" />
                   </a>
                 </Link>
-                <Box mt="42px">
-                  {externalLinks.map(({ label, ...props }) => (
-                    <Label
-                      key={label}
-                      as="a"
-                      mx="21px"
-                      {...props}
-                      target="_blank"
-                    >
-                      {label}
-                    </Label>
-                  ))}
-                </Box>
+                <ContextMenu
+                  position="left"
+                  items={contextMenuItems}
+                  after={<ClaimButton size="small" label="Claim UNION" />}
+                />
               </Layout.Header>
               {children}
             </Col>
           </Row>
         </Grid>
-        <Box mb="80px" />
       </Layout.Main>
     </Layout>
   );
