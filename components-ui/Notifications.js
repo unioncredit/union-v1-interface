@@ -22,20 +22,15 @@ export function Notifications() {
   return (
     <NotificationStack>
       {toasts.map(({ id, body, type, hash, title }) => (
-        <Notification key={id} variant={type} onClose={handleClose(id)}>
-          <Text>{title || defaultTitles[type]}</Text>
+        <Notification
+          key={id}
+          variant={type}
+          onClose={handleClose(id)}
+          title={title || defaultTitles[type]}
+          link={hash && getEtherscanLink(chainId, hash, "TRANSACTION")}
+        >
           <Label as="p" size="small">
-            {hash ? (
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-              >
-                View transaction <Icon name="external" />
-              </a>
-            ) : (
-              body
-            )}
+            {hash ? "View transaction" : body}
           </Label>
         </Notification>
       ))}
