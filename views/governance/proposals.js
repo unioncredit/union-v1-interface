@@ -20,7 +20,7 @@ export default function ProposalsView() {
                 <Button
                   inlint
                   mb="24px"
-                  variant="secondary"
+                  variant="lite"
                   label="Back to overview"
                   icon="arrow-left"
                   iconPosition="start"

@@ -50,7 +50,7 @@ export default function ProposalView() {
             <Box mb="40px">
               <Link href="/governance/proposals">
                 <Button
-                  variant="secondary"
+                  variant="lite"
                   label="Back to proposals"
                   icon="arrow-left"
                 />

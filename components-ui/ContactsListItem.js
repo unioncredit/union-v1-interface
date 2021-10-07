@@ -62,12 +62,12 @@ export function ContactsListItemSkeleton() {
     <TableRow>
       <TableCell>
         <Box align="center">
-          <Skeleton variant="circle" size={24} grey={200} />
-          <Skeleton width={100} height={10} ml="16px" grey={200} />
+          <Skeleton shimmer variant="circle" size={24} grey={200} />
+          <Skeleton shimmer width={100} height={10} ml="16px" grey={200} />
         </Box>
       </TableCell>
       <TableCell span={1}>
-        <Skeleton width={40} height={10} ml="auto" grey={200} />
+        <Skeleton shimmer width={40} height={10} ml="auto" grey={200} />
       </TableCell>
     </TableRow>
   );
