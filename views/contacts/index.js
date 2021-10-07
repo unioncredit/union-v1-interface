@@ -9,6 +9,8 @@ import {
   Divider,
   Pagination,
   Icon,
+  ButtonRow,
+  Select,
 } from "union-ui";
 import {
   Modal,
@@ -42,6 +44,21 @@ import { ContactsType } from "constants/app";
 import usePopTrustModal from "hooks/usePopTrustModal";
 import { useRouter } from "next/router";
 import useIsMobile from "hooks/useIsMobile";
+import useFilterContacts from "hooks/useFilterContacts";
+
+const statusOptions = [
+  { id: "all", label: "All statuses" },
+  { id: "defaulted", label: "Defaulted" },
+  { id: "healthy", label: "Healthy" },
+];
+
+const oderByOptions = [
+  { id: "all", label: "Order by" },
+  { id: "trust-ascending", label: <>Trust amount &middot; Ascending</> },
+  { id: "trust-descending", label: <>Trust amount &middot; Descending</> },
+  { id: "label-a-z", label: <>Label &middot; A {"->"} Z</> },
+  { id: "label-z-a", label: <>Label &middot; Z {"->"} A</> },
+];
 
 const withMobileView =
   (Component) =>
@@ -71,6 +88,8 @@ const ContactDetailsCard = ({ contactsType, ...props }) => {
 export default function ContactsView() {
   const isMobile = useIsMobile();
   const router = useRouter();
+
+  const [showFilters, setShowFilters] = useState(false);
   const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -86,7 +105,10 @@ export default function ContactsView() {
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
   const isLoading = !data;
 
-  const { data: searchData, register } = useContactsSearch(data);
+  const { data: filteredData, setFilter, setOrderBy } = useFilterContacts(data);
+
+  const { data: searchData, register } = useContactsSearch(filteredData);
+
   const {
     data: pagedData,
     page,
@@ -106,6 +128,10 @@ export default function ContactsView() {
     if (item.id === contactsType) return;
     setSelectedContact(null);
     setContactsType(item.id);
+  };
+
+  const toggleFilters = () => {
+    setShowFilters((x) => !x);
   };
 
   useEffect(() => {
@@ -135,9 +161,14 @@ export default function ContactsView() {
   usePopTrustModal();
 
   const title =
-    contactsType === ContactsType.TRUSTS_YOU
-      ? "Contacts who trust you"
-      : "Contacts you trust";
+    contactsType === ContactsType.YOU_TRUST
+      ? "Accounts you trust"
+      : "Accounts who trust you";
+
+  const subTitle =
+    contactsType === ContactsType.YOU_TRUST
+      ? "Accounts you’re currently vouching for"
+      : "Accounts providing you with credit";
 
   return (
     <>
@@ -150,27 +181,67 @@ export default function ContactsView() {
           <Grid.Row justify="center">
             <Grid.Col md={6}>
               <Card mt="24px">
-                <Card.Header title={title} />
+                <Card.Header title={title} subTitle={subTitle} />
                 <Card.Body>
-                  {contactsType === ContactsType.YOU_TRUST && (
+                  {contactsType === ContactsType.YOU_TRUST ? (
                     <>
-                      <Button
-                        fluid
-                        label="Vouch for new contact"
-                        icon="vouch"
-                        onClick={openVouchModal}
-                      />
+                      <ButtonRow mb="8px">
+                        <Button
+                          fluid
+                          variant="secondary"
+                          label="New vouch"
+                          icon="vouch"
+                          onClick={openVouchModal}
+                        />
+                        <Button
+                          fluid
+                          variant="secondary"
+                          label={`${showFilters ? "Hide" : "Show"} filters`}
+                          onClick={toggleFilters}
+                        />
+                      </ButtonRow>
+                      {showFilters && (
+                        <Card variant="packed">
+                          <Card.Body>
+                            <Input
+                              ref={register}
+                              name="query"
+                              suffix={<Icon name="search" />}
+                              placeholder="Filter by ENS or address"
+                            />
+                            <Box mt="8px">
+                              <Select
+                                options={statusOptions}
+                                onChange={({ id }) => {
+                                  setFilter(id);
+                                }}
+                                defaultValue={statusOptions[0]}
+                              />
+                            </Box>
+                            <Box mt="8px">
+                              <Select
+                                options={oderByOptions}
+                                onChange={({ id }) => {
+                                  setOrderBy(id);
+                                }}
+                                defaultValue={oderByOptions[0]}
+                              />
+                            </Box>
+                          </Card.Body>
+                        </Card>
+                      )}
                       <Divider mt="16px" mb="16px" />
                     </>
+                  ) : (
+                    <Box mb="16px">
+                      <Input
+                        ref={register}
+                        name="query"
+                        suffix={<Icon name="search" />}
+                        placeholder="Filter by ENS or address"
+                      />
+                    </Box>
                   )}
-                  <Box mb="16px">
-                    <Input
-                      ref={register}
-                      name="query"
-                      suffix={<Icon name="search" />}
-                      placeholder="Filter by ENS or address"
-                    />
-                  </Box>
                   <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
                       ? createArray(3).map((_, i) => (

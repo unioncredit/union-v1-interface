@@ -35,10 +35,11 @@ export function BorrowModal({
   const { data: maxBorrow } = useMaxBorrow();
   const { data: loanableAmount } = useLoanableAmount();
 
-  const { errors, formState, register, watch, handleSubmit } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { errors, formState, register, watch, handleSubmit, setValue } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   const { isDirty, isSubmitting } = formState;
 
@@ -124,11 +125,25 @@ export function BorrowModal({
               label="Borrow"
               placeholder="0.0"
               suffix={<Dai />}
-              caption={`${amountWithFee} DAI including fee`}
+              caption={`Max. ${format(calcMaxIncludingFee)} DAI`}
+              onCaptionClick={() =>
+                setValue("amount", calcMaxIncludingFee, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
               error={errors.amount?.message || false}
             />
           </Box>
           <Box justify="space-between" mt="16px">
+            <Label as="p" size="small">
+              Total including fee
+            </Label>
+            <Label as="p" size="small">
+              {format(amountWithFee)} DAI
+            </Label>
+          </Box>
+          <Box justify="space-between">
             <Label as="p" size="small">
               New balance owed
             </Label>

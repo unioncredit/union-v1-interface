@@ -5,7 +5,10 @@ import useAddressLabels from "./useAddressLabels";
 // search for contacts using address or label
 export default function useContactsSearch(data) {
   const { labels } = useAddressLabels();
-  const { register, watch } = useForm();
+  const { register, watch } = useForm({
+    reValidateMode: "onChange",
+    mode: "onChange",
+  });
 
   const query = watch("query");
 
