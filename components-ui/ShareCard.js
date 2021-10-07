@@ -20,7 +20,7 @@ import {
 } from "union-ui";
 import { Copyable } from "./Copyable";
 
-export function ShareCard({ vouchCount }) {
+export function ShareCard({ vouchCount, title, content }) {
   const { account } = useWeb3React();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
@@ -31,12 +31,11 @@ export function ShareCard({ vouchCount }) {
     <>
       <Card variant="blue" mt="24px">
         <Card.Body>
-          <Heading align="center">Get extra credit</Heading>
+          <Heading align="center">{title}</Heading>
           <Text align="center" mb="24px">
-            Share your link with other Union members who might be willing to
-            vouch for you with their DAI.
+            {content}
           </Text>
-          {vouchCount && (
+          {!isNaN(vouchCount) && (
             <Box justify="center" mb="24px" fluid>
               <CircleProgress
                 percentage={(vouchCount / 3) * 100}
@@ -45,6 +44,9 @@ export function ShareCard({ vouchCount }) {
               />
             </Box>
           )}
+          <Label as="p" align="center" size="small" m={0} color="blue400">
+            VOUCH LINK
+          </Label>
           <Label as="p" align="center" mb="24px">
             <Copyable value={url}>
               {url.slice(0, 16)}...{url.slice(-16)}

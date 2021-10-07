@@ -35,7 +35,7 @@ export function ContactsListItem(props) {
         <Box align="center">
           <Avatar address={address} />
           <Text grey={700} ml="8px">
-            {name} {label && <>&bull; {label}</>}
+            {label && <>{label} &middot;</>} {name}
           </Text>
         </Box>
       </TableCell>

@@ -14,14 +14,17 @@ export default function BorrowView() {
     <Wrapper title={config.title} tabItems={config.tabItems}>
       <Grid>
         <Row justify="center">
-          <Col xs={12} md={8} lg={6}>
+          <Col>
             <Box mt="24px">
               <BorrowStatsCard />
             </Box>
             <Box mt="24px">
               <CreditProvidersCard />
             </Box>
-            <ShareCard />
+            <ShareCard
+              title="Get extra credit"
+              content="Share your link with other Union members who might be willing to vouch for you with their DAI."
+            />
             <Card mt="24px">
               <Card.Header
                 title="Transaction History"

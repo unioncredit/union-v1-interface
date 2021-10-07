@@ -35,7 +35,7 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
               color="grey"
               label={<Copyable value={address}>{address.slice(0, 6)}</Copyable>}
             />
-            {!isYouTrust && (
+            {isYouTrust && (
               <Badge
                 ml="7px"
                 color={isOverdue ? "red" : "blue"}

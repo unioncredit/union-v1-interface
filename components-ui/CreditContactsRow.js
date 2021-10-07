@@ -2,9 +2,10 @@ import usePublicData from "hooks/usePublicData";
 import { Text, TableCell, TableRow, Skeleton, Box } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
+import format from "util/formatValue";
 
 export function CreditContactsRow(props) {
-  const { address, vouched, onClick } = props;
+  const { address, trust, onClick } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -28,7 +29,7 @@ export function CreditContactsRow(props) {
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
-          <Dai value={vouched} />
+          <Dai value={format(trust)} />
         </Text>
       </TableCell>
     </TableRow>

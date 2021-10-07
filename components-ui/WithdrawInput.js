@@ -5,7 +5,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
-import { Button, InputRow, Dai, Input } from "union-ui";
+import { Button, Box, Dai, Input } from "union-ui";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
@@ -13,13 +13,16 @@ import isHash from "util/isHash";
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
-  const { handleSubmit, register, setValue, formState, errors, reset } =
+  const { handleSubmit, register, setValue, formState, errors, reset, watch } =
     useForm({
       mode: "onChange",
       reValidateMode: "onChange",
     });
 
   const { isDirty, isSubmitting } = formState;
+
+  const watchAmount = watch("amount", 0);
+  const amount = Number(watchAmount || 0);
 
   const withdraw = useStakeWithdraw();
 
@@ -48,7 +51,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputRow mt="18px">
+      <Box mt="18px">
         <Input
           type="number"
           ref={register({
@@ -63,19 +66,19 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
             },
           })}
           name="amount"
-          label="Amount to withdraw"
+          label="Amount to unstake"
           caption={`Max. ${withdrawableStake} DAI`}
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
           suffix={<Dai />}
           error={errors?.amount?.message}
         />
-      </InputRow>
+      </Box>
       <Button
         fluid
         type="submit"
         mt="18px"
-        label="Withdraw"
+        label={`Unstake ${amount} DAI`}
         loading={isSubmitting}
         disabled={!isDirty}
       />

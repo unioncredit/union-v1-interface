@@ -18,7 +18,7 @@ export default function GovernanceView() {
     <Wrapper title={config.title}>
       <Grid>
         <Grid.Row justify="center">
-          <Grid.Col xs={12} md={8} lg={6}>
+          <Grid.Col>
             <Box mt="24px">
               <GovernanceStatsCard />
             </Box>

@@ -5,9 +5,9 @@ import {
   usePaymentModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Bar } from "union-ui";
+import { Stat, Button, Grid, Card } from "union-ui";
 import format from "util/formatValue";
-import { roundDown, roundUp, toPercent } from "util/numbers";
+import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -30,18 +30,9 @@ export function BorrowStatsCard() {
     isOverdue = false,
   } = !!borrowData && borrowData;
 
-  const actualCreditLimit = vouchData
-    ? vouchData.reduce(
-        (acc, data) => acc + Number(data.trust) - Number(data.used),
-        0
-      )
-    : 0;
-
   const totalCreditLimit = vouchData
     ? vouchData.reduce((acc, data) => acc + Number(data.trust), 0)
     : 0;
-
-  const percentageBorrowed = borrowedRounded / totalCreditLimit;
 
   const onComplete = async () => {
     await updateCreditLimit();
@@ -54,26 +45,21 @@ export function BorrowStatsCard() {
       <Card>
         <Card.Header title="Borrow & Repay" align="center" />
         <Card.Body>
-          <Grid>
+          <Grid divider>
             <Grid.Row>
               <Grid.Col xs={6}>
                 <Stat
                   size="large"
-                  align="center"
-                  label="Credit Limit"
-                  value={<Dai value={format(roundDown(actualCreditLimit))} />}
-                />
-                <Stat
                   label="Available"
                   align="center"
-                  mt="24px"
                   value={<Dai value={format(roundDown(creditLimit))} />}
-                  after={
-                    <Bar
-                      label={toPercent(percentageBorrowed)}
-                      percentage={percentageBorrowed * 100}
-                    />
-                  }
+                />
+                <Stat
+                  mt="24px"
+                  align="center"
+                  label="Credit Limit"
+                  value={<Dai value={format(roundDown(171))} />}
+                  after={`of max ${totalCreditLimit}`}
                 />
                 <Button
                   mt="28px"

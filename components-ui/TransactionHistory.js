@@ -54,15 +54,15 @@ function TransactionHistorySkeletonRow() {
     <TableRow>
       <TableCell>
         <Box align="center">
-          <Skeleton variant="circle" size={24} grey={200} />
-          <Skeleton width={60} height={10} grey={200} ml="6px" />
+          <Skeleton shimmer variant="circle" size={24} grey={200} />
+          <Skeleton shimmer width={60} height={10} grey={200} ml="6px" />
         </Box>
       </TableCell>
       <TableCell>
-        <Skeleton width={80} height={10} grey={200} />
+        <Skeleton shimmer width={80} height={10} grey={200} />
       </TableCell>
       <TableCell align="right">
-        <Skeleton width={30} height={10} grey={200} />
+        <Skeleton shimmer width={30} height={10} grey={200} />
       </TableCell>
     </TableRow>
   );

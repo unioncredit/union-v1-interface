@@ -8,6 +8,7 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useRewardsData from "hooks/data/useRewardsData";
 import isHash from "util/isHash";
+import { addToast, FLAVORS } from "hooks/useToast";
 
 export function ClaimButton({ onComplete, label, ...props }) {
   const addActivity = useAddActivity();
@@ -18,6 +19,10 @@ export function ClaimButton({ onComplete, label, ...props }) {
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
   const handleClaim = async () => {
+    if (rewards <= 0) {
+      addToast(FLAVORS.ERROR("No rewards to claim"));
+      return;
+    }
     try {
       setLoading(true);
       const { hash } = await withdrawRewards();

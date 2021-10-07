@@ -3,8 +3,9 @@ import {
   useCongratulationsModal,
   StakeModal,
   useStakeModal,
+  StakeType,
 } from "components-ui/modals";
-import { Grid, Row, Col, Box, Card, Stat, Button } from "union-ui";
+import { Grid, Row, Col, Box, Card, Stat, Button, ButtonRow } from "union-ui";
 import {
   Wrapper,
   ShareCard,
@@ -33,7 +34,7 @@ export default function MembershipView() {
   };
 
   return (
-    <Wrapper title={config.title} tabItems={config.tabItems}>
+    <Wrapper title={config.title}>
       <Grid gutterWidth={0}>
         <Row justify="center">
           <Col xs={12} md={8} lg={6}>
@@ -54,17 +55,19 @@ export default function MembershipView() {
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Col>
-                      <Button
-                        label="Stake"
-                        onClick={() => openStakeModal("deposit")}
-                      />
-                    </Grid.Col>
-                    <Grid.Col>
-                      <Button
-                        label="Unstake"
-                        variant="secondary"
-                        onClick={() => openStakeModal("withdraw")}
-                      />
+                      <ButtonRow fluid>
+                        <Button
+                          fluid
+                          label="Stake"
+                          onClick={() => openStakeModal(StakeType.STAKE)}
+                        />
+                        <Button
+                          fluid
+                          label="Unstake"
+                          variant="secondary"
+                          onClick={() => openStakeModal(StakeType.UNSTAKE)}
+                        />
+                      </ButtonRow>
                     </Grid.Col>
                   </Grid.Row>
                 </Grid>
@@ -72,7 +75,11 @@ export default function MembershipView() {
             </Card>
             <Box mb="24px">
               {vouchData.length < 3 ? (
-                <ShareCard vouchCount={fencedTrustCount} />
+                <ShareCard
+                  vouchCount={fencedTrustCount}
+                  title="Get trusted on Union"
+                  content="Before you can start using Union, you’ll need 3 existing members to vouch for you."
+                />
               ) : (
                 <BecomeMemberCard />
               )}

@@ -7,7 +7,7 @@ export function Modal(props) {
     const scrollbarWidth = getScrollbarWidth();
     document.body.style = `overflow:hidden;margin-right:${scrollbarWidth}px;`;
     return () => {
-      document.body.style = "overflow:unset;margin-right:0;";
+      document.body.style = "overflow-y:scroll;margin-right:0;";
     };
   }, []);
 

@@ -12,6 +12,7 @@ import {
   Borrow,
   NewVouch,
   NewMember,
+  EmptyState,
 } from "union-ui";
 import createArray from "util/createArray";
 import formatDateTime from "util/formatDateTime";
@@ -76,7 +77,7 @@ export function AccountActivity({
   return (
     <>
       {isEmpty ? (
-        <Text>No history</Text>
+        <EmptyState label="No account history" />
       ) : (
         <Table>
           {data?.map((item, i) => {
@@ -101,12 +102,18 @@ export function AccountActivity({
               <TableRow key={i}>
                 <TableCell>
                   <Box align="center">
-                    <Skeleton variant="circle" size={24} grey={200} />
-                    <Skeleton width={120} height={10} grey={200} ml="8px" />
+                    <Skeleton shimmer variant="circle" size={24} grey={200} />
+                    <Skeleton
+                      shimmer
+                      width={120}
+                      height={10}
+                      grey={200}
+                      ml="8px"
+                    />
                   </Box>
                 </TableCell>
                 <TableCell span={2}>
-                  <Skeleton width={80} height={10} grey={200} />
+                  <Skeleton shimmer width={80} height={10} grey={200} />
                 </TableCell>
               </TableRow>
             ))}

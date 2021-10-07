@@ -135,8 +135,8 @@ export function PaymentModal({
               name="amount"
               suffix={<Dai />}
               label="Repay"
-              placeholder="0"
-              caption={`Pay minimum ${roundUp(interest)}`}
+              placeholder="0.0"
+              caption={`Pay minimum ${roundUp(interest)} DAI`}
               onCaptionClick={handlePayMinimum}
               error={errors.amount?.message || false}
             />

@@ -6,6 +6,7 @@ import {
   TableRow,
   TableCell,
   Skeleton,
+  EmptyState,
 } from "union-ui";
 import Link from "next/link";
 import { toPercent } from "util/numbers";
@@ -70,14 +71,13 @@ function ProposalsTableRow({
 }
 
 export function ProposalsTable({ data }) {
+  if (data && data.length <= 0) {
+    return <EmptyState label="There are no live proposals" />;
+  }
+
   return (
     <Table>
       {!data && <ProposalsTableRowSkeleton />}
-      {data && data.length <= 0 && (
-        <TableRow>
-          <TableCell>No proposals</TableCell>
-        </TableRow>
-      )}
       {data && data.map((row, i) => <ProposalsTableRow key={i} {...row} />)}
     </Table>
   );

@@ -19,18 +19,17 @@ export function GovernanceStatsCard() {
       <Card.Body>
         <Grid>
           <Grid.Row>
-            <Grid.Col xs={12}>
+            <Grid.Col>
               <Stat
-                size="medium"
+                mt="8px"
                 align="center"
-                label="Lending pool"
-                value={<Dai value={format(data?.lendingPoolBalance)} />}
+                label="Total staked"
+                value={<Dai value={format(data?.totalStaked)} />}
               />
             </Grid.Col>
-            <Grid.Col xs={12}>
+            <Grid.Col>
               <Stat
-                mt="24px"
-                size="medium"
+                mt="8px"
                 align="center"
                 label="Lending pool"
                 value={<Dai value={format(data?.lendingPoolBalance)} />}

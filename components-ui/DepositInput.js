@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { useForm } from "react-hook-form";
 
-import { Button, Dai, InputRow, Input } from "union-ui";
+import { Button, Dai, Box, Input } from "union-ui";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import useCurrentToken from "hooks/useCurrentToken";
@@ -69,11 +69,11 @@ export const DepositInput = ({ totalStake, onComplete }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <InputRow mt="18px">
+      <Box mt="18px">
         <Input
           type="number"
           name="amount"
-          label="Amount to deposit"
+          label="Amount to stake"
           caption={`Max. ${maxAllowed} DAI`}
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
@@ -91,14 +91,14 @@ export const DepositInput = ({ totalStake, onComplete }) => {
             },
           })}
         />
-      </InputRow>
+      </Box>
       <Button
         fluid
         mt="18px"
         type="submit"
         loading={isSubmitting}
         disabled={!isDirty || newTotalStake > 500}
-        label="Deposit"
+        label={`Stake ${amount} DAI`}
       />
     </form>
   );

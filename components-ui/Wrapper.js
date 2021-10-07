@@ -116,7 +116,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                         )}
                       />
                     )}
-                    {tabItemLinks && (
+                    {tabItemLinks?.length > 0 && (
                       <ToggleMenu
                         className="wrapper-toggle-menu"
                         items={tabItemLinks}

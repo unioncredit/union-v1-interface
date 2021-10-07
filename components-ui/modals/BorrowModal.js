@@ -124,7 +124,7 @@ export function BorrowModal({
               label="Borrow"
               placeholder="0.0"
               suffix={<Dai />}
-              caption={`${amountWithFee} including fee`}
+              caption={`${amountWithFee} DAI including fee`}
               error={errors.amount?.message || false}
             />
           </Box>

@@ -107,3 +107,14 @@ ul {
   padding-left: 20px;
   box-sizing: border-box;
 }
+
+.grid-with-divider .grid-col:nth-child(1):after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: red;
+}
