@@ -3,7 +3,7 @@ import format from "util/formatValue";
 import { roundDown, toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
 import { Dai } from "components-ui";
-import { useStakeModal, StakeModal } from "components-ui/modals";
+import { useStakeModal, StakeModal, StakeType } from "components-ui/modals";
 
 export function LendStatsCard() {
   const { data: stakeData } = useStakeData();
@@ -76,15 +76,15 @@ export function LendStatsCard() {
                 <Button
                   label="Deposit DAI"
                   mt="24px"
-                  onClick={handleOpenStakeModal("deposit")}
+                  onClick={handleOpenStakeModal(StakeType.STAKE)}
                 />
               </Grid.Col>
               <Grid.Col xs={6}>
                 <Button
                   mt="24px"
-                  label="Widthdraw DAI"
+                  label="Withdraw DAI"
                   variant="secondary"
-                  onClick={handleOpenStakeModal("withdraw")}
+                  onClick={handleOpenStakeModal(StakeType.UNSTAKE)}
                 />
               </Grid.Col>
             </Grid.Row>

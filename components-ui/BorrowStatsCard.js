@@ -34,6 +34,13 @@ export function BorrowStatsCard() {
     ? vouchData.reduce((acc, data) => acc + Number(data.trust), 0)
     : 0;
 
+  const actualCreditLimit = vouchData
+    ? vouchData.reduce(
+        (acc, data) => acc + Number(data.available) + Number(data.used),
+        0
+      )
+    : 0;
+
   const onComplete = async () => {
     await updateCreditLimit();
     await updateVouchData();
@@ -58,7 +65,7 @@ export function BorrowStatsCard() {
                   mt="24px"
                   align="center"
                   label="Credit Limit"
-                  value={<Dai value={format(roundDown(171))} />}
+                  value={<Dai value={format(roundDown(actualCreditLimit))} />}
                   after={`of max ${totalCreditLimit}`}
                 />
                 <Button
