@@ -6,6 +6,8 @@ import {
   useAccountModal,
   VoteDelegationModal,
   useVoteDelegationModal,
+  useClaimModal,
+  ClaimModal,
 } from "components-ui/modals";
 import {
   Layout,
@@ -23,13 +25,13 @@ import usePublicData from "hooks/usePublicData";
 import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
 import { Avatar } from "./Avatar";
-import { ClaimButton } from "./ClaimButton";
 import { contextMenuItems } from "constants/app";
 
 export function Wrapper({ children, tabItems, onTabItemsChange }) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const { account } = useWeb3React();
+  const { isOpen: isClaimModalOpen, open: openClaimModal } = useClaimModal();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
   const { isOpen: isAccountModalOpen, open: openAccountModal } =
     useAccountModal();
@@ -85,7 +87,14 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                     <ContextMenu
                       position="left"
                       items={contextMenuItems}
-                      after={<ClaimButton size="small" label="Claim UNION" />}
+                      after={
+                        <Button
+                          fluid
+                          size="small"
+                          label="Claim UNION"
+                          onClick={openClaimModal}
+                        />
+                      }
                     />
                   </Box>
                 </Layout.Header>
@@ -135,6 +144,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
       </Layout>
       {isAccountModalOpen && <AccountModal />}
       {isVoteDelegationOpen && <VoteDelegationModal />}
+      {isClaimModalOpen && <ClaimModal />}
     </>
   );
 }

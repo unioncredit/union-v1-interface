@@ -108,13 +108,16 @@ ul {
   box-sizing: border-box;
 }
 
-.grid-with-divider .grid-col:nth-child(1):after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 2px;
-  height: 100%;
-  background: red;
+.inverted-circle-logo {
+  background-color: #44403c;
+  border-radius: 100%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inverted-circle-logo svg path {
+  fill: white;
 }
