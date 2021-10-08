@@ -1,5 +1,4 @@
 import useBorrowData from "hooks/data/useBorrowData";
-import PropTypes from "prop-types";
 import { Stat, Grid, Card, Button } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
@@ -127,11 +126,3 @@ export function ContactDetails({ contactsType, ...props }) {
     </>
   );
 }
-
-ContactDetails.propTypes = {
-  variant: PropTypes.oneOf(["you-trust", "trusts-you"]),
-};
-
-ContactDetails.defaultProps = {
-  variant: "vouch",
-};
