@@ -5,7 +5,7 @@ import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import { useAddActivity } from "hooks/data/useActivity";
-import useUnionSymbol from "hooks/data/useUnionSymbol";
+import useUnionSymbol from "hooks/useUnionSymbol";
 import activityLabels from "util/activityLabels";
 import useRewardsData from "hooks/data/useRewardsData";
 import isHash from "util/isHash";
