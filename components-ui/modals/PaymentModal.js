@@ -6,6 +6,7 @@ import {
   Button,
   ButtonRow,
   Grid,
+  Label,
 } from "union-ui";
 import { Modal, Dai } from "components-ui";
 import { useForm } from "react-hook-form";
@@ -22,6 +23,7 @@ import useRepay from "hooks/payables/useRepay";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
+import format from "util/formatValue";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -62,6 +64,8 @@ export function PaymentModal({
 
   const nextPaymentDue =
     paymentDueDate === "No Payment Due" ? "-" : paymentDueDate;
+
+  const newBalanceOwed = calculateBalanceOwed - amount;
 
   const handlePayMinimum = () => {
     setValue("amount", roundUp(interest));
@@ -143,6 +147,14 @@ export function PaymentModal({
               onCaptionClick={handlePayMinimum}
               error={errors.amount?.message || false}
             />
+          </Box>
+          <Box justify="space-between" mt="16px">
+            <Label as="p" size="small">
+              New balance owed
+            </Label>
+            <Label as="p" size="small">
+              {format(newBalanceOwed)} DAI
+            </Label>
           </Box>
           <ButtonRow fluid>
             <Button

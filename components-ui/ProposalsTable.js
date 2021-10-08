@@ -10,6 +10,10 @@ import {
 } from "union-ui";
 import Link from "next/link";
 import { toPercent } from "util/numbers";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+
+dayjs.extend(relativeTime);
 
 function ProposalsTableRowSkeleton() {
   return (
@@ -59,10 +63,10 @@ function ProposalsTableRow({
           <Label>
             <Badge
               color={statusColorMap[status] || "blue"}
-              label={status}
+              label={status.slice(0, 1).toUpperCase() + status.slice(1)}
               mr="8px"
             />
-            {toPercent(percentageFor)} yes &bull; {date}
+            {toPercent(percentageFor)} yes &bull; {dayjs().to(dayjs(date))}
           </Label>
         </TableCell>
       </TableRow>

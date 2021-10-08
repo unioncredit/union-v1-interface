@@ -38,6 +38,18 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
 
   const { name } = usePublicData(account);
 
+  useInactiveListener();
+
+  const { isLoading } = useMemberCheck();
+
+  if (isLoading) {
+    return (
+      <div className="loading-screen">
+        <LoadingSpinner size={30} />
+      </div>
+    );
+  }
+
   const tabItemLinks =
     tabItems?.length > 0
       ? tabItems.map((item) =>
@@ -55,16 +67,9 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
     (item) => item.href === router.pathname
   );
 
-  useInactiveListener();
-  const { isLoading } = useMemberCheck();
-
-  if (isLoading) {
-    return (
-      <div className="loading-screen">
-        <LoadingSpinner size={30} />
-      </div>
-    );
-  }
+  const activeNavItem = navItemLinks.find(
+    (item) => item.pathname === router.pathname
+  );
 
   return (
     <>
@@ -117,7 +122,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                         button={(toggleOpen) => (
                           <Button
                             onClick={toggleOpen}
-                            label="Menu"
+                            label={activeNavItem?.label || "Menu"}
                             variant="secondary"
                             icon="dropdown-arrow"
                             iconPosition="end"

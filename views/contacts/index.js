@@ -195,6 +195,7 @@ export default function ContactsView() {
                         />
                         <Button
                           fluid
+                          icon="filter"
                           variant="secondary"
                           label={`${showFilters ? "Hide" : "Show"} filters`}
                           onClick={toggleFilters}

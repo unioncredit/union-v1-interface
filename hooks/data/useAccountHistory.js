@@ -1,11 +1,7 @@
 import useReadProvider from "hooks/useReadProvider";
 import useUserContract from "hooks/contracts/useUserContract";
 import useLogs from "./useLogs";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { formatUnits } from "@ethersproject/units";
-
-dayjs.extend(relativeTime);
 
 const parseUpdateTrust = (provider, userManagerContract) => async (log) => {
   const block = await provider.getBlock(log.blockNumber);

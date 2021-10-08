@@ -19,6 +19,7 @@ export default function ProposalsView() {
               <Link href="/governance">
                 <Button
                   inlint
+                  mt="24px"
                   mb="24px"
                   variant="lite"
                   label="Back to overview"
