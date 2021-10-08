@@ -30,7 +30,7 @@ export function Notifications() {
           link={hash && getEtherscanLink(chainId, hash, "TRANSACTION")}
         >
           <Label as="p" size="small">
-            {hash ? "View transaction" : body}
+            {body}
           </Label>
         </Notification>
       ))}

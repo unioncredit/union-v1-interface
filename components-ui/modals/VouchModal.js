@@ -16,6 +16,7 @@ import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import { isAddress } from "@ethersproject/address";
+import truncateAddress from "util/truncateAddress";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -42,7 +43,14 @@ export function VouchModal() {
   const handleNewVouch = async (data) => {
     try {
       const { hash } = await adjustTrust(data.address, data.amount);
-      await getReceipt(hash, library);
+      await getReceipt(hash, library, {
+        pending: `Vouching ${data.amount} DAI for ${truncateAddress(
+          data.address
+        )}`,
+        success: `Vouched ${data.amount} DAI for ${truncateAddress(
+          data.address
+        )}`,
+      });
       addActivity(
         activityLabels.newVouch({
           address: data.address,
@@ -60,7 +68,7 @@ export function VouchModal() {
           true
         )
       );
-      handleTxError(err);
+      handleTxError(err, `Failed to vouch ${data.amount} DAI`);
     }
   };
 

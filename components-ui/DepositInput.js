@@ -56,14 +56,17 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const onSubmit = async (values) => {
     try {
       const { hash } = await deposit(values.amount);
-      await getReceipt(hash, library);
+      await getReceipt(hash, library, {
+        pending: `Staking ${values.amount} DAI`,
+        success: `Staked ${values.amount} DAI`,
+      });
       addActivity(activityLabels.borrow({ amount: values.amount, hash }));
       await onComplete();
       reset();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.borrow({ amount: values.amount, hash }, true));
-      handleTxError(err);
+      handleTxError(err, `Failed to stake ${values.amount} DAI`);
     }
   };
 

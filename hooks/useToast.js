@@ -6,31 +6,14 @@ const initialState = [];
 export const toastState = newRidgeState(initialState);
 
 export const FLAVORS = {
-  TX_WAITING: {
-    body: "Waiting for confirmation",
-    type: "pending",
-    hideAfter: 0,
-  },
-  TX_PENDING: (hash) => ({
-    body: "Transaction is pending.",
+  TX_PENDING: (hash, body) => ({
+    body: body || "Transaction is pending.",
     hash,
     type: "pending",
     hideAfter: 0,
   }),
-  TX_PENDING_TOKEN: (hash) => ({
-    body: "Enabling token.",
-    hash,
-    type: "pending",
-    hideAfter: 0,
-  }),
-  TX_SUCCESS: (hash) => ({
-    body: "Transaction successful.",
-    hash,
-    type: "success",
-    hideAfter: 15,
-  }),
-  TX_SUCCESS_ENABLED: (hash) => ({
-    body: "Token enabled successfully.",
+  TX_SUCCESS: (hash, body) => ({
+    body: body || "Transaction successful.",
     hash,
     type: "success",
     hideAfter: 15,
@@ -46,11 +29,6 @@ export const FLAVORS = {
     type: "success",
     hideAfter: 15,
   },
-  WALLET_ERROR: (message) => ({
-    body: message,
-    type: "error",
-    hideAfter: 15,
-  }),
   SUCCESS: (message) => ({
     body: message,
     type: "success",

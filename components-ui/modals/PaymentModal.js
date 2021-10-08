@@ -86,14 +86,17 @@ export function PaymentModal({
 
     try {
       const { hash } = await repay(amountToRepay);
-      await getReceipt(hash, library);
+      await getReceipt(hash, library, {
+        pending: `Paying back ${amountToRepay} DAI`,
+        success: `Paid back ${amountToRepay} DAI`,
+      });
       addActivity(activityLabels.repay({ amount: amountToRepay, hash }));
       if (typeof onComplete === "function") await onComplete();
       close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.repay({ amount: amountToRepay, hash }, true));
-      handleTxError(err);
+      handleTxError(err, `Failed to pay back ${amountToRepay} DAI`);
     }
   };
 

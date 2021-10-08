@@ -82,14 +82,17 @@ export function BorrowModal({
     try {
       const { amount } = data;
       const { hash } = await borrow(amount);
-      await getReceipt(hash, library);
+      await getReceipt(hash, library, {
+        pending: `Borrowing ${amount} DAI`,
+        success: `Borrowed ${amount} DAI`,
+      });
       if (typeof onComplete === "function") onComplete();
       addActivity(activityLabels.borrow({ amount, hash }));
       close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.borrow({ amount: data.amount, hash }, true));
-      handleTxError(err);
+      handleTxError(err, `Failed to borrow ${amount} DAI`);
     }
   };
 

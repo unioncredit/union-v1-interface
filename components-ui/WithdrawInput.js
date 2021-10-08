@@ -29,7 +29,10 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   const onSubmit = async (values) => {
     try {
       const { hash } = await withdraw(values.amount);
-      await getReceipt(hash, library);
+      await getReceipt(hash, library, {
+        pending: `Unstaking ${values.amount} DAI`,
+        success: `Unstaked ${values.amount} DAI`,
+      });
       await onComplete();
       addActivity(activityLabels.withdraw({ amount: values.amount, hash }));
       reset();
@@ -38,7 +41,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       addActivity(
         activityLabels.withdraw({ amount: values.amount, hash }, true)
       );
-      handleTxError(err);
+      handleTxError(err, `Failed to unstake ${values.amount} DAI`);
     }
   };
 

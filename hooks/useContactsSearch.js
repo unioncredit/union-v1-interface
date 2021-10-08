@@ -13,9 +13,9 @@ export default function useContactsSearch(data) {
   const query = watch("query");
 
   const searched = useMemo(() => {
-    if (!query) return [...data];
+    if (!query) return data;
 
-    if (!Array.isArray(data)) return [...data];
+    if (!Array.isArray(data)) return data;
 
     const lowerCaseQuery = query.toLowerCase();
 
