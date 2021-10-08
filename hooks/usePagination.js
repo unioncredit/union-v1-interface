@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export default function usePagination(data = [], pageSize = 8) {
   const [page, setPage] = useState(1);
@@ -16,7 +16,15 @@ export default function usePagination(data = [], pageSize = 8) {
   const pageData = useMemo(() => {
     const start = (page - 1) * pageSize;
     return data.slice(start, start + pageSize);
-  }, [pageSize, page, data]);
+    // react be like this data is the same so stringified it
+    // because the upstream memos seems to be correct so fk
+  }, [pageSize, page, JSON.stringify(data)]);
+
+  useEffect(() => {
+    if (data > 0) {
+      setPage(1);
+    }
+  }, [data]);
 
   return {
     page,
