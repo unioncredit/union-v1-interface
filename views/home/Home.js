@@ -69,9 +69,9 @@ export default function HomeView() {
           <Logo />
         </div>
         {footerNav.map((items, i) => (
-          <div className="footer-nav">
+          <div className="footer-nav" key={i}>
             {items.map((item, j) => (
-              <Link href={item.href}>
+              <Link href={item.href} key={j}>
                 <Label as="a" className="footer-nav-item">
                   {item.label}
                 </Label>

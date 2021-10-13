@@ -1,6 +1,6 @@
 import { Box } from "union-ui";
 
-export default function Wrapper({ size, children, ...props }) {
+export default function Wrapper({ children, ...props }) {
   return (
     <Box
       fluid
