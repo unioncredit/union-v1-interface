@@ -12,7 +12,10 @@ export const links = {
   twitter: "https://twitter.com/unionprotocol",
   blog: "https://medium.com/union-finance",
   website: "https://union.finance/",
+  governance: "https://union.finance/governance",
   docs: "https://unionfinance.gitbook.io/docs/",
+  discord: "https://discord.gg/cZagzJ3p8G",
+  github: "https://github.com/unioncredit",
 };
 
 export const contextMenuItems = [
