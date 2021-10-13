@@ -5,15 +5,7 @@ import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "constants/app";
 
 export function ContactsListItem(props) {
-  const {
-    contactsType,
-    address,
-    vouched,
-    onClick,
-    isOverdue,
-    variant,
-    active,
-  } = props;
+  const { address, vouched, onClick, isOverdue, variant, active } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -29,7 +21,7 @@ export function ContactsListItem(props) {
     <TableRow
       onClick={handleClick}
       active={active}
-      error={isOverdue && contactsType !== ContactsType.YOU_TRUST}
+      error={isOverdue && variant === ContactsType.YOU_TRUST}
     >
       <TableCell span={4}>
         <Box align="center">
