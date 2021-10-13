@@ -3,14 +3,16 @@
   overflow: hidden;
 }
 
-.home .main-page {
-  width: 95%;
-  max-width: 646px;
-  margin: 0 auto;
+.home-wrapper {
+  max-width: 920px;
 }
 
-.home .jumbo {
-  width: 100%;
+.home-wrapper .home-wrapper {
+  max-width: 605px;
+}
+
+.home .card {
+  text-align: center;
 }
 
 .home .main-page-footer {
@@ -21,8 +23,6 @@
 
 .home header {
   padding: 43px 14px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
 }
 
 .home .main-page-logo,
@@ -31,30 +31,9 @@
   margin: 0 auto;
 }
 
-@media screen and (max-width: 600px) {
-  .home header {
-    display: flex;
-    justify-content: space-between;
-    padding: 26px 14px;
-  }
-  .home .main-page-logo {
-    margin: 0;
-  }
-
-  .home .footer-logo {
-    width: 32px;
-    margin: 0 auto 30px;
-  }
-}
-
 .home .home-nav {
   display: flex;
   align-items: center;
-}
-
-.home .heading--purple {
-  color: #5143b6;
-  font-weight: 700;
 }
 
 .home .main-page-footer img {
@@ -62,23 +41,18 @@
   margin: 0 auto;
 }
 
-.home .main-page .tabs {
-  text-align: center;
-}
-
-.home .main-page-footer .card .button {
-  margin: 0 auto;
-}
-
 .home footer {
-  background-color: white;
-  box-shadow: inset 0px 1px 0px rgba(0, 0, 0, 0.1);
+  background-color: #fafaf9;
   padding: 64px 0;
-  margin-top: 156px;
+  margin-top: 96px;
 }
 
 .home .footer-nav {
   text-align: center;
+}
+
+.home .footer-nav:nth-of-type(3) .footer-nav-item {
+  color: #c4c4c4;
 }
 
 .home .footer-nav-item {
@@ -86,69 +60,9 @@
   margin: 0 32px;
   margin-top: 24px;
   font-size: 13px;
+  color: #565461;
 }
 
-.home .footer-nav-item.secondary {
-  opacity: 0.5;
-}
-
-.home .bullet-header img {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-
-.home .jumbo:not(.hero) {
-  margin-top: 188px;
-}
-
-@media screen and (max-width: 600px) {
-  .home .intro-title {
-    font-size: 21.88px;
-  }
-  .home .bullet-title {
-    font-size: 27.34px;
-    text-align: left !important;
-    margin-bottom: 18px !important;
-    margin-top: 80px !important;
-  }
-
-  .home .bullet-header {
-    margin-top: 24px !important;
-    margin-bottom: 8px !important;
-  }
-
-  .home .bullet-header:first-child {
-    margin-top: 0;
-  }
-
-  .home .jumbo:not(.hero) {
-    width: 150%;
-    transform: translateX(-50%);
-    left: 50%;
-    position: relative;
-    margin-top: 80px;
-  }
-
-  .heading--preSubTitle {
-    margin-top: 80px !important;
-  }
-
-  .heading--xlarge {
-    font-size: 27.34px;
-    line-height: 33.09px;
-  }
-
-  .home .footer-nav-item {
-    margin: 12px 10px;
-    font-size: 12px;
-  }
-
-  .home footer {
-    margin-top: 104px;
-  }
-
-  .home .tabs-title {
-    margin-top: 110px !important;
-  }
+.home img {
+  width: 100%;
 }
