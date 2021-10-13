@@ -6,7 +6,7 @@ export default function IntroCards() {
       <Grid>
         <Row>
           <Col sm={12} md={4}>
-            <Card>
+            <Card mb="16px">
               <Card.Body>
                 <Box maxw="64px" mx="auto">
                   <img src="/images/efficient.png" alt="efficient" />
@@ -22,7 +22,7 @@ export default function IntroCards() {
             </Card>
           </Col>
           <Col sm={12} md={4}>
-            <Card>
+            <Card mb="16px">
               <Card.Body>
                 <Box maxw="64px" mx="auto">
                   <img src="/images/lock.png" alt="open" />
@@ -38,7 +38,7 @@ export default function IntroCards() {
             </Card>
           </Col>
           <Col sm={12} md={4}>
-            <Card>
+            <Card mb="16px">
               <Card.Body>
                 <Box maxw="64px" mx="auto">
                   <img src="/images/people.png" alt="open" />

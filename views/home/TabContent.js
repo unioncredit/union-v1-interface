@@ -30,7 +30,12 @@ export default function TabContent() {
           />
         </Box>
       </Box>
-      <ToggleMenu items={tabItems} variant="secondary" onChange={setSelected} />
+      <ToggleMenu
+        items={tabItems}
+        variant="secondary"
+        onChange={setSelected}
+        className="toggle-menu-relationship"
+      />
     </>
   );
 }

@@ -9,7 +9,7 @@ export default function Jumbo() {
         <img
           src="/images/jumbo-2.png"
           alt="union-community"
-          className="jumbo"
+          className="jumbo jumbo--people"
         />
       </Box>
       <Heading mt="8px" align="center" size="xxlarge">

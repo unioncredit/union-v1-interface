@@ -22,7 +22,8 @@
 }
 
 .home header {
-  padding: 43px 14px;
+  padding: 43px 34px;
+  box-sizing: border-box;
 }
 
 .home .main-page-logo,
@@ -57,7 +58,7 @@
 
 .home .footer-nav-item {
   display: inline-block;
-  margin: 0 32px;
+  margin: 0 16px;
   margin-top: 24px;
   font-size: 13px;
   color: #565461;
@@ -65,4 +66,27 @@
 
 .home img {
   width: 100%;
+}
+
+.home .open-app-text svg {
+  width: 12px;
+  transform: rotate(180deg);
+}
+
+.home .open-app-text svg polygon {
+  fill: #2563eb;
+}
+
+@media screen and (max-width: 600px) {
+  .home .toggle-menu-relationship {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .home .jumbo.jumbo--people {
+    width: 120%;
+    position: relative;
+    left: 48%;
+    transform: translateX(-50%);
+  }
 }
