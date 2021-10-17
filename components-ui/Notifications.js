@@ -21,19 +21,35 @@ export function Notifications() {
 
   return (
     <NotificationStack>
-      {toasts.map(({ id, body, type, hash, title }) => (
-        <Notification
-          key={id}
-          variant={type}
-          onClose={handleClose(id)}
-          title={title || defaultTitles[type]}
-          link={hash && getEtherscanLink(chainId, hash, "TRANSACTION")}
-        >
+      {toasts.map(({ id, body, type, hash, title }) => {
+        const link = hash && getEtherscanLink(chainId, hash, "TRANSACTION");
+
+        const bodyContent = (
           <Label as="p" size="small">
             {body}
           </Label>
-        </Notification>
-      ))}
+        );
+
+        return (
+          <Notification
+            key={id}
+            variant={type}
+            onClose={handleClose(id)}
+            title={title || defaultTitles[type]}
+            link={link}
+          >
+            <Label as="p" size="small">
+              {link ? (
+                <a href={link} target="_blank" rel="noreferrer">
+                  {bodyContent}
+                </a>
+              ) : (
+                bodyContent
+              )}
+            </Label>
+          </Notification>
+        );
+      })}
     </NotificationStack>
   );
 }
