@@ -18,6 +18,7 @@ import useTrustCountData from "hooks/data/useTrustCountData";
 import useVouchData from "hooks/data/useVouchData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import { config } from "./config";
+import useStakeData from "hooks/data/useStakeData";
 
 export default function MembershipView() {
   const { mutate: updateIsMember } = useIsMember();
@@ -26,8 +27,11 @@ export default function MembershipView() {
   const { data: creditLimit = 0 } = useCreditLimit();
   const { isOpen: isCongratulationsModalOpen } = useCongratulationsModal();
   const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
+  const { data: stakeData } = useStakeData();
 
   const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
+
+  const { totalStake = 0.0 } = !!stakeData && stakeData;
 
   const onComplete = async () => {
     await updateIsMember();
@@ -48,7 +52,7 @@ export default function MembershipView() {
                         size="large"
                         align="center"
                         label="TOTAL STAKE"
-                        value={<Dai value={0} />}
+                        value={<Dai value={totalStake} />}
                         mb="32px"
                       />
                     </Grid.Col>
