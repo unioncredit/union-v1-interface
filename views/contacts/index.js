@@ -85,12 +85,13 @@ const ContactDetailsCard = ({ contactsType, ...props }) => {
   );
 };
 
-export default function ContactsView() {
+export default function ContactsView({
+  contactsType = ContactsType.TRUSTS_YOU,
+}) {
   const isMobile = useIsMobile();
   const router = useRouter();
 
   const [showFilters, setShowFilters] = useState(false);
-  const [contactsType, setContactsType] = useState(ContactsType.TRUSTS_YOU);
   const [selectedContact, setSelectedContact] = useState(null);
 
   const { isOpen: isManageContactModalOpen } = useManageContactModal();
@@ -121,33 +122,17 @@ export default function ContactsView() {
     : ContactDetailsCard;
 
   const query = router.query;
-  const contactsTypeOverride = query?.contactsType;
   const queryContact = query?.contact;
-
-  const handleToggleContactType = (item) => {
-    if (item.id === contactsType) return;
-    setSelectedContact(null);
-    setContactsType(item.id);
-  };
 
   const toggleFilters = () => {
     setShowFilters((x) => !x);
   };
 
   useEffect(() => {
-    if (contactsTypeOverride && contactsType !== contactsTypeOverride) {
-      setContactsType(contactsTypeOverride);
-    }
-  }, [contactsTypeOverride]);
-
-  useEffect(() => {
     if (!vouchData || !trustData) return;
 
     const data =
-      contactsType === ContactsType.TRUSTS_YOU ||
-      contactsTypeOverride === ContactsType.TRUSTS_YOU
-        ? vouchData
-        : trustData;
+      contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
     if (queryContact) {
       const contact = data.find(({ address }) => address === queryContact);
@@ -156,7 +141,7 @@ export default function ContactsView() {
     }
 
     !isMobile && setSelectedContact(data[0]);
-  }, [vouchData, trustData, contactsType, contactsTypeOverride, queryContact]);
+  }, [vouchData, trustData, contactsType, queryContact]);
 
   usePopTrustModal();
 
@@ -172,11 +157,7 @@ export default function ContactsView() {
 
   return (
     <>
-      <Wrapper
-        title={config.title}
-        tabItems={config.tabItems}
-        onTabItemsChange={handleToggleContactType}
-      >
+      <Wrapper title={config.title} tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
             <Grid.Col md={6}>
