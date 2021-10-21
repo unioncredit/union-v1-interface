@@ -130,6 +130,9 @@ export default function ProfileView() {
                   {account === address && (
                     <>
                       <Button
+                        as="a"
+                        target="_blank"
+                        href="https://app.ens.domains/"
                         mt="32px"
                         mb="8px"
                         fluid
