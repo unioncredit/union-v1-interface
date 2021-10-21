@@ -140,17 +140,6 @@ export default function ProfileView() {
                           </>
                         }
                       />
-                      <Button
-                        fluid
-                        icon="avatar"
-                        variant="secondary"
-                        label={
-                          <>
-                            Change profile photo
-                            <Icon name="external" />
-                          </>
-                        }
-                      />
                     </>
                   )}
                 </Box>
