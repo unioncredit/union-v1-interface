@@ -16,9 +16,11 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
     <Copyable value={address}>{truncateAddress(address)}</Copyable>
   );
 
-  const [label1] = [label, ENSName || BoxName, truncatedAddress].filter(
-    Boolean
-  );
+  const [primaryLabel, ...labels] = [
+    { label },
+    { label: ENSName || BoxName },
+    { label: truncatedAddress, value: address },
+  ].filter(({ label }) => Boolean(label));
 
   const isYouTrust = contactsType === ContactsType.YOU_TRUST;
 
@@ -28,13 +30,22 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
         {address && <Avatar size={54} address={address} />}
         <Box direction="vertical" mx="16px">
           <Heading level={2} mb="4px">
-            {label1}
+            <Copyable value={primaryLabel.value || primaryLabel.label}>
+              {primaryLabel.label}
+            </Copyable>
           </Heading>
           <Box>
-            <Badge
-              color="grey"
-              label={<Copyable value={address}>{address.slice(0, 6)}</Copyable>}
-            />
+            {!ENSName && <Badge color="grey" mr="4px" label="No ENS" />}
+
+            {labels.map(({ value, label }) => (
+              <Badge
+                key={label}
+                mr="4px"
+                color="grey"
+                label={<Copyable value={value || label}>{label}</Copyable>}
+              />
+            ))}
+
             {isYouTrust && (
               <Badge
                 ml="7px"
