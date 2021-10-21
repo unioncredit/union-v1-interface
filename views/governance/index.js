@@ -7,7 +7,6 @@ import {
   GovernanceStatsCard,
 } from "components-ui";
 
-import { config } from "./config";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 
 export default function GovernanceView() {
@@ -15,7 +14,7 @@ export default function GovernanceView() {
   const liveProposalData = useFilteredProposalData("active", "all");
 
   return (
-    <Wrapper title={config.title}>
+    <Wrapper>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>

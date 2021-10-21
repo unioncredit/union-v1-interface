@@ -1,5 +1,4 @@
 export const config = {
-  title: "Vote",
   tabItems: [
     { id: "overview", label: "Overview", href: "/governance" },
     { id: "proposals", label: "Proposals", href: "/governance/proposals" },

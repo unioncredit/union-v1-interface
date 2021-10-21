@@ -27,10 +27,6 @@ import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import useDelegate from "hooks/payables/useDelegate";
 
-const config = {
-  title: "Profile page bitch",
-};
-
 export default function ProfileView() {
   const { account, library } = useWeb3React();
   const { query } = useRouter();
@@ -83,7 +79,7 @@ export default function ProfileView() {
   };
 
   return (
-    <Wrapper title={config.title}>
+    <Wrapper>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>

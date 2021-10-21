@@ -17,7 +17,6 @@ import useIsMember from "hooks/data/useIsMember";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import useVouchData from "hooks/data/useVouchData";
 import useCreditLimit from "hooks/data/useCreditLimit";
-import { config } from "./config";
 import useStakeData from "hooks/data/useStakeData";
 
 export default function MembershipView() {
@@ -40,7 +39,7 @@ export default function MembershipView() {
   };
 
   return (
-    <Wrapper title={config.title}>
+    <Wrapper>
       <Grid gutterWidth={0}>
         <Row justify="center">
           <Col xs={12} md={8} lg={6}>

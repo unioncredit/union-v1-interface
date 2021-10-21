@@ -143,7 +143,7 @@ export default function ContactsView({
 
   return (
     <>
-      <Wrapper title={config.title} tabItems={config.tabItems}>
+      <Wrapper tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
             <Grid.Col md={6}>

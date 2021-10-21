@@ -20,7 +20,6 @@ import { useRouter } from "next/router";
 import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 
-import { config } from "./config";
 import createArray from "util/createArray";
 
 export default function ProposalView() {
@@ -43,7 +42,7 @@ export default function ProposalView() {
   const isLoading = !data;
 
   return (
-    <Wrapper title={config.title}>
+    <Wrapper>
       <Grid>
         <Row>
           <Col>

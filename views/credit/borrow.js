@@ -11,7 +11,7 @@ import { config } from "./config";
 
 export default function BorrowView() {
   return (
-    <Wrapper title={config.title} tabItems={config.tabItems}>
+    <Wrapper tabItems={config.tabItems}>
       <Grid>
         <Row justify="center">
           <Col>
