@@ -1,6 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
-import usePublicData from "hooks/usePublicData";
-import { Fragment } from "react";
 import {
   Skeleton,
   Text,
@@ -14,9 +11,13 @@ import {
   NewMember,
   EmptyState,
 } from "union-ui";
+import { Fragment } from "react";
+import { useWeb3React } from "@web3-react/core";
+import usePublicData from "hooks/usePublicData";
+
+import { Dai } from "components-ui/Dai";
 import createArray from "util/createArray";
 import formatDateTime from "util/formatDateTime";
-import { Dai } from "./Dai";
 
 const UpdateTrustActivity = ({
   borrower,

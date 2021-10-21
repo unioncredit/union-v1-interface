@@ -59,7 +59,7 @@ export default function LendView() {
                     ? createArray(3).map((_, i) => (
                         <CreditContactsRowSkeleton key={i} />
                       ))
-                    : pagedTrustData.slice(0, 8).map((item) => (
+                    : pagedTrustData.map((item) => (
                         <Link
                           key={item.address}
                           href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}

@@ -15,10 +15,9 @@ import {
 import {
   Modal,
   Wrapper,
-  ContactDetails,
   ContactsListItem,
-  ContactDetailsHeader,
   ContactsListItemSkeleton,
+  ContactDetailsCard,
 } from "components-ui";
 import {
   useVouchModal,
@@ -71,23 +70,11 @@ const withMobileView =
       </ModalOverlay>
     );
 
-const ContactDetailsCard = ({ contactsType, ...props }) => {
-  const { open: openManageContactModal } = useManageContactModal();
-  return (
-    <>
-      <ContactDetailsHeader {...props} contactsType={contactsType} />
-      <ContactDetails
-        {...props}
-        contactsType={contactsType}
-        manageContact={openManageContactModal}
-      />
-    </>
-  );
-};
-
 export default function ContactsView({
   contactsType = ContactsType.TRUSTS_YOU,
 }) {
+  usePopTrustModal();
+
   const isMobile = useIsMobile();
   const router = useRouter();
 
@@ -104,6 +91,7 @@ export default function ContactsView({
   const { data: vouchData } = useVouchData();
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
+
   const isLoading = !data;
 
   const { data: filteredData, setFilter, setOrderBy } = useFilterContacts(data);
@@ -142,8 +130,6 @@ export default function ContactsView({
 
     !isMobile && setSelectedContact(data[0]);
   }, [vouchData, trustData, contactsType, queryContact]);
-
-  usePopTrustModal();
 
   const title =
     contactsType === ContactsType.YOU_TRUST

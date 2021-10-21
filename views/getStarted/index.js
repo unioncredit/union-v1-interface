@@ -21,13 +21,15 @@ import { config } from "./config";
 import useStakeData from "hooks/data/useStakeData";
 
 export default function MembershipView() {
-  const { mutate: updateIsMember } = useIsMember();
-  const { data: trustCount = 0 } = useTrustCountData();
+  const { data: stakeData } = useStakeData();
   const { data: vouchData = [] } = useVouchData();
   const { data: creditLimit = 0 } = useCreditLimit();
+  const { data: trustCount = 0 } = useTrustCountData();
+
+  const { mutate: updateIsMember } = useIsMember();
+
   const { isOpen: isCongratulationsModalOpen } = useCongratulationsModal();
   const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
-  const { data: stakeData } = useStakeData();
 
   const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
 
