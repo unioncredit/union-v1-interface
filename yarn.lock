@@ -5627,10 +5627,10 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-union-ui@0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.10.tgz#d18d3b1835dce5a65eabbaba0ce09ed2333c9558"
-  integrity sha512-ltguIH2X7wXf/QDdSN0BUHxJA/3J8uco5cVVXZ+QCCrKW9904lUd9fn6wWnFZr9ssbvSxTQIevXmeIkO25cnPg==
+union-ui@0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.11.tgz#74d54906791d242d94e700be83d824d88f880c0d"
+  integrity sha512-hL2W7PJ+Mae2YQaIHyuG0FpzhoH8npV+sCm4eFZz+9HQ9oU75kLuRzVVFEfsbzuqV9OO0VuVo/tbWdjIGXelcA==
   dependencies:
     classnames "^2.3.1"
     react-grid-system "^7.2.0"
