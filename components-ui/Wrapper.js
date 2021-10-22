@@ -25,7 +25,7 @@ import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
 import { contextMenuItems } from "constants/app";
 
-export function Wrapper({ children, tabItems, onTabItemsChange }) {
+export function Wrapper({ children, tabItems }) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const { account } = useWeb3React();
@@ -48,9 +48,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
 
   const tabItemLinks =
     tabItems?.length > 0
-      ? tabItems.map((item) =>
-          onTabItemsChange ? item : { ...item, as: TabLink }
-        )
+      ? tabItems.map((item) => ({ ...item, as: TabLink }))
       : [];
 
   const navItemLinks = navItems.map((item) => ({
@@ -126,7 +124,6 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                         className="wrapper-toggle-menu"
                         items={tabItemLinks}
                         initialActive={~initialTab ? initialTab : 0}
-                        onChange={onTabItemsChange}
                       />
                     )}
                   </Box>
