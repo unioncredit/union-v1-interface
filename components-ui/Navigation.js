@@ -1,38 +1,11 @@
-import { useMemo } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useMemo } from "react";
 import { Nav, NavItem } from "union-ui";
-import useIsMember from "hooks/data/useIsMember";
+import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 
-export const navItems = [
-  {
-    id: "get-started",
-    label: "Get Started",
-    pathname: "/get-started",
-    active: true,
-  },
-  {
-    id: "credit",
-    label: "Credit",
-    pathname: "/credit",
-  },
-  {
-    id: "contacts",
-    label: "Contacts",
-    pathname: "/contacts",
-  },
-  {
-    id: "profile",
-    label: "Profile",
-    pathname: "/profile",
-  },
-  {
-    id: "governance",
-    label: "Governance",
-    pathname: "/governance",
-  },
-];
+import { navItems } from "constants/app";
+import useIsMember from "hooks/data/useIsMember";
 
 export const Navigation = ({ mobile }) => {
   const router = useRouter();

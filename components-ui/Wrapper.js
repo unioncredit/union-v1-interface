@@ -11,12 +11,12 @@ import {
 } from "union-ui";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { Wallet, TabLink, Navigation, navItems, Link } from "components-ui";
+import { Wallet, TabLink, Navigation, Link } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
 import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
-import { contextMenuItems } from "constants/app";
+import { contextMenuItems, navItems } from "constants/app";
 
 export function Wrapper({ children, tabItems }) {
   useInactiveListener();

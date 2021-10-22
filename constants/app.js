@@ -33,3 +33,32 @@ export const contextMenuItems = [
   { label: "Discord", target: "_blank", href: "https://discord.gg/cZagzJ3p8G" },
   { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
 ];
+
+export const navItems = [
+  {
+    id: "get-started",
+    label: "Get Started",
+    pathname: "/get-started",
+    active: true,
+  },
+  {
+    id: "credit",
+    label: "Credit",
+    pathname: "/credit",
+  },
+  {
+    id: "contacts",
+    label: "Contacts",
+    pathname: "/contacts",
+  },
+  {
+    id: "profile",
+    label: "Profile",
+    pathname: "/profile",
+  },
+  {
+    id: "governance",
+    label: "Governance",
+    pathname: "/governance",
+  },
+];
