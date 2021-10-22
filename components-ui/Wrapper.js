@@ -21,22 +21,18 @@ import {
   Button,
 } from "union-ui";
 import useInactiveListener from "hooks/useInactiveListener";
-import usePublicData from "hooks/usePublicData";
 import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
-import { Avatar } from "./Avatar";
 import { contextMenuItems } from "constants/app";
 
 export function Wrapper({ children, tabItems, onTabItemsChange }) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const { account } = useWeb3React();
+
   const { isOpen: isClaimModalOpen, open: openClaimModal } = useClaimModal();
   const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
-  const { isOpen: isAccountModalOpen, open: openAccountModal } =
-    useAccountModal();
-
-  const { name } = usePublicData(account);
+  const { isOpen: isAccountModalOpen } = useAccountModal();
 
   useInactiveListener();
 
@@ -82,12 +78,7 @@ export function Wrapper({ children, tabItems, onTabItemsChange }) {
                   <Navigation />
                   <Box align="center">
                     <Box mr="8px">
-                      <Wallet
-                        onClick={openAccountModal}
-                        name={name}
-                        avatar={<Avatar address={account} />}
-                        mr="8px"
-                      />
+                      <Wallet mr="8px" />
                     </Box>
                     <ContextMenu
                       position="left"
