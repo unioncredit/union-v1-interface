@@ -1,14 +1,3 @@
-import { useRouter } from "next/router";
-import { useWeb3React } from "@web3-react/core";
-import { Wallet, TabLink, Navigation, navItems, Link } from "components-ui";
-import {
-  AccountModal,
-  useAccountModal,
-  VoteDelegationModal,
-  useVoteDelegationModal,
-  useClaimModal,
-  ClaimModal,
-} from "components-ui/modals";
 import {
   Layout,
   Box,
@@ -20,6 +9,10 @@ import {
   ToggleMenu,
   Button,
 } from "union-ui";
+import { useRouter } from "next/router";
+import { useWeb3React } from "@web3-react/core";
+import { Wallet, TabLink, Navigation, navItems, Link } from "components-ui";
+import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
 import useMemberCheck from "hooks/useMemberCheck";
 import useIsMobile from "hooks/useIsMobile";
@@ -31,8 +24,6 @@ export function Wrapper({ children, tabItems }) {
   const { account } = useWeb3React();
 
   const { isOpen: isClaimModalOpen, open: openClaimModal } = useClaimModal();
-  const { isOpen: isVoteDelegationOpen } = useVoteDelegationModal();
-  const { isOpen: isAccountModalOpen } = useAccountModal();
 
   useInactiveListener();
 
@@ -135,8 +126,6 @@ export function Wrapper({ children, tabItems }) {
           <Box mb="40px" />
         </Layout.Main>
       </Layout>
-      {isAccountModalOpen && <AccountModal />}
-      {isVoteDelegationOpen && <VoteDelegationModal />}
       {isClaimModalOpen && <ClaimModal />}
     </>
   );
