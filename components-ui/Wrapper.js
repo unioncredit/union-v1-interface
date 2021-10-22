@@ -19,13 +19,13 @@ import useIsMobile from "hooks/useIsMobile";
 import { contextMenuItems } from "constants/app";
 
 export function Wrapper({ children, tabItems }) {
+  useInactiveListener();
+
   const router = useRouter();
   const isMobile = useIsMobile();
   const { account } = useWeb3React();
 
   const { isOpen: isClaimModalOpen, open: openClaimModal } = useClaimModal();
-
-  useInactiveListener();
 
   const { isLoading } = useMemberCheck();
 
@@ -89,13 +89,7 @@ export function Wrapper({ children, tabItems }) {
                   direction="vertical"
                   className="inner-wrapper"
                 >
-                  <Box
-                    {...{
-                      ...(isMobile
-                        ? { justify: "space-between", fluid: true }
-                        : {}),
-                    }}
-                  >
+                  <Box justify={isMobile && "space-between"} fluid={isMobile}>
                     {isMobile && (
                       <ContextMenu
                         items={navItemLinks.slice(1)}
