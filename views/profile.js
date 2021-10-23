@@ -11,7 +11,6 @@ import {
   Label,
   Divider,
 } from "union-ui";
-import { useRouter } from "next/router";
 import { View, Avatar, Copyable } from "components-ui";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -27,10 +26,8 @@ import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import useDelegate from "hooks/payables/useDelegate";
 
-export default function ProfileView() {
+export default function ProfileView({ address }) {
   const { account, library } = useWeb3React();
-  const { query } = useRouter();
-  const { address } = query;
 
   const delegate = useDelegate();
   const { name } = usePublicData(address);
