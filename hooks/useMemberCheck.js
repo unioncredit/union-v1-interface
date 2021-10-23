@@ -12,11 +12,11 @@ export default function useMemberCheck() {
   const pathname = router.pathname;
 
   useEffect(() => {
-    const isGetStarted = pathname.startsWith("/get-started");
+    const isGetStarted = pathname === "/";
 
     async function load() {
       if (!isMember && !isGetStarted) {
-        await router.push("/get-started");
+        await router.push("/");
       } else if (isMember && isGetStarted) {
         await router.push("/credit");
       }
