@@ -1,7 +1,7 @@
 import { Grid, Table, Card, Pagination, Box } from "union-ui";
 import Link from "next/link";
 import {
-  Wrapper,
+  View,
   CreditContactsRow,
   OutstandingLoans,
   CreditContactsRowSkeleton,
@@ -28,7 +28,7 @@ export default function LendView() {
   const isTrustLoading = !trustData;
 
   return (
-    <Wrapper tabItems={config.tabItems}>
+    <View tabItems={config.tabItems}>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>
@@ -79,6 +79,6 @@ export default function LendView() {
           </Grid.Col>
         </Grid.Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

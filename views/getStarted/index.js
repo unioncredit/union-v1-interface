@@ -7,7 +7,7 @@ import {
 } from "components-ui/modals";
 import { Grid, Row, Col, Box, Card, Stat, Button, ButtonRow } from "union-ui";
 import {
-  Wrapper,
+  View,
   ShareCard,
   BecomeMemberCard,
   CreditProvidersCard,
@@ -39,7 +39,7 @@ export default function MembershipView() {
   };
 
   return (
-    <Wrapper>
+    <View>
       <Grid gutterWidth={0}>
         <Row justify="center">
           <Col xs={12} md={8} lg={6}>
@@ -99,6 +99,6 @@ export default function MembershipView() {
       {isCongratulationsModalOpen && (
         <CongratulationsModal creditLimit={creditLimit} onClose={onComplete} />
       )}
-    </Wrapper>
+    </View>
   );
 }

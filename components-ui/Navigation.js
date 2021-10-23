@@ -31,11 +31,12 @@ export const Navigation = ({ mobile }) => {
 
   return (
     <Nav mobile={mobile}>
-      {account && filteredNavItems.map(({ label, ...item }) => (
-        <Link key={item.id} href={item.pathname} passHref>
-          <NavItem label={!mobile && label} {...item} />
-        </Link>
-      ))}
+      {account &&
+        filteredNavItems.map(({ label, ...item }) => (
+          <Link key={item.id} href={item.pathname} passHref>
+            <NavItem label={!mobile && label} {...item} />
+          </Link>
+        ))}
     </Nav>
   );
 };

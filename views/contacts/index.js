@@ -14,7 +14,7 @@ import {
 } from "union-ui";
 import {
   Modal,
-  Wrapper,
+  View,
   ContactsListItem,
   ContactsListItemSkeleton,
   ContactDetailsCard,
@@ -143,7 +143,7 @@ export default function ContactsView({
 
   return (
     <>
-      <Wrapper tabItems={config.tabItems}>
+      <View tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
             <Grid.Col md={6}>
@@ -250,7 +250,7 @@ export default function ContactsView({
             </Grid.Col>
           </Grid.Row>
         </Grid>
-      </Wrapper>
+      </View>
 
       {/* modals */}
       <VouchModalManager />

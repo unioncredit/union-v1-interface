@@ -1,5 +1,5 @@
 import {
-  Wrapper,
+  View,
   TransactionHistory,
   BorrowStatsCard,
   ShareCard,
@@ -11,7 +11,7 @@ import { config } from "./config";
 
 export default function BorrowView() {
   return (
-    <Wrapper tabItems={config.tabItems}>
+    <View tabItems={config.tabItems}>
       <Grid>
         <Row justify="center">
           <Col>
@@ -37,6 +37,6 @@ export default function BorrowView() {
           </Col>
         </Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

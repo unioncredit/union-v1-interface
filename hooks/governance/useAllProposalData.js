@@ -1,10 +1,11 @@
 import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
 import useProposalCount from "./useProposalCount";
 import dayjs from "dayjs";
+import useReadProvider from "hooks/useReadProvider";
+import useChainId from "hooks/useChainId";
 
 const enumerateProposalState = (state) => {
   const proposalStates = [
@@ -125,9 +126,10 @@ const getAllProposalData =
   };
 
 export default function useAllProposalData() {
-  const { library, chainId } = useWeb3React();
+  const library = useReadProvider();
+  const chainId = useChainId();
 
-  const govContract = useGovernanceContract();
+  const govContract = useGovernanceContract(library);
 
   const { data: proposalCount } = useProposalCount();
   const proposalIndexes = [];

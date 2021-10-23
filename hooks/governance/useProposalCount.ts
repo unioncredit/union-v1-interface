@@ -1,5 +1,6 @@
 import type { Contract } from "@ethersproject/contracts";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
+import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
 const getProposalCount = (contract: Contract) => async () => {
@@ -8,7 +9,8 @@ const getProposalCount = (contract: Contract) => async () => {
 };
 
 export default function useProposalCount() {
-  const contract = useGovernanceContract();
+  const library = useReadProvider();
+  const contract = useGovernanceContract(library);
 
   const shouldFetch = Boolean(contract);
 

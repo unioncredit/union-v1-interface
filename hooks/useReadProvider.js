@@ -1,28 +1,19 @@
 import { useWeb3React } from "@web3-react/core";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { useEffect, useState } from "react";
+import useChainId from "hooks/useChainId";
+import { RPC_URLS } from "lib/connectors";
 
 export default function useReadProvider() {
-  const { chainId, library } = useWeb3React();
+  const { library } = useWeb3React();
+  const chainId = useChainId();
   const [provider, setProvider] = useState(null);
 
   useEffect(() => {
-    if (chainId && library) {
-      if (chainId == 137) {
-        setProvider(
-          new JsonRpcProvider(
-            `https://polygon-mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-          )
-        );
-      } else if (chainId === 80001) {
-        setProvider(
-          new JsonRpcProvider(
-            `https://polygon-mumbai.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
-          )
-        );
-      } else {
-        setProvider(library.getSigner().provider);
-      }
+    if (chainId) {
+      setProvider(new JsonRpcProvider(RPC_URLS[chainId]));
+    } else if (library) {
+      setProvider(library.getSigner().provider);
     }
   }, [chainId, library]);
 

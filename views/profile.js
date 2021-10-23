@@ -12,7 +12,7 @@ import {
   Divider,
 } from "union-ui";
 import { useRouter } from "next/router";
-import { Wrapper, Avatar, Copyable } from "components-ui";
+import { View, Avatar, Copyable } from "components-ui";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
@@ -79,7 +79,7 @@ export default function ProfileView() {
   };
 
   return (
-    <Wrapper>
+    <View>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>
@@ -209,6 +209,6 @@ export default function ProfileView() {
           </Grid.Col>
         </Grid.Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

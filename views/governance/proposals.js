@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Grid, Card, Button, Box } from "union-ui";
-import { Wrapper, ProposalsTable } from "components-ui";
+import { View, ProposalsTable } from "components-ui";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 
 export default function ProposalsView() {
@@ -9,7 +9,7 @@ export default function ProposalsView() {
   const data = useFilteredProposalData(statusFilter, typeFilter);
 
   return (
-    <Wrapper>
+    <View>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col xs={12} md={8} lg={6}>
@@ -35,6 +35,6 @@ export default function ProposalsView() {
           </Grid.Col>
         </Grid.Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

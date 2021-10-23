@@ -1,8 +1,8 @@
-import { defaultAbiCoder } from "@ethersproject/abi";
-import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
+import { defaultAbiCoder } from "@ethersproject/abi";
 import { request, gql } from "graphql-request";
 import { GRAPHQL_URL } from "constants/variables";
+import useChainId from "hooks/useChainId";
 
 const fetchData = (chainId) => async () => {
   const query = gql`
@@ -46,7 +46,7 @@ const fetchData = (chainId) => async () => {
 };
 
 export function useDataFromEventLogs() {
-  const { chainId } = useWeb3React();
+  const chainId = useChainId();
 
   const shouldFetch = chainId;
 

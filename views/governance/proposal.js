@@ -12,7 +12,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import {
   VotingCard,
-  Wrapper,
+  View,
   AddressLabel,
   ProposalHistoryCard,
 } from "components-ui";
@@ -42,7 +42,7 @@ export default function ProposalView() {
   const isLoading = !data;
 
   return (
-    <Wrapper>
+    <View>
       <Grid>
         <Row>
           <Col>
@@ -148,6 +148,6 @@ export default function ProposalView() {
           </Col>
         </Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

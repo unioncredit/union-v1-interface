@@ -1,7 +1,7 @@
 import { Grid, Box } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import {
-  Wrapper,
+  View,
   UserVotingOverview,
   LiveProposals,
   GovernanceStatsCard,
@@ -14,7 +14,7 @@ export default function GovernanceView() {
   const liveProposalData = useFilteredProposalData("active", "all");
 
   return (
-    <Wrapper>
+    <View>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>
@@ -30,6 +30,6 @@ export default function GovernanceView() {
           </Grid.Col>
         </Grid.Row>
       </Grid>
-    </Wrapper>
+    </View>
   );
 }

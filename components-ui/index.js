@@ -45,3 +45,5 @@ export * from "./BecomeMemberCard";
 export * from "./CreditProvidersCard";
 export * from "./Link";
 export * from "./ContactDetailsCard";
+export * from "./CheckIsMember";
+export * from "./View";

@@ -1,8 +1,8 @@
 import { LoadingSpinner } from "union-ui";
 import useMemberCheck from "hooks/useMemberCheck";
 
-export function CheckIsMember({children}) {
-	const { isLoading } = useMemberCheck();
+export function CheckIsMember({ children }) {
+  const { isLoading } = useMemberCheck();
 
   if (isLoading) {
     return (
@@ -12,5 +12,5 @@ export function CheckIsMember({children}) {
     );
   }
 
-	return children;
+  return children;
 }
