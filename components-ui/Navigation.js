@@ -16,6 +16,10 @@ export const Navigation = ({ mobile }) => {
   const { data: isMember } = useIsMember();
 
   const filteredNavItems = useMemo(() => {
+    if (typeof isMember !== "boolean") {
+      return [];
+    }
+
     if (isMember) {
       return navItems.slice(1).map((item) => ({
         ...item,
