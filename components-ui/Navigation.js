@@ -31,7 +31,7 @@ export const Navigation = ({ mobile }) => {
 
   return (
     <Nav mobile={mobile}>
-      {filteredNavItems.map(({ label, ...item }) => (
+      {account && filteredNavItems.map(({ label, ...item }) => (
         <Link key={item.id} href={item.pathname} passHref>
           <NavItem label={!mobile && label} {...item} />
         </Link>
