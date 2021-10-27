@@ -8,7 +8,6 @@ import {
   Input,
   Divider,
   Pagination,
-  Icon,
   ButtonRow,
   Select,
 } from "union-ui";
@@ -31,6 +30,9 @@ import {
   useWriteOffDebtModal,
   WriteOffDebtModal,
 } from "components-ui/modals";
+import Search from "union-ui/lib/icons/search.svg";
+import Vouch from "union-ui/lib/icons/vouch.svg";
+import Filter from "union-ui/lib/icons/filter.svg";
 import { useState, useEffect } from "react";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
@@ -157,12 +159,12 @@ export default function ContactsView({
                           fluid
                           variant="secondary"
                           label="New vouch"
-                          icon="vouch"
+                          icon={Vouch}
                           onClick={openVouchModal}
                         />
                         <Button
                           fluid
-                          icon="filter"
+                          icon={Filter}
                           variant="secondary"
                           label={`${showFilters ? "Hide" : "Show"} filters`}
                           onClick={toggleFilters}
@@ -174,7 +176,7 @@ export default function ContactsView({
                             <Input
                               ref={register}
                               name="query"
-                              suffix={<Icon name="search" />}
+                              suffix={<Search />}
                               placeholder="Filter by ENS or address"
                             />
                             <Box mt="8px">
@@ -205,7 +207,7 @@ export default function ContactsView({
                       <Input
                         ref={register}
                         name="query"
-                        suffix={<Icon name="search" />}
+                        suffix={<Search />}
                         placeholder="Filter by ENS or address"
                       />
                     </Box>

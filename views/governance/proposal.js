@@ -9,6 +9,7 @@ import {
   Label,
   Skeleton,
 } from "union-ui";
+import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
 import ReactMarkdown from "react-markdown";
 import {
   VotingCard,
@@ -50,8 +51,12 @@ export default function ProposalView() {
               <Link href="/governance/proposals">
                 <Button
                   variant="lite"
-                  label="Back to proposals"
-                  icon="arrow-left"
+                  label={
+                    <>
+                      <ArrowRight className="flip" width="24px" height="24px" />
+                      Back to proposals
+                    </>
+                  }
                 />
               </Link>
             </Box>

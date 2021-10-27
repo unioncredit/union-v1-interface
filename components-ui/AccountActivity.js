@@ -6,11 +6,11 @@ import {
   TableRow,
   Badge,
   Box,
-  Borrow,
-  NewVouch,
-  NewMember,
   EmptyState,
 } from "union-ui";
+import NewMember from "union-ui/lib/icons/newMember.svg";
+import NewVouch from "union-ui/lib/icons/newVouch.svg";
+import Borrow from "union-ui/lib/icons/borrow.svg";
 import { Fragment } from "react";
 import { useWeb3React } from "@web3-react/core";
 import usePublicData from "hooks/usePublicData";
@@ -35,7 +35,7 @@ const UpdateTrustActivity = ({
     <TableRow>
       <TableCell>
         <Box>
-          {isVouch ? <NewVouch /> : <Borrow />}
+          {isVouch ? <NewVouch width="24px" /> : <Borrow width="24px" />}
           <Text ml="8px">
             {isVouch ? `Trusted ${borrowerName}` : `Trusted by ${stakerName}`}
           </Text>
@@ -56,7 +56,7 @@ const RegisterMemberActivity = ({ ts }) => {
     <TableRow>
       <TableCell>
         <Box>
-          <NewMember />
+          <NewMember width="24px" />
           <Text ml="8px">Became a member</Text>
         </Box>
       </TableCell>

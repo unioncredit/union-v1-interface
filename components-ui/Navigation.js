@@ -33,8 +33,12 @@ export const Navigation = ({ mobile }) => {
     return navItems.slice(0, 1);
   }, [isMember, pathname]);
 
+  const handleLogoClick = () => {
+    router.push("/");
+  };
+
   return (
-    <Nav mobile={mobile}>
+    <Nav mobile={mobile} onLogoClick={handleLogoClick}>
       {account &&
         filteredNavItems.map(({ label, ...item }) => (
           <Link key={item.id} href={item.pathname} passHref>

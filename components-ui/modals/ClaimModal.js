@@ -1,13 +1,5 @@
-import {
-  ModalOverlay,
-  Box,
-  Grid,
-  Logo,
-  Stat,
-  Label,
-  Text,
-  Icon,
-} from "union-ui";
+import { ModalOverlay, Box, Grid, Logo, Stat, Label, Text } from "union-ui";
+import External from "union-ui/lib/icons/externalinline.svg";
 import Link from "next/link";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
@@ -77,7 +69,7 @@ export function ClaimModal() {
         <Text align="center" mb="20px">
           <Link href="#">
             <Label as="a" size="small" color="blue500" m={0}>
-              Learn more about UNION <Icon name="external" />
+              Learn more about UNION <External />
             </Label>
           </Link>
         </Text>

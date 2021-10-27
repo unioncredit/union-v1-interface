@@ -31,7 +31,6 @@ export * from "./Modal";
 export * from "./Wallet";
 export * from "./NetworkSwitcher";
 export * from "./NetworkSelect";
-export * from "./RewardsCard";
 export * from "./Copyable";
 export * from "./ContactsListItem";
 export * from "./BorrowStatsCard";

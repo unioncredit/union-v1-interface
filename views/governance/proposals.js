@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Grid, Card, Button, Box } from "union-ui";
 import { View, ProposalsTable } from "components-ui";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
+import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
 
 export default function ProposalsView() {
   const typeFilter = "all";
@@ -16,13 +17,13 @@ export default function ProposalsView() {
             <Box>
               <Link href="/governance">
                 <Button
-                  inlint
-                  mt="24px"
-                  mb="24px"
                   variant="lite"
-                  label="Back to overview"
-                  icon="arrow-left"
-                  iconPosition="start"
+                  label={
+                    <>
+                      <ArrowRight className="flip" width="24px" height="24px" />
+                      Back to overview
+                    </>
+                  }
                 />
               </Link>
             </Box>

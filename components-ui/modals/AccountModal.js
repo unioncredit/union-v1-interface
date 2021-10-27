@@ -1,13 +1,5 @@
-import {
-  ModalOverlay,
-  Label,
-  Heading,
-  Box,
-  Button,
-  Text,
-  StatusIcon,
-  Icon,
-} from "union-ui";
+import { ModalOverlay, Label, Heading, Box, Button, Text } from "union-ui";
+import ExternalInline from "union-ui/lib/icons/externalinline.svg";
 import { Modal, NetworkSelect } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useWeb3React } from "@web3-react/core";
@@ -101,17 +93,13 @@ export function AccountModal() {
                         rel="noreferrer"
                         href={getEtherscanLink(chainId, hash, "TRANSACTION")}
                       >
-                        {text} <Icon name="external" />
+                        {text} <ExternalInline />
                       </a>
                     ) : (
                       text
                     )}
                   </Text>
                 </div>
-                <StatusIcon
-                  variant="wire"
-                  name={failed ? "error" : "success"}
-                />
               </Box>
             );
           })

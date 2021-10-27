@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button, Heading, Badge, Box } from "union-ui";
 import { Avatar, Copyable } from "components-ui";
 import truncateAddress from "util/truncateAddress";
+import External from "union-ui/lib/icons/externalinline.svg";
 
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
@@ -62,7 +63,7 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
           rounded
           variant="secondary"
           label="View Profile"
-          icon="external"
+          icon={External}
           iconPosition="end"
         />
       </Link>

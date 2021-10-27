@@ -6,11 +6,13 @@ import {
   Box,
   Heading,
   Card,
-  Icon,
   Badge,
   Label,
   Divider,
 } from "union-ui";
+import Dollar from "union-ui/lib/icons/dollar.svg";
+import People from "union-ui/lib/icons/people.svg";
+import External from "union-ui/lib/icons/externalinline.svg";
 import { View, Avatar, Copyable } from "components-ui";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -87,12 +89,12 @@ export default function ProfileView({ address }) {
                   <Heading mt="8px" mb={0}>
                     {name}
                   </Heading>
-                  <Box align="center" justify="center" my="10px">
-                    <Icon name="dollar" />
+                  <Box align="center" justify="center" my="10px" fluid>
+                    <Dollar width="24px" />
                     <Label as="p" grey={600} m={0} mr="8px">
                       {creditLimitSummary} DAI
                     </Label>
-                    <Icon name="members" />
+                    <People width="24px" />
                     <Label as="p" grey={600} m={0} mr="8px">
                       {vouchData.length} Vouches
                     </Label>
@@ -132,7 +134,7 @@ export default function ProfileView({ address }) {
                         label={
                           <>
                             Get a custom ENS username
-                            <Icon name="external" />
+                            <External />
                           </>
                         }
                       />
@@ -188,7 +190,7 @@ export default function ProfileView({ address }) {
                       />
                     </Grid.Col>
                   </Grid.Row>
-                  {address !== account && (
+                  {address && address !== account && library && (
                     <Grid.Row>
                       <Grid.Col>
                         <Button

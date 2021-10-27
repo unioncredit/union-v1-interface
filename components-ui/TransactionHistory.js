@@ -7,10 +7,10 @@ import {
   Avatar,
   Box,
   Skeleton,
-  Borrow,
-  Repayment,
   Pagination,
 } from "union-ui";
+import Borrow from "union-ui/lib/icons/borrow.svg";
+import Repayment from "union-ui/lib/icons/repayment.svg";
 import { Dai } from "components-ui";
 import useTransactions from "hooks/data/useTransactions";
 import usePagination from "hooks/usePagination";
@@ -26,9 +26,9 @@ function TransactionHistoryRow({ address, amount, type, ts }) {
           {address ? (
             <Avatar address={address} />
           ) : type === "BORROW" ? (
-            <Borrow />
+            <Borrow width="24px" />
           ) : (
-            <Repayment />
+            <Repayment width="24px" />
           )}
           <Text grey={700} ml="8px">
             {type === "BORROW" ? "Borrow" : "Repayment"}
