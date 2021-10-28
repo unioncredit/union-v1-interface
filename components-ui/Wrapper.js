@@ -1,12 +1,15 @@
 import { Layout, Box, Grid, Row, Col, ContextMenu, Button } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
-import { Wallet, Navigation } from "components-ui";
+import { Wallet, Navigation, ConnectButton } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
+import { useUpdateForceConnect } from "hooks/useForceConnect";
 import { contextMenuItems } from "constants/app";
 
 export function Wrapper({ children }) {
   useInactiveListener();
+
+  useUpdateForceConnect();
 
   const { account } = useWeb3React();
 
@@ -22,11 +25,16 @@ export function Wrapper({ children }) {
                 <Layout.Header align="center">
                   <Navigation />
                   <Box align="center">
-                    {account && (
-                      <Box mr="8px">
+                    <Box mr="8px">
+                      {account ? (
                         <Wallet mr="8px" />
-                      </Box>
-                    )}
+                      ) : (
+                        <ConnectButton
+                          label="Connect wallet"
+                          variant="secondary"
+                        />
+                      )}
+                    </Box>
                     <ContextMenu
                       position="left"
                       items={contextMenuItems}

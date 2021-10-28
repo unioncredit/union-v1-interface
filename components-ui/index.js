@@ -45,3 +45,4 @@ export * from "./Link";
 export * from "./ContactDetailsCard";
 export * from "./CheckIsMember";
 export * from "./View";
+export * from "./ConnectButton";

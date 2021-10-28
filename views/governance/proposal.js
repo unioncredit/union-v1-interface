@@ -40,7 +40,7 @@ export default function ProposalView() {
     blockNumber,
   } = !!data && data;
 
-  const isLoading = !data;
+  const isLoading = true;
 
   return (
     <View>
@@ -68,7 +68,7 @@ export default function ProposalView() {
               UIP-{id}
             </Heading>
             {isLoading ? (
-              <Skeleton size="medium" mb="16px" />
+              <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
               <Heading size="xlarge" mb="16px">
                 {title}
@@ -76,8 +76,8 @@ export default function ProposalView() {
             )}
             {isLoading ? (
               <>
-                <Skeleton size="small" variant="secondary" />
-                <Skeleton size="medium" variant="secondary" />
+                <Skeleton height={16} width={220} shimmer mb="8px" />
+                <Skeleton height={16} width={220} shimmer mb="8px" />
               </>
             ) : (
               <>
@@ -88,20 +88,15 @@ export default function ProposalView() {
               </>
             )}
             <Box mt="16px">
-              <Button
-                variant="pill"
-                label="View bytecode"
-                icon="chevron"
-                iconPosition="end"
-              />
+              <Button variant="pill" label="View bytecode" />
             </Box>
             <Box direction="vertical" mt="24px">
               <Heading level={3} mb="12px">
                 Description
               </Heading>
               {isLoading ? (
-                createArray(5).map((_, i) => (
-                  <Skeleton key={i} size="small" variant="secondary" w="100%" />
+                createArray(3).map((_, i) => (
+                  <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
                 ))
               ) : (
                 <ReactMarkdown
@@ -120,15 +115,16 @@ export default function ProposalView() {
               )}
             </Box>
 
-            <Box direction="vertical" mt="24px">
+            <Box direction="vertical" mt="24px" mb="24px">
               <Heading level={3}>Details</Heading>
               {isLoading
-                ? createArray(5).map((_, i) => (
+                ? createArray(3).map((_, i) => (
                     <Skeleton
                       key={i}
-                      size="small"
-                      variant="secondary"
-                      w="100%"
+                      height={16}
+                      width={320}
+                      shimmer
+                      mb="8px"
                     />
                   ))
                 : details.map((detail) => (

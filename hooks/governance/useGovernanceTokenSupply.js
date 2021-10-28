@@ -1,15 +1,16 @@
+import useSWR from "swr";
 import { formatUnits } from "@ethersproject/units";
 import useUnionContract from "hooks/contracts/useUnionContract";
-import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getGovernanceTokenSupply = (contract) => async () => {
   const totalSupply = await contract.totalSupply();
-
   return parseFloat(formatUnits(totalSupply, 18));
 };
 
 export default function useGovernanceTokenSupply() {
-  const contract = useUnionContract();
+  const readProvider = useReadProvider();
+  const contract = useUnionContract(readProvider);
 
   const shouldFetch = Boolean(contract);
 

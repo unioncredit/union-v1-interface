@@ -9,6 +9,7 @@ import { CONNECTORS, walletconnect } from "lib/connectors";
 import { getWalletName, getWalletIcon } from "util/formatWalletDetails";
 import { login } from "lib/auth";
 import UnsupportedChainView from "./unsupportedChain";
+import { useUpdateForceConnect } from "hooks/useForceConnect";
 
 export default function LoggedOutView() {
   const router = useRouter();
@@ -17,6 +18,8 @@ export default function LoggedOutView() {
   const [activatingConnector, setActivatingConnector] = useState();
 
   const unsupportedChainId = error instanceof UnsupportedChainIdError;
+
+  useUpdateForceConnect();
 
   useAutoEffect(() => {
     if (activatingConnector && activatingConnector === connector) {

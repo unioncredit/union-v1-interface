@@ -34,8 +34,8 @@ export const clearActivity = (chainId) =>
 
 export function useAddActivity() {
   const { chainId } = useWeb3React();
-  return (
-    chainId && useAutoCallback((activity) => addActivity(chainId)(activity))
+  return useAutoCallback(
+    (activity) => chainId && addActivity(chainId)(activity)
   );
 }
 
