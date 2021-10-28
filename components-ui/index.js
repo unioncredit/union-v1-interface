@@ -1,7 +1,6 @@
 export * from "./Navigation";
 export * from "./SignInCard";
 export * from "./Wrapper";
-export * from "./LiteWrapper";
 export * from "./Footer";
 export * from "./ClaimCard";
 export * from "./DepositInput";
