@@ -41,7 +41,7 @@ const NavigationLink = ({ href, children, ...rest }) => {
 
 const LogoLink = () => (
   <li className="py-4 lg:w-1/4 h-20 flex items-center justify-start">
-    <Link href="/">
+    <Link href="/stake">
       <a>
         <Logo />
       </a>
