@@ -102,7 +102,6 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
           <Button
             fluid
             label="Vote for"
-            variant="secondary"
             rounded
             color="green"
             disabled={!canVote}
@@ -111,7 +110,6 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
           <Button
             fluid
             label="Vote against"
-            variant="secondary"
             rounded
             color="red"
             disabled={!canVote}
