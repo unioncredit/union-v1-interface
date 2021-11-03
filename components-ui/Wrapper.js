@@ -1,4 +1,13 @@
-import { Layout, Box, Grid, Row, Col, ContextMenu, Button } from "union-ui";
+import {
+  Layout,
+  Box,
+  Grid,
+  Row,
+  Col,
+  ContextMenu,
+  Button,
+  Label,
+} from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
@@ -62,7 +71,11 @@ export function Wrapper({ children }) {
               </Col>
             </Row>
           </Grid>
-          <Box mb="40px" />
+          <Box mt="40px" mb="16px" justify="center" fluid>
+            <Label as="p" size="small" grey={300} align="center">
+              Build: {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
+            </Label>
+          </Box>
         </Layout.Main>
       </Layout>
       {isClaimModalOpen && <ClaimModal />}
