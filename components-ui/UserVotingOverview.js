@@ -1,6 +1,16 @@
+import {
+  Box,
+  Badge,
+  Heading,
+  Card,
+  Button,
+  Stat,
+  Grid,
+  Tooltip,
+  Label,
+} from "union-ui";
 import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
-import { Box, Badge, Heading, Card, Button, Stat, Grid } from "union-ui";
 import External from "union-ui/lib/icons/externalinline.svg";
 import {
   useVoteDelegationModal,
@@ -75,7 +85,15 @@ export function UserVotingOverview({ address }) {
                 <Stat label="Union Balance" value={format(balanceOf)} />
               </Grid.Col>
               <Grid.Col>
-                <Stat label="From others" value={format(votesDelegated)} />
+                <Stat
+                  label={
+                    <Label size="small" weight="medium">
+                      From others{" "}
+                      <Tooltip content="If other users delegate their votes to you, they’ll appear here." />
+                    </Label>
+                  }
+                  value={format(votesDelegated)}
+                />
               </Grid.Col>
             </Grid.Row>
             <Grid.Row>
