@@ -1,16 +1,18 @@
-import { ModalOverlay, Label, Heading, Box, Button, Text } from "union-ui";
-import ExternalInline from "union-ui/lib/icons/externalinline.svg";
-import { Modal, NetworkSelect } from "components-ui";
-import { useModal } from "hooks/useModal";
 import { useWeb3React } from "@web3-react/core";
+import { ModalOverlay, Label, Heading, Box, Button, Text } from "union-ui";
+
+import { useModal } from "hooks/useModal";
 import usePublicData from "hooks/usePublicData";
-import { walletconnect, injected } from "lib/connectors";
 import useToast, { FLAVORS } from "hooks/useToast";
-import { logout } from "lib/auth";
 import useActivity, { useClearActivity } from "hooks/data/useActivity";
-import { Dai } from "components-ui/Dai";
+import { Copyable, Modal, NetworkSelect, Dai } from "components-ui";
+import { logout } from "lib/auth";
+import { walletconnect, injected } from "lib/connectors";
 import getEtherscanLink from "util/getEtherscanLink";
-import { Copyable } from "components-ui/Copyable";
+
+import ExternalInline from "union-ui/lib/icons/externalinline.svg";
+import Failed from "union-ui/lib/icons/failed.svg";
+import Success from "union-ui/lib/icons/success.svg";
 
 export const ACCOUNT_MODAL = "account-modal";
 
@@ -67,40 +69,50 @@ export function AccountModal() {
           </Label>
           <Button variant="pill" label="clear" onClick={clearActivity} />
         </Box>
-        {isEmpty ? (
-          <Text>No activity</Text>
-        ) : (
-          activity.map(({ amount, label, hash, failed }) => {
-            const text =
-              amount && label ? (
-                <>
-                  {label} <Dai value={amount} />
-                </>
-              ) : (
-                label
-              );
+        <Box mb="24px" direction="vertical" fluid>
+          {isEmpty ? (
+            <Text>No activity</Text>
+          ) : (
+            activity.map(({ amount, label, hash, failed }) => {
+              const text =
+                amount && label ? (
+                  <>
+                    {label} <Dai value={amount} />
+                  </>
+                ) : (
+                  label
+                );
 
-            return (
-              <Box key={hash} align="center" justify="space-between" mt="8px">
-                <div>
-                  <Text color={failed && "orange"} m={0}>
-                    {hash ? (
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-                      >
-                        {text} <ExternalInline />
-                      </a>
-                    ) : (
-                      text
-                    )}
-                  </Text>
-                </div>
-              </Box>
-            );
-          })
-        )}
+              return (
+                <Box
+                  key={hash}
+                  align="center"
+                  justify="space-between"
+                  mt="8px"
+                  fluid
+                >
+                  <div>
+                    <Text color={failed && "red600"} m={0}>
+                      {hash ? (
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                        >
+                          {text} <ExternalInline />
+                        </a>
+                      ) : (
+                        text
+                      )}
+                    </Text>
+                  </div>
+                  {failed && <Failed width="22px" />}
+                  {!failed && <Success />}
+                </Box>
+              );
+            })
+          )}
+        </Box>
       </Modal>
     </ModalOverlay>
   );
