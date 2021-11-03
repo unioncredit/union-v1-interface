@@ -3,7 +3,7 @@ import { UNION_TOKEN_ADDRESSES } from "constants/variables";
 import useChainId from "hooks/useChainId";
 import useContract from "../useContract";
 
-export default function useUnionContract(provider: any) {
+export default function useUnionContract(provider?: any) {
   const chainId = useChainId();
 
   return useContract(UNION_TOKEN_ADDRESSES[chainId], UNION_TOKEN_ABI, provider);
