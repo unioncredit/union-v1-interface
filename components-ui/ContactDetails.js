@@ -3,9 +3,9 @@ import { Stat, Grid, Card, Button } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
-import useAccountHistory from "hooks/data/useAccountHistory";
 import { useWeb3React } from "@web3-react/core";
-import { AccountActivity } from "./AccountActivity";
+import { RelatedHistory } from "./RelatedHistory";
+import { ContactsType } from "constants/app";
 
 function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
   return (
@@ -101,28 +101,23 @@ function YouTrustContactDetails({
 
 export function ContactDetails({ contactsType, ...props }) {
   const { account } = useWeb3React();
-  const { data, ...activity } = useAccountHistory(props.address);
 
-  const filtered = data.filter((log) => {
-    if (log.borrower && log.staker) {
-      const arr = [log.borrower, log.staker];
-      return arr.includes(props.address) && arr.includes(account);
-    }
-    return true;
-  });
+  const relatedHistoryProps = ContactsType.YOU_TRUST
+    ? { staker: props.address, borrower: account }
+    : { staker: account, borrower: props.address };
 
   return (
     <>
       <Card mb="24px" variant="packed">
         <Card.Body>
-          {contactsType === "you-trust" ? (
+          {contactsType === ContactsType.YOU_TRUST ? (
             <YouTrustContactDetails {...props} />
           ) : (
             <TrustsYouContactDetails {...props} />
           )}
         </Card.Body>
       </Card>
-      <AccountActivity {...activity} data={filtered} />
+      <RelatedHistory {...relatedHistoryProps} />
     </>
   );
 }

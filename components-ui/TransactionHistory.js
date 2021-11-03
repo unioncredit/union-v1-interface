@@ -42,7 +42,7 @@ function TransactionHistoryRow({ amount, type, timestamp, address }) {
   const { ENSName } = usePublicData(address);
 
   const name =
-    account.toLowerCase() === address.toLowerCase()
+    account.toLowerCase() === address?.toLowerCase()
       ? "You"
       : ENSName || address?.slice(0, 6);
 
