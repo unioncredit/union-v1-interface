@@ -4,46 +4,78 @@ import {
   TableCell,
   TableRow,
   Label,
-  Avatar,
   Box,
   Skeleton,
   Pagination,
 } from "union-ui";
-import Borrow from "union-ui/lib/icons/borrow.svg";
-import Repayment from "union-ui/lib/icons/repayment.svg";
+import { useWeb3React } from "@web3-react/core";
 import { Dai } from "components-ui";
-import useTransactions from "hooks/data/useTransactions";
 import usePagination from "hooks/usePagination";
 import createArray from "util/createArray";
 import format from "util/formatValue";
 import formatDateTime from "util/formatDateTime";
 
-function TransactionHistoryRow({ address, amount, type, ts }) {
+import Borrow from "union-ui/lib/icons/borrow.svg";
+import Repayment from "union-ui/lib/icons/repayment.svg";
+import NewMember from "union-ui/lib/icons/newMember.svg";
+import NewVouch from "union-ui/lib/icons/newVouch.svg";
+
+import { TransactionTypes } from "constants/app";
+import usePublicData from "hooks/usePublicData";
+
+const icons = {
+  [TransactionTypes.BORROW]: Borrow,
+  [TransactionTypes.REPAY]: Repayment,
+  [TransactionTypes.TRUST]: NewVouch,
+  [TransactionTypes.REGISTER]: NewMember,
+};
+
+const texts = {
+  [TransactionTypes.BORROW]: () => "Borrow",
+  [TransactionTypes.REPAY]: () => "Repayment",
+  [TransactionTypes.TRUST]: ({ name }) => `Trusted ${name}`,
+  [TransactionTypes.REGISTER]: () => "Became a member",
+};
+
+function TransactionHistoryRow({ amount, type, timestamp, address }) {
+  const { account } = useWeb3React();
+  const { ENSName } = usePublicData(address);
+
+  const name =
+    account.toLowerCase() === address.toLowerCase()
+      ? "You"
+      : ENSName || address?.slice(0, 6);
+
+  const Icon = icons[type];
+
+  const text = texts[type]({ amount, type, name });
+
+  if (!Icon || !text) {
+    return null;
+  }
+
   return (
     <TableRow>
       <TableCell>
         <Box align="center">
-          {address ? (
-            <Avatar address={address} />
-          ) : type === "BORROW" ? (
-            <Borrow width="24px" />
-          ) : (
-            <Repayment width="24px" />
-          )}
-          <Text grey={700} ml="8px">
-            {type === "BORROW" ? "Borrow" : "Repayment"}
+          <Icon width="24px" />
+          <Text ml="8px" grey={700}>
+            {text}
           </Text>
         </Box>
       </TableCell>
       <TableCell>
         <Label size="small" grey={400}>
-          {formatDateTime(ts)}
+          {formatDateTime(timestamp)}
         </Label>
       </TableCell>
+
       <TableCell align="right">
-        <Text grey={700}>
-          <Dai value={format(amount, 2)} />
-        </Text>
+        {amount && (
+          <Text grey={700}>
+            <Dai value={format(amount, 2)} />
+          </Text>
+        )}
       </TableCell>
     </TableRow>
   );
@@ -78,26 +110,24 @@ function TransactionHistoryEmpty() {
   );
 }
 
-export function TransactionHistory() {
-  const { data, isLoading, isEmpty, loadingCount = 1 } = useTransactions();
+export function TransactionHistory({ data }) {
   const { data: pagedData, page, maxPages, setPage } = usePagination(data);
 
   return (
     <>
       <Table disableCondensed>
-        {isEmpty && !isLoading && <TransactionHistoryEmpty />}
+        {data?.length <= 0 && <TransactionHistoryEmpty />}
 
         {pagedData.map((tx) => (
           <TransactionHistoryRow key={tx.hash} {...tx} />
         ))}
 
-        {isLoading &&
-          loadingCount &&
-          loadingCount > 0 &&
-          createArray(loadingCount).map((_, i) => (
+        {!data &&
+          createArray(3).map((_, i) => (
             <TransactionHistorySkeletonRow key={i} />
           ))}
       </Table>
+
       <Pagination
         mt="24px"
         pages={maxPages}
