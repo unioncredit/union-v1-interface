@@ -62,3 +62,11 @@ export const navItems = [
     pathname: "/governance",
   },
 ];
+
+export const TransactionTypes = {
+  BORROW: "borrow",
+  REPAY: "repay",
+  REGISTER: "register",
+  CANCEL: "cancel",
+  TRUST: "trust",
+};

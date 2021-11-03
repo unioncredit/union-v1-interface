@@ -46,3 +46,4 @@ export * from "./ContactDetailsCard";
 export * from "./CheckIsMember";
 export * from "./View";
 export * from "./ConnectButton";
+export * from "./AddressHistory";

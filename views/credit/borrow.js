@@ -1,15 +1,18 @@
+import { useWeb3React } from "@web3-react/core";
 import {
   View,
-  TransactionHistory,
   BorrowStatsCard,
   ShareCard,
   CreditProvidersCard,
+  AddressHistory,
 } from "components-ui";
 import { Grid, Row, Col, Card, Box } from "union-ui";
 
 import { config } from "./config";
 
 export default function BorrowView() {
+  const { account } = useWeb3React();
+
   return (
     <View tabItems={config.tabItems}>
       <Grid>
@@ -31,7 +34,7 @@ export default function BorrowView() {
                 subTitle="Your credit based transaction history"
               />
               <Card.Body>
-                <TransactionHistory />
+                <AddressHistory address={account} />
               </Card.Body>
             </Card>
           </Col>
