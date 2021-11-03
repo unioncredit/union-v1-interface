@@ -4,55 +4,64 @@ import { GRAPHQL_URL } from "constants/variables";
 import { TransactionTypes } from "constants/app";
 import { formatEther } from "@ethersproject/units";
 
-const graphKeyLookupTable = {
-  memberApplications: TransactionTypes.REGISTER,
-  vouchCancellations: TransactionTypes.CANCEL,
-  trustLines: TransactionTypes.TRUST,
-};
-
-export default async function fetchUserTransactions(chainId, address) {
-  const query = gql`
-    query ($first: Int, $applicant: Bytes) {
-      memberApplications(first: $first, where: { applicant: $applicant }) {
-        applicant
-        timestamp
-      }
-      vouchCancellations(first: $first, where: { staker: $applicant }) {
-        borrower
-        staker
-        timestamp
-      }
-      trustLines(first: $first, where: { staker: $applicant }) {
-        amount
-        borrower
-        staker
-        timestamp
-      }
+const query = gql`
+  query (
+    $first: Int, 
+    $memberApplicationsFilter: MemberApplication_filter,
+    $vouchCancellationsFilter: VouchCancellation_filter,
+    $trustLinesFilter: TrustLine_filter
+  ) {
+    ${TransactionTypes.REGISTER}: memberApplications(first: $first, where: $memberApplicationsFilter) {
+      applicant
+      timestamp
     }
-  `;
+    ${TransactionTypes.CANCEL}: vouchCancellations(first: $first, where: $vouchCancellationsFilter) {
+      borrower
+      staker
+      timestamp
+    }
+    ${TransactionTypes.TRUST}: trustLines(first: $first, where: $trustLinesFilter) {
+      amount
+      borrower
+      staker
+      timestamp
+    }
+  }
+`;
+
+export default async function fetchUserTransactions(chainId, staker, borrower) {
+  const borrowerVariable = borrower ? { borrower } : {};
 
   const variables = {
     first: 100,
-    applicant: address,
+    memberApplicationsFilter: {
+      applicant: staker,
+    },
+    vouchCancellationsFilter: {
+      staker,
+      ...borrowerVariable,
+    },
+    trustLinesFilter: {
+      staker,
+      ...borrowerVariable,
+    },
   };
 
   const resp = await request(GRAPHQL_URL[chainId] + "user", query, variables);
 
   const flattened = Object.keys(resp).reduce((acc, key) => {
     const parsed = resp[key].map((item) => {
-      const transactionType = graphKeyLookupTable[key];
-
       if (item.amount) {
         item.amount = formatEther(item.amount);
       }
 
-      if (transactionType === TransactionTypes.TRUST) {
+      if (key === TransactionTypes.TRUST) {
         item.address = item.borrower;
       }
 
       return {
         ...item,
-        type: transactionType,
+        type: key,
       };
     });
 
