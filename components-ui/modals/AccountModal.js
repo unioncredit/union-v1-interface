@@ -7,7 +7,7 @@ import usePublicData from "hooks/usePublicData";
 import { walletconnect, injected } from "lib/connectors";
 import useToast, { FLAVORS } from "hooks/useToast";
 import { logout } from "lib/auth";
-import useActivity, { clearActivity } from "hooks/data/useActivity";
+import useActivity, { useClearActivity } from "hooks/data/useActivity";
 import { Dai } from "components-ui/Dai";
 import getEtherscanLink from "util/getEtherscanLink";
 import { Copyable } from "components-ui/Copyable";
@@ -21,6 +21,7 @@ export function AccountModal() {
   const { name } = usePublicData(account);
   const { close } = useAccountModal();
   const activity = useActivity();
+  const clearActivity = useClearActivity();
 
   const addToast = useToast();
 
@@ -64,11 +65,7 @@ export function AccountModal() {
           <Label as="p" size="small" mb="8px" grey={400}>
             {"Activity".toUpperCase()}
           </Label>
-          <Button
-            variant="pill"
-            label="clear"
-            onClick={() => clearActivity(chainId)}
-          />
+          <Button variant="pill" label="clear" onClick={clearActivity} />
         </Box>
         {isEmpty ? (
           <Text>No activity</Text>

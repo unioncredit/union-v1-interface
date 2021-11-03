@@ -13,34 +13,43 @@ const initialState =
 
 const activityState = newRidgeState(initialState);
 
-export const addActivity = (chainId) => (activity) => {
-  const getUpdatedState = (chainState, activity) => {
-    if (!chainState) return [activity];
-    if (chainState.length >= MAX_SIZE) {
-      return [activity, ...chainState.slice(0, MAX_SIZE - 1)];
+export const addActivity = (chainId, address) => (activity) => {
+  const key = [chainId, address].toString();
+
+  const getUpdatedState = (stateSlice, activity) => {
+    if (!stateSlice) return [activity];
+    if (stateSlice.length >= MAX_SIZE) {
+      return [activity, ...stateSlice.slice(0, MAX_SIZE - 1)];
     }
-    return [activity, ...chainState];
+    return [activity, ...stateSlice];
   };
 
   activityState.set((state) => {
-    const chainState = state?.[chainId];
-    const updatedChainState = getUpdatedState(chainState, activity);
-    return { ...state, [chainId]: updatedChainState };
+    const stateSlice = state?.[key];
+    const updatedChainState = getUpdatedState(stateSlice, activity);
+    return { ...state, [key]: updatedChainState };
   });
 };
 
-export const clearActivity = (chainId) =>
-  activityState.set((state) => ({ ...state, [chainId]: [] }));
+export const clearActivity = (chainId, address) => {
+  const key = [chainId, address].toString();
+  activityState.set((state) => ({ ...state, [key]: [] }));
+};
 
 export function useAddActivity() {
-  const { chainId } = useWeb3React();
+  const { chainId, account } = useWeb3React();
   return useAutoCallback(
-    (activity) => chainId && addActivity(chainId)(activity)
+    (activity) => chainId && addActivity(chainId, account)(activity)
   );
 }
 
+export function useClearActivity() {
+  const { chainId, account } = useWeb3React();
+  return useAutoCallback(() => chainId && clearActivity(chainId, account));
+}
+
 export default function useActivity() {
-  const { chainId } = useWeb3React();
+  const { chainId, account } = useWeb3React();
   const activity = activityState.useValue();
 
   useEffect(() => {
@@ -50,5 +59,5 @@ export default function useActivity() {
     }
   }, [activity, chainId]);
 
-  return activity && chainId && activity[chainId];
+  return activity && chainId && activity[[chainId, account]];
 }
