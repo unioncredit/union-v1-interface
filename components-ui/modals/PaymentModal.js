@@ -68,7 +68,10 @@ export function PaymentModal({
   const newBalanceOwed = calculateBalanceOwed - amount;
 
   const handlePayMinimum = () => {
-    setValue("amount", roundUp(interest));
+    setValue("amount", roundUp(interest), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   };
 
   const validate = async (val) => {
