@@ -2,8 +2,8 @@ import useSWR from "swr";
 import useChainId from "hooks/useChainId";
 import fetchGovernanceProposals from "fetchers/fetchGovernanceProposals";
 
-const fetchData = (chainId) => async () => {
-  fetchGovernanceProposals(chainId);
+const fetchData = (chainId) => () => {
+  return fetchGovernanceProposals(chainId);
 };
 
 export function useDataFromEventLogs() {

@@ -10,6 +10,7 @@ import {
 } from "union-ui";
 import Link from "next/link";
 import { toPercent } from "util/numbers";
+import createArray from "util/createArray";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 
@@ -19,20 +20,13 @@ function ProposalsTableRowSkeleton() {
   return (
     <TableRow>
       <TableCell span={3}>
-        <Skeleton size="medium" variant="primary" />
-        <Skeleton size="small" variant="secondary" />
+        <Skeleton shimmer height={16} width={100} />
       </TableCell>
       <TableCell span={1} align="center">
-        <Skeleton size="small" />
-      </TableCell>
-      <TableCell span={1} align="center">
-        <Skeleton size="medium" variant="secondary" />
+        <Skeleton shimmer height={16} width={60} />
       </TableCell>
       <TableCell span={1} align="right">
-        <Skeleton size="medium" variant="secondary" />
-      </TableCell>
-      <TableCell>
-        <Skeleton size="small" />
+        <Skeleton shimmer height={16} width={20} />
       </TableCell>
     </TableRow>
   );
@@ -81,7 +75,8 @@ export function ProposalsTable({ data }) {
 
   return (
     <Table>
-      {!data && <ProposalsTableRowSkeleton />}
+      {!data &&
+        createArray(2).map((_, i) => <ProposalsTableRowSkeleton key={i} />)}
       {data && data.map((row, i) => <ProposalsTableRow key={i} {...row} />)}
     </Table>
   );
