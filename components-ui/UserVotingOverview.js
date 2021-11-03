@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import { Box, Badge, Heading, Card, Button, Stat, Grid } from "union-ui";
-
+import External from "union-ui/lib/icons/externalinline.svg";
 import {
   useVoteDelegationModal,
   VoteDelegationModal,
@@ -83,7 +84,15 @@ export function UserVotingOverview({ address }) {
                   mt="28px"
                   label="DELEGATING TO"
                   value={
-                    isDelegatingToSelf ? "self" : delegatesENS || delegatesName
+                    isDelegatingToSelf ? (
+                      "Self"
+                    ) : (
+                      <Link href={`/profile/${delegates}`}>
+                        <a>
+                          {delegatesENS || delegatesName} <External />
+                        </a>
+                      </Link>
+                    )
                   }
                 />
               </Grid.Col>
