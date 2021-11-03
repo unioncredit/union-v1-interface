@@ -16,7 +16,7 @@ import usePagination from "hooks/usePagination";
 function OutstandingLoansRow({ address, used }) {
   const { name } = usePublicData(address);
   return (
-    <Link href={`/contacts?contactsType=you-trust&contact=${address}`}>
+    <Link href={`/contacts/you-trust?contact=${address}`}>
       <TableRow>
         <TableCell span={1}>
           <Box align="center">

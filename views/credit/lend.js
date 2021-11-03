@@ -62,7 +62,7 @@ export default function LendView() {
                     : pagedTrustData.map((item) => (
                         <Link
                           key={item.address}
-                          href={`/contacts?contactsType=${ContactsType.YOU_TRUST}&contact=${item.address}`}
+                          href={`/contacts/${ContactsType.YOU_TRUST}?contact=${item.address}`}
                         >
                           <CreditContactsRow {...item} />
                         </Link>
