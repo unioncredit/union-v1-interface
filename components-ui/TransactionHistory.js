@@ -7,6 +7,7 @@ import {
   Box,
   Skeleton,
   Pagination,
+  EmptyState,
 } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { Dai } from "components-ui";
@@ -101,13 +102,7 @@ function TransactionHistorySkeletonRow() {
 }
 
 function TransactionHistoryEmpty() {
-  return (
-    <TableRow>
-      <TableCell span={3}>
-        <Text>No transactions</Text>
-      </TableCell>
-    </TableRow>
-  );
+  return <EmptyState label="No transactions" />;
 }
 
 export function TransactionHistory({ data }) {

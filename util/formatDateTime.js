@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 
 export default function formatDateTime(ts) {
-  return dayjs(ts).format("HH:MM DD MMM");
+  // because js has dumb timestamps
+  const jsts = Number(ts) * 1000;
+  return dayjs(jsts).format("HH:MM DD MMM");
 }

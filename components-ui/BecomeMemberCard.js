@@ -28,7 +28,7 @@ export function BecomeMemberCard() {
   };
 
   return (
-    <Card variant="blue">
+    <Card variant="blue" mt="24px">
       <Card.Body>
         <Heading mb="4px" align="center">
           Become a Member
