@@ -6,6 +6,7 @@ import {
   TableRow,
   Box,
   Pagination,
+  EmptyState,
 } from "union-ui";
 import Link from "next/link";
 import usePublicData from "hooks/usePublicData";
@@ -40,13 +41,7 @@ function OutstandingLoansRow({ address, used }) {
 }
 
 function OutstandingLoansEmpty() {
-  return (
-    <TableRow>
-      <TableCell span={3}>
-        <Text>No loans</Text>
-      </TableCell>
-    </TableRow>
-  );
+  return <EmptyState label="No loans" />;
 }
 
 export function OutstandingLoans({ data }) {
