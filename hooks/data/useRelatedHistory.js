@@ -3,8 +3,8 @@ import useChainId from "hooks/useChainId";
 import fetchUserTransactions from "fetchers/fetchUserTransactions";
 import fetchUTokenTransactions from "fetchers/fetchUTokenTransactions";
 
-async function fetchData(_, chainId, staker, borrower) {
-  const utokenTransactions = await fetchUTokenTransactions(chainId, staker);
+async function fetchData(_, chainId, account, staker, borrower) {
+  const utokenTransactions = await fetchUTokenTransactions(chainId, account);
   const userTransactions = await fetchUserTransactions(
     chainId,
     staker,
@@ -16,13 +16,13 @@ async function fetchData(_, chainId, staker, borrower) {
   });
 }
 
-export default function useRelatedHistory(staker, borrower) {
+export default function useRelatedHistory(account, staker, borrower) {
   const chainId = useChainId();
 
   const shouldFetch = chainId;
 
   return useSWR(
-    shouldFetch ? ["EventLogsData", chainId, staker, borrower] : null,
+    shouldFetch ? ["EventLogsData", chainId, account, staker, borrower] : null,
     fetchData,
     {
       shouldRetryOnError: false,

@@ -1,14 +1,13 @@
 import Link from "next/link";
-import { Button, Heading, Badge, Box } from "union-ui";
+import { Heading, Badge, Box } from "union-ui";
 import { Avatar, Copyable } from "components-ui";
 import truncateAddress from "util/truncateAddress";
-import External from "union-ui/lib/icons/externalinline.svg";
+import External from "union-ui/lib/icons/external.svg";
 
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
-import { ContactsType } from "constants/app";
 
-export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
+export function ContactDetailsHeader({ address }) {
   const { ENSName, BoxName } = usePublicData(address);
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
@@ -22,8 +21,6 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
     { label: ENSName || BoxName },
     { label: truncatedAddress, value: address },
   ].filter(({ label }) => Boolean(label));
-
-  const isYouTrust = contactsType === ContactsType.YOU_TRUST;
 
   return (
     <Box mb="24px" align="center">
@@ -47,26 +44,12 @@ export function ContactDetailsHeader({ address, isOverdue, contactsType }) {
               />
             ))}
 
-            {isYouTrust && (
-              <Badge
-                ml="7px"
-                color={isOverdue ? "red" : "blue"}
-                label={isOverdue ? "Overdue" : "Healthy"}
-              />
-            )}
+            <Link href={`/profile/${address}`}>
+              <External width="24px" />
+            </Link>
           </Box>
         </Box>
       </Box>
-      <Link href={`/profile/${address}`}>
-        <Button
-          ml="auto"
-          rounded
-          variant="secondary"
-          label="View Profile"
-          icon={External}
-          iconPosition="end"
-        />
-      </Link>
     </Box>
   );
 }

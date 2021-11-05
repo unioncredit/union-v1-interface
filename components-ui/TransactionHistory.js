@@ -34,22 +34,28 @@ const icons = {
 const texts = {
   [TransactionTypes.BORROW]: () => "Borrow",
   [TransactionTypes.REPAY]: () => "Repayment",
-  [TransactionTypes.TRUST]: ({ name }) => `Trusted ${name}`,
+  [TransactionTypes.TRUST]: ({ borrowerName, stakerName }) =>
+    `${stakerName} Trusted ${borrowerName}`,
   [TransactionTypes.REGISTER]: () => "Became a member",
 };
 
-function TransactionHistoryRow({ amount, type, timestamp, address }) {
+const parseName = (account, address, ENSName) => {
+  return account?.toLowerCase() === address?.toLowerCase()
+    ? "You"
+    : ENSName || address?.slice(0, 6);
+};
+function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
   const { account } = useWeb3React();
-  const { ENSName } = usePublicData(address);
 
-  const name =
-    account.toLowerCase() === address?.toLowerCase()
-      ? "You"
-      : ENSName || address?.slice(0, 6);
+  const { ENSName: borrowerENS } = usePublicData(borrower);
+  const { ENSName: stakerENS } = usePublicData(staker);
+
+  const borrowerName = parseName(account, borrower, borrowerENS);
+  const stakerName = parseName(account, staker, stakerENS);
 
   const Icon = icons[type];
 
-  const text = texts[type]({ amount, type, name });
+  const text = texts[type]({ amount, type, borrowerName, stakerName });
 
   if (!Icon || !text) {
     return null;

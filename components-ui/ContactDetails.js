@@ -1,5 +1,5 @@
 import useBorrowData from "hooks/data/useBorrowData";
-import { Stat, Grid, Card, Button } from "union-ui";
+import { Stat, Grid, Card, Button, Badge } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp, toPercent } from "util/numbers";
@@ -9,7 +9,7 @@ import { ContactsType } from "constants/app";
 
 function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
   return (
-    <Grid>
+    <>
       <Grid.Row>
         <Grid.Col xs={4}>
           <Stat label="Providing you" value={<Dai value={vouched} />} />
@@ -34,7 +34,7 @@ function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
           />
         </Grid.Col>
       </Grid.Row>
-    </Grid>
+    </>
   );
 }
 
@@ -44,13 +44,28 @@ function YouTrustContactDetails({
   used,
   utilized,
   vouched,
+  isOverdue,
 }) {
   const { data: borrowData } = useBorrowData(address);
 
   const { interest = 0, paymentDueDate = "-" } = !!borrowData && borrowData;
 
   return (
-    <Grid>
+    <>
+      <Grid.Row>
+        <Grid.Col>
+          <Stat
+            mb="24px"
+            label="Credit Status"
+            value={
+              <Badge
+                color={isOverdue ? "red" : "blue"}
+                label={isOverdue ? "Overdue" : "Healthy"}
+              />
+            }
+          />
+        </Grid.Col>
+      </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
           <Stat
@@ -95,26 +110,29 @@ function YouTrustContactDetails({
           />
         </Grid.Col>
       </Grid.Row>
-    </Grid>
+    </>
   );
 }
 
 export function ContactDetails({ contactsType, ...props }) {
   const { account } = useWeb3React();
 
-  const relatedHistoryProps = ContactsType.YOU_TRUST
-    ? { staker: props.address, borrower: account }
-    : { staker: account, borrower: props.address };
+  const relatedHistoryProps =
+    contactsType === ContactsType.TRUSTS_YOU
+      ? { account: props.address, staker: props.address, borrower: account }
+      : { account: props.address, staker: account, borrower: props.address };
 
   return (
     <>
       <Card mb="24px" variant="packed">
         <Card.Body>
-          {contactsType === ContactsType.YOU_TRUST ? (
-            <YouTrustContactDetails {...props} />
-          ) : (
-            <TrustsYouContactDetails {...props} />
-          )}
+          <Grid>
+            {contactsType === ContactsType.YOU_TRUST ? (
+              <YouTrustContactDetails {...props} />
+            ) : (
+              <TrustsYouContactDetails {...props} />
+            )}
+          </Grid>
         </Card.Body>
       </Card>
       <RelatedHistory {...relatedHistoryProps} />
