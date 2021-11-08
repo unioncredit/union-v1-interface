@@ -152,66 +152,56 @@ export default function ContactsView({
               <Card mt="24px">
                 <Card.Header title={title} subTitle={subTitle} />
                 <Card.Body>
-                  {contactsType === ContactsType.YOU_TRUST ? (
-                    <>
-                      <ButtonRow mb="8px">
-                        <Button
-                          fluid
-                          variant="secondary"
-                          label="New vouch"
-                          icon={Vouch}
-                          onClick={openVouchModal}
-                        />
-                        <Button
-                          fluid
-                          icon={Filter}
-                          variant="secondary"
-                          label={`${showFilters ? "Hide" : "Show"} filters`}
-                          onClick={toggleFilters}
-                        />
-                      </ButtonRow>
-                      {showFilters && (
-                        <Card variant="packed">
-                          <Card.Body>
-                            <Input
-                              ref={register}
-                              name="query"
-                              suffix={<Search />}
-                              placeholder="Filter by ENS or address"
-                            />
-                            <Box mt="8px">
-                              <Select
-                                options={statusOptions}
-                                onChange={({ id }) => {
-                                  setFilter(id);
-                                }}
-                                defaultValue={statusOptions[0]}
-                              />
-                            </Box>
-                            <Box mt="8px">
-                              <Select
-                                options={oderByOptions}
-                                onChange={({ id }) => {
-                                  setOrderBy(id);
-                                }}
-                                defaultValue={oderByOptions[0]}
-                              />
-                            </Box>
-                          </Card.Body>
-                        </Card>
-                      )}
-                      <Divider mt="16px" mb="16px" />
-                    </>
-                  ) : (
-                    <Box mb="16px">
-                      <Input
-                        ref={register}
-                        name="query"
-                        suffix={<Search />}
-                        placeholder="Filter by ENS or address"
+                  <ButtonRow mb="8px">
+                    {contactsType === ContactsType.YOU_TRUST && (
+                      <Button
+                        fluid
+                        label="New vouch"
+                        icon={Vouch}
+                        onClick={openVouchModal}
                       />
-                    </Box>
+                    )}
+                    <Button
+                      fluid
+                      icon={Filter}
+                      variant="secondary"
+                      label={`${showFilters ? "Hide" : "Show"} filters`}
+                      onClick={toggleFilters}
+                    />
+                  </ButtonRow>
+                  {showFilters && (
+                    <Card variant="packed">
+                      <Card.Body>
+                        <Input
+                          ref={register}
+                          name="query"
+                          suffix={<Search />}
+                          placeholder="Filter by ENS or address"
+                        />
+                        {contactsType === ContactsType.YOU_TRUST && (
+                          <Box mt="8px">
+                            <Select
+                              options={statusOptions}
+                              onChange={({ id }) => {
+                                setFilter(id);
+                              }}
+                              defaultValue={statusOptions[0]}
+                            />
+                          </Box>
+                        )}
+                        <Box mt="8px">
+                          <Select
+                            options={oderByOptions}
+                            onChange={({ id }) => {
+                              setOrderBy(id);
+                            }}
+                            defaultValue={oderByOptions[0]}
+                          />
+                        </Box>
+                      </Card.Body>
+                    </Card>
                   )}
+                  <Divider mt="16px" mb="16px" />
                   <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
                       ? createArray(3).map((_, i) => (
