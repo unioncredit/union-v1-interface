@@ -66,9 +66,9 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
       <TableCell>
         <Box align="center">
           <Icon width="24px" />
-          <Text ml="8px" grey={700}>
+          <Label as="p" ml="8px" grey={700}>
             {text}
-          </Text>
+          </Label>
         </Box>
       </TableCell>
       <TableCell>
