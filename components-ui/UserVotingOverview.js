@@ -40,6 +40,8 @@ export function UserVotingOverview({ address }) {
   const { ENSName: delegatesENS, name: delegatesName } =
     usePublicData(delegates);
 
+  const isVotingConfigured = Number(delegates) !== 0;
+
   const isDelegatingToSelf = delegates === address;
 
   const votesDelegated = isDelegatingToSelf
@@ -102,7 +104,9 @@ export function UserVotingOverview({ address }) {
                   mt="28px"
                   label="DELEGATING TO"
                   value={
-                    isDelegatingToSelf ? (
+                    !isVotingConfigured ? (
+                      "Not configured"
+                    ) : isDelegatingToSelf ? (
                       "Self"
                     ) : (
                       <Link href={`/profile/${delegates}`}>
@@ -115,13 +119,16 @@ export function UserVotingOverview({ address }) {
                 />
               </Grid.Col>
               <Grid.Col>
-                <Button
-                  mt="28px"
-                  variant="secondary"
-                  inline
-                  label="Delegate votes"
-                  onClick={openVoteDelegationModal}
-                />
+                <Box ml="auto">
+                  <Button
+                    mt="28px"
+                    variant="secondary"
+                    label={
+                      isVotingConfigured ? "Delegate votes" : "Set up voting"
+                    }
+                    onClick={openVoteDelegationModal}
+                  />
+                </Box>
               </Grid.Col>
             </Grid.Row>
           </Grid>
