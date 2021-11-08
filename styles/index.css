@@ -17,29 +17,6 @@ a {
   }
 }
 
-.footer {
-  width: 100%;
-  margin-top: auto;
-}
-
-.footer .text {
-  position: relative;
-  padding-left: 10px;
-}
-
-.footer .text:not(:first-of-type):before {
-  content: "";
-  display: block;
-  width: 2px;
-  height: 2px;
-  border-radius: 100%;
-  background: #565461;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .qrcode {
   border-radius: 5px;
   border: 0.625px solid #e1e0e6;
@@ -123,4 +100,8 @@ ul {
 
 .inverted-circle-logo svg path {
   fill: white;
+}
+
+.identicon {
+  border-radius: 100%;
 }

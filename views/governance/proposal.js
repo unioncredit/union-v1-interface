@@ -40,7 +40,7 @@ export default function ProposalView() {
     blockNumber,
   } = !!data && data;
 
-  const isLoading = true;
+  const isLoading = !data;
 
   return (
     <View>
