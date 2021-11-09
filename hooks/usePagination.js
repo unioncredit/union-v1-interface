@@ -32,6 +32,7 @@ export default function usePagination(data = [], pageSize = 8) {
     next,
     prev,
     maxPages,
+    pageSize,
     setPage: (n) => setPage(Number(n)),
   };
 }

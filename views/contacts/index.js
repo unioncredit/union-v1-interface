@@ -81,7 +81,7 @@ export default function ContactsView({
   const router = useRouter();
 
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedContact, setSelectedContact] = useState(null);
+  const [selectedContactIndex, setSelectedContact] = useState(0);
 
   const { isOpen: isManageContactModalOpen } = useManageContactModal();
   const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
@@ -103,6 +103,7 @@ export default function ContactsView({
   const {
     data: pagedData,
     page,
+    pageSize,
     maxPages,
     setPage,
   } = usePagination(searchData);
@@ -125,13 +126,11 @@ export default function ContactsView({
       contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
     if (queryContact) {
-      const contact = data.find(({ address }) => address === queryContact);
-      setSelectedContact(contact || data[0]);
+      const contactIndex = data.find(({ address }) => address === queryContact);
+      setSelectedContact(~contactIndex ? contactIndex : 0);
       return;
     }
-
-    !isMobile && !selectedContact && setSelectedContact(data[0]);
-  }, [vouchData, selectedContact, trustData, contactsType, queryContact]);
+  }, [vouchData, trustData, contactsType, queryContact]);
 
   const title =
     contactsType === ContactsType.YOU_TRUST
@@ -142,6 +141,8 @@ export default function ContactsView({
     contactsType === ContactsType.YOU_TRUST
       ? "Accounts you’re currently vouching for"
       : "Accounts providing you with credit";
+
+  const selectedContact = data[selectedContactIndex];
 
   return (
     <>
@@ -207,13 +208,15 @@ export default function ContactsView({
                       ? createArray(3).map((_, i) => (
                           <ContactsListItemSkeleton key={i} />
                         ))
-                      : pagedData.map((item) => (
+                      : pagedData.map((item, i) => (
                           <ContactsListItem
                             {...item}
                             active={item.address === selectedContact?.address}
                             variant={contactsType}
                             key={`${item.address}-${contactsType}`}
-                            onClick={(_, data) => setSelectedContact(data)}
+                            onClick={() =>
+                              setSelectedContact(pageSize * (page - 1) + i)
+                            }
                           />
                         ))}
                   </Table>
@@ -233,7 +236,6 @@ export default function ContactsView({
                     <ContactDetailsVariant
                       {...selectedContact}
                       onClose={() => setSelectedContact(null)}
-                      setSelectedContact={setSelectedContact}
                       contactsType={contactsType}
                     />
                   </Card.Body>
