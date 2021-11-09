@@ -1,5 +1,4 @@
 import useENSName from "hooks/useENSName";
-import use3BoxPublicData from "hooks/use3BoxPublicData";
 
 function truncate(text) {
   if (text.startsWith("0x")) {
@@ -12,17 +11,9 @@ export default function usePublicData(address) {
   const ENSName = useENSName(address);
   const hasENSName = !!ENSName;
 
-  const { data, error } = use3BoxPublicData(address);
-  const has3BoxName = !!data && !error && data?.name;
-
   return {
-    name: hasENSName
-      ? ENSName
-      : has3BoxName
-      ? data.name
-      : address && truncate(address),
-    image: data?.image,
+    name: hasENSName ? ENSName : address && truncate(address),
+    image: null,
     ENSName,
-    BoxName: data?.name,
   };
 }
