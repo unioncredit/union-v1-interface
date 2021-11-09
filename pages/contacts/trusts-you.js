@@ -12,7 +12,7 @@ export default function ContactsPage() {
       <PageHead title="Contacts | Union" />
       {account && library ? (
         <CheckIsMember>
-          <ContactsView contactsType={ContactsType.YOU_TRUST} />
+          <ContactsView contactsType={ContactsType.TRUSTS_YOU} />
         </CheckIsMember>
       ) : (
         <LoggedOutView />

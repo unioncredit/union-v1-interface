@@ -3,7 +3,6 @@ import { Table, Card, Pagination, EmptyState } from "union-ui";
 import Link from "next/link";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
-import { ContactsType } from "constants/app";
 
 import usePagination from "hooks/usePagination";
 
@@ -37,7 +36,7 @@ export function CreditProvidersCard() {
               : pagedVouchData.map((item) => (
                   <Link
                     key={item.address}
-                    href={`/contacts?contactsType=${ContactsType.TRUSTS_YOU}&contact=${item.address}`}
+                    href={`/contacts/trusts-you?contact=${item.address}`}
                   >
                     <CreditContactsRow {...item} />
                   </Link>
