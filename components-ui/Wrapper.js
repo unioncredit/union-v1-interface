@@ -71,10 +71,12 @@ export function Wrapper({ children }) {
               </Col>
             </Row>
           </Grid>
-          <Box mt="40px" mb="16px" justify="center" fluid>
-            <Label as="p" size="small" grey={300} align="center">
-              Build: {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
-            </Label>
+          <Box mt="auto" w="100%">
+            <Box mt="40px" mb="16px" justify="center" fluid>
+              <Label as="p" size="small" grey={300} align="center">
+                Build: {process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA}
+              </Label>
+            </Box>
           </Box>
         </Layout.Main>
       </Layout>
