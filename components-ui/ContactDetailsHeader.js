@@ -12,14 +12,15 @@ export function ContactDetailsHeader({ address }) {
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
 
+  const truncatedAddressText = truncateAddress(address);
+
   const truncatedAddress = (
-    <Copyable value={address}>{truncateAddress(address)}</Copyable>
+    <Copyable value={address}>{truncatedAddressText}</Copyable>
   );
 
-  const [primaryLabel, ...labels] = [
-    { label },
+  const [primaryLabel] = [
     { label: ENSName || BoxName },
-    { label: truncatedAddress, value: address },
+    { label: truncatedAddressText, value: address },
   ].filter(({ label }) => Boolean(label));
 
   return (
@@ -28,21 +29,12 @@ export function ContactDetailsHeader({ address }) {
         {address && <Avatar size={54} address={address} />}
         <Box direction="vertical" mx="16px">
           <Heading level={2} mb="4px">
-            <Copyable value={primaryLabel.value || primaryLabel.label}>
-              {primaryLabel.label}
-            </Copyable>
+            {label && <>{label} &middot;</>} {primaryLabel.label}
           </Heading>
           <Box>
             {!ENSName && <Badge color="grey" mr="4px" label="No ENS" />}
 
-            {labels.map(({ value, label }) => (
-              <Badge
-                key={label}
-                mr="4px"
-                color="grey"
-                label={<Copyable value={value || label}>{label}</Copyable>}
-              />
-            ))}
+            <Badge mr="4px" color="green" label={truncatedAddress} />
 
             <Link href={`/profile/${address}`}>
               <External width="24px" />

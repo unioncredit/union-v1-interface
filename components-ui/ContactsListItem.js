@@ -6,7 +6,7 @@ import { ContactsType } from "constants/app";
 
 export function ContactsListItem(props) {
   const { address, vouched, onClick, isOverdue, variant, active } = props;
-  const { name, ...publicData } = usePublicData(address);
+  const { name, ENSName, BoxName, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
   const label = getLabel(address);
@@ -16,6 +16,10 @@ export function ContactsListItem(props) {
       onClick(event, { ...props, name, ...publicData });
     }
   };
+
+  const [primaryLabel] = [label, ENSName || BoxName, name].filter((label) =>
+    Boolean(label)
+  );
 
   return (
     <TableRow
@@ -27,7 +31,7 @@ export function ContactsListItem(props) {
         <Box align="center">
           <Avatar address={address} />
           <Text grey={700} ml="8px">
-            {label && <>{label} &middot;</>} {name}
+            {primaryLabel}
           </Text>
         </Box>
       </TableCell>
