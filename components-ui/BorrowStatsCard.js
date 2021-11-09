@@ -66,7 +66,7 @@ export function BorrowStatsCard() {
                   align="center"
                   label="Credit Limit"
                   value={<Dai value={format(roundDown(actualCreditLimit))} />}
-                  after={`of max ${totalCreditLimit}`}
+                  after={`of max ${format(totalCreditLimit)}`}
                 />
                 <Button
                   mt="28px"
