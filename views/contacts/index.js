@@ -23,8 +23,6 @@ import {
   useVouchModal,
   useManageContactModal,
   ManageContactModal,
-  EditAliasModal,
-  useEditAliasModal,
   EditVouchModal,
   useEditVouchModal,
   VouchModalManager,
@@ -85,7 +83,6 @@ export default function ContactsView({
   const [selectedContactIndex, setSelectedContact] = useState(0);
 
   const { isOpen: isManageContactModalOpen } = useManageContactModal();
-  const { isOpen: isEditAliasModalOpen } = useEditAliasModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
   const { open: openVouchModal } = useVouchModal();
   const { isOpen: isWriteOffDebtModalOpen } = useWriteOffDebtModal();
@@ -266,7 +263,6 @@ export default function ContactsView({
           isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
         />
       )}
-      {isEditAliasModalOpen && <EditAliasModal {...selectedContact} />}
       {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
       {isWriteOffDebtModalOpen && <WriteOffDebtModal {...selectedContact} />}
     </>
