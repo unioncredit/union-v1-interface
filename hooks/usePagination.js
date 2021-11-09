@@ -21,10 +21,10 @@ export default function usePagination(data = [], pageSize = 8) {
   }, [pageSize, page, JSON.stringify(data)]);
 
   useEffect(() => {
-    if (data > 0) {
+    if (data.length > 0) {
       setPage(1);
     }
-  }, [data]);
+  }, [data.length]);
 
   return {
     page,
