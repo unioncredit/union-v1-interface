@@ -7,6 +7,8 @@ import format from "util/formatValue";
 import { duneAnalytics } from "constants/app";
 import { toPercent } from "util/numbers";
 
+import External from "union-ui/lib/icons/externalinline.svg";
+
 export function GovernanceStatsCard() {
   const { chainId } = useWeb3React();
   const { data } = useStatisticsData();
@@ -64,7 +66,7 @@ export function GovernanceStatsCard() {
                 mt="32px"
                 variant="secondary"
                 label="Dune Analytics"
-                icon="external"
+                icon={External}
                 iconPosition="end"
               />
             </Grid.Col>
