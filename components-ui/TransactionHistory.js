@@ -20,6 +20,7 @@ import Borrow from "union-ui/lib/icons/borrow.svg";
 import Repayment from "union-ui/lib/icons/repayment.svg";
 import NewMember from "union-ui/lib/icons/newMember.svg";
 import NewVouch from "union-ui/lib/icons/newVouch.svg";
+import NewVouchRecieved from "union-ui/lib/icons/newVouchRecieved.svg";
 
 import { TransactionTypes } from "constants/app";
 import usePublicData from "hooks/usePublicData";
@@ -28,14 +29,15 @@ const icons = {
   [TransactionTypes.BORROW]: Borrow,
   [TransactionTypes.REPAY]: Repayment,
   [TransactionTypes.TRUST]: NewVouch,
+  [TransactionTypes.TRUSTED]: NewVouchRecieved,
   [TransactionTypes.REGISTER]: NewMember,
 };
 
 const texts = {
   [TransactionTypes.BORROW]: () => "Borrow",
   [TransactionTypes.REPAY]: () => "Repayment",
-  [TransactionTypes.TRUST]: ({ borrowerName, stakerName }) =>
-    `${stakerName} Trusted ${borrowerName}`,
+  [TransactionTypes.TRUST]: ({ borrowerName }) => `Trusted ${borrowerName}`,
+  [TransactionTypes.TRUSTED]: ({ stakerName }) => `Trusted by ${stakerName}`,
   [TransactionTypes.REGISTER]: () => "Became a member",
 };
 
@@ -55,7 +57,12 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
 
   const Icon = icons[type];
 
-  const text = texts[type]({ amount, type, borrowerName, stakerName });
+  const text = texts[type]({
+    amount,
+    type,
+    borrowerName,
+    stakerName,
+  });
 
   if (!Icon || !text) {
     return null;

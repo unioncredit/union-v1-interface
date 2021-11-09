@@ -69,4 +69,5 @@ export const TransactionTypes = {
   REGISTER: "register",
   CANCEL: "cancel",
   TRUST: "trust",
+  TRUSTED: "trusted",
 };

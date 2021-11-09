@@ -9,7 +9,8 @@ const query = gql`
     $first: Int, 
     $memberApplicationsFilter: MemberApplication_filter,
     $vouchCancellationsFilter: VouchCancellation_filter,
-    $trustLinesFilter: TrustLine_filter
+    $trustLinesFilter: TrustLine_filter,
+    $trustLinesFilter_Vouch: TrustLine_filter
   ) {
     ${TransactionTypes.REGISTER}: memberApplications(first: $first, where: $memberApplicationsFilter) {
       applicant
@@ -21,6 +22,12 @@ const query = gql`
       timestamp
     }
     ${TransactionTypes.TRUST}: trustLines(first: $first, where: $trustLinesFilter) {
+      amount
+      borrower
+      staker
+      timestamp
+    }
+    ${TransactionTypes.TRUSTED}: trustLines(first: $first, where: $trustLinesFilter_Vouch) {
       amount
       borrower
       staker
@@ -44,6 +51,10 @@ export default async function fetchUserTransactions(chainId, staker, borrower) {
     trustLinesFilter: {
       staker,
       ...borrowerVariable,
+    },
+    trustLinesFilter_Vouch: {
+      borrower: staker,
+      //...(borrower ? { staker: borrower } : {}),
     },
   };
 
