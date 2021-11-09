@@ -130,8 +130,8 @@ export default function ContactsView({
       return;
     }
 
-    !isMobile && setSelectedContact(data[0]);
-  }, [vouchData, trustData, contactsType, queryContact]);
+    !isMobile && !selectedContact && setSelectedContact(data[0]);
+  }, [vouchData, selectedContact, trustData, contactsType, queryContact]);
 
   const title =
     contactsType === ContactsType.YOU_TRUST
