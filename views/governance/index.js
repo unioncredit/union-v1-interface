@@ -3,16 +3,16 @@ import { useWeb3React } from "@web3-react/core";
 import {
   View,
   UserVotingOverview,
-  LiveProposals,
+  RecentProposals,
   GovernanceStatsCard,
 } from "components-ui";
-import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
+import useAllProposalData from "hooks/governance/useAllProposalData";
 
 import { config } from "./config";
 
 export default function GovernanceView() {
   const { account } = useWeb3React();
-  const liveProposalData = useFilteredProposalData("active", "all");
+  const { data } = useAllProposalData();
 
   return (
     <View tabItems={config.tabItems}>
@@ -26,7 +26,7 @@ export default function GovernanceView() {
               <UserVotingOverview address={account} />
             </Box>
             <Box mt="24px">
-              <LiveProposals data={liveProposalData} />
+              <RecentProposals data={data.slice(0, 3)} />
             </Box>
           </Grid.Col>
         </Grid.Row>
