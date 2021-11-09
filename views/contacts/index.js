@@ -17,6 +17,7 @@ import {
   ContactsListItem,
   ContactsListItemSkeleton,
   ContactDetailsCard,
+  ContactDetailsSkeleton,
 } from "components-ui";
 import {
   useVouchModal,
@@ -238,17 +239,19 @@ export default function ContactsView({
               </Card>
             </Grid.Col>
             <Grid.Col md={6}>
-              {selectedContact && (
-                <Card mt="24px">
-                  <Card.Body>
+              <Card mt="24px">
+                <Card.Body>
+                  {selectedContact ? (
                     <ContactDetailsVariant
                       {...selectedContact}
                       onClose={() => setSelectedContact(null)}
                       contactsType={contactsType}
                     />
-                  </Card.Body>
-                </Card>
-              )}
+                  ) : (
+                    <ContactDetailsSkeleton />
+                  )}
+                </Card.Body>
+              </Card>
             </Grid.Col>
           </Grid.Row>
         </Grid>
