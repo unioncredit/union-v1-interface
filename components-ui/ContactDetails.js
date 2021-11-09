@@ -7,6 +7,8 @@ import { useWeb3React } from "@web3-react/core";
 import { RelatedHistory } from "./RelatedHistory";
 import { ContactsType } from "constants/app";
 
+import Manage from "union-ui/lib/icons/manage.svg";
+
 function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
   return (
     <>
@@ -30,6 +32,7 @@ function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
             mt="18px"
             fluid
             label="Manage Contact"
+            icon={Manage}
             onClick={manageContact}
           />
         </Grid.Col>
@@ -106,6 +109,7 @@ function YouTrustContactDetails({
             fluid
             variant="secondary"
             label="Manage Contact"
+            icon={Manage}
             onClick={manageContact}
           />
         </Grid.Col>

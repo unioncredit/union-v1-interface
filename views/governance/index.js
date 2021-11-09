@@ -22,10 +22,10 @@ export default function GovernanceView() {
               <GovernanceStatsCard />
             </Box>
             <Box mt="24px">
-              <LiveProposals data={liveProposalData} />
+              <UserVotingOverview address={account} />
             </Box>
             <Box mt="24px">
-              <UserVotingOverview address={account} />
+              <LiveProposals data={liveProposalData} />
             </Box>
           </Grid.Col>
         </Grid.Row>

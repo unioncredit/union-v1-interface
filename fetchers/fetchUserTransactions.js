@@ -54,7 +54,7 @@ export default async function fetchUserTransactions(chainId, staker, borrower) {
     },
     trustLinesFilter_Vouch: {
       borrower: staker,
-      //...(borrower ? { staker: borrower } : {}),
+      ...(borrower ? { staker: borrower } : {}),
     },
   };
 
