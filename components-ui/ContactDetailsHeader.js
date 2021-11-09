@@ -6,8 +6,11 @@ import External from "union-ui/lib/icons/external.svg";
 
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
+import getEtherscanLink from "util/getEtherscanLink";
+import useChainId from "hooks/useChainId";
 
 export function ContactDetailsHeader({ address }) {
+  const chainId = useChainId();
   const { ENSName, BoxName } = usePublicData(address);
   const { getLabel } = useAddressLabels();
   const label = getLabel(address);
@@ -23,22 +26,34 @@ export function ContactDetailsHeader({ address }) {
     { label: truncatedAddressText, value: address },
   ].filter(({ label }) => Boolean(label));
 
+  const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
+
   return (
     <Box mb="24px" align="center">
       <Box align="center">
-        {address && <Avatar size={54} address={address} />}
+        {address && (
+          <Link href={`/profile/${address}`}>
+            <a>
+              <Avatar size={54} address={address} />
+            </a>
+          </Link>
+        )}
         <Box direction="vertical" mx="16px">
-          <Heading level={2} mb="4px">
-            {label && <>{label} &middot;</>} {primaryLabel.label}
-          </Heading>
+          <Link href={`/profile/${address}`}>
+            <a>
+              <Heading level={2} mb="4px">
+                {label && <>{label} &middot;</>} {primaryLabel.label}
+              </Heading>
+            </a>
+          </Link>
           <Box>
             {!ENSName && <Badge color="grey" mr="4px" label="No ENS" />}
 
             <Badge mr="4px" color="green" label={truncatedAddress} />
 
-            <Link href={`/profile/${address}`}>
+            <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
               <External width="24px" />
-            </Link>
+            </a>
           </Box>
         </Box>
       </Box>
