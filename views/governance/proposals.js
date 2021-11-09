@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Grid, Card, Button, Box } from "union-ui";
+import { Grid, Card } from "union-ui";
 import { View, ProposalsTable } from "components-ui";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
-import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
+
+import { config } from "./config";
 
 export default function ProposalsView() {
   const typeFilter = "all";
@@ -10,24 +10,11 @@ export default function ProposalsView() {
   const data = useFilteredProposalData(statusFilter, typeFilter);
 
   return (
-    <View>
+    <View tabItems={config.tabItems}>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col xs={12} md={8} lg={6}>
-            <Box>
-              <Link href="/governance">
-                <Button
-                  variant="lite"
-                  label={
-                    <>
-                      <ArrowRight className="flip" width="24px" height="24px" />
-                      Back to overview
-                    </>
-                  }
-                />
-              </Link>
-            </Box>
-            <Card>
+            <Card mt="24px">
               <Card.Header title="All Proposals" />
               <Card.Body>
                 <ProposalsTable data={data} />
