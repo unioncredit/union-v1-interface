@@ -49,12 +49,12 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hook-form": "^6.11.3",
-    "react-jazzicon-custom-colors": "^0.1.7",
+    "react-identicons": "^1.2.5",
     "react-markdown": "^5.0.2",
     "react-ridge-state": "4.1.6",
     "react-use": "^15.3.4",
     "swr": "^0.3.9",
-    "union-ui": "0.2.19"
+    "union-ui": "0.2.20"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^10.0.1",
