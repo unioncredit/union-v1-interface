@@ -17,7 +17,10 @@ function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
           <Stat label="Providing you" value={<Dai value={vouched} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Utilized" value={`${toPercent(utilized)}`} />
+          <Stat
+            label="Utilized"
+            value={`${toPercent(isNaN(utilized) ? 0 : utilized)}`}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
