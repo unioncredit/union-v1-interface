@@ -6,15 +6,16 @@ import {
   LiveProposals,
   GovernanceStatsCard,
 } from "components-ui";
-
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
+
+import { config } from "./config";
 
 export default function GovernanceView() {
   const { account } = useWeb3React();
   const liveProposalData = useFilteredProposalData("active", "all");
 
   return (
-    <View>
+    <View tabItems={config.tabItems}>
       <Grid>
         <Grid.Row justify="center">
           <Grid.Col>
