@@ -41,6 +41,7 @@ export default function ProfileView({ address }) {
   const { data: vouchData = [] } = useVouchData(address);
   const { data: trustData = [] } = useTrustData(address);
   const { data: votingWalletData } = useVotingWalletData(address);
+  const { data: accountVotingWalletData } = useVotingWalletData(account);
 
   const { open: openVouchModal } = useVouchModal();
 
@@ -51,6 +52,11 @@ export default function ProfileView({ address }) {
   } = !!votingWalletData && votingWalletData;
 
   const isDelegatingToSelf = delegates === address;
+
+  const { balanceOf: accountBalanceOf = 0, delegates: accountDelegates } =
+    !!accountVotingWalletData && accountVotingWalletData;
+
+  const accountIsDelegating = accountDelegates === address;
 
   const votesDelegated = isDelegatingToSelf
     ? currentVotes - balanceOf
@@ -183,10 +189,22 @@ export default function ProfileView({ address }) {
                       <Grid.Col>
                         <Stat label="Union Balance" value={format(balanceOf)} />
                       </Grid.Col>
+                    </Grid.Row>
+                    <Grid.Row>
                       <Grid.Col>
                         <Stat
+                          mt="16px"
                           label="From others"
                           value={format(votesDelegated)}
+                        />
+                      </Grid.Col>
+                      <Grid.Col>
+                        <Stat
+                          mt="16px"
+                          label="From you"
+                          value={
+                            accountIsDelegating ? format(accountBalanceOf) : 0
+                          }
                         />
                       </Grid.Col>
                     </Grid.Row>
@@ -205,18 +223,21 @@ export default function ProfileView({ address }) {
                         <UserVotingHistory address={address} />
                       </Grid.Col>
                     </Grid.Row>
-                    {address && address !== account && library && (
-                      <Grid.Row>
-                        <Grid.Col>
-                          <Button
-                            mt="24px"
-                            variant="secondary"
-                            label={`Delegate votes to ${name}`}
-                            onClick={handleDelegation}
-                          />
-                        </Grid.Col>
-                      </Grid.Row>
-                    )}
+                    {address &&
+                      address !== account &&
+                      library &&
+                      !accountIsDelegating && (
+                        <Grid.Row>
+                          <Grid.Col>
+                            <Button
+                              mt="24px"
+                              variant="secondary"
+                              label={`Delegate votes to ${name}`}
+                              onClick={handleDelegation}
+                            />
+                          </Grid.Col>
+                        </Grid.Row>
+                      )}
                   </Grid>
                 </Card.Body>
               </Card>
