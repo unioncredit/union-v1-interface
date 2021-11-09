@@ -34,9 +34,9 @@ export function Wrapper({ children }) {
                 <Layout.Header align="center">
                   <Navigation />
                   <Box align="center">
-                    <Box mr="8px">
+                    <Box mr="4px">
                       {account ? (
-                        <Wallet mr="8px" />
+                        <Wallet />
                       ) : (
                         <ConnectButton
                           label="Connect wallet"
