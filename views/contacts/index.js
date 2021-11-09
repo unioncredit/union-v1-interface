@@ -103,7 +103,6 @@ export default function ContactsView({
   const {
     data: pagedData,
     page,
-    pageSize,
     maxPages,
     setPage,
   } = usePagination(searchData);
@@ -119,6 +118,15 @@ export default function ContactsView({
     setShowFilters((x) => !x);
   };
 
+  const handleSelectContact = (contact) => () => {
+    const contactIndex = data.findIndex(
+      ({ address }) => address === contact.address
+    );
+    if (~contactIndex) {
+      setSelectedContact(contactIndex);
+    }
+  };
+
   useEffect(() => {
     if (!vouchData || !trustData) return;
 
@@ -126,7 +134,9 @@ export default function ContactsView({
       contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
     if (queryContact) {
-      const contactIndex = data.find(({ address }) => address === queryContact);
+      const contactIndex = data.findIndex(
+        ({ address }) => address === queryContact
+      );
       setSelectedContact(~contactIndex ? contactIndex : 0);
       return;
     }
@@ -142,7 +152,7 @@ export default function ContactsView({
       ? "Accounts you’re currently vouching for"
       : "Accounts providing you with credit";
 
-  const selectedContact = data[selectedContactIndex];
+  const selectedContact = data?.[selectedContactIndex];
 
   return (
     <>
@@ -208,15 +218,13 @@ export default function ContactsView({
                       ? createArray(3).map((_, i) => (
                           <ContactsListItemSkeleton key={i} />
                         ))
-                      : pagedData.map((item, i) => (
+                      : pagedData.map((item) => (
                           <ContactsListItem
                             {...item}
                             active={item.address === selectedContact?.address}
                             variant={contactsType}
                             key={`${item.address}-${contactsType}`}
-                            onClick={() =>
-                              setSelectedContact(pageSize * (page - 1) + i)
-                            }
+                            onClick={handleSelectContact(item)}
                           />
                         ))}
                   </Table>

@@ -1,5 +1,6 @@
 import { formatUnits } from "@ethersproject/units";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
+import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 import useAllProposalData from "./useAllProposalData";
 
@@ -26,7 +27,8 @@ const getProposalVoteHistory =
   };
 
 export default function useUserProposalVoteHistory(address) {
-  const govContract = useGovernanceContract();
+  const readProvider = useReadProvider();
+  const govContract = useGovernanceContract(readProvider);
 
   const { data: proposals } = useAllProposalData();
 

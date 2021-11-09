@@ -26,7 +26,7 @@ export default function GovernanceView() {
               <UserVotingOverview address={account} />
             </Box>
             <Box mt="24px">
-              <RecentProposals data={data.slice(0, 3)} />
+              <RecentProposals data={data?.slice(0, 3)} />
             </Box>
           </Grid.Col>
         </Grid.Row>

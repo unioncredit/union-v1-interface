@@ -2,6 +2,7 @@ import type { BigNumber } from "@ethersproject/bignumber";
 import type { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import useUnionContract from "hooks/contracts/useUnionContract";
+import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
 const getVotingWalletData =
@@ -23,7 +24,8 @@ const getVotingWalletData =
   };
 
 export default function useVotingWalletData(address: string) {
-  const contract = useUnionContract();
+  const readProvider = useReadProvider();
+  const contract = useUnionContract(readProvider);
 
   const shouldFetch = typeof address === "string" && !!contract;
 

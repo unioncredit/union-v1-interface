@@ -10,11 +10,9 @@ import {
   Label,
   Divider,
 } from "union-ui";
-import Dollar from "union-ui/lib/icons/dollar.svg";
-import People from "union-ui/lib/icons/people.svg";
-import External from "union-ui/lib/icons/externalinline.svg";
-import { View, Avatar, Copyable } from "components-ui";
-import useCreditLimit from "hooks/data/useCreditLimit";
+import ExternalInline from "union-ui/lib/icons/externalinline.svg";
+import External from "union-ui/lib/icons/external.svg";
+import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
 import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
 import { useWeb3React } from "@web3-react/core";
@@ -28,15 +26,20 @@ import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import useDelegate from "hooks/payables/useDelegate";
 import { useVouchModal, VouchModalManager } from "components-ui/modals";
+import truncateAddress from "util/truncateAddress";
+import useAddressLabels from "hooks/useAddressLabels";
+import getEtherscanLink from "util/getEtherscanLink";
+import useChainId from "hooks/useChainId";
 
 export default function ProfileView({ address }) {
+  const chainId = useChainId();
   const { account, library } = useWeb3React();
 
   const delegate = useDelegate();
-  const { name } = usePublicData(address);
+  const { getLabel } = useAddressLabels();
+  const { name, ENSName } = usePublicData(address);
   const { data: vouchData = [] } = useVouchData(address);
   const { data: trustData = [] } = useTrustData(address);
-  const { data: creditLimit = "0.0" } = useCreditLimit(address);
   const { data: votingWalletData } = useVotingWalletData(address);
 
   const { open: openVouchModal } = useVouchModal();
@@ -56,16 +59,7 @@ export default function ProfileView({ address }) {
   const vouchedForThem = trustData.some((x) => x.address === account);
   const vouchesForYou = vouchData.some((x) => x.address === account);
 
-  const creditLimitSummary =
-    creditLimit > 5000
-      ? "> 5,000"
-      : creditLimit > 1000
-      ? "> 1,000"
-      : creditLimit > 500
-      ? "> 500"
-      : creditLimit > 100
-      ? "> 100"
-      : "< 100";
+  const label = getLabel(address);
 
   const handleDelegation = async () => {
     try {
@@ -80,6 +74,12 @@ export default function ProfileView({ address }) {
     }
   };
 
+  const truncatedAddress = (
+    <Copyable value={address}>{truncateAddress(address)}</Copyable>
+  );
+
+  const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
+
   return (
     <>
       <View>
@@ -91,27 +91,17 @@ export default function ProfileView({ address }) {
                   <Box direction="vertical" align="center">
                     <Avatar size={56} address={address} />
                     <Heading mt="8px" mb={0}>
-                      {name}
+                      {label && <>{label} &middot;</>} {name}
                     </Heading>
-                    <Box align="center" justify="center" my="10px" fluid>
-                      <Dollar width="24px" />
-                      <Label as="p" grey={600} m={0} mr="8px">
-                        {creditLimitSummary} DAI
-                      </Label>
-                      <People width="24px" />
-                      <Label as="p" grey={600} m={0} mr="8px">
-                        {vouchData.length} Vouches
-                      </Label>
-                    </Box>
-                    <Box>
-                      <Badge
-                        label={
-                          <Copyable value={address}>
-                            {address.slice(0, 6)}
-                          </Copyable>
-                        }
-                        color="grey"
-                      />
+                    <Box mt="8px">
+                      <Badge label={truncatedAddress} color="grey" mr="4px" />
+                      <a
+                        href={addressEtherscanLink}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <External width="24px" />
+                      </a>
                     </Box>
                     {vouchesForYou && (
                       <Text mt="20px" mb={0} grey={500}>
@@ -127,7 +117,7 @@ export default function ProfileView({ address }) {
                         label={`Vouch for ${name}`}
                       />
                     )}
-                    {account === address && (
+                    {account === address && !ENSName && (
                       <>
                         <Button
                           as="a"
@@ -139,7 +129,7 @@ export default function ProfileView({ address }) {
                           label={
                             <>
                               Get a custom ENS username
-                              <External />
+                              <ExternalInline />
                             </>
                           }
                         />
@@ -154,7 +144,7 @@ export default function ProfileView({ address }) {
                     <Grid.Row>
                       <Grid.Col>
                         <Heading m={0}>Reputation</Heading>
-                        <Text mt="24px" mb="12px">
+                        <Text mt="24px" mb="12px" grey={700}>
                           Wallet traits
                         </Text>
                       </Grid.Col>
@@ -178,7 +168,9 @@ export default function ProfileView({ address }) {
                   <Grid>
                     <Grid.Row>
                       <Grid.Col>
-                        <Heading mt="24px">Governance</Heading>
+                        <Heading mt="24px" mb="24px">
+                          Governance
+                        </Heading>
                       </Grid.Col>
                     </Grid.Row>
                     <Grid.Row>
@@ -196,6 +188,21 @@ export default function ProfileView({ address }) {
                           label="From others"
                           value={format(votesDelegated)}
                         />
+                      </Grid.Col>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Col>
+                        <Label
+                          size="small"
+                          weight="medium"
+                          as="p"
+                          mt="24px"
+                          mb="16px"
+                          grey={400}
+                        >
+                          VOTING HISTORY
+                        </Label>
+                        <UserVotingHistory address={address} />
                       </Grid.Col>
                     </Grid.Row>
                     {address && address !== account && library && (

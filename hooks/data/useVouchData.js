@@ -9,24 +9,24 @@ import useCurrentToken from "../useCurrentToken";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import { JsonRpcProvider } from "@ethersproject/providers";
+import useReadProvider from "hooks/useReadProvider";
 
 const getVouch =
-  (marketRegistryContract) => async (_, account, tokenAddress, library) => {
+  (marketRegistryContract) => async (_, account, tokenAddress, provider) => {
     const ethereumRpc = new JsonRpcProvider(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
     );
     const res = await marketRegistryContract.tokens(tokenAddress);
-    const signer = library.getSigner();
     const uTokenAddress = res.uToken;
     const userManagerAddress = res.userManager;
 
     const userManagerContract = new Contract(
       userManagerAddress,
       USER_MANAGER_ABI,
-      signer
+      provider
     );
 
-    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
+    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
     const addresses = await userManagerContract.getStakerAddresses(account);
 
@@ -83,21 +83,23 @@ const getVouch =
   };
 
 export default function useVouchData(address) {
-  const { library, account: connectedAccount } = useWeb3React();
+  const readProvider = useReadProvider();
+  const { account: connectedAccount } = useWeb3React();
   const account = address || connectedAccount;
 
   const curToken = useCurrentToken();
 
-  const marketRegistryContract = useMarketRegistryContract();
+  const marketRegistryContract = useMarketRegistryContract(readProvider);
 
   const shouldFetch =
     !!marketRegistryContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
-    !!library;
+    Number(curToken) !== 0 &&
+    !!readProvider;
 
   return useSWR(
-    shouldFetch ? ["Vouch", account, curToken, library] : null,
+    shouldFetch ? ["Vouch", account, curToken, readProvider] : null,
     getVouch(marketRegistryContract)
   );
 }

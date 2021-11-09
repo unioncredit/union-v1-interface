@@ -1,7 +1,7 @@
 import { isAddress } from "@ethersproject/address";
 import type { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
-import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import U_TOKEN_ABI from "constants/abis/uToken.json";
@@ -9,6 +9,7 @@ import useSWR from "swr";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import useCurrentToken from "../useCurrentToken";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import useReadProvider from "hooks/useReadProvider";
 
 const getTrust =
   (marketRegistryContract: Contract) =>
@@ -16,24 +17,23 @@ const getTrust =
     _: any,
     account: string,
     tokenAddress: string,
-    library: Web3Provider,
+    provider: any,
     count: number
   ) => {
     const ethereumRpc = new JsonRpcProvider(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
     );
     const res = await marketRegistryContract.tokens(tokenAddress);
-    const signer = library.getSigner();
     const uTokenAddress = res.uToken;
     const userManagerAddress = res.userManager;
 
     const userManagerContract = new Contract(
       userManagerAddress,
       USER_MANAGER_ABI,
-      signer
+      provider
     );
 
-    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, signer);
+    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
 
     const addresses: string[] = await userManagerContract.getBorrowerAddresses(
       account
@@ -81,21 +81,22 @@ const getTrust =
   };
 
 export default function useTrustData(address: string) {
-  const { library, account: connectedAccount } = useWeb3React();
+  const readProvider = useReadProvider();
+  const { account: connectedAccount } = useWeb3React();
   const account = address || connectedAccount;
 
   const curToken = useCurrentToken();
 
-  const marketRegistryContract = useMarketRegistryContract();
+  const marketRegistryContract = useMarketRegistryContract(readProvider);
 
   const shouldFetch =
     !!marketRegistryContract &&
     typeof account === "string" &&
     isAddress(curToken) &&
-    !!library;
+    !!readProvider;
 
   return useSWR(
-    shouldFetch ? ["Trust", account, curToken, library] : null,
+    shouldFetch ? ["Trust", account, curToken, readProvider] : null,
     getTrust(marketRegistryContract)
   );
 }
