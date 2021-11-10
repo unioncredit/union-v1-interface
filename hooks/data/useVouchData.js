@@ -12,7 +12,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import useReadProvider from "hooks/useReadProvider";
 
 const getVouch =
-  (marketRegistryContract) => async (_, account, tokenAddress, provider) => {
+  (marketRegistryContract, provider) => async (_, account, tokenAddress) => {
     const ethereumRpc = new JsonRpcProvider(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
     );
@@ -99,7 +99,7 @@ export default function useVouchData(address) {
     !!readProvider;
 
   return useSWR(
-    shouldFetch ? ["Vouch", account, curToken, readProvider] : null,
-    getVouch(marketRegistryContract)
+    shouldFetch ? ["Vouch", account, curToken] : null,
+    getVouch(marketRegistryContract, readProvider)
   );
 }

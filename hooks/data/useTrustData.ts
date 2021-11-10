@@ -12,14 +12,8 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useReadProvider from "hooks/useReadProvider";
 
 const getTrust =
-  (marketRegistryContract: Contract) =>
-  async (
-    _: any,
-    account: string,
-    tokenAddress: string,
-    provider: any,
-    count: number
-  ) => {
+  (marketRegistryContract: Contract, provider: any) =>
+  async (_: any, account: string, tokenAddress: string, count: number) => {
     const ethereumRpc = new JsonRpcProvider(
       `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
     );
@@ -96,7 +90,7 @@ export default function useTrustData(address: string) {
     !!readProvider;
 
   return useSWR(
-    shouldFetch ? ["Trust", account, curToken, readProvider] : null,
-    getTrust(marketRegistryContract)
+    shouldFetch ? ["Trust", account, curToken] : null,
+    getTrust(marketRegistryContract, readProvider)
   );
 }
