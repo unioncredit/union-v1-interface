@@ -22,11 +22,14 @@ export default function useMemberCheck() {
     const isGetStarted = pathname === "/";
 
     async function load() {
-      if (!isMember && !isGetStarted) {
-        await router.push("/");
-      } else if (isMember && isGetStarted) {
-        await router.push("/credit");
+      if (!Object.prototype.hasOwnProperty.call(router.query, "development")) {
+        if (!isMember && !isGetStarted) {
+          await router.push("/");
+        } else if (isMember && isGetStarted) {
+          await router.push("/credit");
+        }
       }
+
       memberLoadingState.set(false);
     }
 
