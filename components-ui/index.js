@@ -49,3 +49,4 @@ export * from "./RelatedHistory";
 export * from "./ContactDetailsSkeleton";
 export * from "./StakeStepCard";
 export * from "./VouchStepCard";
+export * from "./UnionWallet";

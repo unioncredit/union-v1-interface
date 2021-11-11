@@ -31,10 +31,12 @@ export function View({ children, tabItems }) {
     (item) => item.pathname === router.pathname
   );
 
+  const isGetStarted = router.pathname === "/";
+
   return (
     <>
       <Box justify={isMobile && "space-between"} fluid={isMobile}>
-        {isMobile && (
+        {isMobile && !isGetStarted && (
           <ContextMenu
             items={navItemLinks.slice(1)}
             button={(toggleOpen) => (

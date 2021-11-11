@@ -9,6 +9,7 @@ import {
   Tooltip,
   Label,
 } from "union-ui";
+import TooltipIcon from "union-ui/lib/icons/tooltip.svg";
 import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import External from "union-ui/lib/icons/externalinline.svg";
@@ -91,7 +92,9 @@ export function UserVotingOverview({ address }) {
                   label={
                     <Label size="small" weight="medium">
                       From others{" "}
-                      <Tooltip content="If other users delegate their votes to you, they’ll appear here." />
+                      <Tooltip content="If other users delegate their votes to you, they’ll appear here.">
+                        <TooltipIcon />
+                      </Tooltip>
                     </Label>
                   }
                   value={format(votesDelegated)}

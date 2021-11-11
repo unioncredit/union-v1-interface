@@ -52,7 +52,7 @@ a {
 }
 
 @media screen and (max-width: 650px) {
-  .tooltip {
+  .tooltip:not(.tooltip--alwaysShow) {
     display: none;
   }
 
@@ -106,8 +106,9 @@ ul {
   border-radius: 100%;
 }
 
+.union-wallet.button,
 .wallet.button {
-  min-height: 44px;
+  max-height: 44px;
 }
 
 .layout-main {

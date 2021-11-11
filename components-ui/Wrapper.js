@@ -9,7 +9,7 @@ import {
   Label,
 } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
-import { Wallet, Navigation, ConnectButton } from "components-ui";
+import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
@@ -36,7 +36,10 @@ export function Wrapper({ children }) {
                   <Box align="center">
                     <Box mr="4px">
                       {account ? (
-                        <Wallet />
+                        <>
+                          <UnionWallet />
+                          <Wallet />
+                        </>
                       ) : (
                         <ConnectButton
                           label="Connect wallet"
