@@ -1,6 +1,4 @@
-import { ModalOverlay, Box, Grid, Logo, Stat, Label, Text } from "union-ui";
-import External from "union-ui/lib/icons/externalinline.svg";
-import Link from "next/link";
+import { ModalOverlay, Box, Grid, Logo, Stat } from "union-ui";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
@@ -66,13 +64,6 @@ export function ClaimModal() {
             </Grid.Col>
           </Grid.Row>
         </Grid>
-        <Text align="center" mb="20px">
-          <Link href="#">
-            <Label as="a" size="small" color="blue500" m={0}>
-              Learn more about UNION <External />
-            </Label>
-          </Link>
-        </Text>
         <ClaimButton
           m={0}
           fluid
