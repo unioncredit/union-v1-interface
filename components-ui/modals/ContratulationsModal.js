@@ -18,7 +18,9 @@ const generateTwitterLink = (shareMessage) =>
 
 export function CongratulationsModal({ onClose, creditLimit }) {
   const { close } = useCongratulationsModal();
+
   const formattedCreditLimit = format(creditLimit);
+
   const shareMessage = `I just joined the Union with a ${formattedCreditLimit} DAI credit line`;
 
   const handleClose = () => {
@@ -29,21 +31,20 @@ export function CongratulationsModal({ onClose, creditLimit }) {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Union Membership" onClose={handleClose} size="medium">
-        <Modal.Body>
-          <Heading align="center">
-            You just joined the Union with a <Dai value={creditLimit} /> credit
-            line
-          </Heading>
-          <Text align="center">
-            You’re starting with a credit line of <Dai value={creditLimit} />.
-            Get more vouches from trusted friends to increase your credit limit.
-          </Text>
-          <Box align="center" justify="center">
-            <Link href={generateTwitterLink(shareMessage)} target="_blank">
-              <Button label="Tweet to celebrate" icon="twitter" rounded />
-            </Link>
-          </Box>
-        </Modal.Body>
+        <Heading align="center">
+          You just joined the Union with a <Dai value={formattedCreditLimit} />{" "}
+          credit line
+        </Heading>
+        <Text align="center">
+          You’re starting with a credit line of{" "}
+          <Dai value={formattedCreditLimit} />. Get more vouches from trusted
+          friends to increase your credit limit.
+        </Text>
+        <Box align="center" justify="center">
+          <Link href={generateTwitterLink(shareMessage)} target="_blank">
+            <Button label="Tweet to celebrate" icon="twitter" rounded />
+          </Link>
+        </Box>
       </Modal>
     </ModalOverlay>
   );
