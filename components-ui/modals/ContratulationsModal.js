@@ -1,8 +1,8 @@
 import { ModalOverlay, Button, Box, Text, Heading } from "union-ui";
+import NewMember from "union-ui/lib/icons/newMember.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
-import { Dai } from "components-ui/Dai";
 import Link from "next/link";
 
 export const CONGRATULATIONS_MODAL = "congratulations-modal";
@@ -30,19 +30,21 @@ export function CongratulationsModal({ onClose, creditLimit }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Union Membership" onClose={handleClose} size="medium">
+      <Modal onClose={handleClose}>
+        <Box fluid mb="16px" justify="center">
+          <NewMember width="48px" />
+        </Box>
         <Heading align="center">
-          You just joined the Union with a <Dai value={formattedCreditLimit} />{" "}
-          credit line
+          You’re now a member of Union, with a starting credit line of{" "}
+          {formattedCreditLimit} DAI
         </Heading>
-        <Text align="center">
-          You’re starting with a credit line of{" "}
-          <Dai value={formattedCreditLimit} />. Get more vouches from trusted
-          friends to increase your credit limit.
+        <Text align="center" mb="24px">
+          Start by borrowing from your credit line in the Union Dashboard or go
+          ahead and get your friends onboarded by vouching for them.
         </Text>
         <Box align="center" justify="center">
           <Link href={generateTwitterLink(shareMessage)} target="_blank">
-            <Button label="Tweet to celebrate" icon="twitter" rounded />
+            <Button label="Share on Twitter" fluid />
           </Link>
         </Box>
       </Modal>
