@@ -3,95 +3,73 @@ import {
   useCongratulationsModal,
   StakeModal,
   useStakeModal,
-  StakeType,
 } from "components-ui/modals";
-import { Grid, Row, Col, Box, Card, Stat, Button, ButtonRow } from "union-ui";
+import {
+  Grid,
+  Row,
+  Col,
+  Text,
+  Heading,
+  ProgressList,
+  ProgressListItem,
+} from "union-ui";
 import {
   View,
-  ShareCard,
   BecomeMemberCard,
-  CreditProvidersCard,
-  Dai,
+  StakeStepCard,
+  VouchStepCard,
 } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
-import useTrustCountData from "hooks/data/useTrustCountData";
-import useVouchData from "hooks/data/useVouchData";
 import useCreditLimit from "hooks/data/useCreditLimit";
+import useTrustCountData from "hooks/data/useTrustCountData";
 import useStakeData from "hooks/data/useStakeData";
 
 export default function MembershipView() {
-  const { data: stakeData } = useStakeData();
-  const { data: vouchData = [] } = useVouchData();
-  const { data: creditLimit = 0 } = useCreditLimit();
   const { data: trustCount = 0 } = useTrustCountData();
+  const { data: creditLimit = 0 } = useCreditLimit();
+  const { data: stakeData } = useStakeData();
 
-  const { mutate: updateIsMember } = useIsMember();
+  const { data: isMember, mutate: updateIsMember } = useIsMember();
 
   const { isOpen: isCongratulationsModalOpen } = useCongratulationsModal();
-  const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
-
-  const fencedTrustCount = trustCount >= 3 ? 3 : trustCount;
-
-  const { totalStake = 0.0 } = !!stakeData && stakeData;
+  const { isOpen: isStakeModalOpen } = useStakeModal();
 
   const onComplete = async () => {
     await updateIsMember();
   };
 
+  const { totalStake = 0.0 } = !!stakeData && stakeData;
+
+  const stakeComplete = totalStake > 0;
+  const vouchComplete = trustCount >= 3;
+
+  const completeCount = [stakeComplete, vouchComplete, isMember].reduce(
+    (acc, completeness) => (completeness ? acc + 1 : acc),
+    0
+  );
+
   return (
     <View>
       <Grid gutterWidth={0}>
         <Row justify="center">
-          <Col xs={12} md={8} lg={6}>
-            <Card mt="24px">
-              <Card.Header title="Your staked DAI" align="center" />
-              <Card.Body>
-                <Grid>
-                  <Grid.Row>
-                    <Grid.Col xs={12}>
-                      <Stat
-                        size="large"
-                        align="center"
-                        label="TOTAL STAKE"
-                        value={<Dai value={totalStake} />}
-                        mb="32px"
-                      />
-                    </Grid.Col>
-                  </Grid.Row>
-                  <Grid.Row>
-                    <Grid.Col>
-                      <ButtonRow fluid>
-                        <Button
-                          fluid
-                          label="Stake"
-                          onClick={() => openStakeModal(StakeType.STAKE)}
-                        />
-                        <Button
-                          fluid
-                          label="Unstake"
-                          variant="secondary"
-                          onClick={() => openStakeModal(StakeType.UNSTAKE)}
-                        />
-                      </ButtonRow>
-                    </Grid.Col>
-                  </Grid.Row>
-                </Grid>
-              </Card.Body>
-            </Card>
-            <Box mb="24px">
-              {vouchData.length < 3 ? (
-                <ShareCard
-                  vouchCount={fencedTrustCount}
-                  title="Get trusted on Union"
-                  content="Before you can start using Union, you’ll need 3 existing members to vouch for you."
-                />
-              ) : (
-                <BecomeMemberCard />
-              )}
-            </Box>
-            <Box mb="24px">
-              <CreditProvidersCard />
-            </Box>
+          <Col xs={12} md={8} lg={8}>
+            <Heading size="large" mb="4px" mt="24px">
+              Become a Union member
+            </Heading>
+            <Text grey={500} mb="24px">
+              {completeCount} of 3 tasks completed
+            </Text>
+            <ProgressList>
+              <ProgressListItem number={1} complete={stakeComplete}>
+                <StakeStepCard />
+              </ProgressListItem>
+              <ProgressListItem number={2} complete={vouchComplete}>
+                <VouchStepCard />
+              </ProgressListItem>
+              <ProgressListItem number={3} complete={isMember}>
+                <BecomeMemberCard disabled={trustCount < 3} />
+              </ProgressListItem>
+            </ProgressList>
           </Col>
         </Row>
       </Grid>

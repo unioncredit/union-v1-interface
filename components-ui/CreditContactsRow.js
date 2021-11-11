@@ -18,7 +18,7 @@ export function CreditContactsRow(props) {
   };
 
   return (
-    <TableRow onClick={handleClick}>
+    <TableRow onClick={onClick && handleClick}>
       <TableCell>
         <Box align="center">
           <Avatar address={address} />

@@ -47,3 +47,5 @@ export * from "./ConnectButton";
 export * from "./AddressHistory";
 export * from "./RelatedHistory";
 export * from "./ContactDetailsSkeleton";
+export * from "./StakeStepCard";
+export * from "./VouchStepCard";

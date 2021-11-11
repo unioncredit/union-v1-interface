@@ -8,19 +8,10 @@ import generateLink, {
   generateTelegramLink,
 } from "util/generateLink";
 import Link from "next/link";
-import {
-  Card,
-  Heading,
-  Button,
-  Label,
-  ButtonRow,
-  CircleProgress,
-  Box,
-  Text,
-} from "union-ui";
+import { Card, Heading, Button, Label, ButtonRow, Text } from "union-ui";
 import { Copyable } from "./Copyable";
 
-export function ShareCard({ vouchCount, title, content }) {
+export function ShareCard({ title, content }) {
   const { account } = useWeb3React();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
@@ -35,15 +26,6 @@ export function ShareCard({ vouchCount, title, content }) {
           <Text align="center" mb="24px">
             {content}
           </Text>
-          {!isNaN(vouchCount) && (
-            <Box justify="center" mb="24px" fluid>
-              <CircleProgress
-                percentage={(vouchCount / 3) * 100}
-                complete={vouchCount >= 3}
-                label={`${vouchCount}/3`}
-              />
-            </Box>
-          )}
           <Label as="p" align="center" size="small" m={0} color="blue400">
             VOUCH LINK
           </Label>
