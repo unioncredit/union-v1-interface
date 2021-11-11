@@ -1,13 +1,4 @@
-import {
-  Layout,
-  Box,
-  Grid,
-  Row,
-  Col,
-  ContextMenu,
-  Button,
-  Label,
-} from "union-ui";
+import { Layout, Box, Grid, Row, Col, ContextMenu, Label } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
@@ -22,7 +13,7 @@ export function Wrapper({ children }) {
 
   const { account } = useWeb3React();
 
-  const { isOpen: isClaimModalOpen, open: openClaimModal } = useClaimModal();
+  const { isOpen: isClaimModalOpen } = useClaimModal();
 
   return (
     <>
@@ -47,20 +38,7 @@ export function Wrapper({ children }) {
                         />
                       )}
                     </Box>
-                    <ContextMenu
-                      position="left"
-                      items={contextMenuItems}
-                      after={
-                        account && (
-                          <Button
-                            fluid
-                            size="small"
-                            label="Claim UNION"
-                            onClick={openClaimModal}
-                          />
-                        )
-                      }
-                    />
+                    <ContextMenu position="left" items={contextMenuItems} />
                   </Box>
                 </Layout.Header>
                 <Box
