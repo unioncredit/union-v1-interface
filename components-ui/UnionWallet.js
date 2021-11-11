@@ -36,7 +36,7 @@ export function UnionWallet() {
     />
   );
 
-  return rewards > 0 && isGetStarted ? (
+  return rewards > 0 && unionBalance < 1 && isGetStarted ? (
     <Tooltip
       position="bottom"
       content="Collect your accrued UNION rewards"
