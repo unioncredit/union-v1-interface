@@ -74,21 +74,21 @@ export default function MembershipView() {
               {completeCount} of 3 tasks completed
             </Text>
             <ProgressList>
-              <div ref={stakeStep}>
-                <ProgressListItem number={1} complete={stakeComplete}>
+              <ProgressListItem number={1} complete={stakeComplete}>
+                <div ref={stakeStep}>
                   <StakeStepCard />
-                </ProgressListItem>
-              </div>
-              <div ref={vouchStep}>
-                <ProgressListItem number={2} complete={vouchComplete}>
+                </div>
+              </ProgressListItem>
+              <ProgressListItem number={2} complete={vouchComplete}>
+                <div ref={vouchStep}>
                   <VouchStepCard />
-                </ProgressListItem>
-              </div>
-              <div ref={memberStep}>
-                <ProgressListItem number={3} complete={isMember}>
+                </div>
+              </ProgressListItem>
+              <ProgressListItem number={3} complete={isMember}>
+                <div ref={memberStep}>
                   <BecomeMemberCard disabled={trustCount < 3} />
-                </ProgressListItem>
-              </div>
+                </div>
+              </ProgressListItem>
             </ProgressList>
           </Col>
         </Row>
