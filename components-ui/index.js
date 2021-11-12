@@ -50,3 +50,4 @@ export * from "./ContactDetailsSkeleton";
 export * from "./StakeStepCard";
 export * from "./VouchStepCard";
 export * from "./UnionWallet";
+export * from "./OverdueAlert";

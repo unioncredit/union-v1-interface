@@ -2,7 +2,7 @@ import { Box, ContextMenu, ToggleMenu, Button } from "union-ui";
 import DropdownArrow from "union-ui/lib/icons/dropdownArrow.svg";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
-import { TabLink, Link } from "components-ui";
+import { TabLink, Link, OverdueAlert } from "components-ui";
 import useIsMobile from "hooks/useIsMobile";
 import { navItems } from "constants/app";
 
@@ -35,6 +35,7 @@ export function View({ children, tabItems }) {
 
   return (
     <>
+      <OverdueAlert />
       <Box justify={isMobile && "space-between"} fluid={isMobile}>
         {isMobile && !isGetStarted && (
           <ContextMenu
