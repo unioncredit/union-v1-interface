@@ -28,7 +28,7 @@ export function UnionWallet() {
       variant="secondary"
       label={
         <Text mb="0" ml="4px">
-          {format(unionBalance)}
+          {format(unionBalance, 4)}
         </Text>
       }
       className="union-wallet"

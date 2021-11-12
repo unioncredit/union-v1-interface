@@ -1,7 +1,7 @@
+import { commify } from "@ethersproject/units";
 import { ModalOverlay, Box, Grid, Logo, Stat } from "union-ui";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
-import format from "util/formatValue";
 import { ClaimButton } from "components-ui/ClaimButton";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
@@ -22,6 +22,8 @@ export function ClaimModal() {
 
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
+  const balance = Number(rewards) + Number(unionBalance);
+
   return (
     <ModalOverlay onClick={close}>
       <Modal onClose={close} size="medium">
@@ -39,7 +41,7 @@ export function ClaimModal() {
                 align="center"
                 size="large"
                 label={`${unionSymbol} Balance`}
-                value={format(Number(rewards) + Number(unionBalance), 2)}
+                value={commify(balance.toFixed(4))}
               />
             </Grid.Col>
           </Grid.Row>
@@ -50,7 +52,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="In wallet"
-                value={format(unionBalance, 2)}
+                value={commify(unionBalance.toFixed(4))}
               />
             </Grid.Col>
             <Grid.Col>
@@ -59,7 +61,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="Unclaimed"
-                value={format(rewards, 2)}
+                value={commify(Number(rewards).toFixed(4))}
               />
             </Grid.Col>
           </Grid.Row>
@@ -67,7 +69,7 @@ export function ClaimModal() {
         <ClaimButton
           m={0}
           fluid
-          label={`Claim ${format(rewards)} ${unionSymbol}`}
+          label={`Claim ${commify(Number(rewards).toFixed(4))} ${unionSymbol}`}
         />
       </Modal>
     </ModalOverlay>

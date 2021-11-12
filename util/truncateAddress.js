@@ -12,7 +12,5 @@ export default function truncateAddress(address, digits = 4) {
   if (!isAddress(address))
     throw new Error(`Invalid 'address' parameter '${address}'.`);
 
-  return `${address.substring(0, digits + 2)}...${address.substring(
-    42 - digits
-  )}`;
+  return `${address.slice(0, digits + 2)}...${address.slice(-digits)}`;
 }
