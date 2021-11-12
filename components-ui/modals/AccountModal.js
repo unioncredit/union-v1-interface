@@ -1,6 +1,14 @@
+import {
+  ModalOverlay,
+  Label,
+  Badge,
+  Box,
+  Button,
+  Text,
+  Heading,
+  Divider,
+} from "union-ui";
 import { useWeb3React } from "@web3-react/core";
-import { ModalOverlay, Label, Heading, Box, Button, Text } from "union-ui";
-
 import { useModal } from "hooks/useModal";
 import usePublicData from "hooks/usePublicData";
 import useToast, { FLAVORS } from "hooks/useToast";
@@ -11,8 +19,11 @@ import { walletconnect, injected } from "lib/connectors";
 import getEtherscanLink from "util/getEtherscanLink";
 
 import ExternalInline from "union-ui/lib/icons/externalinline.svg";
+import External from "union-ui/lib/icons/external.svg";
 import Failed from "union-ui/lib/icons/failed.svg";
 import Success from "union-ui/lib/icons/success.svg";
+import { Avatar } from "components-ui/Avatar";
+import truncateAddress from "util/truncateAddress";
 
 export const ACCOUNT_MODAL = "account-modal";
 
@@ -45,24 +56,37 @@ export function AccountModal() {
       ? "Metamask"
       : null;
 
+  const addressEtherscanLink = getEtherscanLink(chainId, account, "ADDRESS");
+
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Account" onClose={close}>
-        <Box mb="20px">
-          <NetworkSelect />
-        </Box>
+      <Modal onClose={close}>
         <Box align="center" justify="space-between">
           <Label as="p" size="small" mb="8px" grey={400}>
             {walletName.toUpperCase()}
           </Label>
           <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
         </Box>
-        <Heading m={0} size="large">
-          {name}
-        </Heading>
-        <Label size="small" grey={600}>
-          <Copyable value={account}>{account}</Copyable>
-        </Label>
+        <Box fluid align="center" direction="vertical" mt="16px">
+          <Avatar address={account} size={56} />
+          <Heading mt="8px">{name}</Heading>
+        </Box>
+        <Box fluid justify="center" mb="16px">
+          <Badge
+            mr="4px"
+            color="grey"
+            label={
+              <Copyable value={account}>{truncateAddress(account)}</Copyable>
+            }
+          />
+          <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
+            <External width="24px" />
+          </a>
+        </Box>
+        <Box mb="20px">
+          <NetworkSelect />
+        </Box>
+        <Divider />
         <Box align="center" justify="space-between" mt="20px" mb="12px">
           <Label as="p" size="small" mb="8px" grey={400}>
             {"Activity".toUpperCase()}

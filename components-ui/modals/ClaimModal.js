@@ -39,7 +39,7 @@ export function ClaimModal() {
                 align="center"
                 size="large"
                 label={`${unionSymbol} Balance`}
-                value={format(Number(rewards) + Number(unionBalance))}
+                value={format(Number(rewards) + Number(unionBalance), 2)}
               />
             </Grid.Col>
           </Grid.Row>
@@ -50,7 +50,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="In wallet"
-                value={format(unionBalance)}
+                value={format(unionBalance, 2)}
               />
             </Grid.Col>
             <Grid.Col>
@@ -59,7 +59,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="Unclaimed"
-                value={format(rewards)}
+                value={format(rewards, 2)}
               />
             </Grid.Col>
           </Grid.Row>
