@@ -9273,10 +9273,10 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-union-ui@0.2.27:
-  version "0.2.27"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.27.tgz#bbefd5b1baf28732b03ce64ed1f5e5d40eaf9f69"
-  integrity sha512-PG4n5KCP8OOFhGY5IPmFfbKf9S7z/2rinonwRvwDuD/samN4sMyHBUrpqkZqhTFFebuBHjiwEY1YXJsYWIPjwg==
+union-ui@0.2.28:
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.28.tgz#55f676be2b726c4ace08d42e7bfbee0ac701d779"
+  integrity sha512-ROnAKIlyROOpCZ7e4XvaA0u0kNidcemhOfrlKyuuNUzlyOCAx6fiFdtNCKyymGcZ67ysKgwG1TIAo99WU3T8Wg==
   dependencies:
     classnames "^2.3.1"
     react-grid-system "^7.2.0"

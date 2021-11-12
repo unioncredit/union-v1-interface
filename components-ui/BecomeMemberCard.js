@@ -28,7 +28,7 @@ export function BecomeMemberCard({ disabled }) {
   };
 
   return (
-    <Card mt="24px" size="fluid">
+    <Card size="fluid">
       <Card.Header
         title="Pay membership fee"
         subTitle="To finalise the membership process, you’ll need to burn 1 UNION token. This will activate your account and enable access to your starting credit limit."

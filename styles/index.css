@@ -111,6 +111,10 @@ ul {
   max-height: 44px;
 }
 
+.union-wallet.button {
+  padding: 8px;
+}
+
 .layout-main {
   min-height: 100vh;
 }

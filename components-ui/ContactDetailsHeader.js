@@ -49,7 +49,7 @@ export function ContactDetailsHeader({ address }) {
           <Box>
             {!ENSName && <Badge color="grey" mr="4px" label="No ENS" />}
 
-            <Badge mr="4px" color="green" label={truncatedAddress} />
+            <Badge mr="4px" color="grey" label={truncatedAddress} />
 
             <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
               <External width="24px" />
