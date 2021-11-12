@@ -12,3 +12,4 @@ export * from "./VouchModalManager";
 export * from "./WriteOffDebtModal";
 export * from "./ContratulationsModal";
 export * from "./ClaimModal";
+export * from "./PaymentReminderModal";

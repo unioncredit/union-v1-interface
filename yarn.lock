@@ -2348,6 +2348,11 @@ acorn@^7.4.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
+add-event-to-calendar@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/add-event-to-calendar/-/add-event-to-calendar-1.0.7.tgz#e37ec7e2034b2461c5e374b93d5a7a9ba95fa05e"
+  integrity sha512-XadkJJ48WnBq56/oG2kxJCCmj3T1fQFBvBvDkTykMzfQak/0zqbgN6hx29pPN4t+u7hJqXPstfEujksgl+q5GQ==
+
 aes-js@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/aes-js/-/aes-js-3.0.0.tgz#e21df10ad6c2053295bcbb8dab40b09dbea87e4d"
@@ -9273,10 +9278,8 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-union-ui@0.2.28:
-  version "0.2.28"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.28.tgz#55f676be2b726c4ace08d42e7bfbee0ac701d779"
-  integrity sha512-ROnAKIlyROOpCZ7e4XvaA0u0kNidcemhOfrlKyuuNUzlyOCAx6fiFdtNCKyymGcZ67ysKgwG1TIAo99WU3T8Wg==
+"union-ui@file:../union-ui":
+  version "0.2.29-beta.0"
   dependencies:
     classnames "^2.3.1"
     react-grid-system "^7.2.0"

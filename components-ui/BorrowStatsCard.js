@@ -3,17 +3,23 @@ import {
   useBorrowModal,
   PaymentModal,
   usePaymentModal,
+  usePaymentReminderModal,
+  PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card } from "union-ui";
+import { Stat, Button, Grid, Card, Label } from "union-ui";
 import format from "util/formatValue";
 import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
 
+import styles from "./BorrowStatsCard.module.css";
+
 export function BorrowStatsCard() {
   const { isOpen: isBorrowModalOpen, open: openBorrowModal } = useBorrowModal();
+  const { isOpen: isPaymentReminderModalOpen, open: openPaymentReminderModal } =
+    usePaymentReminderModal();
   const { isOpen: isPaymentModalOpen, open: openPaymentModal } =
     usePaymentModal();
 
@@ -87,7 +93,17 @@ export function BorrowStatsCard() {
                   label="Minimum due"
                   mt="24px"
                   value={<Dai value={roundUp(interest)} />}
-                  after={paymentDueDate}
+                  after={
+                    <Label size="small">
+                      {paymentDueDate}{" "}
+                      <u
+                        onClick={openPaymentReminderModal}
+                        className={styles.reminder}
+                      >
+                        (reminder)
+                      </u>
+                    </Label>
+                  }
                 />
                 <Button
                   label="Make a payment"
@@ -123,6 +139,7 @@ export function BorrowStatsCard() {
           }}
         />
       )}
+      {isPaymentReminderModalOpen && <PaymentReminderModal />}
     </>
   );
 }
