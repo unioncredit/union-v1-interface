@@ -11,7 +11,7 @@
     "export": "next export",
     "format": "prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.tsx\" \"**/*.ts\"",
     "lint": "eslint . --ext js --cache",
-    "upload": "aws s3 sync ./out s3://union-beta --profile jacobford"
+    "vercel-build": "yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/ && npm run build"
   },
   "husky": {
     "hooks": {
