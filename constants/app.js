@@ -1,3 +1,5 @@
+export const DEFAULT_CHAIN_ID = 137;
+
 export const ContactsType = {
   TRUSTS_YOU: "trusts-you",
   YOU_TRUST: "you-trust",
