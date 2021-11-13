@@ -1,7 +1,7 @@
 import stream from "stream";
 import { createCanvas, Image, loadImage, registerFont } from "canvas";
-import getProfileAvatar from "./profileAvatar";
-import getProfileDetails from "./profileDetails";
+import getProfileAvatar from "fetchers/api/profileAvatar";
+import getProfileDetails from "fetchers/api/profileDetails";
 import formatDateTime from "util/formatDateTime";
 
 export default async function handler(req, res) {
