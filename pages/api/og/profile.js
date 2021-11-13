@@ -74,9 +74,9 @@ export default async function handler(req, res) {
   }
 
   const buffer = canvas.toBuffer("image/png");
-
   const bufferStream = new stream.PassThrough();
   bufferStream.end(buffer);
 
+  res.setHeader("Content-Type", "image/png");
   bufferStream.pipe(res);
 }
