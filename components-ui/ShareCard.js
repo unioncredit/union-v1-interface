@@ -9,9 +9,11 @@ import generateLink, {
 } from "util/generateLink";
 import Link from "next/link";
 import { Card, Heading, Button, Label, ButtonRow, Text } from "union-ui";
+import Telegram from "union-ui/lib/icons/telegram.svg";
+import Twitter from "union-ui/lib/icons/twitter.svg";
 import { Copyable } from "./Copyable";
 
-export function ShareCard({ title, content }) {
+export function ShareCard({ title, content, size }) {
   const { account } = useWeb3React();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
@@ -20,16 +22,25 @@ export function ShareCard({ title, content }) {
 
   return (
     <>
-      <Card variant="blue" mt="24px">
+      <Card variant="blue" mt="24px" size={size}>
         <Card.Body>
-          <Heading align="center">{title}</Heading>
-          <Text align="center" mb="24px">
-            {content}
-          </Text>
-          <Label as="p" align="center" size="small" m={0} color="blue400">
-            VOUCH LINK
+          {title && <Heading align="center">{title}</Heading>}
+          {content && (
+            <Text align="center" mb="24px">
+              {content}
+            </Text>
+          )}
+          <Label
+            as="p"
+            align="center"
+            m={0}
+            mb="4px"
+            color="blue600"
+            size="large"
+          >
+            Share your vouch link
           </Label>
-          <Label as="p" align="center" mb="24px">
+          <Label as="p" align="center" mb="24px" color="blue500">
             <Copyable value={url}>
               {url.slice(0, 16)}...{url.slice(-16)}
             </Copyable>
@@ -40,7 +51,8 @@ export function ShareCard({ title, content }) {
               <Button
                 variant="secondary"
                 color="blue"
-                label="Share on Twitter"
+                icon={Twitter}
+                label="Twitter"
                 fluid
               />
             </Link>
@@ -48,7 +60,8 @@ export function ShareCard({ title, content }) {
               <Button
                 variant="secondary"
                 color="blue"
-                label="Share on Telegram"
+                icon={Telegram}
+                label="Telegram"
                 fluid
               />
             </Link>

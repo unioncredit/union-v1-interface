@@ -142,8 +142,8 @@ export default function ContactsView({
 
   const title =
     contactsType === ContactsType.YOU_TRUST
-      ? "Accounts you trust"
-      : "Accounts who trust you";
+      ? "Accounts you vouch for"
+      : "Accounts vouching for you";
 
   const subTitle =
     contactsType === ContactsType.YOU_TRUST

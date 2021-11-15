@@ -164,7 +164,7 @@ export default function ProfileView({ address }) {
                       </Grid.Col>
                       <Grid.Col>
                         <Stat
-                          label="Vouched for others"
+                          label="Vouching for"
                           value={`${trustData.length} times`}
                         />
                       </Grid.Col>

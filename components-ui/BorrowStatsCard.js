@@ -7,9 +7,9 @@ import {
   PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Label } from "union-ui";
+import { Stat, Button, Grid, Card, Label, Bar } from "union-ui";
 import format from "util/formatValue";
-import { roundDown, roundUp } from "util/numbers";
+import { roundDown, roundUp, toPercent } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -36,16 +36,11 @@ export function BorrowStatsCard() {
     isOverdue = false,
   } = !!borrowData && borrowData;
 
-  const totalCreditLimit = vouchData
+  const totalVouch = vouchData
     ? vouchData.reduce((acc, data) => acc + Number(data.trust), 0)
     : 0;
 
-  const actualCreditLimit = vouchData
-    ? vouchData.reduce(
-        (acc, data) => acc + Number(data.available) + Number(data.used),
-        0
-      )
-    : 0;
+  const percentageVouchCredit = toPercent(creditLimit / totalVouch);
 
   const onComplete = async () => {
     await updateCreditLimit();
@@ -63,16 +58,21 @@ export function BorrowStatsCard() {
               <Grid.Col xs={6}>
                 <Stat
                   size="large"
-                  label="Available"
+                  label="Total Vouch"
                   align="center"
-                  value={<Dai value={format(roundDown(creditLimit))} />}
+                  value={<Dai value={format(totalVouch)} />}
                 />
                 <Stat
                   mt="24px"
                   align="center"
-                  label="Credit Limit"
-                  value={<Dai value={format(roundDown(actualCreditLimit))} />}
-                  after={`of max ${format(totalCreditLimit)}`}
+                  label="Available credit"
+                  value={<Dai value={format(roundDown(creditLimit))} />}
+                  after={
+                    <Bar
+                      percentage={(creditLimit / totalVouch) * 100}
+                      label={percentageVouchCredit}
+                    />
+                  }
                 />
                 <Button
                   mt="28px"

@@ -48,7 +48,7 @@ export function ManageContactModal({
 
   const data = [
     {
-      label: "Credit limit",
+      label: "Vouch",
       value: <Dai value={vouched} />,
       buttonProps: { label: "Change limit" },
       onClick: handleEditVouch,

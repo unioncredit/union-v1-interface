@@ -80,7 +80,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
                 <Stat
                   size="medium"
                   align="center"
-                  label="Credit limit"
+                  label="Vouch"
                   value={<Dai value={format(vouched)} />}
                 />
               </Grid.Col>

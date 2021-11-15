@@ -1,6 +1,10 @@
+import {
+  CreditContactsRow,
+  CreditContactsRowSkeleton,
+  ShareCard,
+} from "components-ui";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import { Box, Card, CircleProgress, Table } from "union-ui";
-import { CreditContactsRow, CreditContactsRowSkeleton } from "components-ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
 
@@ -41,6 +45,7 @@ export function VouchStepCard() {
                   ))}
           </Table>
         </Box>
+        <ShareCard size="fluid" />
       </Card.Body>
     </Card>
   );

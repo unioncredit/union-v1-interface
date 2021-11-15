@@ -14,7 +14,7 @@ function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
     <>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat label="Providing you" value={<Dai value={vouched} />} />
+          <Stat label="Vouch" value={<Dai value={vouched} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
@@ -74,11 +74,7 @@ function YouTrustContactDetails({
       </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat
-            mb="12px"
-            label="Credit Limit"
-            value={<Dai value={vouched} />}
-          />
+          <Stat mb="12px" label="Vouch" value={<Dai value={vouched} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat mb="12px" label="Utilized" value={`${toPercent(utilized)}`} />

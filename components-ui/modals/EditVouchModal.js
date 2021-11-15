@@ -80,7 +80,7 @@ export function EditVouchModal({ address, used, vouched }) {
                   mb="24px"
                   size="medium"
                   align="center"
-                  label="Credit limit"
+                  label="Current vouch"
                   value={<Dai value={format(vouched)} />}
                 />
               </Grid.Col>
@@ -99,7 +99,7 @@ export function EditVouchModal({ address, used, vouched }) {
             type="number"
             ref={register({ validate })}
             name="amount"
-            label="Credit limit"
+            label="New vouch"
             suffix={<Dai />}
             error={errors.amount?.message}
           />
