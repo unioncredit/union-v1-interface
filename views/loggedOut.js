@@ -1,4 +1,14 @@
-import { Card, Label, Button, Box, Heading, Text, Grid } from "union-ui";
+import {
+  Control,
+  Card,
+  Label,
+  Button,
+  Box,
+  Heading,
+  Text,
+  Grid,
+} from "union-ui";
+import { useLocalStorage } from "react-use";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
@@ -6,12 +16,15 @@ import { useState } from "react";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
 import { CONNECTORS, walletconnect } from "lib/connectors";
-import { getWalletName, getWalletIcon } from "util/formatWalletDetails";
+import { getWalletIcon } from "util/formatWalletDetails";
 import { login } from "lib/auth";
 import UnsupportedChainView from "./unsupportedChain";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 
+const TERM_KEY = "union:terms_and_conditions";
+
 export default function LoggedOutView() {
+  const [confirmTerms, setConfirmTerms] = useLocalStorage(TERM_KEY, false);
   const router = useRouter();
   const isSanctioned = useIsSanctioned();
   const { activate, error, connector, deactivate } = useWeb3React();
@@ -59,6 +72,20 @@ export default function LoggedOutView() {
         <Grid.Row justify="center">
           <Grid.Col md={12} lg={9}>
             <Grid.Row>
+              <Grid.Col>
+                <Card mb="16px" size="fluid" variant="packed">
+                  <Card.Body>
+                    <Control
+                      type="checkbox"
+                      checked={confirmTerms}
+                      onClick={() => setConfirmTerms(!confirmTerms)}
+                      label="I agree to Union’s Terms & Conditions and Privacy Policy"
+                    />
+                  </Card.Body>
+                </Card>
+              </Grid.Col>
+            </Grid.Row>
+            <Grid.Row>
               {Object.keys(CONNECTORS).map((name) => {
                 const currentConnector = CONNECTORS[name];
                 const activating = currentConnector === activatingConnector;
@@ -68,7 +95,8 @@ export default function LoggedOutView() {
                     !!activatingConnector ||
                     connected ||
                     !!error ||
-                    isSanctioned
+                    isSanctioned ||
+                    !confirmTerms
                 );
 
                 const handleSignIn = async () => {
@@ -99,18 +127,15 @@ export default function LoggedOutView() {
                           {getWalletIcon(name)}
                         </Box>
                         <Heading align="center">{name}</Heading>
-                        <Label as="p" align="center">
-                          Allows you to connect to web3 products using a browser
-                          plugin. It works best with Google Chrome.
-                        </Label>
                         <Button
                           fluid
                           mt="24px"
-                          label={`Connect with ${getWalletName(name)}`}
+                          label="Connect"
                           onClick={handleSignIn}
                           disabled={disabled}
                           fontSize="large"
                           loading={activating}
+                          variant="secondary"
                         />
                       </Card.Body>
                     </Card>
