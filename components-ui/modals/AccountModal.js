@@ -131,7 +131,7 @@ export function AccountModal() {
                     </Text>
                   </div>
                   {failed && <Failed width="22px" />}
-                  {!failed && <Success />}
+                  {!failed && <Success width="22px" />}
                 </Box>
               );
             })
