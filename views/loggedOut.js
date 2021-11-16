@@ -8,23 +8,21 @@ import {
   Text,
   Grid,
 } from "union-ui";
-import { useLocalStorage } from "react-use";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";
+import useTerms from "hooks/useTerms";
 import { CONNECTORS, walletconnect } from "lib/connectors";
 import { getWalletIcon } from "util/formatWalletDetails";
 import { login } from "lib/auth";
 import UnsupportedChainView from "./unsupportedChain";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 
-const TERM_KEY = "union:terms_and_conditions";
-
 export default function LoggedOutView() {
-  const [confirmTerms, setConfirmTerms] = useLocalStorage(TERM_KEY, false);
+  const { data: confirmTerms, setConfirmTerms } = useTerms();
   const router = useRouter();
   const isSanctioned = useIsSanctioned();
   const { activate, error, connector, deactivate } = useWeb3React();
