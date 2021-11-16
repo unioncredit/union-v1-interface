@@ -7,7 +7,11 @@ import {
   ButtonRow,
   Grid,
   Label,
+  Card,
+  Badge,
+  Control,
 } from "union-ui";
+import { useEffect, useState } from "react";
 import { Modal, Dai } from "components-ui";
 import { useForm } from "react-hook-form";
 import { useModal } from "hooks/useModal";
@@ -29,19 +33,21 @@ export const PAYMENT_MODAL = "payment-modal";
 
 export const usePaymentModal = () => useModal(PAYMENT_MODAL);
 
-export function PaymentModal({
-  paymentDueDate,
-  balanceOwed,
-  interest,
-  onComplete,
-}) {
+const PaymentType = {
+  MIN: "min",
+  MAX: "max",
+  CUSTOM: "custom",
+};
+
+export function PaymentModal({ balanceOwed, interest, onComplete }) {
+  const [paymentType, setPaymentType] = useState(PaymentType.MIN);
   const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const { close } = usePaymentModal();
-  const curToken = useCurrentToken();
+  const curToken = useCurrentToken("DAI");
   const repay = useRepay();
 
-  const { errors, formState, register, watch, setValue, handleSubmit } =
+  const { reset, errors, formState, register, watch, setValue, handleSubmit } =
     useForm({
       mode: "onChange",
       reValidateMode: "onChange",
@@ -62,16 +68,18 @@ export function PaymentModal({
       ? flooredDaiBalance
       : calculateBalanceOwed;
 
-  const nextPaymentDue =
-    paymentDueDate === "No Payment Due" ? "-" : paymentDueDate;
-
   const newBalanceOwed = calculateBalanceOwed - amount;
 
-  const handlePayMinimum = () => {
-    setValue("amount", roundUp(interest), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
+  const handleSelectOption = (option) => {
+    setPaymentType(option.paymentType);
+    if (option.value) {
+      setValue("amount", option.value, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    } else {
+      reset();
+    }
   };
 
   const validate = async (val) => {
@@ -107,6 +115,39 @@ export function PaymentModal({
     }
   };
 
+  useEffect(() => {
+    if (interest) {
+      setValue("amount", roundUp(interest), {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    }
+  }, [interest]);
+
+  const options = [
+    {
+      title: "Pay minimum due",
+      content:
+        "Make the payment required to cover the interest due on your loan",
+      value: roundUp(interest),
+      paymentType: PaymentType.MIN,
+    },
+    {
+      title:
+        calculateMaxValue >= calculateBalanceOwed
+          ? "Pay-off entire loan"
+          : "Pay maximum DAI available",
+      content:
+        calculateMaxValue >= calculateBalanceOwed
+          ? "Make a payment to pay-off your current balance owed in its entirety"
+          : "Make a payment with the maximum amount of DAI available in your connected wallet",
+      value: calculateMaxValue,
+      paymentType: PaymentType.MAX,
+    },
+  ];
+
+  const isCustomSelected = paymentType === PaymentType.CUSTOM;
+
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Make a payment" onClose={close}>
@@ -122,35 +163,77 @@ export function PaymentModal({
                   value={<Dai value={calculateBalanceOwed} />}
                 />
               </Grid.Col>
-              <Grid.Col xs={6}>
-                <Stat
-                  align="center"
-                  label="Min due"
-                  value={<Dai value={roundUp(interest)} />}
-                />
-              </Grid.Col>
-              <Grid.Col xs={6}>
-                <Stat
-                  align="center"
-                  label="Defaults in"
-                  value={nextPaymentDue}
-                />
-              </Grid.Col>
             </Grid.Row>
           </Grid>
-          <Box mt="16px">
-            <Input
-              type="number"
-              ref={register({ validate })}
-              name="amount"
-              suffix={<Dai />}
-              label="Repay"
-              placeholder="0.0"
-              caption={`Pay minimum ${roundUp(interest)} DAI`}
-              onCaptionClick={handlePayMinimum}
-              error={errors.amount?.message || false}
-            />
-          </Box>
+
+          {options.map((option) => {
+            const selected = option.paymentType === paymentType;
+
+            return (
+              <Card
+                key={option.paymentType}
+                variant={selected ? "blue" : "primary"}
+                packed
+                mt="8px"
+              >
+                <Card.Body>
+                  <Box justify="space-between">
+                    <Box direction="vertical">
+                      <Control
+                        onClick={() => handleSelectOption(option)}
+                        label={option.title}
+                        type="radio"
+                        checked={selected}
+                      />
+                      {selected && (
+                        <Label as="p" mt="4px" mb={0}>
+                          {option.content}
+                        </Label>
+                      )}
+                    </Box>
+                    {option.value && (
+                      <Badge
+                        ml="8px"
+                        color={selected ? "blue" : "grey"}
+                        label={<Dai value={option.value} />}
+                      />
+                    )}
+                  </Box>
+                </Card.Body>
+              </Card>
+            );
+          })}
+
+          <Card packed mt="8px" variant={isCustomSelected ? "blue" : "primary"}>
+            <Card.Body>
+              <Box align="center">
+                <Box direction="vertical" fluid>
+                  <Control
+                    checked={isCustomSelected}
+                    type="radio"
+                    label="Custom payment amount"
+                    onClick={() =>
+                      handleSelectOption({ paymentType: PaymentType.CUSTOM })
+                    }
+                  />
+                  <div hidden={!isCustomSelected} style={{ width: "100%" }}>
+                    <Box fluid mt="12px">
+                      <Input
+                        type="number"
+                        ref={register({ validate })}
+                        name="amount"
+                        suffix={<Dai />}
+                        placeholder="0.0"
+                        error={errors.amount?.message || false}
+                      />
+                    </Box>
+                  </div>
+                </Box>
+              </Box>
+            </Card.Body>
+          </Card>
+
+          <Box mt="16px"></Box>
           <Box justify="space-between" mt="16px">
             <Label as="p" size="small">
               New balance owed
