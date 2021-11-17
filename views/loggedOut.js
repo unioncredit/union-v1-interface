@@ -1,13 +1,4 @@
-import {
-  Control,
-  Card,
-  Label,
-  Button,
-  Box,
-  Heading,
-  Text,
-  Grid,
-} from "union-ui";
+import { Control, Card, Button, Box, Heading, Text, Grid } from "union-ui";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
@@ -141,20 +132,6 @@ export default function LoggedOutView() {
                 );
               })}
             </Grid.Row>
-          </Grid.Col>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Col>
-            <Label as="p" align="center">
-              By connecting your wallet, you agree to Union’s{" "}
-              <Label as="a" color="blue500" href="#">
-                Terms & Conditions
-              </Label>{" "}
-              and{" "}
-              <Label as="a" color="blue500" href="#">
-                Privacy Policy
-              </Label>
-            </Label>
           </Grid.Col>
         </Grid.Row>
       </Grid>
