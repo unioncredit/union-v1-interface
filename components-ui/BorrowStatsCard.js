@@ -94,14 +94,13 @@ export function BorrowStatsCard() {
                   mt="24px"
                   value={<Dai value={roundUp(interest)} />}
                   after={
-                    <Label size="small">
-                      {paymentDueDate}{" "}
-                      <u
-                        onClick={openPaymentReminderModal}
-                        className={styles.reminder}
-                      >
-                        (reminder)
-                      </u>
+                    <Label
+                      size="small"
+                      color="blue500"
+                      onClick={openPaymentReminderModal}
+                      className={styles.reminder}
+                    >
+                      {paymentDueDate}
                     </Label>
                   }
                 />
