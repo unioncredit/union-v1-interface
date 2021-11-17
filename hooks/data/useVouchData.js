@@ -46,6 +46,8 @@ const getVouch =
           formatUnits(await userManagerContract.getStakerBalance(address), 18)
         );
 
+        const isMember = await userManagerContract.checkIsMember(address);
+
         const isOverdue = await uTokenContract.checkIsOverdue(address);
 
         const vouched = parseRes(vouchingAmount);
@@ -75,6 +77,7 @@ const getVouch =
           utilized,
           vouched,
           ens,
+          isMember,
         };
       })
     );

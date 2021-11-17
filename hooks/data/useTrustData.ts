@@ -57,6 +57,8 @@ const getTrust =
 
         const ens = await ethereumRpc.lookupAddress(address);
 
+        const isMember = await userManagerContract.checkIsMember(address);
+
         return {
           address,
           health,
@@ -67,6 +69,7 @@ const getTrust =
           utilized: percentage,
           vouched,
           ens,
+          isMember,
         };
       })
     );

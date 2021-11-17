@@ -30,6 +30,7 @@ import truncateAddress from "util/truncateAddress";
 import useAddressLabels from "hooks/useAddressLabels";
 import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
+import useIsMember from "hooks/data/useIsMember";
 
 export default function ProfileView({ address }) {
   const chainId = useChainId();
@@ -42,6 +43,7 @@ export default function ProfileView({ address }) {
   const { data: trustData = [] } = useTrustData(address);
   const { data: votingWalletData } = useVotingWalletData(address);
   const { data: accountVotingWalletData } = useVotingWalletData(account);
+  const { data: isMember } = useIsMember(address);
 
   const { open: openVouchModal } = useVouchModal();
 
@@ -99,6 +101,11 @@ export default function ProfileView({ address }) {
                     <Heading mt="8px" mb={0}>
                       {label && <>{label} &middot;</>} {name}
                     </Heading>
+                    {!isMember && (
+                      <Box mt="8px">
+                        <Badge label="Not a member" color="grey" mr="4px" />
+                      </Box>
+                    )}
                     <Box mt="8px">
                       <Badge label={truncatedAddress} color="grey" mr="4px" />
                       <a

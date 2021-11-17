@@ -50,6 +50,7 @@ function YouTrustContactDetails({
   used,
   utilized,
   vouched,
+  isMember,
   isOverdue,
 }) {
   const { data: borrowData } = useBorrowData(address);
@@ -64,10 +65,14 @@ function YouTrustContactDetails({
             mb="24px"
             label="Credit Status"
             value={
-              <Badge
-                color={isOverdue ? "red" : "blue"}
-                label={isOverdue ? "Overdue" : "Healthy"}
-              />
+              isMember ? (
+                <Badge
+                  color={isOverdue ? "red" : "blue"}
+                  label={isOverdue ? "Overdue" : "Healthy"}
+                />
+              ) : (
+                <Badge color="grey" label="Not a member" />
+              )
             }
           />
         </Grid.Col>

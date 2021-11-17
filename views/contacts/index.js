@@ -48,6 +48,8 @@ import useFilterContacts from "hooks/useFilterContacts";
 
 const statusOptions = [
   { id: "all", label: "All statuses" },
+  { id: "member", label: "Member" },
+  { id: "notAMember", label: "Not a member" },
   { id: "defaulted", label: "Defaulted" },
   { id: "healthy", label: "Healthy" },
 ];
