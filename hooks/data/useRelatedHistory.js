@@ -2,8 +2,13 @@ import useSWR from "swr";
 import useChainId from "hooks/useChainId";
 import fetchUserTransactions from "fetchers/fetchUserTransactions";
 import fetchUTokenTransactions from "fetchers/fetchUTokenTransactions";
+import fetchRegisterTransactions from "fetchers/fetchRegisterTransactions";
 
 async function fetchData(_, chainId, account, staker, borrower) {
+  const registerTransactions = await fetchRegisterTransactions(
+    chainId,
+    account
+  );
   const utokenTransactions = await fetchUTokenTransactions(chainId, account);
   const userTransactions = await fetchUserTransactions(
     chainId,
@@ -11,7 +16,11 @@ async function fetchData(_, chainId, account, staker, borrower) {
     borrower
   );
 
-  return [...utokenTransactions, ...userTransactions].sort((a, b) => {
+  return [
+    ...registerTransactions,
+    ...utokenTransactions,
+    ...userTransactions,
+  ].sort((a, b) => {
     return Number(b.timestamp) - Number(a.timestamp);
   });
 }

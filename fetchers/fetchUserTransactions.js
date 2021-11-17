@@ -7,15 +7,10 @@ import { formatEther } from "@ethersproject/units";
 const query = gql`
   query (
     $first: Int, 
-    $memberApplicationsFilter: MemberApplication_filter,
     $vouchCancellationsFilter: VouchCancellation_filter,
     $trustLinesFilter: TrustLine_filter,
     $trustLinesFilter_Vouch: TrustLine_filter
   ) {
-    ${TransactionTypes.REGISTER}: memberApplications(first: $first, where: $memberApplicationsFilter) {
-      applicant
-      timestamp
-    }
     ${TransactionTypes.CANCEL}: vouchCancellations(first: $first, where: $vouchCancellationsFilter) {
       borrower
       staker
@@ -41,9 +36,6 @@ export default async function fetchUserTransactions(chainId, staker, borrower) {
 
   const variables = {
     first: 100,
-    memberApplicationsFilter: {
-      applicant: staker,
-    },
     vouchCancellationsFilter: {
       staker,
       ...borrowerVariable,
