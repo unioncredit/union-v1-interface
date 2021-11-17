@@ -64,8 +64,8 @@ export default function ProfileView({ address }) {
     ? currentVotes - balanceOf
     : currentVotes;
 
-  const vouchedForThem = trustData.some((x) => x.address === account);
-  const vouchesForYou = vouchData.some((x) => x.address === account);
+  const vouchedForThem = vouchData.some((x) => x.address === account);
+  const vouchesForYou = trustData.some((x) => x.address === account);
 
   const label = getLabel(address);
 
@@ -121,7 +121,7 @@ export default function ProfileView({ address }) {
                         Vouching for you
                       </Text>
                     )}
-                    {vouchedForThem && (
+                    {!vouchedForThem && (
                       <Button
                         fluid
                         mt="20px"
