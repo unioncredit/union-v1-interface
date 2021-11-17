@@ -10,6 +10,7 @@ import {
   Pagination,
   ButtonRow,
   Select,
+  Collapse,
 } from "union-ui";
 import {
   Modal,
@@ -180,7 +181,7 @@ export default function ContactsView({
                       onClick={toggleFilters}
                     />
                   </ButtonRow>
-                  {showFilters && (
+                  <Collapse active={showFilters}>
                     <Card packed>
                       <Card.Body>
                         <Input
@@ -211,7 +212,7 @@ export default function ContactsView({
                         </Box>
                       </Card.Body>
                     </Card>
-                  )}
+                  </Collapse>
                   <Divider mt="16px" mb="16px" />
                   <Table noBorder noPadding mb="20px" disableCondensed>
                     {isLoading
