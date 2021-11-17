@@ -179,7 +179,7 @@ export default function ContactsView({
                     />
                   </ButtonRow>
                   {showFilters && (
-                    <Card variant="packed">
+                    <Card packed>
                       <Card.Body>
                         <Input
                           ref={register}

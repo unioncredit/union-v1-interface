@@ -71,7 +71,7 @@ export default function LoggedOutView() {
           <Grid.Col md={12} lg={9}>
             <Grid.Row>
               <Grid.Col>
-                <Card mb="16px" size="fluid" variant="packed">
+                <Card mb="16px" size="fluid" packed>
                   <Card.Body>
                     <Control
                       type="checkbox"

@@ -10,7 +10,7 @@ export function MiniProfileCard({ address }) {
   const { name, ENSName } = usePublicData(address);
 
   return (
-    <Card variant="packed" mb="24px">
+    <Card packed mb="24px">
       <Card.Body>
         {address ? (
           <Box>
