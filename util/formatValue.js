@@ -8,6 +8,12 @@ import { commify } from "@ethersproject/units";
  * @param {number} decimals
  */
 export default function format(num, digits) {
+  num = Number(num);
+
+  if (num && num < 1) {
+    return num.toFixed(digits);
+  }
+
   const lookup = [
     { value: 1, symbol: "" },
     { value: 1e3, symbol: "k" },

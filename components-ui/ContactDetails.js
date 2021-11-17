@@ -25,7 +25,7 @@ function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
         <Grid.Col xs={4}>
           <Stat
             label="Available"
-            value={<Dai value={format(vouched - used)} />}
+            value={<Dai value={format(vouched - used, 4)} />}
           />
         </Grid.Col>
       </Grid.Row>
@@ -88,11 +88,11 @@ function YouTrustContactDetails({
           <Stat
             mb="12px"
             label="Available"
-            value={<Dai value={format(vouched - used)} />}
+            value={<Dai value={format(vouched - used, 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Balance owed" value={<Dai value={format(used)} />} />
+          <Stat label="Balance owed" value={<Dai value={format(used, 2)} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
