@@ -10,6 +10,7 @@ import {
   Card,
   Badge,
   Control,
+  Collapse,
 } from "union-ui";
 import { useEffect, useState } from "react";
 import { Modal, Dai } from "components-ui";
@@ -185,11 +186,11 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                         type="radio"
                         checked={selected}
                       />
-                      {selected && (
+                      <Collapse active={selected}>
                         <Label as="p" mt="4px" mb={0}>
                           {option.content}
                         </Label>
-                      )}
+                      </Collapse>
                     </Box>
                     {option.value && (
                       <Badge
@@ -216,7 +217,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                       handleSelectOption({ paymentType: PaymentType.CUSTOM })
                     }
                   />
-                  <div hidden={!isCustomSelected} style={{ width: "100%" }}>
+                  <Collapse active={isCustomSelected}>
                     <Box fluid mt="12px">
                       <Input
                         type="number"
@@ -227,7 +228,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                         error={errors.amount?.message || false}
                       />
                     </Box>
-                  </div>
+                  </Collapse>
                 </Box>
               </Box>
             </Card.Body>
