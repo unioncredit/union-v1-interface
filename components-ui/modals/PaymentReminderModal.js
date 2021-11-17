@@ -57,26 +57,34 @@ export function PaymentReminderModal() {
             {paymentDueDate}
           </Label>
         </Box>
-        <ButtonRow align="center" justify="center" mt="18px">
-          <Button
-            as="a"
-            download="Union payment reminder"
-            target="_blank"
-            rel="norefferer"
-            href={urls.ics}
-            label="ICS file download"
-            fluid
-            icon={Calendar}
-          />
+        <ButtonRow
+          align="center"
+          justify="center"
+          mt="18px"
+          direction="vertical"
+        >
+          <Text mb="16px">
+            <Label
+              as="a"
+              variant="lite"
+              download="Union payment reminder"
+              target="_blank"
+              rel="norefferer"
+              href={urls.ics}
+              color="blue500"
+              fluid
+            >
+              Download .ICS file
+            </Label>
+          </Text>
           <Button
             as="a"
             target="_blank"
             rel="norefferer"
             href={urls.google}
-            label="Google calendar"
+            label="Add to Google calendar"
             fluid
             icon={Calendar}
-            variant="secondary"
           />
         </ButtonRow>
       </Modal>
