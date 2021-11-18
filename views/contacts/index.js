@@ -262,7 +262,7 @@ export default function ContactsView({
       {isManageContactModalOpen && (
         <ManageContactModal
           {...selectedContact}
-          contactsType={contactsType}
+          contactType={contactsType}
           isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
         />
       )}

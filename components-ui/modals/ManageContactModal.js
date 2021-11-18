@@ -71,6 +71,7 @@ export function ManageContactModal({
       await getReceipt(hash, library);
       addActivity(activityLabels.removeContact({ address, hash }));
       await updateTrustData();
+      close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.removeContact({ address, hash }, true));
@@ -112,9 +113,9 @@ export function ManageContactModal({
               </Box>
             </Box>
           ))}
-        {contactType === ContactsType.YOU_TRUST && (
+        {contactType === ContactsType.YOU_TRUST && used <= 0 && (
           <>
-            <Label as="p" size="small" align="center" mt="24px" grey={400}>
+            <Label as="p" align="center" mt="24px" grey={400}>
               Contacts with outstanding balance can’t be removed
             </Label>
             <Button
