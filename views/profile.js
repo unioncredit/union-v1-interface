@@ -93,6 +93,11 @@ export default function ProfileView({ address }) {
     <>
       <Head>
         <meta
+          key="og:image"
+          property="og:image"
+          content={`https://${window.location.host}/api/og/profile?address=${address}`}
+        />
+        <meta
           key="twitter:image"
           property="twitter:image"
           content={`https://${window.location.host}/api/og/profile?address=${address}`}
