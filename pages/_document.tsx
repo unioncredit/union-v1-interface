@@ -13,11 +13,6 @@ export default class UnionDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <meta property="og:type" content="website" />
           <meta
-            name="twitter:image"
-            key="twitter:image"
-            content="https://union.finance/og-image.png"
-          />
-          <meta
             name="og:image"
             key="og:image"
             content="https://union.finance/og-image.png"
