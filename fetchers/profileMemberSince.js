@@ -1,6 +1,6 @@
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "constants/variables";
-import { DEFAULT_CHAIN_ID } from "constants/app";
+import { GRAPHQL_URL } from "../constants/variables";
+import { DEFAULT_CHAIN_ID } from "../constants/app";
 
 const query = gql`
   query ($first: Int, $memberApplicationsFilter: MemberApplication_filter) {
@@ -25,5 +25,11 @@ export default async function fetchMemberApplication(applicant) {
     variables
   );
 
-  return resp?.memberApplications?.[0]?.timestamp || 0;
+  return (
+    (resp &&
+      resp.memberApplications &&
+      resp.memberApplications[0] &&
+      resp.memberApplications[0].timestamp) ||
+    0
+  );
 }
