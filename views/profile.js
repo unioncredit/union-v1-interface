@@ -93,12 +93,10 @@ export default function ProfileView({ address }) {
     <>
       <Head>
         <meta
-          property="og:image"
+          property="twitter:image"
           content={`https://${window.location.host}/api/og/profile?address=${address}`}
         />
-        <meta property="og:title" content={`Union Member ${name}`} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="600" />
+        <meta property="twitter:title" content={`Union Member ${name}`} />
       </Head>
       <View>
         <Grid>
