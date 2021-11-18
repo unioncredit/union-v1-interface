@@ -22,6 +22,7 @@ export function ContactDetailsHeader({ address }) {
   );
 
   const [primaryLabel] = [
+    { label },
     { label: ENSName || BoxName },
     { label: truncatedAddressText, value: address },
   ].filter(({ label }) => Boolean(label));
@@ -42,12 +43,24 @@ export function ContactDetailsHeader({ address }) {
           <Link href={`/profile/${address}`}>
             <a>
               <Heading level={2} mb="4px">
-                {label && <>{label} &middot;</>} {primaryLabel.label}
+                {primaryLabel.label}
               </Heading>
             </a>
           </Link>
           <Box>
-            {!ENSName && <Badge color="grey" mr="4px" label="No ENS" />}
+            {(!ENSName || (ENSName && label)) && (
+              <Badge
+                color="grey"
+                mr="4px"
+                label={
+                  ENSName ? (
+                    <Copyable value={ENSName}>{ENSName}</Copyable>
+                  ) : (
+                    "No ENS"
+                  )
+                }
+              />
+            )}
 
             <Badge mr="4px" color="grey" label={truncatedAddress} />
 
