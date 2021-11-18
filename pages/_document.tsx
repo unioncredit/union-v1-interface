@@ -14,15 +14,32 @@ export default class UnionDocument extends Document {
           <meta property="og:type" content="website" />
           <meta
             name="twitter:image"
+            key="twitter:image"
             content="https://union.finance/og-image.png"
           />
-          <meta name="og:image" content="https://union.finance/og-image.png" />
+          <meta
+            name="og:image"
+            key="og:image"
+            content="https://union.finance/og-image.png"
+          />
           <meta name="twitter:site" content="@unionprotocol" />
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:creator" content="@unionprotocol" />
-          <meta name="description" content={META_TAGS.DESCRIPTION} />
-          <meta property="og:description" content={META_TAGS.DESCRIPTION} />
-          <meta name="twitter:description" content={META_TAGS.DESCRIPTION} />
+          <meta
+            name="description"
+            key="description"
+            content={META_TAGS.DESCRIPTION}
+          />
+          <meta
+            property="og:description"
+            key="og:description"
+            content={META_TAGS.DESCRIPTION}
+          />
+          <meta
+            name="twitter:description"
+            key="twitter:description"
+            content={META_TAGS.DESCRIPTION}
+          />
           <meta name="theme-color" content="#032437" />
         </Head>
         <body className="hide-scrollbar">
