@@ -13,7 +13,7 @@ export default class UnionDocument extends Document {
           <link rel="icon" href="/favicon.ico" />
           <meta property="og:type" content="website" />
           <meta name="twitter:site" content="@unionprotocol" />
-          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:creator" content="@unionprotocol" />
           <meta
             name="description"
