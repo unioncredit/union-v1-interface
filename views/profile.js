@@ -10,7 +10,6 @@ import {
   Label,
   Divider,
 } from "union-ui";
-import Head from "next/head";
 import ExternalInline from "union-ui/lib/icons/externalinline.svg";
 import External from "union-ui/lib/icons/external.svg";
 import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
@@ -91,23 +90,6 @@ export default function ProfileView({ address }) {
 
   return (
     <>
-      <Head>
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`https://${window.location.host}/api/og/profile?address=${address}`}
-        />
-        <meta
-          key="twitter:image"
-          property="twitter:image"
-          content={`https://${window.location.host}/api/og/profile?address=${address}`}
-        />
-        <meta
-          property="twitter:title"
-          key="twitter:title"
-          content={`Union Member ${name}`}
-        />
-      </Head>
       <View>
         <Grid>
           <Grid.Row justify="center">
