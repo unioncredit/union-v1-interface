@@ -1,15 +1,13 @@
 import Head from "next/head";
 import ProfileView from "views/profile";
 import { PageHead } from "components-ui";
-import { useRouter } from "next/router";
 import { useForceConnect } from "hooks/useForceConnect";
 import LoggedOutView from "views/loggedOut";
 
-export default function ProfilePage() {
-  const { query } = useRouter();
+export default function ProfilePage({ params }) {
   const [forceConnect] = useForceConnect();
 
-  const { address } = query;
+  const { address } = params;
 
   return (
     <>
@@ -39,4 +37,10 @@ export default function ProfilePage() {
       )}
     </>
   );
+}
+
+export function getServerSideProps(context) {
+  return {
+    props: { params: context.params },
+  };
 }
