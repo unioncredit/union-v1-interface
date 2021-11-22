@@ -3,7 +3,7 @@ import useTimelockContract from "hooks/contracts/useTimelockContract";
 import useSWR from "swr";
 
 const getTimelock = (timelockContract: Contract) => async () => {
-  return timelockContract.delay();
+  return timelockContract.getMinDelay();
 };
 
 export default function useTimelock() {

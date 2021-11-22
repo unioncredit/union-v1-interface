@@ -1,4 +1,4 @@
-import useUTokenContract from "hooks/contracts/useUTokenContract";
+import useUErc20Contract from "hooks/contracts/useUErc20Contract";
 import useUTokenDecimals from "hooks/useUTokenDecimals";
 import { formatUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
@@ -14,7 +14,7 @@ const getUTokenSupply = (uTokenContract: Contract) => async (
 };
 
 export default function useUTokenSupply() {
-  const uTokenContract: Contract = useUTokenContract();
+  const uTokenContract: Contract = useUErc20Contract();
   const { data: decimals } = useUTokenDecimals();
   const shouldFetch = !!uTokenContract;
   return useSWR(
