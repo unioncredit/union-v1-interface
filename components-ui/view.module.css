@@ -1,0 +1,12 @@
+.tabNavWrapper {
+  width: 100%;
+  overflow: hidden;
+  overflow-x: scroll;
+  margin-bottom: 16px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.tabNavWrapper::-webkit-scrollbar {
+  display: none;
+}

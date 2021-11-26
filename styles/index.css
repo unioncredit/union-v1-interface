@@ -118,3 +118,9 @@ ul {
 .layout-main {
   min-height: 100vh;
 }
+
+@media screen and (max-width: 767px) {
+  .layout-header {
+    padding-bottom: 8px;
+  }
+}

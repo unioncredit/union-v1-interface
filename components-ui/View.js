@@ -1,10 +1,11 @@
-import { Box, ContextMenu, ToggleMenu, Button } from "union-ui";
-import DropdownArrow from "union-ui/lib/icons/dropdownArrow.svg";
+import { Box, ToggleMenu, TabNav } from "union-ui";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { TabLink, Link, OverdueAlert } from "components-ui";
 import useIsMobile from "hooks/useIsMobile";
 import { navItems } from "constants/app";
+
+import styles from "./view.module.css";
 
 export function View({ children, tabItems }) {
   const isMobile = useIsMobile();
@@ -20,15 +21,12 @@ export function View({ children, tabItems }) {
   const navItemLinks = navItems.map((item) => ({
     ...item,
     as: Link,
+    active: item.pathname === router.pathname,
     href: item.id === "profile" ? `/profile/${account}` : item.pathname,
   }));
 
   const initialTab = tabItemLinks.findIndex(
     (item) => item.href === router.pathname
-  );
-
-  const activeNavItem = navItemLinks.find(
-    (item) => item.pathname === router.pathname
   );
 
   const isGetStarted = router.pathname === "/";
@@ -37,20 +35,9 @@ export function View({ children, tabItems }) {
     <>
       <OverdueAlert />
       {isMobile && !isGetStarted && (
-        <Box mb="8px" fluid align="start">
-          <ContextMenu
-            items={navItemLinks.slice(1)}
-            button={(toggleOpen) => (
-              <Button
-                onClick={toggleOpen}
-                label={activeNavItem?.label || "Menu"}
-                variant="secondary"
-                icon={DropdownArrow}
-                iconPosition="end"
-              />
-            )}
-          />
-        </Box>
+        <div className={styles.tabNavWrapper}>
+          <TabNav items={navItemLinks} />
+        </div>
       )}
       {tabItemLinks?.length > 0 && (
         <Box fluid justify="center">

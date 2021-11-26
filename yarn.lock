@@ -9586,10 +9586,10 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-union-ui@^0.2.34:
-  version "0.2.34"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.34.tgz#75e8d5c48004def22828db66ce40028b8c331e59"
-  integrity sha512-eRezyzmX+CARn0xquu5TENgn5tVT4tXSWwPitGc1yH5vHLnIhSZRTzMfiJ2VAzavNUwqKajdZnSKZBWLnRAXxQ==
+union-ui@0.2.36:
+  version "0.2.36"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.36.tgz#bc0891611612ee6e72272fd03f84fc225fd9401c"
+  integrity sha512-kXTNR5AAbgw4m7FVM9Zl0ZfDZF449ZBd4y9ueonCn744YXX5ShMiPZuYN6mQNhrfAgtvoEK0W85BLCYKOy0nnA==
   dependencies:
     classnames "^2.3.1"
     react-animate-height "^2.0.23"
