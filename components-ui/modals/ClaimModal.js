@@ -1,5 +1,6 @@
 import { commify } from "@ethersproject/units";
-import { ModalOverlay, Box, Grid, Logo, Stat } from "union-ui";
+import { ModalOverlay, Box, Grid, Stat } from "union-ui";
+import UnionLogo from "union-ui/lib/icons/union.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { ClaimButton } from "components-ui/ClaimButton";
@@ -27,10 +28,8 @@ export function ClaimModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal onClose={close} size="medium">
-        <Box justify="center">
-          <div className="inverted-circle-logo">
-            <Logo />
-          </div>
+        <Box justify="center" mt="32px">
+          <UnionLogo width="48px" height="48px" />
         </Box>
         <Grid>
           <Grid.Row>

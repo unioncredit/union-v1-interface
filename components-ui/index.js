@@ -51,3 +51,4 @@ export * from "./StakeStepCard";
 export * from "./VouchStepCard";
 export * from "./UnionWallet";
 export * from "./OverdueAlert";
+export * from "./LoginOptions";

@@ -15,6 +15,7 @@ import usePagination from "hooks/usePagination";
 import createArray from "util/createArray";
 import format from "util/formatValue";
 import formatDateTime from "util/formatDateTime";
+import truncateName from "util/truncateName";
 
 import Borrow from "union-ui/lib/icons/borrow.svg";
 import Repayment from "union-ui/lib/icons/repayment.svg";
@@ -63,8 +64,8 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
   const text = texts[type]?.({
     amount,
     type,
-    borrowerName,
-    stakerName,
+    borrowerName: truncateName(borrowerName),
+    stakerName: truncateName(stakerName),
   });
 
   if (!Icon || !text) {
@@ -76,13 +77,24 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
       <TableCell>
         <Box align="center">
           <Icon width="24px" />
-          <Label as="p" ml="8px" grey={700}>
-            {text}
-          </Label>
+          <Box direction="vertical">
+            <Label as="p" ml="8px" grey={700} mb={0}>
+              {text}
+            </Label>
+            <Label
+              as="p"
+              ml="8px"
+              size="small"
+              className="hide-gt-600"
+              grey={400}
+            >
+              {formatDateTime(timestamp)}
+            </Label>
+          </Box>
         </Box>
       </TableCell>
-      <TableCell>
-        <Label size="small" grey={400}>
+      <TableCell className="hide-lt-600">
+        <Label as="p" size="small" grey={400}>
           {formatDateTime(timestamp)}
         </Label>
       </TableCell>

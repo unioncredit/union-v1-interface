@@ -36,8 +36,8 @@ export function View({ children, tabItems }) {
   return (
     <>
       <OverdueAlert />
-      <Box justify={isMobile && "space-between"} fluid={isMobile}>
-        {isMobile && !isGetStarted && (
+      {isMobile && !isGetStarted && (
+        <Box mb="8px" fluid align="start">
           <ContextMenu
             items={navItemLinks.slice(1)}
             button={(toggleOpen) => (
@@ -50,15 +50,18 @@ export function View({ children, tabItems }) {
               />
             )}
           />
-        )}
-        {tabItemLinks?.length > 0 && (
+        </Box>
+      )}
+      {tabItemLinks?.length > 0 && (
+        <Box fluid justify="center">
           <ToggleMenu
+            fluid={isMobile}
             className="wrapper-toggle-menu"
             items={tabItemLinks}
             initialActive={~initialTab ? initialTab : 0}
           />
-        )}
-      </Box>
+        </Box>
+      )}
       {children}
     </>
   );

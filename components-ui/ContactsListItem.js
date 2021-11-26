@@ -41,7 +41,7 @@ export function ContactsListItem(props) {
         </Text>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
-        <TableCell align="right">
+        <TableCell align="right" className="hide-lt-600">
           {isOverdue ? (
             <Badge color="red" label="Overdue" />
           ) : (

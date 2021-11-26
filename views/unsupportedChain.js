@@ -26,10 +26,11 @@ export default function UnsupportedChainView() {
   };
 
   return (
-    <Box justify="center" align="center" direction="vertical" fluid mb="10vh">
+    <Box justify="center" align="center" direction="vertical" fluid>
+      <Box mt="48px" className="hide-lt-600" />
       <Heading
         mb="4px"
-        mt="64px"
+        mt="16px"
         size="xlarge"
         weight="medium"
         grey={800}

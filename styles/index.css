@@ -12,7 +12,7 @@ a {
 
 @media screen and (max-width: 1000px) {
   .layout-main-wrapper {
-    padding-bottom: 60px;
+    padding-bottom: 32px;
     box-sizing: border-box;
   }
 }

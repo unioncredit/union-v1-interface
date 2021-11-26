@@ -12,11 +12,14 @@ import { Card, Heading, Button, Label, ButtonRow, Text } from "union-ui";
 import Telegram from "union-ui/lib/icons/telegram.svg";
 import Twitter from "union-ui/lib/icons/twitter.svg";
 import { Copyable } from "./Copyable";
+import useIsMobile from "hooks/useIsMobile";
 
 export function ShareCard({ title, content, size }) {
   const { account } = useWeb3React();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
+
+  const isMobile = useIsMobile();
 
   const url = generateLink(account);
 
@@ -42,7 +45,7 @@ export function ShareCard({ title, content, size }) {
           </Label>
           <Label as="p" align="center" mb="24px" color="blue500">
             <Copyable value={url}>
-              {url.slice(0, 16)}...{url.slice(-16)}
+              {url.slice(0, 12)}...{url.slice(-12)}
             </Copyable>
           </Label>
           <Button label="Get QR Code" fluid onClick={openCreditRequest} />
@@ -52,7 +55,7 @@ export function ShareCard({ title, content, size }) {
                 variant="secondary"
                 color="blue"
                 icon={Twitter}
-                label="Twitter"
+                label={isMobile ? null : "Twitter"}
                 fluid
               />
             </Link>
@@ -61,7 +64,7 @@ export function ShareCard({ title, content, size }) {
                 variant="secondary"
                 color="blue"
                 icon={Telegram}
-                label="Telegram"
+                label={isMobile ? null : "Telegram"}
                 fluid
               />
             </Link>

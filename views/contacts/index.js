@@ -67,7 +67,7 @@ const withMobileView =
   (Component) =>
   ({ onClose, contactsType, ...props }) =>
     (
-      <ModalOverlay>
+      <ModalOverlay onClick={onClose}>
         <Modal title="Contact details" onClose={onClose} size="large">
           <Component {...props} variant={contactsType} />
         </Modal>
@@ -83,7 +83,7 @@ export default function ContactsView({
   const router = useRouter();
 
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedContactIndex, setSelectedContact] = useState(0);
+  const [selectedContactIndex, setSelectedContact] = useState(null);
 
   const { isOpen: isManageContactModalOpen } = useManageContactModal();
   const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
@@ -140,6 +140,8 @@ export default function ContactsView({
       );
       setSelectedContact(~contactIndex ? contactIndex : 0);
       return;
+    } else {
+      !isMobile && setSelectedContact(0);
     }
   }, [vouchData, trustData, contactsType, queryContact]);
 
@@ -164,7 +166,10 @@ export default function ContactsView({
               <Card mt="24px">
                 <Card.Header title={title} subTitle={subTitle} />
                 <Card.Body>
-                  <ButtonRow mb="8px">
+                  <ButtonRow
+                    mb="8px"
+                    direction={isMobile ? "vertical" : "horizontal"}
+                  >
                     {contactsType === ContactsType.YOU_TRUST && (
                       <Button
                         fluid
@@ -239,19 +244,25 @@ export default function ContactsView({
               </Card>
             </Grid.Col>
             <Grid.Col md={6}>
-              <Card mt="24px">
-                <Card.Body>
-                  {selectedContact ? (
+              {selectedContact && (
+                <Card mt="24px">
+                  <Card.Body>
                     <ContactDetailsVariant
                       {...selectedContact}
                       onClose={() => setSelectedContact(null)}
                       contactsType={contactsType}
                     />
-                  ) : (
+                  </Card.Body>
+                </Card>
+              )}
+
+              {!selectedContact && !isMobile && (
+                <Card mt="24px">
+                  <Card.Body>
                     <ContactDetailsSkeleton />
-                  )}
-                </Card.Body>
-              </Card>
+                  </Card.Body>
+                </Card>
+              )}
             </Grid.Col>
           </Grid.Row>
         </Grid>

@@ -22,9 +22,7 @@ export function CreditContactsRow(props) {
       <TableCell>
         <Box align="center">
           <Avatar address={address} />
-          <Text ml="8px">
-            {name} {label && <>&bull; {label}</>}
-          </Text>
+          <Text ml="8px">{label || name}</Text>
         </Box>
       </TableCell>
       <TableCell align="right">
