@@ -25,7 +25,7 @@ export default function LoggedOutView() {
   const loginOptions = <LoginOptions triedEager={triedEager} />;
 
   return (
-    <Box justify="center" align="center" direction="vertical" fluid>
+    <Box align="center" direction="vertical" fluid>
       <Box mt="48px" className="hide-lt-600" />
       <Heading
         mb="4px"

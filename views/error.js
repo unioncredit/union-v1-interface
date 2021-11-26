@@ -4,9 +4,9 @@ import { links } from "constants/app";
 
 export default function ErrorView({ title, content }) {
   return (
-    <Box fluid justify="center" align="center" mt="10vh">
-      <Box justify="center" align="center" direction="vertical" maxw="440px">
-        <Heading align="center" size="xxlarge" mb="12px">
+    <Box fluid justify="center">
+      <Box align="center" direction="vertical" maxw="440px">
+        <Heading align="center" size="xxlarge" mb="12px" mt="48px">
           {title}
         </Heading>
         <Text align="center">{content}</Text>
