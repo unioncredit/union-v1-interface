@@ -29,6 +29,8 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import format from "util/formatValue";
+import useUnionContract from "hooks/contracts/useUTokenContract";
+import { Approval } from "components-ui";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -47,6 +49,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
   const { close } = usePaymentModal();
   const curToken = useCurrentToken("DAI");
   const repay = useRepay();
+  const utoken = useUnionContract();
 
   const { reset, errors, formState, register, watch, setValue, handleSubmit } =
     useForm({
@@ -244,15 +247,22 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
             </Label>
           </Box>
           <ButtonRow fluid>
-            <Button
-              label={`Repay ${amount} DAI`}
-              fluid
-              mt="16px"
-              loading={isSubmitting}
-              disabled={!isDirty}
-              onClick={handleSubmit(handlePayment)}
-              fontSize="large"
-            />
+            <Approval
+              amount={amount}
+              tokenAddress={curToken}
+              spender={utoken.address}
+              signatureKey="approve-repay-dai"
+            >
+              <Button
+                label={`Repay ${amount} DAI`}
+                fluid
+                mt="16px"
+                loading={isSubmitting}
+                disabled={!isDirty}
+                onClick={handleSubmit(handlePayment)}
+                fontSize="large"
+              />
+            </Approval>
           </ButtonRow>
         </form>
       </Modal>
