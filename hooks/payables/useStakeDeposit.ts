@@ -1,4 +1,3 @@
-import { MaxUint256 } from "@ethersproject/constants";
 import { Contract } from "@ethersproject/contracts";
 import type { TransactionResponse } from "@ethersproject/providers";
 import { parseUnits } from "@ethersproject/units";
@@ -6,7 +5,6 @@ import { useWeb3React } from "@web3-react/core";
 import useERC20Contract from "hooks/contracts/useERC20Contract";
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
-import { signDaiPermit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
@@ -36,27 +34,7 @@ export default function useStakeDeposit() {
       );
       //Approve is not required to call stakeWithPermit
       if (allowance.lt(stakeAmount)) {
-        try {
-          const { nonce, expiry, v, r, s } = await signDaiPermit(
-            library.provider,
-            DAI,
-            account,
-            userManagerAddress
-          );
-          return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
-            stakeAmount,
-            nonce,
-            expiry,
-            v,
-            r,
-            s,
-          ]);
-        } catch (err) {
-          await makeTxWithGasEstimate(DAIContract, "approve", [
-            userManagerAddress,
-            MaxUint256,
-          ]);
-        }
+        throw Error("Allowance not enough");
       }
 
       return makeTxWithGasEstimate(userManagerContract, "stake", [stakeAmount]);
