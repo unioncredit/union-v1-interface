@@ -11,7 +11,7 @@ export function Wrapper({ children }) {
 
   useUpdateForceConnect();
 
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   const { isOpen: isClaimModalOpen } = useClaimModal();
 
@@ -32,10 +32,12 @@ export function Wrapper({ children }) {
                           <Wallet />
                         </>
                       ) : (
-                        <ConnectButton
-                          label="Connect wallet"
-                          variant="secondary"
-                        />
+                        library && (
+                          <ConnectButton
+                            label="Connect wallet"
+                            variant="secondary"
+                          />
+                        )
                       )}
                     </Box>
                     <ContextMenu position="left" items={contextMenuItems} />
