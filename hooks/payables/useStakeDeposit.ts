@@ -34,7 +34,7 @@ export default function useStakeDeposit() {
       );
       //Approve is not required to call stakeWithPermit
       if (allowance.lt(stakeAmount)) {
-        throw Error("Allowance not enough");
+        throw new Error("Allowance not enough");
       }
 
       return makeTxWithGasEstimate(userManagerContract, "stake", [stakeAmount]);

@@ -31,33 +31,7 @@ export default function useRepay() {
       const repayAmount = parseUnits(String(amount), 18);
       const allowance = await DAIContract.allowance(account, uTokenAddress);
       if (allowance.lt(repayAmount)) {
-        try {
-          const result = await signDaiPermit(
-            library.provider,
-            DAI,
-            account,
-            uTokenAddress
-          );
-
-          return makeTxWithGasEstimate(
-            uTokenContract,
-            "repayBorrowWithPermit",
-            [
-              account,
-              repayAmount.toString(),
-              result.nonce,
-              result.expiry,
-              result.v,
-              result.r,
-              result.s,
-            ]
-          );
-        } catch (err) {
-          await makeTxWithGasEstimate(DAIContract, "approve", [
-            uTokenAddress,
-            MaxUint256,
-          ]);
-        }
+        throw new Error("Allowance not enough");
       }
 
       return makeTxWithGasEstimate(uTokenContract, "repayBorrow", [
