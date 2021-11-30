@@ -52,3 +52,4 @@ export * from "./VouchStepCard";
 export * from "./UnionWallet";
 export * from "./OverdueAlert";
 export * from "./LoginOptions";
+export * from "./Approval";

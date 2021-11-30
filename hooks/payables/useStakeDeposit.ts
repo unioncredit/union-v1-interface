@@ -9,7 +9,6 @@ import { useCallback } from "react";
 import { signDaiPermit } from "eth-permit";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import { BigNumberish } from "@ethersproject/bignumber";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 
 export default function useStakeDeposit() {

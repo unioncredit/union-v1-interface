@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
 import { useForm } from "react-hook-form";
-
+import { useWeb3React } from "@web3-react/core";
 import { Button, Dai, Box, Input } from "union-ui";
+
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import useCurrentToken from "hooks/useCurrentToken";
@@ -13,10 +13,13 @@ import { roundDown } from "util/numbers";
 import activityLabels from "util/activityLabels";
 import { useAddActivity } from "hooks/data/useActivity";
 import isHash from "util/isHash";
+import { Approval } from "components-ui";
+import useUserContract from "hooks/contracts/useUserContract";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
+  const userManager = useUserContract();
 
   const { handleSubmit, register, watch, setValue, formState, errors, reset } =
     useForm({
@@ -95,14 +98,22 @@ export const DepositInput = ({ totalStake, onComplete }) => {
           })}
         />
       </Box>
-      <Button
-        fluid
-        mt="18px"
-        type="submit"
-        loading={isSubmitting}
-        disabled={!isDirty || newTotalStake > 500}
-        label={`Stake ${amount} DAI`}
-      />
+      <Box mt="18px" fluid>
+        <Approval
+          amount={amount}
+          tokenAddress={DAI}
+          spender={userManager.address}
+          signatureKey="approve-deposit-dai"
+        >
+          <Button
+            fluid
+            type="submit"
+            loading={isSubmitting}
+            disabled={!isDirty || newTotalStake > 500}
+            label={`Stake ${amount} DAI`}
+          />
+        </Approval>
+      </Box>
     </form>
   );
 };

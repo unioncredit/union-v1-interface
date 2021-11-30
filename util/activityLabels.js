@@ -66,6 +66,11 @@ const activityLabels = {
     failed,
     hash,
   }),
+  approve: ({ token, hash }, failed) => ({
+    label: `Approved ${token}`,
+    failed,
+    hash,
+  }),
 };
 
 export default activityLabels;
