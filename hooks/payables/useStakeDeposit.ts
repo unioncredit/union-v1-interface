@@ -8,12 +8,17 @@ import { useCallback } from "react";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
+import usePermits from "hooks/usePermits";
+import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
   const marketRegistryContract = useMarketRegistryContract();
   const DAI = useCurrentToken();
   const DAIContract = useERC20Contract(DAI);
+  const { getPermit, removePermit } = usePermits();
+
+  const permit = getPermit(APPROVE_DAI_SIGNATURE_KEY);
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {
@@ -28,11 +33,24 @@ export default function useStakeDeposit() {
 
       const stakeAmount = parseUnits(String(amount), 18);
 
+      // if we have a valid permit use that to stake
+      if (permit) {
+        await makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+          stakeAmount,
+          permit.nonce,
+          permit.expiry,
+          permit.v,
+          permit.r,
+          permit.s,
+        ]);
+        removePermit(APPROVE_DAI_SIGNATURE_KEY);
+      }
+
       const allowance = await DAIContract.allowance(
         account,
         userManagerAddress
       );
-      //Approve is not required to call stakeWithPermit
+
       if (allowance.lt(stakeAmount)) {
         throw new Error("Allowance not enough");
       }

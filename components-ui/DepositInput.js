@@ -15,6 +15,7 @@ import { useAddActivity } from "hooks/data/useActivity";
 import isHash from "util/isHash";
 import { Approval } from "components-ui";
 import useUserContract from "hooks/contracts/useUserContract";
+import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
@@ -46,7 +47,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const newTotalStake = Number(
     parseFloat(amount || 0) + parseFloat(totalStake)
   );
-
   const handleMaxDeposit = () => {
     setValue("amount", maxAllowed, {
       shouldDirty: true,
@@ -103,7 +103,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
           amount={amount}
           tokenAddress={DAI}
           spender={userManager.address}
-          signatureKey="approve-deposit-dai"
+          signatureKey={APPROVE_DAI_SIGNATURE_KEY}
         >
           <Button
             fluid

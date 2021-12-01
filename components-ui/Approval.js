@@ -3,6 +3,7 @@ import { Button } from "union-ui";
 import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";
 import { useState } from "react";
+import usePermits from "hooks/usePermits";
 
 const ApprovalTypes = {
   SIGNATURE: "signature",
@@ -31,14 +32,18 @@ export function Approval({
     data: allowance,
     mutate: updateAllowance,
     approveWithSignature,
-  } = useAllowance(tokenAddress, spender);
+  } = useAllowance(tokenAddress, spender, signatureKey);
+  const { getPermit } = usePermits();
+
   const [loading, setLoading] = useState(false);
+
+  const permit = getPermit(signatureKey);
 
   const handleApproval = async () => {
     setLoading(true);
     if (approvalType === ApprovalTypes.SIGNATURE) {
       try {
-        await approveWithSignature(signatureKey);
+        await approveWithSignature();
       } catch (_) {
         await approve();
       }
@@ -50,7 +55,7 @@ export function Approval({
     setLoading(false);
   };
 
-  if (allowance?.lt(parseEther(amount.toString()))) {
+  if (!permit && allowance?.lt(parseEther(amount.toString()))) {
     return (
       <Button
         fluid

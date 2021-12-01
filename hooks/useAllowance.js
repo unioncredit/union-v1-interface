@@ -16,7 +16,7 @@ const getAllowance = (contract) => (_, account, spender) => {
   return contract.allowance(account, spender);
 };
 
-export default function useAllowance(tokenAddress, spender) {
+export default function useAllowance(tokenAddress, spender, signatureKey) {
   const { signPermit } = usePermits();
   const addActivity = useAddActivity();
   const { account, chainId, library } = useWeb3React();
@@ -51,8 +51,8 @@ export default function useAllowance(tokenAddress, spender) {
     }
   }, []);
 
-  const approveWithSignature = useCallback(async (key) => {
-    await signPermit(key, tokenAddress, spender);
+  const approveWithSignature = useCallback(async () => {
+    await signPermit(signatureKey, tokenAddress, spender);
   }, []);
 
   return { ...resp, approve, approveWithSignature };

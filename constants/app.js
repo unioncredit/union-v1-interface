@@ -73,3 +73,5 @@ export const TransactionTypes = {
   TRUST: "trust",
   TRUSTED: "trusted",
 };
+
+export const APPROVE_DAI_SIGNATURE_KEY = "approve-dai";
