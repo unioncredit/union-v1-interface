@@ -31,6 +31,8 @@ import isHash from "util/isHash";
 import format from "util/formatValue";
 import useUnionContract from "hooks/contracts/useUTokenContract";
 import { Approval } from "components-ui";
+import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
+import usePermits from "hooks/usePermits";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -50,6 +52,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
   const curToken = useCurrentToken("DAI");
   const repay = useRepay();
   const utoken = useUnionContract();
+  const { removePermit } = usePermits();
 
   const { reset, errors, formState, register, watch, setValue, handleSubmit } =
     useForm({
@@ -111,6 +114,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
       });
       addActivity(activityLabels.repay({ amount: amountToRepay, hash }));
       if (typeof onComplete === "function") await onComplete();
+      removePermit(APPROVE_DAI_SIGNATURE_KEY);
       close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
@@ -251,7 +255,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
               amount={amount}
               tokenAddress={curToken}
               spender={utoken.address}
-              signatureKey="approve-repay-dai"
+              signatureKey={APPROVE_DAI_SIGNATURE_KEY}
             >
               <Button
                 label={`Repay ${amount} DAI`}
