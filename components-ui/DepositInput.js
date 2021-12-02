@@ -70,7 +70,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       removePermit(APPROVE_DAI_SIGNATURE_KEY);
       reset();
     } catch (err) {
-      debugger;
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.borrow({ amount: values.amount, hash }, true));
       handleTxError(err, `Failed to stake ${values.amount} DAI`);

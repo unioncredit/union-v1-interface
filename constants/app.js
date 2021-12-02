@@ -75,3 +75,4 @@ export const TransactionTypes = {
 };
 
 export const APPROVE_DAI_SIGNATURE_KEY = "approve-dai";
+export const APPROVE_UNION_SIGNATURE_KEY = "approve-union";
