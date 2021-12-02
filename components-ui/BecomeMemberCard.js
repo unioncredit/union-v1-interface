@@ -6,12 +6,22 @@ import handleTxError from "util/handleTxError";
 import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
 import { useCongratulationsModal } from "components-ui/modals/ContratulationsModal";
+import { Approval } from "./Approval";
+import useMemberFee from "hooks/data/useMemberFee";
+import { parseEther } from "@ethersproject/units";
+import useCurrentToken from "hooks/useCurrentToken";
+import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
+import useUserContract from "hooks/contracts/useUserContract";
 
 export function BecomeMemberCard({ disabled }) {
-  const { library } = useWeb3React();
   const [registering, setRegistering] = useState(false);
-  const { data: isMember = null } = useIsMember();
+
+  const { library } = useWeb3React();
+  const userManager = useUserContract();
+  const UNION = useCurrentToken("UNION");
   const registerMember = useRegisterMember();
+  const { data: memberFee } = useMemberFee();
+  const { data: isMember = null } = useIsMember();
   const { open: openCongratulationsModal } = useCongratulationsModal();
 
   const handleRegister = async () => {
@@ -31,16 +41,23 @@ export function BecomeMemberCard({ disabled }) {
     <Card size="fluid">
       <Card.Header
         title="Pay membership fee"
-        subTitle="To finalise the membership process, you’ll need to burn 1 UNION token. This will activate your account and enable access to your starting credit limit."
+        subTitle={`To finalise the membership process, you’ll need to burn ${memberFee} UNION token. This will activate your account and enable access to your starting credit limit.`}
       />
       <Card.Body>
-        <Button
-          fluid
-          label="Burn 1 UNION"
-          disabled={isMember || disabled}
-          loading={registering}
-          onClick={handleRegister}
-        />
+        <Approval
+          amount={parseEther(memberFee?.toString() || "0")}
+          tokenAddress={UNION}
+          spender={userManager.address}
+          signatureKey={APPROVE_UNION_REGISTER_SIGNATURE_KEY}
+        >
+          <Button
+            fluid
+            label={`Burn ${memberFee} UNION`}
+            disabled={isMember || disabled}
+            loading={registering}
+            onClick={handleRegister}
+          />
+        </Approval>
         <Label as="p" mt="12px" mb={0} align="center" grey={400}>
           Complete step 1 & 2 before paying membership
         </Label>

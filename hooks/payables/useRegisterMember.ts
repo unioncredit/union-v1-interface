@@ -10,14 +10,18 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 import useUnionContract from "../contracts/useUnionContract";
+import usePermits from "hooks/usePermits";
+import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
 
 export default function useRegisterMember() {
   const { account, library } = useWeb3React();
   const tokenAddress = useCurrentToken();
-  const UNION = useCurrentToken("UNION");
   const marketRegistryContract = useMarketRegistryContract();
   const unionContract: Contract = useUnionContract();
-  let memberFee;
+  const { getPermit } = usePermits();
+
+  const permit = getPermit(APPROVE_UNION_REGISTER_SIGNATURE_KEY);
+
   return useCallback(async (): Promise<TransactionResponse> => {
     const signer = library.getSigner();
     const { userManager: userManagerAddress } =
@@ -27,31 +31,28 @@ export default function useRegisterMember() {
       USER_MANAGER_ABI,
       signer
     );
-    memberFee = (await userManagerContract.newMemberFee()).toString();
-    try {
-      const result = await signERC2612Permit(
-        library,
-        UNION,
-        account,
-        userManagerAddress,
-        memberFee
-      );
 
+    const memberFee = (await userManagerContract.newMemberFee()).toString();
+
+    if (permit) {
       return makeTxWithGasEstimate(
         userManagerContract,
         "registerMemberWithPermit",
-        [account, memberFee, result.deadline, result.v, result.r, result.s]
-      );
-    } catch (err) {
-      await makeTxWithGasEstimate(unionContract, "approve", [
-        userManagerAddress,
-        memberFee,
-      ]);
-      return await makeTxWithGasEstimate(
-        userManagerContract,
-        "registerMember",
-        [account]
+        [account, memberFee, permit.deadline, permit.v, permit.r, permit.s]
       );
     }
+
+    const allowance = await unionContract.allowance(
+      account,
+      userManagerAddress
+    );
+
+    if (allowance.lt(memberFee)) {
+      throw new Error("Allowance not enough");
+    }
+
+    return await makeTxWithGasEstimate(userManagerContract, "registerMember", [
+      account,
+    ]);
   }, [account, library, tokenAddress, marketRegistryContract]);
 }
