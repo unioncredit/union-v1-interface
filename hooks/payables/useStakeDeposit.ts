@@ -16,7 +16,7 @@ export default function useStakeDeposit() {
   const marketRegistryContract = useMarketRegistryContract();
   const DAI = useCurrentToken();
   const DAIContract = useERC20Contract(DAI);
-  const { getPermit, removePermit } = usePermits();
+  const { getPermit } = usePermits();
 
   const permit = getPermit(APPROVE_DAI_SIGNATURE_KEY);
 
@@ -35,7 +35,7 @@ export default function useStakeDeposit() {
 
       // if we have a valid permit use that to stake
       if (permit) {
-        await makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+        return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
           stakeAmount,
           permit.nonce,
           permit.expiry,
@@ -43,7 +43,6 @@ export default function useStakeDeposit() {
           permit.r,
           permit.s,
         ]);
-        removePermit(APPROVE_DAI_SIGNATURE_KEY);
       }
 
       const allowance = await DAIContract.allowance(
@@ -57,6 +56,6 @@ export default function useStakeDeposit() {
 
       return makeTxWithGasEstimate(userManagerContract, "stake", [stakeAmount]);
     },
-    [account, chainId, DAI, DAIContract, marketRegistryContract]
+    [account, chainId, DAI, DAIContract, marketRegistryContract, permit]
   );
 }

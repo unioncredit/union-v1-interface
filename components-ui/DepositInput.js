@@ -16,11 +16,13 @@ import isHash from "util/isHash";
 import { Approval } from "components-ui";
 import useUserContract from "hooks/contracts/useUserContract";
 import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
+import usePermits from "hooks/usePermits";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const userManager = useUserContract();
+  const { removePermit } = usePermits();
 
   const { handleSubmit, register, watch, setValue, formState, errors, reset } =
     useForm({
@@ -65,8 +67,10 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       });
       addActivity(activityLabels.borrow({ amount: values.amount, hash }));
       await onComplete();
+      removePermit(APPROVE_DAI_SIGNATURE_KEY);
       reset();
     } catch (err) {
+      debugger;
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.borrow({ amount: values.amount, hash }, true));
       handleTxError(err, `Failed to stake ${values.amount} DAI`);

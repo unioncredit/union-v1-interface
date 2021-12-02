@@ -10,6 +10,11 @@ const ApprovalTypes = {
   TRANSACTION: "transaction",
 };
 
+const approvalText = {
+  [ApprovalTypes.SIGNATURE]: "Approve with permit",
+  [ApprovalTypes.TRANSACTION]: "Approve with transaction",
+}
+
 /**
  * returns an approval button is there is not enough allowance
  *
@@ -60,7 +65,7 @@ export function Approval({
       <Button
         fluid
         loading={loading}
-        label="Approve"
+        label={approvalText[approvalType]}
         onClick={handleApproval}
       />
     );
