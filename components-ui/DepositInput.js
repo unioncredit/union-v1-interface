@@ -15,7 +15,7 @@ import { useAddActivity } from "hooks/data/useActivity";
 import isHash from "util/isHash";
 import { Approval } from "components-ui";
 import useUserContract from "hooks/contracts/useUserContract";
-import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
+import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
 import usePermits from "hooks/usePermits";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
@@ -67,7 +67,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       });
       addActivity(activityLabels.borrow({ amount: values.amount, hash }));
       await onComplete();
-      removePermit(APPROVE_DAI_SIGNATURE_KEY);
+      removePermit(APPROVE_DAI_DEPOSIT_SIGNATURE_KEY);
       reset();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
@@ -106,7 +106,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
           amount={amount}
           tokenAddress={DAI}
           spender={userManager.address}
-          signatureKey={APPROVE_DAI_SIGNATURE_KEY}
+          signatureKey={APPROVE_DAI_DEPOSIT_SIGNATURE_KEY}
         >
           <Button
             fluid

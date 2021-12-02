@@ -9,7 +9,7 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 import usePermits from "hooks/usePermits";
-import { APPROVE_DAI_SIGNATURE_KEY } from "constants/app";
+import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
@@ -18,7 +18,7 @@ export default function useStakeDeposit() {
   const DAIContract = useERC20Contract(DAI);
   const { getPermit } = usePermits();
 
-  const permit = getPermit(APPROVE_DAI_SIGNATURE_KEY);
+  const permit = getPermit(APPROVE_DAI_DEPOSIT_SIGNATURE_KEY);
 
   return useCallback(
     async (amount: number | string): Promise<TransactionResponse> => {

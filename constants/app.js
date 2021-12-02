@@ -74,5 +74,11 @@ export const TransactionTypes = {
   TRUSTED: "trusted",
 };
 
-export const APPROVE_DAI_SIGNATURE_KEY = "approve-dai";
-export const APPROVE_UNION_SIGNATURE_KEY = "approve-union";
+export const APPROVE_DAI_DEPOSIT_SIGNATURE_KEY = "approve-dai";
+export const APPROVE_DAI_REPAY_SIGNATURE_KEY = "approve-dai-repay";
+export const APPROVE_UNION_REGISTER_SIGNATURE_KEY = "approve-union";
+
+export const PermitType = {
+  DAI: "dai",
+  ERC2612: "erc2612",
+};
