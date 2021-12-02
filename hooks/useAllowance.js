@@ -51,8 +51,8 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
     }
   }, []);
 
-  const approveWithSignature = useCallback(async () => {
-    await signPermit(signatureKey, tokenAddress, spender);
+  const approveWithSignature = useCallback(async (amount, permitType) => {
+    await signPermit(signatureKey, tokenAddress, spender, amount, permitType);
   }, []);
 
   return { ...resp, approve, approveWithSignature };

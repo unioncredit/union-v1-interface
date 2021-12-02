@@ -4,6 +4,7 @@ import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";
 import { useState } from "react";
 import usePermits from "hooks/usePermits";
+import { PermitType } from "constants/app";
 
 const ApprovalTypes = {
   SIGNATURE: "signature",
@@ -31,6 +32,7 @@ export function Approval({
   children,
   spender,
   tokenAddress,
+  permitType = PermitType.DAI,
 }) {
   const {
     approve,
@@ -45,15 +47,17 @@ export function Approval({
 
   const permit = getPermit(signatureKey);
 
-  const handleApproval = (type) => async () => {
+  const parsedAmount = parseEther(amount.toString());
+
+  const handleApproval = async () => {
     setLoading(true);
-    if (type === ApprovalTypes.SIGNATURE) {
+    if (approvalType === ApprovalTypes.SIGNATURE) {
       try {
-        await approveWithSignature();
+        await approveWithSignature(parsedAmount, permitType);
       } catch (_) {
         await approve();
       }
-    } else if (type === ApprovalTypes.TRANSACTION) {
+    } else if (approvalType === ApprovalTypes.TRANSACTION) {
       await approve();
     }
 
@@ -69,7 +73,7 @@ export function Approval({
     });
   };
 
-  if (!permit && allowance?.lt(parseEther(amount.toString()))) {
+  if (!permit && allowance?.lt(parsedAmount)) {
     return (
       <Box fluid direction="vertical">
         <Button
