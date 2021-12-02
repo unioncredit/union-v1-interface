@@ -1,4 +1,4 @@
-import { Button } from "union-ui";
+import { Button, Box, Label } from "union-ui";
 
 import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";
@@ -13,7 +13,7 @@ const ApprovalTypes = {
 const approvalText = {
   [ApprovalTypes.SIGNATURE]: "Approve with permit",
   [ApprovalTypes.TRANSACTION]: "Approve with transaction",
-}
+};
 
 /**
  * returns an approval button is there is not enough allowance
@@ -26,7 +26,7 @@ const approvalText = {
  */
 export function Approval({
   signatureKey,
-  approvalType = ApprovalTypes.SIGNATURE,
+  approvalType: initialApprovalType = ApprovalTypes.SIGNATURE,
   amount,
   children,
   spender,
@@ -39,20 +39,21 @@ export function Approval({
     approveWithSignature,
   } = useAllowance(tokenAddress, spender, signatureKey);
   const { getPermit } = usePermits();
+  const [approvalType, setApprovalType] = useState(initialApprovalType);
 
   const [loading, setLoading] = useState(false);
 
   const permit = getPermit(signatureKey);
 
-  const handleApproval = async () => {
+  const handleApproval = (type) => async () => {
     setLoading(true);
-    if (approvalType === ApprovalTypes.SIGNATURE) {
+    if (type === ApprovalTypes.SIGNATURE) {
       try {
         await approveWithSignature();
       } catch (_) {
         await approve();
       }
-    } else if (approvalType === ApprovalTypes.TRANSACTION) {
+    } else if (type === ApprovalTypes.TRANSACTION) {
       await approve();
     }
 
@@ -60,14 +61,36 @@ export function Approval({
     setLoading(false);
   };
 
+  const toggleApprovalType = () => {
+    setApprovalType((type) => {
+      return type === ApprovalTypes.TRANSACTION
+        ? ApprovalTypes.SIGNATURE
+        : ApprovalTypes.TRANSACTION;
+    });
+  };
+
   if (!permit && allowance?.lt(parseEther(amount.toString()))) {
     return (
-      <Button
-        fluid
-        loading={loading}
-        label={approvalText[approvalType]}
-        onClick={handleApproval}
-      />
+      <Box fluid direction="vertical">
+        <Button
+          fluid
+          loading={loading}
+          label={approvalText[approvalType]}
+          onClick={handleApproval}
+        />
+        <Label
+          as="p"
+          style={{ cursor: "pointer" }}
+          onClick={toggleApprovalType}
+          size="small"
+          color="blue500"
+          align="center"
+          w="100%"
+          mt="16px"
+        >
+          Toggle approval type
+        </Label>
+      </Box>
     );
   }
 
