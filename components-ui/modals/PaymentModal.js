@@ -181,6 +181,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
               <Card
                 key={option.paymentType}
                 variant={selected ? "blue" : "primary"}
+                bordered={selected}
                 packed
                 mt="8px"
               >

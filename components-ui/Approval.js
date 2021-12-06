@@ -1,17 +1,15 @@
-import { Button, Box, Label } from "union-ui";
+import { Card, Button, Box, Label } from "union-ui";
+import Switch from "union-ui/lib/icons/switch.svg";
 
 import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";
 import { useState } from "react";
 import usePermits from "hooks/usePermits";
-import { PermitType } from "constants/app";
+import { PermitType, ApprovalTypes } from "constants/app";
 
-const ApprovalTypes = {
-  SIGNATURE: "signature",
-  TRANSACTION: "transaction",
-};
+import styles from "./approval.module.css";
 
-const approvalText = {
+const defaultApprovalText = {
   [ApprovalTypes.SIGNATURE]: "Approve with permit",
   [ApprovalTypes.TRANSACTION]: "Approve with transaction",
 };
@@ -33,6 +31,7 @@ export function Approval({
   spender,
   tokenAddress,
   permitType = PermitType.DAI,
+  approvalText = defaultApprovalText,
 }) {
   const {
     approve,
@@ -73,28 +72,39 @@ export function Approval({
     });
   };
 
+  const oppositeApprovalText =
+    approvalText[
+      approvalType === ApprovalTypes.TRANSACTION
+        ? ApprovalTypes.SIGNATURE
+        : ApprovalTypes.TRANSACTION
+    ];
+
   if (!permit && allowance?.lt(parsedAmount)) {
     return (
-      <Box fluid direction="vertical">
+      <Card variant="blue" packed className={styles.card}>
+        <Box fluid align="center" justify="center" mt="4px" mb="10px">
+          <div className={styles.switchIcon}>
+            <Switch width="24px" />
+          </div>
+          <Label
+            m={0}
+            as="p"
+            style={{ cursor: "pointer" }}
+            onClick={toggleApprovalType}
+            size="small"
+            color="blue500"
+            align="center"
+          >
+            {oppositeApprovalText}
+          </Label>
+        </Box>
         <Button
           fluid
           loading={loading}
           label={approvalText[approvalType]}
           onClick={handleApproval}
         />
-        <Label
-          as="p"
-          style={{ cursor: "pointer" }}
-          onClick={toggleApprovalType}
-          size="small"
-          color="blue500"
-          align="center"
-          w="100%"
-          mt="16px"
-        >
-          Toggle approval type
-        </Label>
-      </Box>
+      </Card>
     );
   }
 

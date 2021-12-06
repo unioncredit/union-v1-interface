@@ -1,0 +1,8 @@
+.card {
+  padding: 8px !important;
+  border: 0 !important;
+}
+
+.switchIcon svg path {
+  fill: #3b82f6;
+}

@@ -82,3 +82,8 @@ export const PermitType = {
   DAI: "dai",
   ERC2612: "erc2612",
 };
+
+export const ApprovalTypes = {
+  SIGNATURE: "signature",
+  TRANSACTION: "transaction",
+};
