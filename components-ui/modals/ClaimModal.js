@@ -39,8 +39,8 @@ export function ClaimModal() {
                 mb="24px"
                 align="center"
                 size="large"
-                label={`${unionSymbol} Balance`}
-                value={commify(balance.toFixed(4))}
+                label={`Unclaimed ${unionSymbol}`}
+                value={commify(Number(rewards).toFixed(4))}
               />
             </Grid.Col>
           </Grid.Row>
@@ -59,8 +59,8 @@ export function ClaimModal() {
                 mb="44px"
                 align="center"
                 size="medium"
-                label="Unclaimed"
-                value={commify(Number(rewards).toFixed(4))}
+                label="Total Balance"
+                value={commify(balance.toFixed(4))}
               />
             </Grid.Col>
           </Grid.Row>
