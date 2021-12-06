@@ -1,13 +1,19 @@
 import { useStakeModal, StakeType } from "components-ui/modals";
 import { Grid, Card, Stat, Button, ButtonRow, Divider } from "union-ui";
-import { Dai } from "components-ui";
+import { Dai, Union } from "components-ui";
 import useStakeData from "hooks/data/useStakeData";
+import useRewardsData from "hooks/data/useRewardsData";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 export function StakeStepCard() {
   const { data: stakeData } = useStakeData();
   const { open: openStakeModal } = useStakeModal();
+  const { data: rewardsData } = useRewardsData();
+  const { data: unionSymbol } = useUnionSymbol();
 
   const { totalStake = 0.0 } = !!stakeData && stakeData;
+
+  const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
   return (
     <Card size="fluid" mb="24px">
@@ -32,8 +38,8 @@ export function StakeStepCard() {
               <Stat
                 size="large"
                 align="center"
-                label="TOTAL STAKE"
-                value={<Dai value={totalStake} />}
+                label={`${unionSymbol} Accrued`}
+                value={<Union value={rewards} />}
                 mb="32px"
               />
             </Grid.Col>
