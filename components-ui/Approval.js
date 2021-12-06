@@ -32,6 +32,7 @@ export function Approval({
   tokenAddress,
   permitType = PermitType.DAI,
   approvalText = defaultApprovalText,
+  disabled,
 }) {
   const {
     approve,
@@ -79,7 +80,7 @@ export function Approval({
         : ApprovalTypes.TRANSACTION
     ];
 
-  if (!permit && allowance?.lt(parsedAmount)) {
+  if (!disabled && !permit && allowance?.lt(parsedAmount)) {
     return (
       <Card variant="blue" packed className={styles.card}>
         <Box fluid align="center" justify="center" mt="4px" mb="10px">

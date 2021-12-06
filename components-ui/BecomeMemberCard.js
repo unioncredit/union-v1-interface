@@ -45,6 +45,7 @@ export function BecomeMemberCard({ disabled }) {
       />
       <Card.Body>
         <Approval
+          disabled={disabled}
           amount={parseEther(memberFee?.toString() || "0")}
           tokenAddress={UNION}
           spender={userManager.address}

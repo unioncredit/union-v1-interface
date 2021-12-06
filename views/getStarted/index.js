@@ -86,7 +86,7 @@ export default function MembershipView() {
               </ProgressListItem>
               <ProgressListItem number={3} complete={isMember}>
                 <div ref={memberStep}>
-                  <BecomeMemberCard disabled={trustCount < 3} />
+                  <BecomeMemberCard disabled={isMember || trustCount < 3} />
                 </div>
               </ProgressListItem>
             </ProgressList>
