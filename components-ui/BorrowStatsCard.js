@@ -7,9 +7,9 @@ import {
   PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Label, Bar } from "union-ui";
+import { Stat, Button, Grid, Card, Label } from "union-ui";
 import format from "util/formatValue";
-import { roundDown, roundUp, toPercent } from "util/numbers";
+import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -40,8 +40,6 @@ export function BorrowStatsCard() {
     ? vouchData.reduce((acc, data) => acc + Number(data.trust), 0)
     : 0;
 
-  const percentageVouchCredit = toPercent(creditLimit / totalVouch);
-
   const onComplete = async () => {
     await updateCreditLimit();
     await updateVouchData();
@@ -58,21 +56,16 @@ export function BorrowStatsCard() {
               <Grid.Col xs={6}>
                 <Stat
                   size="large"
-                  label="Total Vouch"
                   align="center"
-                  value={<Dai value={format(totalVouch)} />}
+                  label="Available credit"
+                  value={<Dai value={format(roundDown(creditLimit))} />}
                 />
                 <Stat
                   mt="24px"
                   align="center"
-                  label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit))} />}
-                  after={
-                    <Bar
-                      percentage={(creditLimit / totalVouch) * 100}
-                      label={percentageVouchCredit}
-                    />
-                  }
+                  label="Vouch"
+                  value={<Dai value={format(totalVouch)} />}
+                  after={`From ${vouchData?.length || 0} accounts`}
                 />
                 <Button
                   mt="28px"
