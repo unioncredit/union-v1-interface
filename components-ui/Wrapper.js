@@ -1,10 +1,20 @@
-import { Layout, Box, Grid, Row, Col, ContextMenu, Label } from "union-ui";
+import {
+  Button,
+  Layout,
+  Box,
+  Grid,
+  Row,
+  Col,
+  ContextMenu,
+  Label,
+} from "union-ui";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 import { contextMenuItems } from "constants/app";
+import Link from "next/link";
 
 export function Wrapper({ children }) {
   useInactiveListener();
@@ -31,13 +41,15 @@ export function Wrapper({ children }) {
                           <UnionWallet />
                           <Wallet />
                         </>
+                      ) : library ? (
+                        <ConnectButton
+                          label="Connect wallet"
+                          variant="secondary"
+                        />
                       ) : (
-                        library && (
-                          <ConnectButton
-                            label="Connect wallet"
-                            variant="secondary"
-                          />
-                        )
+                        <Link href="/">
+                          <Button label="Login" variant="secondary" />
+                        </Link>
                       )}
                     </Box>
                     <ContextMenu position="left" items={contextMenuItems} />
