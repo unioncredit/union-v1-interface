@@ -20,7 +20,7 @@ export function BecomeMemberCard({ disabled }) {
   const { library } = useWeb3React();
   const userManager = useUserContract();
   const UNION = useCurrentToken("UNION");
-  const unionSymbol = useUnionSymbol();
+  const { data: unionSymbol } = useUnionSymbol();
   const registerMember = useRegisterMember();
   const { data: memberFee } = useMemberFee();
   const { data: isMember = null } = useIsMember();
