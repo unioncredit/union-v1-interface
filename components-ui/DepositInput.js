@@ -103,6 +103,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
       </Box>
       <Box mt="18px" fluid>
         <Approval
+          label="Approve DAI for Staking"
           amount={amount}
           tokenAddress={DAI}
           spender={userManager.address}

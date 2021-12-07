@@ -12,6 +12,7 @@ import { parseEther } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
 import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
 import useUserContract from "hooks/contracts/useUserContract";
+import useUnionSymbol from "hooks/useUnionSymbol";
 
 export function BecomeMemberCard({ disabled }) {
   const [registering, setRegistering] = useState(false);
@@ -19,6 +20,7 @@ export function BecomeMemberCard({ disabled }) {
   const { library } = useWeb3React();
   const userManager = useUserContract();
   const UNION = useCurrentToken("UNION");
+  const unionSymbol = useUnionSymbol();
   const registerMember = useRegisterMember();
   const { data: memberFee } = useMemberFee();
   const { data: isMember = null } = useIsMember();
@@ -45,6 +47,7 @@ export function BecomeMemberCard({ disabled }) {
       />
       <Card.Body>
         <Approval
+          label={`Approve ${unionSymbol} for Membership`}
           disabled={disabled}
           amount={parseEther(memberFee?.toString() || "0")}
           tokenAddress={UNION}
