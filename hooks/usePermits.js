@@ -20,9 +20,11 @@ export default function usePermits() {
 
   const getPermit = (key) => {
     const permit = permits[key];
+
+    const expiry = permit?.expiry || permit?.deadline;
+
     const permitValid =
-      permit?.expiry &&
-      BigNumber.from(permit.expiry).gt(Math.floor(Date.now() / 1000));
+      expiry && BigNumber.from(expiry).gt(Math.floor(Date.now() / 1000));
 
     if (!permitValid) {
       return null;
@@ -37,7 +39,7 @@ export default function usePermits() {
 
     const signFnArgs = permitType === PermitType.ERC2612 ? [amount] : [];
 
-    const { nonce, expiry, v, r, s } = await signFn(
+    const permit = await signFn(
       library.provider,
       tokenAddress,
       account,
@@ -45,7 +47,7 @@ export default function usePermits() {
       ...signFnArgs
     );
 
-    savePermit(key, { nonce, expiry, v, r, s });
+    savePermit(key, permit);
   };
 
   return { savePermit, removePermit, getPermit, signPermit };
