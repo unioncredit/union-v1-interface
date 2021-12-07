@@ -9,9 +9,9 @@ import { PermitType, ApprovalTypes } from "constants/app";
 
 import styles from "./approval.module.css";
 
-const defaultApprovalText = {
-  [ApprovalTypes.SIGNATURE]: "Approve with permit",
-  [ApprovalTypes.TRANSACTION]: "Approve with transaction",
+const defaultApprovalTypeText = {
+  [ApprovalTypes.SIGNATURE]: "Approving with permit",
+  [ApprovalTypes.TRANSACTION]: "Approving with transaction",
 };
 
 /**
@@ -25,14 +25,15 @@ const defaultApprovalText = {
  */
 export function Approval({
   signatureKey,
-  approvalType: initialApprovalType = ApprovalTypes.SIGNATURE,
   amount,
   children,
   spender,
   tokenAddress,
-  permitType = PermitType.DAI,
-  approvalText = defaultApprovalText,
   disabled,
+  label = "Approve",
+  permitType = PermitType.DAI,
+  approvalType: initialApprovalType = ApprovalTypes.SIGNATURE,
+  approvalTypeText = defaultApprovalTypeText,
 }) {
   const {
     approve,
@@ -73,17 +74,19 @@ export function Approval({
     });
   };
 
-  const oppositeApprovalText =
-    approvalText[
-      approvalType === ApprovalTypes.TRANSACTION
-        ? ApprovalTypes.SIGNATURE
-        : ApprovalTypes.TRANSACTION
-    ];
+  const typeText = approvalTypeText[approvalType];
 
   if (!disabled && !permit && allowance?.lt(parsedAmount)) {
     return (
       <Card variant="blue" packed className={styles.card}>
-        <Box fluid align="center" justify="center" mt="4px" mb="10px">
+        <Box
+          fluid
+          mt="4px"
+          mb="10px"
+          align="center"
+          justify="center"
+          onClick={toggleApprovalType}
+        >
           <div className={styles.switchIcon}>
             <Switch width="24px" />
           </div>
@@ -91,18 +94,17 @@ export function Approval({
             m={0}
             as="p"
             style={{ cursor: "pointer" }}
-            onClick={toggleApprovalType}
             size="small"
             color="blue500"
             align="center"
           >
-            {oppositeApprovalText}
+            {typeText}
           </Label>
         </Box>
         <Button
           fluid
           loading={loading}
-          label={approvalText[approvalType]}
+          label={label}
           onClick={handleApproval}
         />
       </Card>

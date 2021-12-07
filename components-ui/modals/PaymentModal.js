@@ -242,17 +242,17 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
             </Card.Body>
           </Card>
 
-          <Box mt="16px"></Box>
-          <Box justify="space-between" mt="16px">
-            <Label as="p" size="small">
+          <Box justify="space-between" mt="24px" mb="18px">
+            <Label as="p" grey={400}>
               New balance owed
             </Label>
-            <Label as="p" size="small">
+            <Label as="p" grey={400} m={0}>
               {format(newBalanceOwed)} DAI
             </Label>
           </Box>
           <ButtonRow fluid>
             <Approval
+              label="Approve DAI for Loan Payments"
               amount={amount}
               tokenAddress={curToken}
               spender={utoken.address}
