@@ -11,6 +11,7 @@ import {
   ButtonRow,
   Select,
   Collapse,
+  EmptyState,
 } from "union-ui";
 import {
   Modal,
@@ -220,19 +221,23 @@ export default function ContactsView({
                   </Collapse>
                   <Divider mt="16px" mb="16px" />
                   <Table noBorder noPadding mb="20px" disableCondensed>
-                    {isLoading
-                      ? createArray(3).map((_, i) => (
-                          <ContactsListItemSkeleton key={i} />
-                        ))
-                      : pagedData.map((item) => (
-                          <ContactsListItem
-                            {...item}
-                            active={item.address === selectedContact?.address}
-                            variant={contactsType}
-                            key={`${item.address}-${contactsType}`}
-                            onClick={handleSelectContact(item)}
-                          />
-                        ))}
+                    {isLoading ? (
+                      createArray(3).map((_, i) => (
+                        <ContactsListItemSkeleton key={i} />
+                      ))
+                    ) : pagedData?.length <= 0 ? (
+                      <EmptyState label="No contacts" />
+                    ) : (
+                      pagedData.map((item) => (
+                        <ContactsListItem
+                          {...item}
+                          active={item.address === selectedContact?.address}
+                          variant={contactsType}
+                          key={`${item.address}-${contactsType}`}
+                          onClick={handleSelectContact(item)}
+                        />
+                      ))
+                    )}
                   </Table>
                   <Pagination
                     mt="24px"
