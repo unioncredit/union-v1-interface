@@ -1,9 +1,9 @@
 import { useWeb3React } from "@web3-react/core";
 import LoggedOutView from "views/loggedOut";
-import LendView from "views/credit/lend";
+import StakeView from "views/credit/stake";
 import { PageHead, CheckIsMember } from "components-ui";
 
-export default function LendPage() {
+export default function StakePage() {
   const { account, library } = useWeb3React();
 
   return (
@@ -11,7 +11,7 @@ export default function LendPage() {
       <PageHead title="Lend | Union" />
       {account && library ? (
         <CheckIsMember>
-          <LendView />
+          <StakeView />
         </CheckIsMember>
       ) : (
         <LoggedOutView />

@@ -9,7 +9,7 @@ import useTrustData from "hooks/data/useTrustData";
 
 import { config } from "./config";
 
-export default function LendView() {
+export default function StakeView() {
   const { data: trustData } = useTrustData();
 
   return (
