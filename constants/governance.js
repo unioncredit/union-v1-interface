@@ -5,7 +5,6 @@ import {
   ASSET_MANAGER_ADDRESSES,
   COMPOUND_ADAPTER_ADDRESSES,
   PURE_TOKEN_ADAPTER_ADDRESSES,
-  ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS,
   FIXED_INTEREST_RATE_MODEL_ADDRESSES,
   GOVERNOR_ADDRESSES,
   AAVE_ADAPTER_ADDRESSES,
@@ -41,19 +40,6 @@ export const TARGETS = {
     },
   },
   42: {
-    assetAndAdapterProxyAdmin: {
-      address: ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS[42],
-      actions: [
-        {
-          signature: "changeProxyAdmin(address,address)",
-          params: ["address", "address"],
-        },
-        {
-          signature: "upgrade(address,address)",
-          params: ["address", "address"],
-        },
-      ],
-    },
     UToken: {
       address: U_TOKEN_ADDRESSES[42],
       actions: [
