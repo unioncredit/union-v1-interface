@@ -10,7 +10,10 @@ import { Approval } from "./Approval";
 import useMemberFee from "hooks/data/useMemberFee";
 import { parseEther } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
-import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
+import {
+  APPROVE_UNION_REGISTER_SIGNATURE_KEY,
+  PermitType,
+} from "constants/app";
 import useUserContract from "hooks/contracts/useUserContract";
 import useUnionSymbol from "hooks/useUnionSymbol";
 
@@ -53,6 +56,7 @@ export function BecomeMemberCard({ disabled }) {
           tokenAddress={UNION}
           spender={userManager.address}
           signatureKey={APPROVE_UNION_REGISTER_SIGNATURE_KEY}
+          permitType={PermitType.ERC2612}
         >
           <Button
             fluid
