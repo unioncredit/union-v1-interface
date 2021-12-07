@@ -49,7 +49,7 @@ export function View({ children, tabItems }) {
         </div>
       )}
       {tabItemLinks?.length > 0 && (
-        <Box fluid justify="center">
+        <Box justify="center">
           <ToggleMenu
             fluid={isMobile}
             className="wrapper-toggle-menu"
