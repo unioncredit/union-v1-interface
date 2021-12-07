@@ -1,5 +1,5 @@
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "constants/variables";
+import { GRAPHQL_URLS } from "constants/variables";
 
 import { TransactionTypes } from "constants/app";
 import { formatEther } from "@ethersproject/units";
@@ -50,7 +50,7 @@ export default async function fetchUserTransactions(chainId, staker, borrower) {
     },
   };
 
-  const resp = await request(GRAPHQL_URL[chainId] + "user", query, variables);
+  const resp = await request(GRAPHQL_URLS[chainId].user, query, variables);
 
   const flattened = Object.keys(resp).reduce((acc, key) => {
     const parsed = resp[key].map((item) => {

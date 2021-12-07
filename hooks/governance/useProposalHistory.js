@@ -3,7 +3,7 @@ import useSWR from "swr";
 import useGovernanceContract from "../contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "constants/variables";
+import { GRAPHQL_URLS } from "constants/variables";
 
 const getProposalHistory = (chainId) => async (_, id) => {
   const query = gql`
@@ -17,7 +17,7 @@ const getProposalHistory = (chainId) => async (_, id) => {
       }
     }
   `;
-  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
+  const logs = await request(GRAPHQL_URLS[chainId].gov, query);
   const pastEvents = await Promise.all(
     logs.proposalUpdates.map(async (log) => {
       const formattedEvent = {

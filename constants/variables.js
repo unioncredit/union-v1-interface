@@ -224,3 +224,21 @@ export const OFAC_SANCTIONED = [
 export const GRAPHQL_URL = {
   137: "https://api.thegraph.com/subgraphs/name/unioncredit/union-",
 };
+
+export const GRAPHQL_URLS = {
+  137: {
+    user: "https://api.thegraph.com/subgraphs/name/unioncredit/union-user",
+    gov: "https://api.thegraph.com/subgraphs/name/unioncredit/union-gov",
+    rewards:
+      "https://api.thegraph.com/subgraphs/name/unioncredit/union-rewards",
+    utoken: "https://api.thegraph.com/subgraphs/name/unioncredit/union-utoken",
+  },
+  42: {
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-kovan",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-kovan",
+    rewards:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-kovan",
+    utoken:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-kovan",
+  },
+};

@@ -1,6 +1,6 @@
 import { defaultAbiCoder } from "@ethersproject/abi";
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "constants/variables";
+import { GRAPHQL_URLS } from "constants/variables";
 
 export default async function fetchGovernanceProposals(chainId) {
   const query = gql`
@@ -16,7 +16,7 @@ export default async function fetchGovernanceProposals(chainId) {
     }
   `;
 
-  const logs = await request(GRAPHQL_URL[chainId] + "gov", query);
+  const logs = await request(GRAPHQL_URLS[chainId].gov, query);
 
   // reverse events to get them from newest to oldest
   const formattedEventData = logs.proposals

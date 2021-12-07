@@ -1,5 +1,5 @@
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "../constants/variables";
+import { GRAPHQL_URLS } from "../constants/variables";
 import { DEFAULT_CHAIN_ID } from "../constants/app";
 
 const query = gql`
@@ -20,7 +20,7 @@ export default async function fetchMemberApplication(applicant) {
   };
 
   const resp = await request(
-    GRAPHQL_URL[DEFAULT_CHAIN_ID] + "user",
+    GRAPHQL_URLS[DEFAULT_CHAIN_ID].user,
     query,
     variables
   );

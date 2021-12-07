@@ -1,5 +1,5 @@
 import { request, gql } from "graphql-request";
-import { GRAPHQL_URL } from "constants/variables";
+import { GRAPHQL_URLS } from "constants/variables";
 
 import { TransactionTypes } from "constants/app";
 import { formatEther } from "@ethersproject/units";
@@ -26,7 +26,7 @@ export default async function fetchUTokenTransactions(chainId, address) {
     account: address,
   };
 
-  const resp = await request(GRAPHQL_URL[chainId] + "utoken", query, variables);
+  const resp = await request(GRAPHQL_URLS[chainId].utoken, query, variables);
 
   const flattened = Object.keys(resp).reduce((acc, key) => {
     const parsed = resp[key].map((item) => {
