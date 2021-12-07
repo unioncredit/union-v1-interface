@@ -25,14 +25,6 @@ export const EVENT_BLOCK_INTERVAL = {
   80001: 10000000,
 };
 
-export const ASSET_AND_ADAPTER_PROXY_ADMIN_ADDRESS = {
-  1: AddressZero,
-  4: AddressZero,
-  42: "0x672760099f9752631655dbc6fdf2b88f4890378b",
-  137: "0x0a39C91d4DCd11dd2FaEe8A18Dd1e8079359f64b",
-  80001: "0x25A4181c335ed6B370a0De1F3583830C1C7Cf80D",
-};
-
 export const ASSET_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: "0xd0493c674156566f363ff3B6980c1E64742EEde8",
@@ -100,7 +92,7 @@ export const RESERVOIR_1_ADDRESSES = {
 export const RESERVOIR_2_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  42: "0x421e4F40977F724Ca15d1dD1a3F9f893dB4883De",
+  42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
 };
