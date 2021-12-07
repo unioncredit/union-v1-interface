@@ -8,7 +8,6 @@ import { useWeb3React } from "@web3-react/core";
 import { useCongratulationsModal } from "components-ui/modals/ContratulationsModal";
 import { Approval } from "./Approval";
 import useMemberFee from "hooks/data/useMemberFee";
-import { parseEther } from "@ethersproject/units";
 import useCurrentToken from "hooks/useCurrentToken";
 import {
   APPROVE_UNION_REGISTER_SIGNATURE_KEY,
@@ -52,7 +51,7 @@ export function BecomeMemberCard({ disabled }) {
         <Approval
           label={`Approve ${unionSymbol} for Membership`}
           disabled={disabled}
-          amount={parseEther(memberFee?.toString() || "0").toString()}
+          amount={memberFee}
           tokenAddress={UNION}
           spender={userManager.address}
           signatureKey={APPROVE_UNION_REGISTER_SIGNATURE_KEY}

@@ -54,7 +54,7 @@ export function Approval({
     setLoading(true);
     if (approvalType === ApprovalTypes.SIGNATURE) {
       try {
-        await approveWithSignature(parsedAmount, permitType);
+        await approveWithSignature(parsedAmount.toString(), permitType);
       } catch (_) {
         await approve();
       }
