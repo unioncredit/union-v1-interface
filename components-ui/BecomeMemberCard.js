@@ -51,7 +51,7 @@ export function BecomeMemberCard({ disabled }) {
         <Approval
           label={`Approve ${unionSymbol} for Membership`}
           disabled={disabled}
-          amount={memberFee}
+          amount={memberFee || "0"}
           tokenAddress={UNION}
           spender={userManager.address}
           signatureKey={APPROVE_UNION_REGISTER_SIGNATURE_KEY}
