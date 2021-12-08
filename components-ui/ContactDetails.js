@@ -9,12 +9,18 @@ import { ContactsType } from "constants/app";
 
 import Manage from "union-ui/lib/icons/manage.svg";
 
-function TrustsYouContactDetails({ used, utilized, vouched, manageContact }) {
+function TrustsYouContactDetails({
+  used,
+  utilized,
+  trust,
+  vouched,
+  manageContact,
+}) {
   return (
     <>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat label="Vouch" value={<Dai value={vouched} />} />
+          <Stat label="Vouch" value={<Dai value={trust} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
@@ -50,6 +56,7 @@ function YouTrustContactDetails({
   used,
   utilized,
   vouched,
+  trust,
   isMember,
   isOverdue,
 }) {
@@ -79,7 +86,7 @@ function YouTrustContactDetails({
       </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat mb="12px" label="Vouch" value={<Dai value={vouched} />} />
+          <Stat mb="12px" label="Vouch" value={<Dai value={trust} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat mb="12px" label="Utilized" value={`${toPercent(utilized)}`} />

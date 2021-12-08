@@ -5,7 +5,7 @@ import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "constants/app";
 
 export function ContactsListItem(props) {
-  const { address, vouched, onClick, isOverdue, variant, active } = props;
+  const { address, trust, onClick, isOverdue, variant, active } = props;
   const { name, ENSName, BoxName, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -37,7 +37,7 @@ export function ContactsListItem(props) {
       </TableCell>
       <TableCell align="right">
         <Text>
-          <Dai value={vouched} />
+          <Dai value={trust} />
         </Text>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
