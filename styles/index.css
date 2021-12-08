@@ -108,7 +108,8 @@ ul {
 
 .union-wallet.button,
 .wallet.button {
-  max-height: 44px;
+  height: 44px;
+  min-height: 0;
 }
 
 .union-wallet.button {
