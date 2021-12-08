@@ -55,6 +55,6 @@ export default function useRepay() {
         repayAmount,
       ]);
     },
-    [account, DAI, marketRegistryContract, DAIContract]
+    [account, DAI, marketRegistryContract, DAIContract, permit]
   );
 }

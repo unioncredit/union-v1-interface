@@ -51,5 +51,5 @@ export default function useRegisterMember() {
     return await makeTxWithGasEstimate(userManagerContract, "registerMember", [
       account,
     ]);
-  }, [account, library, tokenAddress, marketRegistryContract]);
+  }, [account, library, tokenAddress, marketRegistryContract, permit]);
 }
