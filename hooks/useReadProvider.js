@@ -1,25 +1,32 @@
+import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { useEffect, useState } from "react";
 import useChainId from "hooks/useChainId";
 import { RPC_URLS } from "lib/connectors";
 
-function fetchProvider() {
- return new JsonRpcProvider(RPC_URLS[chainId]); 
+function fetchProvider(_, chainId, library) {
+  if (library) {
+    return library.getSigner().provider;
+  }
+
+  return new JsonRpcProvider(RPC_URLS[chainId]);
 }
 
 export default function useReadProvider() {
   const { library } = useWeb3React();
   const chainId = useChainId();
-  const [provider, setProvider] = useState(null);
 
-  useEffect(() => {
-    if (chainId) {
-      setProvider(new JsonRpcProvider(RPC_URLS[chainId]));
-    } else if (library) {
-      setProvider(library.getSigner().provider);
+  const shouldFetch = !!chainId;
+
+  const resp = useSWR(
+    shouldFetch ? ["ReadProvider", chainId, library] : null,
+    fetchProvider,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
-  }, [chainId, library]);
+  );
 
-  return provider;
+  return resp.data;
 }
