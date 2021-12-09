@@ -264,7 +264,9 @@ export default function ContactsView({
               {!selectedContact && !isMobile && (
                 <Card mt="24px">
                   <Card.Body>
-                    <ContactDetailsSkeleton />
+                    <ContactDetailsSkeleton
+                      shimmer={Array.isArray(data) && data.length > 0}
+                    />
                   </Card.Body>
                 </Card>
               )}
