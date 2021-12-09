@@ -88,6 +88,8 @@ export default function ProfileView({ address }) {
 
   const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
 
+  const isAccountProfile = account === address;
+
   return (
     <>
       <View>
@@ -121,7 +123,7 @@ export default function ProfileView({ address }) {
                         Vouching for you
                       </Text>
                     )}
-                    {!vouchedForThem && (
+                    {!vouchedForThem && !isAccountProfile && (
                       <Button
                         fluid
                         mt="20px"
