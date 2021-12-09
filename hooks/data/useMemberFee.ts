@@ -17,6 +17,7 @@ export default function useMemberFee() {
   const shouldFetch = !!userManager;
 
   return useSWR(shouldFetch ? "MemberFee" : null, getMemberFee(userManager), {
-    refreshInterval: 10 * 1000,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
   });
 }

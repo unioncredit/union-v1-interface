@@ -1,15 +1,7 @@
 import useSWR from "swr";
-import { RPC_URLS } from "lib/connectors";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import ENS, { getEnsAddress } from "@ensdomains/ensjs";
+import useENS from "hooks/useENS";
 
-const ensProvider = new JsonRpcProvider(RPC_URLS["1"]);
-const ens = new ENS({
-  provider: ensProvider,
-  ensAddress: getEnsAddress("1"),
-});
-
-const getENSImage = async (_, ensName) => {
+const getENSImage = (ens) => async (_, ensName) => {
   const image = await ens.name(ensName).getText("avatar");
   return image;
 };
@@ -18,10 +10,19 @@ const getENSImage = async (_, ensName) => {
  * @name useENSImage
  * @returns {String}
  */
-export default function useENSImage(ens) {
-  const shouldFetch = typeof ens === "string" && ens.endsWith(".eth");
+export default function useENSImage(ensName) {
+  const ens = useENS();
+  const shouldFetch = ens && typeof ens === "string" && ens.endsWith(".eth");
 
-  const { data } = useSWR(shouldFetch ? ["ENSName", ens] : null, getENSImage);
+  const { data } = useSWR(
+    shouldFetch ? ["ENSName", ensName] : null,
+    getENSImage(ens),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 
   return data;
 }

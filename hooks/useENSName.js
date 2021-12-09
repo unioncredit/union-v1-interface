@@ -4,7 +4,7 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 
 const getENSName = (_, address) => {
   const library = new JsonRpcProvider(
-    `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_KEY}`
+    "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
   );
   return library.lookupAddress(address);
 };
@@ -19,7 +19,12 @@ export default function useENSName(address) {
   const shouldFetch = isAddress(address);
   const { data } = useSWR(
     shouldFetch ? ["ENSName", address] : null,
-    getENSName
+    getENSName,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
   return data;
 }

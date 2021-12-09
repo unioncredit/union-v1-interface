@@ -52,8 +52,9 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
     <ErrorBoundary fallback={<Error />}>
       <SWRConfig
         value={{
-          refreshInterval: 10 * 1000,
-          errorRetryCount: 1,
+          refreshInterval: 0,
+          errorRetryCount: 0,
+          shouldRetryOnError: false,
         }}
       >
         <Web3ReactProvider getLibrary={getLibrary}>
