@@ -4,6 +4,7 @@ import { formatUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getUnionTokenSupply =
   (unionContract: Contract) => async (_: any, decimals: BigNumber) => {
@@ -12,7 +13,8 @@ const getUnionTokenSupply =
   };
 
 export default function useUnionTokenSupply() {
-  const unionContract: Contract = useUnionContract();
+  const readProvider = useReadProvider();
+  const unionContract: Contract = useUnionContract(readProvider);
   const { data: decimals } = useUnionDecimals();
   const shouldFetch = !!unionContract;
   return useSWR(

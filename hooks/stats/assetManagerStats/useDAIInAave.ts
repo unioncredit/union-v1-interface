@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getDAIInAave =
   (AaveAdapter: Contract) =>
@@ -15,7 +16,8 @@ const getDAIInAave =
   };
 
 export default function useDAIInAave() {
-  const AaveAdapter: Contract = useAaveAdapterContract();
+  const readProvider = useReadProvider();
+  const AaveAdapter: Contract = useAaveAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
   const shouldFetch =

@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA=$(git rev-parse HEAD) next dev",
+    "dev": "NEXT_PUBLIC_INFURA_KEY=05bc032e727c40d79202e3373090ed55 NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA=$(git rev-parse HEAD) next dev",
     "build": "next build",
     "start": "next start",
     "export": "next export",

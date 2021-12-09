@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getPureFloor =
   (pureAdapter: Contract) =>
@@ -15,7 +16,8 @@ const getPureFloor =
   };
 
 export default function usePureFloor() {
-  const pureAdapter: Contract = usePureTokenAdapterContract();
+  const readProvider = useReadProvider();
+  const pureAdapter: Contract = usePureTokenAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 

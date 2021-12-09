@@ -8,6 +8,7 @@ import useSWR from "swr";
 import { BLOCK_SPEED } from "constants/variables";
 import useReadProvider from "hooks/useReadProvider";
 import { getLogs } from "lib/logs";
+import useChainId from "hooks/useChainId";
 
 // Calculates average reward distributed per block in past week
 // avg = total_reward_per_week / total_blocks_per_week
@@ -33,10 +34,10 @@ const getAverageInflationPerBlock =
   };
 
 export default function useAverageInflationPerBlock() {
-  const comptroller: Contract = useComptrollerContract();
-  const { data: decimals } = useUnionDecimals();
-  const { chainId } = useWeb3React();
+  const chainId = useChainId();
   const readProvider = useReadProvider();
+  const comptroller: Contract = useComptrollerContract(readProvider);
+  const { data: decimals } = useUnionDecimals();
 
   const shouldFetch =
     !!comptroller && !!decimals && !!readProvider && !!chainId;

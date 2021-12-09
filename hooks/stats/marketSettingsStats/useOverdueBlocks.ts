@@ -1,15 +1,15 @@
 import useUTokenContract from "hooks/contracts/useUTokenContract";
-import { formatUnits } from "@ethersproject/units";
-import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getOverdueBlocks = (uTokenContract: Contract) => async (_: any) => {
   return uTokenContract.overdueBlocks();
 };
 
 export default function useOverdueBlocks() {
-  const uTokenContract: Contract = useUTokenContract();
+  const readProvider = useReadProvider();
+  const uTokenContract: Contract = useUTokenContract(readProvider);
   const shouldFetch = !!uTokenContract;
 
   return useSWR(

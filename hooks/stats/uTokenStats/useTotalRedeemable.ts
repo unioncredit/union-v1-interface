@@ -4,6 +4,7 @@ import { formatUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getTotalRedeemable =
   (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
@@ -12,7 +13,8 @@ const getTotalRedeemable =
   };
 
 export default function useTotalRedeemable() {
-  const uTokenContract: Contract = useUTokenContract();
+  const readProvider = useReadProvider();
+  const uTokenContract: Contract = useUTokenContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const shouldFetch = !!uTokenContract;
   return useSWR(

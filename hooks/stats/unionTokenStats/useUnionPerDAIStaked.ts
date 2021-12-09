@@ -1,9 +1,10 @@
-import { BigNumber, FixedNumber } from "@ethersproject/bignumber";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useComptrollerContract from "hooks/contracts/useComptrollerContract";
 import useUserContract from "hooks/contracts/useUserContract";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const offsetPower = 18;
 const offset = BigNumber.from(10).pow(offsetPower);
@@ -19,8 +20,9 @@ const getUnionPerDAIStaked =
   };
 
 export default function useUnionPerDAIStaked() {
-  const comptroller: Contract = useComptrollerContract();
-  const userContract: Contract = useUserContract();
+  const readProvider = useReadProvider();
+  const comptroller: Contract = useComptrollerContract(readProvider);
+  const userContract: Contract = useUserContract(readProvider);
 
   const shouldFetch = !!comptroller && !!userContract;
   return useSWR(

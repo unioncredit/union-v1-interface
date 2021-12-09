@@ -38,9 +38,6 @@ export default function useIsMember(address: string) {
 
   return useSWR(
     shouldFetch ? ["IsMember", account, curToken, library] : null,
-    getIsMember(marketRegistryContract),
-    {
-      refreshInterval: 10 * 1000,
-    }
+    getIsMember(marketRegistryContract)
   );
 }

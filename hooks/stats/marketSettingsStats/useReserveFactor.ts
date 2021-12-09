@@ -3,6 +3,7 @@ import { formatUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getReserveFactor = (uTokenContract: Contract) => async (_: any) => {
   const reserveFactor: BigNumber = await uTokenContract.reserveFactorMantissa();
@@ -11,7 +12,8 @@ const getReserveFactor = (uTokenContract: Contract) => async (_: any) => {
 };
 
 export default function useReserveFactor() {
-  const uTokenContract: Contract = useUTokenContract();
+  const readProvider = useReadProvider();
+  const uTokenContract: Contract = useUTokenContract(readProvider);
   const shouldFetch = !!uTokenContract;
 
   return useSWR(

@@ -8,6 +8,7 @@ import useSWR from "swr";
 import useReadProvider from "hooks/useReadProvider";
 import { getLogs } from "lib/logs";
 import { useWeb3React } from "@web3-react/core";
+import useChainId from "hooks/useChainId";
 
 declare type borrowerStakerPair = {
   borrower: string;
@@ -61,11 +62,11 @@ const getDefaultedAmount =
   };
 
 export function useDefaultedAmount() {
-  const uTokenContract: Contract = useUTokenContract();
-  const userContract: Contract = useUserContract();
-  const { data: decimals } = useDAIDecimals();
-  const { chainId } = useWeb3React();
   const readProvider = useReadProvider();
+  const uTokenContract: Contract = useUTokenContract(readProvider);
+  const userContract: Contract = useUserContract(readProvider);
+  const { data: decimals } = useDAIDecimals();
+  const chainId = useChainId();
 
   const shouldFetch =
     !!uTokenContract && !!userContract && !!chainId && !!readProvider;

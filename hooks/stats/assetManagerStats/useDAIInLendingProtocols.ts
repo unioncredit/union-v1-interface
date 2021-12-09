@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getDAIInLendingProtocols =
   (assetContract: Contract) =>
@@ -16,7 +17,8 @@ const getDAIInLendingProtocols =
   };
 
 export default function useDAIInLendingProtocols() {
-  const assetContract: Contract = useAssetContract();
+  const readProvider = useReadProvider();
+  const assetContract: Contract = useAssetContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 

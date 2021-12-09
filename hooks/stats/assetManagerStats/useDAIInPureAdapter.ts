@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getDAIInPureAdapter =
   (pureAdapter: Contract) =>
@@ -17,7 +18,8 @@ const getDAIInPureAdapter =
   };
 
 export default function useDAIInPureAdapter() {
-  const pureAdapter: Contract = usePureTokenAdapterContract();
+  const readProvider = useReadProvider();
+  const pureAdapter: Contract = usePureTokenAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 

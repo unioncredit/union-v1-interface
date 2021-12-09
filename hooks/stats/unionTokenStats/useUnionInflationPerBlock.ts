@@ -5,6 +5,7 @@ import useUserContract from "hooks/contracts/useUserContract";
 import useUnionDecimals from "hooks/useUnionDecimals";
 import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getUnionInflationPerBlock =
   (comptroller: Contract, userContract: Contract) =>
@@ -19,8 +20,9 @@ const getUnionInflationPerBlock =
   };
 
 export default function useUnionInflationPerBlock() {
-  const comptroller: Contract = useComptrollerContract();
-  const userContract: Contract = useUserContract();
+  const readProvider = useReadProvider();
+  const comptroller: Contract = useComptrollerContract(readProvider);
+  const userContract: Contract = useUserContract(readProvider);
   const { data: decimals } = useUnionDecimals();
 
   const shouldFetch = !!comptroller && !!userContract && !!decimals;

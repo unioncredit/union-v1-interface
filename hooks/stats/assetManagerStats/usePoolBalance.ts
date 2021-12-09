@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getPoolBalance =
   (assetContract: Contract) =>
@@ -17,7 +18,8 @@ const getPoolBalance =
   };
 
 export default function usePoolBalance() {
-  const assetContract: Contract = useAssetContract();
+  const readProvider = useReadProvider();
+  const assetContract: Contract = useAssetContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 

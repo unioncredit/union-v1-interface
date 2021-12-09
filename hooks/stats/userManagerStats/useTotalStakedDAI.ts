@@ -4,6 +4,7 @@ import { formatUnits } from "@ethersproject/units";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getTotalStakedDAI =
   (userContract: Contract) => async (_: any, decimals: BigNumber) => {
@@ -12,9 +13,10 @@ const getTotalStakedDAI =
   };
 
 export default function useTotalStakedDAI() {
-  const userContract: Contract = useUserContract();
+  const readProvider = useReadProvider();
+  const userContract: Contract = useUserContract(readProvider);
   const { data: decimals } = useDAIDecimals();
-  const shouldFetch = !!useUserContract;
+  const shouldFetch = !!userContract && !!decimals;
   return useSWR(
     shouldFetch ? ["totalStakedDAI", decimals] : null,
     getTotalStakedDAI(userContract)

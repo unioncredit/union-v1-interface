@@ -5,6 +5,7 @@ import { Contract } from "@ethersproject/contracts";
 import { BLOCKS_PER_YEAR } from "constants/variables";
 import useSWR from "swr";
 import useChainId from "hooks/useChainId";
+import useReadProvider from "hooks/useReadProvider";
 
 const getInterestRate =
   (uTokenContract: Contract) => async (_: any, chainId: string) => {
@@ -18,7 +19,8 @@ const getInterestRate =
   };
 
 export default function useInterestRate() {
-  const uTokenContract: Contract = useUTokenContract();
+  const readProvider = useReadProvider();
+  const uTokenContract: Contract = useUTokenContract(readProvider);
   const chainId = useChainId();
   const shouldFetch = !!uTokenContract && !!chainId;
 

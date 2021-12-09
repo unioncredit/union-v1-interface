@@ -5,6 +5,7 @@ import ABI from "constants/abis/erc20Detailed.json";
 import useSWR from "swr";
 import useContract from "../useContract";
 import { AddressZero } from "constants/variables";
+import useReadProvider from "hooks/useReadProvider";
 
 const getTokenBalanceOfAccount =
   (contract: Contract) => async (_: any, __: any, account: string) => {
@@ -21,7 +22,8 @@ export default function useTokenBalanceOfAccount(
   tokenAddress: string,
   account: string
 ) {
-  const contract = useContract(tokenAddress, ABI);
+  const readProvider = useReadProvider();
+  const contract = useContract(tokenAddress, ABI, readProvider);
 
   const shouldFetch =
     !!contract &&

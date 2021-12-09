@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getAaveCeiling =
   (aaveAdapter: Contract) =>
@@ -15,12 +16,14 @@ const getAaveCeiling =
   };
 
 export default function useAaveCeiling() {
-  const aaveAdapter: Contract = useAaveAdapterContract();
+  const readProvider = useReadProvider();
+  const aaveAdapter: Contract = useAaveAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 
   const shouldFetch =
     !!aaveAdapter && chainId && TOKENS[chainId] && TOKENS[chainId].DAI;
+
   return useSWR(
     shouldFetch ? ["aaveCeiling", decimals, TOKENS[chainId].DAI] : null,
     getAaveCeiling(aaveAdapter)

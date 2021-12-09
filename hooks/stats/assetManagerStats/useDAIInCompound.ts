@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getDAIInCompound =
   (compoundAdapter: Contract) =>
@@ -17,11 +18,14 @@ const getDAIInCompound =
   };
 
 export default function useDAIInCompound() {
-  const compoundAdapter: Contract = useCompoundAdapterContract();
+  const readProvider = useReadProvider();
+  const compoundAdapter: Contract = useCompoundAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
+
   const shouldFetch =
     !!compoundAdapter && chainId && TOKENS[chainId] && TOKENS[chainId].DAI;
+
   return useSWR(
     shouldFetch ? ["daiInCompound", decimals, TOKENS[chainId].DAI] : null,
     getDAIInCompound(compoundAdapter)

@@ -34,6 +34,7 @@ export const contextMenuItems = [
   },
   { label: "Discord", target: "_blank", href: "https://discord.gg/cZagzJ3p8G" },
   { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
+  { label: "Stats", href: "/stats" },
 ];
 
 export const navItems = [

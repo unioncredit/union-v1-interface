@@ -8,9 +8,12 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import Error from "./_error";
 import ErrorView from "views/error";
+import { SWRConfig } from "swr";
 
 import "../styles/index.css";
 import { links } from "constants/app";
+
+console.log(process.env.NEXT_PUBLIC_INFURA_KEY);
 
 export default function UnionApp({ Component, pageProps }: AppProps) {
   useFathom();
@@ -47,12 +50,19 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
 
   return (
     <ErrorBoundary fallback={<Error />}>
-      <Web3ReactProvider getLibrary={getLibrary}>
-        <Wrapper>
-          <Component {...pageProps} />
-        </Wrapper>
-        <Notifications />
-      </Web3ReactProvider>
+      <SWRConfig
+        value={{
+          refreshInterval: 10 * 1000,
+          errorRetryCount: 1,
+        }}
+      >
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Wrapper>
+            <Component {...pageProps} />
+          </Wrapper>
+          <Notifications />
+        </Web3ReactProvider>
+      </SWRConfig>
     </ErrorBoundary>
   );
 }

@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import useChainId from "hooks/useChainId";
 import { RPC_URLS } from "lib/connectors";
 
+function fetchProvider() {
+ return new JsonRpcProvider(RPC_URLS[chainId]); 
+}
+
 export default function useReadProvider() {
   const { library } = useWeb3React();
   const chainId = useChainId();

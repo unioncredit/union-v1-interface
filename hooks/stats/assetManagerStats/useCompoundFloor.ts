@@ -6,6 +6,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Contract } from "@ethersproject/contracts";
 import { TOKENS } from "constants/variables";
 import useSWR from "swr";
+import useReadProvider from "hooks/useReadProvider";
 
 const getCompoundFloor =
   (compoundAdapter: Contract) =>
@@ -15,7 +16,8 @@ const getCompoundFloor =
   };
 
 export default function useCompoundFloor() {
-  const compoundAdapter: Contract = useCompoundAdapterContract();
+  const readProvider = useReadProvider();
+  const compoundAdapter: Contract = useCompoundAdapterContract(readProvider);
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 
