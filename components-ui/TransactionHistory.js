@@ -141,8 +141,8 @@ export function TransactionHistory({ data }) {
       <Table disableCondensed>
         {data?.length <= 0 && <TransactionHistoryEmpty />}
 
-        {pagedData.map((tx) => (
-          <TransactionHistoryRow key={tx.hash} {...tx} />
+        {pagedData.map((tx, i) => (
+          <TransactionHistoryRow key={i} {...tx} />
         ))}
 
         {!data &&
