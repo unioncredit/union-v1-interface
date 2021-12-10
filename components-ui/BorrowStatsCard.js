@@ -37,7 +37,7 @@ export function BorrowStatsCard() {
   } = !!borrowData && borrowData;
 
   const totalVouch = vouchData
-    ? vouchData.reduce((acc, data) => acc + Number(data.trust), 0)
+    ? vouchData.reduce((acc, data) => acc + Number(data.vouched), 0)
     : 0;
 
   const onComplete = async () => {
@@ -58,13 +58,13 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit))} />}
+                  value={<Dai value={format(roundDown(creditLimit, 2))} />}
                 />
                 <Stat
                   mt="24px"
                   align="center"
-                  label="Trust"
-                  value={<Dai value={format(totalVouch)} />}
+                  label="Vouch"
+                  value={<Dai value={format(totalVouch, 2)} />}
                   after={`From ${vouchData?.length || 0} accounts`}
                 />
                 <Button

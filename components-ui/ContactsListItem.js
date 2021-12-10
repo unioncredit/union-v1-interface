@@ -3,6 +3,7 @@ import { Text, TableCell, TableRow, Skeleton, Box, Badge } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "constants/app";
+import format from "util/formatValue";
 
 export function ContactsListItem(props) {
   const { address, trust, onClick, isOverdue, variant, active } = props;
@@ -37,7 +38,7 @@ export function ContactsListItem(props) {
       </TableCell>
       <TableCell align="right">
         <Text>
-          <Dai value={trust} />
+          <Dai value={format(trust, 2)} />
         </Text>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (

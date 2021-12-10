@@ -49,13 +49,13 @@ export function ManageContactModal({
   const data = [
     {
       label: "Trust",
-      value: <Dai value={trust} />,
+      value: <Dai value={format(trust, 4)} />,
       buttonProps: { label: "Change limit" },
       onClick: handleEditVouch,
     },
     {
       label: "Outstanding debt",
-      value: <Dai value={format(used)} />,
+      value: <Dai value={format(used, 4)} />,
       buttonProps: {
         label: "Write-off debt",
         disabled: used <= 0 || !isOverdue,

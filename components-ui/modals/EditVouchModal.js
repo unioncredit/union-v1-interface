@@ -1,6 +1,5 @@
 import { Grid, Button, ModalOverlay, Input, Stat } from "union-ui";
 import { useModal } from "hooks/useModal";
-import { useManageContactModal } from "components-ui/modals";
 import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
@@ -26,7 +25,6 @@ export function EditVouchModal({ address, used, trust }) {
   const adjustTrust = useAdjustTrust();
   const { mutate: updateTrustData } = useTrustData();
   const { mutate: updateCreditLimit } = useCreditLimit();
-  const { open: openManageContactModal } = useManageContactModal();
 
   const { register, formState, errors, handleSubmit } = useForm({
     mode: "onChange",
@@ -42,11 +40,6 @@ export function EditVouchModal({ address, used, trust }) {
     return true;
   };
 
-  const handleGoBack = () => {
-    close();
-    openManageContactModal();
-  };
-
   const handleAdjustTrust = async (values) => {
     try {
       const { hash } = await adjustTrust(address, values.amount);
@@ -56,7 +49,7 @@ export function EditVouchModal({ address, used, trust }) {
       );
       await updateTrustData();
       await updateCreditLimit();
-      handleGoBack();
+      close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(
@@ -81,7 +74,7 @@ export function EditVouchModal({ address, used, trust }) {
                   size="medium"
                   align="center"
                   label="Current trust"
-                  value={<Dai value={format(trust)} />}
+                  value={<Dai value={format(trust, 4)} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -90,7 +83,7 @@ export function EditVouchModal({ address, used, trust }) {
                   size="medium"
                   align="center"
                   label="Unpaid debt"
-                  value={<Dai value={format(used)} />}
+                  value={<Dai value={format(used, 4)} />}
                 />
               </Grid.Col>
             </Grid.Row>

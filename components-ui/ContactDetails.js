@@ -17,21 +17,21 @@ function TrustsYouContactDetails({ used, trust, vouched, manageContact }) {
           <Stat
             label="Trust"
             tooltip="The DAI amount this address trusts you with"
-            value={<Dai value={trust} />}
+            value={<Dai value={format(trust, 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             label="Vouch"
             tooltip="The DAI amount this address can underwrite based on their total staked DAI"
-            value={<Dai value={vouched} />}
+            value={<Dai value={format(vouched, 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             label="Available"
             tooltip="The DAI amount you can borrow from this address"
-            value={<Dai value={format(vouched - used, 4)} />}
+            value={<Dai value={format(vouched - used, 2)} />}
           />
         </Grid.Col>
       </Grid.Row>
@@ -89,7 +89,7 @@ function YouTrustContactDetails({
             mb="12px"
             label="Trust"
             tooltip="The DAI amount you trust this address to borrow"
-            value={<Dai value={trust} />}
+            value={<Dai value={format(trust, 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
@@ -97,7 +97,7 @@ function YouTrustContactDetails({
             mb="12px"
             label="Vouch"
             tooltip="The DAI amount you can underwrite based on your total staked DAI"
-            value={<Dai value={vouched} />}
+            value={<Dai value={format(vouched, 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
