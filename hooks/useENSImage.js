@@ -12,7 +12,9 @@ const getENSImage = (ens) => async (_, ensName) => {
  */
 export default function useENSImage(ensName) {
   const ens = useENS();
-  const shouldFetch = ens && typeof ens === "string" && ens.endsWith(".eth");
+
+  const shouldFetch =
+    ens && typeof ensName === "string" && ensName.endsWith(".eth");
 
   const { data } = useSWR(
     shouldFetch ? ["ENSName", ensName] : null,
