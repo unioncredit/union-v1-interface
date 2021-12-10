@@ -38,7 +38,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   const validate = (val) => {
     if (!isOverdue) return errorMessages.notOverDue;
-    if (Number(val) >= used) return errorMessages.maxWriteOff;
+    if (Number(val) > used) return errorMessages.maxWriteOff;
     if (Number(val) <= 0) return errorMessages.minValueZero;
     if (!val) return errorMessages.required;
 
