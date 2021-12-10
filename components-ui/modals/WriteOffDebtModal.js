@@ -72,7 +72,10 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   };
 
   const handleWriteOffMax = () => {
-    setValue("amount", used);
+    setValue("amount", used, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   };
 
   return (
