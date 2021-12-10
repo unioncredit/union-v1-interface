@@ -26,10 +26,11 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   const { open: openManageContactModal } = useManageContactModal();
   const writeOffDebt = useWriteOffDebt();
 
-  const { register, watch, formState, errors, handleSubmit } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { register, watch, formState, errors, setValue, handleSubmit } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
   const { isDirty, isSubmitting } = formState;
 
   const watchAmount = watch("amount");
@@ -70,6 +71,10 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
     }
   };
 
+  const handleWriteOffMax = () => {
+    setValue("amount", used);
+  };
+
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Write-off debt" onClose={close}>
@@ -81,7 +86,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
                   size="medium"
                   align="center"
                   label="Vouch"
-                  value={<Dai value={format(vouched)} />}
+                  value={<Dai value={format(vouched, 4)} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -89,7 +94,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
                   size="medium"
                   align="center"
                   label="Unpaid debt"
-                  value={<Dai value={format(used)} />}
+                  value={<Dai value={format(used, 4)} />}
                 />
               </Grid.Col>
             </Grid.Row>
@@ -100,7 +105,9 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
             name="amount"
             label="Value"
             suffix={<Dai />}
+            caption="Write off max."
             error={errors.amount?.message}
+            onCaptionClick={handleWriteOffMax}
           />
           <Box justify="space-between" mt="16px">
             <Label as="p" size="small" m={0}>
