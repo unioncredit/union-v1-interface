@@ -1,21 +1,15 @@
 import useBorrowData from "hooks/data/useBorrowData";
-import { Stat, Grid, Card, Button, Badge } from "union-ui";
+import { Label, Tooltip, Stat, Grid, Card, Button, Badge } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
-import { roundUp, toPercent } from "util/numbers";
+import { roundUp } from "util/numbers";
 import { useWeb3React } from "@web3-react/core";
 import { RelatedHistory } from "./RelatedHistory";
 import { ContactsType } from "constants/app";
 
 import Manage from "union-ui/lib/icons/manage.svg";
 
-function TrustsYouContactDetails({
-  used,
-  utilized,
-  trust,
-  vouched,
-  manageContact,
-}) {
+function TrustsYouContactDetails({ used, trust, vouched, manageContact }) {
   return (
     <>
       <Grid.Row>
@@ -23,10 +17,7 @@ function TrustsYouContactDetails({
           <Stat label="Trust" value={<Dai value={trust} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat
-            label="Utilized"
-            value={`${toPercent(isNaN(utilized) ? 0 : utilized)}`}
-          />
+          <Stat label="Vouch" value={<Dai value={vouched} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
@@ -86,15 +77,26 @@ function YouTrustContactDetails({
       </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat mb="12px" label="Trust" value={<Dai value={trust} />} />
+          <Stat
+            mb="12px"
+            label="Trust"
+            tooltip="The DAI amount your trust this address to borrow"
+            value={<Dai value={trust} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat mb="12px" label="Utilized" value={`${toPercent(utilized)}`} />
+          <Stat
+            mb="12px"
+            label="Vouch"
+            tooltip="The DAI amount you can underwrite based on your total staked DAI"
+            value={<Dai value={vouched} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             mb="12px"
             label="Available"
+            tooltip="The DAI this address has available to borrow"
             value={<Dai value={format(vouched - used, 2)} />}
           />
         </Grid.Col>
