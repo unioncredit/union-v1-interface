@@ -17,6 +17,7 @@ import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import { isAddress } from "@ethersproject/address";
 import truncateAddress from "util/truncateAddress";
+import useAddressLabels from "hooks/useAddressLabels";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -28,6 +29,7 @@ export function VouchModal() {
   const { close } = useVouchModal();
   const addActivity = useAddActivity();
   const { mutate: updateTrustData } = useTrustData();
+  const { setLabel } = useAddressLabels();
 
   const adjustTrust = useAdjustTrust();
 
@@ -43,6 +45,7 @@ export function VouchModal() {
   const handleNewVouch = async (data) => {
     try {
       const { hash } = await adjustTrust(data.address, data.amount);
+      setLabel(data.address, data.alias);
       await getReceipt(hash, library, {
         pending: `Vouching ${data.amount} DAI for ${truncateAddress(
           data.address
@@ -90,6 +93,14 @@ export function VouchModal() {
             placeholder="e.g. 0xA1e3..."
             error={errors.address?.message}
           />
+          <Box mt="16px">
+            <Input
+              ref={register}
+              name="alias"
+              label="Alias"
+              placeholder="e.g. Halkyone Olga"
+            />
+          </Box>
           <Box mt="16px">
             <Input
               ref={register({
