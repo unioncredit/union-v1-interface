@@ -9657,10 +9657,10 @@ unified@^9.0.0:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-union-ui@^0.2.42:
-  version "0.2.42"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.42.tgz#fed54f67ad4dee3939939ce95b11ef4d7f0f2b9a"
-  integrity sha512-210jEeWW3Sb4VOP6gRMCv6z2c0pwfFR3GqIRUoP86tcN/8gWHacsaALGWswwM2amUvTNq5XsLl6VG4sLdCElFw==
+union-ui@^0.2.43:
+  version "0.2.43"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.43.tgz#c135deab799c260033f520713b38bbca2125a678"
+  integrity sha512-LldMyadwqQUhFg2s9JISedNRx7oYERA/oe/m7vczdx/K1Il56QcFrFZb/6xpe91E5um/q83rnKT159rWivsmMg==
   dependencies:
     classnames "^2.3.1"
     react-animate-height "^2.0.23"

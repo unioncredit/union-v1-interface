@@ -1,5 +1,5 @@
 import useBorrowData from "hooks/data/useBorrowData";
-import { Label, Tooltip, Stat, Grid, Card, Button, Badge } from "union-ui";
+import { Stat, Grid, Card, Button, Badge } from "union-ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp } from "util/numbers";
@@ -14,14 +14,23 @@ function TrustsYouContactDetails({ used, trust, vouched, manageContact }) {
     <>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat label="Trust" value={<Dai value={trust} />} />
+          <Stat
+            label="Trust"
+            tooltip="The DAI amount this address trusts you with"
+            value={<Dai value={trust} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Vouch" value={<Dai value={vouched} />} />
+          <Stat
+            label="Vouch"
+            tooltip="The DAI amount this address can underwrite based on their total staked DAI"
+            value={<Dai value={vouched} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             label="Available"
+            tooltip="The DAI amount you can borrow from this address"
             value={<Dai value={format(vouched - used, 4)} />}
           />
         </Grid.Col>
@@ -45,7 +54,6 @@ function YouTrustContactDetails({
   manageContact,
   address,
   used,
-  utilized,
   vouched,
   trust,
   isMember,
@@ -80,7 +88,7 @@ function YouTrustContactDetails({
           <Stat
             mb="12px"
             label="Trust"
-            tooltip="The DAI amount your trust this address to borrow"
+            tooltip="The DAI amount you trust this address to borrow"
             value={<Dai value={trust} />}
           />
         </Grid.Col>
