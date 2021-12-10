@@ -19,7 +19,7 @@ export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
 export const useEditVouchModal = () => useModal(EDIT_VOUCH_MODAL);
 
-export function EditVouchModal({ address, used, vouched }) {
+export function EditVouchModal({ address, used, trust }) {
   const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const { close } = useEditVouchModal();
@@ -71,7 +71,7 @@ export function EditVouchModal({ address, used, vouched }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Change credit limit" onClose={close}>
+      <Modal title="Change trust limit" onClose={close}>
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>
@@ -80,8 +80,8 @@ export function EditVouchModal({ address, used, vouched }) {
                   mb="24px"
                   size="medium"
                   align="center"
-                  label="Current vouch"
-                  value={<Dai value={format(vouched)} />}
+                  label="Current trust"
+                  value={<Dai value={format(trust)} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -99,7 +99,7 @@ export function EditVouchModal({ address, used, vouched }) {
             type="number"
             ref={register({ validate })}
             name="amount"
-            label="New vouch"
+            label="New trust limit"
             suffix={<Dai />}
             error={errors.amount?.message}
           />

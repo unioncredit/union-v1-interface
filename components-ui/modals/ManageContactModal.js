@@ -21,7 +21,7 @@ export const useManageContactModal = () => useModal(MANAGE_CONTACT_MODAL);
 export function ManageContactModal({
   address,
   used,
-  vouched,
+  trust,
   isLabelOnly,
   isOverdue,
   contactType,
@@ -48,8 +48,8 @@ export function ManageContactModal({
 
   const data = [
     {
-      label: "Vouch",
-      value: <Dai value={vouched} />,
+      label: "Trust",
+      value: <Dai value={trust} />,
       buttonProps: { label: "Change limit" },
       onClick: handleEditVouch,
     },

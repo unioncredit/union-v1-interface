@@ -20,7 +20,7 @@ function TrustsYouContactDetails({
     <>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat label="Vouch" value={<Dai value={trust} />} />
+          <Stat label="Trust" value={<Dai value={trust} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
@@ -86,7 +86,7 @@ function YouTrustContactDetails({
       </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
-          <Stat mb="12px" label="Vouch" value={<Dai value={trust} />} />
+          <Stat mb="12px" label="Trust" value={<Dai value={trust} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat mb="12px" label="Utilized" value={`${toPercent(utilized)}`} />
