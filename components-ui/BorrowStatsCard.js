@@ -63,7 +63,7 @@ export function BorrowStatsCard() {
                 <Stat
                   mt="24px"
                   align="center"
-                  label="Vouch"
+                  label="Trust"
                   value={<Dai value={format(totalVouch)} />}
                   after={`From ${vouchData?.length || 0} accounts`}
                 />
