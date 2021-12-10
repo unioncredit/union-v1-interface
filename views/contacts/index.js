@@ -130,7 +130,7 @@ export default function ContactsView({
   };
 
   useEffect(() => {
-    if (!vouchData || !trustData) return;
+    if (!vouchData || !trustData || selectedContactIndex !== null) return;
 
     const data =
       contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
