@@ -12,7 +12,7 @@ import truncateAddress from "util/truncateAddress";
 import handleTxError from "util/handleTxError";
 import isHash from "util/isHash";
 
-const getAllowance = (contract) => (_, account, spender) => {
+const getAllowance = (_, contract, account, spender) => {
   return contract.allowance(account, spender);
 };
 
@@ -27,11 +27,11 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
     !!contract && typeof account === "string" && typeof chainId === "number";
 
   const resp = useSWR(
-    shouldFetch ? ["Allowance", account, spender] : null,
-    getAllowance(contract)
+    shouldFetch ? ["Allowance", contract, account, spender] : null,
+    getAllowance
   );
 
-  const approve = useCallback(async () => {
+  const approve = async () => {
     try {
       const { hash } = await contract.approve(spender, MaxUint256);
       await getReceipt(hash, library, {
@@ -49,7 +49,7 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
       );
       handleTxError(err, "Failed to approve");
     }
-  }, []);
+  };
 
   const approveWithSignature = useCallback(async (amount, permitType) => {
     await signPermit(signatureKey, tokenAddress, spender, amount, permitType);
