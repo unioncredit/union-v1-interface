@@ -13,8 +13,6 @@ import { SWRConfig } from "swr";
 import "../styles/index.css";
 import { links } from "constants/app";
 
-console.log(process.env.NEXT_PUBLIC_INFURA_KEY);
-
 export default function UnionApp({ Component, pageProps }: AppProps) {
   useFathom();
   const restricted = useGeoRestriction();
