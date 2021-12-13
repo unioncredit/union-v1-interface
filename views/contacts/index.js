@@ -12,6 +12,8 @@ import {
   Select,
   Collapse,
   EmptyState,
+  Heading,
+  Label,
 } from "union-ui";
 import {
   Modal,
@@ -158,6 +160,8 @@ export default function ContactsView({
 
   const selectedContact = data?.[selectedContactIndex];
 
+  const isEmpty = !isLoading && data?.length <= 0;
+
   return (
     <>
       <View tabItems={config.tabItems}>
@@ -167,26 +171,28 @@ export default function ContactsView({
               <Card mt="24px">
                 <Card.Header title={title} subTitle={subTitle} />
                 <Card.Body>
-                  <ButtonRow
-                    mb="8px"
-                    direction={isMobile ? "vertical" : "horizontal"}
-                  >
-                    {contactsType === ContactsType.YOU_TRUST && (
+                  {!isEmpty && (
+                    <ButtonRow
+                      mb="8px"
+                      direction={isMobile ? "vertical" : "horizontal"}
+                    >
+                      {contactsType === ContactsType.YOU_TRUST && (
+                        <Button
+                          fluid
+                          label="New vouch"
+                          icon={Vouch}
+                          onClick={openVouchModal}
+                        />
+                      )}
                       <Button
                         fluid
-                        label="New vouch"
-                        icon={Vouch}
-                        onClick={openVouchModal}
+                        icon={Filter}
+                        variant="secondary"
+                        label={`${showFilters ? "Hide" : "Show"} filters`}
+                        onClick={toggleFilters}
                       />
-                    )}
-                    <Button
-                      fluid
-                      icon={Filter}
-                      variant="secondary"
-                      label={`${showFilters ? "Hide" : "Show"} filters`}
-                      onClick={toggleFilters}
-                    />
-                  </ButtonRow>
+                    </ButtonRow>
+                  )}
                   <Collapse active={showFilters}>
                     <Card packed>
                       <Card.Body>
@@ -249,6 +255,28 @@ export default function ContactsView({
               </Card>
             </Grid.Col>
             <Grid.Col md={6}>
+              {isEmpty && (
+                <Card mt="24px" variant="blue">
+                  <Card.Body>
+                    <Heading align="center" mb="4px">
+                      Make your first vouch
+                    </Heading>
+                    <Label as="p" align="center" mb="16px">
+                      You can use your staked DAI to provide vouches to other
+                      Ethereum addresses. When you vouch for an account, that
+                      account gets access to credit backed by your vouch.
+                    </Label>
+                    <Box fluid justify="center">
+                      <Button
+                        label="Vouch for someone"
+                        icon={Vouch}
+                        onClick={openVouchModal}
+                      />
+                    </Box>
+                  </Card.Body>
+                </Card>
+              )}
+
               {selectedContact && (
                 <Card mt="24px">
                   <Card.Body>
@@ -261,7 +289,7 @@ export default function ContactsView({
                 </Card>
               )}
 
-              {!selectedContact && !isMobile && (
+              {!isEmpty && !selectedContact && !isMobile && (
                 <Card mt="24px">
                   <Card.Body>
                     <ContactDetailsSkeleton
