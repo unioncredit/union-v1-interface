@@ -73,7 +73,13 @@ export function LoginOptions({ triedEager }) {
             }
 
             return (
-              <Card my="6px" packed key={i}>
+              <Card
+                my="6px"
+                packed
+                key={i}
+                onClick={handleSignIn}
+                className={styles.innerCard}
+              >
                 <Card.Body>
                   <Box align="center">
                     <Box justify="center" mr="16px">
@@ -89,7 +95,6 @@ export function LoginOptions({ triedEager }) {
                     </Box>
                     <Button
                       variant="lite"
-                      onClick={handleSignIn}
                       icon={Chevron}
                       loading={activating}
                       disabled={disabled}

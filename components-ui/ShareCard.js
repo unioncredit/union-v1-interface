@@ -33,14 +33,7 @@ export function ShareCard({ title, content, size }) {
               {content}
             </Text>
           )}
-          <Label
-            as="p"
-            align="center"
-            m={0}
-            mb="4px"
-            color="blue600"
-            size="large"
-          >
+          <Label as="p" align="center" m={0} mb="4px" color="blue600">
             Share your vouch link
           </Label>
           <Label as="p" align="center" mb="24px" color="blue500">
