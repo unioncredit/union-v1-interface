@@ -1,18 +1,14 @@
-import { Control, Card, Box, Heading, Text, Grid } from "union-ui";
+import { Box, Heading, Text, Grid } from "union-ui";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import useEagerConnect from "hooks/useEagerConnect";
-import useTerms from "hooks/useTerms";
 import UnsupportedChainView from "./unsupportedChain";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 import { LoginOptions } from "components-ui";
-import useIsMobile from "hooks/useIsMobile";
 
 export default function LoggedOutView() {
   useUpdateForceConnect();
 
-  const isMobile = useIsMobile();
   const { error } = useWeb3React();
-  const { data: confirmTerms, setConfirmTerms } = useTerms();
 
   const unsupportedChainId = error instanceof UnsupportedChainIdError;
 
@@ -21,8 +17,6 @@ export default function LoggedOutView() {
   if (unsupportedChainId) {
     return <UnsupportedChainView />;
   }
-
-  const loginOptions = <LoginOptions triedEager={triedEager} />;
 
   return (
     <Box align="center" direction="vertical" fluid>
@@ -44,29 +38,7 @@ export default function LoggedOutView() {
         <Grid.Row justify="center">
           <Grid.Col md={12} lg={9}>
             <Grid.Row>
-              <Grid.Col>
-                <Card mb="16px" size="fluid" packed>
-                  <Card.Body>
-                    <Control
-                      type="checkbox"
-                      checked={confirmTerms}
-                      onClick={() => setConfirmTerms(!confirmTerms)}
-                      label="I agree to Union’s Terms & Conditions and Privacy Policy"
-                    />
-                  </Card.Body>
-                </Card>
-              </Grid.Col>
-            </Grid.Row>
-            <Grid.Row>
-              {isMobile ? (
-                <Grid.Col xs={12}>
-                  <Card packed>
-                    <Card.Body>{loginOptions}</Card.Body>
-                  </Card>
-                </Grid.Col>
-              ) : (
-                loginOptions
-              )}
+              <LoginOptions triedEager={triedEager} />
             </Grid.Row>
           </Grid.Col>
         </Grid.Row>

@@ -15,3 +15,8 @@ export const getWalletName = (name) =>
   name === "Injected" && isMetaMask
     ? SUPPORTED_WALLETS.MetaMask.name
     : SUPPORTED_WALLETS[name].name;
+
+export const getWalletDescription = (name) =>
+  name === "Injected" && isMetaMask
+    ? SUPPORTED_WALLETS.MetaMask.description
+    : SUPPORTED_WALLETS[name].description;
