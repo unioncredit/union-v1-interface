@@ -149,7 +149,7 @@ export function ContactDetails({ contactsType, ...props }) {
 
   return (
     <>
-      <Card mb="24px" variant="packed">
+      <Card mb="24px">
         <Card.Body>
           <Grid>
             {contactsType === ContactsType.YOU_TRUST ? (

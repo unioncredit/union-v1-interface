@@ -1,10 +1,11 @@
+import { forwardRef } from "react";
 import usePublicData from "hooks/usePublicData";
 import { Text, TableCell, TableRow, Skeleton, Box } from "union-ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import format from "util/formatValue";
 
-export function CreditContactsRow(props) {
+export const CreditContactsRow = forwardRef((props, ref) => {
   const { address, trust, onClick } = props;
   const { name, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
@@ -18,7 +19,7 @@ export function CreditContactsRow(props) {
   };
 
   return (
-    <TableRow onClick={onClick && handleClick}>
+    <TableRow onClick={onClick && handleClick} ref={ref}>
       <TableCell>
         <Box align="center">
           <Avatar address={address} />
@@ -32,7 +33,7 @@ export function CreditContactsRow(props) {
       </TableCell>
     </TableRow>
   );
-}
+});
 
 export function CreditContactsRowSkeleton() {
   return (
