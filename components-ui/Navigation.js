@@ -24,7 +24,9 @@ export const Navigation = ({ mobile }) => {
       return navItems.slice(1).map((item) => ({
         ...item,
         active:
-          item.id === "profile"
+          item.id === "credit"
+            ? pathname.match(/\/(stake|credit)/)
+            : item.id === "profile"
             ? account === router.query.address
             : pathname.startsWith(item.pathname),
         pathname: item.id === "profile" ? `/profile/${account}` : item.pathname,
