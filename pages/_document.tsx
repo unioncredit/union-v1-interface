@@ -32,11 +32,15 @@ export default class UnionDocument extends Document {
           />
           <meta name="theme-color" content="#032437" />
 
-          <meta key="og:image" property="og:image" content="/open-graph.png" />
+          <meta
+            key="og:image"
+            property="og:image"
+            content="https://bluejay.union.finance/open-graph.png"
+          />
           <meta
             key="twitter:image"
             property="twitter:image"
-            content="/open-graph.png"
+            content="https://bluejay.union.finance/open-graph.png"
           />
         </Head>
         <body className="hide-scrollbar">
