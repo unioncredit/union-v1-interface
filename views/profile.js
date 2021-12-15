@@ -174,7 +174,7 @@ export default function ProfileView({ address }) {
                       <Grid.Col>
                         <Stat
                           label="Vouching for"
-                          value={`${trustData.length} times`}
+                          value={`${trustData.length} accounts`}
                         />
                       </Grid.Col>
                     </Grid.Row>
