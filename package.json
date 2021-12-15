@@ -59,7 +59,7 @@
     "react-ridge-state": "4.1.6",
     "react-use": "^15.3.4",
     "swr": "^0.3.9",
-    "union-ui": "^0.2.47"
+    "union-ui": "^0.2.51"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^10.0.1",

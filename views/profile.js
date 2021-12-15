@@ -31,10 +31,13 @@ import useAddressLabels from "hooks/useAddressLabels";
 import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
 import useIsMember from "hooks/data/useIsMember";
+import Link from "union-ui/lib/icons/link.svg";
+import useCopy from "hooks/useCopy";
 
 export default function ProfileView({ address }) {
   const chainId = useChainId();
   const { account, library } = useWeb3React();
+  const [isCopied, copy] = useCopy();
 
   const delegate = useDelegate();
   const { getLabel } = useAddressLabels();
@@ -150,6 +153,14 @@ export default function ProfileView({ address }) {
                         />
                       </>
                     )}
+                    <Button
+                      fluid
+                      mt="8px"
+                      variant="secondary"
+                      label={isCopied ? "Copied" : "Copy profile link"}
+                      onClick={() => copy(window.location.href)}
+                      icon={Link}
+                    />
                   </Box>
                 </Card.Body>
               </Card>
