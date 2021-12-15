@@ -15,6 +15,7 @@ import useInactiveListener from "hooks/useInactiveListener";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 import { contextMenuItems } from "constants/app";
 import Link from "next/link";
+import { ContextMenuLink } from "./ContextMenuLink";
 
 export function Wrapper({ children }) {
   useInactiveListener();
@@ -24,6 +25,13 @@ export function Wrapper({ children }) {
   const { account, library } = useWeb3React();
 
   const { isOpen: isClaimModalOpen } = useClaimModal();
+
+  const contextMenuItemsLink = contextMenuItems.map((item) => {
+    if (item.href.startsWith("/")) {
+      return { ...item, as: ContextMenuLink };
+    }
+    return item;
+  });
 
   return (
     <>
@@ -52,7 +60,7 @@ export function Wrapper({ children }) {
                         </Link>
                       )}
                     </Box>
-                    <ContextMenu position="left" items={contextMenuItems} />
+                    <ContextMenu position="left" items={contextMenuItemsLink} />
                   </Box>
                 </Layout.Header>
                 <Box
