@@ -14,6 +14,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
+import useMinBorrow from "hooks/stats/marketSettingsStats/useMinBorrow";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -34,6 +35,7 @@ export function BorrowModal({
   const { close } = useBorrowModal();
   const { data: maxBorrow } = useMaxBorrow();
   const { data: loanableAmount } = useLoanableAmount();
+  const { data: minBorrow } = useMinBorrow();
 
   const { errors, formState, register, watch, handleSubmit, setValue } =
     useForm({
@@ -73,7 +75,7 @@ export function BorrowModal({
     if (Number(val) > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
     if (Number(val) > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
     if (Number(val) > loanableAmount) return errorMessages.notEnoughPoolDAI;
-    if (Number(val) < 1.0) return errorMessages.minDAIBorrow;
+    if (Number(val) < minBorrow) return errorMessages.minDAIBorrow;
 
     return true;
   };

@@ -5,7 +5,6 @@ import useReadProvider from "hooks/useReadProvider";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 
 const getMaxBorrow = (contract: Contract) => async () => {
-  debugger;
   const res = await contract.maxBorrow();
 
   return Number(formatUnits(res, 18));

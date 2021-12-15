@@ -9,7 +9,7 @@ import useReadProvider from "hooks/useReadProvider";
 const getMinBorrow =
   (uTokenContract: Contract) => async (_: any, decimals: BigNumber) => {
     const minBorrow: BigNumber = await uTokenContract.minBorrow();
-    return formatUnits(minBorrow, decimals);
+    return Number(formatUnits(minBorrow, decimals));
   };
 
 export default function useMinBorrow() {
