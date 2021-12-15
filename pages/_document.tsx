@@ -31,6 +31,13 @@ export default class UnionDocument extends Document {
             content={META_TAGS.DESCRIPTION}
           />
           <meta name="theme-color" content="#032437" />
+
+          <meta key="og:image" property="og:image" content="/open-graph.png" />
+          <meta
+            key="twitter:image"
+            property="twitter:image"
+            content="/open-graph.png"
+          />
         </Head>
         <body className="hide-scrollbar">
           <Main />
