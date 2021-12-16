@@ -2,35 +2,27 @@ import { addToast, FLAVORS } from "hooks/useToast";
 
 export const options = [
   {
-    value: "kovan",
-    label: "Kovan",
+    value: "ethereum",
+    label: "Ethereum",
     buttonVariant: "ethereum",
     description:
       "Union on mainnet is more frequently used by accounts staking and borrowing larger amounts of DAI.",
     imageSrc: "/images/ethereum.png",
-    chainId: 42,
+    chainId: 1,
     networkData: {
-      chainId: "0x2A",
+      chainId: "0x1",
     },
   },
   {
-    value: "polygon",
-    label: "Polygon",
-    buttonVariant: "polygon",
+    value: "kovan",
+    label: "Kovan",
+    buttonVariant: "secondary",
     description:
-      "Faster and cheaper. Used more frequently by accounts transacting with smaller amounts of DAI.",
-    imageSrc: "/images/polygon.png",
-    chainId: 137,
+      "Union on mainnet is more frequently used by accounts staking and borrowing larger amounts of DAI.",
+    imageSrc: "/images/kovan.png",
+    chainId: 42,
     networkData: {
-      chainId: "0x89",
-      rpcUrls: ["https://rpc-mainnet.matic.network"],
-      chainName: "Matic(Polygon) Mainnet",
-      nativeCurrency: {
-        name: "Matic",
-        symbol: "MATIC",
-        decimals: 18,
-      },
-      blockExplorerUrls: ["https://polygonscan.com"],
+      chainId: "0x2A",
     },
   },
 ];

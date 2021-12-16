@@ -55,9 +55,9 @@ export default function UnsupportedChainView() {
                         <Box justify="center" mb="24px">
                           <Avatar size={48} src={imageSrc} />
                         </Box>
-                        <Heading size="small" align="center">
+                        <Text grey={800} weight="medium" as="h2" align="center">
                           {label}
-                        </Heading>
+                        </Text>
                         <Label as="p" align="center">
                           {description}
                         </Label>
