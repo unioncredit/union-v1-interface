@@ -1,9 +1,9 @@
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 
 export const BLOCKS_PER_YEAR = {
-  1: 2102400,
+  1: 2407328,
   4: 2102400,
-  42: 2102400,
+  42: 5744262,
   137: 15768000,
   80001: 15768000,
 };
@@ -150,9 +150,9 @@ export const AAVE_ADAPTER_ADDRESSES = {
 export const SCALE = 10 ** 18;
 
 export const BLOCK_SPEED = {
-  1: 12,
+  1: 13, //13.1,
   4: 12,
-  42: 7,
+  42: 5, //5.49,
   137: 2,
   80001: 2,
 };
