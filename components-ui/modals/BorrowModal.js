@@ -75,7 +75,7 @@ export function BorrowModal({
     if (Number(val) > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
     if (Number(val) > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
     if (Number(val) > loanableAmount) return errorMessages.notEnoughPoolDAI;
-    if (Number(val) < minBorrow) return errorMessages.minDAIBorrow;
+    if (Number(val) < minBorrow) return errorMessages.minDAIBorrow(minBorrow);
 
     return true;
   };

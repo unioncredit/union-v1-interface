@@ -6,8 +6,7 @@ import useReadProvider from "hooks/useReadProvider";
 
 const getMemberFee = (userManager: Contract) => async (_: any) => {
   const fee = await userManager.newMemberFee();
-
-  return Number(formatUnits(fee, 18));
+  return fee;
 };
 
 export default function useMemberFee() {

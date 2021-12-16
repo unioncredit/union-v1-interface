@@ -15,6 +15,8 @@ import {
 } from "constants/app";
 import useUserContract from "hooks/contracts/useUserContract";
 import useUnionSymbol from "hooks/useUnionSymbol";
+import { formatUnits } from "@ethersproject/units";
+import useTokenBalance from "hooks/data/useTokenBalance";
 
 export function BecomeMemberCard({ disabled }) {
   const [registering, setRegistering] = useState(false);
@@ -27,6 +29,7 @@ export function BecomeMemberCard({ disabled }) {
   const { data: memberFee } = useMemberFee();
   const { data: isMember = null } = useIsMember();
   const { open: openCongratulationsModal } = useCongratulationsModal();
+  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
   const handleRegister = async () => {
     try {
@@ -41,11 +44,17 @@ export function BecomeMemberCard({ disabled }) {
     }
   };
 
+  const displayMemberFee = memberFee
+    ? formatUnits(memberFee.toString(), 18)
+    : "0";
+
+  const hasEnoughUnion = unionBalance >= Number(displayMemberFee);
+
   return (
     <Card size="fluid">
       <Card.Header
         title="Pay membership fee"
-        subTitle={`To finalise the membership process, you’ll need to burn ${memberFee} UNION token. This will activate your account and enable access to your starting credit limit.`}
+        subTitle={`To finalise the membership process, you’ll need to burn ${displayMemberFee} UNION token. This will activate your account and enable access to your starting credit limit.`}
       />
       <Card.Body>
         <Approval
@@ -59,8 +68,8 @@ export function BecomeMemberCard({ disabled }) {
         >
           <Button
             fluid
-            label={`Burn ${memberFee} UNION`}
-            disabled={isMember || disabled}
+            label={`Burn ${displayMemberFee} UNION`}
+            disabled={isMember || disabled || !hasEnoughUnion}
             loading={registering}
             onClick={handleRegister}
           />

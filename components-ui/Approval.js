@@ -6,6 +6,7 @@ import { parseEther } from "@ethersproject/units";
 import { useState } from "react";
 import usePermits from "hooks/usePermits";
 import { PermitType, ApprovalTypes } from "constants/app";
+import { BigNumber } from "@ethersproject/bignumber";
 
 import styles from "./approval.module.css";
 
@@ -48,7 +49,8 @@ export function Approval({
 
   const permit = getPermit(signatureKey);
 
-  const parsedAmount = parseEther(amount.toString());
+  const parsedAmount =
+    amount instanceof BigNumber ? amount : parseEther(amount.toString());
 
   const handleApproval = async () => {
     setLoading(true);

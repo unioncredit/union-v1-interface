@@ -11,7 +11,8 @@ const errorMessages = {
   overdueBalance: "You cannot borrow with an overdue balance",
   maxBorrow: (max) =>
     `The maximum borrow is ${commify(Number(max).toFixed(2))} DAI`,
-  minDAIBorrow: "The minimum borrow is 1.00 DAI",
+  minDAIBorrow: (min) =>
+    `The minimum borrow is ${commify(Number(min).toFixed(2))} DAI`,
   minVouch: "The minimum vouch is 1.00 DAI",
   minValuePointZeroOne: "Value must be greater than 0.01",
   minValueOnePointZero: "Value must be greater than or equal to 1.00",
