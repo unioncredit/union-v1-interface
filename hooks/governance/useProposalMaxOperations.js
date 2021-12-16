@@ -1,10 +1,11 @@
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 
-const getProposalMaxOperations = (contract) => async () => {
-  const res = await contract.proposalMaxOperations();
+import { proposalMaxOperations } from "constants/variables";
 
-  return Number(res);
+const getProposalMaxOperations = (contract) => async () => {
+  //const res = await contract.proposalMaxOperations();
+  return proposalMaxOperations;
 };
 
 export default function useProposalMaxOperations() {

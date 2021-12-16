@@ -5,6 +5,7 @@ import usePagination from "hooks/usePagination";
 
 const ProposalVoteHistoryList = ({ address }) => {
   const { data } = useUserProposalVoteHistory(address);
+
   const { next, prev, currentData, currentPage, jump, maxPage } = usePagination(
     data,
     5
