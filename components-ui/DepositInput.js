@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { Button, Dai, Box, Input } from "union-ui";
+import { Button, Dai, Box, Input, Alert } from "union-ui";
+import Info from "union-ui/lib/icons/wireInfo.svg";
 
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
@@ -15,14 +16,17 @@ import { useAddActivity } from "hooks/data/useActivity";
 import isHash from "util/isHash";
 import { Approval } from "components-ui";
 import useUserContract from "hooks/contracts/useUserContract";
+import useMaxStakeAmount from "hooks/data/useMaxStakeAmount";
 import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
 import usePermits from "hooks/usePermits";
+import { formatEther } from "@ethersproject/units";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const userManager = useUserContract();
   const { removePermit } = usePermits();
+  const { data: maxStake = "0" } = useMaxStakeAmount();
 
   const { handleSubmit, register, watch, setValue, formState, errors, reset } =
     useForm({
@@ -44,13 +48,15 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     updateDaiBalance();
   }, []);
 
-  const flooredDaiBalance = roundDown(daiBalance);
-  const maxAllowed = Math.min(500 - parseFloat(totalStake), flooredDaiBalance);
+  const maxStakeAmount = Number(formatEther(maxStake));
+  const maxAllowed = maxStakeAmount - parseFloat(totalStake);
+  const maxDeposit = Math.min(maxAllowed, roundDown(daiBalance));
   const newTotalStake = Number(
     parseFloat(amount || 0) + parseFloat(totalStake)
   );
+
   const handleMaxDeposit = () => {
-    setValue("amount", maxAllowed, {
+    setValue("amount", maxDeposit, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -76,29 +82,35 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     }
   };
 
+  const validateAmount = (amount) => {
+    if (!amount || amount <= 0) return errorMessages.required;
+    if (amount > maxAllowed) return errorMessages.stakeLimitHit;
+    if (amount > daiBalance) return errorMessages.notEnoughBalanceDAI;
+    if (amount < 0.1) return errorMessages.minValuePointZeroOne;
+    return false;
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box mt="18px">
+      <Box mt="18px" direction="vertical">
+        <Alert
+          packed
+          size="small"
+          variant="info"
+          label={`Maximum total stake of ${formatEther(maxStake)} DAI`}
+          icon={<Info />}
+          mb="16px"
+        />
         <Input
           type="number"
           name="amount"
           label="Amount to stake"
-          caption={`Max. ${maxAllowed} DAI`}
+          caption={`Max. ${maxDeposit} DAI`}
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
           suffix={<Dai />}
           error={errors?.amount?.message}
-          ref={register({
-            required: errorMessages.required,
-            max: {
-              value: maxAllowed,
-              message: errorMessages.stakeLimitHit,
-            },
-            min: {
-              value: 0.01,
-              message: errorMessages.minValuePointZeroOne,
-            },
-          })}
+          ref={register({ validate: validateAmount })}
         />
       </Box>
       <Box mt="18px" fluid>
@@ -113,7 +125,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
             fluid
             type="submit"
             loading={isSubmitting}
-            disabled={!isDirty || newTotalStake > 500}
+            disabled={!isDirty || newTotalStake > maxStakeAmount}
             label={`Stake ${amount} DAI`}
           />
         </Approval>
