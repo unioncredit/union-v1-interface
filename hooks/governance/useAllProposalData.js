@@ -2,128 +2,111 @@ import { formatUnits } from "@ethersproject/units";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
-import useProposalCount from "./useProposalCount";
 import dayjs from "dayjs";
 import useReadProvider from "hooks/useReadProvider";
 import useChainId from "hooks/useChainId";
 
-const enumerateProposalState = (state) => {
-  const proposalStates = [
-    "pending",
-    "active",
-    "canceled",
-    "defeated",
-    "succeeded",
-    "queued",
-    "expired",
-    "executed",
-  ];
+const ProposalStateStrings = [
+  "pending",
+  "active",
+  "canceled",
+  "defeated",
+  "succeeded",
+  "queued",
+  "expired",
+  "executed",
+];
 
-  return proposalStates[state];
-};
+const getAllProposalData = async (
+  _,
+  _chainId,
+  library,
+  govContract,
+  formattedEvents
+) => {
+  const allProposals = await Promise.all(
+    formattedEvents.map(async (event) => {
+      return await govContract.proposals(event.id);
+    })
+  );
 
-const getAllProposalData =
-  (govContract, library, proposalIndexes, formattedEvents) => async () => {
-    const allProposals = await Promise.all(
-      proposalIndexes.map(async (proposalID) => {
-        const res = await govContract.proposals(proposalID);
+  const allProposalStates = await Promise.all(
+    formattedEvents.map(async (event) => {
+      return await govContract.state(event.id);
+    })
+  );
 
-        return {
-          result: res,
-        };
-      })
-    );
+  allProposals.reverse();
+  allProposalStates.reverse();
 
-    const allProposalStates = await Promise.all(
-      proposalIndexes.map(async (proposalID) => {
-        const res = await govContract.state(proposalID);
+  const formattedAllProposals = allProposals
+    .filter((proposal, i) => {
+      return (
+        Boolean(proposal) &&
+        Boolean(allProposalStates[i]) &&
+        Boolean(formattedEvents[i])
+      );
+    })
+    .map((proposal, i) => ({
+      ...formattedEvents[i],
+      id: proposal?.id.toString(),
+      title:
+        String(formattedEvents[i].description)
+          ?.replace(/\\{1,2}n/g, "\n")
+          ?.split("\n")
+          ?.filter(Boolean)[0] || "Untitled",
+      description:
+        String(formattedEvents[i].description)
+          ?.replace(/\\{1,2}n/, "\n")
+          ?.split("\n")
+          ?.slice(2)
+          ?.join("\n\n") || "No description",
+      proposer: proposal?.proposer,
+      status: ProposalStateStrings[allProposalStates[i]] || "Undetermined",
+      forCount: parseFloat(formatUnits(proposal?.forVotes.toString(), 18)),
+      againstCount: parseFloat(
+        formatUnits(proposal?.againstVotes.toString(), 18)
+      ),
+      startBlock: parseInt(proposal?.startBlock?.toString()),
+      endBlock: parseInt(proposal?.endBlock?.toString()),
+      eta: parseInt(proposal?.eta?.toString()),
+      details: formattedEvents[i].details,
+      type: "onchain",
+    }));
 
-        return {
-          result: res,
-        };
-      })
-    );
+  const currentBlock = await library.getBlockNumber();
 
-    allProposals.reverse();
-    allProposalStates.reverse();
+  const formattedAllProposalsWithTimestamp = await Promise.all(
+    formattedAllProposals.map(async (proposal) => {
+      let date = `Ends in ${proposal.endBlock - Number(currentBlock)} Blocks`;
 
-    const formattedAllProposals = allProposals
-      .filter((p, i) => {
-        return (
-          Boolean(p.result) &&
-          Boolean(allProposalStates[i]?.result) &&
-          Boolean(formattedEvents[i])
-        );
-      })
-      .map((p, i) => {
-        const formattedProposal = {
-          id: allProposals[i]?.result?.id.toString(),
-          title:
-            String(formattedEvents[i].description)
-              ?.split("\n")[0]
-              ?.replace("#", "") ||
-            String(formattedEvents[i].description)
-              ?.split("\n")[1]
-              ?.replace("#", "") ||
-            "Untitled",
-          description:
-            String(formattedEvents[i].description)
-              ?.split("\n")
-              ?.slice(2)
-              ?.join("\n\n") || "No description",
-          proposer: allProposals[i]?.result?.proposer,
-          status:
-            enumerateProposalState(allProposalStates[i]?.result) ??
-            "Undetermined",
-          forCount: parseFloat(
-            formatUnits(allProposals[i]?.result?.forVotes.toString(), 18)
-          ),
-          againstCount: parseFloat(
-            formatUnits(allProposals[i]?.result?.againstVotes.toString(), 18)
-          ),
-          startBlock: parseInt(allProposals[i]?.result?.startBlock?.toString()),
-          endBlock: parseInt(allProposals[i]?.result?.endBlock?.toString()),
-          eta: parseInt(allProposals[i]?.result?.eta?.toString()),
-          details: formattedEvents[i].details,
-          type: "onchain",
-        };
+      let endTimestamp = "";
 
-        return formattedProposal;
-      });
+      if (proposal.endBlock < currentBlock) {
+        try {
+          const block = await library.getBlock(proposal.endBlock);
 
-    const formattedAllProposalsWithTimestamp = await Promise.all(
-      formattedAllProposals.map(async (proposal) => {
-        const currentBlock = await library.getBlockNumber();
+          const formattedDate = dayjs
+            .unix(block.timestamp.toString())
+            .format("MMM D, YYYY");
 
-        let date = `Ends in ${proposal.endBlock - Number(currentBlock)} Blocks`;
-
-        let endTimestamp = "";
-
-        if (proposal.endBlock < currentBlock) {
-          try {
-            const block = await library.getBlock(proposal.endBlock);
-
-            const formattedDate = dayjs
-              .unix(block.timestamp.toString())
-              .format("MMM D, YYYY");
-
-            date = `${proposal.status} on ${formattedDate}`;
-            endTimestamp = block.timestamp.toString();
-          } catch (err) {
-            console.error(err);
-          }
+          date = `${proposal.status} on ${formattedDate}`;
+          endTimestamp = block.timestamp.toString();
+        } catch (err) {
+          console.error(err);
         }
+      }
 
-        return {
-          ...proposal,
-          date,
-          endTimestamp,
-        };
-      })
-    );
+      return {
+        ...proposal,
+        date,
+        endTimestamp,
+      };
+    })
+  );
 
-    return formattedAllProposalsWithTimestamp;
-  };
+  return formattedAllProposalsWithTimestamp;
+};
 
 export default function useAllProposalData() {
   const library = useReadProvider();
@@ -131,29 +114,21 @@ export default function useAllProposalData() {
 
   const govContract = useGovernanceContract(library);
 
-  const { data: proposalCount } = useProposalCount();
-  const proposalIndexes = [];
-  for (let i = 1; i <= (proposalCount ?? 0); i++) {
-    proposalIndexes.push([i]);
-  }
-
-  // get metadata from past events
   const { data: formattedEvents } = useDataFromEventLogs();
 
-  const shouldFetch = Boolean(
-    govContract && typeof proposalCount !== undefined && formattedEvents
-  );
+  const shouldFetch = Boolean(govContract && formattedEvents && library);
 
   return useSWR(
     shouldFetch
       ? [
-          // putting `proposalIndexes.length` and `formattedEvents.length` in cache key
-          // so that refetch is triggered when their length changes
-          `AllProposalData-${proposalIndexes.length}-${formattedEvents.length}`,
+          `AllProposalData-${formattedEvents.length}`,
           chainId,
+          library,
+          govContract,
+          formattedEvents,
         ]
       : null,
-    getAllProposalData(govContract, library, proposalIndexes, formattedEvents),
+    getAllProposalData,
     {
       shouldRetryOnError: false,
       refreshWhenHidden: false,

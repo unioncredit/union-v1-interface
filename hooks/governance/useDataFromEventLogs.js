@@ -2,7 +2,7 @@ import useSWR from "swr";
 import useChainId from "hooks/useChainId";
 import fetchGovernanceProposals from "fetchers/fetchGovernanceProposals";
 
-const fetchData = (chainId) => () => {
+const fetchData = (_, chainId) => {
   return fetchGovernanceProposals(chainId);
 };
 
@@ -11,7 +11,7 @@ export function useDataFromEventLogs() {
 
   const shouldFetch = chainId;
 
-  return useSWR(shouldFetch ? ["EventLogsData"] : null, fetchData(chainId), {
+  return useSWR(shouldFetch ? ["EventLogsData", chainId] : null, fetchData, {
     shouldRetryOnError: false,
     refreshWhenHidden: false,
     refreshWhenOffline: false,

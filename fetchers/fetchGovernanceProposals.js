@@ -20,8 +20,10 @@ export default async function fetchGovernanceProposals(chainId) {
 
   // reverse events to get them from newest to oldest
   const formattedEventData = logs.proposals
-    .map((log) => {
+    .map((log, i) => {
       return {
+        ...log,
+        displayId: i + 1,
         description: log.description,
         details: log.targets.map((target, i) => {
           const signature = log.signatures[i];
@@ -29,7 +31,10 @@ export default async function fetchGovernanceProposals(chainId) {
             .substr(0, signature.length - 1)
             .split("(");
           const calldata = log.calldatas[i];
-          const decoded = defaultAbiCoder.decode(types.split(","), calldata);
+          const decoded =
+            types && calldata
+              ? defaultAbiCoder.decode(types.split(","), calldata)
+              : [];
           return {
             target,
             functionSig: name,

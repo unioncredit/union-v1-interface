@@ -47,7 +47,7 @@ function ProposalsTableRow({
   status,
 }) {
   const total = againstCount + forCount;
-  const percentageFor = forCount / total;
+  const percentageFor = total > 0 ? forCount / total : 0;
 
   return (
     <Link href={`/governance/proposals/${id}`}>

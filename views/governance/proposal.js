@@ -38,6 +38,7 @@ export default function ProposalView() {
     details = [],
     status,
     blockNumber,
+    displayId,
   } = !!data && data;
 
   const isLoading = !data;
@@ -65,13 +66,13 @@ export default function ProposalView() {
         <Row>
           <Col md={8}>
             <Heading level={2} mb="8px" grey={400}>
-              UIP-{id}
+              UIP-{displayId}
             </Heading>
             {isLoading ? (
               <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
               <Heading size="xlarge" mb="16px">
-                {title}
+                <ReactMarkdown>{title}</ReactMarkdown>
               </Heading>
             )}
             {isLoading ? (
