@@ -216,3 +216,5 @@ export const OFAC_SANCTIONED = [
 export const GRAPHQL_URL = {
   137: "https://api.thegraph.com/subgraphs/name/unioncredit/union-",
 };
+
+export const proposalMaxOperations = 10;

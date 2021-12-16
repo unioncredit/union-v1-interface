@@ -23,13 +23,9 @@ ${data.title}
 
 ${data.description}`;
 
-      return governanceContract.propose(
-        targets,
-        values,
-        signatures,
-        calldatas,
-        description
-      );
+      return governanceContract[
+        "propose(address[],uint256[],string[],bytes[],string)"
+      ](targets, values, signatures, calldatas, description);
     },
     [governanceContract]
   );
