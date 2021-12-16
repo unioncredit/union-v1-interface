@@ -1,5 +1,6 @@
 import { Card, Button, Box, Label } from "union-ui";
 import Switch from "union-ui/lib/icons/switch.svg";
+import Check from "union-ui/lib/icons/wireCheck.svg";
 
 import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";
@@ -113,5 +114,24 @@ export function Approval({
     );
   }
 
-  return children;
+  return (
+    <Card variant="blue" packed className={styles.card}>
+      <Box
+        fluid
+        mt="4px"
+        mb="10px"
+        align="center"
+        justify="center"
+        onClick={toggleApprovalType}
+      >
+        <div className={styles.switchIcon}>
+          <Check width="24px" />
+        </div>
+        <Label m={0} as="p" size="small" color="blue500" align="center">
+          Approved
+        </Label>
+      </Box>
+      {children}
+    </Card>
+  );
 }

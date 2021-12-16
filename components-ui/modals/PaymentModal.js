@@ -259,13 +259,12 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
               signatureKey={APPROVE_DAI_REPAY_SIGNATURE_KEY}
             >
               <Button
-                label={`Repay ${amount} DAI`}
                 fluid
-                mt="16px"
-                loading={isSubmitting}
-                disabled={!isDirty}
-                onClick={handleSubmit(handlePayment)}
                 fontSize="large"
+                disabled={!isDirty}
+                loading={isSubmitting}
+                label={`Repay ${amount} DAI`}
+                onClick={handleSubmit(handlePayment)}
               />
             </Approval>
           </ButtonRow>
