@@ -87,7 +87,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
     if (amount > maxAllowed) return errorMessages.stakeLimitHit;
     if (amount > daiBalance) return errorMessages.notEnoughBalanceDAI;
     if (amount < 0.1) return errorMessages.minValuePointZeroOne;
-    return false;
   };
 
   return (
