@@ -1,5 +1,6 @@
 import { formatUnits } from "@ethersproject/units";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
+import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
 const getProposalThreshold = (contract) => async () => {
@@ -9,7 +10,8 @@ const getProposalThreshold = (contract) => async () => {
 };
 
 export default function useProposalThreshold() {
-  const contract = useGovernanceContract();
+  const readProvider = useReadProvider();
+  const contract = useGovernanceContract(readProvider);
 
   const shouldFetch = Boolean(contract);
 
