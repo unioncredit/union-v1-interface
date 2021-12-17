@@ -1,19 +1,13 @@
 import { Stat, Grid } from "union-ui";
-import { Dai, Union } from "components-ui";
 
-import format, { formatDetailed } from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
 
 import { toPercent } from "util/numbers";
 import useChainId from "hooks/useChainId";
 import { BLOCK_SPEED } from "constants/variables";
 import { formatUnits } from "@ethersproject/units";
-
-const unionValue = (value, decimal = 4) => (
-  <Union value={format(value, decimal)} />
-);
-
-const daiValue = (value, decimal = 4) => <Dai value={format(value, decimal)} />;
+import { unionValue, daiValue } from "./values";
 
 function useMarketSettingsStatsView() {
   const {
@@ -54,7 +48,7 @@ function useMarketSettingsStatsView() {
     { label: "Reserve Factor", value: reserveFactor },
     {
       label: "Membership Fee",
-      value: unionValue(formatUnits(newMemberFee, 18)),
+      value: unionValue(formatUnits(newMemberFee || 0, 18)),
     },
     { label: "Max Borrow", value: daiValue(maxBorrow) },
     { label: "Min Borrow", value: daiValue(minBorrow) },

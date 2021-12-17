@@ -1,15 +1,11 @@
 import { Stat, Grid } from "union-ui";
-import { Union } from "components-ui";
 
-import format, { formatDetailed } from "util/formatValue";
+import { formatDetailed } from "util/formatValue";
 import useGovernanceStats from "hooks/stats/governanceStats";
 
 import useChainId from "hooks/useChainId";
 import { BLOCK_SPEED } from "constants/variables";
-
-const unionValue = (value, decimal = 4) => (
-  <Union value={format(value, decimal)} />
-);
+import { unionValue } from "./values";
 
 function useGovernanceStatsView() {
   const { quorum, votingPeriod, votingDelay, timelock } = useGovernanceStats();

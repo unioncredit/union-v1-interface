@@ -1,12 +1,6 @@
 import { Stat, Grid } from "union-ui";
-import { Union } from "components-ui";
-
-import format from "util/formatValue";
 import useUnionTokenStats from "hooks/stats/unionTokenStats";
-
-const unionValue = (value, decimal = 4) => (
-  <Union value={format(value, decimal)} />
-);
+import { daiValue, unionValue } from "./values";
 
 function useUnionStatsView() {
   const {
@@ -43,7 +37,7 @@ function useUnionStatsView() {
       value: unionValue(averageInflationPerBlock, 6),
     },
     { label: "Union per DAI staked", value: unionValue(unionPerDAIStaked, 6) },
-    { label: "Half decay point", value: unionValue(halfDecayPoint) },
+    { label: "Half decay point", value: daiValue(halfDecayPoint) },
     { label: "Transfers", value: isUnionTransferPaused ? "Off" : "On" },
   ];
 }

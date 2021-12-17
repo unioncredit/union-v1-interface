@@ -1,10 +1,7 @@
 import { Stat, Grid } from "union-ui";
-import { Dai } from "components-ui";
 
-import format from "util/formatValue";
 import useAssetManagerStats from "hooks/stats/assetManagerStats";
-
-const daiValue = (value, decimal = 4) => <Dai value={format(value, decimal)} />;
+import { daiValue } from "./values";
 
 function useAssetManagerStatsView() {
   const {
