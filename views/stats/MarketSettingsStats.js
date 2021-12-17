@@ -7,6 +7,7 @@ import useMarketSettingsStats from "hooks/stats/marketSettingsStats";
 import { toPercent } from "util/numbers";
 import useChainId from "hooks/useChainId";
 import { BLOCK_SPEED } from "constants/variables";
+import { formatUnits } from "@ethersproject/units";
 
 const unionValue = (value, decimal = 4) => (
   <Union value={format(value, decimal)} />
@@ -51,7 +52,10 @@ function useMarketSettingsStatsView() {
         : "N/A",
     },
     { label: "Reserve Factor", value: reserveFactor },
-    { label: "Membership Fee", value: unionValue(newMemberFee) },
+    {
+      label: "Membership Fee",
+      value: unionValue(formatUnits(newMemberFee, 18)),
+    },
     { label: "Max Borrow", value: daiValue(maxBorrow) },
     { label: "Min Borrow", value: daiValue(minBorrow) },
     { label: "Current Debt Ceiling", value: daiValue(debtCeiling) },
