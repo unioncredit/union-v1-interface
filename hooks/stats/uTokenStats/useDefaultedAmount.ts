@@ -5,7 +5,6 @@ import useUserContract from "hooks/contracts/useUserContract";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 import useDAIDecimals from "hooks/useDAIDecimals";
 import useSWR from "swr";
-import useReadProvider from "hooks/useReadProvider";
 import { getLogs } from "lib/logs";
 import { useWeb3React } from "@web3-react/core";
 import useChainId from "hooks/useChainId";
@@ -62,19 +61,17 @@ const getDefaultedAmount =
   };
 
 export function useDefaultedAmount() {
-  const readProvider = useReadProvider();
-  const uTokenContract: Contract = useUTokenContract(readProvider);
-  const userContract: Contract = useUserContract(readProvider);
+  const { library } = useWeb3React();
+  const uTokenContract: Contract = useUTokenContract();
+  const userContract: Contract = useUserContract();
   const { data: decimals } = useDAIDecimals();
   const chainId = useChainId();
 
   const shouldFetch =
-    !!uTokenContract && !!userContract && !!chainId && !!readProvider;
+    !!uTokenContract && !!userContract && !!chainId && !!library;
 
   return useSWR(
-    shouldFetch
-      ? ["totalDefaultedAmount", decimals, chainId, readProvider]
-      : null,
+    shouldFetch ? ["totalDefaultedAmount", decimals, chainId, library] : null,
     getDefaultedAmount(uTokenContract, userContract)
   );
 }

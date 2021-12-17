@@ -33,10 +33,6 @@ export default function useTokenBalanceOfAccount(
 
   return useSWR(
     shouldFetch ? ["TokenBalance", tokenAddress, account] : null,
-    getTokenBalanceOfAccount(contract),
-    {
-      refreshInterval: 10 * 1000,
-      dedupingInterval: 10 * 1000,
-    }
+    getTokenBalanceOfAccount(contract)
   );
 }

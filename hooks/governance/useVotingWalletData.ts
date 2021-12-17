@@ -31,10 +31,6 @@ export default function useVotingWalletData(address: string) {
 
   return useSWR(
     shouldFetch ? ["VotingWalletData", address] : null,
-    getVotingWalletData(contract),
-    {
-      refreshInterval: 10 * 1000,
-      dedupingInterval: 10 * 1000,
-    }
+    getVotingWalletData(contract)
   );
 }

@@ -42,8 +42,7 @@ export default function useRewardsData() {
     shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
     getRewardsData(comptrollerContract),
     {
-      refreshInterval: 10 * 1000,
-      dedupingInterval: 10 * 1000,
+      refreshInterval: 30 * 1000,
     }
   );
 }
