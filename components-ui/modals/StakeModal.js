@@ -80,7 +80,7 @@ export function StakeModal() {
                 mb="24px"
                 align="center"
                 label="Dai Staked"
-                value={<Dai value={format(totalStake)} />}
+                value={<Dai value={format(totalStake, 4)} />}
               />
             </Grid.Col>
             <Grid.Col>
@@ -89,7 +89,7 @@ export function StakeModal() {
                 mb="24px"
                 align="center"
                 label="Withdrawable"
-                value={<Dai value={format(withdrawableStake)} />}
+                value={<Dai value={format(withdrawableStake, 4)} />}
               />
             </Grid.Col>
           </Grid.Row>
