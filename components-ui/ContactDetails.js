@@ -9,7 +9,7 @@ import { ContactsType } from "constants/app";
 
 import Manage from "union-ui/lib/icons/manage.svg";
 
-function TrustsYouContactDetails({ used, trust, vouched, manageContact }) {
+function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
   return (
     <>
       <Grid.Row>
@@ -31,7 +31,7 @@ function TrustsYouContactDetails({ used, trust, vouched, manageContact }) {
           <Stat
             label="Available"
             tooltip="The DAI amount you can borrow from this address"
-            value={<Dai value={format(vouched - used, 2)} />}
+            value={<Dai value={format(available, 2)} />}
           />
         </Grid.Col>
       </Grid.Row>

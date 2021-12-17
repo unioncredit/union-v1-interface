@@ -7,7 +7,8 @@ import {
   PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Label } from "union-ui";
+import { Stat, Button, Grid, Card, Label, Tooltip } from "union-ui";
+import TooltipIcon from "union-ui/lib/icons/tooltip.svg";
 import format from "util/formatValue";
 import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
@@ -40,6 +41,13 @@ export function BorrowStatsCard() {
     ? vouchData.reduce((acc, data) => acc + Number(data.vouched), 0)
     : 0;
 
+  const unavailable = vouchData
+    ? vouchData.reduce(
+        (acc, data) => acc + Number(data.vouched) - Number(data.available),
+        0
+      )
+    : 0;
+
   const onComplete = async () => {
     await updateCreditLimit();
     await updateVouchData();
@@ -65,7 +73,14 @@ export function BorrowStatsCard() {
                   align="center"
                   label="Vouch"
                   value={<Dai value={format(totalVouch, 2)} />}
-                  after={`From ${vouchData?.length || 0} accounts`}
+                  after={
+                    <Label m={0}>
+                      {unavailable || 0} DAI unavailable
+                      <Tooltip content="These are funds which are currently tied up elsewhere and as a result, not available to borrow at this time">
+                        <TooltipIcon width="16px" />
+                      </Tooltip>
+                    </Label>
+                  }
                 />
                 <Button
                   mt="28px"
