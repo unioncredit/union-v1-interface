@@ -7,7 +7,6 @@ function useUnionStatsView() {
     totalSupply,
     treasuryVestorBalance,
     reservoir1UnionBalance,
-    reservoir2UnionBalance,
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
@@ -23,7 +22,6 @@ function useUnionStatsView() {
       value: unionValue(treasuryVestorBalance),
     },
     { label: "Reservoir 1 balance", value: unionValue(reservoir1UnionBalance) },
-    { label: "Reservoir 2 balance", value: unionValue(reservoir2UnionBalance) },
     {
       label: "Comptroller balance",
       value: unionValue(comptrollerUnionBalance),
