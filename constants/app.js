@@ -41,7 +41,7 @@ export const navItems = [
   {
     id: "get-started",
     label: "Get Started",
-    pathname: "/get-started",
+    pathname: "/",
     active: true,
   },
   {
