@@ -15,6 +15,7 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import useMinBorrow from "hooks/stats/marketSettingsStats/useMinBorrow";
+import { commify } from "@ethersproject/units";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -141,33 +142,33 @@ export function BorrowModal({
             />
           </Box>
           <Box justify="space-between" mt="16px">
-            <Label as="p" size="small">
+            <Label as="p" size="small" grey={400}>
               Total including fee
             </Label>
-            <Label as="p" size="small">
-              {format(amountWithFee)} DAI
+            <Label as="p" size="small" grey={400}>
+              {commify(amountWithFee)} DAI
             </Label>
           </Box>
           <Box justify="space-between">
-            <Label as="p" size="small">
+            <Label as="p" size="small" grey={400}>
+              First Payment Due
+            </Label>
+            <Label as="p" size="small" grey={400}>
+              {nextPaymentDue}
+            </Label>
+          </Box>
+          <Box justify="space-between">
+            <Label as="p" size="small" grey={400}>
               New balance owed
             </Label>
-            <Label as="p" size="small">
-              {newBalanceOwed}
-            </Label>
-          </Box>
-          <Box justify="space-between">
-            <Label as="p" size="small">
-              Repayment due
-            </Label>
-            <Label as="p" size="small">
-              {nextPaymentDue}
+            <Label as="p" size="small" grey={400}>
+              {commify(newBalanceOwed)} DAI
             </Label>
           </Box>
           <Button
             fluid
             mt="18px"
-            label={`Borrow ${amount} DAI`}
+            label={`Borrow ${commify(amount)} DAI`}
             disabled={!isDirty || isSubmitting}
             onClick={handleSubmit(handleBorrow)}
             fontSize="large"
