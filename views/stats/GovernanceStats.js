@@ -8,7 +8,8 @@ import { BLOCK_SPEED } from "constants/variables";
 import { unionValue } from "./values";
 
 function useGovernanceStatsView() {
-  const { quorum, votingPeriod, votingDelay, timelock } = useGovernanceStats();
+  const { quorum, votingPeriod, votingDelay, timelock, threshold } =
+    useGovernanceStats();
 
   const chainId = useChainId();
 
@@ -47,6 +48,7 @@ function useGovernanceStatsView() {
             : " (" + timelockDays + " Days)")
         : "N/A",
     },
+    { label: "Proposal Threshold", value: unionValue(threshold) },
   ];
 }
 
