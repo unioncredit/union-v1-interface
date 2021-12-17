@@ -79,7 +79,7 @@ export function Approval({
 
   const typeText = approvalTypeText[approvalType];
 
-  if (!disabled && !permit && allowance?.lt(parsedAmount)) {
+  if (!permit && (parsedAmount.lte("0") || allowance?.lt(parsedAmount))) {
     return (
       <Card variant="blue" packed className={styles.card}>
         <Box
@@ -88,7 +88,7 @@ export function Approval({
           mb="10px"
           align="center"
           justify="center"
-          onClick={toggleApprovalType}
+          onClick={disabled ? undefined : toggleApprovalType}
         >
           <div className={styles.switchIcon}>
             <Switch width="24px" />
@@ -108,6 +108,7 @@ export function Approval({
           fluid
           loading={loading}
           label={label}
+          disabled={disabled}
           onClick={handleApproval}
         />
       </Card>
