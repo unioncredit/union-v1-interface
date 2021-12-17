@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { Button, Dai, Box, Input, Alert } from "union-ui";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import { Button, Dai, Box, Input } from "union-ui";
 
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
@@ -92,14 +91,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box mt="18px" direction="vertical">
-        <Alert
-          packed
-          size="small"
-          variant="info"
-          label={`Maximum total stake of ${formatEther(maxStake)} DAI`}
-          icon={<Info />}
-          mb="16px"
-        />
         <Input
           type="number"
           name="amount"
