@@ -21,7 +21,7 @@ function useUnionStatsView() {
       label: "Treasury vestor balance",
       value: unionValue(treasuryVestorBalance),
     },
-    { label: "Reservoir 1 balance", value: unionValue(reservoir1UnionBalance) },
+    { label: "Treasury 1 balance", value: unionValue(reservoir1UnionBalance) },
     {
       label: "Comptroller balance",
       value: unionValue(comptrollerUnionBalance),
