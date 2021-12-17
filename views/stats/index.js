@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heading, Box, Grid, ToggleMenu } from "union-ui";
+import { Heading, Box, Grid, ToggleMenu, TabNav } from "union-ui";
 
 import UnionTokenStats from "./UnionTokenStats";
 import UTokenStats from "./UTokenStats";
@@ -9,11 +9,17 @@ import MarketSettingsStats from "./MarketSettingsStats";
 import GovernanceStats from "./GovernanceStats";
 import useIsMobile from "hooks/useIsMobile";
 
+import styles from "./stats.module.css";
+
 export default function StatsView() {
   const [index, setIndex] = useState(0);
   const isMobile = useIsMobile();
 
   const handleChange = (_, i) => {
+    setIndex(i);
+  };
+
+  const handleTabNavClick = (i) => () => {
     setIndex(i);
   };
 
@@ -46,11 +52,24 @@ export default function StatsView() {
             >
               Union Protocol Statistics
             </Heading>
-            <ToggleMenu
-              items={items}
-              initialActive={0}
-              onChange={handleChange}
-            />
+            {!isMobile && (
+              <ToggleMenu
+                items={items}
+                initialActive={0}
+                onChange={handleChange}
+              />
+            )}
+
+            {isMobile && (
+              <div className={styles.tabNavWrapper}>
+                <TabNav
+                  items={items.map((item, i) => ({
+                    ...item,
+                    onClick: handleTabNavClick(i),
+                  }))}
+                />
+              </div>
+            )}
           </Box>
         </Grid.Col>
       </Grid.Row>
