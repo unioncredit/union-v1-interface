@@ -75,7 +75,7 @@ export function BorrowStatsCard() {
                   value={<Dai value={format(totalVouch, 2)} />}
                   after={
                     <Label m={0}>
-                      {unavailable || 0} DAI unavailable
+                      {format(unavailable, 2) || 0} DAI unavailable
                       <Tooltip content="These are funds which are currently tied up elsewhere and as a result, not available to borrow at this time">
                         <TooltipIcon width="16px" />
                       </Tooltip>
