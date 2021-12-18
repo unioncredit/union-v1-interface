@@ -3,12 +3,23 @@ import Chevron from "union-ui/lib/icons/chevron.svg";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { useState } from "react";
 import { useAutoEffect } from "hooks.macro";
 import { CONNECTORS, walletconnect } from "lib/connectors";
 import { getWalletDescription, getWalletIcon } from "util/formatWalletDetails";
 import { login } from "lib/auth";
 import styles from "./loginOptions.module.css";
+
+const resetWalletConnector = (connector) => {
+  if (
+    connector &&
+    connector instanceof WalletConnectConnector &&
+    connector.walletConnectProvider?.wc?.uri
+  ) {
+    connector.walletConnectProvider = undefined;
+  }
+};
 
 export function LoginOptions({ triedEager }) {
   const router = useRouter();
@@ -56,6 +67,7 @@ export function LoginOptions({ triedEager }) {
               setActivatingConnector(currentConnector);
 
               await activate(CONNECTORS[name]);
+              resetWalletConnector(CONNECTORS[name]);
 
               if (name === "MetaMask") {
                 login();
