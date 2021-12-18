@@ -27,7 +27,7 @@ export default function StatsView() {
     { label: "UNION Token", view: UnionTokenStats },
     { label: "uToken", view: UTokenStats },
     { label: "Users", view: UserManagerStats },
-    { label: "Managers", view: AssetManagerStats },
+    { label: "Assets", view: AssetManagerStats },
     { label: "Market", view: MarketSettingsStats },
     { label: "Governance", view: GovernanceStats },
   ];

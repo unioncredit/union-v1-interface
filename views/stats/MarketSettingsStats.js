@@ -62,7 +62,7 @@ export default function MarketSettingsStats() {
   return (
     <>
       {stats.map((stat) => (
-        <Grid.Col md={3} key={stat.label}>
+        <Grid.Col xs={6} md={3} key={stat.label}>
           <Stat
             align="center"
             mb="28px"
