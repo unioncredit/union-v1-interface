@@ -49,6 +49,7 @@ import usePopTrustModal from "hooks/usePopTrustModal";
 import { useRouter } from "next/router";
 import useIsMobile from "hooks/useIsMobile";
 import useFilterContacts from "hooks/useFilterContacts";
+import Head from "next/head";
 
 const statusOptions = [
   { id: "all", label: "All statuses" },
@@ -164,6 +165,25 @@ export default function ContactsView({
 
   return (
     <>
+      {query.address && (
+        <Head>
+          <meta
+            key="og:image"
+            property="og:image"
+            content={`https://bluejay.union.finance/api/og/profile?address=${query.address}`}
+          />
+          <meta
+            key="twitter:image"
+            property="twitter:image"
+            content={`https://bluejay.union.finance/api/og/profile?address=${query.address}`}
+          />
+          <meta
+            property="twitter:title"
+            key="twitter:title"
+            content={`Union Member ${query.address}`}
+          />
+        </Head>
+      )}
       <View tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
