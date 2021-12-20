@@ -42,15 +42,12 @@ const getStatisticsData =
 
     const totalBorrowed: BigNumber = await uTokenContract.totalBorrows();
 
-    const totalSupply: BigNumber = await unionContract.totalSupply();
-
     const ratePreBlock: BigNumber = await uTokenContract.borrowRatePerBlock();
 
     return {
       lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
       totalStaked: parseFloat(formatUnits(currentTotalStaked, 18)),
       outstandingLoans: parseFloat(formatUnits(totalBorrowed, 18)),
-      totalSupply: parseFloat(formatUnits(totalSupply, 18)),
       interestRate:
         parseFloat(formatUnits(ratePreBlock, 18)) * BLOCKS_PER_YEAR[chainId],
     };
