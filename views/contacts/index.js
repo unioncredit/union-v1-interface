@@ -170,12 +170,12 @@ export default function ContactsView({
           <meta
             key="og:image"
             property="og:image"
-            content={`https://bluejay.union.finance/api/og/profile?address=${query.address}`}
+            content={`https://app.union.finance/api/og/profile?address=${query.address}`}
           />
           <meta
             key="twitter:image"
             property="twitter:image"
-            content={`https://bluejay.union.finance/api/og/profile?address=${query.address}`}
+            content={`https://app.union.finance/api/og/profile?address=${query.address}`}
           />
           <meta
             property="twitter:title"
