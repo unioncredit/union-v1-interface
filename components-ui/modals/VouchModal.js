@@ -1,4 +1,5 @@
-import { ModalOverlay, Box, Input, Button } from "union-ui";
+import { ModalOverlay, Box, Input, Button, Alert } from "union-ui";
+import Info from "union-ui/lib/icons/wireInfo.svg";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useModal } from "hooks/useModal";
@@ -28,7 +29,7 @@ export function VouchModal() {
   const { account, library } = useWeb3React();
   const { close } = useVouchModal();
   const addActivity = useAddActivity();
-  const { mutate: updateTrustData } = useTrustData();
+  const { data: trustData, mutate: updateTrustData } = useTrustData();
   const { setLabel } = useAddressLabels();
 
   const adjustTrust = useAdjustTrust();
@@ -80,6 +81,10 @@ export function VouchModal() {
     return validateAddress(address);
   };
 
+  const maxTrust = 25;
+
+  const maxTrustData = trustData?.length >= maxTrust;
+
   return (
     <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
@@ -91,6 +96,7 @@ export function VouchModal() {
             value={query?.address}
             label="Address"
             placeholder="e.g. 0xA1e3..."
+            disabled={maxTrustData}
             error={errors.address?.message}
           />
           <Box mt="16px">
@@ -98,6 +104,7 @@ export function VouchModal() {
               ref={register}
               name="alias"
               label="Alias"
+              disabled={maxTrustData}
               placeholder="e.g. Halkyone Olga"
             />
           </Box>
@@ -115,17 +122,28 @@ export function VouchModal() {
               type="number"
               label="Trust amount"
               placeholder="0.0"
+              disabled={maxTrustData}
               error={errors?.amount?.message}
             />
           </Box>
-          <Button
-            fluid
-            mt="32px"
-            type="submit"
-            loading={isSubmitting}
-            disabled={!isDirty}
-            label="Confirm vouch"
-          />
+          <Box mt="32px" direction="vertical">
+            {maxTrustData && (
+              <Alert
+                packed
+                size="small"
+                label={`You have reached the max trust limit of ${trustData?.length} vouches`}
+                icon={<Info />}
+              />
+            )}
+            <Button
+              fluid
+              mt="8px"
+              type="submit"
+              loading={isSubmitting}
+              disabled={!isDirty || maxTrustData}
+              label="Confirm vouch"
+            />
+          </Box>
         </form>
       </Modal>
     </ModalOverlay>
