@@ -7,7 +7,9 @@ import {
   Col,
   ContextMenu,
   Label,
+  AlertBanner,
 } from "union-ui";
+import { useLocalStorage } from "react-use";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
@@ -22,6 +24,11 @@ export function Wrapper({ children }) {
 
   useUpdateForceConnect();
 
+  const [hideBetaBanner, setHideBetaBanner] = useLocalStorage(
+    "union:hide_beta_banner",
+    false
+  );
+
   const { account, library } = useWeb3React();
 
   const { isOpen: isClaimModalOpen } = useClaimModal();
@@ -35,6 +42,14 @@ export function Wrapper({ children }) {
 
   return (
     <>
+      <div>
+        {!hideBetaBanner && (
+          <AlertBanner
+            label="This is experimental software. Do not use unless you understand the risks."
+            onClose={() => setHideBetaBanner(true)}
+          />
+        )}
+      </div>
       <Layout>
         <Layout.Main>
           <Grid style={{ display: "flex", flexGrow: 1 }}>
