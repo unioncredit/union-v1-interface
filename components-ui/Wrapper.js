@@ -9,14 +9,14 @@ import {
   Label,
   AlertBanner,
 } from "union-ui";
-import { useLocalStorage } from "react-use";
+import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
 import { useUpdateForceConnect } from "hooks/useForceConnect";
 import { contextMenuItems } from "constants/app";
-import Link from "next/link";
+import useBetaBanner from "hooks/useBetaBanner";
 import { ContextMenuLink } from "./ContextMenuLink";
 
 export function Wrapper({ children }) {
@@ -24,10 +24,7 @@ export function Wrapper({ children }) {
 
   useUpdateForceConnect();
 
-  const [hideBetaBanner, setHideBetaBanner] = useLocalStorage(
-    "union:hide_beta_banner",
-    false
-  );
+  const [showBetaBanner, hideBetaBanner] = useBetaBanner();
 
   const { account, library } = useWeb3React();
 
@@ -43,10 +40,10 @@ export function Wrapper({ children }) {
   return (
     <>
       <div>
-        {!hideBetaBanner && (
+        {showBetaBanner && (
           <AlertBanner
             label="This is experimental software. Do not use unless you understand the risks."
-            onClose={() => setHideBetaBanner(true)}
+            onClose={hideBetaBanner}
           />
         )}
       </div>
