@@ -10,8 +10,8 @@ import { commify } from "@ethersproject/units";
 export default function format(num, digits) {
   num = Number(num);
 
-  if (num && num < 1) {
-    return num.toFixed(digits);
+  if (num && num < 10000) {
+    return commify(num.toFixed(digits).toString());
   }
 
   const lookup = [
