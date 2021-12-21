@@ -10,13 +10,13 @@ import { commify } from "@ethersproject/units";
 export default function format(num, digits) {
   num = Number(num);
 
-  if (num && num < 1) {
-    return num.toFixed(digits);
+  if (num && num < 10000) {
+    return commify(num.toFixed(digits).toString());
   }
 
   const lookup = [
     { value: 1, symbol: "" },
-    { value: 1e4, symbol: "k" },
+    { value: 1e3, symbol: "k" },
     { value: 1e6, symbol: "M" },
     { value: 1e9, symbol: "B" },
     { value: 1e12, symbol: "T" },
