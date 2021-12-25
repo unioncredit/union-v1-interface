@@ -4,7 +4,7 @@ import { PageHead } from "components-ui";
 import { useForceConnect } from "hooks/useForceConnect";
 import LoggedOutView from "views/loggedOut";
 
-export default function ProfilePage({ params }) {
+export default function ProfilePage({ params, host }) {
   const [forceConnect] = useForceConnect();
 
   const { address } = params;
@@ -16,12 +16,12 @@ export default function ProfilePage({ params }) {
         <meta
           key="og:image"
           property="og:image"
-          content={`https://bluejay.union.finance/api/og/profile?address=${address}`}
+          content={`https://${host}/api/og/profile?address=${address}`}
         />
         <meta
           key="twitter:image"
           property="twitter:image"
-          content={`https://bluejay.union.finance/api/og/profile?address=${address}`}
+          content={`https://${host}/api/og/profile?address=${address}`}
         />
         <meta
           property="twitter:title"
@@ -41,6 +41,6 @@ export default function ProfilePage({ params }) {
 
 export function getServerSideProps(context) {
   return {
-    props: { params: context.params },
+    props: { params: context.params, host: context.req.headers.host },
   };
 }
