@@ -4,33 +4,31 @@ import ContactsView from "views/contacts";
 import { PageHead, CheckIsMember } from "components-ui";
 import { ContactsType } from "constants/app";
 import Head from "next/head";
-import { useRouter } from "next/router";
 
-export default function ContactsPage() {
+export default function ContactsPage({ params, host }) {
   const { account, library } = useWeb3React();
-  const router = useRouter();
 
-  const query = router.query;
+  const address = params?.address;
 
   return (
     <>
       <PageHead title="Contacts | Union" />
-      {query.address && (
+      {address && (
         <Head>
           <meta
             key="og:image"
             property="og:image"
-            content={`https://app.union.finance/api/og/profile?address=${query.address}`}
+            content={`https://${host}/api/og/profile?address=${address}`}
           />
           <meta
             key="twitter:image"
             property="twitter:image"
-            content={`https://app.union.finance/api/og/profile?address=${query.address}`}
+            content={`https://${host}/api/og/profile?address=${address}`}
           />
           <meta
             property="twitter:title"
             key="twitter:title"
-            content={`Union Member ${query.address}`}
+            content={`Union Member ${address}`}
           />
         </Head>
       )}
@@ -44,4 +42,10 @@ export default function ContactsPage() {
       )}
     </>
   );
+}
+
+export function getServerSideProps(context) {
+  return {
+    props: { params: context.query || null, host: context.req.headers.host },
+  };
 }
