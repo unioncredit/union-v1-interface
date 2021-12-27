@@ -108,7 +108,7 @@ export default function ProfileView({ address }) {
                     </Heading>
                     <Box mt="8px">
                       {isMember ? (
-                        <Badge label="Union Member" color="blue" ml="auto" />
+                        <Badge label="Union Member" color="blue" mr="4px" />
                       ) : (
                         <Badge label="Not a member" color="grey" mr="4px" />
                       )}
