@@ -7,7 +7,7 @@ const errorMessages = {
   notEnoughStake: "Insufficient withdrawable stake",
   notEnoughBalanceDAI: "Not enough DAI in your wallet",
   stakeLimitHit: "Cannot stake more than limit",
-  notEnoughPoolDAI: "Insufficient DAI available",
+  notEnoughPoolDAI: "Not enough DAI in the reserves",
   overdueBalance: "You cannot borrow with an overdue balance",
   maxBorrow: (max) =>
     `The maximum borrow is ${commify(Number(max).toFixed(2))} DAI`,
