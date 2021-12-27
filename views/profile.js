@@ -106,11 +106,13 @@ export default function ProfileView({ address }) {
                     <Heading mt="8px" mb={0}>
                       {label && <>{label} &middot;</>} {name}
                     </Heading>
-                    {!isMember && (
-                      <Box mt="8px">
+                    <Box mt="8px">
+                      {isMember ? (
+                        <Badge label="Union Member" color="blue" mr="4px" />
+                      ) : (
                         <Badge label="Not a member" color="grey" mr="4px" />
-                      </Box>
-                    )}
+                      )}
+                    </Box>
                     <Box mt="8px">
                       <Badge label={truncatedAddress} color="grey" mr="4px" />
                       <a
