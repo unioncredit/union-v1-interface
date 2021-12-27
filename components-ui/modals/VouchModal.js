@@ -93,7 +93,7 @@ export function VouchModal() {
           <Input
             ref={register({ validate: validateAddressInput })}
             name="address"
-            value={query?.address}
+            defaultValue={query?.address}
             label="Address"
             placeholder="e.g. 0xA1e3..."
             disabled={maxTrustData}
