@@ -1,5 +1,6 @@
 import { ModalOverlay, Button, Box, Text, Heading } from "union-ui";
 import NewMember from "union-ui/lib/icons/newMember.svg";
+import Twitter from "union-ui/lib/icons/twitter.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
@@ -35,8 +36,9 @@ export function CongratulationsModal({ onClose, creditLimit }) {
           <NewMember width="48px" />
         </Box>
         <Heading align="center">
-          You’re now a member of Union, with a starting credit line of{" "}
-          {formattedCreditLimit} DAI
+          Congratulations! <br />
+          You’re now a member of Union, <br />
+          with a starting credit line of {formattedCreditLimit} DAI
         </Heading>
         <Text align="center" mb="24px">
           Start by borrowing from your credit line in the Union Dashboard or go
@@ -44,7 +46,7 @@ export function CongratulationsModal({ onClose, creditLimit }) {
         </Text>
         <Box align="center" justify="center">
           <Link href={generateTwitterLink(shareMessage)} target="_blank">
-            <Button label="Share on Twitter" fluid />
+            <Button label="Share on Twitter" icon={Twitter} fluid />
           </Link>
         </Box>
       </Modal>
