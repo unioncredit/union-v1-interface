@@ -6,7 +6,7 @@ export const ContactsType = {
 };
 
 export const duneAnalytics = {
-  1: "#",
+  1: "https://dune.xyz/wenyu/Union-on-Mainnet",
   137: "https://dune.xyz/asidik/Union-on-Polygon",
 };
 
