@@ -36,9 +36,6 @@ const getAllProposalData = async (
     })
   );
 
-  allProposals.reverse();
-  allProposalStates.reverse();
-
   const formattedAllProposals = allProposals
     .filter((proposal, i) => {
       return (
@@ -80,18 +77,18 @@ const getAllProposalData = async (
     formattedAllProposals.map(async (proposal) => {
       let date = `Ends in ${proposal.endBlock - Number(currentBlock)} Blocks`;
 
-      let endTimestamp = "";
+      let startTimestamp = "";
 
       if (proposal.endBlock < currentBlock) {
         try {
-          const block = await library.getBlock(proposal.endBlock);
+          const block = await library.getBlock(proposal.startBlock);
 
           const formattedDate = dayjs
             .unix(block.timestamp.toString())
             .format("MMM D, YYYY");
 
           date = `${proposal.status} on ${formattedDate}`;
-          endTimestamp = block.timestamp.toString();
+          startTimestamp = block.timestamp.toString();
         } catch (err) {
           console.error(err);
         }
@@ -100,7 +97,7 @@ const getAllProposalData = async (
       return {
         ...proposal,
         date,
-        endTimestamp,
+        startTimestamp,
       };
     })
   );

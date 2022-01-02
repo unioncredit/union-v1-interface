@@ -35,32 +35,38 @@ function ProposalsTableRowSkeleton() {
 const statusColorMap = {
   executed: "green",
   live: "blue",
-  cancelled: "red",
+  canceled: "red",
 };
 
 function ProposalsTableRow({
   id,
   againstCount,
   forCount,
-  date,
   title,
   status,
+  startTimestamp,
 }) {
   const total = againstCount + forCount;
   const percentageFor = total > 0 ? forCount / total : 0;
+
+  const maxStrLength = 46;
 
   return (
     <Link href={`/governance/proposals/${id}`}>
       <TableRow>
         <TableCell>
-          <Text mb="4px">{title}</Text>
+          <Text mb="4px">
+            {title.slice(0, maxStrLength)}
+            {title.length > maxStrLength && "..."}
+          </Text>
           <Label>
             <Badge
               color={statusColorMap[status] || "blue"}
               label={status.slice(0, 1).toUpperCase() + status.slice(1)}
               mr="8px"
             />
-            {toPercent(percentageFor)} yes &bull; {dayjs().to(dayjs(date))}
+            {toPercent(percentageFor)} yes &bull;{" "}
+            {dayjs(Number(startTimestamp) * 1000).fromNow()}
           </Label>
         </TableCell>
       </TableRow>

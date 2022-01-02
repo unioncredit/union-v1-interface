@@ -72,7 +72,7 @@ export default function ProposalView() {
               <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
               <Heading size="xlarge" mb="16px">
-                <ReactMarkdown>{title}</ReactMarkdown>
+                {title}
               </Heading>
             )}
             {isLoading ? (
