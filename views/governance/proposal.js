@@ -88,9 +88,6 @@ export default function ProposalView() {
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
-            <Box mt="16px">
-              <Button variant="pill" label="View bytecode" />
-            </Box>
             <Box direction="vertical" mt="24px">
               <Heading level={3} mb="12px">
                 Description
