@@ -11,7 +11,6 @@ import {
 import { useWeb3React } from "@web3-react/core";
 import { useModal } from "hooks/useModal";
 import usePublicData from "hooks/usePublicData";
-import useToast, { FLAVORS } from "hooks/useToast";
 import useActivity, { useClearActivity } from "hooks/data/useActivity";
 import { Copyable, Modal, NetworkSelect, Dai } from "components-ui";
 import { logout } from "lib/auth";
@@ -36,13 +35,10 @@ export function AccountModal() {
   const activity = useActivity();
   const clearActivity = useClearActivity();
 
-  const addToast = useToast();
-
   const handleSignOut = () => {
     if (connector === walletconnect) connector.close();
 
     deactivate();
-    addToast(FLAVORS.LOGGED_OUT);
     logout();
     close();
   };
