@@ -32,7 +32,8 @@ export const Navigation = ({ mobile }) => {
         pathname: item.id === "profile" ? `/profile/${account}` : item.pathname,
       }));
     }
-    return navItems.slice(0, 1);
+
+    return navItems.filter((x) => ["get-started", "governance"].includes(x.id));
   }, [isMember, pathname]);
 
   const handleLogoClick = () => {
