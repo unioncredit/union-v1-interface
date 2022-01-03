@@ -9,12 +9,11 @@ import {
   Label,
   AlertBanner,
 } from "union-ui";
-import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
-import { useUpdateForceConnect } from "hooks/useForceConnect";
+import { useForceConnect, useUpdateForceConnect } from "hooks/useForceConnect";
 import { contextMenuItems } from "constants/app";
 import useBetaBanner from "hooks/useBetaBanner";
 import { ContextMenuLink } from "./ContextMenuLink";
@@ -23,6 +22,8 @@ export function Wrapper({ children }) {
   useInactiveListener();
 
   useUpdateForceConnect();
+
+  const [, setForceConnect] = useForceConnect();
 
   const [showBetaBanner, hideBetaBanner] = useBetaBanner();
 
@@ -67,9 +68,11 @@ export function Wrapper({ children }) {
                           variant="secondary"
                         />
                       ) : (
-                        <Link href="/">
-                          <Button label="Login" variant="secondary" />
-                        </Link>
+                        <Button
+                          label="Login"
+                          variant="secondary"
+                          onClick={() => setForceConnect(true)}
+                        />
                       )}
                     </Box>
                     <ContextMenu position="left" items={contextMenuItemsLink} />

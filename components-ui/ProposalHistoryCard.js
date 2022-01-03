@@ -19,8 +19,8 @@ function parseData(data) {
   });
 }
 
-export function ProposalHistoryCard({ id, blockNumber }) {
-  const { data } = useProposalHistory(id, blockNumber);
+export function ProposalHistoryCard({ id }) {
+  const { data } = useProposalHistory(id);
 
   const hasHistory = data && data.length > 0;
 
