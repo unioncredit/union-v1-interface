@@ -11,6 +11,7 @@ import {
   ButtonRow,
   Button,
   Badge,
+  Label,
 } from "union-ui";
 import format from "util/formatValue";
 import { toPercent } from "util/numbers";
@@ -77,14 +78,22 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
         }
       />
       <Card.Body>
-        <Box justify="space-between">
-          <Text>For</Text>
-          <Text>{format(forCount)} Votes</Text>
+        <Box justify="space-between" mb="4px">
+          <Label as="p" m={0}>
+            For
+          </Label>
+          <Label as="p" m={0}>
+            {format(forCount)} Votes
+          </Label>
         </Box>
         <Bar percentage={percentageFor} size="large" color="green" />
-        <Box justify="space-between" mt="18px">
-          <Text>Against</Text>
-          <Text>{format(againstCount)} Votes</Text>
+        <Box justify="space-between" mt="18px" mb="4px">
+          <Label as="p" m={0}>
+            Against
+          </Label>
+          <Label as="p" m={0}>
+            {format(againstCount)} Votes
+          </Label>
         </Box>
         <Bar percentage={percentageAgainst} size="large" />
         <Box mt="22px">

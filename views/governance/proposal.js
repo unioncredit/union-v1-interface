@@ -48,7 +48,7 @@ export default function ProposalView() {
       <Grid>
         <Row>
           <Col>
-            <Box mb="40px">
+            <Box mb="30px">
               <Link href="/governance/proposals">
                 <Button
                   variant="lite"
@@ -65,13 +65,13 @@ export default function ProposalView() {
         </Row>
         <Row>
           <Col md={8}>
-            <Heading level={2} mb="8px" grey={400}>
+            <Text size="large" mb="12px" grey={500}>
               UIP-{displayId}
-            </Heading>
+            </Text>
             {isLoading ? (
               <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
-              <Heading size="xlarge" mb="16px">
+              <Heading size="xlarge" mb="12px" grey={800}>
                 {title}
               </Heading>
             )}
@@ -82,16 +82,14 @@ export default function ProposalView() {
               </>
             ) : (
               <>
-                <Label as="p" size="small">
-                  Proposed by
+                <Label as="p" size="small" grey={400}>
+                  PROPOSED BY
                 </Label>
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
             <Box direction="vertical" mt="24px">
-              <Heading level={3} mb="12px">
-                Description
-              </Heading>
+              <Heading level={3}>Description</Heading>
               {isLoading ? (
                 createArray(3).map((_, i) => (
                   <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
@@ -104,7 +102,16 @@ export default function ProposalView() {
                         <Text as="a" {...props} color="blue600" />
                       </Link>
                     ),
-                    paragraph: (props) => <Text {...props} />,
+                    heading: (props) => (
+                      <Text
+                        size="large"
+                        grey={800}
+                        {...props}
+                        mb="8px"
+                        mt="24px"
+                      />
+                    ),
+                    paragraph: (props) => <Text {...props} mb="8px" />,
                     listItem: (props) => <Text as="li" {...props} />,
                   }}
                 >
