@@ -4,7 +4,6 @@ import Twitter from "union-ui/lib/icons/twitter.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
-import Link from "next/link";
 
 export const CONGRATULATIONS_MODAL = "congratulations-modal";
 
@@ -45,9 +44,14 @@ export function CongratulationsModal({ onClose, creditLimit }) {
           ahead and get your friends onboarded by vouching for them.
         </Text>
         <Box align="center" justify="center">
-          <Link href={generateTwitterLink(shareMessage)} target="_blank">
+          <Box
+            as="a"
+            href={generateTwitterLink(shareMessage)}
+            target="_blank"
+            fluid
+          >
             <Button label="Share on Twitter" icon={Twitter} fluid />
-          </Link>
+          </Box>
         </Box>
       </Modal>
     </ModalOverlay>
