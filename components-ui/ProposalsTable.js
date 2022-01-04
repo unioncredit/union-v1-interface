@@ -34,8 +34,9 @@ function ProposalsTableRowSkeleton() {
 
 const statusColorMap = {
   executed: "green",
-  live: "blue",
-  canceled: "red",
+  active: "purple",
+  canceled: "blue",
+  defeated: "red",
 };
 
 function ProposalsTableRow({

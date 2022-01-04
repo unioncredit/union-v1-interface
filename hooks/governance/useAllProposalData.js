@@ -2,9 +2,9 @@ import { formatUnits } from "@ethersproject/units";
 import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
 import { useDataFromEventLogs } from "./useDataFromEventLogs";
-import dayjs from "dayjs";
 import useReadProvider from "hooks/useReadProvider";
 import useChainId from "hooks/useChainId";
+import { BLOCK_SPEED } from "constants/variables";
 
 const ProposalStateStrings = [
   "pending",
@@ -19,7 +19,7 @@ const ProposalStateStrings = [
 
 const getAllProposalData = async (
   _,
-  _chainId,
+  chainId,
   library,
   govContract,
   formattedEvents
@@ -37,72 +37,76 @@ const getAllProposalData = async (
   );
 
   const formattedAllProposals = allProposals
-    .filter((proposal, i) => {
-      return (
-        Boolean(proposal) &&
-        Boolean(allProposalStates[i]) &&
-        Boolean(formattedEvents[i])
-      );
+    .map((proposal, i) => {
+      if (!proposal || !allProposalStates[i] || !formattedEvents[i]) {
+        return false;
+      }
+
+      return {
+        ...formattedEvents[i],
+        id: proposal?.id.toString(),
+        title:
+          String(formattedEvents[i].description)
+            ?.replace(/\\{1,2}n/g, "\n")
+            ?.split("\n")
+            ?.filter(Boolean)[0] || "Untitled",
+        description:
+          String(formattedEvents[i].description)
+            ?.replace(/\\{1,2}n/, "\n")
+            ?.split("\n")
+            ?.slice(2)
+            ?.join("\n\n") || "No description",
+        proposer: proposal?.proposer,
+        status: ProposalStateStrings[allProposalStates[i]] || "Undetermined",
+        forCount: parseFloat(formatUnits(proposal?.forVotes.toString(), 18)),
+        againstCount: parseFloat(
+          formatUnits(proposal?.againstVotes.toString(), 18)
+        ),
+        startBlock: parseInt(proposal?.startBlock?.toString()),
+        endBlock: parseInt(proposal?.endBlock?.toString()),
+        eta: parseInt(proposal?.eta?.toString()),
+        details: formattedEvents[i].details,
+        type: "onchain",
+      };
     })
-    .map((proposal, i) => ({
-      ...formattedEvents[i],
-      id: proposal?.id.toString(),
-      title:
-        String(formattedEvents[i].description)
-          ?.replace(/\\{1,2}n/g, "\n")
-          ?.split("\n")
-          ?.filter(Boolean)[0] || "Untitled",
-      description:
-        String(formattedEvents[i].description)
-          ?.replace(/\\{1,2}n/, "\n")
-          ?.split("\n")
-          ?.slice(2)
-          ?.join("\n\n") || "No description",
-      proposer: proposal?.proposer,
-      status: ProposalStateStrings[allProposalStates[i]] || "Undetermined",
-      forCount: parseFloat(formatUnits(proposal?.forVotes.toString(), 18)),
-      againstCount: parseFloat(
-        formatUnits(proposal?.againstVotes.toString(), 18)
-      ),
-      startBlock: parseInt(proposal?.startBlock?.toString()),
-      endBlock: parseInt(proposal?.endBlock?.toString()),
-      eta: parseInt(proposal?.eta?.toString()),
-      details: formattedEvents[i].details,
-      type: "onchain",
-    }));
+    .filter(Boolean);
 
   const currentBlock = await library.getBlockNumber();
 
   const formattedAllProposalsWithTimestamp = await Promise.all(
     formattedAllProposals.map(async (proposal) => {
-      let date = `Ends in ${proposal.endBlock - Number(currentBlock)} Blocks`;
-
-      let startTimestamp = "";
+      const startBlock = await library.getBlock(proposal.startBlock);
+      const startTimestamp = startBlock.timestamp.toString();
 
       if (proposal.endBlock < currentBlock) {
-        try {
-          const block = await library.getBlock(proposal.startBlock);
+        const endBlock = await library.getBlock(proposal.endBlock);
+        const endTimestamp = endBlock.timestamp.toString();
 
-          const formattedDate = dayjs
-            .unix(block.timestamp.toString())
-            .format("MMM D, YYYY");
-
-          date = `${proposal.status} on ${formattedDate}`;
-          startTimestamp = block.timestamp.toString();
-        } catch (err) {
-          console.error(err);
-        }
+        return {
+          ...proposal,
+          startTimestamp,
+          endTimestamp,
+        };
       }
+
+      const blockPerDay = BLOCK_SPEED[chainId] * 60 * 60;
+
+      const secondsDay = 60 * 60 * 24; // 86400
+
+      const blockDelta = proposal.endBlock - currentBlock;
+      const timestampDelta = (blockDelta / blockPerDay) * secondsDay;
 
       return {
         ...proposal,
-        date,
         startTimestamp,
+        endTimestamp: startTimestamp + timestampDelta,
       };
     })
   );
 
-  return formattedAllProposalsWithTimestamp;
+  return formattedAllProposalsWithTimestamp.sort(
+    (a, b) => b.startTimestamp - a.startTimestamp
+  );
 };
 
 export default function useAllProposalData() {
