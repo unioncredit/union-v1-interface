@@ -7,17 +7,20 @@ import { formatUnits } from "@ethersproject/units";
 import useSWR from "swr";
 import useReadProvider from "hooks/useReadProvider";
 
-const getUnionInflationPerBlock =
-  (comptroller: Contract, userContract: Contract) =>
-  async (_: any, decimals: BigNumber) => {
-    const totalStaked: BigNumber = await userContract.totalStaked();
-    const totalFrozen: BigNumber = await userContract.totalFrozen();
-    const effectiveTotalStake: BigNumber = totalStaked.sub(totalFrozen);
+const getUnionInflationPerBlock = async (
+  _: any,
+  decimals: BigNumber,
+  comptroller: Contract,
+  userContract: Contract
+) => {
+  const totalStaked: BigNumber = await userContract.totalStaked();
+  const totalFrozen: BigNumber = await userContract.totalFrozen();
+  const effectiveTotalStake: BigNumber = totalStaked.sub(totalFrozen);
 
-    const a = await comptroller.inflationPerBlock(effectiveTotalStake);
+  const a = await comptroller.inflationPerBlock(effectiveTotalStake);
 
-    return formatUnits(a, decimals);
-  };
+  return formatUnits(a, decimals);
+};
 
 export default function useUnionInflationPerBlock() {
   const readProvider = useReadProvider();
@@ -26,8 +29,11 @@ export default function useUnionInflationPerBlock() {
   const { data: decimals } = useUnionDecimals();
 
   const shouldFetch = !!comptroller && !!userContract && !!decimals;
+
   return useSWR(
-    shouldFetch ? ["unionInflationPerBlock", decimals] : null,
-    getUnionInflationPerBlock(comptroller, userContract)
+    shouldFetch
+      ? ["unionInflationPerBlock", decimals, comptroller, userContract]
+      : null,
+    getUnionInflationPerBlock
   );
 }
