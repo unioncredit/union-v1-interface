@@ -1,9 +1,8 @@
 import { BigNumber } from "@ethersproject/bignumber";
-import { Contract, EventFilter, Event } from "@ethersproject/contracts";
+import { Contract, EventFilter } from "@ethersproject/contracts";
 import useComptrollerContract from "hooks/contracts/useComptrollerContract";
 import useUnionDecimals from "hooks/useUnionDecimals";
 import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import { BLOCK_SPEED } from "constants/variables";
 import useReadProvider from "hooks/useReadProvider";
@@ -12,6 +11,7 @@ import useChainId from "hooks/useChainId";
 
 // Calculates average reward distributed per block in past week
 // avg = total_reward_per_week / total_blocks_per_week
+// not reasonable to assume we will ever pull this in any sort of timely manner.
 const getAverageInflationPerBlock =
   (comptroller: Contract) =>
   async (_: any, decimals: BigNumber, provider: any, chainId: number) => {

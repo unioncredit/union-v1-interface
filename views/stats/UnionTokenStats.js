@@ -10,10 +10,11 @@ function useUnionStatsView() {
     comptrollerUnionBalance,
     isUnionTransferPaused,
     unionInflationPerBlock,
-    averageInflationPerBlock,
     halfDecayPoint,
     unionPerDAIStaked,
   } = useUnionTokenStats();
+
+  const blocksPerDay = 5760;
 
   return [
     { label: "Total supply", value: unionValue(totalSupply) },
@@ -28,13 +29,15 @@ function useUnionStatsView() {
     },
     {
       label: "Inflation per Block",
-      value: unionValue(unionInflationPerBlock, 4),
+      value: unionValue(unionInflationPerBlock, 8),
     },
     {
-      label: "Weekly average UPB",
-      value: unionValue(averageInflationPerBlock, 6),
+      label: "Union per 1K DAI staked per day",
+      value: unionValue(
+        unionPerDAIStaked ? unionPerDAIStaked * 1000 * blocksPerDay : 0,
+        8
+      ),
     },
-    { label: "Union per DAI staked", value: unionValue(unionPerDAIStaked, 6) },
     { label: "Half decay point", value: daiValue(halfDecayPoint) },
     { label: "Transfers", value: isUnionTransferPaused ? "Off" : "On" },
   ];
