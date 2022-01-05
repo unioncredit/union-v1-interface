@@ -1,8 +1,9 @@
-import useENSName from "hooks/useENSName";
+import useENS from "hooks/useENS";
 import truncateAddress from "util/truncateAddress";
 
 export default function usePublicData(address) {
-  const ENSName = useENSName(address);
+  const ens = useENS(address);
+  const ENSName = ens.name;
   const hasENSName = !!ENSName;
 
   return {
