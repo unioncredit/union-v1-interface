@@ -44,12 +44,10 @@ export default function ProposalView() {
     status,
     blockNumber,
     pid,
-    id: txHashId,
+    hash,
   } = !!data && data;
 
   const isLoading = !data;
-
-  const txHash = txHashId?.split("-")[0];
 
   return (
     <View>
@@ -98,7 +96,7 @@ export default function ProposalView() {
             )}
             <Box mt="16px">
               <a
-                href={getEtherscanLink(chainId, txHash, "TRANSACTION")}
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
                 target="_blank"
                 rel="noreferrer"
               >
