@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 // https://twitter.com/frolic <- what a legend
 const apiUrl = "https://api.ensideas.com/ens/resolve/";
@@ -11,10 +11,9 @@ async function fetchENS(_, address) {
 }
 
 export default function useENS(address) {
-  const resp = useSWR(address ? ["ENS", address] : null, fetchENS, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
+  address = address?.toLowerCase();
+  const resp = useSWRImmutable(address ? ["ENS", address] : null, fetchENS, {
+    dedupingInterval: 100000,
   });
 
   return resp.data || {};

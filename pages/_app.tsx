@@ -56,6 +56,7 @@ export default function UnionApp({ Component, pageProps }: AppProps) {
           revalidateOnFocus: true,
           revalidateOnReconnect: false,
           revalidateOnMount: true,
+          dedupingInterval: 5000,
         }}
       >
         <Web3ReactProvider getLibrary={getLibrary}>
