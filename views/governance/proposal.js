@@ -22,9 +22,14 @@ import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 
 import createArray from "util/createArray";
+import getEtherscanLink from "util/getEtherscanLink";
+import useChainId from "hooks/useChainId";
 
 export default function ProposalView() {
+  const chainId = useChainId();
+
   const { query } = useRouter();
+
   const { id } = query;
 
   const data = useProposalData(id);
@@ -38,10 +43,13 @@ export default function ProposalView() {
     details = [],
     status,
     blockNumber,
-    displayId,
+    pid,
+    id: txHashId,
   } = !!data && data;
 
   const isLoading = !data;
+
+  const txHash = txHashId?.split("-")[0];
 
   return (
     <View>
@@ -66,7 +74,7 @@ export default function ProposalView() {
         <Row>
           <Col md={8}>
             <Text size="large" mb="12px" grey={500}>
-              UIP-{displayId}
+              UIP-{id}
             </Text>
             {isLoading ? (
               <Skeleton height={20} width={280} mb="16px" shimmer />
@@ -88,6 +96,15 @@ export default function ProposalView() {
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
+            <Box mt="16px">
+              <a
+                href={getEtherscanLink(chainId, txHash, "TRANSACTION")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="pill" label="View bytecode" />
+              </a>
+            </Box>
             <Box direction="vertical" mt="24px">
               <Heading level={3}>Description</Heading>
               {isLoading ? (
@@ -148,9 +165,9 @@ export default function ProposalView() {
               forCount={forCount}
               againstCount={againstCount}
               status={status}
-              proposalId={id}
+              proposalId={pid}
             />
-            <ProposalHistoryCard id={id} blockNumber={blockNumber} />
+            <ProposalHistoryCard id={pid} blockNumber={blockNumber} />
           </Col>
         </Row>
       </Grid>

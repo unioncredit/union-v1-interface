@@ -26,13 +26,13 @@ const getAllProposalData = async (
 ) => {
   const allProposals = await Promise.all(
     formattedEvents.map(async (event) => {
-      return await govContract.proposals(event.id);
+      return await govContract.proposals(event.pid);
     })
   );
 
   const allProposalStates = await Promise.all(
     formattedEvents.map(async (event) => {
-      return await govContract.state(event.id);
+      return await govContract.state(event.pid);
     })
   );
 
@@ -44,7 +44,6 @@ const getAllProposalData = async (
 
       return {
         ...formattedEvents[i],
-        id: proposal?.id.toString(),
         title:
           String(formattedEvents[i].description)
             ?.replace(/\\{1,2}n/g, "\n")
@@ -56,15 +55,15 @@ const getAllProposalData = async (
             ?.split("\n")
             ?.slice(2)
             ?.join("\n\n") || "No description",
-        proposer: proposal?.proposer,
+        proposer: proposal.proposer,
         status: ProposalStateStrings[allProposalStates[i]] || "Undetermined",
-        forCount: parseFloat(formatUnits(proposal?.forVotes.toString(), 18)),
+        forCount: parseFloat(formatUnits(proposal.forVotes.toString(), 18)),
         againstCount: parseFloat(
-          formatUnits(proposal?.againstVotes.toString(), 18)
+          formatUnits(proposal.againstVotes.toString(), 18)
         ),
-        startBlock: parseInt(proposal?.startBlock?.toString()),
-        endBlock: parseInt(proposal?.endBlock?.toString()),
-        eta: parseInt(proposal?.eta?.toString()),
+        startBlock: parseInt(proposal.startBlock.toString()),
+        endBlock: parseInt(proposal.endBlock.toString()),
+        eta: parseInt(proposal.eta.toString()),
         details: formattedEvents[i].details,
         type: "onchain",
       };

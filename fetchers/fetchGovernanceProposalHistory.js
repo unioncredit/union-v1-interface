@@ -12,7 +12,7 @@ const query = gql`
   }
 `;
 
-export default async function fetchGovernanceProposals(chainId, pid) {
+export default async function fetchGovernanceProposalUpdates(chainId, pid) {
   const variables = {
     where: {
       pid: pid.toString(),

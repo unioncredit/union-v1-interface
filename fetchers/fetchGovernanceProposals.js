@@ -7,6 +7,7 @@ export default async function fetchGovernanceProposals(chainId) {
     {
       proposals(first: 999) {
         id
+        pid
         proposer
         description
         targets
@@ -20,10 +21,15 @@ export default async function fetchGovernanceProposals(chainId) {
 
   // reverse events to get them from newest to oldest
   const formattedEventData = logs.proposals
-    .map((log, i) => {
+    .map((log) => {
+      const hashId = log.id.split("-");
+      const id = String(Number(hashId[1]) + 1);
+      const hash = hashId[0];
+
       return {
         ...log,
-        displayId: i + 1,
+        id,
+        hash,
         description: log.description,
         details: log.targets.map((target, i) => {
           const signature = log.signatures[i];
