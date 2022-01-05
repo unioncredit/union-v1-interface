@@ -22,9 +22,14 @@ import useProposalData from "hooks/governance/useProposalData";
 import Link from "next/link";
 
 import createArray from "util/createArray";
+import getEtherscanLink from "util/getEtherscanLink";
+import useChainId from "hooks/useChainId";
 
 export default function ProposalView() {
+  const chainId = useChainId();
+
   const { query } = useRouter();
+
   const { id } = query;
 
   const data = useProposalData(id);
@@ -38,7 +43,8 @@ export default function ProposalView() {
     details = [],
     status,
     blockNumber,
-    displayId,
+    pid,
+    hash,
   } = !!data && data;
 
   const isLoading = !data;
@@ -48,7 +54,7 @@ export default function ProposalView() {
       <Grid>
         <Row>
           <Col>
-            <Box mb="40px">
+            <Box mb="30px">
               <Link href="/governance/proposals">
                 <Button
                   variant="lite"
@@ -65,13 +71,13 @@ export default function ProposalView() {
         </Row>
         <Row>
           <Col md={8}>
-            <Heading level={2} mb="8px" grey={400}>
-              UIP-{displayId}
-            </Heading>
+            <Text size="large" mb="12px" grey={500}>
+              UIP-{id}
+            </Text>
             {isLoading ? (
               <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
-              <Heading size="xlarge" mb="16px">
+              <Heading size="xlarge" mb="12px" grey={800}>
                 {title}
               </Heading>
             )}
@@ -82,16 +88,23 @@ export default function ProposalView() {
               </>
             ) : (
               <>
-                <Label as="p" size="small">
-                  Proposed by
+                <Label as="p" size="small" grey={400}>
+                  PROPOSED BY
                 </Label>
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
+            <Box mt="16px">
+              <a
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="pill" label="View bytecode" />
+              </a>
+            </Box>
             <Box direction="vertical" mt="24px">
-              <Heading level={3} mb="12px">
-                Description
-              </Heading>
+              <Heading level={3}>Description</Heading>
               {isLoading ? (
                 createArray(3).map((_, i) => (
                   <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
@@ -104,7 +117,16 @@ export default function ProposalView() {
                         <Text as="a" {...props} color="blue600" />
                       </Link>
                     ),
-                    paragraph: (props) => <Text {...props} />,
+                    heading: (props) => (
+                      <Text
+                        size="large"
+                        grey={800}
+                        {...props}
+                        mb="8px"
+                        mt="24px"
+                      />
+                    ),
+                    paragraph: (props) => <Text {...props} mb="8px" />,
                     listItem: (props) => <Text as="li" {...props} />,
                   }}
                 >
@@ -141,9 +163,9 @@ export default function ProposalView() {
               forCount={forCount}
               againstCount={againstCount}
               status={status}
-              proposalId={id}
+              proposalId={pid}
             />
-            <ProposalHistoryCard id={id} blockNumber={blockNumber} />
+            <ProposalHistoryCard id={pid} blockNumber={blockNumber} />
           </Col>
         </Row>
       </Grid>
