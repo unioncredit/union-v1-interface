@@ -11,7 +11,7 @@ async function fetchENS(_, address) {
 }
 
 export default function useENS(address) {
-  address = address?.toLowerCase();
+  address = address && address.toLowerCase && address.toLowerCase();
   const resp = useSWRImmutable(address ? ["ENS", address] : null, fetchENS, {
     dedupingInterval: 100000,
   });
