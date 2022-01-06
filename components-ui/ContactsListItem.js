@@ -4,9 +4,11 @@ import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "constants/app";
 import format from "util/formatValue";
+import truncateName from "util/truncateName";
 
 export function ContactsListItem(props) {
-  const { address, trust, onClick, isOverdue, variant, active } = props;
+  const { address, trust, onClick, isOverdue, variant, active, isMember } =
+    props;
   const { name, ENSName, BoxName, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -32,7 +34,7 @@ export function ContactsListItem(props) {
         <Box align="center">
           <Avatar address={address} />
           <Text grey={700} ml="8px">
-            {primaryLabel}
+            {truncateName(primaryLabel)}
           </Text>
         </Box>
       </TableCell>
@@ -43,7 +45,9 @@ export function ContactsListItem(props) {
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
         <TableCell align="right" className="hide-lt-600">
-          {isOverdue ? (
+          {!isMember ? (
+            <Badge color="grey" label="Not a member" />
+          ) : isOverdue ? (
             <Badge color="red" label="Overdue" />
           ) : (
             <Badge color="blue" label="Healthy" />
