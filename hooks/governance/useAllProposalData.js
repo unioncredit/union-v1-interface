@@ -5,6 +5,7 @@ import { useDataFromEventLogs } from "./useDataFromEventLogs";
 import useReadProvider from "hooks/useReadProvider";
 import useChainId from "hooks/useChainId";
 import { BLOCK_SPEED } from "constants/variables";
+import getDateFromBlock from "util/getDateFromBlock";
 
 const ProposalStateStrings = [
   "pending",
@@ -38,7 +39,11 @@ const getAllProposalData = async (
 
   const formattedAllProposals = allProposals
     .map((proposal, i) => {
-      if (!proposal || !allProposalStates[i] || !formattedEvents[i]) {
+      if (
+        !proposal ||
+        typeof allProposalStates[i] !== "number" ||
+        !formattedEvents[i]
+      ) {
         return false;
       }
 
@@ -70,35 +75,24 @@ const getAllProposalData = async (
     })
     .filter(Boolean);
 
-  const currentBlock = await library.getBlockNumber();
-
   const formattedAllProposalsWithTimestamp = await Promise.all(
     formattedAllProposals.map(async (proposal) => {
-      const startBlock = await library.getBlock(proposal.startBlock);
-      const startTimestamp = startBlock.timestamp.toString();
+      const startTimestamp = await getDateFromBlock(
+        library,
+        proposal.startBlock,
+        BLOCK_SPEED[chainId]
+      );
 
-      if (proposal.endBlock < currentBlock) {
-        const endBlock = await library.getBlock(proposal.endBlock);
-        const endTimestamp = endBlock.timestamp.toString();
-
-        return {
-          ...proposal,
-          startTimestamp,
-          endTimestamp,
-        };
-      }
-
-      const blockPerDay = BLOCK_SPEED[chainId] * 60 * 60;
-
-      const secondsDay = 60 * 60 * 24; // 86400
-
-      const blockDelta = proposal.endBlock - currentBlock;
-      const timestampDelta = (blockDelta / blockPerDay) * secondsDay;
+      const endTimestamp = await getDateFromBlock(
+        library,
+        proposal.endBlock,
+        BLOCK_SPEED[chainId]
+      );
 
       return {
         ...proposal,
         startTimestamp,
-        endTimestamp: startTimestamp + timestampDelta,
+        endTimestamp,
       };
     })
   );
