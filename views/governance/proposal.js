@@ -71,9 +71,6 @@ export default function ProposalView() {
         </Row>
         <Row>
           <Col md={8}>
-            <Text size="large" mb="12px" grey={500}>
-              UIP-{id}
-            </Text>
             {isLoading ? (
               <Skeleton height={20} width={280} mb="16px" shimmer />
             ) : (
