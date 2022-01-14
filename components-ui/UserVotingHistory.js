@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Label, EmptyState, Box, Badge } from "union-ui";
 import ExtenalInline from "union-ui/lib/icons/externalinline.svg";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
@@ -14,16 +15,20 @@ export function UserVotingHistory({ address }) {
   return (
     <Box direction="vertical">
       {votes.map((vote, i) => (
-        <Box key={i} fluid justify="space-between">
-          <Label as="p" mb="4px" grey={400}>
-            {vote.title}
-            <ExtenalInline />
-          </Label>
-          <Badge
-            color={vote.receipt.support ? "green" : "red"}
-            label={vote.receipt.support ? "For" : "Against"}
-          />
-        </Box>
+        <Link key={i} href={`/proposals/${vote.id}`}>
+          <a>
+            <Box fluid justify="space-between">
+              <Label as="p" mb="4px" grey={400}>
+                {vote.title}
+                <ExtenalInline />
+              </Label>
+              <Badge
+                color={vote.receipt.support ? "green" : "red"}
+                label={vote.receipt.support ? "For" : "Against"}
+              />
+            </Box>
+          </a>
+        </Link>
       ))}
     </Box>
   );

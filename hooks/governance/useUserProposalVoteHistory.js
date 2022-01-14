@@ -8,7 +8,7 @@ const getProposalVoteHistory =
   (govContract, proposals) => async (_, address) => {
     const allProposalsWithReceipt = await Promise.all(
       proposals.map(async (proposal) => {
-        const receipt = await govContract.getReceipt(proposal.id, address);
+        const receipt = await govContract.getReceipt(proposal.pid, address);
 
         const formattedReceipt = {
           hasVoted: receipt.hasVoted,
