@@ -9,7 +9,7 @@ import {
   EmptyState,
 } from "union-ui";
 import Link from "next/link";
-import { toPercent } from "util/numbers";
+import { roundDown, toPercent } from "util/numbers";
 import createArray from "util/createArray";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
@@ -66,7 +66,7 @@ function ProposalsTableRow({
               label={status.slice(0, 1).toUpperCase() + status.slice(1)}
               mr="8px"
             />
-            {toPercent(percentageFor)} yes &bull;{" "}
+            {toPercent(roundDown(percentageFor))} yes &bull;{" "}
             {dayjs(Number(startTimestamp) * 1000).fromNow()}
           </Label>
         </TableCell>
