@@ -34,6 +34,12 @@ const statusColorMap = {
   cancelled: "red",
 };
 
+const statusText = {
+  active: "Live",
+  executed: "Executed",
+  cancelled: "Cancelled",
+};
+
 export function VotingCard({ forCount, againstCount, proposalId, status }) {
   const { account, library } = useWeb3React();
   const { data: quorum } = useProposalQuorum();
@@ -69,12 +75,14 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
 
   const votedAgainst = voteReceipt?.hasVoted && !voteReceipt?.support;
 
+  const statusLabel = statusText[status] || status;
+
   return (
     <Card mb="16px">
       <Card.Header
         title="Voting"
         action={
-          <Badge label={status} color={statusColorMap[status] || "blue"} />
+          <Badge label={statusLabel} color={statusColorMap[status] || "blue"} />
         }
       />
       <Card.Body>
@@ -104,7 +112,7 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
             value={
               <Bar
                 size="large"
-                percentage={percentageFor}
+                percentage={totalVotePercent * 100}
                 marker={quorumPercent * 100}
               />
             }

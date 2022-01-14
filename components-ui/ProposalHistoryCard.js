@@ -10,7 +10,7 @@ function parseData(data) {
     if (item.action === "queued") {
       return { title: "Queued", subTitle };
     } else if (item.action === "proposed") {
-      return { title: "Created", subTitle };
+      return { title: "Proposed", subTitle };
     } else if (item.action === "executed") {
       return { title: "Executed", subTitle };
     } else {
