@@ -23,7 +23,7 @@ export default function GovernanceView() {
               <GovernanceStatsCard />
             </Box>
             <Box mt="24px">
-              <UserVotingOverview address={account} />
+              {account && <UserVotingOverview address={account} />}
             </Box>
             <Box mt="24px">
               <RecentProposals data={data?.slice(0, 3)} />
