@@ -166,7 +166,12 @@ export default function ProposalView() {
               endTimestamp={endTimestamp}
               startTimestamp={startTimestamp}
             />
-            <ProposalHistoryCard id={pid} blockNumber={blockNumber} />
+            <ProposalHistoryCard
+              id={pid}
+              blockNumber={blockNumber}
+              endTimestamp={endTimestamp}
+              startTimestamp={startTimestamp}
+            />
           </Col>
         </Row>
       </Grid>
