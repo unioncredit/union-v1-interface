@@ -45,6 +45,8 @@ export default function ProposalView() {
     blockNumber,
     pid,
     hash,
+    endTimestamp,
+    startTimestamp,
   } = !!data && data;
 
   const isLoading = !data;
@@ -161,6 +163,8 @@ export default function ProposalView() {
               againstCount={againstCount}
               status={status}
               proposalId={pid}
+              endTimestamp={endTimestamp}
+              startTimestamp={startTimestamp}
             />
             <ProposalHistoryCard id={pid} blockNumber={blockNumber} />
           </Col>

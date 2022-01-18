@@ -22,6 +22,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
+import dayjs from "dayjs";
 
 const VoteType = {
   FOR: "for",
@@ -29,18 +30,21 @@ const VoteType = {
 };
 
 const statusColorMap = {
-  executed: "green",
   active: "purple",
+  executed: "green",
   cancelled: "red",
+  succeeded: "green",
+  queued: "blue",
 };
 
-const statusText = {
-  active: "Live",
-  executed: "Executed",
-  cancelled: "Cancelled",
-};
-
-export function VotingCard({ forCount, againstCount, proposalId, status }) {
+export function VotingCard({
+  forCount,
+  againstCount,
+  proposalId,
+  status,
+  startTimestamp,
+  endTimestamp,
+}) {
   const { account, library } = useWeb3React();
   const { data: quorum } = useProposalQuorum();
   const { data: totalSupply } = useGovernanceTokenSupply();
@@ -74,6 +78,15 @@ export function VotingCard({ forCount, againstCount, proposalId, status }) {
   const votedFor = voteReceipt?.hasVoted && voteReceipt?.support;
 
   const votedAgainst = voteReceipt?.hasVoted && !voteReceipt?.support;
+
+  const statusText = {
+    pending: `Live in ${dayjs(Number(startTimestamp) * 1000).fromNow()}`,
+    active: `Live ${dayjs(Number(endTimestamp) * 1000).fromNow()}`,
+    executed: "Executed",
+    cancelled: "Cancelled",
+    succeeded: "Succeeded",
+    queued: "Queued",
+  };
 
   const statusLabel = statusText[status] || status;
 
