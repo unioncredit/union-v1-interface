@@ -37,7 +37,7 @@ export const Navigation = ({ mobile }) => {
   }, [isMember, pathname]);
 
   const handleLogoClick = () => {
-    router.push("/");
+    router.push(isMember ? "/credit" : "/");
   };
 
   return (

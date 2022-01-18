@@ -1,17 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import useIsMember from "hooks/data/useIsMember";
 import { useRouter } from "next/router";
-import { newRidgeState } from "react-ridge-state";
-
-const memberLoadingState = newRidgeState(true);
-
-export function useIsMemberLoading() {
-  return memberLoadingState.useValue();
-}
 
 export default function useMemberCheck() {
-  const isLoading = useIsMemberLoading();
+  const [isLoading, setIsLoading] = useState(true);
   const { account } = useWeb3React();
   const router = useRouter();
   const { data: isMember } = useIsMember();
@@ -30,11 +23,11 @@ export default function useMemberCheck() {
         }
       }
 
-      memberLoadingState.set(false);
+      setIsLoading(false);
     }
 
     account && typeof isMember !== "undefined" && load();
   }, [pathname, isMember, account]);
 
-  return { isLoading };
+  return { isLoading, isMember };
 }
