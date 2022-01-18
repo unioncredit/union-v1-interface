@@ -8,13 +8,13 @@ function parseData(data) {
     const subTitle = new Date(Number(item.timestamp * 1000)).toDateString();
 
     if (item.action === "queued") {
-      return { title: "Queued for Execution", subTitle };
+      return { title: "Queued for Execution", subTitle, color: "blue" };
     } else if (item.action === "proposed") {
-      return { title: "Proposed", subTitle };
+      return { title: "Proposed", subTitle, color: "blue" };
     } else if (item.action === "executed") {
-      return { title: "Executed", subTitle };
+      return { title: "Executed", subTitle, color: "green" };
     } else if (item.action === "votingStarted") {
-      return { title: "Queued For Voting", subTitle };
+      return { title: "Queued For Voting", subTitle, color: "purple" };
     } else {
       return {};
     }
