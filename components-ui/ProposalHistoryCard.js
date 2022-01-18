@@ -1,20 +1,24 @@
 import useProposalHistory from "hooks/governance/useProposalHistory";
+import useChainId from "hooks/useChainId";
 import { Heading, Card, Steps } from "union-ui";
+import getEtherScanLink from "util/getEtherscanLink";
 
-function parseData(data) {
+function parseData(chainId, data) {
   if (!data) return [];
 
   return data.map((item) => {
     const subTitle = new Date(Number(item.timestamp * 1000)).toDateString();
+    const hash = item.id ? item.id.split("-")?.[0] : false;
+    const href = hash && getEtherScanLink(chainId, hash, "TRANSACTION");
 
     if (item.action === "queued") {
-      return { title: "Queued for Execution", subTitle, color: "blue" };
+      return { title: "Queued for Execution", subTitle, color: "blue", href };
     } else if (item.action === "proposed") {
-      return { title: "Proposed", subTitle, color: "blue" };
+      return { title: "Proposed", subTitle, color: "blue", href };
     } else if (item.action === "executed") {
-      return { title: "Executed", subTitle, color: "green" };
+      return { title: "Executed", subTitle, color: "green", href };
     } else if (item.action === "votingStarted") {
-      return { title: "Queued For Voting", subTitle, color: "purple" };
+      return { title: "Queued For Voting", subTitle, color: "purple", href };
     } else {
       return {};
     }
@@ -23,6 +27,7 @@ function parseData(data) {
 
 export function ProposalHistoryCard({ id, startTimestamp }) {
   const { data = [] } = useProposalHistory(id);
+  const chainId = useChainId();
 
   const hasHistory = data && data.length > 0;
 
@@ -42,7 +47,11 @@ export function ProposalHistoryCard({ id, startTimestamp }) {
     <Card>
       <Card.Body>
         <Heading>History</Heading>
-        {hasHistory ? <Steps items={parseData(allData)} /> : "No history"}
+        {hasHistory ? (
+          <Steps items={parseData(chainId, allData)} />
+        ) : (
+          "No history"
+        )}
       </Card.Body>
     </Card>
   );
