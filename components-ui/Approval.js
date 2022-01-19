@@ -34,7 +34,7 @@ export function Approval({
   disabled,
   label = "Approve",
   permitType = PermitType.DAI,
-  approvalType: initialApprovalType = ApprovalTypes.SIGNATURE,
+  approvalType: initialApprovalType = ApprovalTypes.TRANSACTION,
   approvalTypeText = defaultApprovalTypeText,
 }) {
   const {
