@@ -80,7 +80,7 @@ export function VotingCard({
   const votedAgainst = voteReceipt?.hasVoted && !voteReceipt?.support;
 
   const statusText = {
-    pending: `Live in ${dayjs(Number(startTimestamp) * 1000).fromNow()}`,
+    pending: `Live ${dayjs(Number(startTimestamp) * 1000).fromNow()}`,
     active: `Live ${dayjs(Number(endTimestamp) * 1000).fromNow()}`,
     executed: "Executed",
     cancelled: "Cancelled",

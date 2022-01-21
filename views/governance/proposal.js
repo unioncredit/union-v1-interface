@@ -9,17 +9,20 @@ import {
   Label,
   Skeleton,
 } from "union-ui";
-import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
+import Link from "next/link";
+import { Fragment } from "react";
+import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
+import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
+
 import {
   VotingCard,
   View,
   AddressLabel,
   ProposalHistoryCard,
 } from "components-ui";
-import { useRouter } from "next/router";
 import useProposalData from "hooks/governance/useProposalData";
-import Link from "next/link";
+import { defaultAbiCoder } from "@ethersproject/abi";
 
 import createArray from "util/createArray";
 import getEtherscanLink from "util/getEtherscanLink";
@@ -40,13 +43,15 @@ export default function ProposalView() {
     proposer,
     forCount,
     againstCount,
-    details = [],
     status,
     blockNumber,
     pid,
     hash,
     endTimestamp,
     startTimestamp,
+    targets = [],
+    signatures = [],
+    calldatas = [],
   } = !!data && data;
 
   const isLoading = !data;
@@ -146,15 +151,46 @@ export default function ProposalView() {
                       mb="8px"
                     />
                   ))
-                : details.map((detail) => (
-                    <Text
-                      w="100%"
-                      key={`${detail.target}${detail.functionSig}${detail.callData}`}
-                      style={{ wordWrap: "break-word" }}
-                    >
-                      {detail.target}.{detail.functionSig}({detail.callData})
-                    </Text>
-                  ))}
+                : targets.map((target, i) => {
+                    const signature = signatures[i];
+                    const calldata = calldatas[i];
+                    const args = signature
+                      .match(/(?<=\().*(?=\))/)?.[0]
+                      .split(",");
+
+                    const decoded =
+                      args &&
+                      calldata &&
+                      defaultAbiCoder.decode(args, calldata);
+                    const argumentString =
+                      decoded &&
+                      decoded.map((item) => item.toString()).join(",");
+
+                    return (
+                      <Fragment key={`${target}${signature}${calldata}`}>
+                        <Label
+                          as="a"
+                          w="100%"
+                          m={0}
+                          grey={800}
+                          href={getEtherscanLink(chainId, target, "ADDRESS")}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ wordWrap: "break-word" }}
+                        >
+                          Contract: {target}
+                        </Label>
+                        <Label
+                          as="p"
+                          w="100%"
+                          style={{ wordWrap: "break-word" }}
+                        >
+                          Function: {signature.replace(/(\(=?)(.*)$/, "")}(
+                          {argumentString})
+                        </Label>
+                      </Fragment>
+                    );
+                  })}
             </Box>
           </Col>
           <Col md={4}>

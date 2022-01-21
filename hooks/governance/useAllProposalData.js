@@ -37,6 +37,12 @@ const getAllProposalData = async (
     })
   );
 
+  const allProposalDetails = await Promise.all(
+    formattedEvents.map(async (event) => {
+      return await govContract.getActions(event.pid);
+    })
+  );
+
   const formattedAllProposals = allProposals
     .map((proposal, i) => {
       if (
@@ -49,6 +55,9 @@ const getAllProposalData = async (
 
       return {
         ...formattedEvents[i],
+        signatures: allProposalDetails[i].signatures,
+        calldatas: allProposalDetails[i].calldatas,
+        targets: allProposalDetails[i].targets,
         title:
           String(formattedEvents[i].description)
             ?.replace(/\\{1,2}n/g, "\n")
@@ -69,7 +78,6 @@ const getAllProposalData = async (
         startBlock: parseInt(proposal.startBlock.toString()),
         endBlock: parseInt(proposal.endBlock.toString()),
         eta: parseInt(proposal.eta.toString()),
-        details: formattedEvents[i].details,
         type: "onchain",
       };
     })
