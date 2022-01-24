@@ -35,6 +35,7 @@ const statusColorMap = {
   cancelled: "red",
   succeeded: "green",
   queued: "blue",
+  defeated: "red",
 };
 
 export function VotingCard({
@@ -80,12 +81,17 @@ export function VotingCard({
   const votedAgainst = voteReceipt?.hasVoted && !voteReceipt?.support;
 
   const statusText = {
-    pending: `Live ${dayjs(Number(startTimestamp) * 1000).fromNow()}`,
-    active: `Live ${dayjs(Number(endTimestamp) * 1000).fromNow()}`,
+    pending: `Voting begins in ${dayjs(Number(startTimestamp) * 1000).fromNow(
+      true
+    )}`,
+    active: `Voting ends in ${dayjs(Number(endTimestamp) * 1000).fromNow(
+      true
+    )}`,
     executed: "Executed",
     cancelled: "Cancelled",
     succeeded: "Succeeded",
     queued: "Queued",
+    defeated: "Defeated",
   };
 
   const statusLabel = statusText[status] || status;
