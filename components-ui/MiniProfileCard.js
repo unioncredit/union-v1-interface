@@ -32,10 +32,10 @@ export function MiniProfileCard({ address }) {
             )}
           </Box>
         ) : (
-          <Box>
+          <Box mb="16px" mt="2px">
             <Skeleton variant="circle" size={32} grey={200} mr="8px" />
             <Box direction="vertical">
-              <Skeleton width={70} height={16} grey={200} mb="4px" />
+              <Skeleton width={80} height={18} grey={200} mb="4px" />
               <Skeleton width={70} height={12} grey={100} />
             </Box>
             <Skeleton width={93} height={24} grey={200} ml="auto" />
