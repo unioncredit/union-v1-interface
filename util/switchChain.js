@@ -19,7 +19,7 @@ export const options = [
     label: "Kovan",
     buttonVariant: "secondary",
     description:
-      "Union on mainnet is more frequently used by accounts staking and borrowing larger amounts of DAI.",
+      "Use a test version of Ethereum to try out Union and learn more about how it works",
     imageSrc: "/images/kovan.png",
     chainId: 42,
     networkData: {
