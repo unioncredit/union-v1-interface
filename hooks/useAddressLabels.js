@@ -7,7 +7,7 @@ const fetcher = () => {
 };
 
 export default function useAddressLabels() {
-  const { data, mutate, revalidate } = useSWR("labels", fetcher);
+  const { data, mutate } = useSWR("labels", fetcher);
 
   const [, setValue] = useLocalStorage("labels", {});
 
@@ -37,7 +37,7 @@ export default function useAddressLabels() {
       await mutate({ ...data, [key]: label });
     }
 
-    await revalidate();
+    await mutate();
   };
 
   /**
@@ -54,5 +54,5 @@ export default function useAddressLabels() {
     return undefined;
   };
 
-  return { labels: data, setLabel, getLabel, revalidate };
+  return { labels: data, setLabel, getLabel };
 }

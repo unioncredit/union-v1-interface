@@ -1,0 +1,11 @@
+.addressInput {
+  min-height: 114px;
+}
+
+.ensIconValid path {
+  fill: #3b82f6;
+}
+
+.ensIconError path {
+  fill: #ef4444;
+}

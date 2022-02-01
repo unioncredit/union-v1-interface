@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -17,6 +18,7 @@ import errorMessages from "util/errorMessages";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
+import validateAddress from "util/validateAddress";
 import { Dai, MiniProfileCard, Modal, AddressInput } from "components-ui";
 
 export const VOUCH_MODAL = "vouch-modal";
@@ -25,7 +27,7 @@ export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export function VouchModal() {
   const { query } = useRouter();
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
   const { close } = useVouchModal();
   const addActivity = useAddActivity();
   const { data: trustData, mutate: updateTrustData } = useTrustData();
@@ -33,12 +35,24 @@ export function VouchModal() {
 
   const adjustTrust = useAdjustTrust();
 
-  const { formState, handleSubmit, register, errors, watch, setValue } =
-    useForm({
-      mode: "onChange",
-      reValidateMode: "onChange",
-    });
+  const {
+    formState,
+    handleSubmit,
+    register,
+    errors,
+    watch,
+    setValue,
+    setError,
+    clearErrors,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
   const { isDirty, isSubmitting } = formState;
+
+  useEffect(() => {
+    register("address");
+  }, []);
 
   const watchAddress = watch("address");
   const address = isAddress(watchAddress) && watchAddress;
@@ -76,6 +90,31 @@ export function VouchModal() {
     }
   };
 
+  const validateAddressInput = (address) => {
+    if (!address) return errorMessages.required;
+    if (address === account) return errorMessages.notVouchSelf;
+    if (address.startsWith("0x")) return validateAddress(address);
+    if (address.endsWith(".eth")) return true;
+    return errorMessages.validAddress;
+  };
+
+  const handleAddressInputChange = (value) => {
+    clearErrors("address");
+
+    const setAddress = (address) => {
+      setValue("address", address, { shouldDirty: true, shouldValidate: true });
+    };
+
+    const addressError = validateAddressInput(value);
+    if (addressError !== true) {
+      setError("address", { message: addressError });
+      setAddress("");
+      return;
+    }
+
+    setAddress(value);
+  };
+
   const maxTrust = 25;
 
   const maxTrustData = trustData?.length >= maxTrust;
@@ -86,13 +125,13 @@ export function VouchModal() {
         <MiniProfileCard address={address} />
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <AddressInput
-            onChange={(value) => setValue("address", value)}
             name="address"
-            defaultValue={query?.address}
             label="Address"
-            placeholder="e.g. 0xA1e3..."
             disabled={maxTrustData}
+            placeholder="e.g. 0xA1e3..."
+            defaultValue={query?.address}
             error={errors.address?.message}
+            onChange={handleAddressInputChange}
           />
           <Box mt="8px">
             <Input

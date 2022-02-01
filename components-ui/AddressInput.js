@@ -1,34 +1,15 @@
-import { useWeb3React } from "@web3-react/core";
 import EnsIcon from "union-ui/lib/icons/ens.svg";
 import { Input, Box, Label, LoadingSpinner, Avatar } from "union-ui";
-import errorMessages from "util/errorMessages";
 
-import validateAddress from "util/validateAddress";
 import { useRef, useState } from "react";
 import { fetchENS } from "fetchers/fetchEns";
 
-export const AddressInput = ({ onChange, error, ...props }) => {
-  const { account } = useWeb3React();
+import styles from "./AddressInput.module.css";
 
+export const AddressInput = ({ onChange, error, ...props }) => {
   const timer = useRef(null);
   const [loading, setLoading] = useState(false);
   const [ensData, setEnsData] = useState(null);
-
-  const isEns = false;
-
-  const validateAddressInput = (address) => {
-    if (address === account) return errorMessages.notVouchSelf;
-
-    if (address.startsWith("0x")) {
-      return validateAddress(address);
-    }
-
-    if (address.endsWith(".eth")) {
-      return true;
-    }
-
-    return errorMessages.validAddress;
-  };
 
   const handleChange = (event) => {
     setLoading(true);
@@ -38,36 +19,54 @@ export const AddressInput = ({ onChange, error, ...props }) => {
     timer.current = setTimeout(async () => {
       const input = event.target.value;
       const ensData = await fetchENS(input);
-      if (ensData) {
-        setEnsData({ ...ensData, inputIsENS: input.endsWith(".eth") });
-        onChange && onChange(ensData.address);
-        setLoading(false);
-        return;
-      }
+      const inputIsENS = input.endsWith(".eth");
 
-      onChange && onChange(input);
+      setEnsData({ ...ensData, inputIsENS });
+
+      const formValue = inputIsENS ? ensData.address : input;
+      onChange && onChange(formValue);
       setLoading(false);
     }, 500);
   };
 
+  const inputError =
+    (!loading && error) ||
+    (ensData?.inputIsENS &&
+      !ensData.address &&
+      "ENS doesn’t resolve to an address");
+
   return (
-    <Input
-      {...props}
-      onChange={handleChange}
-      error={!loading && error}
-      suffix={isEns ? <EnsIcon /> : loading ? <LoadingSpinner /> : null}
-      caption={
-        ensData ? (
-          <Box direction="horizontal" align="center">
-            {!ensData.inputIsENS && <Avatar size={16} src={ensData.avatar} />}{" "}
-            <Label mb={0} mt={0} ml="4px">
-              {ensData.inputIsENS ? ensData.address : ensData.name}
-            </Label>
-          </Box>
-        ) : (
-          <div style={{ height: "20px" }} />
-        )
-      }
-    />
+    <div className={styles.addressInput}>
+      <Input
+        {...props}
+        onChange={handleChange}
+        error={inputError}
+        suffix={
+          loading ? (
+            <LoadingSpinner />
+          ) : ensData?.inputIsENS ? (
+            <EnsIcon
+              className={inputError ? styles.ensIconError : styles.ensIconValid}
+            />
+          ) : null
+        }
+        caption={
+          ensData ? (
+            <Box direction="horizontal" align="center" mt="4px">
+              {ensData.avatar && <Avatar size={16} src={ensData.avatar} />}{" "}
+              <Label mb={0} mt={0} ml="4px" size="small">
+                {ensData.inputIsENS
+                  ? ensData.address
+                  : ensData.name
+                  ? ensData.name
+                  : "No ENS Registered"}
+              </Label>
+            </Box>
+          ) : (
+            <div style={{ height: "22px" }} />
+          )
+        }
+      />
+    </div>
   );
 };
