@@ -30,10 +30,10 @@ export const AddressInput = ({ onChange, error, ...props }) => {
   };
 
   const inputError =
-    (!loading && error) ||
     (ensData?.inputIsENS &&
       !ensData.address &&
-      "ENS doesn’t resolve to an address");
+      "ENS doesn’t resolve to an address") ||
+    (!loading && error);
 
   return (
     <div className={styles.addressInput}>
