@@ -7,8 +7,8 @@ export default async function getDateFromBlock(library, block, blockspeed) {
   }
 
   const currentBlock = await library.getBlock(currentBlockNumber);
-  const blockPerDay = blockspeed * 60 * 60;
   const secondsDay = 60 * 60 * 24; // 86400
+  const blockPerDay = secondsDay / blockspeed;
   const blockDelta = block - currentBlockNumber;
   const timestampDelta = (blockDelta / blockPerDay) * secondsDay;
   return currentBlock.timestamp + timestampDelta;
