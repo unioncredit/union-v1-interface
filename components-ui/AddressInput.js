@@ -43,7 +43,9 @@ export const AddressInput = ({ onChange, error, ...props }) => {
         error={inputError}
         suffix={
           loading ? (
-            <LoadingSpinner />
+            <div className={styles.loadingSpinner}>
+              <LoadingSpinner />
+            </div>
           ) : ensData?.inputIsENS ? (
             <EnsIcon
               className={inputError ? styles.ensIconError : styles.ensIconValid}
