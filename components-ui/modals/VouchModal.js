@@ -108,7 +108,6 @@ export function VouchModal() {
     const addressError = validateAddressInput(value);
     if (addressError !== true) {
       setError("address", { message: addressError });
-      setAddress("");
       return;
     }
 
@@ -122,7 +121,7 @@ export function VouchModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
-        <MiniProfileCard address={address} />
+        <MiniProfileCard address={!errors.address?.message && address} />
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <AddressInput
             name="address"
