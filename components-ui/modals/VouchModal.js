@@ -125,7 +125,7 @@ export function VouchModal() {
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <AddressInput
             name="address"
-            label="Address"
+            label="Address or ENS"
             disabled={maxTrustData}
             placeholder="e.g. 0xA1e3..."
             defaultValue={query?.address}
