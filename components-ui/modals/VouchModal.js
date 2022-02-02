@@ -95,7 +95,7 @@ export function VouchModal() {
     if (address === account) return errorMessages.notVouchSelf;
     if (address.startsWith("0x")) return validateAddress(address);
     if (address.endsWith(".eth")) return true;
-    return errorMessages.validAddress;
+    return errorMessages.validAddressOrEns;
   };
 
   const handleAddressInputChange = (value) => {
