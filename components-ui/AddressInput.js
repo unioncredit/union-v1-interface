@@ -27,7 +27,7 @@ export const AddressInput = ({ onChange, error, ...props }) => {
       const formValue = inputIsENS ? ensData.address : input;
       onChange && onChange(formValue);
       setLoading(false);
-    }, 500);
+    }, 1000);
   };
 
   const inputError =
@@ -56,13 +56,12 @@ export const AddressInput = ({ onChange, error, ...props }) => {
         caption={
           ensData ? (
             <Box direction="horizontal" align="center" mt="4px">
-              {ensData.avatar ||
-                (ensData.address && (
-                  <Avatar
-                    size={16}
-                    src={ensData.avatar || makeBlockie(ensData.address)}
-                  />
-                ))}{" "}
+              {(ensData.avatar || ensData.address) && (
+                <Avatar
+                  size={16}
+                  src={ensData.avatar || makeBlockie(ensData.address)}
+                />
+              )}{" "}
               <Label mb={0} mt={0} ml="4px" size="small">
                 {ensData.inputIsENS
                   ? ensData.address
