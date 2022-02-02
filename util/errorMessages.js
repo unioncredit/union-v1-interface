@@ -20,6 +20,7 @@ const errorMessages = {
   validEmail: "Please enter a valid email",
   knownScam: "This address is associated with a known scam",
   validAddress: "Please input a valid Ethereum address",
+  validAddressOrEns: "Please input a valid ENS or Ethereum address",
   cantRemoveStake: "You can't remove used stake",
   notANumber: "Please input a valid number",
   maxWriteOff: "You can't write off more than debt",

@@ -1,24 +1,25 @@
-import { ModalOverlay, Box, Input, Button, Alert } from "union-ui";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
-import { useModal } from "hooks/useModal";
-import { Modal } from "components-ui";
-import validateAddress from "util/validateAddress";
-import { useWeb3React } from "@web3-react/core";
-import errorMessages from "util/errorMessages";
 import { useRouter } from "next/router";
-import { Dai, MiniProfileCard } from "components-ui";
-import { useAddActivity } from "hooks/data/useActivity";
+import { useForm } from "react-hook-form";
+import { useWeb3React } from "@web3-react/core";
+import { isAddress } from "@ethersproject/address";
+import Info from "union-ui/lib/icons/wireInfo.svg";
+import { ModalOverlay, Box, Input, Button, Alert } from "union-ui";
+
+import { useModal } from "hooks/useModal";
 import useTrustData from "hooks/data/useTrustData";
+import useAddressLabels from "hooks/useAddressLabels";
+import { useAddActivity } from "hooks/data/useActivity";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
-import getReceipt from "util/getReceipt";
 import isHash from "util/isHash";
+import getReceipt from "util/getReceipt";
+import errorMessages from "util/errorMessages";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
-import { isAddress } from "@ethersproject/address";
 import truncateAddress from "util/truncateAddress";
-import useAddressLabels from "hooks/useAddressLabels";
+import validateAddress from "util/validateAddress";
+import { Dai, MiniProfileCard, Modal, AddressInput } from "components-ui";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -26,7 +27,7 @@ export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export function VouchModal() {
   const { query } = useRouter();
-  const { account, library } = useWeb3React();
+  const { library, account } = useWeb3React();
   const { close } = useVouchModal();
   const addActivity = useAddActivity();
   const { data: trustData, mutate: updateTrustData } = useTrustData();
@@ -34,11 +35,24 @@ export function VouchModal() {
 
   const adjustTrust = useAdjustTrust();
 
-  const { formState, handleSubmit, register, errors, watch } = useForm({
+  const {
+    formState,
+    handleSubmit,
+    register,
+    errors,
+    watch,
+    setValue,
+    setError,
+    clearErrors,
+  } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
   const { isDirty, isSubmitting } = formState;
+
+  useEffect(() => {
+    register("address");
+  }, []);
 
   const watchAddress = watch("address");
   const address = isAddress(watchAddress) && watchAddress;
@@ -77,8 +91,29 @@ export function VouchModal() {
   };
 
   const validateAddressInput = (address) => {
-    if (address === account) return errorMessages.notVouchSelf;
-    return validateAddress(address);
+    if (!address) return errorMessages.required;
+    if (address.toLowerCase() === account.toLowerCase()) {
+      return errorMessages.notVouchSelf;
+    }
+    if (address.startsWith("0x")) return validateAddress(address);
+    if (address.endsWith(".eth")) return true;
+    return errorMessages.validAddressOrEns;
+  };
+
+  const handleAddressInputChange = (value) => {
+    clearErrors("address");
+
+    const setAddress = (address) => {
+      setValue("address", address, { shouldDirty: true, shouldValidate: true });
+    };
+
+    const addressError = validateAddressInput(value);
+    if (addressError !== true) {
+      setError("address", { message: addressError });
+      return;
+    }
+
+    setAddress(value);
   };
 
   const maxTrust = 25;
@@ -88,18 +123,18 @@ export function VouchModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
-        <MiniProfileCard address={address} />
+        <MiniProfileCard address={!errors.address?.message && address} />
         <form onSubmit={handleSubmit(handleNewVouch)}>
-          <Input
-            ref={register({ validate: validateAddressInput })}
+          <AddressInput
             name="address"
-            defaultValue={query?.address}
-            label="Address"
-            placeholder="e.g. 0xA1e3..."
+            label="Address or ENS"
             disabled={maxTrustData}
+            placeholder="e.g. 0xA1e3..."
+            defaultValue={query?.address}
             error={errors.address?.message}
+            onChange={handleAddressInputChange}
           />
-          <Box mt="16px">
+          <Box mt="8px">
             <Input
               ref={register}
               name="alias"

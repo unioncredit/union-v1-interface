@@ -9,7 +9,7 @@ const fetcher = () => {
 };
 
 export default function useTerms() {
-  const { data, mutate, revalidate } = useSWR("terms_and_conditions", fetcher);
+  const { data, mutate } = useSWR("terms_and_conditions", fetcher);
 
   const [, setValue] = useLocalStorage(TERM_KEY, false);
 
@@ -21,7 +21,6 @@ export default function useTerms() {
   const setConfirmTerms = async (value) => {
     setValue(value);
     await mutate(value);
-    await revalidate();
   };
 
   return { data, setConfirmTerms };

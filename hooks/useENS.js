@@ -1,13 +1,8 @@
 import useSWRImmutable from "swr/immutable";
+import { fetchENS as fetchEnsData } from "fetchers/fetchEns";
 
-// https://twitter.com/frolic <- what a legend
-const apiUrl = "https://api.ensideas.com/ens/resolve/";
-
-async function fetchENS(_, address) {
-  const resp = await fetch(apiUrl + address);
-  const json = await resp.json();
-
-  return json;
+function fetchENS(_, address) {
+  return fetchEnsData(address);
 }
 
 export default function useENS(address) {
