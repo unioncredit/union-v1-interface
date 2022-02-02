@@ -1,4 +1,5 @@
 import EnsIcon from "union-ui/lib/icons/ens.svg";
+import makeBlockie from "ethereum-blockies-base64";
 import { Input, Box, Label, LoadingSpinner, Avatar } from "union-ui";
 
 import { useRef, useState } from "react";
@@ -55,7 +56,13 @@ export const AddressInput = ({ onChange, error, ...props }) => {
         caption={
           ensData ? (
             <Box direction="horizontal" align="center" mt="4px">
-              {ensData.avatar && <Avatar size={16} src={ensData.avatar} />}{" "}
+              {ensData.avatar ||
+                (ensData.address && (
+                  <Avatar
+                    size={16}
+                    src={ensData.avatar || makeBlockie(ensData.address)}
+                  />
+                ))}{" "}
               <Label mb={0} mt={0} ml="4px" size="small">
                 {ensData.inputIsENS
                   ? ensData.address
