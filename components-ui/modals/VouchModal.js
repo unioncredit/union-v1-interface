@@ -92,7 +92,9 @@ export function VouchModal() {
 
   const validateAddressInput = (address) => {
     if (!address) return errorMessages.required;
-    if (address === account) return errorMessages.notVouchSelf;
+    if (address.toLowerCase() === account.toLowerCase()) {
+      return errorMessages.notVouchSelf;
+    }
     if (address.startsWith("0x")) return validateAddress(address);
     if (address.endsWith(".eth")) return true;
     return errorMessages.validAddressOrEns;
