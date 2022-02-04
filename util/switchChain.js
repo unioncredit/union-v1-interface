@@ -26,6 +26,18 @@ export const options = [
       chainId: "0x2A",
     },
   },
+  {
+    value: "arbitrum",
+    label: "Arbitrum (testnet)",
+    buttonVariant: "secondary",
+    description:
+      "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
+    imageSrc: "/images/arbitrum.png",
+    chainId: 421611,
+    networkData: {
+      chainId: "0x66EEB",
+    },
+  },
 ];
 
 export const switchChain = async (value) => {
