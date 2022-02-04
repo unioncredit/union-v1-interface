@@ -3,7 +3,7 @@ import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
-const getVotingDelay = (governanceContract: Contract) => async () => {
+const getVotingDelay = async (_, governanceContract: Contract) => {
   return governanceContract.votingDelay();
 };
 
@@ -13,5 +13,5 @@ export default function useVotingDelay() {
 
   const shouldFetch: boolean = Boolean(contract);
 
-  return useSWR(shouldFetch ? ["votingDelay"] : null, getVotingDelay(contract));
+  return useSWR(shouldFetch ? ["votingDelay", contract] : null, getVotingDelay);
 }

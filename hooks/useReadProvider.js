@@ -5,7 +5,7 @@ import useChainId from "hooks/useChainId";
 import { RPC_URLS } from "lib/connectors";
 
 function fetchProvider(_, chainId, library) {
-  if (library) {
+  if (library && chainId && library.network.chainId === chainId) {
     return library.getSigner().provider;
   }
 

@@ -3,7 +3,7 @@ import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
-const getProposalThreshold = (contract) => async () => {
+const getProposalThreshold = async (_, contract) => {
   const res = await contract.proposalThreshold();
 
   return Number(formatUnits(res, 18));
@@ -16,7 +16,7 @@ export default function useProposalThreshold() {
   const shouldFetch = Boolean(contract);
 
   return useSWR(
-    shouldFetch ? ["ProposalThreshold"] : null,
-    getProposalThreshold(contract)
+    shouldFetch ? ["ProposalThreshold", contract] : null,
+    getProposalThreshold
   );
 }

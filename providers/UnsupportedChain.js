@@ -10,3 +10,13 @@ export const useUnsupportedChains = () => useContext(Context);
 export default function UnsuportedChainProvider({ children, chainIds }) {
   return <Context.Provider value={chainIds}>{children}</Context.Provider>;
 }
+
+export function withUnsupportedChains(Component, chainIds) {
+  return (props) => {
+    return (
+      <UnsuportedChainProvider chainIds={chainIds}>
+        <Component {...props} />
+      </UnsuportedChainProvider>
+    );
+  };
+}
