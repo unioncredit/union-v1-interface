@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import { Card, Stat, Button, Grid } from "union-ui";
 import { Dai } from "components-ui";
 import useStatisticsData from "hooks/governance/useStatisticsData";
@@ -8,9 +7,10 @@ import { duneAnalytics } from "constants/app";
 import { toPercent } from "util/numbers";
 
 import External from "union-ui/lib/icons/externalinline.svg";
+import useChainId from "hooks/useChainId";
 
 export function GovernanceStatsCard() {
-  const { chainId } = useWeb3React();
+  const chainId = useChainId();
   const { data } = useStatisticsData();
   const { data: interestRate } = useInterestRate();
 
