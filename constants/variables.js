@@ -170,6 +170,7 @@ export const BLOCK_SPEED = {
   42: 5, //5.49,
   137: 2,
   80001: 2,
+  421611: 13,
 };
 
 export const TOKENS = {
