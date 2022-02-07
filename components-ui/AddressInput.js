@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import EnsIcon from "union-ui/lib/icons/ens.svg";
 import makeBlockie from "ethereum-blockies-base64";
 import { Input, Box, Label, LoadingSpinner, Avatar } from "union-ui";
@@ -7,10 +8,14 @@ import { fetchENS } from "fetchers/fetchEns";
 
 import styles from "./AddressInput.module.css";
 
-export const AddressInput = ({ onChange, error, ...props }) => {
+export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
   const timer = useRef(null);
   const [loading, setLoading] = useState(false);
   const [ensData, setEnsData] = useState(null);
+
+  useEffect(() => {
+    defaultValue && onChange(defaultValue);
+  }, [defaultValue, onChange]);
 
   const handleChange = (event) => {
     setLoading(true);
@@ -40,6 +45,7 @@ export const AddressInput = ({ onChange, error, ...props }) => {
     <div className={styles.addressInput}>
       <Input
         {...props}
+        defaultValue={defaultValue}
         onChange={handleChange}
         error={inputError}
         suffix={
