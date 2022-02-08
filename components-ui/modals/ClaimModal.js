@@ -1,7 +1,7 @@
 import { commify } from "@ethersproject/units";
 import { ModalOverlay, Box, Grid, Stat } from "union-ui";
 import UnionLogo from "union-ui/lib/icons/union.svg";
-import { Modal } from "components-ui";
+import { Modal, UnwrapButton } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { ClaimButton } from "components-ui/ClaimButton";
 import useTokenBalance from "hooks/data/useTokenBalance";
@@ -17,9 +17,12 @@ export function ClaimModal() {
   const { close } = useClaimModal();
 
   const UNION = useCurrentToken("UNION");
+  const WRAPPED_UNION = useCurrentToken("WRAPPED_UNION");
+
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { data: wrappedUnionBalance } = useTokenBalance(WRAPPED_UNION);
 
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
@@ -70,6 +73,16 @@ export function ClaimModal() {
           fluid
           label={`Claim ${commify(Number(rewards).toFixed(4))} ${unionSymbol}`}
         />
+        {wrappedUnionBalance?.gt("0") && (
+          <UnwrapButton
+            mt="8px"
+            fluid
+            variant="secondary"
+            label={`Unwrap ${commify(
+              Number(wrappedUnionBalance).toFixed(4)
+            )} Wrapped Union`}
+          />
+        )}
       </Modal>
     </ModalOverlay>
   );
