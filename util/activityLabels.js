@@ -1,3 +1,4 @@
+import { formatEther } from "@ethersproject/units";
 import format from "./formatValue";
 import truncateAddress from "./truncateAddress";
 
@@ -6,6 +7,11 @@ const activityLabels = {
   claim: ({ amount, hash }, failed) => ({
     hash,
     label: `Claimed ${format(amount)} UNION`,
+    failed,
+  }),
+  unwrap: ({ balance, hash }, failed) => ({
+    hash,
+    label: `Unwrapped ${format(formatEther(balance))} UNION`,
     failed,
   }),
   delegate: ({ address, hash }, failed) => ({

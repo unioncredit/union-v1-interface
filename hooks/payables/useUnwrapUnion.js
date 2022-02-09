@@ -10,7 +10,10 @@ export default function useUnwrapUnion() {
 
   const wrappedUnion = useContract(UNION_WRAPPED_TOKEN_ADDRESSES[chainId], ABI);
 
-  return useCallback(() => {
-    alert("unwrap");
-  }, [wrappedUnion]);
+  return useCallback(
+    (amount) => {
+      return wrappedUnion.unwrap(amount);
+    },
+    [wrappedUnion]
+  );
 }
