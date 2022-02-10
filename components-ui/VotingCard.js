@@ -124,10 +124,16 @@ export function VotingCard({
         </Box>
         <Bar percentage={percentageAgainst} size="large" />
         <Box mt="22px">
-          <Stat fluid label="Votes cast" value={toPercent(totalVotePercent)} />
           <Stat
             fluid
-            label={`${toPercent(quorumPercent)} Quorum`}
+            label="Votes cast"
+            value={toPercent(isNaN(totalVotePercent) ? 0 : totalVotePercent)}
+          />
+          <Stat
+            fluid
+            label={`${toPercent(
+              isNaN(quorumPercent) ? 0 : quorumPercent
+            )} Quorum`}
             value={
               <Bar
                 size="large"
