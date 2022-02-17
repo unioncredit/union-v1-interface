@@ -3,6 +3,7 @@ import { signDaiPermit, signERC2612Permit } from "eth-permit";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
 import { PermitType } from "constants/app";
+import { MaxUint256 } from "@ethersproject/constants";
 
 export const permitsState = newRidgeState({});
 
@@ -37,8 +38,8 @@ export default function usePermits() {
     const signFn =
       permitType === PermitType.ERC2612 ? signERC2612Permit : signDaiPermit;
 
-    const signFnArgs = permitType === PermitType.ERC2612 ? [amount] : [];
-
+    const signFnArgs =
+      permitType === PermitType.ERC2612 ? [MaxUint256.toString()] : [];
     const permit = await signFn(
       library.provider,
       tokenAddress,

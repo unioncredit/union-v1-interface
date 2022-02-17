@@ -9,7 +9,10 @@ import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
 import usePermits from "hooks/usePermits";
-import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
+import {
+  APPROVE_DAI_DEPOSIT_SIGNATURE_KEY,
+  DaiPermitType,
+} from "constants/app";
 
 export default function useStakeDeposit() {
   const { account, chainId, library } = useWeb3React();
@@ -30,19 +33,32 @@ export default function useStakeDeposit() {
         USER_MANAGER_ABI,
         signer
       );
-
       const stakeAmount = parseUnits(String(amount), 18);
 
       // if we have a valid permit use that to stake
       if (permit) {
-        return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
-          stakeAmount,
-          permit.nonce,
-          permit.expiry,
-          permit.v,
-          permit.r,
-          permit.s,
-        ]);
+        if (DaiPermitType[chainId] == "DAI") {
+          return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+            stakeAmount.toString(),
+            permit.nonce,
+            permit.expiry,
+            permit.v,
+            permit.r,
+            permit.s,
+          ]);
+        } else {
+          return makeTxWithGasEstimate(
+            userManagerContract,
+            "stakeWithERC20Permit",
+            [
+              stakeAmount.toString(),
+              permit.deadline,
+              permit.v,
+              permit.r,
+              permit.s,
+            ]
+          );
+        }
       }
 
       const allowance = await DAIContract.allowance(

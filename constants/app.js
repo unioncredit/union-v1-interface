@@ -79,6 +79,14 @@ export const APPROVE_DAI_DEPOSIT_SIGNATURE_KEY = "approve-dai";
 export const APPROVE_DAI_REPAY_SIGNATURE_KEY = "approve-dai-repay";
 export const APPROVE_UNION_REGISTER_SIGNATURE_KEY = "approve-union";
 
+export const DaiPermitType = {
+  1: "DAI",
+  4: "DAI",
+  42: "DAI",
+  42161: "ERC2612",
+  421611: "ERC2612",
+};
+
 export const PermitType = {
   DAI: "dai",
   ERC2612: "erc2612",

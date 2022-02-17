@@ -52,7 +52,7 @@ export const USER_MANAGER_ADDRESSES = {
   137: "0xd99ccdb6E05937e53EFDb099eeAe33D559b20F90",
   80001: "0x3635d6F0fE995B2C7aC1A8EF681478f2Dc0dD844",
   42161: "0xb07Bb7D95c8c57D0ac284957D56B62751a7e98B4",
-  421611: "0x8Cf2D155D1b789C72403BAdB33E85664cEF84e6B",
+  421611: "0x5d42dF4eE077Eb908d6271A0Fb8ABE7E053E7CAe",
 };
 
 export const UNION_TOKEN_ADDRESSES = {
@@ -287,7 +287,8 @@ export const GRAPHQL_URLS = {
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-kovan",
   },
   1: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-mainnet",
+    user:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-mainnet",
     gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
     rewards:
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-mainnet",
