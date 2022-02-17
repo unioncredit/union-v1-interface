@@ -8,7 +8,7 @@ import useMarketRegistryContract from "hooks/contracts/useMarketRegistryContract
 import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
 import { makeTxWithGasEstimate } from "../../util/gasEstimation";
-import { APPROVE_DAI_REPAY_SIGNATURE_KEY, DaiPermitType } from "constants/app";
+import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 import usePermits from "hooks/usePermits";
 
 export default function useRepay() {
@@ -35,7 +35,7 @@ export default function useRepay() {
 
       // if we have a valid permit use that to stake
       if (permit) {
-        if (DaiPermitType[chainId] == "DAI") {
+        if (chainId == 1) {
           return makeTxWithGasEstimate(
             uTokenContract,
             "repayBorrowWithPermit",

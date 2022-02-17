@@ -31,13 +31,8 @@ import isHash from "util/isHash";
 import format from "util/formatValue";
 import useUnionContract from "hooks/contracts/useUTokenContract";
 import { Approval } from "components-ui";
-import {
-  APPROVE_DAI_REPAY_SIGNATURE_KEY,
-  PermitType,
-  DaiPermitType,
-} from "constants/app";
+import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 import usePermits from "hooks/usePermits";
-import useChainId from "hooks/useChainId";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -53,13 +48,11 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
   const [paymentType, setPaymentType] = useState(PaymentType.MIN);
   const addActivity = useAddActivity();
   const { library } = useWeb3React();
-  const chainId = useChainId();
   const { close } = usePaymentModal();
   const curToken = useCurrentToken("DAI");
   const repay = useRepay();
   const utoken = useUnionContract();
   const { removePermit } = usePermits();
-  const permitType = PermitType[DaiPermitType[chainId]];
 
   const {
     reset,
@@ -271,7 +264,6 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
               tokenAddress={curToken}
               spender={utoken.address}
               signatureKey={APPROVE_DAI_REPAY_SIGNATURE_KEY}
-              permitType={permitType}
             >
               <Button
                 fluid

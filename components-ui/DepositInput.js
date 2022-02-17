@@ -16,18 +16,12 @@ import isHash from "util/isHash";
 import { Approval } from "components-ui";
 import useUserContract from "hooks/contracts/useUserContract";
 import useMaxStakeAmount from "hooks/data/useMaxStakeAmount";
-import {
-  APPROVE_DAI_DEPOSIT_SIGNATURE_KEY,
-  PermitType,
-  DaiPermitType,
-} from "constants/app";
+import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
 import usePermits from "hooks/usePermits";
 import { formatEther } from "@ethersproject/units";
-import useChainId from "hooks/useChainId";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
   const { library } = useWeb3React();
-  const chainId = useChainId();
   const addActivity = useAddActivity();
   const userManager = useUserContract();
   const { removePermit } = usePermits();
@@ -52,7 +46,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const amount = Number(watchAmount || 0);
 
   const DAI = useCurrentToken();
-  const permitType = PermitType[DaiPermitType[chainId]];
 
   const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
     DAI
@@ -125,7 +118,6 @@ export const DepositInput = ({ totalStake, onComplete }) => {
           spender={userManager.address}
           label="Approve DAI for Staking"
           signatureKey={APPROVE_DAI_DEPOSIT_SIGNATURE_KEY}
-          permitType={permitType}
         >
           <Button
             fluid
