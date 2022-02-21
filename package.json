@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "@ensdomains/ensjs": "^2.1.0",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/address": "^5.0.5",
     "@ethersproject/bignumber": "^5.0.8",
