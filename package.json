@@ -48,7 +48,7 @@
     "graphql": "^15.6.0",
     "graphql-request": "^3.5.0",
     "md5": "^2.3.0",
-    "next": "^10.0.1",
+    "next": "^12.1.0",
     "next-svgr": "^0.0.2",
     "parse-ms": "^2.1.0",
     "prop-types": "^15.7.2",
