@@ -1,0 +1,9 @@
+.wireCheck {
+  width: 16px;
+  position: absolute;
+  top: 0;
+}
+
+.wireCheck path {
+  fill: #a8a29e;
+}

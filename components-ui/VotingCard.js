@@ -11,6 +11,7 @@ import {
   Label,
 } from "union-ui";
 import { useWeb3React } from "@web3-react/core";
+import WireCheck from "union-ui/lib/icons/wireCheck.svg";
 
 import useCastVote from "hooks/payables/useCastVote";
 import { useAddActivity } from "hooks/data/useActivity";
@@ -24,6 +25,8 @@ import isHash from "util/isHash";
 import format from "util/formatValue";
 import { toPercent } from "util/numbers";
 import relativeTime from "util/relativeTime";
+
+import styles from "./VotingCard.module.css";
 
 const VoteType = {
   FOR: "for",
@@ -60,6 +63,8 @@ export function VotingCard({
 
   const totalVotePercent = totalCount / totalSupply;
   const quorumPercent = quorum / totalSupply;
+  const quorumProgress =
+    Math.ceil(totalCount / quorum) >= 1 ? 1 : totalCount / quorum;
 
   const handleCastVote = (type) => async () => {
     try {
@@ -130,16 +135,15 @@ export function VotingCard({
           />
           <Stat
             fluid
-            label={`${toPercent(
-              isNaN(quorumPercent) ? 0 : quorumPercent
-            )} Quorum`}
-            value={
-              <Bar
-                size="large"
-                percentage={totalVotePercent * 100}
-                marker={quorumPercent * 100}
-              />
+            label={
+              <Label as="p" m={0} weight="medium" size="small">
+                {toPercent(isNaN(quorumPercent) ? 0 : quorumPercent)} Quorum{" "}
+                {quorumProgress >= 1 && (
+                  <WireCheck className={styles.wireCheck} />
+                )}
+              </Label>
             }
+            value={<Bar size="large" percentage={quorumProgress * 100} />}
           />
         </Box>
         {!votingNotStarted && (
