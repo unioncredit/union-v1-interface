@@ -41,9 +41,19 @@ export default function usePermits() {
 
     const signFnArgs =
       permitType === PermitType.DAI && chainId == 1 ? [] : [amount];
+
+    const token =
+      chainId == 42161
+        ? {
+            name: "Dai Stablecoin",
+            version: "2",
+            chainId,
+            verifyingContract: tokenAddress,
+          }
+        : tokenAddress;
     const permit = await signFn(
       library.provider,
-      tokenAddress,
+      token,
       account,
       spender,
       ...signFnArgs
