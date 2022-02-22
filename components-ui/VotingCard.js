@@ -1,6 +1,3 @@
-import { useAddActivity } from "hooks/data/useActivity";
-import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
-import useProposalQuorum from "hooks/governance/useProposalQuorum";
 import {
   Divider,
   Card,
@@ -13,16 +10,20 @@ import {
   Badge,
   Label,
 } from "union-ui";
-import format from "util/formatValue";
-import { toPercent } from "util/numbers";
-import useCastVote from "hooks/payables/useCastVote";
-import useProposalVoteReceipt from "hooks/governance/useProposalVoteReceipt";
 import { useWeb3React } from "@web3-react/core";
+
+import useCastVote from "hooks/payables/useCastVote";
+import { useAddActivity } from "hooks/data/useActivity";
+import useProposalQuorum from "hooks/governance/useProposalQuorum";
+import useGovernanceTokenSupply from "hooks/governance/useGovernanceTokenSupply";
+import useProposalVoteReceipt from "hooks/governance/useProposalVoteReceipt";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
-import dayjs from "dayjs";
+import format from "util/formatValue";
+import { toPercent } from "util/numbers";
+import relativeTime from "util/relativeTime";
 
 const VoteType = {
   FOR: "for",
@@ -81,12 +82,8 @@ export function VotingCard({
   const votedAgainst = voteReceipt?.hasVoted && !voteReceipt?.support;
 
   const statusText = {
-    pending: `Voting begins in ${dayjs(Number(startTimestamp) * 1000).fromNow(
-      true
-    )}`,
-    active: `Voting ends in ${dayjs(Number(endTimestamp) * 1000).fromNow(
-      true
-    )}`,
+    pending: `Begins ${relativeTime(Number(startTimestamp))}`,
+    active: `Ends ${relativeTime(Number(endTimestamp))}`,
     executed: "Executed",
     cancelled: "Cancelled",
     succeeded: "Succeeded",
