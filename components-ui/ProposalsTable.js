@@ -8,7 +8,8 @@ import {
   Skeleton,
   EmptyState,
 } from "union-ui";
-import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { roundDown, toPercent } from "util/numbers";
 import createArray from "util/createArray";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -47,31 +48,35 @@ function ProposalsTableRow({
   status,
   startTimestamp,
 }) {
+  const router = useRouter();
+
   const total = againstCount + forCount;
   const percentageFor = total > 0 ? forCount / total : 0;
 
   const maxStrLength = 46;
 
+  const handleClick = () => {
+    router.push(`/governance/proposals/${id}`);
+  };
+
   return (
-    <Link href={`/governance/proposals/${id}`}>
-      <TableRow>
-        <TableCell>
-          <Text mb="4px">
-            {title.slice(0, maxStrLength)}
-            {title.length > maxStrLength && "..."}
-          </Text>
-          <Label>
-            <Badge
-              color={statusColorMap[status] || "blue"}
-              label={status.slice(0, 1).toUpperCase() + status.slice(1)}
-              mr="8px"
-            />
-            {toPercent(roundDown(percentageFor))} yes &bull;{" "}
-            {dayjs(Number(startTimestamp) * 1000).fromNow()}
-          </Label>
-        </TableCell>
-      </TableRow>
-    </Link>
+    <TableRow onClick={handleClick}>
+      <TableCell>
+        <Text mb="4px">
+          {title.slice(0, maxStrLength)}
+          {title.length > maxStrLength && "..."}
+        </Text>
+        <Label>
+          <Badge
+            color={statusColorMap[status] || "blue"}
+            label={status.slice(0, 1).toUpperCase() + status.slice(1)}
+            mr="8px"
+          />
+          {toPercent(roundDown(percentageFor))} yes &bull;{" "}
+          {dayjs(Number(startTimestamp) * 1000).fromNow()}
+        </Label>
+      </TableCell>
+    </TableRow>
   );
 }
 
