@@ -8506,9 +8506,9 @@ unified@^9.0.0:
     vfile "^4.0.0"
 
 union-ui@^0.2.59:
-  version "0.2.66"
-  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.66.tgz#a9656d62a5779282ce67e652f6e2a8cb5fe5090c"
-  integrity sha512-LDoqjFA9/A0Ex3nWvQxTsTgEgRN8NoyfRKFqd7BB7tLXdIRG0VD4y5EzWNzhGxMFTE9+iZY+80EDFwUWVflZ/g==
+  version "0.2.67"
+  resolved "https://registry.yarnpkg.com/union-ui/-/union-ui-0.2.67.tgz#bcd7b52f704fb34b4f25a67e604781e94c0c1fe4"
+  integrity sha512-+XmkLDJqW3JIzaucaEfd22ujI8Fp0eUMgJgfsN46gHCVdXIwjteIAWQpT/sZtmAsTXpH1SR5IaZt6sZ94sgVmQ==
   dependencies:
     classnames "^2.3.1"
     react-animate-height "^2.0.23"
