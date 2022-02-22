@@ -43,7 +43,7 @@ export default function usePermits() {
       permitType === PermitType.DAI && chainId == 1 ? [] : [amount];
 
     const token =
-      chainId == 42161
+      chainId == 42161 && permitType === PermitType.DAI
         ? {
             name: "Dai Stablecoin",
             version: "2",
