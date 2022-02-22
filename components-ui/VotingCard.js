@@ -74,6 +74,8 @@ export function VotingCard({
     }
   };
 
+  const votingNotStarted = status === "pending";
+
   const canVote = !voteReceipt?.hasVoted && status === "active";
 
   const votedFor = voteReceipt?.hasVoted && voteReceipt?.support;
@@ -143,38 +145,42 @@ export function VotingCard({
             }
           />
         </Box>
-        <Divider my="24px" />
-        {votedFor ? (
-          <Text m={0} color="green500" align="center">
-            You voted for
-          </Text>
-        ) : votedAgainst ? (
-          <Text m={0} color="red500" align="center">
-            You voted against
-          </Text>
-        ) : !canVote ? (
-          <Text m={0} align="center">
-            You did not vote
-          </Text>
-        ) : (
-          <ButtonRow mt="16px">
-            <Button
-              fluid
-              label="Vote for"
-              rounded
-              color="green"
-              disabled={!canVote}
-              onClick={handleCastVote(VoteType.FOR)}
-            />
-            <Button
-              fluid
-              label="Vote against"
-              rounded
-              color="red"
-              disabled={!canVote}
-              onClick={handleCastVote(VoteType.AGAINST)}
-            />
-          </ButtonRow>
+        {!votingNotStarted && (
+          <>
+            <Divider my="24px" />
+            {votedFor ? (
+              <Text m={0} color="green500" align="center">
+                You voted for
+              </Text>
+            ) : votedAgainst ? (
+              <Text m={0} color="red500" align="center">
+                You voted against
+              </Text>
+            ) : !canVote ? (
+              <Text m={0} align="center">
+                You did not vote
+              </Text>
+            ) : (
+              <ButtonRow mt="16px">
+                <Button
+                  fluid
+                  label="Vote for"
+                  rounded
+                  color="green"
+                  disabled={!canVote}
+                  onClick={handleCastVote(VoteType.FOR)}
+                />
+                <Button
+                  fluid
+                  label="Vote against"
+                  rounded
+                  color="red"
+                  disabled={!canVote}
+                  onClick={handleCastVote(VoteType.AGAINST)}
+                />
+              </ButtonRow>
+            )}
+          </>
         )}
       </Card.Body>
     </Card>
