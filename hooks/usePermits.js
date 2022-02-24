@@ -7,7 +7,7 @@ import { PermitType } from "constants/app";
 export const permitsState = newRidgeState({});
 
 export default function usePermits() {
-  const { account, library } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
   const [permits, setPermits] = permitsState.use();
 
   const savePermit = (key, permit) => {
@@ -35,13 +35,25 @@ export default function usePermits() {
 
   const signPermit = async (key, tokenAddress, spender, amount, permitType) => {
     const signFn =
-      permitType === PermitType.ERC2612 ? signERC2612Permit : signDaiPermit;
+      permitType === PermitType.DAI && chainId == 1
+        ? signDaiPermit
+        : signERC2612Permit;
 
-    const signFnArgs = permitType === PermitType.ERC2612 ? [amount] : [];
+    const signFnArgs =
+      permitType === PermitType.DAI && chainId == 1 ? [] : [amount];
 
+    const token =
+      chainId == 42161 && permitType === PermitType.DAI
+        ? {
+            name: "Dai Stablecoin",
+            version: "2",
+            chainId,
+            verifyingContract: tokenAddress,
+          }
+        : tokenAddress;
     const permit = await signFn(
       library.provider,
-      tokenAddress,
+      token,
       account,
       spender,
       ...signFnArgs

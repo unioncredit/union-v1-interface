@@ -15,6 +15,18 @@ export const options = [
     },
   },
   {
+    value: "arbitrum one",
+    label: "Arbitrum One",
+    buttonVariant: "secondary",
+    description:
+      "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
+    imageSrc: "/images/arbitrum.png",
+    chainId: 42161,
+    networkData: {
+      chainId: "0xA4B1",
+    },
+  },
+  {
     value: "kovan",
     label: "Kovan",
     buttonVariant: "secondary",

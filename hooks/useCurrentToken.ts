@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import useChainId from "./useChainId";
 
 export default function useCurrentToken(
-  symbol: "DAI" | "UNION" | "FUN" = "DAI"
+  symbol: "DAI" | "UNION" | "FUN" | "WRAPPED_UNION" = "DAI"
 ): string {
   const chainId = useChainId();
 

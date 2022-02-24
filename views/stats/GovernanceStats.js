@@ -1,4 +1,5 @@
-import { Stat, Grid } from "union-ui";
+import { Alert, Stat, Grid } from "union-ui";
+import Info from "union-ui/lib/icons/wireInfo.svg";
 
 import { formatDetailed } from "util/formatValue";
 import useGovernanceStats from "hooks/stats/governanceStats";
@@ -6,6 +7,8 @@ import useGovernanceStats from "hooks/stats/governanceStats";
 import useChainId from "hooks/useChainId";
 import { BLOCK_SPEED } from "constants/variables";
 import { unionValue } from "./values";
+import { withUnsupportedChains } from "providers/UnsupportedChain";
+import { useWeb3React } from "@web3-react/core";
 
 function useGovernanceStatsView() {
   const { quorum, votingPeriod, votingDelay, timelock, threshold } =
@@ -52,11 +55,26 @@ function useGovernanceStatsView() {
   ];
 }
 
-export default function GovernanceStats() {
+function GovernanceStats() {
+  const chainId = useChainId();
+  const { chainId: actualChainId } = useWeb3React();
   const stats = useGovernanceStatsView();
+
+  const unsupportedFeature = actualChainId && actualChainId !== chainId;
 
   return (
     <>
+      {unsupportedFeature && (
+        <Alert
+          icon={<Info />}
+          packed
+          mt="-24px"
+          mb="36px"
+          size="small"
+          variant="info"
+          label="Governance is not supported on this chain. Showing governance data from mainnet"
+        />
+      )}
       {stats.map((stat) => (
         <Grid.Col xs={6} md={3} key={stat.label}>
           <Stat
@@ -70,3 +88,5 @@ export default function GovernanceStats() {
     </>
   );
 }
+
+export default withUnsupportedChains(GovernanceStats, [421611, 42161]);

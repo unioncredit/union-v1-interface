@@ -30,19 +30,32 @@ export default function useStakeDeposit() {
         USER_MANAGER_ABI,
         signer
       );
-
       const stakeAmount = parseUnits(String(amount), 18);
 
       // if we have a valid permit use that to stake
       if (permit) {
-        return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
-          stakeAmount,
-          permit.nonce,
-          permit.expiry,
-          permit.v,
-          permit.r,
-          permit.s,
-        ]);
+        if (chainId == 1) {
+          return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
+            stakeAmount.toString(),
+            permit.nonce,
+            permit.expiry,
+            permit.v,
+            permit.r,
+            permit.s,
+          ]);
+        } else {
+          return makeTxWithGasEstimate(
+            userManagerContract,
+            "stakeWithERC20Permit",
+            [
+              stakeAmount.toString(),
+              permit.deadline,
+              permit.v,
+              permit.r,
+              permit.s,
+            ]
+          );
+        }
       }
 
       const allowance = await DAIContract.allowance(

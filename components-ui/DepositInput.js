@@ -27,11 +27,18 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const { removePermit } = usePermits();
   const { data: maxStake = "0" } = useMaxStakeAmount();
 
-  const { handleSubmit, register, watch, setValue, formState, errors, reset } =
-    useForm({
-      mode: "onChange",
-      reValidateMode: "onChange",
-    });
+  const {
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    formState,
+    errors,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
   const { isDirty, isSubmitting } = formState;
 
@@ -40,8 +47,9 @@ export const DepositInput = ({ totalStake, onComplete }) => {
 
   const DAI = useCurrentToken();
 
-  const { data: daiBalance = 0.0, mutate: updateDaiBalance } =
-    useTokenBalance(DAI);
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
+    DAI
+  );
 
   useEffect(() => {
     updateDaiBalance();

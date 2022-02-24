@@ -11,13 +11,10 @@ import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
 import { roundUp } from "util/numbers";
 
 const getPaymentDue = async (account, chainId, contract, library) => {
-  let due;
-
   const isOverdue = await contract.checkIsOverdue(account);
 
   if (isOverdue) {
-    due = "Overdue";
-    return due;
+    return "Overdue";
   }
 
   const lastRepayRes = await contract.getLastRepay(account);
@@ -27,13 +24,20 @@ const getPaymentDue = async (account, chainId, contract, library) => {
   const overdueBlocks = parseInt(overdueBlocksRes.toString());
 
   const curBlock = await library.getBlockNumber();
+  const block = await library.getBlock(curBlock);
+  const resp = await library.provider.send("eth_getTransactionReceipt", [
+    block.transactions[0],
+  ]);
+
+  // Supports ARBITRUM which returns L1 blockNumber as `l1BlockNumber`
+  const blockNumber = resp.result.l1BlockNumber || resp.result.blockNumber;
 
   if (lastRepay === 0) {
-    due = "No Payment Due";
-    return due;
+    return "No Payment Due";
   }
 
-  const seconds = (lastRepay + overdueBlocks - curBlock) * BLOCK_SPEED[chainId];
+  const seconds =
+    (lastRepay + overdueBlocks - blockNumber) * BLOCK_SPEED[chainId];
 
   return formatDueDate(seconds);
 };

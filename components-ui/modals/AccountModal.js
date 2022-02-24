@@ -59,7 +59,7 @@ export function AccountModal() {
       <Modal onClose={close}>
         <Box align="center" justify="space-between">
           <Label as="p" size="small" mb="8px" grey={400}>
-            {walletName.toUpperCase()}
+            {walletName?.toUpperCase()}
           </Label>
           <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
         </Box>

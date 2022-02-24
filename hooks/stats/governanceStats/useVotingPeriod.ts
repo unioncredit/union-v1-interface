@@ -3,7 +3,7 @@ import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
-const getVotingPeriod = (governanceContract: Contract) => async () => {
+const getVotingPeriod = async (_, governanceContract: Contract) => {
   return governanceContract.votingPeriod();
 };
 
@@ -14,7 +14,7 @@ export default function useVotingPeriod() {
   const shouldFetch: boolean = Boolean(contract);
 
   return useSWR(
-    shouldFetch ? ["votingPeriod"] : null,
-    getVotingPeriod(contract)
+    shouldFetch ? ["votingPeriod", contract] : null,
+    getVotingPeriod
   );
 }
