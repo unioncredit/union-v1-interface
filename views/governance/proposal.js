@@ -30,8 +30,9 @@ import { defaultAbiCoder } from "@ethersproject/abi";
 import createArray from "util/createArray";
 import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
+import { withUnsupportedChains } from "providers/UnsupportedChain";
 
-export default function ProposalView() {
+function ProposalView() {
   const chainId = useChainId();
   const { chainId: actualChainId } = useWeb3React();
 
@@ -242,3 +243,5 @@ export default function ProposalView() {
     </>
   );
 }
+
+export default withUnsupportedChains(ProposalView, [421611, 42161]);

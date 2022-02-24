@@ -7,8 +7,9 @@ import useFilteredProposalData from "hooks/governance/useFilteredProposalData";
 import { config } from "./config";
 import useChainId from "hooks/useChainId";
 import { useWeb3React } from "@web3-react/core";
+import { withUnsupportedChains } from "providers/UnsupportedChain";
 
-export default function ProposalsView() {
+function ProposalsView() {
   const chainId = useChainId();
   const { chainId: actualChainId } = useWeb3React();
 
@@ -47,3 +48,5 @@ export default function ProposalsView() {
     </>
   );
 }
+
+export default withUnsupportedChains(ProposalsView, [421611, 42161]);
