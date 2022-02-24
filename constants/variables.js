@@ -294,4 +294,13 @@ export const GRAPHQL_URLS = {
     utoken:
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-mainnet",
   },
+  42161: {
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-arbitrum",
+    // governance uses L1 subgraph
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
+    rewards:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-arbitrum",
+    utoken:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-arbitrum",
+  },
 };
