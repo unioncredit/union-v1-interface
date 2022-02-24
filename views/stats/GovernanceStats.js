@@ -89,4 +89,4 @@ function GovernanceStats() {
   );
 }
 
-export default withUnsupportedChains(GovernanceStats, [421611]);
+export default withUnsupportedChains(GovernanceStats, [421611, 42161]);

@@ -15,30 +15,6 @@ export const options = [
     },
   },
   {
-    value: "kovan",
-    label: "Kovan",
-    buttonVariant: "secondary",
-    description:
-      "Use a test version of Ethereum to try out Union and learn more about how it works",
-    imageSrc: "/images/kovan.png",
-    chainId: 42,
-    networkData: {
-      chainId: "0x2A",
-    },
-  },
-  {
-    value: "arbitrum",
-    label: "Arbitrum (testnet)",
-    buttonVariant: "secondary",
-    description:
-      "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
-    imageSrc: "/images/arbitrum.png",
-    chainId: 421611,
-    networkData: {
-      chainId: "0x66EEB",
-    },
-  },
-  {
     value: "arbitrum one",
     label: "Arbitrum One",
     buttonVariant: "secondary",
@@ -48,6 +24,18 @@ export const options = [
     chainId: 42161,
     networkData: {
       chainId: "0xA4B1",
+    },
+  },
+  {
+    value: "kovan",
+    label: "Kovan",
+    buttonVariant: "secondary",
+    description:
+      "Use a test version of Ethereum to try out Union and learn more about how it works",
+    imageSrc: "/images/kovan.png",
+    chainId: 42,
+    networkData: {
+      chainId: "0x2A",
     },
   },
 ];
