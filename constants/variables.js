@@ -6,6 +6,8 @@ export const BLOCKS_PER_YEAR = {
   42: 5744262,
   137: 15768000,
   80001: 15768000,
+  42161: 2407328,
+  421611: 2407328,
 };
 
 // due to block range restriction on polygon rpc
