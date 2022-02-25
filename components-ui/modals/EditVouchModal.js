@@ -64,7 +64,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Change trust limit" onClose={close}>
+      <Modal title="Change trust amount" onClose={close}>
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>
@@ -92,7 +92,7 @@ export function EditVouchModal({ address, used, trust }) {
             type="number"
             ref={register({ validate })}
             name="amount"
-            label="New trust limit"
+            label="New trust amount"
             suffix={<Dai />}
             error={errors.amount?.message}
           />
