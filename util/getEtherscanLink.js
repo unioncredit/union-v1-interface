@@ -1,9 +1,9 @@
-const ETHERSCAN_PREFIXES = {
-  1: "",
-  3: "ropsten.",
-  4: "rinkeby.",
-  5: "goerli.",
-  42: "kovan.",
+const urls = {
+  1: "https://etherscan.io",
+  137: "https://polygonscan.com",
+  42: "https://kovan.etherscan.io",
+  42161: "https://arbiscan.io",
+  421611: "https://arbiscan.io",
 };
 
 /**
@@ -16,16 +16,7 @@ const ETHERSCAN_PREFIXES = {
  * @returns {String}
  */
 export default function getEtherscanLink(networkId, data, type) {
-  let prefix;
-  if (networkId == 137) {
-    prefix = "https://polygonscan.com";
-  } else if (networkId == 80001) {
-    prefix = `https://mumbai.polygonscan.com`;
-  } else {
-    prefix = `https://${
-      ETHERSCAN_PREFIXES[networkId] || ETHERSCAN_PREFIXES[1]
-    }etherscan.io`;
-  }
+  let prefix = urls[networkId] || urls[1];
 
   switch (type) {
     case "TRANSACTION": {
