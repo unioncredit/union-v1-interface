@@ -73,7 +73,7 @@ export function ClaimModal() {
           fluid
           label={`Claim ${commify(Number(rewards).toFixed(4))} ${unionSymbol}`}
         />
-        {wrappedUnionBalance?.gt("0") && (
+        {wrappedUnionBalance > 0 && (
           <UnwrapButton
             mt="8px"
             fluid
