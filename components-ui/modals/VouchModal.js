@@ -54,6 +54,10 @@ export function VouchModal() {
     register("address");
   }, []);
 
+  const onNavigateToProfile = () => {
+    close();
+  };
+
   const watchAddress = watch("address");
   const address = isAddress(watchAddress) && watchAddress;
 
@@ -123,7 +127,10 @@ export function VouchModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
-        <MiniProfileCard address={!errors.address?.message && address} />
+        <MiniProfileCard
+          onClick={onNavigateToProfile}
+          address={!errors.address?.message && address}
+        />
         <form onSubmit={handleSubmit(handleNewVouch)}>
           <AddressInput
             name="address"

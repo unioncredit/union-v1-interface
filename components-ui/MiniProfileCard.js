@@ -1,13 +1,19 @@
 import { Box, Button, Card, Skeleton, Badge, Text, Label } from "union-ui";
 import { Avatar } from "components-ui";
-import Link from "next/link";
 import useIsMember from "hooks/data/useIsMember";
 import usePublicData from "hooks/usePublicData";
 import truncateAddress from "util/truncateAddress";
+import { useRouter } from "next/router";
 
-export function MiniProfileCard({ address }) {
+export function MiniProfileCard({ address, onClick }) {
+  const router = useRouter();
   const { data: isMember } = useIsMember(address);
   const { name, ENSName } = usePublicData(address);
+
+  const handleClick = () => {
+    onClick && onClick();
+    router.push(`/profile/${address}`);
+  };
 
   return (
     <Card packed mb="24px">
@@ -41,17 +47,16 @@ export function MiniProfileCard({ address }) {
             <Skeleton width={93} height={24} grey={200} ml="auto" />
           </Box>
         )}
-        <Link href={`/profile/${address}`}>
-          <Button
-            mt="14px"
-            variant="secondary"
-            disabled={!address}
-            label="View Profile"
-            icon="external"
-            iconPosition="end"
-            fluid
-          />
-        </Link>
+        <Button
+          mt="14px"
+          variant="secondary"
+          disabled={!address}
+          label="View Profile"
+          icon="external"
+          iconPosition="end"
+          onClick={handleClick}
+          fluid
+        />
       </Card.Body>
     </Card>
   );
