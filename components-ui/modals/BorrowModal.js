@@ -169,7 +169,8 @@ export function BorrowModal({
             fluid
             mt="18px"
             label={`Borrow ${commify(amount)} DAI`}
-            disabled={!isDirty || isSubmitting}
+            disabled={!isDirty}
+            loading={isSubmitting}
             onClick={handleSubmit(handleBorrow)}
             fontSize="large"
           />
