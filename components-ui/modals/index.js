@@ -6,7 +6,6 @@ export * from "./VouchModal";
 export * from "./ManageContactModal";
 export * from "./VoteDelegationModal";
 export * from "./AccountModal";
-export * from "./NewVouchModal";
 export * from "./EditVouchModal";
 export * from "./VouchModalManager";
 export * from "./WriteOffDebtModal";
