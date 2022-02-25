@@ -7,6 +7,38 @@ import { useRef, useState } from "react";
 import { fetchENS } from "fetchers/fetchEns";
 
 import styles from "./AddressInput.module.css";
+import errorMessages from "util/errorMessages";
+import validateAddress from "util/validateAddress";
+
+export const generateHandleChange = (
+  account,
+  { clearErrors, setValue, setError }
+) => {
+  const validateAddressInput = (address) => {
+    if (!address) return errorMessages.required;
+    if (address.toLowerCase() === account.toLowerCase()) {
+      return errorMessages.notVouchSelf;
+    }
+    if (address.startsWith("0x")) return validateAddress(address);
+    if (address.endsWith(".eth")) return true;
+    return errorMessages.validAddressOrEns;
+  };
+
+  return (value) => {
+    clearErrors("address");
+    const setAddress = (address) => {
+      setValue("address", address, { shouldDirty: true, shouldValidate: true });
+    };
+
+    const addressError = validateAddressInput(value);
+    if (addressError !== true) {
+      setError("address", { message: addressError });
+      return;
+    }
+
+    setAddress(value);
+  };
+};
 
 export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
   const timer = useRef(null);
