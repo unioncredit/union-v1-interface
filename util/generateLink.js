@@ -1,16 +1,17 @@
+import { networkAppUrls } from "lib/connectors";
+
 /**
  * @name generateLink
  *
  * @param {String} address
  * @param {Number|String} amount
  */
-export default function generateLink(address, amount) {
+export default function generateLink(address, chainId = 1) {
   if (!address) throw new Error("`account` is required");
 
-  if (amount) {
-    return `${window.location.origin}/contacts?address=${address}&trust=${amount}`;
-  }
-  return `${window.location.origin}/contacts?address=${address}`;
+  const baseUrl = networkAppUrls[chainId] || window.location.origin;
+
+  return `${baseUrl}/contacts?address=${address}`;
 }
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;

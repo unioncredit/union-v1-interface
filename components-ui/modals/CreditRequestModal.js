@@ -13,10 +13,10 @@ export const useCreditRequestModal = () => useModal(CREDIT_REQUEST_MODAL);
 const QRCode = dynamic(() => import("../ShareQrCode"));
 
 export function CreditRequestModal() {
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const { close } = useCreditRequestModal();
 
-  const url = generateLink(account);
+  const url = generateLink(account, chainId);
 
   return (
     <ModalOverlay onClick={close}>
