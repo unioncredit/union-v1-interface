@@ -94,10 +94,16 @@ export function VouchModal() {
     }
   };
 
-  const handleAddressInputChange = generateHandleChange(account, {
+  const handleAddressInputChange = generateHandleChange({
     clearErrors,
     setValue,
     setError,
+    validate: (address) => {
+      if (address.toLowerCase() === account.toLowerCase()) {
+        return errorMessages.notVouchSelf;
+      }
+      return true;
+    },
   });
 
   const maxTrust = 25;

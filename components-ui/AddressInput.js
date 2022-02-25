@@ -10,14 +10,17 @@ import styles from "./AddressInput.module.css";
 import errorMessages from "util/errorMessages";
 import validateAddress from "util/validateAddress";
 
-export const generateHandleChange = (
-  account,
-  { clearErrors, setValue, setError }
-) => {
+export const generateHandleChange = ({
+  clearErrors,
+  setValue,
+  setError,
+  validate,
+}) => {
   const validateAddressInput = (address) => {
     if (!address) return errorMessages.required;
-    if (address.toLowerCase() === account.toLowerCase()) {
-      return errorMessages.notVouchSelf;
+    if (validate) {
+      const res = validate(address);
+      if (res !== true) return res;
     }
     if (address.startsWith("0x")) return validateAddress(address);
     if (address.endsWith(".eth")) return true;

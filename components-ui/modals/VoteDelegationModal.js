@@ -64,7 +64,7 @@ export function VoteDelegationModal() {
     }
   };
 
-  const handleAddressInputChange = generateHandleChange(account, {
+  const handleAddressInputChange = generateHandleChange({
     clearErrors,
     setValue,
     setError,
