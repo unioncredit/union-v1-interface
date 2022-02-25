@@ -26,7 +26,7 @@ export const VOUCH_MODAL = "vouch-modal";
 export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export function VouchModal() {
-  const { query } = useRouter();
+  const { query, events } = useRouter();
   const { library, account } = useWeb3React();
   const { close } = useVouchModal();
   const addActivity = useAddActivity();
@@ -52,6 +52,14 @@ export function VouchModal() {
 
   useEffect(() => {
     register("address");
+  }, []);
+
+  useEffect(() => {
+    const handleComplete = () => close();
+    events.on("routeChangeComplete", handleComplete);
+    return () => {
+      events.off("routeChangeComplete", handleComplete);
+    };
   }, []);
 
   const onNavigateToProfile = () => {
