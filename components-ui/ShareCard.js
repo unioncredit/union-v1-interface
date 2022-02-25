@@ -15,13 +15,13 @@ import { Copyable } from "./Copyable";
 import useIsMobile from "hooks/useIsMobile";
 
 export function ShareCard({ title, content, size }) {
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
     useCreditRequestModal();
 
   const isMobile = useIsMobile();
 
-  const url = generateLink(account);
+  const url = generateLink(account, chainId);
 
   return (
     <>
