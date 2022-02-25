@@ -18,8 +18,8 @@ import errorMessages from "util/errorMessages";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
-import validateAddress from "util/validateAddress";
 import { Dai, MiniProfileCard, Modal, AddressInput } from "components-ui";
+import { generateHandleChange } from "components-ui/AddressInput";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -94,31 +94,17 @@ export function VouchModal() {
     }
   };
 
-  const validateAddressInput = (address) => {
-    if (!address) return errorMessages.required;
-    if (address.toLowerCase() === account.toLowerCase()) {
-      return errorMessages.notVouchSelf;
-    }
-    if (address.startsWith("0x")) return validateAddress(address);
-    if (address.endsWith(".eth")) return true;
-    return errorMessages.validAddressOrEns;
-  };
-
-  const handleAddressInputChange = (value) => {
-    clearErrors("address");
-
-    const setAddress = (address) => {
-      setValue("address", address, { shouldDirty: true, shouldValidate: true });
-    };
-
-    const addressError = validateAddressInput(value);
-    if (addressError !== true) {
-      setError("address", { message: addressError });
-      return;
-    }
-
-    setAddress(value);
-  };
+  const handleAddressInputChange = generateHandleChange({
+    clearErrors,
+    setValue,
+    setError,
+    validate: (address) => {
+      if (address.toLowerCase() === account.toLowerCase()) {
+        return errorMessages.notVouchSelf;
+      }
+      return true;
+    },
+  });
 
   const maxTrust = 25;
 

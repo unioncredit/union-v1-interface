@@ -1,8 +1,7 @@
-import { ModalOverlay, Text, Button, Input, Box, ToggleMenu } from "union-ui";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ModalOverlay, Text, Button, Box, ToggleMenu } from "union-ui";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
-import validateAddress from "util/validateAddress";
 import { useForm } from "react-hook-form";
 import handleTxError from "util/handleTxError";
 import { useWeb3React } from "@web3-react/core";
@@ -11,6 +10,8 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import getReceipt from "util/getReceipt";
 import isHash from "util/isHash";
+import { AddressInput, generateHandleChange } from "components-ui/AddressInput";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
 
 export const VOTE_DELEGATION_MODAL = "vote-delegation-modal";
 
@@ -27,11 +28,24 @@ export function VoteDelegationModal() {
   const [selected, setSelected] = useState("self");
   const { close } = useVoteDelegationModal();
   const delegate = useDelegate();
+  const { mutate: updateVotingWalletData } = useVotingWalletData(account);
 
-  const { handleSubmit, register, errors, formState } = useForm({
+  const {
+    handleSubmit,
+    register,
+    clearErrors,
+    setValue,
+    setError,
+    errors,
+    formState,
+  } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
+
+  useEffect(() => {
+    register("address");
+  }, []);
 
   const { isSubmitting } = formState;
 
@@ -41,6 +55,7 @@ export function VoteDelegationModal() {
       const { hash } = await delegate(delegateTo);
       await getReceipt(hash, library);
       addActivity(activityLabels.delegate({ address: delegateTo, hash }));
+      await updateVotingWalletData();
       close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
@@ -49,10 +64,11 @@ export function VoteDelegationModal() {
     }
   };
 
-  const validate = (address) => {
-    if (!address) return true;
-    return validateAddress(address);
-  };
+  const handleAddressInputChange = generateHandleChange({
+    clearErrors,
+    setValue,
+    setError,
+  });
 
   return (
     <ModalOverlay onClick={close}>
@@ -67,19 +83,17 @@ export function VoteDelegationModal() {
           onChange={({ id }) => setSelected(id)}
         />
         <form onSubmit={handleSubmit(handleDelegation)}>
-          <Box mt="18px">
-            <Input
-              disabled={selected !== "delegate"}
-              ref={register({ validate })}
-              name="address"
-              label="Wallet address"
-              error={errors?.address?.message}
-              placeholder="Ethereum address"
-            />
-          </Box>
+          <Box mt="18px" fluid />
+          <AddressInput
+            disabled={selected !== "delegate"}
+            name="address"
+            label="Wallet address"
+            error={errors?.address?.message}
+            placeholder="Ethereum address"
+            onChange={handleAddressInputChange}
+          />
           <Button
             fluid
-            mt="20px"
             type="submit"
             loading={isSubmitting}
             label={
