@@ -1,6 +1,6 @@
 import { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 import type { Web3Provider } from "@ethersproject/providers";
 import USER_MANAGER_ABI from "constants/abis/userManager.json";
 import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
@@ -36,7 +36,7 @@ export default function useIsMember(address: string) {
 
   const shouldFetch = !!marketRegistryContract && typeof account === "string";
 
-  return useSWR(
+  return useSWRImmutable(
     shouldFetch ? ["IsMember", account, curToken, library] : null,
     getIsMember(marketRegistryContract)
   );
