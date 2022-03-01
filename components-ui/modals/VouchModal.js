@@ -20,6 +20,7 @@ import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
 import { Dai, MiniProfileCard, Modal, AddressInput } from "components-ui";
 import { generateHandleChange } from "components-ui/AddressInput";
+import useMaxTrust from "hooks/useMaxTrust";
 
 export const VOUCH_MODAL = "vouch-modal";
 
@@ -114,7 +115,7 @@ export function VouchModal() {
     },
   });
 
-  const maxTrust = 25;
+  const maxTrust = useMaxTrust();
 
   const maxTrustData = trustData?.length >= maxTrust;
 
