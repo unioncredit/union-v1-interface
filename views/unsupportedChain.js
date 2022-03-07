@@ -9,16 +9,19 @@ import {
   Grid,
 } from "union-ui";
 import { useState } from "react";
-import { switchChain, options } from "util/switchChain";
+import { useWeb3React } from "@web3-react/core";
+import { options, switchChain } from "util/switchChain";
 import { networks } from "lib/connectors";
 
 export default function UnsupportedChainView() {
   const [loading, setIsLoading] = useState(false);
+  const { connector } = useWeb3React();
 
   const handleChangeNetwork = (value) => async () => {
     try {
       setIsLoading(value.buttonVariant);
-      await switchChain(value);
+      const provider = await connector.getProvider();
+      await switchChain(value, provider);
     } catch (error) {
       return;
     } finally {

@@ -40,7 +40,7 @@ export const options = [
   },
 ];
 
-export const switchChain = async (value) => {
+export const switchChain = async (value, provider) => {
   const chainId = value.networkData.chainId;
 
   const gotToChainSite = () => {
@@ -51,7 +51,7 @@ export const switchChain = async (value) => {
   };
 
   try {
-    await window.ethereum.request({
+    await provider.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId }],
     });
@@ -61,14 +61,16 @@ export const switchChain = async (value) => {
       return;
     }
 
-    try {
-      await window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [value.networkData],
-      });
-      gotToChainSite();
-    } catch (addError) {
-      addToast(FLAVORS.ERROR("Error switching chain. Please try again."));
+    if (switchError.code === 4902) {
+      try {
+        await provider.request({
+          method: "wallet_addEthereumChain",
+          params: [value.networkData],
+        });
+        gotToChainSite();
+      } catch (err) {
+        addToast(FLAVORS.ERROR("Error switching chain. Please try again."));
+      }
     }
   }
 };

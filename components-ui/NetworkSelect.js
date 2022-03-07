@@ -5,7 +5,7 @@ import { switchChain, options } from "util/switchChain";
 
 export function NetworkSelect() {
   const [loading, setIsLoading] = useState(false);
-  const { chainId } = useWeb3React();
+  const { chainId, library } = useWeb3React();
 
   const defaultValueIndex = options.findIndex(
     (option) => option.chainId === chainId
@@ -13,7 +13,7 @@ export function NetworkSelect() {
 
   const handleChangeNetwork = async (value) => {
     setIsLoading(true);
-    await switchChain(value);
+    await switchChain(value, library.provider);
     setIsLoading(false);
   };
 
