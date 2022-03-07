@@ -46,7 +46,7 @@ export const switchChain = async (value) => {
   const gotToChainSite = () => {
     const url = networkAppUrls[Number(chainId)];
     if (!window.location.href.includes(url)) {
-      window.location.href = url;
+      window.location.href = `${url}${window.location.pathname}`;
     }
   };
 
