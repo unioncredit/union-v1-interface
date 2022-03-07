@@ -66,7 +66,7 @@ export function LoginOptions({ triedEager }) {
             const handleSignIn = async () => {
               setActivatingConnector(currentConnector);
 
-              await activate(CONNECTORS[name]);
+              await activate(CONNECTORS[name], undefined, false);
               resetWalletConnector(CONNECTORS[name]);
 
               if (name === "MetaMask") {
