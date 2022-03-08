@@ -128,7 +128,7 @@ export const RESERVOIR_2_ADDRESSES = {
 };
 
 export const GOVERNOR_ADDRESSES = {
-  1: "0x011e5846975c6463a8c6337EECF3cbF64e328884",
+  1: "0xe1b3F07a9032F0d3deDf3E96c395A4Da74130f6e",
   4: "0x30CE06AE0D282F25Ee8AFDf1536229bc48B0Bac8",
   42: "0x2aB13c159c2A2c001910239698Da970f56A4D1Aa",
   137: "0x7e376e9eccD105CA47f2d7EdE8e106A6F72F4C9B",
@@ -289,7 +289,8 @@ export const GRAPHQL_URLS = {
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-kovan",
   },
   1: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-mainnet",
+    user:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-mainnet",
     gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
     rewards:
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-mainnet",
@@ -297,7 +298,8 @@ export const GRAPHQL_URLS = {
       "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-mainnet",
   },
   42161: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-arbitrum",
+    user:
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-arbitrum",
     // governance uses L1 subgraph
     gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
     rewards:
