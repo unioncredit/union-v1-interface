@@ -7,7 +7,7 @@ export default function useChainId() {
   const { chainId } = useWeb3React();
   const chainIds = useUnsupportedChains();
 
-  const unsupported = chainIds.includes(chainId);
+  const unsupported = chainIds?.includes(chainId);
 
   if (chainId) {
     // connected
@@ -17,7 +17,7 @@ export default function useChainId() {
   const value = Object.keys(networkAppUrls).reduce((acc, chainId) => {
     if (
       typeof window !== "undefined" &&
-      networkAppUrls[chainId].includes(window.location.hostname)
+      networkAppUrls[chainId]?.includes(window.location.hostname)
     ) {
       return chainId;
     }
