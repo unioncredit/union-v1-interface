@@ -184,8 +184,11 @@ function ProposalView() {
                   : targets.map((target, i) => {
                       const signature = signatures[i];
                       const calldata = calldatas[i];
+
                       const args = signature
-                        .match(/(?<=\().*(?=\))/)?.[0]
+                        .match(/\((.*?)\)/)?.[0]
+                        .replace("(", "")
+                        .replace(")", "")
                         .split(",");
 
                       const decoded =
