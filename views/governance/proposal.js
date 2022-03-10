@@ -32,6 +32,8 @@ import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
 import { withUnsupportedChains } from "providers/UnsupportedChain";
 
+import styles from "./proposal.module.css";
+
 function ProposalView() {
   const chainId = useChainId();
   const { chainId: actualChainId } = useWeb3React();
@@ -99,7 +101,7 @@ function ProposalView() {
             </Col>
           </Row>
           <Row>
-            <Col md={8}>
+            <Col md={8} className={styles.contentCol}>
               {isLoading ? (
                 <Skeleton height={20} width={280} mb="16px" shimmer />
               ) : (

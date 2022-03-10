@@ -1,0 +1,6 @@
+.contentCol {
+  overflow-wrap: anywhere;
+  word-wrap: anywhere;
+  hyphens: auto;
+  overflow: hidden;
+}
