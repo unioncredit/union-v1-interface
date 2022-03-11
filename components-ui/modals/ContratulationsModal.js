@@ -21,7 +21,7 @@ export function CongratulationsModal({ onClose, creditLimit }) {
 
   const formattedCreditLimit = format(creditLimit);
 
-  const shareMessage = `Thanks to my friends who backed me for a $${formattedCreditLimit} credit line via @unionprotocol`;
+  const shareMessage = `Thanks to my friends who backed me for a $${formattedCreditLimit} credit line`;
 
   const handleClose = () => {
     close();
