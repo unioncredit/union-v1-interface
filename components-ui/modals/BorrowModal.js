@@ -16,6 +16,7 @@ import isHash from "util/isHash";
 import useMinBorrow from "hooks/stats/marketSettingsStats/useMinBorrow";
 import { commify, formatUnits, parseUnits } from "@ethersproject/units";
 import { WAD, ZERO } from "constants/app";
+import { roundDown } from "util/numbers";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -133,10 +134,14 @@ export function BorrowModal({
               suffix={<Dai />}
               caption={`Max. ${format(formatUnits(maxUserBorrow, 18))} DAI`}
               onCaptionClick={() =>
-                setValue("amount", formatUnits(maxUserBorrow, 18), {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                })
+                setValue(
+                  "amount",
+                  roundDown(Number(formatUnits(maxUserBorrow, 18)), 2),
+                  {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  }
+                )
               }
               error={errors.amount?.message || false}
             />
