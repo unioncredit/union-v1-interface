@@ -9,6 +9,8 @@ import { BLOCK_SPEED } from "constants/variables";
 import { unionValue } from "./values";
 import { withUnsupportedChains } from "providers/UnsupportedChain";
 import { useWeb3React } from "@web3-react/core";
+import { roundDown } from "util/numbers";
+import { commify } from "@ethersproject/units";
 
 function useGovernanceStatsView() {
   const { quorum, votingPeriod, votingDelay, timelock, threshold } =
@@ -16,15 +18,13 @@ function useGovernanceStatsView() {
 
   const chainId = useChainId();
 
-  const votingPeriodHours = votingPeriod
-    ?.mul(BLOCK_SPEED[chainId])
-    ?.div(3600)
-    .toNumber();
+  const votingPeriodSeconds = votingPeriod?.mul(BLOCK_SPEED[chainId]);
 
-  const votingPeriodDays = votingPeriod
-    ?.mul(BLOCK_SPEED[chainId])
-    ?.div(86400)
-    .toNumber();
+  const votingPeriodDays = Math.floor(votingPeriodSeconds / 86400);
+
+  const votingPeriodHours = Math.floor(
+    votingPeriodSeconds / 3600 - votingPeriodDays * 24
+  );
 
   const timelockHours = timelock?.div(3600).toNumber();
 
@@ -35,10 +35,9 @@ function useGovernanceStatsView() {
     {
       label: "Voting Period",
       value: votingPeriod
-        ? formatDetailed(votingPeriod, "", 0) +
-          (votingPeriodHours < 48
-            ? " (" + votingPeriodHours + " Hours)"
-            : " (" + votingPeriodDays + " Days)")
+        ? `${commify(votingPeriod.toString())} (${roundDown(
+            votingPeriodDays
+          )}d ${roundDown(votingPeriodHours)}h)`
         : "N/A",
     },
     { label: "Delay Period", value: formatDetailed(votingDelay, "Block", 0) },
