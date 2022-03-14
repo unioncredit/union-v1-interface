@@ -4,7 +4,7 @@ import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
 
 const getTimelock = async (_, timelockContract: Contract) => {
-  return timelockContract.delay();
+  return timelockContract.getMinDelay();
 };
 
 export default function useTimelock() {
