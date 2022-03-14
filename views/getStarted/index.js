@@ -25,6 +25,7 @@ import useIsMember from "hooks/data/useIsMember";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import useStakeData from "hooks/data/useStakeData";
+import { ZERO } from "constants/app";
 
 import styles from "./getStarted.module.css";
 
@@ -34,7 +35,7 @@ export default function MembershipView() {
   const memberStep = useRef();
 
   const { data: trustCount = 0 } = useTrustCountData();
-  const { data: creditLimit = 0 } = useCreditLimit();
+  const { data: creditLimit = ZERO } = useCreditLimit();
   const { data: stakeData } = useStakeData();
 
   const { data: isMember, mutate: updateIsMember } = useIsMember();

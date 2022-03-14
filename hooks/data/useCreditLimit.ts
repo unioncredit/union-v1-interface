@@ -1,6 +1,5 @@
 import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
-import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
 import useCurrentToken from "../useCurrentToken";
@@ -21,7 +20,7 @@ const getCreditLimit =
 
     const limit = await userManagerContract.getCreditLimit(account);
 
-    return Number(formatUnits(limit, 18));
+    return limit;
   };
 
 export default function useCreditLimit(address: string) {

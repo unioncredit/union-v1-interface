@@ -16,6 +16,8 @@ import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
 
 import styles from "./BorrowStatsCard.module.css";
+import { formatUnits } from "@ethersproject/units";
+import { ZERO } from "constants/app";
 
 export function BorrowStatsCard() {
   const { isOpen: isBorrowModalOpen, open: openBorrowModal } = useBorrowModal();
@@ -24,16 +26,18 @@ export function BorrowStatsCard() {
   const { isOpen: isPaymentModalOpen, open: openPaymentModal } =
     usePaymentModal();
 
-  const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
+  const { data: creditLimit = ZERO, mutate: updateCreditLimit } =
+    useCreditLimit();
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
 
   const {
+    borrowed,
     borrowedRounded = 0,
     interest = 0,
     paymentDueDate = "-",
     paymentPeriod = "-",
-    fee = 0,
+    fee,
     isOverdue = false,
   } = !!borrowData && borrowData;
 
@@ -66,7 +70,11 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit, 2))} />}
+                  value={
+                    <Dai
+                      value={format(roundDown(formatUnits(creditLimit, 18), 2))}
+                    />
+                  }
                 />
                 <Stat
                   mt="24px"
@@ -100,7 +108,9 @@ export function BorrowStatsCard() {
                   align="center"
                   label="Minimum due"
                   mt="24px"
-                  value={<Dai value={roundUp(interest)} />}
+                  value={
+                    <Dai value={roundUp(Number(formatUnits(interest, 18)))} />
+                  }
                   after={
                     <Label
                       size="small"
@@ -131,7 +141,7 @@ export function BorrowStatsCard() {
             creditLimit,
             paymentDueDate,
             paymentPeriod,
-            balanceOwed: borrowedRounded,
+            borrowed,
             onComplete,
           }}
         />
@@ -141,7 +151,7 @@ export function BorrowStatsCard() {
           {...{
             paymentDueDate,
             balanceOwed: borrowedRounded,
-            interest,
+            interest: Number(formatUnits(interest, 18)),
             onComplete,
           }}
         />

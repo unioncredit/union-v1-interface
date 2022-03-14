@@ -6,6 +6,8 @@ import useBorrowData from "hooks/data/useBorrowData";
 import { roundUp } from "util/numbers";
 import makeUrls from "add-event-to-calendar";
 import { useMemo } from "react";
+import { formatUnits } from "@ethersproject/units";
+import { ZERO } from "constants/app";
 
 export const PAYMENT_REMINDER_MODAL = "payment-reminder-modal";
 
@@ -16,7 +18,7 @@ export function PaymentReminderModal() {
 
   const { data: borrowData } = useBorrowData();
 
-  const { interest = 0, paymentDueDate = "-" } = !!borrowData && borrowData;
+  const { interest = ZERO, paymentDueDate = "-" } = !!borrowData && borrowData;
 
   const date = useMemo(() => {
     const date = new Date();
@@ -46,7 +48,7 @@ export function PaymentReminderModal() {
             First payment amount
           </Label>
           <Label as="p" size="small" grey={400}>
-            {roundUp(interest)} DAI
+            {roundUp(Number(formatUnits(interest, 18)))} DAI
           </Label>
         </Box>
         <Box justify="space-between" mt="4px">

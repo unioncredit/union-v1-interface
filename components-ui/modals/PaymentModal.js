@@ -54,18 +54,11 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
   const utoken = useUnionContract();
   const { removePermit } = usePermits();
 
-  const {
-    reset,
-    errors,
-    formState,
-    register,
-    watch,
-    setValue,
-    handleSubmit,
-  } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { reset, errors, formState, register, watch, setValue, handleSubmit } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   const { data: daiBalance = 0.0 } = useTokenBalance(curToken);
   const flooredDaiBalance = roundDown(daiBalance);

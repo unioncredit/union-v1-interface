@@ -1,4 +1,10 @@
+import { BigNumber } from "@ethersproject/bignumber";
+
 export const DEFAULT_CHAIN_ID = 1;
+
+export const ZERO = BigNumber.from("0");
+
+export const WAD = BigNumber.from((1e18).toString());
 
 export const ContactsType = {
   TRUSTS_YOU: "trusts-you",

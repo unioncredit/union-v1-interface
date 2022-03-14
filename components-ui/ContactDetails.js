@@ -5,9 +5,10 @@ import format from "util/formatValue";
 import { roundUp } from "util/numbers";
 import { useWeb3React } from "@web3-react/core";
 import { RelatedHistory } from "./RelatedHistory";
-import { ContactsType } from "constants/app";
+import { ContactsType, ZERO } from "constants/app";
 
 import Manage from "union-ui/lib/icons/manage.svg";
+import { formatUnits } from "@ethersproject/units";
 
 function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
   return (
@@ -61,7 +62,7 @@ function YouTrustContactDetails({
 }) {
   const { data: borrowData } = useBorrowData(address);
 
-  const { interest = 0, paymentDueDate = "-" } = !!borrowData && borrowData;
+  const { interest = ZERO, paymentDueDate = "-" } = !!borrowData && borrowData;
 
   return (
     <>
@@ -112,7 +113,10 @@ function YouTrustContactDetails({
           <Stat label="Balance owed" value={<Dai value={format(used, 2)} />} />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
+          <Stat
+            label="Min payment"
+            value={<Dai value={roundUp(Number(formatUnits(interest, 18)))} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat

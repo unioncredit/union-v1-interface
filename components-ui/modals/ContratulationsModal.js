@@ -4,6 +4,7 @@ import Twitter from "union-ui/lib/icons/twitter.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
+import { formatUnits } from "@ethersproject/units";
 
 export const CONGRATULATIONS_MODAL = "congratulations-modal";
 
@@ -19,7 +20,7 @@ const generateTwitterLink = (shareMessage) =>
 export function CongratulationsModal({ onClose, creditLimit }) {
   const { close } = useCongratulationsModal();
 
-  const formattedCreditLimit = format(creditLimit);
+  const formattedCreditLimit = format(formatUnits(creditLimit, 18));
 
   const shareMessage = `Thanks to my friends who backed me for a $${formattedCreditLimit} credit line`;
 

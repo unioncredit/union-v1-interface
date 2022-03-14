@@ -1,13 +1,10 @@
 import useSWR from "swr";
 import { Contract } from "@ethersproject/contracts";
-import { formatUnits } from "@ethersproject/units";
 import useReadProvider from "hooks/useReadProvider";
 import useUTokenContract from "hooks/contracts/useUTokenContract";
 
 const getMaxBorrow = (contract: Contract) => async () => {
-  const res = await contract.maxBorrow();
-
-  return Number(formatUnits(res, 18));
+  return await contract.maxBorrow();
 };
 
 export default function useMaxBorrow() {

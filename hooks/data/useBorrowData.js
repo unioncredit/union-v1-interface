@@ -81,10 +81,9 @@ const getCreditLimit =
       borrowedRounded: roundUp(
         Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18))
       ),
-      borrowedRaw:
-        Number(formatUnits(borrowed, 18)) + Number(formatUnits(interest, 18)),
-      fee: Number(formatUnits(fee, 18)),
-      interest: Number(formatUnits(interest, 18)),
+      borrowed: borrowed.add(interest),
+      fee,
+      interest,
       paymentDueDate,
       paymentPeriod,
       isOverdue,
