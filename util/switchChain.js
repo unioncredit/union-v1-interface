@@ -24,6 +24,8 @@ export const options = [
     chainId: 42161,
     networkData: {
       chainId: "0xA4B1",
+      rpcUrls: ["https://arb1.arbitrum.io/rpc"],
+      chainName: "Arbitrum One",
     },
   },
   {
