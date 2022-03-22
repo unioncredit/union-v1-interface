@@ -128,7 +128,7 @@ export default function ProfileView({ address }) {
                         Vouching for you
                       </Text>
                     )}
-                    {!vouchedForThem && !isAccountProfile && (
+                    {!vouchedForThem && !isAccountProfile && account && (
                       <Button
                         fluid
                         mt="20px"
