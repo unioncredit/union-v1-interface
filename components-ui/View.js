@@ -22,8 +22,14 @@ export function View({ children, tabItems }) {
       : [];
 
   const navItemLinks = useMemo(() => {
-    if (!isMember) {
+    if (typeof isMember !== "boolean") {
       return [];
+    }
+
+    if (!isMember) {
+      return navItems.filter((x) =>
+        ["get-started", "governance"].includes(x.id)
+      );
     }
 
     return navItems.slice(1).map((item) => ({
@@ -32,7 +38,7 @@ export function View({ children, tabItems }) {
       active: item.pathname === router.pathname,
       href: item.id === "profile" ? `/profile/${account}` : item.pathname,
     }));
-  }, []);
+  }, [isMember]);
 
   const initialTab = tabItemLinks.findIndex(
     (item) => item.href === router.pathname

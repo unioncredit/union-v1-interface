@@ -1,43 +1,25 @@
 import { Contract } from "@ethersproject/contracts";
 import { useWeb3React } from "@web3-react/core";
 import useSWRImmutable from "swr/immutable";
-import type { Web3Provider } from "@ethersproject/providers";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import useCurrentToken from "../useCurrentToken";
+import useReadProvider from "hooks/useReadProvider";
+import useUserContract from "hooks/contracts/useUserContract";
 
-const getIsMember =
-  (marketRegistryContract: Contract) =>
-  async (
-    _: any,
-    account: string,
-    tokenAddress: string,
-    library: Web3Provider
-  ) => {
-    const signer = library.getSigner();
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const userManagerAddress = res.userManager;
-    const userManagerContract = new Contract(
-      userManagerAddress,
-      USER_MANAGER_ABI,
-      signer
-    );
-
-    const isMember: boolean = await userManagerContract.checkIsMember(account);
-    return isMember;
-  };
+const getIsMember = async (_: any, account: string, userManager: Contract) => {
+  const isMember: boolean = await userManager.checkIsMember(account);
+  return isMember;
+};
 
 export default function useIsMember(address: string) {
-  const { account: connectedAccount, library } = useWeb3React();
-  const curToken = useCurrentToken();
-  const marketRegistryContract = useMarketRegistryContract();
+  const { account: connectedAccount } = useWeb3React();
+  const provider = useReadProvider();
+  const userManager = useUserContract(provider);
 
   const account = address || connectedAccount;
 
-  const shouldFetch = !!marketRegistryContract && typeof account === "string";
+  const shouldFetch = !!userManager && typeof account === "string";
 
   return useSWRImmutable(
-    shouldFetch ? ["IsMember", account, curToken, library] : null,
-    getIsMember(marketRegistryContract)
+    shouldFetch ? ["IsMember", account, userManager] : null,
+    getIsMember
   );
 }
