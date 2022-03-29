@@ -7,7 +7,8 @@ function parseData(chainId, data) {
   if (!data) return [];
 
   return data.map((item) => {
-    const subTitle = new Date(Number(item.timestamp * 1000)).toDateString();
+    const date = new Date(Number(item.timestamp * 1000));
+    const subTitle = `${date.toDateString()} ${date.getHours()}:${date.getMinutes()}`;
     const hash = item.id ? item.id.split("-")?.[0] : false;
     const href = hash && getEtherScanLink(chainId, hash, "TRANSACTION");
 
@@ -31,17 +32,14 @@ export function ProposalHistoryCard({ id, startTimestamp }) {
 
   const hasHistory = data && data.length > 0;
 
-  const allData = [
-    ...data,
-    ...(startTimestamp * 1000 <= Date.now()
-      ? [
-          {
-            action: "votingStarted",
-            timestamp: startTimestamp,
-          },
-        ]
-      : []),
-  ].sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
+  const votingStarted = startTimestamp * 1000 <= Date.now() && {
+    action: "votingStarted",
+    timestamp: startTimestamp,
+  };
+
+  const allData = [...data, votingStarted]
+    .filter(Boolean)
+    .sort((a, b) => Number(a.timestamp) - Number(b.timestamp));
 
   return (
     <Card>

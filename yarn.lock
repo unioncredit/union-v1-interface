@@ -2147,9 +2147,9 @@
   integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
 
 "@unioncredit/ui@^0.2.79":
-  version "0.2.81"
-  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.81.tgz#dac32f74d7457f77101fe2b6ad422be514bd717d"
-  integrity sha512-O5ygr9MH+8SxPhb0bSjYhS4+/OHzZ4PZ6ConkS3ReJOZBBl+6riO7tncqxzyOM5o25OQ7nKyzUR7LbvQz652+g==
+  version "0.2.82"
+  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.82.tgz#c362fdfcef4c3ce14fc0543b4082b878da9768df"
+  integrity sha512-aZ2o9nlHBT1A/fa3UU03v01cZCJ2sdVq2ukdCf+1NC7eAQsc0aqlVe1/ES5PgUjT0Zxk3gGp21AytPklyHxSwg==
   dependencies:
     classnames "^2.3.1"
     react-animate-height "^2.0.23"
