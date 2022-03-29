@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 const FILTERS = {
   member: (item) => item.isMember,
   notAMember: (item) => !item.isMember,
-  healthy: (item) => !item.isOverdue,
+  healthy: (item) => !item.isOverdue && item.isMember,
   defaulted: (item) => item.isOverdue,
   all: (item) => item,
 };
