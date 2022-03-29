@@ -15,7 +15,7 @@ export const links = {
   blog: "https://medium.com/union-finance",
   website: "https://union.finance/",
   governance: "https://union.finance/governance",
-  docs: "https://unionfinance.gitbook.io/docs/",
+  docs: "https://docs.union.finance/",
   discord: "https://discord.gg/cZagzJ3p8G",
   github: "https://github.com/unioncredit",
 };
@@ -24,7 +24,7 @@ export const contextMenuItems = [
   {
     label: "Docs",
     target: "_blank",
-    href: "https://unionfinance.gitbook.io/docs/",
+    href: "https://docs.union.finance/",
   },
   { label: "Blog", target: "_blank", href: "https://medium.com/union-finance" },
   {
