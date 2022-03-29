@@ -1,6 +1,5 @@
 export async function fetchENS(address) {
-  // https://twitter.com/frolic <- what a legend
-  const apiUrl = "https://api.ensideas.com/ens/resolve/";
+  const apiUrl = "/api/ens/";
 
   try {
     const resp = await fetch(apiUrl + address);

@@ -30,7 +30,7 @@
     "@ethersproject/address": "^5.0.5",
     "@ethersproject/bignumber": "^5.0.8",
     "@ethersproject/contracts": "^5.0.5",
-    "@ethersproject/providers": "^5.0.14",
+    "@ethersproject/providers": "^5.6.2",
     "@ethersproject/units": "^5.0.6",
     "@unioncredit/ui": "^0.2.79",
     "@web3-react/core": "^6.1.9",
