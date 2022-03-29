@@ -68,7 +68,7 @@ export function BecomeMemberCard({ disabled }) {
         >
           <Button
             fluid
-            label={`Burn ${displayMemberFee} UNION`}
+            label={`Burn ${displayMemberFee} ${unionSymbol}`}
             disabled={isMember || disabled || !hasEnoughUnion}
             loading={registering}
             onClick={handleRegister}
