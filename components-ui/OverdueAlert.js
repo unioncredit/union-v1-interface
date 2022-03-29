@@ -1,4 +1,4 @@
-import { Box, Alert } from "union-ui";
+import { Box, Alert } from "@unioncredit/ui";
 import { PaymentModal, usePaymentModal } from "components-ui/modals";
 import { roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";

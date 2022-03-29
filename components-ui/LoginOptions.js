@@ -1,5 +1,5 @@
-import { Card, Button, Box, Label, Grid, Text } from "union-ui";
-import Chevron from "union-ui/lib/icons/chevron.svg";
+import { Card, Button, Box, Label, Grid, Text } from "@unioncredit/ui";
+import Chevron from "@unioncredit/ui/lib/icons/chevron.svg";
 import { useRouter } from "next/router";
 import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";

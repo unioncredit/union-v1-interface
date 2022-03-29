@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import { Wallet as UIWallet } from "union-ui";
+import { Wallet as UIWallet } from "@unioncredit/ui";
 
 import { networkImages } from "lib/connectors";
 import { useAccountModal, AccountModal } from "components-ui/modals";

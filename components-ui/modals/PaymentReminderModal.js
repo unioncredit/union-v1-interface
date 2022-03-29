@@ -1,5 +1,12 @@
-import { ModalOverlay, ButtonRow, Button, Box, Text, Label } from "union-ui";
-import Calendar from "union-ui/lib/icons/calendar.svg";
+import {
+  ModalOverlay,
+  ButtonRow,
+  Button,
+  Box,
+  Text,
+  Label,
+} from "@unioncredit/ui";
+import Calendar from "@unioncredit/ui/lib/icons/calendar.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import useBorrowData from "hooks/data/useBorrowData";

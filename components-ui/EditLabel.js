@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from "react";
-import { Box, Label, Text, Button } from "union-ui";
+import { Box, Label, Text, Button } from "@unioncredit/ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import setEndOfContentEditable from "util/setEndOfContentEditable";
 

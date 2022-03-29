@@ -8,11 +8,11 @@ import {
   Grid,
   Tooltip,
   Label,
-} from "union-ui";
-import TooltipIcon from "union-ui/lib/icons/tooltip.svg";
+} from "@unioncredit/ui";
+import TooltipIcon from "@unioncredit/ui/lib/icons/tooltip.svg";
 import Link from "next/link";
 import { useWeb3React } from "@web3-react/core";
-import External from "union-ui/lib/icons/externalinline.svg";
+import External from "@unioncredit/ui/lib/icons/externalinline.svg";
 import {
   useVoteDelegationModal,
   VoteDelegationModal,

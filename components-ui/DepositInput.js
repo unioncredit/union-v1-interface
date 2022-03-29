@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { Button, Dai, Box, Input } from "union-ui";
+import { Button, Dai, Box, Input } from "@unioncredit/ui";
 
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
@@ -27,18 +27,11 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const { removePermit } = usePermits();
   const { data: maxStake = "0" } = useMaxStakeAmount();
 
-  const {
-    handleSubmit,
-    register,
-    watch,
-    setValue,
-    formState,
-    errors,
-    reset,
-  } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { handleSubmit, register, watch, setValue, formState, errors, reset } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   const { isDirty, isSubmitting } = formState;
 
@@ -47,9 +40,8 @@ export const DepositInput = ({ totalStake, onComplete }) => {
 
   const DAI = useCurrentToken();
 
-  const { data: daiBalance = 0.0, mutate: updateDaiBalance } = useTokenBalance(
-    DAI
-  );
+  const { data: daiBalance = 0.0, mutate: updateDaiBalance } =
+    useTokenBalance(DAI);
 
   useEffect(() => {
     updateDaiBalance();

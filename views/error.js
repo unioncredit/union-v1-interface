@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Box, Heading, Button, Text, ButtonRow } from "union-ui";
+import { Box, Heading, Button, Text, ButtonRow } from "@unioncredit/ui";
 import { links } from "constants/app";
 
 export default function ErrorView({

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heading, Box, Grid, ToggleMenu, TabNav } from "union-ui";
+import { Heading, Box, Grid, ToggleMenu, TabNav } from "@unioncredit/ui";
 
 import UnionTokenStats from "./UnionTokenStats";
 import UTokenStats from "./UTokenStats";

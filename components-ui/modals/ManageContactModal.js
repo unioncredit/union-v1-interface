@@ -1,5 +1,5 @@
 import { useEditVouchModal, useWriteOffDebtModal } from "components-ui/modals";
-import { Button, ModalOverlay, Text, Label, Box } from "union-ui";
+import { Button, ModalOverlay, Text, Label, Box } from "@unioncredit/ui";
 import { useModal } from "hooks/useModal";
 import { MiniProfileCard, Modal, Dai, EditLabel } from "components-ui";
 import { useState } from "react";

@@ -1,6 +1,6 @@
-import { Card, Button, Box, Label } from "union-ui";
-import Switch from "union-ui/lib/icons/switch.svg";
-import Check from "union-ui/lib/icons/wireCheck.svg";
+import { Card, Button, Box, Label } from "@unioncredit/ui";
+import Switch from "@unioncredit/ui/lib/icons/switch.svg";
+import Check from "@unioncredit/ui/lib/icons/wireCheck.svg";
 
 import useAllowance from "hooks/useAllowance";
 import { parseEther } from "@ethersproject/units";

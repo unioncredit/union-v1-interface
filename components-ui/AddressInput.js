@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import EnsIcon from "union-ui/lib/icons/ens.svg";
+import EnsIcon from "@unioncredit/ui/lib/icons/ens.svg";
 import makeBlockie from "ethereum-blockies-base64";
-import { Input, Box, Label, LoadingSpinner, Avatar } from "union-ui";
+import { Input, Box, Label, LoadingSpinner, Avatar } from "@unioncredit/ui";
 
 import { useRef, useState } from "react";
 import { fetchENS } from "fetchers/fetchEns";

@@ -1,4 +1,4 @@
-import { Button } from "union-ui";
+import { Button } from "@unioncredit/ui";
 import { useForceConnect } from "hooks/useForceConnect";
 
 export function ConnectButton(props) {

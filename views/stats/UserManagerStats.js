@@ -1,4 +1,4 @@
-import { Stat, Grid } from "union-ui";
+import { Stat, Grid } from "@unioncredit/ui";
 
 import useUserManagerStats from "hooks/stats/userManagerStats";
 import { daiValue } from "./values";

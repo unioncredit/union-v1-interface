@@ -1,4 +1,4 @@
-import { Card, Heading, Button, Label } from "union-ui";
+import { Card, Heading, Button, Label } from "@unioncredit/ui";
 import { VouchModal, useVouchModal } from "components-ui/modals";
 
 export function NewVouchCard() {

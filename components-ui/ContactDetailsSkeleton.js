@@ -1,4 +1,4 @@
-import { Box, Card, Skeleton, Grid } from "union-ui";
+import { Box, Card, Skeleton, Grid } from "@unioncredit/ui";
 
 export function ContactDetailsSkeleton({ shimmer = true }) {
   return (

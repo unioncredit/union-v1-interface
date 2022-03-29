@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Heading, Badge, Box } from "union-ui";
+import { Heading, Badge, Box } from "@unioncredit/ui";
 import { Avatar, Copyable } from "components-ui";
 import truncateAddress from "util/truncateAddress";
-import External from "union-ui/lib/icons/external.svg";
+import External from "@unioncredit/ui/lib/icons/external.svg";
 
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";

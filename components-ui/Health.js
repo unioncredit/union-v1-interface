@@ -1,4 +1,4 @@
-import { Badge } from "union-ui";
+import { Badge } from "@unioncredit/ui";
 
 export function Health({ health, isOverdue }) {
   const fillColor = isOverdue

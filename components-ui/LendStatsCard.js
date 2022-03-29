@@ -1,4 +1,4 @@
-import { Stat, Button, Bar, Grid, Card } from "union-ui";
+import { Stat, Button, Bar, Grid, Card } from "@unioncredit/ui";
 import format from "util/formatValue";
 import { roundDown, toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";

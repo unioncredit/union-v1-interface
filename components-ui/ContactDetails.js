@@ -1,5 +1,5 @@
 import useBorrowData from "hooks/data/useBorrowData";
-import { Stat, Grid, Card, Button, Badge } from "union-ui";
+import { Stat, Grid, Card, Button, Badge } from "@unioncredit/ui";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp } from "util/numbers";
@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 import { RelatedHistory } from "./RelatedHistory";
 import { ContactsType } from "constants/app";
 
-import Manage from "union-ui/lib/icons/manage.svg";
+import Manage from "@unioncredit/ui/lib/icons/manage.svg";
 
 function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
   return (

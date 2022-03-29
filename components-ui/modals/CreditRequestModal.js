@@ -1,4 +1,4 @@
-import { ModalOverlay, Box, Label } from "union-ui";
+import { ModalOverlay, Box, Label } from "@unioncredit/ui";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import dynamic from "next/dynamic";

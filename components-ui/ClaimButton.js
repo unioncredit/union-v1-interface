@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "union-ui";
+import { Button } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import useWithdrawRewards from "hooks/payables/useWithdrawRewards";
 import getReceipt from "util/getReceipt";

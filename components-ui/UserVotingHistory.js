@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Label, EmptyState, Box, Badge } from "union-ui";
-import ExtenalInline from "union-ui/lib/icons/externalinline.svg";
+import { Label, EmptyState, Box, Badge } from "@unioncredit/ui";
+import ExtenalInline from "@unioncredit/ui/lib/icons/externalinline.svg";
 import useUserProposalVoteHistory from "hooks/governance/useUserProposalVoteHistory";
 
 export function UserVotingHistory({ address }) {

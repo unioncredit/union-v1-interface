@@ -7,8 +7,8 @@ import {
   PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Label, Tooltip } from "union-ui";
-import TooltipIcon from "union-ui/lib/icons/tooltip.svg";
+import { Stat, Button, Grid, Card, Label, Tooltip } from "@unioncredit/ui";
+import TooltipIcon from "@unioncredit/ui/lib/icons/tooltip.svg";
 import format from "util/formatValue";
 import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";

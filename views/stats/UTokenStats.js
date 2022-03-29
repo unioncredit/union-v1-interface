@@ -1,4 +1,4 @@
-import { Stat, Grid } from "union-ui";
+import { Stat, Grid } from "@unioncredit/ui";
 
 import format from "util/formatValue";
 import useUTokenStats from "hooks/stats/uTokenStats";

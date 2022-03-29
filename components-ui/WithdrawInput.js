@@ -5,7 +5,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import errorMessages from "util/errorMessages";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
-import { Button, Box, Dai, Input } from "union-ui";
+import { Button, Box, Dai, Input } from "@unioncredit/ui";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";

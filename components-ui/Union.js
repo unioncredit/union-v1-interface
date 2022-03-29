@@ -1,4 +1,4 @@
-import UnionSymbol from "union-ui/lib/icons/union.svg";
+import UnionSymbol from "@unioncredit/ui/lib/icons/union.svg";
 
 import styles from "./union.module.css";
 

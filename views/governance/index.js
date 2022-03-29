@@ -1,5 +1,5 @@
-import { Alert, Grid, Box } from "union-ui";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import { Alert, Grid, Box } from "@unioncredit/ui";
+import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
 import { useWeb3React } from "@web3-react/core";
 import {
   View,

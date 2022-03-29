@@ -1,6 +1,6 @@
 import useProposalHistory from "hooks/governance/useProposalHistory";
 import useChainId from "hooks/useChainId";
-import { Heading, Card, Steps } from "union-ui";
+import { Heading, Card, Steps } from "@unioncredit/ui";
 import getEtherScanLink from "util/getEtherscanLink";
 
 function parseData(chainId, data) {

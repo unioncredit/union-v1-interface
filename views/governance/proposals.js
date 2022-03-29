@@ -1,5 +1,5 @@
-import { Grid, Card, Alert } from "union-ui";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import { Grid, Card, Alert } from "@unioncredit/ui";
+import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
 
 import { View, ProposalsTable } from "components-ui";
 import useFilteredProposalData from "hooks/governance/useFilteredProposalData";

@@ -8,7 +8,7 @@ import {
   Skeleton,
   Pagination,
   EmptyState,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { Dai } from "components-ui";
 import usePagination from "hooks/usePagination";
@@ -17,12 +17,12 @@ import format from "util/formatValue";
 import formatDateTime from "util/formatDateTime";
 import truncateName from "util/truncateName";
 
-import Borrow from "union-ui/lib/icons/borrow.svg";
-import Repayment from "union-ui/lib/icons/repayment.svg";
-import NewMember from "union-ui/lib/icons/newMember.svg";
-import NewVouch from "union-ui/lib/icons/newVouch.svg";
-import NewVouchRecieved from "union-ui/lib/icons/newVouchRecieved.svg";
-import CancelledVouch from "union-ui/lib/icons/cancelVouch.svg";
+import Borrow from "@unioncredit/ui/lib/icons/borrow.svg";
+import Repayment from "@unioncredit/ui/lib/icons/repayment.svg";
+import NewMember from "@unioncredit/ui/lib/icons/newMember.svg";
+import NewVouch from "@unioncredit/ui/lib/icons/newVouch.svg";
+import NewVouchRecieved from "@unioncredit/ui/lib/icons/newVouchRecieved.svg";
+import CancelledVouch from "@unioncredit/ui/lib/icons/cancelVouch.svg";
 
 import { TransactionTypes } from "constants/app";
 import usePublicData from "hooks/usePublicData";

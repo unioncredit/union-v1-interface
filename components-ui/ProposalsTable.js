@@ -7,7 +7,7 @@ import {
   TableCell,
   Skeleton,
   EmptyState,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useRouter } from "next/router";
 
 import { roundDown, toPercent } from "util/numbers";

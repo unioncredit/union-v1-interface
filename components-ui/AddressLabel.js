@@ -1,5 +1,5 @@
 import { Avatar } from "components-ui";
-import { Box, Text } from "union-ui";
+import { Box, Text } from "@unioncredit/ui";
 import usePublicData from "hooks/usePublicData";
 import truncateAddress from "util/truncateAddress";
 import { Copyable } from "./Copyable";

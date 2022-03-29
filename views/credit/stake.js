@@ -1,4 +1,4 @@
-import { Grid, Card, Box } from "union-ui";
+import { Grid, Card, Box } from "@unioncredit/ui";
 import {
   View,
   OutstandingLoans,

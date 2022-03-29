@@ -1,4 +1,4 @@
-import { Stat, Grid } from "union-ui";
+import { Stat, Grid } from "@unioncredit/ui";
 
 import { formatDetailed } from "util/formatValue";
 import useMarketSettingsStats from "hooks/stats/marketSettingsStats";

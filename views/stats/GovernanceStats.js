@@ -1,5 +1,5 @@
-import { Alert, Stat, Grid } from "union-ui";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import { Alert, Stat, Grid } from "@unioncredit/ui";
+import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
 
 import { formatDetailed } from "util/formatValue";
 import useGovernanceStats from "hooks/stats/governanceStats";

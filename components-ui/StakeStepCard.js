@@ -1,5 +1,5 @@
 import { useStakeModal, StakeType } from "components-ui/modals";
-import { Grid, Card, Stat, Button, ButtonRow, Divider } from "union-ui";
+import { Grid, Card, Stat, Button, ButtonRow, Divider } from "@unioncredit/ui";
 import { Dai, Union } from "components-ui";
 import useStakeData from "hooks/data/useStakeData";
 import useRewardsData from "hooks/data/useRewardsData";

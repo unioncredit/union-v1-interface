@@ -1,4 +1,4 @@
-import { Select } from "union-ui";
+import { Select } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { useState } from "react";
 import { switchChain, options } from "util/switchChain";

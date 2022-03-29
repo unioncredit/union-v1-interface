@@ -1,6 +1,6 @@
 import { commify } from "@ethersproject/units";
-import { ModalOverlay, Box, Grid, Stat } from "union-ui";
-import UnionLogo from "union-ui/lib/icons/union.svg";
+import { ModalOverlay, Box, Grid, Stat } from "@unioncredit/ui";
+import UnionLogo from "@unioncredit/ui/lib/icons/union.svg";
 import { Modal, UnwrapButton } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { ClaimButton } from "components-ui/ClaimButton";

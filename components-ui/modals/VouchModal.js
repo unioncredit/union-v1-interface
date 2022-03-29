@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { isAddress } from "@ethersproject/address";
-import Info from "union-ui/lib/icons/wireInfo.svg";
-import { ModalOverlay, Box, Input, Button, Alert } from "union-ui";
+import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
+import { ModalOverlay, Box, Input, Button, Alert } from "@unioncredit/ui";
 
 import { useModal } from "hooks/useModal";
 import useTrustData from "hooks/data/useTrustData";
@@ -18,7 +18,7 @@ import errorMessages from "util/errorMessages";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
-import { Dai, MiniProfileCard, Modal, AddressInput } from "components-ui";
+import { Dai, MiniAccountSummary, Modal, AddressInput } from "components-ui";
 import { generateHandleChange } from "components-ui/AddressInput";
 import useMaxTrust from "hooks/useMaxTrust";
 
@@ -122,7 +122,7 @@ export function VouchModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="New vouch" onClose={close}>
-        <MiniProfileCard
+        <MiniAccountSummary
           onClick={onNavigateToProfile}
           address={!errors.address?.message && address}
         />

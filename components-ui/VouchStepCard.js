@@ -4,7 +4,7 @@ import {
   ShareCard,
 } from "components-ui";
 import useTrustCountData from "hooks/data/useTrustCountData";
-import { Box, Card, CircleProgress, Table } from "union-ui";
+import { Box, Card, CircleProgress, Table } from "@unioncredit/ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
 

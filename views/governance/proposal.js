@@ -9,14 +9,14 @@ import {
   Label,
   Skeleton,
   Alert,
-} from "union-ui";
+} from "@unioncredit/ui";
 import Link from "next/link";
 import { Fragment } from "react";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { useWeb3React } from "@web3-react/core";
-import ArrowRight from "union-ui/lib/icons/arrowRight.svg";
-import Info from "union-ui/lib/icons/wireInfo.svg";
+import ArrowRight from "@unioncredit/ui/lib/icons/arrowRight.svg";
+import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
 
 import {
   VotingCard,

@@ -7,7 +7,7 @@ import {
   Box,
   Pagination,
   EmptyState,
-} from "union-ui";
+} from "@unioncredit/ui";
 import Link from "next/link";
 import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";

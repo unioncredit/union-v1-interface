@@ -1,4 +1,4 @@
-import { Box, Heading, Text, Grid } from "union-ui";
+import { Box, Heading, Text, Grid } from "@unioncredit/ui";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import useEagerConnect from "hooks/useEagerConnect";
 import UnsupportedChainView from "./unsupportedChain";

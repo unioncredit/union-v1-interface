@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Layout } from "union-ui";
+import { Layout } from "@unioncredit/ui";
 import ErrorView from "views/error";
 
 export default function Custom404Page() {

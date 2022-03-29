@@ -1,4 +1,4 @@
-import { Text } from "union-ui";
+import { Text } from "@unioncredit/ui";
 import { NetworkSelect } from "components-ui";
 
 export function NetworkSwitcher() {

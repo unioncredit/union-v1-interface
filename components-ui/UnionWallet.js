@@ -1,5 +1,5 @@
-import { Button, Text, Tooltip } from "union-ui";
-import Union from "union-ui/lib/icons/union.svg";
+import { Button, Text, Tooltip } from "@unioncredit/ui";
+import Union from "@unioncredit/ui/lib/icons/union.svg";
 import { useClaimModal } from "components-ui/modals";
 import format from "util/formatValue";
 import useCurrentToken from "hooks/useCurrentToken";

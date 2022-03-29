@@ -1,6 +1,6 @@
-import { ModalOverlay, Button, Box, Text, Heading } from "union-ui";
-import NewMember from "union-ui/lib/icons/newMember.svg";
-import Twitter from "union-ui/lib/icons/twitter.svg";
+import { ModalOverlay, Button, Box, Text, Heading } from "@unioncredit/ui";
+import NewMember from "@unioncredit/ui/lib/icons/newMember.svg";
+import Twitter from "@unioncredit/ui/lib/icons/twitter.svg";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";

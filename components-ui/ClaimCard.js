@@ -4,7 +4,7 @@ import useTokenBalance from "hooks/data/useTokenBalance";
 import format from "util/formatValue";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import { ClaimButton } from "components-ui";
-import { Card, Text, Box, Label, Heading } from "union-ui";
+import { Card, Text, Box, Label, Heading } from "@unioncredit/ui";
 
 export const ClaimCard = () => {
   const UNION = useCurrentToken("UNION");

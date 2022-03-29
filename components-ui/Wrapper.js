@@ -8,7 +8,7 @@ import {
   ContextMenu,
   Label,
   AlertBanner,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
 import { useClaimModal, ClaimModal } from "components-ui/modals";

@@ -14,7 +14,7 @@ import {
   EmptyState,
   Heading,
   Label,
-} from "union-ui";
+} from "@unioncredit/ui";
 import {
   Modal,
   View,
@@ -33,9 +33,9 @@ import {
   useWriteOffDebtModal,
   WriteOffDebtModal,
 } from "components-ui/modals";
-import Search from "union-ui/lib/icons/search.svg";
-import Vouch from "union-ui/lib/icons/vouch.svg";
-import Filter from "union-ui/lib/icons/filter.svg";
+import Search from "@unioncredit/ui/lib/icons/search.svg";
+import Vouch from "@unioncredit/ui/lib/icons/vouch.svg";
+import Filter from "@unioncredit/ui/lib/icons/filter.svg";
 import { useState, useEffect } from "react";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";

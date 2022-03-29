@@ -7,7 +7,7 @@ import {
   Heading,
   Text,
   Grid,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { options, switchChain } from "util/switchChain";

@@ -1,4 +1,4 @@
-import { LoadingSpinner } from "union-ui";
+import { LoadingSpinner } from "@unioncredit/ui";
 import useMemberCheck from "hooks/useMemberCheck";
 
 export function CheckIsMember({ children }) {

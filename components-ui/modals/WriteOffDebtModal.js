@@ -1,4 +1,12 @@
-import { Label, Stat, Grid, Button, ModalOverlay, Input, Box } from "union-ui";
+import {
+  Label,
+  Stat,
+  Grid,
+  Button,
+  ModalOverlay,
+  Input,
+  Box,
+} from "@unioncredit/ui";
 import { useModal } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
 import { Dai, Modal } from "components-ui";

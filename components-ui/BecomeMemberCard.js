@@ -1,4 +1,4 @@
-import { Card, Button, Label } from "union-ui";
+import { Card, Button, Label } from "@unioncredit/ui";
 import { useState } from "react";
 import useIsMember from "hooks/data/useIsMember";
 import useRegisterMember from "hooks/payables/useRegisterMember";

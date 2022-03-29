@@ -13,7 +13,7 @@ import {
   ProgressList,
   ProgressListItem,
   MiniProgressList,
-} from "union-ui";
+} from "@unioncredit/ui";
 import {
   View,
   BecomeMemberCard,

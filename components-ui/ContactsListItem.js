@@ -1,5 +1,12 @@
 import usePublicData from "hooks/usePublicData";
-import { Text, TableCell, TableRow, Skeleton, Box, Badge } from "union-ui";
+import {
+  Text,
+  TableCell,
+  TableRow,
+  Skeleton,
+  Box,
+  Badge,
+} from "@unioncredit/ui";
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import { ContactsType } from "constants/app";

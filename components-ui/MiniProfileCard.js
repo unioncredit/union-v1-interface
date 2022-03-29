@@ -1,4 +1,12 @@
-import { Box, Button, Card, Skeleton, Badge, Text, Label } from "union-ui";
+import {
+  Box,
+  Button,
+  Card,
+  Skeleton,
+  Badge,
+  Text,
+  Label,
+} from "@unioncredit/ui";
 import { Avatar } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import usePublicData from "hooks/usePublicData";

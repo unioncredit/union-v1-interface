@@ -1,5 +1,5 @@
 import { CreditContactsRow, CreditContactsRowSkeleton } from "components-ui";
-import { Table, Card, Pagination, EmptyState } from "union-ui";
+import { Table, Card, Pagination, EmptyState } from "@unioncredit/ui";
 import Link from "next/link";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";

@@ -6,7 +6,7 @@ import {
   CreditProvidersCard,
   AddressHistory,
 } from "components-ui";
-import { Grid, Row, Col, Card, Box } from "union-ui";
+import { Grid, Row, Col, Card, Box } from "@unioncredit/ui";
 
 import { config } from "./config";
 

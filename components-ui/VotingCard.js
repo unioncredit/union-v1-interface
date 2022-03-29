@@ -9,9 +9,9 @@ import {
   Button,
   Badge,
   Label,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
-import WireCheck from "union-ui/lib/icons/wireCheck.svg";
+import WireCheck from "@unioncredit/ui/lib/icons/wireCheck.svg";
 
 import useCastVote from "hooks/payables/useCastVote";
 import { useAddActivity } from "hooks/data/useActivity";

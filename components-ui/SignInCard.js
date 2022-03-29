@@ -6,7 +6,7 @@ import {
   Text,
   Label,
   Heading,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { useAutoEffect } from "hooks.macro";
 import useEagerConnect from "hooks/useEagerConnect";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useMemo } from "react";
-import { Nav, NavItem } from "union-ui";
+import { Nav, NavItem } from "@unioncredit/ui";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 

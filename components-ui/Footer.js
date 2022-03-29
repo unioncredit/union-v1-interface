@@ -1,4 +1,4 @@
-import { Box, Text } from "union-ui";
+import { Box, Text } from "@unioncredit/ui";
 
 const FOOTER_LINKS = [
   {

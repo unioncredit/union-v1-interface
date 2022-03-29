@@ -9,9 +9,9 @@ import {
   Badge,
   Label,
   Divider,
-} from "union-ui";
-import ExternalInline from "union-ui/lib/icons/externalinline.svg";
-import External from "union-ui/lib/icons/external.svg";
+} from "@unioncredit/ui";
+import ExternalInline from "@unioncredit/ui/lib/icons/externalinline.svg";
+import External from "@unioncredit/ui/lib/icons/external.svg";
 import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
 import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
@@ -31,7 +31,7 @@ import useAddressLabels from "hooks/useAddressLabels";
 import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
 import useIsMember from "hooks/data/useIsMember";
-import Link from "union-ui/lib/icons/link.svg";
+import Link from "@unioncredit/ui/lib/icons/link.svg";
 import useCopy from "hooks/useCopy";
 
 export default function ProfileView({ address }) {

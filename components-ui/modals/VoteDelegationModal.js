@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ModalOverlay, Text, Button, Box, ToggleMenu } from "union-ui";
+import { ModalOverlay, Text, Button, Box, ToggleMenu } from "@unioncredit/ui";
 import { Modal } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useForm } from "react-hook-form";

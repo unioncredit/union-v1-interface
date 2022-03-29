@@ -1,4 +1,4 @@
-import { Grid, Button, ModalOverlay, Input, Stat } from "union-ui";
+import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
 import { useModal } from "hooks/useModal";
 import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";

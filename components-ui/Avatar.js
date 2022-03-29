@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar as UIAvatar } from "union-ui";
+import { Avatar as UIAvatar } from "@unioncredit/ui";
 import makeBlockie from "ethereum-blockies-base64";
 import useENS from "hooks/useENS";
 

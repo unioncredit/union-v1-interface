@@ -8,9 +8,9 @@ import generateLink, {
   generateTelegramLink,
 } from "util/generateLink";
 import Link from "next/link";
-import { Card, Heading, Button, Label, ButtonRow, Text } from "union-ui";
-import Telegram from "union-ui/lib/icons/telegram.svg";
-import Twitter from "union-ui/lib/icons/twitter.svg";
+import { Card, Heading, Button, Label, ButtonRow, Text } from "@unioncredit/ui";
+import Telegram from "@unioncredit/ui/lib/icons/telegram.svg";
+import Twitter from "@unioncredit/ui/lib/icons/twitter.svg";
 import { Copyable } from "./Copyable";
 import useIsMobile from "hooks/useIsMobile";
 

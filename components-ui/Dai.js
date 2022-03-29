@@ -1,4 +1,4 @@
-import { Dai as UIDai } from "union-ui";
+import { Dai as UIDai } from "@unioncredit/ui";
 
 export function Dai({ value }) {
   return (

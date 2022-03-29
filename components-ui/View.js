@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Box, ToggleMenu, TabNav } from "union-ui";
+import { Box, ToggleMenu, TabNav } from "@unioncredit/ui";
 import { useRouter } from "next/router";
 import { useWeb3React } from "@web3-react/core";
 import { TabLink, Link, OverdueAlert } from "components-ui";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, Button } from "union-ui";
+import { Card, Button } from "@unioncredit/ui";
 import { ProposalsTable } from "./ProposalsTable";
 
 export function RecentProposals({ data }) {

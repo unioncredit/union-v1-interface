@@ -7,7 +7,7 @@ import {
   Text,
   Heading,
   Divider,
-} from "union-ui";
+} from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { useModal } from "hooks/useModal";
 import usePublicData from "hooks/usePublicData";
@@ -17,10 +17,10 @@ import { logout } from "lib/auth";
 import { walletconnect, injected } from "lib/connectors";
 import getEtherscanLink from "util/getEtherscanLink";
 
-import ExternalInline from "union-ui/lib/icons/externalinline.svg";
-import External from "union-ui/lib/icons/external.svg";
-import Failed from "union-ui/lib/icons/failed.svg";
-import Success from "union-ui/lib/icons/success.svg";
+import ExternalInline from "@unioncredit/ui/lib/icons/externalinline.svg";
+import External from "@unioncredit/ui/lib/icons/external.svg";
+import Failed from "@unioncredit/ui/lib/icons/failed.svg";
+import Success from "@unioncredit/ui/lib/icons/success.svg";
 import { Avatar } from "components-ui/Avatar";
 import truncateAddress from "util/truncateAddress";
 

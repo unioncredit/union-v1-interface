@@ -1,5 +1,5 @@
 import { newRidgeState } from "react-ridge-state";
-import { ModalOverlay, Grid, Stat, ToggleMenu } from "union-ui";
+import { ModalOverlay, Grid, Stat, ToggleMenu } from "@unioncredit/ui";
 import { Modal, DepositInput, WithdrawInput } from "components-ui";
 import { useModal } from "hooks/useModal";
 import { useCallback } from "react";

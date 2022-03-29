@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Modal as UIModal } from "union-ui";
+import { Modal as UIModal } from "@unioncredit/ui";
 import getScrollbarWidth from "util/getScrollbarWidth";
 
 export function Modal(props) {
