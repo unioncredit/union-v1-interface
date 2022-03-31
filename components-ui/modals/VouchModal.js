@@ -36,6 +36,8 @@ export function VouchModal() {
 
   const adjustTrust = useAdjustTrust();
 
+  const defaultAddressValue = query?.address;
+
   const {
     formState,
     handleSubmit,
@@ -48,6 +50,7 @@ export function VouchModal() {
   } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
+    defaultValues: { address: defaultAddressValue },
   });
   const { isDirty, isSubmitting } = formState;
 
@@ -132,9 +135,9 @@ export function VouchModal() {
             label="Address or ENS"
             disabled={maxTrustData}
             placeholder="e.g. 0xA1e3..."
-            defaultValue={query?.address}
             error={errors.address?.message}
             onChange={handleAddressInputChange}
+            defaultValue={defaultAddressValue}
           />
           <Box mt="8px">
             <Input

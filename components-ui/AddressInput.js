@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import EnsIcon from "@unioncredit/ui/lib/icons/ens.svg";
 import makeBlockie from "ethereum-blockies-base64";
 import { Input, Box, Label, LoadingSpinner, Avatar } from "@unioncredit/ui";
@@ -48,10 +47,6 @@ export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
   const [loading, setLoading] = useState(false);
   const [ensData, setEnsData] = useState(null);
 
-  useEffect(() => {
-    defaultValue && onChange(defaultValue);
-  }, [defaultValue, onChange]);
-
   const handleChange = (event) => {
     setLoading(true);
     setEnsData(null);
@@ -80,8 +75,8 @@ export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
     <div className={styles.addressInput}>
       <Input
         {...props}
-        defaultValue={defaultValue}
         onChange={handleChange}
+        defaultValue={defaultValue}
         error={inputError}
         suffix={
           loading ? (
