@@ -42,8 +42,8 @@ export default function ProfileView({ address }) {
   const delegate = useDelegate();
   const { getLabel } = useAddressLabels();
   const { name, ENSName } = usePublicData(address);
-  const { data: vouchData = [] } = useVouchData(address);
-  const { data: trustData = [] } = useTrustData(address);
+  const { data: rawVouchData } = useVouchData(address);
+  const { data: rawTrustData } = useTrustData(address);
   const { data: votingWalletData } = useVotingWalletData(address);
   const { data: accountVotingWalletData } = useVotingWalletData(account);
   const { data: isMember } = useIsMember(address);
@@ -67,8 +67,16 @@ export default function ProfileView({ address }) {
     ? currentVotes - balanceOf
     : currentVotes;
 
-  const vouchedForThem = vouchData.some((x) => x.address === account);
-  const vouchesForYou = trustData.some((x) => x.address === account);
+  const vouchData = rawVouchData || [];
+  const trustData = rawTrustData || [];
+
+  const vouchedForThem = rawVouchData
+    ? vouchData.some((x) => x.address === account)
+    : undefined;
+
+  const vouchesForYou = rawTrustData
+    ? trustData.some((x) => x.address === account)
+    : undefined;
 
   const label = getLabel(address);
 
@@ -123,41 +131,49 @@ export default function ProfileView({ address }) {
                         <External width="24px" />
                       </a>
                     </Box>
-                    {vouchesForYou && (
-                      <Text mt="20px" mb={0} grey={500}>
-                        Vouching for you
-                      </Text>
-                    )}
-                    {!vouchedForThem && !isAccountProfile && account && (
-                      <Button
-                        fluid
-                        mt="20px"
-                        icon="vouch"
-                        onClick={openVouchModal}
-                        label={`Vouch for ${name}`}
-                      />
-                    )}
-                    {account === address && !ENSName && (
-                      <>
-                        <Button
-                          as="a"
-                          target="_blank"
-                          href="https://app.ens.domains/"
-                          mt="32px"
-                          mb="8px"
-                          fluid
-                          label={
+                    {vouchesForYou !== undefined &&
+                      vouchedForThem !== undefined && (
+                        <>
+                          {vouchesForYou && (
+                            <Text mt="20px" mb={0} grey={500}>
+                              Vouching for you
+                            </Text>
+                          )}
+
+                          {!vouchedForThem && !isAccountProfile && account && (
+                            <Button
+                              fluid
+                              mt="20px"
+                              icon="vouch"
+                              onClick={openVouchModal}
+                              label={`Vouch for ${name}`}
+                            />
+                          )}
+
+                          {account === address && !ENSName && (
                             <>
-                              Get a custom ENS username
-                              <ExternalInline />
+                              <Button
+                                as="a"
+                                target="_blank"
+                                href="https://app.ens.domains/"
+                                mt="32px"
+                                mb="8px"
+                                fluid
+                                label={
+                                  <>
+                                    Get a custom ENS username
+                                    <ExternalInline />
+                                  </>
+                                }
+                              />
                             </>
-                          }
-                        />
-                      </>
-                    )}
+                          )}
+                        </>
+                      )}
+
                     <Button
                       fluid
-                      mt="8px"
+                      mt="20px"
                       variant="secondary"
                       label={isCopied ? "Copied" : "Copy profile link"}
                       onClick={() => copy(window.location.href)}
