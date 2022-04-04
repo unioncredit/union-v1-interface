@@ -1,17 +1,20 @@
+import { useRouter } from "next/router";
+import { useWeb3React } from "@web3-react/core";
 import { Box, Skeleton, Badge, Text, Label, BadgeRow } from "@unioncredit/ui";
+
 import { Avatar } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import usePublicData from "hooks/usePublicData";
 import truncateAddress from "util/truncateAddress";
-import { useRouter } from "next/router";
 import useVouchData from "hooks/data/useVouchData";
-import { useWeb3React } from "@web3-react/core";
+import useTrustData from "hooks/data/useTrustData";
 
 export function MiniAccountSummary({ address, onClick }) {
   const router = useRouter();
   const { account } = useWeb3React();
   const { data: isMember } = useIsMember(address);
   const { data: vouchData = [] } = useVouchData(address);
+  const { data: trustData = [] } = useTrustData(address);
   const { name, ENSName } = usePublicData(address);
 
   const handleClick = () => {
@@ -20,6 +23,10 @@ export function MiniAccountSummary({ address, onClick }) {
   };
 
   const isVouchingFor = vouchData.find(
+    (x) => x.address.toLowerCase() === account.toLowerCase()
+  );
+
+  const isVouchingForYou = trustData.find(
     (x) => x.address.toLowerCase() === account.toLowerCase()
   );
 
@@ -56,6 +63,7 @@ export function MiniAccountSummary({ address, onClick }) {
       </Box>
       <BadgeRow mt="8px" mb="16px">
         {isVouchingFor && <Badge label="You’re Vouching" color="green" />}
+        {isVouchingForYou && <Badge label="Vouching for you" color="green" />}
 
         {isMember ? (
           <Badge label="Union Member" color="blue" />
