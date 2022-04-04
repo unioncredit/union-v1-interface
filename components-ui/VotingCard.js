@@ -63,8 +63,7 @@ export function VotingCard({
 
   const totalVotePercent = totalCount / totalSupply;
   const quorumPercent = quorum / totalSupply;
-  const quorumProgress =
-    Math.ceil(totalCount / quorum) >= 1 ? 1 : totalCount / quorum;
+  const quorumProgress = totalVotePercent / quorumPercent;
 
   const handleCastVote = (type) => async () => {
     try {
@@ -131,7 +130,7 @@ export function VotingCard({
           <Stat
             fluid
             label="Votes cast"
-            value={toPercent(isNaN(totalVotePercent) ? 0 : totalVotePercent)}
+            value={toPercent(isNaN(totalVotePercent) ? 0 : totalVotePercent, 2)}
           />
           <Stat
             fluid
