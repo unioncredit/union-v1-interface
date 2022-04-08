@@ -45,7 +45,7 @@ const resolveAddress = async (
       displayName = name;
     }
 
-    const avatar = name ? await provider.getAvatar(address) : null;
+    const avatar = name ? await provider.getAvatar(name) : null;
 
     res.status(200).json({ address, name, displayName, avatar });
   } catch (error: any) {
