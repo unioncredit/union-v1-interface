@@ -1,5 +1,5 @@
 export async function fetchENS(address) {
-  const apiUrl = "/api/ens/";
+  const apiUrl = "https://api.ensideas.com/ens/resolve/";
 
   try {
     const resp = await fetch(apiUrl + address);
