@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import Head from "next/head";
 import ProfileView from "views/profile";
 import { PageHead } from "components-ui";
@@ -9,13 +10,14 @@ import { isAddress } from "@ethersproject/address";
 export default function ProfilePage({ params, host }) {
   const [forceConnect] = useForceConnect();
   const { address } = params;
-  const hasAddress = isAddress(address);
-  let ENSAddress;
-  if (!hasAddress) {
-    const ens = useENS(address);
-    ENSAddress = ens.address;
-  }
-  const userAddress = hasAddress ? address : ENSAddress;
+  const ens = useENS(address);
+
+  const userAddress = useMemo(() => {
+    if (isAddress(address)) {
+      return address;
+    }
+    return ens.address;
+  }, [address, ens.address]);
 
   return (
     <>
