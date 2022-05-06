@@ -14,8 +14,9 @@ import { Avatar, Dai } from "components-ui";
 import format from "util/formatValue";
 import usePagination from "hooks/usePagination";
 
-function OutstandingLoansRow({ address, used }) {
+function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
   const { name } = usePublicData(address);
+
   return (
     <Link href={`/contacts?contact=${address}`}>
       <TableRow>
@@ -28,7 +29,13 @@ function OutstandingLoansRow({ address, used }) {
           </Box>
         </TableCell>
         <TableCell>
-          <Badge label="Healthy" color="blue" />
+          {!isMember ? (
+            <Badge color="grey" label="Not a member" />
+          ) : isOverdue ? (
+            <Badge color="red" label="Overdue" />
+          ) : (
+            <Badge color="blue" label="Healthy" />
+          )}
         </TableCell>
         <TableCell align="right">
           <Text grey={700}>
