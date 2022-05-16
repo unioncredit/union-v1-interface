@@ -16,7 +16,7 @@ export const links = {
   website: "https://union.finance/",
   governance: "https://union.finance/governance",
   docs: "https://docs.union.finance/",
-  discord: "https://discord.gg/cZagzJ3p8G",
+  discord: "https://discord.gg/4re6YJdgKZ",
   github: "https://github.com/unioncredit",
 };
 
@@ -24,16 +24,16 @@ export const contextMenuItems = [
   {
     label: "Docs",
     target: "_blank",
-    href: "https://docs.union.finance/",
+    href: links.docs,
   },
-  { label: "Blog", target: "_blank", href: "https://medium.com/union-finance" },
+  { label: "Blog", target: "_blank", href: links.blog },
   {
     label: "Twitter",
     target: "_blank",
-    href: "https://twitter.com/unionprotocol",
+    href: links.twitter,
   },
-  { label: "Discord", target: "_blank", href: "https://discord.gg/cZagzJ3p8G" },
-  { label: "Github", target: "_blank", href: "https://github.com/unioncredit" },
+  { label: "Discord", target: "_blank", href: links.discord },
+  { label: "Github", target: "_blank", href: links.github },
   { label: "Stats", href: "/stats" },
 ];
 
