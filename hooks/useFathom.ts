@@ -7,7 +7,7 @@ export default function useFathom() {
 
   useEffect(() => {
     Fathom.load(process.env.NEXT_PUBLIC_FATHOM_ID, {
-      includedDomains: ["app.union.finance"],
+      includedDomains: ["*.union.finance"],
     });
 
     function onRouteChangeComplete() {
