@@ -34,7 +34,7 @@ export default function useStakeDeposit() {
 
       // if we have a valid permit use that to stake
       if (permit) {
-        if (chainId == 1) {
+        if (chainId == 1 || chainId == 42) {
           return makeTxWithGasEstimate(userManagerContract, "stakeWithPermit", [
             stakeAmount.toString(),
             permit.nonce,

@@ -35,13 +35,13 @@ export default function usePermits() {
 
   const signPermit = async (key, tokenAddress, spender, amount, permitType) => {
     const signFn =
-      permitType === PermitType.DAI && chainId == 1
+      permitType === PermitType.DAI && (chainId == 1 || chainId == 42)
         ? signDaiPermit
         : signERC2612Permit;
-
     const signFnArgs =
-      permitType === PermitType.DAI && chainId == 1 ? [] : [amount];
-
+      permitType === PermitType.DAI && (chainId == 1 || chainId == 42)
+        ? []
+        : [amount];
     const token =
       chainId == 42161 && permitType === PermitType.DAI
         ? {
@@ -58,7 +58,6 @@ export default function usePermits() {
       spender,
       ...signFnArgs
     );
-
     savePermit(key, permit);
   };
 
