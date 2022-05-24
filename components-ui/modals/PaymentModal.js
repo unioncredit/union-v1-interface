@@ -177,7 +177,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                   align="center"
                   size="medium"
                   label="Dai in Wallet"
-                  value={<Dai value={calculateMaxValue} />}
+                  value={<Dai value={daiBalance} />}
                 />
               </Grid.Col>
             </Grid.Row>
