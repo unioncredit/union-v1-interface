@@ -162,13 +162,22 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
         <form onSubmit={handleSubmit(handlePayment)}>
           <Grid>
             <Grid.Row>
-              <Grid.Col xs={12}>
+              <Grid.Col xs={6}>
                 <Stat
                   mb="16px"
                   align="center"
                   size="medium"
                   label="Balance owed"
                   value={<Dai value={calculateBalanceOwed} />}
+                />
+              </Grid.Col>
+              <Grid.Col xs={6}>
+                <Stat
+                  mb="16px"
+                  align="center"
+                  size="medium"
+                  label="Dai in Wallet"
+                  value={<Dai value={calculateMaxValue} />}
                 />
               </Grid.Col>
             </Grid.Row>
