@@ -11,7 +11,18 @@ export default function format(num, digits) {
   num = Number(num);
 
   if (num && num < 10000) {
-    return commify(num.toFixed(digits).toString());
+    if (!num) return "0." + Array(digits).fill("0").join();
+    const numStr = Number(num).toLocaleString("en", {
+      useGrouping: false,
+      minimumFractionDigits: digits,
+    });
+
+    const parts = numStr.split(".");
+    const lhs = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (digits > 0 && parts[1]) {
+      return `${lhs}.${parts[1]}`;
+    }
+    return lhs;
   }
 
   const lookup = [

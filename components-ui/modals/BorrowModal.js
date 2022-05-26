@@ -118,7 +118,7 @@ export function BorrowModal({
                   size="medium"
                   align="center"
                   label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit))} />}
+                  value={<Dai value={format(roundDown(creditLimit), 2)} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -139,7 +139,7 @@ export function BorrowModal({
               label="Borrow"
               placeholder="0.0"
               suffix={<Dai />}
-              caption={`Max. ${format(calcMaxIncludingFee)} DAI`}
+              caption={`Max. ${format(calcMaxIncludingFee, 2)} DAI`}
               onCaptionClick={() =>
                 setValue("amount", calcMaxIncludingFee, {
                   shouldValidate: true,
@@ -154,7 +154,7 @@ export function BorrowModal({
               Total including fee
             </Label>
             <Label as="p" size="small" grey={400}>
-              {commify(amountWithFee)} DAI
+              {format(amountWithFee, 2)} DAI
             </Label>
           </Box>
           <Box justify="space-between">
