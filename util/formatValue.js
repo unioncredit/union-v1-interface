@@ -15,6 +15,7 @@ export default function format(num, digits) {
     const numStr = Number(num).toLocaleString("en", {
       useGrouping: false,
       minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
     });
 
     const parts = numStr.split(".");
