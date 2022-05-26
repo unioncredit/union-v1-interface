@@ -17,6 +17,8 @@ export function UnionWallet() {
 
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
+  const total = Number(rewards) + Number(unionBalance);
+
   const pathname = router.pathname;
 
   const isGetStarted = pathname === "/";
@@ -28,7 +30,7 @@ export function UnionWallet() {
       variant="secondary"
       label={
         <Text mb="0" ml="4px">
-          {format(rewards, 2)}
+          {format(total, 2)}
         </Text>
       }
       className="union-wallet"
