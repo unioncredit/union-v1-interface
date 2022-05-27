@@ -1,36 +1,37 @@
-# Union Frontend
+# Union Interface
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![follow: @unionprotocol](https://badgen.net/badge/twitter/follow/unionprotocol)](https://twitter.com/unionprotocol)
 
-The open source interface for Union.
+The open source interface for the [Union app](https://union.finance) built with NextJS.
 
-- Website: [union.finance](https://union.finance)
-- Twitter: [@unionprotocol](https://twitter.com/unionprotocol)
-- Blog: [medium.com](https://medium.com/union-finance)
+## Get started
 
-## Develop Locally
-
-Always create a new branch off of `develop`.
-
-_Note:_ If you want to use WalletConnect or Fortmatic to test while building make sure you're part of the Vercel Union team and run `vercel env pull` to get a copy of the development variables.
-
-### Install dependencies
-
-```bash
-yarn
+```
+git clone git@github.com:unioncredit/union-interface.git && cd union-interface
+yarn install
 ```
 
-### Start server
+## Run
+
+This project runs with NextJS. To run locally:
 
 ```bash
 yarn dev
 ```
 
-## Open browser
+To run the API you will need to install vercel:
 
-Navigate to example at [http://localhost:3000/](http://localhost:3000/).
+```
+npm i -g vercel
+vercel dev
+```
 
-## Contributions
+## Build
 
-**Please open all pull requests against the `develop` branch**. ~Zeit~ Vercel builds will run against all PRs.
+This project is built with NextJS.
+
+```
+yarn build
+```
+
