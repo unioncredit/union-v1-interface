@@ -5,40 +5,49 @@ export const options = [
   {
     value: "ethereum",
     label: "Ethereum",
-    buttonVariant: "ethereum",
     description:
-      "Union on mainnet is more frequently used by accounts staking and borrowing larger amounts of DAI.",
+      "Use Union on Ethereum’s main network. All Governance activity takes place here",
     imageSrc: "/images/ethereum.png",
+    avatar: "/images/ethereum-avatar.png",
     chainId: 1,
     networkData: {
       chainId: "0x1",
     },
+    badges: [
+      { label: "Governance", color: "blue" },
+      { label: "Higher Gas Fees", color: "yellow" },
+    ],
   },
   {
     value: "arbitrum one",
     label: "Arbitrum One",
-    buttonVariant: "secondary",
     description:
       "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
     imageSrc: "/images/arbitrum.png",
+    avatar: "/images/arbitrum-avatar.png",
     chainId: 42161,
     networkData: {
       chainId: "0xA4B1",
       rpcUrls: ["https://arb1.arbitrum.io/rpc"],
       chainName: "Arbitrum One",
     },
+    badges: [{ label: "Low Gas Fees", color: "blue" }],
   },
   {
     value: "kovan",
     label: "Kovan",
-    buttonVariant: "secondary",
     description:
       "Use a test version of Ethereum to try out Union and learn more about how it works",
     imageSrc: "/images/kovan.png",
+    avatar: "/images/kovan-avatar.png",
     chainId: 42,
     networkData: {
       chainId: "0x2A",
     },
+    badges: [
+      { label: "Testing", color: "grey" },
+      { label: "Development", color: "grey" },
+    ],
   },
 ];
 
