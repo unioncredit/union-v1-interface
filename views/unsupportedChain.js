@@ -7,11 +7,14 @@ import {
   Heading,
   Text,
   Grid,
+  Badge,
 } from "@unioncredit/ui";
 import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { options, switchChain } from "util/switchChain";
 import { networks } from "lib/connectors";
+import Chevron from "@unioncredit/ui/lib/icons/chevron.svg";
+import styles from "../components-ui/loginOptions.module.css";
 
 export default function UnsupportedChainView() {
   const [loading, setIsLoading] = useState(false);
@@ -47,47 +50,59 @@ export default function UnsupportedChainView() {
       </Text>
       <Grid>
         <Grid.Row justify="center">
-          <Grid.Col md={12} lg={9}>
-            <Grid.Row justify="center">
-              {options
-                .filter((option) =>
-                  Object.keys(networks).includes(String(option.chainId))
-                )
-                .map((props) => {
-                  const { label, value, imageSrc, description, buttonVariant } =
-                    props;
-                  return (
-                    <Grid.Col xs={12} md={6} key={label}>
-                      <Card mb="24px">
+          <Grid.Col>
+            <Box fluid align="center">
+              <Card packed className={styles.outterCard}>
+                {options
+                  .filter((option) =>
+                    Object.keys(networks).includes(String(option.chainId))
+                  )
+                  .map((props) => {
+                    const { label, value, avatar, description, badges } = props;
+                    return (
+                      <Card
+                        my="6px"
+                        packed
+                        key={value}
+                        onClick={handleChangeNetwork(props)}
+                        className={styles.innerCard}
+                      >
                         <Card.Body>
-                          <Box justify="center" mb="24px">
-                            <Avatar size={48} src={imageSrc} />
+                          <Box align="center">
+                            <Box justify="center" mr="16px">
+                              <Avatar size={48} src={avatar} />
+                            </Box>
+                            <Box direction="vertical">
+                              <Text as="h3" m={0} grey={800}>
+                                {label}
+                              </Text>
+                              <Label as="p" m={0}>
+                                {description}
+                              </Label>
+                              <Box mt="4px">
+                                {badges.map(({ label, color }) => (
+                                  <Badge
+                                    key={label}
+                                    label={label}
+                                    color={color}
+                                    mr="4px"
+                                  />
+                                ))}
+                              </Box>
+                            </Box>
+                            <Button
+                              loading={loading}
+                              variant="lite"
+                              icon={Chevron}
+                              ml="4px"
+                            />
                           </Box>
-                          <Text
-                            grey={800}
-                            weight="medium"
-                            as="h2"
-                            align="center"
-                          >
-                            {label}
-                          </Text>
-                          <Label as="p" align="center">
-                            {description}
-                          </Label>
-                          <Button
-                            fluid
-                            mt="24px"
-                            variant={buttonVariant}
-                            loading={loading === buttonVariant}
-                            label={`Switch to ${value}`}
-                            onClick={handleChangeNetwork(props)}
-                          />
                         </Card.Body>
                       </Card>
-                    </Grid.Col>
-                  );
-                })}
-            </Grid.Row>
+                    );
+                  })}
+              </Card>
+            </Box>
           </Grid.Col>
         </Grid.Row>
       </Grid>
