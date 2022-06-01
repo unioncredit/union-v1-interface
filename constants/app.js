@@ -18,6 +18,7 @@ export const links = {
   docs: "https://docs.union.finance/",
   discord: "https://discord.gg/4re6YJdgKZ",
   github: "https://github.com/unioncredit",
+  data: "https://data.union.finance",
 };
 
 export const contextMenuItems = [
@@ -34,7 +35,7 @@ export const contextMenuItems = [
   },
   { label: "Discord", target: "_blank", href: links.discord },
   { label: "Github", target: "_blank", href: links.github },
-  { label: "Stats", href: "/stats" },
+  { label: "Stats", target: "_blank", href: links.data },
 ];
 
 export const navItems = [
