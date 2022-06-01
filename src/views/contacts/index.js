@@ -46,9 +46,9 @@ import createArray from "util/createArray";
 import { config } from "./config";
 import { ContactsType } from "constants/app";
 import usePopTrustModal from "hooks/usePopTrustModal";
-import { useRouter } from "next/router";
 import useIsMobile from "hooks/useIsMobile";
 import useFilterContacts from "hooks/useFilterContacts";
+import { useSearchParams } from "react-router-dom";
 
 const statusOptions = [
   { id: "all", label: "All statuses" },
@@ -83,7 +83,7 @@ export default function ContactsView({
   usePopTrustModal();
 
   const isMobile = useIsMobile();
-  const router = useRouter();
+  const [searchParams] = useSearchParams();
 
   const [showFilters, setShowFilters] = useState(false);
   const [selectedContactIndex, setSelectedContact] = useState(null);
@@ -115,8 +115,7 @@ export default function ContactsView({
     ? withMobileView(ContactDetailsCard)
     : ContactDetailsCard;
 
-  const query = router.query;
-  const queryContact = query?.contact;
+  const queryContact = searchParams.get("contact");
 
   const toggleFilters = () => {
     setShowFilters((x) => !x);

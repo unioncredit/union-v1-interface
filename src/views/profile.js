@@ -85,7 +85,6 @@ export default function ProfileView({ address }) {
       const { hash } = await delegate(address);
       await getReceipt(hash, library);
       addActivity(activityLabels.delegate({ address, hash }));
-      close();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       handleTxError(err);

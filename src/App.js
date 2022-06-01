@@ -12,6 +12,12 @@ import { links } from "constants/app";
 
 import Credit from "pages/credit";
 import Stake from "pages/stake";
+import Contacts from "pages/contacts";
+import Vouchers from "pages/contacts/trusts-you";
+import Governance from "pages/governance";
+import Proposals from "pages/governance/proposals";
+import Proposal from "pages/governance/proposal";
+import Profile from "pages/profile";
 
 import "./index.css";
 
@@ -61,6 +67,12 @@ function App() {
                 <Routes>
                   <Route path="/credit" element={<Credit />} />
                   <Route path="/stake" element={<Stake />} />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/contacts/trusts-you" element={<Vouchers />} />
+                  <Route path="/profile/:address" element={<Profile />} />
+                  <Route path="/governance" element={<Governance />} />
+                  <Route path="/governance/proposals" element={<Proposals />} />
+                  <Route path="/governance/proposals/:proposalId" element={<Proposal />} />
                 </Routes>
               </Wrapper>
               <Notifications />

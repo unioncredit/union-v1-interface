@@ -10,14 +10,13 @@ import {
   Skeleton,
   Alert,
 } from "@unioncredit/ui";
-import Link from "next/link";
 import { Fragment } from "react";
-import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as ArrowRight } from "@unioncredit/ui/lib/icons/arrowRight.svg";
 import { ReactComponent as Info } from "@unioncredit/ui/lib/icons/wireInfo.svg";
 
+import { Link } from "react-router-dom";
 import {
   VotingCard,
   View,
@@ -33,14 +32,13 @@ import useChainId from "hooks/useChainId";
 import { withUnsupportedChains } from "providers/UnsupportedChain";
 
 import styles from "./proposal.module.css";
+import { useParams } from "react-router-dom";
 
 function ProposalView() {
   const chainId = useChainId();
   const { chainId: actualChainId } = useWeb3React();
 
-  const { query } = useRouter();
-
-  const { id } = query;
+  const { proposalId: id } = useParams();
 
   const data = useProposalData(id);
 
@@ -82,7 +80,7 @@ function ProposalView() {
           <Row>
             <Col>
               <Box mb="30px">
-                <Link href="/governance/proposals">
+                <Link to="/governance/proposals">
                   <Button
                     variant="lite"
                     label={
@@ -147,7 +145,7 @@ function ProposalView() {
                   <ReactMarkdown
                     renderers={{
                       link: (props) => (
-                        <Link href={props.href}>
+                        <Link to={props.href}>
                           <Text as="a" {...props} color="blue600" />
                         </Link>
                       ),

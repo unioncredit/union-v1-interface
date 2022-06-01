@@ -9,9 +9,9 @@ import {
   Tooltip,
   Label,
 } from "@unioncredit/ui";
-import TooltipIcon from "@unioncredit/ui/lib/icons/tooltip.svg";
+import { ReactComponent as TooltipIcon } from "@unioncredit/ui/lib/icons/tooltip.svg";
 import { useWeb3React } from "@web3-react/core";
-import External from "@unioncredit/ui/lib/icons/externalinline.svg";
+import { ReactComponent as External } from "@unioncredit/ui/lib/icons/externalinline.svg";
 import {
   useVoteDelegationModal,
   VoteDelegationModal,

@@ -6,10 +6,11 @@ import { useForceConnect } from "hooks/useForceConnect";
 import useENS from "hooks/useENS";
 import LoggedOutView from "views/loggedOut";
 import { isAddress } from "@ethersproject/address";
+import { useParams } from "react-router-dom";
 
-export default function ProfilePage({ params, host }) {
+export default function ProfilePage() {
   const [forceConnect] = useForceConnect();
-  const { address } = params;
+  const { address } = useParams();
   const ens = useENS(address);
 
   const userAddress = useMemo(() => {
@@ -18,6 +19,9 @@ export default function ProfilePage({ params, host }) {
     }
     return ens.address;
   }, [address, ens.address]);
+
+  // TODO:
+  const host = null;
 
   return (
     <>
