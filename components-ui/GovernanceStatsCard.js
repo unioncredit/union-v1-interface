@@ -1,7 +1,7 @@
 import { Card, Stat, Button, Grid } from "@unioncredit/ui";
 import { Dai } from "components-ui";
 import useStatisticsData from "hooks/governance/useStatisticsData";
-import useInterestRate from "hooks/stats/marketSettingsStats/useInterestRate";
+import useInterestRate from "hooks/data/useInterestRate";
 import format from "util/formatValue";
 import { duneAnalytics } from "constants/app";
 import { toPercent } from "util/numbers";

@@ -22,7 +22,7 @@ import { useWeb3React } from "@web3-react/core";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
-import useMinBorrow from "hooks/stats/marketSettingsStats/useMinBorrow";
+import useMinBorrow from "hooks/data/useMinBorrow";
 import { commify } from "@ethersproject/units";
 
 export const BORROW_MODAL = "borrow-modal";
