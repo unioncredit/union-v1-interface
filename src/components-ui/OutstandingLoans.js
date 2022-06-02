@@ -12,38 +12,37 @@ import usePublicData from "hooks/usePublicData";
 import { Avatar, Dai } from "components-ui";
 import format from "util/formatValue";
 import usePagination from "hooks/usePagination";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
+  const navigate = useNavigate();
   const { name } = usePublicData(address);
 
   return (
-    <Link to={`/contacts?contact=${address}`}>
-      <TableRow>
-        <TableCell span={1}>
-          <Box align="center">
-            <Avatar address={address} />
-            <Text ml="8px" grey={400}>
-              {name}
-            </Text>
-          </Box>
-        </TableCell>
-        <TableCell>
-          {!isMember ? (
-            <Badge color="grey" label="Not a member" />
-          ) : isOverdue ? (
-            <Badge color="red" label="Overdue" />
-          ) : (
-            <Badge color="blue" label="Healthy" />
-          )}
-        </TableCell>
-        <TableCell align="right">
-          <Text grey={700}>
-            <Dai value={format(used)} />
+    <TableRow onClick={() => navigate(`/contacts?contact=${address}`)}>
+      <TableCell span={1}>
+        <Box align="center">
+          <Avatar address={address} />
+          <Text ml="8px" grey={400}>
+            {name}
           </Text>
-        </TableCell>
-      </TableRow>
-    </Link>
+        </Box>
+      </TableCell>
+      <TableCell>
+        {!isMember ? (
+          <Badge color="grey" label="Not a member" />
+        ) : isOverdue ? (
+          <Badge color="red" label="Overdue" />
+        ) : (
+          <Badge color="blue" label="Healthy" />
+        )}
+      </TableCell>
+      <TableCell align="right">
+        <Text grey={700}>
+          <Dai value={format(used)} />
+        </Text>
+      </TableCell>
+    </TableRow>
   );
 }
 

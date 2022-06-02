@@ -49,20 +49,3 @@ export default function format(num, digits) {
     ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
     : "0";
 }
-
-export function formatDetailed(number, unit = null, decimals = 4) {
-  if (number === null || number === undefined) return "NaN";
-  const fullNumber = Number(number);
-  const fixedNumber = Number(fullNumber.toFixed(decimals));
-  const integerPart = Number(fullNumber.toFixed(0));
-  const fixedDecimalPart = fixedNumber - integerPart;
-  const fullDecimalPart = fullNumber - integerPart;
-
-  let result = fixedNumber;
-  // if the decimal part is being rounded to zero then set lowest decimal as 1
-  if (fixedDecimalPart == 0 && fullDecimalPart > 0) {
-    result += Math.pow(10, -1 * decimals);
-  }
-
-  return commify(result) + (unit ? " " + unit : "");
-}

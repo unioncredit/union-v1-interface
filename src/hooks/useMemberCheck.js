@@ -10,21 +10,17 @@ export default function useMemberCheck() {
   const { pathname } = useLocation();
   const { data: isMember } = useIsMember();
 
-  // TODO:
-  const query = null;
-
   useEffect(() => {
-    const isGetStarted = pathname === "/";
+    const isGetStarted = pathname === "/get-started";
 
     async function load() {
-      // TODO
-      // if (!Object.prototype.hasOwnProperty.call(query, "development")) {
-      if (!isMember && !isGetStarted) {
-        navigate("/");
-      } else if (isMember && isGetStarted) {
-        navigate("/credit");
+      if (!window.location.href.includes("development")) {
+        if (!isMember && !isGetStarted) {
+          navigate("/get-started");
+        } else if (isMember && isGetStarted) {
+          navigate("/credit");
+        }
       }
-      // }
 
       setIsLoading(false);
     }

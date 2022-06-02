@@ -42,7 +42,7 @@ export const navItems = [
   {
     id: "get-started",
     label: "Get Started",
-    pathname: "/",
+    pathname: "/get-started",
     active: true,
   },
   {
