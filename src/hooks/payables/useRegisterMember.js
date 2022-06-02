@@ -5,16 +5,18 @@ import useToken from "hooks/useToken";
 import usePermits from "hooks/usePermits";
 import useUnionToken from "hooks/contracts/useUnionToken";
 import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
+import useUserManager from "hooks/contracts/useUserManager";
 
 export default function useRegisterMember() {
-  const { account, library } = useWeb3React();
-  const DAI = useToken();
-  const unionToken = useUnionToken(DAI);
   const { getPermit } = usePermits();
+  const { account } = useWeb3React();
+  const DAI = useToken();
+  const userManager = useUserManager(DAI);
+  const unionToken = useUnionToken();
 
   return useCallback(async () => {
     const permit = getPermit(APPROVE_UNION_REGISTER_SIGNATURE_KEY);
-    const memberFee = await userManagerContract.newMemberFee();
+    const memberFee = await userManager.newMemberFee();
 
     if (permit) {
       return userManager.registerMemberWithPermit(
@@ -34,5 +36,5 @@ export default function useRegisterMember() {
     }
 
     return userManager.registerMember(account);
-  }, [account, library, tokenAddress, marketRegistryContract, permit]);
+  }, [account, userManager, unionToken]);
 }

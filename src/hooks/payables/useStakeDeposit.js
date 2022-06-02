@@ -54,6 +54,6 @@ export default function useStakeDeposit() {
 
       return userManager.stake(stakeAmount);
     },
-    [account, chainId, DAI, DAIContract, marketRegistryContract, permit]
+    [account, chainId, DAIContract, getPermit, userManager]
   );
 }

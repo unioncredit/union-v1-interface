@@ -1,5 +1,8 @@
+import useSWR from "swr";
+
 import useContract from "hooks/useContract";
-import U_TOKEN_ABI from "constants/abis/uToken.json";
+import ABI from "constants/abis/uToken.json";
+import useMarketRegistry from "hooks/contracts/useMarketRegistry";
 
 async function fetchUTokenContractAddress(_, marketRegistry, underlying) {
   const resp = await marketRegistry.tokens(underlying);
@@ -8,12 +11,12 @@ async function fetchUTokenContractAddress(_, marketRegistry, underlying) {
 
 export default function useUToken(underlying) {
   const marketRegistry = useMarketRegistry();
-  const shouldFetch = address && ABI && isAddress(address);
+  const shouldFetch = ABI && marketRegistry;
 
   const { data: uTokenAddress } = useSWR(
     shouldFetch ? ["uToken", marketRegistry, underlying] : null,
     fetchUTokenContractAddress
   );
 
-  return useContract(uTokenAddress, U_TOKEN_ABI);
+  return useContract(uTokenAddress, ABI);
 }

@@ -13,6 +13,6 @@ export default function useStakeWithdraw() {
       const stakeAmount = parseUnits(String(amount), 18);
       return userManager.unstake(stakeAmount);
     },
-    [library, marketRegistryContract, tokenAddress]
+    [userManager]
   );
 }

@@ -11,7 +11,7 @@ export default function useUnionSymbol() {
   const chainId = useChainId();
   const unionToken = useUnionToken();
 
-  const shouldFetch = !!unionContract;
+  const shouldFetch = !!unionToken;
 
   return useSWR(
     shouldFetch ? ["unionSymbol", unionToken, chainId] : null,

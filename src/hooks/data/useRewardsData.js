@@ -19,14 +19,14 @@ async function fetchRewardsData(_, comptroller, account, tokenAddress) {
 }
 
 export default function useRewardsData() {
-  const { account, chainId } = useWeb3React();
+  const { account } = useWeb3React();
   const comptroller = useComptroller();
   const DAI = useToken("DAI");
 
-  const shouldFetch = comptrollerContract && account && DAI;
+  const shouldFetch = comptroller && account && DAI;
 
   return useSWR(
-    shouldFetch ? ["RewardsData", comptroller, account, curToken] : null,
+    shouldFetch ? ["RewardsData", comptroller, account, DAI] : null,
     fetchRewardsData,
     {
       refreshInterval: 30 * 1000,

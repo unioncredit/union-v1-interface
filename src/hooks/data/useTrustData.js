@@ -3,8 +3,9 @@ import { useWeb3React } from "@web3-react/core";
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { formatUnits } from "@ethersproject/units";
 
-import useUserManager from "hooks/contracts/useUserManager";
+import useToken from "hooks/useToken";
 import useUToken from "hooks/contracts/useUToken";
+import useUserManager from "hooks/contracts/useUserManager";
 
 // TODO: convert this to use multicall
 async function fetchTrustData(_, userManager, uToken, account) {
@@ -50,7 +51,7 @@ export default function useTrustData(address) {
   const { account: connectedAccount } = useWeb3React();
   const account = address || connectedAccount;
 
-  const DAI = useCurrentToken("DAI");
+  const DAI = useToken("DAI");
   const userManager = useUserManager(DAI);
   const uToken = useUToken(DAI);
 

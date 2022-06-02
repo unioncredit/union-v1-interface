@@ -4,6 +4,7 @@ import { formatUnits } from "@ethersproject/units";
 
 import parseRes from "util/parseRes";
 import { roundDown } from "util/numbers";
+import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 
 async function fetchStakeData(_, userManager, account) {

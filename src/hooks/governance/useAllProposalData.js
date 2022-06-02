@@ -119,7 +119,7 @@ export default function useAllProposalData() {
 
   const { data: formattedEvents } = useDataFromEventLogs();
 
-  const shouldFetch = Boolean(govContract && formattedEvents && library);
+  const shouldFetch = govContract && formattedEvents && readProvider;
 
   return useSWR(
     shouldFetch

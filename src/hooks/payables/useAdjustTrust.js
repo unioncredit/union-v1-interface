@@ -13,6 +13,6 @@ export default function useAdjustTrust() {
       const trustAmount = parseUnits(String(amount), 18);
       return userManager.updateTrust(memberAddress, trustAmount);
     },
-    [userManager, tokenAddress]
+    [userManager]
   );
 }

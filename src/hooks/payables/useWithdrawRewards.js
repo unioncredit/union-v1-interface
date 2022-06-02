@@ -9,5 +9,5 @@ export default function useWithdrawRewards() {
 
   return useCallback(async () => {
     return userManager.withdrawRewards();
-  }, [library, tokenAddress, marketRegistryContract]);
+  }, [userManager]);
 }

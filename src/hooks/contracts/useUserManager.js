@@ -1,4 +1,8 @@
+import useSWR from "swr";
+
 import useContract from "hooks/useContract";
+import useMarketRegistry from "hooks/contracts/useMarketRegistry";
+
 import ABI from "constants/abis/userManager.json";
 
 async function fetchUserManagerContractAddress(_, marketRegistry, underlying) {
@@ -8,12 +12,12 @@ async function fetchUserManagerContractAddress(_, marketRegistry, underlying) {
 
 export default function useUserManager(underlying) {
   const marketRegistry = useMarketRegistry();
-  const shouldFetch = address && ABI && isAddress(address);
+  const shouldFetch = marketRegistry && ABI;
 
   const { data: userManagerAddress } = useSWR(
     shouldFetch ? ["userManager", marketRegistry, underlying] : null,
     fetchUserManagerContractAddress
   );
 
-  return useContract(userManagerAddress, USER_MANAGER_ABI);
+  return useContract(userManagerAddress, ABI);
 }
