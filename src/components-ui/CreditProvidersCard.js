@@ -2,10 +2,11 @@ import { CreditContactsRow, CreditContactsRowSkeleton } from "components-ui";
 import { Table, Card, Pagination, EmptyState } from "@unioncredit/ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import usePagination from "hooks/usePagination";
 
 export function CreditProvidersCard() {
+  const navigate = useNavigate();
   const { data: vouchData } = useVouchData();
 
   const {
@@ -33,12 +34,13 @@ export function CreditProvidersCard() {
                   <CreditContactsRowSkeleton key={i} />
                 ))
               : pagedVouchData.map((item) => (
-                  <Link
+                  <CreditContactsRow
+                    {...item}
                     key={item.address}
-                    to={`/contacts/trusts-you?contact=${item.address}`}
-                  >
-                    <CreditContactsRow {...item} />
-                  </Link>
+                    onClick={() =>
+                      navigate(`/contacts/trusts-you?contact=${item.address}`)
+                    }
+                  />
                 ))}
           </Table>
         )}

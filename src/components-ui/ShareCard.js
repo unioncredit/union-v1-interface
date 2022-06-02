@@ -44,24 +44,26 @@ export function ShareCard({ title, content, size }) {
           </Label>
           <Button label="Get QR Code" fluid onClick={openCreditRequest} />
           <ButtonRow fluid mt="8px">
-            <a target="_blank" href={generateTwitterLink(url)}>
-              <Button
-                variant="secondary"
-                color="blue"
-                icon={Twitter}
-                label={isMobile ? null : "Twitter"}
-                fluid
-              />
-            </a>
-            <a target="_blank" href={generateTelegramLink(url)}>
-              <Button
-                variant="secondary"
-                color="blue"
-                icon={Telegram}
-                label={isMobile ? null : "Telegram"}
-                fluid
-              />
-            </a>
+            <Button
+              as="a"
+              variant="secondary"
+              color="blue"
+              icon={Twitter}
+              label={isMobile ? null : "Twitter"}
+              target="_blank"
+              href={generateTwitterLink(url)}
+              fluid
+            />
+            <Button
+              as="a"
+              variant="secondary"
+              color="blue"
+              icon={Telegram}
+              label={isMobile ? null : "Telegram"}
+              target="_blank"
+              href={generateTelegramLink(url)}
+              fluid
+            />
           </ButtonRow>
         </Card.Body>
       </Card>
