@@ -1,19 +1,17 @@
-import { formatUnits } from "@ethersproject/units";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
-import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
+import { formatUnits } from "@ethersproject/units";
 
-const getQuorum = async (_, contract) => {
-  const res = await contract.quorumVotes();
+import useGovernance from "hooks/contracts/useGovernance";
 
+async function fetchQuorum(_, gov) {
+  const res = await gov.quorumVotes();
   return formatUnits(res, 18);
-};
+}
 
 export default function useProposalQuorum() {
-  const readProvider = useReadProvider();
-  const contract = useGovernanceContract(readProvider);
+  const gov = useGovernance();
 
-  const shouldFetch = Boolean(contract);
+  const shouldFetch = !!gov;
 
-  return useSWR(shouldFetch ? ["ProposalQuorum", contract] : null, getQuorum);
+  return useSWR(shouldFetch ? ["useProposalQuorum", gov] : null, fetchQuorum);
 }

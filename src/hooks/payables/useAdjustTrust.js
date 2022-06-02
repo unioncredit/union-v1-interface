@@ -1,47 +1,18 @@
-import { parseUnits } from "@ethersproject/units";
-import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
-import { useWeb3React } from "@web3-react/core";
-import { Contract } from "@ethersproject/contracts";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import { parseUnits } from "@ethersproject/units";
+
+import useToken from "hooks/useToken";
+import useUserManager from "hooks/contracts/useUserManager";
 
 export default function useAdjustTrust() {
-  const tokenAddress = useCurrentToken();
-  const { library } = useWeb3React();
-  const marketRegistryContract = useMarketRegistryContract();
+  const DAI = useToken("DAI");
+  const userManager = useUserManager(DAI);
 
   return useCallback(
     async (memberAddress, amount) => {
       const trustAmount = parseUnits(String(amount), 18);
-
-      let gasLimit, userManagerContract;
-      try {
-        const signer = library.getSigner();
-        const res = await marketRegistryContract.tokens(tokenAddress);
-        const userManagerAddress = res.userManager;
-        userManagerContract = new Contract(
-          userManagerAddress,
-          USER_MANAGER_ABI,
-          signer
-        );
-
-        gasLimit = await userManagerContract.estimateGas.updateTrust(
-          memberAddress,
-          trustAmount.toString()
-        );
-      } catch (err) {
-        gasLimit = 300000;
-      }
-
-      return userManagerContract.updateTrust(
-        memberAddress,
-        trustAmount.toString(),
-        {
-          gasLimit,
-        }
-      );
+      return userManager.updateTrust(memberAddress, trustAmount);
     },
-    [library, marketRegistryContract, tokenAddress]
+    [userManager, tokenAddress]
   );
 }

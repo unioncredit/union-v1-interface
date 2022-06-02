@@ -1,28 +1,29 @@
-import { formatUnits } from "@ethersproject/units";
-import { BLOCKS_PER_YEAR } from "constants/variables";
-import useAssetContract from "hooks/contracts/useAssetContract";
-import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
-import useReadProvider from "hooks/useReadProvider";
-import useChainId from "hooks/useChainId";
-import useUserContract from "hooks/contracts/useUserContract";
-import useUTokenContract from "hooks/contracts/useUTokenContract";
+import { formatUnits } from "@ethersproject/units";
 
-const getStatisticsData = async (
+import { BLOCKS_PER_YEAR } from "constants/variables";
+import useChainId from "hooks/useChainId";
+import useUserManager from "hooks/contracts/useUserManager";
+import useAssetManager from "hooks/contracts/useAssetManager";
+import useToken from "hooks/useToken";
+import useUToken from "hooks/contracts/useUToken";
+
+// TODO: update this to use graph/multicall
+const fetchStatisticsData = async (
   _,
   DAI,
   chainId,
-  assetContract,
-  userManagerContract,
-  uTokenContract
+  assetManager,
+  userManager,
+  uToken
 ) => {
-  const currentTotalStaked = await userManagerContract.totalStaked();
+  const currentTotalStaked = await userManager.totalStaked();
 
-  const loanableAmount = await assetContract.getLoanableAmount(DAI);
+  const loanableAmount = await assetManager.getLoanableAmount(DAI);
 
-  const totalBorrowed = await uTokenContract.totalBorrows();
+  const totalBorrowed = await uToken.totalBorrows();
 
-  const ratePreBlock = await uTokenContract.borrowRatePerBlock();
+  const ratePreBlock = await uToken.borrowRatePerBlock();
 
   return {
     lendingPoolBalance: parseFloat(formatUnits(loanableAmount, 18)),
@@ -35,31 +36,18 @@ const getStatisticsData = async (
 
 export default function useStatisticsData() {
   const chainId = useChainId();
-  const readProvider = useReadProvider();
+  const DAI = useToken();
 
-  const DAI = useCurrentToken();
+  const assetManager = useAssetManager();
+  const userManager = useUserManager(DAI);
+  const uToken = useUToken(DAI);
 
-  const assetContract = useAssetContract(readProvider);
-  const userManagerContract = useUserContract(readProvider);
-  const uTokenContract = useUTokenContract(readProvider);
-
-  const shouldFetch =
-    !!assetContract &&
-    typeof chainId === "number" &&
-    typeof DAI === "string" &&
-    !!readProvider;
+  const shouldFetch = assetManager && userManager && uToken;
 
   return useSWR(
     shouldFetch
-      ? [
-          "StatisticsData",
-          DAI,
-          chainId,
-          assetContract,
-          userManagerContract,
-          uTokenContract,
-        ]
+      ? ["useStatisticsData", DAI, chainId, assetManager, userManager, uToken]
       : null,
-    getStatisticsData
+    fetchStatisticsData
   );
 }

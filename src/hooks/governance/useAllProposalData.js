@@ -1,9 +1,10 @@
-import { formatUnits } from "@ethersproject/units";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
-import { useDataFromEventLogs } from "./useDataFromEventLogs";
-import useReadProvider from "hooks/useReadProvider";
+import { formatUnits } from "@ethersproject/units";
+
 import useChainId from "hooks/useChainId";
+import useReadProvider from "hooks/useReadProvider";
+import useGovernance from "hooks/contracts/useGovernance";
+import { useDataFromEventLogs } from "hooks/governance/useDataFromEventLogs";
 import { BLOCK_SPEED } from "constants/variables";
 import getDateFromBlock from "util/getDateFromBlock";
 
@@ -111,10 +112,10 @@ const getAllProposalData = async (
 };
 
 export default function useAllProposalData() {
-  const library = useReadProvider();
+  const readProvider = useReadProvider();
   const chainId = useChainId();
 
-  const govContract = useGovernanceContract(library);
+  const govContract = useGovernance();
 
   const { data: formattedEvents } = useDataFromEventLogs();
 
@@ -125,7 +126,7 @@ export default function useAllProposalData() {
       ? [
           `AllProposalData-${formattedEvents.length}`,
           chainId,
-          library,
+          readProvider,
           govContract,
           formattedEvents,
         ]

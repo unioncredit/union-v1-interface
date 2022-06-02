@@ -1,14 +1,12 @@
-import { formatUnits } from "@ethersproject/units";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
-import useReadProvider from "hooks/useReadProvider";
 import useSWR from "swr";
-import useAllProposalData from "./useAllProposalData";
+import { formatUnits } from "@ethersproject/units";
+import useGovernance from "hooks/contracts/useGovernance";
+import useAllProposalData from "hooks/governance/useAllProposalData";
 
-const getProposalVoteHistory =
-  (govContract, proposals) => async (_, address) => {
+async function fetchProposalVoteHistory(_, gov, proposals, address) {
     const allProposalsWithReceipt = await Promise.all(
       proposals.map(async (proposal) => {
-        const receipt = await govContract.getReceipt(proposal.pid, address);
+        const receipt = await gov.getReceipt(proposal.pid, address);
 
         const formattedReceipt = {
           hasVoted: receipt.hasVoted,
@@ -27,15 +25,13 @@ const getProposalVoteHistory =
   };
 
 export default function useUserProposalVoteHistory(address) {
-  const readProvider = useReadProvider();
-  const govContract = useGovernanceContract(readProvider);
-
+  const gov = useGovernance();
   const { data: proposals } = useAllProposalData();
 
-  const shouldFetch = typeof address === "string" && govContract && proposals;
+  const shouldFetch = address && gov && proposals;
 
   return useSWR(
-    shouldFetch ? ["ProposalVoteHistory", address, proposals] : null,
-    getProposalVoteHistory(govContract, proposals)
+    shouldFetch ? ["ProposalVoteHistory", gov, proposals, address, proposals] : null,
+    fetchProposalVoteHistory
   );
 }

@@ -1,54 +1,33 @@
-import { isAddress } from "@ethersproject/address";
-import { Contract } from "@ethersproject/contracts";
-import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
-import useCurrentToken from "../useCurrentToken";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
+import { useWeb3React } from "@web3-react/core";
 
-const getTrustCount =
-  (marketRegistryContract) => async (_, account, library, tokenAddress) => {
-    let count = 0;
+import useToken from "hooks/useToken";
+import useUserManager from "hooks/contracts/useUserManager";
 
-    const signer = library.getSigner();
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const userManagerAddress = res.userManager;
-    const userManagerContract = new Contract(
-      userManagerAddress,
-      USER_MANAGER_ABI,
-      signer
-    );
+async function fetchTrustCount(_, userManager, account) {
+  const addresses = await userManager.getStakerAddresses(account);
 
-    const addresses = await userManagerContract.getStakerAddresses(account);
+  const vouchers = await Promise.all(
+    addresses.map(async (staker) => {
+      const trustAmount = await userManager.getVouchingAmount(staker, account);
+      const isMember = await userManager.checkIsMember(staker);
 
-    await Promise.all(
-      addresses.map(async (stakerAddress) => {
-        const trustAmount = await userManagerContract.getVouchingAmount(
-          stakerAddress,
-          account
-        );
+      return trustAmount > 0 && isMember;
+    })
+  );
 
-        const isMember = await userManagerContract.checkIsMember(stakerAddress);
-
-        if (trustAmount > 0 && isMember) count++;
-      })
-    );
-
-    return count;
-  };
+  return vouchers.length;
+}
 
 export default function useTrustCountData() {
-  const { account, library } = useWeb3React();
-  const marketRegistryContract = useMarketRegistryContract();
-  const curToken = useCurrentToken();
+  const { account } = useWeb3React();
+  const DAI = useToken("DAI");
+  const userManager = useUserManager(DAI);
 
-  const shouldFetch =
-    !!marketRegistryContract &&
-    typeof account === "string" &&
-    isAddress(curToken);
+  const shouldFetch = userManager && account;
 
   return useSWR(
-    shouldFetch ? ["TrustCount", account, library, curToken] : null,
-    getTrustCount(marketRegistryContract)
+    shouldFetch ? ["useTrustCount", userManager, account] : null,
+    fetchTrustCount
   );
 }

@@ -1,17 +1,20 @@
-import useUnionContract from "./contracts/useUnionContract";
-import useChainId from "./useChainId";
 import useSWR from "swr";
 
-const getSymbol = (unionContract) => async () => {
-  return unionContract.symbol();
-};
+import useChainId from "hooks/useChainId";
+import useUnionToken from "hooks/contracts/useUnionToken";
+
+async function fetchSymbol(_, unionToken) {
+  return unionToken.symbol();
+}
 
 export default function useUnionSymbol() {
-  const unionContract = useUnionContract();
   const chainId = useChainId();
+  const unionToken = useUnionToken();
+
   const shouldFetch = !!unionContract;
+
   return useSWR(
-    shouldFetch ? ["unionSymbol", chainId] : null,
-    getSymbol(unionContract)
+    shouldFetch ? ["unionSymbol", unionToken, chainId] : null,
+    fetchSymbol
   );
 }

@@ -1,30 +1,30 @@
 import useSWR from "swr";
-import { useWeb3React } from "@web3-react/core";
-
-import { MaxUint256 } from "@ethersproject/constants";
 import { useCallback } from "react";
-import useERC20Contract from "hooks/contracts/useERC20Contract";
-import usePermits from "hooks/usePermits";
+import { useWeb3React } from "@web3-react/core";
+import { MaxUint256 } from "@ethersproject/constants";
+
+import isHash from "util/isHash";
 import getReceipt from "util/getReceipt";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
 import handleTxError from "util/handleTxError";
-import isHash from "util/isHash";
+import useChainId from "hooks/useChainId";
+import useERC20 from "hooks/contracts/useERC20";
+import usePermits from "hooks/usePermits";
 
 const getAllowance = (_, contract, account, spender) => {
   return contract.allowance(account, spender);
 };
 
 export default function useAllowance(tokenAddress, spender, signatureKey) {
-  const { signPermit } = usePermits();
+  const chainId = useChainId();
   const addActivity = useAddActivity();
-  const { account, chainId, library } = useWeb3React();
+  const contract = useERC20(tokenAddress);
+  const { account, library } = useWeb3React();
+  const { signPermit } = usePermits();
 
-  const contract = useERC20Contract(tokenAddress);
-
-  const shouldFetch =
-    !!contract && typeof account === "string" && typeof chainId === "number";
+  const shouldFetch = contract && account && chainId;
 
   const resp = useSWR(
     shouldFetch ? ["Allowance", contract, account, spender] : null,
@@ -38,15 +38,10 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
         pending: "Approving",
         success: "Approved",
       });
-      addActivity(
-        activityLabels.claim({ hash, token: truncateAddress(tokenAddress) })
-      );
+      addActivity(activityLabels.claim({ hash, token: tokenAddress }));
     } catch (err) {
       const hash = isHash(err.message) && err.message;
-      addActivity(
-        activityLabels.claim({ hash, token: truncateAddress(tokenAddress) }),
-        true
-      );
+      addActivity(activityLabels.claim({ hash, token: tokenAddress }), true);
       handleTxError(err, "Failed to approve");
     }
   };

@@ -1,109 +1,82 @@
-import { isAddress } from "@ethersproject/address";
-import { Contract } from "@ethersproject/contracts";
-import { formatUnits } from "@ethersproject/units";
-import { useWeb3React } from "@web3-react/core";
-import U_TOKEN_ABI from "constants/abis/uToken.json";
 import useSWR from "swr";
-import parseRes from "util/parseRes";
-import useCurrentToken from "../useCurrentToken";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
+import { useWeb3React } from "@web3-react/core";
+import { formatUnits } from "@ethersproject/units";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import useReadProvider from "hooks/useReadProvider";
 
-const getVouch =
-  (marketRegistryContract, provider) => async (_, account, tokenAddress) => {
-    const ethereumRpc = new JsonRpcProvider(
-      // TODO:
-      `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
-    );
-    const res = await marketRegistryContract.tokens(tokenAddress);
-    const uTokenAddress = res.uToken;
-    const userManagerAddress = res.userManager;
+import parseRes from "util/parseRes";
+import useToken from "hooks/useToken";
+import useUserManager from "hooks/contracts/useUserManager";
+import useUToken from "hooks/contracts/useUToken";
 
-    const userManagerContract = new Contract(
-      userManagerAddress,
-      USER_MANAGER_ABI,
-      provider
-    );
+// TODO: better data fetching
+async function fetchVouchData(_, userManager, uToken, account) {
+  const ethereumRpc = new JsonRpcProvider(
+    // TODO:
+    `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
+  );
 
-    const uTokenContract = new Contract(uTokenAddress, U_TOKEN_ABI, provider);
+  const addresses = await userManager.getStakerAddresses(account);
 
-    const addresses = await userManagerContract.getStakerAddresses(account);
+  const list = await Promise.all(
+    addresses.map(async (address) => {
+      const { vouchingAmount, lockedStake, trustAmount } =
+        await userManager.getStakerAsset(account, address);
 
-    const list = await Promise.all(
-      addresses.map(async (address) => {
-        const { vouchingAmount, lockedStake, trustAmount } =
-          await userManagerContract.getStakerAsset(account, address);
+      const totalUsed = Number(
+        formatUnits(await userManager.getTotalLockedStake(address), 18)
+      );
 
-        const totalUsed = Number(
-          formatUnits(
-            await userManagerContract.getTotalLockedStake(address),
-            18
-          )
-        );
+      const stakingAmount = Number(
+        formatUnits(await userManager.getStakerBalance(address), 18)
+      );
 
-        const stakingAmount = Number(
-          formatUnits(await userManagerContract.getStakerBalance(address), 18)
-        );
+      const isMember = await userManager.checkIsMember(address);
+      const isOverdue = await uToken.checkIsOverdue(address);
+      const vouched = parseRes(vouchingAmount);
+      const used = parseRes(lockedStake);
+      const trust = parseRes(trustAmount);
 
-        const isMember = await userManagerContract.checkIsMember(address);
+      const freeStakingAmount =
+        stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
 
-        const isOverdue = await uTokenContract.checkIsOverdue(address);
+      const available =
+        Number(vouched) - Number(used) > freeStakingAmount
+          ? freeStakingAmount.toFixed(2)
+          : Number(vouched - used).toFixed(2);
 
-        const vouched = parseRes(vouchingAmount);
+      const utilized = used / vouched;
 
-        const used = parseRes(lockedStake);
+      const ens = await ethereumRpc.lookupAddress(address);
 
-        const trust = parseRes(trustAmount);
+      return {
+        address,
+        available,
+        isOverdue,
+        trust,
+        used,
+        utilized,
+        vouched,
+        ens,
+        isMember,
+      };
+    })
+  );
 
-        const freeStakingAmount =
-          stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
-
-        const available =
-          Number(vouched) - Number(used) > freeStakingAmount
-            ? freeStakingAmount.toFixed(2)
-            : Number(vouched - used).toFixed(2);
-
-        const utilized = used / vouched;
-
-        const ens = await ethereumRpc.lookupAddress(address);
-
-        return {
-          address,
-          available,
-          isOverdue,
-          trust,
-          used,
-          utilized,
-          vouched,
-          ens,
-          isMember,
-        };
-      })
-    );
-
-    return list;
-  };
+  return list;
+}
 
 export default function useVouchData(address) {
-  const readProvider = useReadProvider();
   const { account: connectedAccount } = useWeb3React();
   const account = address || connectedAccount;
 
-  const curToken = useCurrentToken();
+  const DAI = useToken("DAI");
+  const userManager = useUserManager(DAI);
+  const uToken = useUToken(DAI);
 
-  const marketRegistryContract = useMarketRegistryContract(readProvider);
-
-  const shouldFetch =
-    !!marketRegistryContract &&
-    typeof account === "string" &&
-    isAddress(curToken) &&
-    Number(curToken) !== 0 &&
-    !!readProvider;
+  const shouldFetch = userManager && uToken && account;
 
   return useSWR(
-    shouldFetch ? ["Vouch", account, curToken] : null,
-    getVouch(marketRegistryContract, readProvider)
+    shouldFetch ? ["useVouchData", userManager, uToken, account] : null,
+    fetchVouchData
   );
 }

@@ -1,9 +1,10 @@
-import { formatUnits } from "@ethersproject/units";
-import useGovernanceContract from "hooks/contracts/useGovernanceContract";
 import useSWR from "swr";
+import { formatUnits } from "@ethersproject/units";
 
-const getProposalVoteReceipt = async (_, address, proposalId, govContract) => {
-  const receipt = await govContract.getReceipt(proposalId, address);
+import useGovernance from "hooks/contracts/useGovernance";
+
+async function fetchProposalVoteReceipt(_, gov, address, proposalId) {
+  const receipt = await gov.getReceipt(proposalId, address);
 
   const formattedReceipt = {
     hasVoted: receipt.hasVoted,
@@ -12,17 +13,17 @@ const getProposalVoteReceipt = async (_, address, proposalId, govContract) => {
   };
 
   return formattedReceipt;
-};
+}
 
 export default function useProposalVoteReceipt(address, proposalId) {
-  const govContract = useGovernanceContract();
+  const gov= useGovernance();
 
-  const shouldFetch = typeof address === "string" && proposalId && govContract;
+  const shouldFetch = address && proposalId && gov;
 
   return useSWR(
     shouldFetch
-      ? ["ProposalVoteReceipt", address, proposalId, govContract]
+      ? ["ProposalVoteReceipt", gov, address, proposalId]
       : null,
-    getProposalVoteReceipt
+    fetchProposalVoteReceipt,
   );
 }

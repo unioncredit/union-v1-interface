@@ -1,13 +1,13 @@
-import useUnionContract from "hooks/contracts/useUnionContract";
+import useUnionToken from "hooks/contracts/useUnionToken";
 import { useCallback } from "react";
 
 export default function useDelegate() {
-  const unionContract = useUnionContract();
+  const unionToken = useUnionToken();
 
   return useCallback(
     async (address) => {
-      return unionContract.delegate(address);
+      return unionToken.delegate(address);
     },
-    [unionContract]
+    [unionToken]
   );
 }

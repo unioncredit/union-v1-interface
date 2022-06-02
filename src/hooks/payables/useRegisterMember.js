@@ -1,55 +1,38 @@
-import { useWeb3React } from "@web3-react/core";
-import useCurrentToken from "hooks/useCurrentToken";
 import { useCallback } from "react";
-import USER_MANAGER_ABI from "constants/abis/userManager.json";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import { makeTxWithGasEstimate } from "../../util/gasEstimation";
-import useUnionContract from "../contracts/useUnionContract";
+import { useWeb3React } from "@web3-react/core";
+
+import useToken from "hooks/useToken";
 import usePermits from "hooks/usePermits";
+import useUnionToken from "hooks/contracts/useUnionToken";
 import { APPROVE_UNION_REGISTER_SIGNATURE_KEY } from "constants/app";
-import { Contract } from "@ethersproject/contracts";
 
 export default function useRegisterMember() {
   const { account, library } = useWeb3React();
-  const tokenAddress = useCurrentToken();
-  const marketRegistryContract = useMarketRegistryContract();
-  const unionContract = useUnionContract();
+  const DAI = useToken();
+  const unionToken = useUnionToken(DAI);
   const { getPermit } = usePermits();
 
-  const permit = getPermit(APPROVE_UNION_REGISTER_SIGNATURE_KEY);
-
   return useCallback(async () => {
-    const signer = library.getSigner();
-    const { userManagerAddress } = await marketRegistryContract.tokens(
-      tokenAddress
-    );
-    const userManagerContract = new Contract(
-      userManagerAddress,
-      USER_MANAGER_ABI,
-      signer
-    );
-
-    const memberFee = (await userManagerContract.newMemberFee()).toString();
+    const permit = getPermit(APPROVE_UNION_REGISTER_SIGNATURE_KEY);
+    const memberFee = await userManagerContract.newMemberFee();
 
     if (permit) {
-      return makeTxWithGasEstimate(
-        userManagerContract,
-        "registerMemberWithPermit",
-        [account, memberFee, permit.deadline, permit.v, permit.r, permit.s]
+      return userManager.registerMemberWithPermit(
+        account,
+        memberFee,
+        permit.deadline,
+        permit.v,
+        permit.r,
+        permit.s
       );
     }
 
-    const allowance = await unionContract.allowance(
-      account,
-      userManagerAddress
-    );
+    const allowance = await unionToken.allowance(account, userManager.address);
 
     if (allowance.lt(memberFee)) {
       throw new Error("Allowance not enough");
     }
 
-    return await makeTxWithGasEstimate(userManagerContract, "registerMember", [
-      account,
-    ]);
+    return userManager.registerMember(account);
   }, [account, library, tokenAddress, marketRegistryContract, permit]);
 }
