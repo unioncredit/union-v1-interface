@@ -12,27 +12,29 @@ import {
   Control,
   Collapse,
 } from "@unioncredit/ui";
-import { useEffect, useState } from "react";
-import { Modal, Dai } from "components-ui";
 import { useForm } from "react-hook-form";
-import { useModal } from "hooks/useModal";
-import { REPAY_MARGIN } from "constants/variables";
-import { roundDown, roundUp } from "util/numbers";
-import errorMessages from "util/errorMessages";
-import useCurrentToken from "hooks/useCurrentToken";
-import useTokenBalance from "hooks/data/useTokenBalance";
-import handleTxError from "util/handleTxError";
-import getReceipt from "util/getReceipt";
+import { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
-import useRepay from "hooks/payables/useRepay";
-import { useAddActivity } from "hooks/data/useActivity";
-import activityLabels from "util/activityLabels";
+
 import isHash from "util/isHash";
 import format from "util/formatValue";
-import useUnionContract from "hooks/contracts/useUTokenContract";
-import { Approval } from "components-ui";
-import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
+import errorMessages from "util/errorMessages";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import activityLabels from "util/activityLabels";
+import { roundDown, roundUp } from "util/numbers";
+import { useModal } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
+import useRepay from "hooks/payables/useRepay";
+import useToken from "hooks/useToken";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import { useAddActivity } from "hooks/data/useActivity";
+import useUToken from "hooks/contracts/useUToken";
+import { Dai } from "components-ui/Dai";
+import { Modal } from "components-ui/Modal";
+import { Approval } from "components-ui/Approval";
+import { REPAY_MARGIN } from "constants/variables";
+import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 
 export const PAYMENT_MODAL = "payment-modal";
 
@@ -45,13 +47,15 @@ const PaymentType = {
 };
 
 export function PaymentModal({ balanceOwed, interest, onComplete }) {
-  const [paymentType, setPaymentType] = useState(PaymentType.MIN);
-  const addActivity = useAddActivity();
   const { library } = useWeb3React();
-  const { close } = usePaymentModal();
-  const curToken = useCurrentToken("DAI");
+  const [paymentType, setPaymentType] = useState(PaymentType.MIN);
+
   const repay = useRepay();
-  const utoken = useUnionContract();
+  const curToken = useToken("DAI");
+  const utoken = useUToken();
+  const addActivity = useAddActivity();
+
+  const { close } = usePaymentModal();
   const { removePermit } = usePermits();
 
   const { reset, errors, formState, register, watch, setValue, handleSubmit } =

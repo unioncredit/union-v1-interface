@@ -1,43 +1,33 @@
-import { isAddress } from "@ethersproject/address";
-import { useWeb3React } from "@web3-react/core";
 import useSWR from "swr";
+import { useWeb3React } from "@web3-react/core";
+
 import parseRes from "util/parseRes";
-import useComptrollerContract from "../contracts/useComptrollerContract";
-import useCurrentToken from "../useCurrentToken";
+import useComptroller from "hooks/contracts/useComptroller";
+import useToken from "hooks/useToken";
 
-const getRewardsData = (contract) => async (_, account, tokenAddress) => {
-  try {
-    const rewardsMultiplier = await contract.getRewardsMultiplier(
-      account,
-      tokenAddress
-    );
+async function fetchRewardsData(_, comptroller, account, tokenAddress) {
+  const rewards = await comptroller.calculateRewards(account, tokenAddress);
+  const rewardsMultiplier = await comptroller.getRewardsMultiplier(
+    account,
+    tokenAddress
+  );
 
-    const rewards = await contract.calculateRewards(account, tokenAddress);
-
-    return {
-      rewards: parseRes(rewards, 3),
-      rewardsMultiplier: parseRes(rewardsMultiplier),
-    };
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+  return {
+    rewards: parseRes(rewards, 3),
+    rewardsMultiplier: parseRes(rewardsMultiplier),
+  };
+}
 
 export default function useRewardsData() {
   const { account, chainId } = useWeb3React();
-  const comptrollerContract = useComptrollerContract();
-  const curToken = useCurrentToken();
+  const comptroller = useComptroller();
+  const DAI = useToken("DAI");
 
-  const shouldFetch =
-    !!comptrollerContract &&
-    typeof chainId === "number" &&
-    typeof account === "string" &&
-    isAddress(curToken);
+  const shouldFetch = comptrollerContract && account && DAI;
 
   return useSWR(
-    shouldFetch ? ["RewardsData", account, curToken, chainId] : null,
-    getRewardsData(comptrollerContract),
+    shouldFetch ? ["RewardsData", comptroller, account, curToken] : null,
+    fetchRewardsData,
     {
       refreshInterval: 30 * 1000,
     }

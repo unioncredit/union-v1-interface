@@ -1,14 +1,15 @@
+import useSWR from "swr";
 import { isAddress } from "@ethersproject/address";
 import { Contract } from "@ethersproject/contracts";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
+
+import { roundUp } from "util/numbers";
+import { formatDueDate } from "util/formatDueDate";
+import useToken from "hooks/useToken";
+import useMarketRegistry from "hooks/contracts/useMarketRegistry";
 import U_TOKEN_ABI from "constants/abis/uToken.json";
 import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
-import useSWR from "swr";
-import { formatDueDate } from "util/formatDueDate";
-import useCurrentToken from "../useCurrentToken";
-import useMarketRegistryContract from "../contracts/useMarketRegistryContract";
-import { roundUp } from "util/numbers";
 
 const getPaymentDue = async (account, chainId, contract, library) => {
   const isOverdue = await contract.checkIsOverdue(account);
@@ -93,11 +94,11 @@ const getCreditLimit =
 
 export default function useBorrowData(address) {
   const { account: connectedAccount, library, chainId } = useWeb3React();
-  const curToken = useCurrentToken();
+  const curToken = useToken("DAI");
 
   const account = address || connectedAccount;
 
-  const marketRegistryContract = useMarketRegistryContract();
+  const marketRegistryContract = useMarketRegistry();
 
   const shouldFetch =
     !!marketRegistryContract &&

@@ -1,22 +1,18 @@
-import { formatUnits } from "@ethersproject/units";
-import useAssetContract from "hooks/contracts/useAssetContract";
-import useCurrentToken from "hooks/useCurrentToken";
 import useSWR from "swr";
+import useToken from "hooks/useToken";
 
-const getLoanableAmount = (contract) => async (_, tokenAddress) => {
-  const res = await contract.getLoanableAmount(tokenAddress);
-
-  return Number(formatUnits(res, 18));
-};
+function getLoanableAmount(_, assetManager, tokenAddress) {
+  return assetManager.getLoanableAmount(tokenAddress);
+}
 
 export default function useLoanableAmount() {
+  const DAI = useToken("DAI");
   const assetContract = useAssetContract();
-  const DAI = useCurrentToken();
 
-  const shouldFetch = !!assetContract && typeof DAI === "string";
+  const shouldFetch = !!assetManager && DAI;
 
   return useSWR(
-    shouldFetch ? ["LoanableAmount", DAI] : null,
-    getLoanableAmount(assetContract)
+    shouldFetch ? ["useLoanableAmount", assetContract, DAI] : null,
+    getLoanableAmount
   );
 }

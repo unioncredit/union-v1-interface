@@ -1,16 +1,15 @@
 import useSWR from "swr";
-import useReadProvider from "hooks/useReadProvider";
-import useUserContract from "hooks/contracts/useUserContract";
 
-const getMaxBorrow = (_, contract) => {
-  return contract.maxStakeAmount();
-};
+import useUserManager from "hooks/contracts/useUserManager";
+
+function fetchMaxBorrow(_, userManager) {
+  return userManager.maxStakeAmount();
+}
 
 export default function useMaxStakeAmount() {
-  const readProvider = useReadProvider();
-  const userManager = useUserContract(readProvider);
+  const userManager = useUserManager();
 
   const shouldFetch = !!userManager;
 
-  return useSWR(shouldFetch ? ["MaxStake", userManager] : null, getMaxBorrow);
+  return useSWR(shouldFetch ? ["MaxStake", userManager] : null, fetchMaxBorrow);
 }

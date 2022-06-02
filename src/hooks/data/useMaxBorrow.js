@@ -1,19 +1,17 @@
 import useSWR from "swr";
 import { formatUnits } from "@ethersproject/units";
-import useReadProvider from "hooks/useReadProvider";
-import useUTokenContract from "hooks/contracts/useUTokenContract";
 
-const getMaxBorrow = (contract) => async () => {
-  const res = await contract.maxBorrow();
+import useUToken from "hooks/contracts/useUToken";
 
+async function fetchMaxBorrow(uToken) {
+  const res = await uToken.maxBorrow();
   return Number(formatUnits(res, 18));
-};
+}
 
 export default function useMaxBorrow() {
-  const readProvider = useReadProvider();
-  const uTokenContract = useUTokenContract(readProvider);
+  const uToken = useUToken();
 
-  const shouldFetch = !!uTokenContract;
+  const shouldFetch = !!uToken;
 
-  return useSWR(shouldFetch ? "MaxBorrow" : null, getMaxBorrow(uTokenContract));
+  return useSWR(shouldFetch ? ["useMaxBorrow", uToken] : null, fetchMaxBorrow);
 }

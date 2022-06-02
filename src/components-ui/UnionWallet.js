@@ -1,38 +1,38 @@
+import { useLocation } from "react-router-dom";
 import { Button, Text, Tooltip } from "@unioncredit/ui";
 import { ReactComponent as Union } from "@unioncredit/ui/lib/icons/union.svg";
-import { useClaimModal } from "components-ui/modals";
+
 import format from "util/formatValue";
-import useCurrentToken from "hooks/useCurrentToken";
+import useToken from "hooks/useToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
-import { useLocation } from "react-router-dom";
+import { useClaimModal } from "components-ui/modals";
 
 export function UnionWallet() {
+  const UNION = useToken("UNION");
   const { pathname } = useLocation();
-  const UNION = useCurrentToken("UNION");
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
   const { data: rewardsData } = useRewardsData();
-
   const { open: openClaimModal } = useClaimModal();
 
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
   const total = Number(rewards) + Number(unionBalance);
 
-  const isGetStarted = pathname === "/";
+  const isGetStarted = pathname === "/get-started";
 
   const button = (
     <Button
-      onClick={openClaimModal}
+      mr="4px"
       icon={Union}
       variant="secondary"
+      className="union-wallet"
+      onClick={openClaimModal}
       label={
         <Text mb="0" ml="4px">
           {format(total, 2)}
         </Text>
       }
-      className="union-wallet"
-      mr="4px"
     />
   );
 

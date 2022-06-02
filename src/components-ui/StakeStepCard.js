@@ -1,19 +1,20 @@
-import { useStakeModal, StakeType } from "components-ui/modals";
 import { Grid, Card, Stat, Button, ButtonRow, Divider } from "@unioncredit/ui";
-import { Dai, Union } from "components-ui";
+
+import format from "util/formatValue";
+import useToken from "hooks/useToken";
 import useStakeData from "hooks/data/useStakeData";
 import useRewardsData from "hooks/data/useRewardsData";
 import useUnionSymbol from "hooks/useUnionSymbol";
-import useCurrentToken from "hooks/useCurrentToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
-import format from "util/formatValue";
+import { Dai, Union } from "components-ui";
+import { useStakeModal, StakeType } from "components-ui/modals";
 
 export function StakeStepCard() {
+  const UNION = useToken("UNION");
   const { data: stakeData } = useStakeData();
   const { open: openStakeModal } = useStakeModal();
   const { data: rewardsData } = useRewardsData();
   const { data: unionSymbol } = useUnionSymbol();
-  const UNION = useCurrentToken("UNION");
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
 
   const { totalStake = 0.0 } = !!stakeData && stakeData;

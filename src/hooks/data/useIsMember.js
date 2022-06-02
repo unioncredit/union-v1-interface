@@ -1,24 +1,20 @@
-import { useWeb3React } from "@web3-react/core";
 import useSWRImmutable from "swr/immutable";
-import useReadProvider from "hooks/useReadProvider";
-import useUserContract from "hooks/contracts/useUserContract";
+import { useWeb3React } from "@web3-react/core";
 
-const getIsMember = async (_, account, userManager) => {
-  const isMember = await userManager.checkIsMember(account);
-  return isMember;
-};
+function fetchIsMember(_, userManager, account) {
+  return userManager.checkIsMember(account);
+}
 
 export default function useIsMember(address) {
   const { account: connectedAccount } = useWeb3React();
-  const provider = useReadProvider();
-  const userManager = useUserContract(provider);
+  const userManager = useUserManager();
 
   const account = address || connectedAccount;
 
-  const shouldFetch = !!userManager && typeof account === "string";
+  const shouldFetch = userManager && account;
 
   return useSWRImmutable(
-    shouldFetch ? ["IsMember", account, userManager] : null,
-    getIsMember
+    shouldFetch ? ["useIsMember", userManager, account] : null,
+    fetchIsMember
   );
 }

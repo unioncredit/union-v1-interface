@@ -1,19 +1,24 @@
 import useSWR from "swr";
-import useUserContract from "hooks/contracts/useUserContract";
-import useReadProvider from "hooks/useReadProvider";
 
-const getMemberFee = (userManager) => async () => {
-  return await userManager.newMemberFee();
-};
+import useToken from "hooks/useToken";
+import useUserManager from "hooks/contracts/useUserManager";
+
+function fetchMemberFee(userManager) {
+  return userManager.newMemberFee();
+}
 
 export default function useMemberFee() {
-  const readProvider = useReadProvider();
-  const userManager = useUserContract(readProvider);
+  const DAI = useToken("DAI");
+  const userManager = useUserManager(DAI);
 
   const shouldFetch = !!userManager;
 
-  return useSWR(shouldFetch ? "MemberFee" : null, getMemberFee(userManager), {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  return useSWR(
+    shouldFetch ? ["MemberFee", userManager] : null,
+    fetchMemberFee,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
+  );
 }

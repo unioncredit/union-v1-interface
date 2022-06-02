@@ -1,52 +1,53 @@
-import { Card, Button, Label } from "@unioncredit/ui";
 import { useState } from "react";
-import useIsMember from "hooks/data/useIsMember";
-import useRegisterMember from "hooks/payables/useRegisterMember";
-import handleTxError from "util/handleTxError";
-import getReceipt from "util/getReceipt";
 import { useWeb3React } from "@web3-react/core";
-import { useCongratulationsModal } from "components-ui/modals/ContratulationsModal";
-import { Approval } from "./Approval";
-import useMemberFee from "hooks/data/useMemberFee";
-import useCurrentToken from "hooks/useCurrentToken";
+import { formatEther } from "@ethersproject/units";
+import { Card, Button, Label } from "@unioncredit/ui";
+
 import {
   APPROVE_UNION_REGISTER_SIGNATURE_KEY,
   PermitType,
 } from "constants/app";
-import useUserContract from "hooks/contracts/useUserContract";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import useToken from "hooks/useToken";
+import useIsMember from "hooks/data/useIsMember";
 import useUnionSymbol from "hooks/useUnionSymbol";
-import { formatUnits } from "@ethersproject/units";
+import useMemberFee from "hooks/data/useMemberFee";
 import useTokenBalance from "hooks/data/useTokenBalance";
+import useUserManager from "hooks/contracts/useUserManager";
+import useRegisterMember from "hooks/payables/useRegisterMember";
+import { Approval } from "components-ui/Approval";
+import { useCongratulationsModal } from "components-ui/modals/ContratulationsModal";
 
 export function BecomeMemberCard({ disabled }) {
+  const { library } = useWeb3React();
   const [registering, setRegistering] = useState(false);
 
-  const { library } = useWeb3React();
-  const userManager = useUserContract();
-  const UNION = useCurrentToken("UNION");
-  const { data: unionSymbol } = useUnionSymbol();
+  const UNION = useToken("UNION");
+  const userManager = useUserManager();
   const registerMember = useRegisterMember();
+
   const { data: memberFee } = useMemberFee();
+  const { data: unionSymbol } = useUnionSymbol();
   const { data: isMember = null } = useIsMember();
-  const { open: openCongratulationsModal } = useCongratulationsModal();
   const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { open: openCongratulationsModal } = useCongratulationsModal();
 
   const handleRegister = async () => {
+    setRegistering(true);
+
     try {
-      setRegistering(true);
       const { hash } = await registerMember();
       await getReceipt(hash, library);
       openCongratulationsModal();
-      setRegistering(false);
     } catch (err) {
-      setRegistering(false);
       handleTxError(err);
+    } finally {
+      setRegistering(false);
     }
   };
 
-  const displayMemberFee = memberFee
-    ? formatUnits(memberFee.toString(), 18)
-    : "0";
+  const displayMemberFee = memberFee ? formatEther(memberFee.toString()) : "0";
 
   const hasEnoughUnion = unionBalance >= Number(displayMemberFee);
 

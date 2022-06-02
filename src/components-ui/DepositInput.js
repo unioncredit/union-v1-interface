@@ -1,29 +1,30 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
+import { formatEther } from "@ethersproject/units";
 import { Button, Dai, Box, Input } from "@unioncredit/ui";
 
+import { Approval } from "components-ui";
+import isHash from "util/isHash";
+import { roundDown } from "util/numbers";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
-import useCurrentToken from "hooks/useCurrentToken";
+import errorMessages from "util/errorMessages";
+import activityLabels from "util/activityLabels";
+import useToken from "hooks/useToken";
+import usePermits from "hooks/usePermits";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useStakeDeposit from "hooks/payables/useStakeDeposit";
-import errorMessages from "util/errorMessages";
-import { roundDown } from "util/numbers";
-import activityLabels from "util/activityLabels";
 import { useAddActivity } from "hooks/data/useActivity";
-import isHash from "util/isHash";
-import { Approval } from "components-ui";
-import useUserContract from "hooks/contracts/useUserContract";
+import useUserManager from "hooks/contracts/useUserManager";
 import useMaxStakeAmount from "hooks/data/useMaxStakeAmount";
 import { APPROVE_DAI_DEPOSIT_SIGNATURE_KEY } from "constants/app";
-import usePermits from "hooks/usePermits";
-import { formatEther } from "@ethersproject/units";
 
 export const DepositInput = ({ totalStake, onComplete }) => {
-  const { library } = useWeb3React();
   const addActivity = useAddActivity();
-  const userManager = useUserContract();
+  const userManager = useUserManager();
+
+  const { library } = useWeb3React();
   const { removePermit } = usePermits();
   const { data: maxStake = "0" } = useMaxStakeAmount();
 
@@ -38,7 +39,7 @@ export const DepositInput = ({ totalStake, onComplete }) => {
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const DAI = useCurrentToken();
+  const DAI = useToken("DAI");
 
   const { data: daiBalance = 0.0, mutate: updateDaiBalance } =
     useTokenBalance(DAI);

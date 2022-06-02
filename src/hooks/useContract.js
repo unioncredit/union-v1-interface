@@ -1,25 +1,20 @@
-import { isAddress } from "@ethersproject/address";
-import { BigNumber } from "@ethersproject/bignumber";
-import { Contract } from "@ethersproject/contracts";
-import { useWeb3React } from "@web3-react/core";
 import { useMemo } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { isAddress } from "@ethersproject/address";
+import { Contract } from "@ethersproject/contracts";
 
-export default function useContract(address, ABI, provider) {
+import useReadProvider from "hooks/useReadProvider";
+
+export default function useContract(address, ABI) {
+  const readProvider = useReadProvider();
   const { library, account } = useWeb3React();
 
   return useMemo(() => {
-    if (BigNumber.from(address).eq("0")) {
-      return undefined;
-    }
+    if (!address || !ABI || !isAddress(address)) return null;
 
-    const lib = provider
-      ? provider
-      : account
-      ? library?.getSigner(account)
-      : library;
+    const provider =
+      account && library ? library.getSigner(account) : readProvider;
 
-    return isAddress(address) && !!ABI && !!lib
-      ? new Contract(address, ABI, lib)
-      : undefined;
-  }, [address, ABI, library, account, provider]);
+    return new Contract(address, ABI, provider);
+  }, [address, ABI, library, account, readProvider]);
 }

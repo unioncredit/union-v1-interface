@@ -1,19 +1,19 @@
-import useCurrentToken from "hooks/useCurrentToken";
-import useRewardsData from "hooks/data/useRewardsData";
-import useTokenBalance from "hooks/data/useTokenBalance";
-import format from "util/formatValue";
-import useUnionSymbol from "hooks/useUnionSymbol";
-import { ClaimButton } from "components-ui";
 import { Card, Text, Box, Label, Heading } from "@unioncredit/ui";
 
-export const ClaimCard = () => {
-  const UNION = useCurrentToken("UNION");
-  const { data: unionSymbol } = useUnionSymbol();
+import format from "util/formatValue";
+import useToken from "hooks/useToken";
+import useUnionSymbol from "hooks/useUnionSymbol";
+import useRewardsData from "hooks/data/useRewardsData";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import { ClaimButton } from "components-ui";
 
+export const ClaimCard = () => {
+  const UNION = useToken("UNION");
+
+  const { data: unionSymbol } = useUnionSymbol();
+  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
   const { data: unionBalance = 0.0, mutate: updateUnionBalance } =
     useTokenBalance(UNION);
-
-  const { data: rewardsData, mutate: updateRewardsData } = useRewardsData();
 
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 

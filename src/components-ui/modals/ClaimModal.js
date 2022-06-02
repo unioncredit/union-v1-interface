@@ -1,13 +1,14 @@
-import { commify } from "@ethersproject/units";
 import { ModalOverlay, Box, Grid, Stat } from "@unioncredit/ui";
 import { ReactComponent as UnionLogo } from "@unioncredit/ui/lib/icons/union.svg";
-import { Modal, UnwrapButton } from "components-ui";
+
+import format from "util/formatValue";
 import { useModal } from "hooks/useModal";
-import { ClaimButton } from "components-ui/ClaimButton";
+import useUnionSymbol from "hooks/useUnionSymbol";
+import useToken from "hooks/useToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import useRewardsData from "hooks/data/useRewardsData";
-import useUnionSymbol from "hooks/useUnionSymbol";
-import useCurrentToken from "hooks/useCurrentToken";
+import { Modal, UnwrapButton } from "components-ui";
+import { ClaimButton } from "components-ui/ClaimButton";
 
 export const CLAIM_MODAL = "claim-modal";
 
@@ -16,8 +17,8 @@ export const useClaimModal = () => useModal(CLAIM_MODAL);
 export function ClaimModal() {
   const { close } = useClaimModal();
 
-  const UNION = useCurrentToken("UNION");
-  const WRAPPED_UNION = useCurrentToken("WRAPPED_UNION");
+  const UNION = useToken("UNION");
+  const WRAPPED_UNION = useToken("WRAPPED_UNION");
 
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
@@ -43,7 +44,7 @@ export function ClaimModal() {
                 align="center"
                 size="large"
                 label={`Unclaimed ${unionSymbol}`}
-                value={commify(Number(rewards).toFixed(4))}
+                value={format(rewards, 4)}
               />
             </Grid.Col>
           </Grid.Row>
@@ -54,7 +55,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="In wallet"
-                value={commify(unionBalance.toFixed(4))}
+                value={format(unionBalance, 4)}
               />
             </Grid.Col>
             <Grid.Col>
@@ -63,7 +64,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="Total Balance"
-                value={commify(balance.toFixed(4))}
+                value={format(balance, 4)}
               />
             </Grid.Col>
           </Grid.Row>
@@ -71,16 +72,14 @@ export function ClaimModal() {
         <ClaimButton
           m={0}
           fluid
-          label={`Claim ${commify(Number(rewards).toFixed(4))} ${unionSymbol}`}
+          label={`Claim ${format(rewards, 4)} ${unionSymbol}`}
         />
         {wrappedUnionBalance > 0 && (
           <UnwrapButton
-            mt="8px"
             fluid
+            mt="8px"
             variant="secondary"
-            label={`Unwrap ${commify(
-              Number(wrappedUnionBalance).toFixed(4)
-            )} Wrapped Union`}
+            label={`Unwrap ${format(wrappedUnionBalance, 4)} Wrapped Union`}
           />
         )}
       </Modal>

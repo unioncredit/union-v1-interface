@@ -1,15 +1,17 @@
+import { useCallback } from "react";
 import { newRidgeState } from "react-ridge-state";
 import { ModalOverlay, Grid, Stat, ToggleMenu } from "@unioncredit/ui";
-import { Modal, DepositInput, WithdrawInput } from "components-ui";
-import { useModal } from "hooks/useModal";
-import { useCallback } from "react";
 
-import useRewardsData from "hooks/data/useRewardsData";
-import useStakeData from "hooks/data/useStakeData";
 import format from "util/formatValue";
-import useCurrentToken from "hooks/useCurrentToken";
+import { useModal } from "hooks/useModal";
+import useStakeData from "hooks/data/useStakeData";
+import useToken from "hooks/useToken";
+import useRewardsData from "hooks/data/useRewardsData";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import { Dai } from "components-ui/Dai";
+import { Modal } from "components-ui/Modal";
+import { DepositInput } from "components-ui/DepositInput";
+import { WithdrawInput } from "components-ui/WithdrawInput";
 
 export const StakeType = {
   STAKE: "stake",
@@ -47,7 +49,7 @@ export const useStakeModal = () => {
 export function StakeModal() {
   const { close, type, setType } = useStakeModal();
 
-  const UNION = useCurrentToken("UNION");
+  const UNION = useToken("UNION");
   const { mutate: updateUnionBalance } = useTokenBalance(UNION);
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
   const { mutate: updateRewardsData } = useRewardsData();
