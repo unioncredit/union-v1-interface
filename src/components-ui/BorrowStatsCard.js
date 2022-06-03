@@ -26,10 +26,10 @@ export function BorrowStatsCard() {
   const { isOpen: isPaymentReminderOpen, open: openPaymentReminder } =
     usePaymentReminderModal();
 
-  const { data: creditLimit = ZERO, mutate: updateCreditLimit } =
-    useCreditLimit();
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
+  const { data: creditLimit = ZERO, mutate: updateCreditLimit } =
+    useCreditLimit();
 
   const {
     borrowed = ZERO,
@@ -38,15 +38,15 @@ export function BorrowStatsCard() {
   } = !!borrowData && borrowData;
 
   const totalVouch = vouchData
-    ? vouchData.reduce((acc, data) => acc + Number(data.vouched), 0)
-    : 0;
+    ? vouchData.reduce((acc, data) => acc.add(data.vouched), ZERO)
+    : ZERO;
 
   const unavailable = vouchData
     ? vouchData.reduce(
-        (acc, data) => acc + Number(data.vouched) - Number(data.available),
-        0
+        (acc, data) => acc.add(data.vouched.sub(data.available)),
+        ZERO
       )
-    : 0;
+    : ZERO;
 
   const onComplete = async () => {
     await updateCreditLimit();
@@ -74,10 +74,10 @@ export function BorrowStatsCard() {
                   mt="24px"
                   align="center"
                   label="Vouch"
-                  value={<Dai value={format(totalVouch, 2)} />}
+                  value={<Dai value={format(formatUnits(totalVouch), 2)} />}
                   after={
                     <Label m={0}>
-                      {format(unavailable, 2)} DAI unavailable
+                      {format(formatUnits(unavailable), 2)} DAI unavailable
                       <Tooltip content="These are funds which are currently tied up elsewhere and as a result, not available to borrow at this time">
                         <TooltipIcon width="16px" />
                       </Tooltip>

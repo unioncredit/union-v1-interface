@@ -13,6 +13,7 @@ import { Avatar, Dai } from "components-ui";
 import format from "util/formatValue";
 import usePagination from "hooks/usePagination";
 import { useNavigate } from "react-router-dom";
+import { formatUnits } from "@ethersproject/units";
 
 function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
-          <Dai value={format(used)} />
+          <Dai value={format(formatUnits(used))} />
         </Text>
       </TableCell>
     </TableRow>
@@ -51,7 +52,7 @@ function OutstandingLoansEmpty() {
 }
 
 export function OutstandingLoans({ data }) {
-  const loans = data && data.filter((item) => item.used > 0);
+  const loans = data && data.filter((item) => item.used.gt("0"));
 
   const { data: pagedLoans, maxPages, page, setPage } = usePagination(loans);
 

@@ -13,6 +13,7 @@ import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import format from "util/formatValue";
 import isHash from "util/isHash";
 import { ContactsType } from "constants/app";
+import {formatUnits} from "@ethersproject/units";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
@@ -26,9 +27,10 @@ export function ManageContactModal({
   isOverdue,
   contactType,
 }) {
-  const { library } = useWeb3React();
   const addActivity = useAddActivity();
   const removeVouch = useRemoveVouch();
+
+  const { library } = useWeb3React();
   const [removing, setRemoving] = useState(false);
   const { mutate: updateTrustData } = useTrustData();
 
@@ -49,13 +51,13 @@ export function ManageContactModal({
   const data = [
     {
       label: "Trust",
-      value: <Dai value={format(trust, 4)} />,
+      value: <Dai value={format(formatUnits(trust), 2)} />,
       buttonProps: { label: "Change limit" },
       onClick: handleEditVouch,
     },
     {
       label: "Outstanding debt",
-      value: <Dai value={format(used, 4)} />,
+      value: <Dai value={format(formatUnits(used), 2)} />,
       buttonProps: {
         label: "Write-off debt",
         disabled: used <= 0 || !isOverdue,

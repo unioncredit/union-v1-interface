@@ -1,9 +1,11 @@
 import { forwardRef } from "react";
-import usePublicData from "hooks/usePublicData";
+import { formatUnits } from "@ethersproject/units";
 import { Text, TableCell, TableRow, Skeleton, Box } from "@unioncredit/ui";
-import { Avatar, Dai } from "components-ui";
-import useAddressLabels from "hooks/useAddressLabels";
+
 import format from "util/formatValue";
+import { Avatar, Dai } from "components-ui";
+import usePublicData from "hooks/usePublicData";
+import useAddressLabels from "hooks/useAddressLabels";
 
 export const CreditContactsRow = forwardRef((props, ref) => {
   const { address, trust, onClick } = props;
@@ -28,7 +30,7 @@ export const CreditContactsRow = forwardRef((props, ref) => {
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
-          <Dai value={format(trust)} />
+          <Dai value={format(formatUnits(trust))} />
         </Text>
       </TableCell>
     </TableRow>
