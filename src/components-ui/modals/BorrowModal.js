@@ -11,7 +11,7 @@ import { Modal, Dai } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
 import { roundDown, toFixed } from "util/numbers";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import errorMessages from "util/errorMessages";
 import useMaxBorrow from "hooks/data/useMaxBorrow";
 import useLoanableAmount from "hooks/data/useLoanableAmount";
@@ -50,16 +50,15 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
     isOverdue = false,
   } = !!borrowData && borrowData;
 
-  const { errors, formState, register, control, handleSubmit, setValue } =
-    useForm({
-      mode: "onChange",
-      reValidateMode: "onChange",
-    });
+  const { formState, register, watch, handleSubmit, setValue } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
 
-  const { isDirty, isSubmitting } = formState;
+  const { errors, isDirty, isSubmitting } = formState;
 
-  const watchAmount = useWatch({ name: "amount", control });
-  const amount = BigNumber.from(parseEther(watchAmount || "0"));
+  const watchAmount = String(watch("amount") || 0);
+  const amount = BigNumber.from(parseEther(watchAmount));
 
   const maxFeeAmount = creditLimit.mul(fee).div(WAD);
   const maxBorrowAmount = creditLimit.sub(maxFeeAmount);
@@ -153,7 +152,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
           <Box mt="24px">
             <Input
               type="number"
-              ref={register({ validate })}
+              {...register("amount", { validate })}
               name="amount"
               label="Borrow"
               placeholder="0.0"
