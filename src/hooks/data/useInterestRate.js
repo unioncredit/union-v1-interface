@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { formatUnits } from "@ethersproject/units";
 
+import useToken from "hooks/useToken";
 import useChainId from "hooks/useChainId";
 import useUToken from "hooks/contracts/useUToken";
 import { BLOCKS_PER_YEAR } from "constants/variables";
@@ -12,7 +13,8 @@ async function fetchInterestRate(_, uToken, chainId) {
 }
 
 export default function useInterestRate() {
-  const uToken = useUToken();
+  const DAI = useToken("DAI");
+  const uToken = useUToken(DAI);
   const chainId = useChainId();
   const shouldFetch = uToken && chainId;
 
