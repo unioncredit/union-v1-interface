@@ -15,6 +15,12 @@ import {
   Heading,
   Label,
 } from "@unioncredit/ui";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { ReactComponent as Search } from "@unioncredit/ui/lib/icons/search.svg";
+import { ReactComponent as Vouch } from "@unioncredit/ui/lib/icons/vouch.svg";
+import { ReactComponent as Filter } from "@unioncredit/ui/lib/icons/filter.svg";
+
 import {
   Modal,
   View,
@@ -33,22 +39,17 @@ import {
   useWriteOffDebtModal,
   WriteOffDebtModal,
 } from "components-ui/modals";
-import { ReactComponent as Search } from "@unioncredit/ui/lib/icons/search.svg";
-import { ReactComponent as Vouch } from "@unioncredit/ui/lib/icons/vouch.svg";
-import { ReactComponent as Filter } from "@unioncredit/ui/lib/icons/filter.svg";
-import { useState, useEffect } from "react";
+import createArray from "util/createArray";
+import { ContactsType } from "constants/app";
+import useIsMobile from "hooks/useIsMobile";
+import usePagination from "hooks/usePagination";
 import useTrustData from "hooks/data/useTrustData";
 import useVouchData from "hooks/data/useVouchData";
 import useContactsSearch from "hooks/useContactsSearch";
-import usePagination from "hooks/usePagination";
-import createArray from "util/createArray";
+import usePopTrustModal from "hooks/usePopTrustModal";
+import useFilterContacts from "hooks/useFilterContacts";
 
 import { config } from "./config";
-import { ContactsType } from "constants/app";
-import usePopTrustModal from "hooks/usePopTrustModal";
-import useIsMobile from "hooks/useIsMobile";
-import useFilterContacts from "hooks/useFilterContacts";
-import { useSearchParams } from "react-router-dom";
 
 const statusOptions = [
   { id: "all", label: "All statuses" },
@@ -98,8 +99,6 @@ export default function ContactsView({
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
-  const isLoading = !data;
-
   const { data: filteredData, setFilter, setOrderBy } = useFilterContacts(data);
 
   const { data: searchData, register } = useContactsSearch(filteredData);
@@ -111,24 +110,7 @@ export default function ContactsView({
     setPage,
   } = usePagination(searchData);
 
-  const ContactDetailsVariant = isMobile
-    ? withMobileView(ContactDetailsCard)
-    : ContactDetailsCard;
-
   const queryContact = searchParams.get("contact");
-
-  const toggleFilters = () => {
-    setShowFilters((x) => !x);
-  };
-
-  const handleSelectContact = (contact) => () => {
-    const contactIndex = data.findIndex(
-      ({ address }) => address === contact.address
-    );
-    if (~contactIndex) {
-      setSelectedContact(contactIndex);
-    }
-  };
 
   useEffect(() => {
     if (!vouchData || !trustData || selectedContactIndex !== null) return;
@@ -146,6 +128,25 @@ export default function ContactsView({
       !isMobile && setSelectedContact(0);
     }
   }, [vouchData, trustData, contactsType, queryContact]);
+
+  const ContactDetailsVariant = isMobile
+    ? withMobileView(ContactDetailsCard)
+    : ContactDetailsCard;
+
+  const toggleFilters = () => {
+    setShowFilters((x) => !x);
+  };
+
+  const handleSelectContact = (contact) => () => {
+    const contactIndex = data.findIndex(
+      ({ address }) => address === contact.address
+    );
+    if (~contactIndex) {
+      setSelectedContact(contactIndex);
+    }
+  };
+
+  const isLoading = !data;
 
   const title =
     contactsType === ContactsType.YOU_TRUST
@@ -196,8 +197,7 @@ export default function ContactsView({
                     <Card packed>
                       <Card.Body>
                         <Input
-                          ref={register}
-                          name="query"
+                          {...register("query")}
                           suffix={<Search />}
                           placeholder="Filter by ENS or address"
                         />
