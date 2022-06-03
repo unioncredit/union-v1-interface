@@ -1,22 +1,30 @@
 import { Stat, Button, Bar, Grid, Card } from "@unioncredit/ui";
+
+import { ZERO } from "constants/variables";
 import format from "util/formatValue";
 import { roundDown, toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
-import { Dai } from "components-ui";
+import { Dai } from "components-ui/Dai";
 import { useStakeModal, StakeModal, StakeType } from "components-ui/modals";
+import { formatUnits } from "@ethersproject/units";
 
 export function LendStatsCard() {
   const { data: stakeData } = useStakeData();
   const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
 
   const {
-    totalStake = 0.0,
-    utilizedStake = 0.0,
-    defaultedStake = 0.0,
-    withdrawableStake = 0.0,
+    totalStake = ZERO,
+    utilizedStake = ZERO,
+    defaultedStake = ZERO,
+    withdrawableStake = ZERO,
   } = !!stakeData && stakeData;
 
   const percentageStake = utilizedStake / totalStake;
+
+  const defaultedStakeView = format(formatUnits(defaultedStake, 18), 2);
+  const totalStakeView = format(formatUnits(totalStake, 18), 2);
+  const utilizedStakeView = format(formatUnits(utilizedStake, 18), 2);
+  const withdrawableStakeView = format(formatUnits(withdrawableStake, 18), 2);
 
   const handleOpenStakeModal = (type) => () => {
     openStakeModal(type);
@@ -34,7 +42,7 @@ export function LendStatsCard() {
                   size="large"
                   align="center"
                   label="Staked"
-                  value={<Dai value={format(roundDown(totalStake))} />}
+                  value={<Dai value={totalStakeView} />}
                 />
               </Grid.Col>
             </Grid.Row>
@@ -44,7 +52,7 @@ export function LendStatsCard() {
                   mt="24px"
                   label="Utilized"
                   align="center"
-                  value={<Dai value={format(roundDown(utilizedStake))} />}
+                  value={<Dai value={utilizedStakeView} />}
                   after={
                     <Bar
                       label={toPercent(percentageStake)}
@@ -58,7 +66,7 @@ export function LendStatsCard() {
                   mt="24px"
                   align="center"
                   label="Withdrawable"
-                  value={<Dai value={format(roundDown(withdrawableStake))} />}
+                  value={<Dai value={withdrawableStakeView} />}
                 />
               </Grid.Col>
               <Grid.Col xs={4}>
@@ -66,7 +74,7 @@ export function LendStatsCard() {
                   mt="24px"
                   align="center"
                   label="Defaulted"
-                  value={<Dai value={format(roundDown(defaultedStake))} />}
+                  value={<Dai value={defaultedStakeView} />}
                   after="0 DAI frozen"
                 />
               </Grid.Col>

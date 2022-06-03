@@ -1,19 +1,12 @@
 import { isAddress } from "@ethersproject/address";
-import { formatUnits } from "@ethersproject/units";
 import ABI from "constants/abis/erc20Detailed.json";
 import useSWR from "swr";
 import useContract from "../useContract";
 import { AddressZero } from "constants/variables";
 import useReadProvider from "hooks/useReadProvider";
 
-const getTokenBalanceOfAccount = (contract) => async (_, __, account) => {
-  const decimals = await contract.decimals();
-
-  const balanceOf = await contract.balanceOf(account);
-
-  const balance = formatUnits(balanceOf, decimals);
-
-  return parseFloat(balance);
+const getTokenBalanceOfAccount = (contract) => (_, __, account) => {
+  return contract.balanceOf(account);
 };
 
 export default function useTokenBalanceOfAccount(tokenAddress, account) {

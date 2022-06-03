@@ -1,10 +1,15 @@
 import { BigNumber } from "@ethersproject/bignumber";
+import { parseEther } from "@ethersproject/units";
 
 export const ZERO = BigNumber.from("0");
 
 export const WAD = BigNumber.from("1000000000000000000");
 
 export const AddressZero = "0x0000000000000000000000000000000000000000";
+
+export const MIN_REPAY = parseEther("0.1");
+
+export const REPAY_MARGIN = BigNumber.from("1100000000000000000").div(WAD);
 
 export const BLOCKS_PER_YEAR = {
   1: 2407328,
@@ -244,8 +249,6 @@ export const TOKENS = {
     WRAPPED_UNION: UNION_WRAPPED_TOKEN_ADDRESSES[421611],
   },
 };
-
-export const REPAY_MARGIN = 1.000011;
 
 export const MESSAGE = `Hello from the Union team. Please verify your email and wallet ownership by signing this message. This doesn't cost anything and your email won't be publicly visible.`;
 

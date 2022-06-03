@@ -13,8 +13,10 @@ import {
   Collapse,
 } from "@unioncredit/ui";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "@ethersproject/bignumber";
+import { formatUnits, parseEther } from "@ethersproject/units";
 
 import isHash from "util/isHash";
 import format from "util/formatValue";
@@ -22,7 +24,7 @@ import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
-import { roundDown, roundUp } from "util/numbers";
+import { toFixed } from "util/numbers";
 import { useModal } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
 import useRepay from "hooks/payables/useRepay";
@@ -33,7 +35,7 @@ import useUToken from "hooks/contracts/useUToken";
 import { Dai } from "components-ui/Dai";
 import { Modal } from "components-ui/Modal";
 import { Approval } from "components-ui/Approval";
-import { REPAY_MARGIN } from "constants/variables";
+import { REPAY_MARGIN, MIN_REPAY, ZERO } from "constants/variables";
 import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 
 export const PAYMENT_MODAL = "payment-modal";
@@ -46,40 +48,37 @@ const PaymentType = {
   CUSTOM: "custom",
 };
 
-export function PaymentModal({ balanceOwed, interest, onComplete }) {
+export function PaymentModal({ borrowData, onComplete }) {
   const { library } = useWeb3React();
   const [paymentType, setPaymentType] = useState(PaymentType.MIN);
 
   const repay = useRepay();
-  const curToken = useToken("DAI");
-  const utoken = useUToken();
+  const DAI = useToken("DAI");
+  const utoken = useUToken(DAI);
   const addActivity = useAddActivity();
 
   const { close } = usePaymentModal();
   const { removePermit } = usePermits();
+  const { data: daiBalance = ZERO } = useTokenBalance(DAI);
 
-  const { reset, errors, formState, register, watch, setValue, handleSubmit } =
-    useForm({
+  const { borrowed = ZERO, interest = ZERO } = !!borrowData && borrowData;
+
+  const { reset, formState, register, watch, setValue, handleSubmit } = useForm(
+    {
       mode: "onChange",
       reValidateMode: "onChange",
-    });
+    }
+  );
 
-  const { data: daiBalance = 0.0 } = useTokenBalance(curToken);
-  const flooredDaiBalance = roundDown(daiBalance);
+  const { isDirty, isSubmitting, errors } = formState;
 
-  const { isDirty, isSubmitting } = formState;
+  const watchAmount = String(watch("amount") || 0);
+  const amount = BigNumber.from(parseEther(watchAmount));
 
-  const watchAmount = watch("amount", 0);
-  const amount = Number(watchAmount || 0);
-
-  const calculateBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
-
-  const calculateMaxValue =
-    flooredDaiBalance <= calculateBalanceOwed
-      ? flooredDaiBalance
-      : calculateBalanceOwed;
-
-  const newBalanceOwed = calculateBalanceOwed - amount;
+  const borrowedFull = borrowed.mul(REPAY_MARGIN);
+  const maxRepay = daiBalance.lt(borrowedFull) ? daiBalance : borrowedFull;
+  const minRepay = interest.lt(MIN_REPAY) ? MIN_REPAY : interest;
+  const newBalanceOwed = borrowed.sub(amount);
 
   const handleSelectOption = (option) => {
     setPaymentType(option.paymentType);
@@ -95,20 +94,25 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
 
   const validate = async (val) => {
     if (!val) return errorMessages.required;
-    if (Number(val) > flooredDaiBalance)
+
+    const scaled = String(toFixed(val * 10 ** 18));
+    const bnValue = BigNumber.from(scaled);
+    if (bnValue.gt(daiBalance)) {
       return errorMessages.notEnoughBalanceDAI;
-    if (Number(val) < 0.01) return errorMessages.minValuePointZeroOne;
+    }
 
     return true;
   };
 
   const handlePayment = async (values) => {
-    const amountToRepay =
-      Number(values.amount) === calculateMaxValue
-        ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
-          ? flooredDaiBalance
-          : Number(values.amount * REPAY_MARGIN)
-        : Number(values.amount);
+    const amountToRepay = 0;
+    // TODO:
+    // const amountToRepay =
+    //   Number(values.amount) === calculateMaxValue
+    //     ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
+    //       ? flooredDaiBalance
+    //       : Number(values.amount * REPAY_MARGIN)
+    //     : Number(values.amount);
 
     try {
       const { hash } = await repay(amountToRepay);
@@ -127,33 +131,22 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
     }
   };
 
-  useEffect(() => {
-    if (interest) {
-      setValue("amount", roundUp(interest), {
-        shouldDirty: true,
-        shouldValidate: true,
-      });
-    }
-  }, [interest]);
-
   const options = [
     {
       title: "Pay minimum due",
       content:
         "Make the payment required to cover the interest due on your loan",
-      value: roundUp(interest),
+      value: format(formatUnits(minRepay, 18), 2),
       paymentType: PaymentType.MIN,
     },
     {
-      title:
-        calculateMaxValue >= calculateBalanceOwed
-          ? "Pay-off entire loan"
-          : "Pay maximum DAI available",
-      content:
-        calculateMaxValue >= calculateBalanceOwed
-          ? "Make a payment to pay-off your current balance owed in its entirety"
-          : "Make a payment with the maximum amount of DAI available in your connected wallet",
-      value: calculateMaxValue,
+      title: maxRepay.gte(borrowed)
+        ? "Pay-off entire loan"
+        : "Pay maximum DAI available",
+      content: maxRepay.gte(borrowed)
+        ? "Make a payment to pay-off your current balance owed in its entirety"
+        : "Make a payment with the maximum amount of DAI available in your connected wallet",
+      value: format(formatUnits(maxRepay, 18), 2),
       paymentType: PaymentType.MAX,
     },
   ];
@@ -172,7 +165,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                   align="center"
                   size="medium"
                   label="Balance owed"
-                  value={<Dai value={calculateBalanceOwed} />}
+                  value={<Dai value={format(formatUnits(borrowed, 18), 2)} />}
                 />
               </Grid.Col>
               <Grid.Col xs={6}>
@@ -181,7 +174,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                   align="center"
                   size="medium"
                   label="Dai in Wallet"
-                  value={<Dai value={format(daiBalance, 2)} />}
+                  value={<Dai value={format(formatUnits(daiBalance, 18), 2)} />}
                 />
               </Grid.Col>
             </Grid.Row>
@@ -242,7 +235,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                     <Box fluid mt="12px">
                       <Input
                         type="number"
-                        ref={register({ validate })}
+                        {...register("amount", { validate })}
                         name="amount"
                         suffix={<Dai />}
                         placeholder="0.0"
@@ -260,15 +253,15 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
               New balance owed
             </Label>
             <Label as="p" grey={400} m={0}>
-              {format(newBalanceOwed)} DAI
+              {format(formatUnits(newBalanceOwed, 18), 2)} DAI
             </Label>
           </Box>
           <ButtonRow fluid>
             <Approval
               label="Approve DAI for Loan Payments"
               amount={amount}
-              tokenAddress={curToken}
-              spender={utoken.address}
+              tokenAddress={DAI}
+              spender={utoken?.address}
               signatureKey={APPROVE_DAI_REPAY_SIGNATURE_KEY}
             >
               <Button
@@ -276,7 +269,7 @@ export function PaymentModal({ balanceOwed, interest, onComplete }) {
                 fontSize="large"
                 disabled={!isDirty}
                 loading={isSubmitting}
-                label={`Repay ${amount} DAI`}
+                label={`Repay ${format(formatUnits(amount, 18), 2)} DAI`}
                 onClick={handleSubmit(handlePayment)}
               />
             </Approval>

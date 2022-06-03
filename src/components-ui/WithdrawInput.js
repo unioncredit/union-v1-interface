@@ -1,30 +1,37 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "@ethersproject/bignumber";
+import { formatUnits } from "@ethersproject/units";
+import { Button, Box, Dai, Input } from "@unioncredit/ui";
 
+import isHash from "util/isHash";
+import format from "util/formatValue";
+import { toFixed } from "util/numbers";
 import getReceipt from "util/getReceipt";
+import activityLabels from "util/activityLabels";
 import handleTxError from "util/handleTxError";
 import errorMessages from "util/errorMessages";
-import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
-import { Button, Box, Dai, Input } from "@unioncredit/ui";
 import { useAddActivity } from "hooks/data/useActivity";
-import activityLabels from "util/activityLabels";
-import isHash from "util/isHash";
+import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 
 export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
-  const { library } = useWeb3React();
   const addActivity = useAddActivity();
-  const { handleSubmit, register, setValue, formState, errors, reset, watch } =
-    useForm({
+  const withdraw = useStakeWithdraw();
+
+  const { library } = useWeb3React();
+  const { handleSubmit, register, setValue, formState, reset, watch } = useForm(
+    {
       mode: "onChange",
       reValidateMode: "onChange",
-    });
+    }
+  );
 
-  const { isDirty, isSubmitting } = formState;
+  const { isDirty, isSubmitting, errors } = formState;
 
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const withdraw = useStakeWithdraw();
+  const withdrawableStakeView = format(formatUnits(withdrawableStake, 18), 2);
 
   const onSubmit = async (values) => {
     try {
@@ -46,10 +53,18 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
   };
 
   const handleMaxWithdraw = () => {
-    setValue("amount", withdrawableStake, {
+    setValue("amount", withdrawableStakeView, {
       shouldDirty: true,
       shouldValidate: true,
     });
+  };
+
+  const validate = (amount) => {
+    if (!amount || amount <= 0) return errorMessages.required;
+
+    const scaled = String(toFixed(amount * 10 ** 18));
+    const bnValue = BigNumber.from(scaled);
+    if (bnValue.gt(withdrawableStake)) return errorMessages.notEnoughStake;
   };
 
   return (
@@ -57,24 +72,15 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
       <Box mt="18px">
         <Input
           type="number"
-          ref={register({
-            required: errorMessages.required,
-            max: {
-              value: withdrawableStake,
-              message: errorMessages.notEnoughStake,
-            },
-            min: {
-              value: 0.01,
-              message: errorMessages.minValuePointZeroOne,
-            },
-          })}
-          name="amount"
           label="Amount to unstake"
-          caption={`Max. ${withdrawableStake} DAI`}
+          caption={`Max. ${withdrawableStakeView} DAI`}
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
           suffix={<Dai />}
           error={errors?.amount?.message}
+          {...register("amount", {
+            validate,
+          })}
         />
       </Box>
       <Button

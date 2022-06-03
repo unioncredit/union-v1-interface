@@ -12,6 +12,8 @@ import { Dai } from "components-ui/Dai";
 import { Modal } from "components-ui/Modal";
 import { DepositInput } from "components-ui/DepositInput";
 import { WithdrawInput } from "components-ui/WithdrawInput";
+import { formatUnits } from "@ethersproject/units";
+import { ZERO } from "constants/variables";
 
 export const StakeType = {
   STAKE: "stake",
@@ -54,7 +56,7 @@ export function StakeModal() {
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
   const { mutate: updateRewardsData } = useRewardsData();
 
-  const { totalStake = 0.0, withdrawableStake = 0.0 } =
+  const { totalStake = ZERO, withdrawableStake = ZERO } =
     !!stakeData && stakeData;
 
   const onComplete = async () => {
@@ -82,7 +84,7 @@ export function StakeModal() {
                 mb="24px"
                 align="center"
                 label="Dai Staked"
-                value={<Dai value={format(totalStake, 4)} />}
+                value={<Dai value={format(formatUnits(totalStake, 18), 2)} />}
               />
             </Grid.Col>
             <Grid.Col>
@@ -91,7 +93,9 @@ export function StakeModal() {
                 mb="24px"
                 align="center"
                 label="Withdrawable"
-                value={<Dai value={format(withdrawableStake, 4)} />}
+                value={
+                  <Dai value={format(formatUnits(withdrawableStake, 18), 2)} />
+                }
               />
             </Grid.Col>
           </Grid.Row>
@@ -103,9 +107,13 @@ export function StakeModal() {
           initialActive={initialActiveIndex}
         />
         {type === StakeType.STAKE ? (
-          <DepositInput {...{ totalStake, onComplete }} />
+          <DepositInput totalStake={totalStake} onComplete={onComplete} />
         ) : (
-          <WithdrawInput {...{ withdrawableStake, totalStake, onComplete }} />
+          <WithdrawInput
+            totalStake={totalStake}
+            onComplete={onComplete}
+            withdrawableStake={withdrawableStake}
+          />
         )}
       </Modal>
     </ModalOverlay>

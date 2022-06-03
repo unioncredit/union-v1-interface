@@ -5,7 +5,7 @@ import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 
 export default function useStakeWithdraw() {
-  const DAI = useToken(DAI);
+  const DAI = useToken("DAI");
   const userManager = useUserManager(DAI);
 
   return useCallback(

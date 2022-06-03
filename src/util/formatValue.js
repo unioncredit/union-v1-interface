@@ -9,6 +9,7 @@ import { formatUnits } from "@ethersproject/units";
  */
 export default function format(num, digits) {
   num = Number(num);
+  num = num <= 0 ? 0 : num;
 
   if (num && num < 10000) {
     if (!num) return "0." + Array(digits).fill("0").join();

@@ -14,28 +14,26 @@ import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <UnsuportedChainProvider chainIds={[]}>
-        <ErrorBoundary fallback={<Error />}>
-          <SWRConfig
-            value={{
-              refreshInterval: 0,
-              errorRetryCount: 0,
-              shouldRetryOnError: false,
-              revalidateOnFocus: false,
-              revalidateOnReconnect: false,
-              revalidateOnMount: true,
-              dedupingInterval: 5000,
-            }}
-          >
-            <Web3ReactProvider getLibrary={getLibrary}>
-              <App />
-              <Notifications />
-            </Web3ReactProvider>
-          </SWRConfig>
-        </ErrorBoundary>
-      </UnsuportedChainProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <UnsuportedChainProvider chainIds={[]}>
+      <ErrorBoundary fallback={<Error />}>
+        <SWRConfig
+          value={{
+            refreshInterval: 0,
+            errorRetryCount: 0,
+            shouldRetryOnError: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+            revalidateOnMount: true,
+            dedupingInterval: 5000,
+          }}
+        >
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <App />
+            <Notifications />
+          </Web3ReactProvider>
+        </SWRConfig>
+      </ErrorBoundary>
+    </UnsuportedChainProvider>
+  </BrowserRouter>
 );

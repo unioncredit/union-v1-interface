@@ -129,14 +129,7 @@ export function BorrowStatsCard() {
         />
       )}
       {isPaymentOpen && (
-        <PaymentModal
-          {...{
-            paymentDueDate,
-            balanceOwed: borrowed,
-            interest,
-            onComplete,
-          }}
-        />
+        <PaymentModal borrowData={borrowData} onComplete={onComplete} />
       )}
       {isPaymentReminderOpen && <PaymentReminderModal />}
     </>
