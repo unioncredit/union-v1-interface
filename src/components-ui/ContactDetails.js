@@ -1,13 +1,15 @@
-import useBorrowData from "hooks/data/useBorrowData";
+import { useWeb3React } from "@web3-react/core";
+import { formatUnits } from "@ethersproject/units";
 import { Stat, Grid, Card, Button, Badge } from "@unioncredit/ui";
+import { ReactComponent as Manage } from "@unioncredit/ui/lib/icons/manage.svg";
+
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp } from "util/numbers";
-import { useWeb3React } from "@web3-react/core";
-import { RelatedHistory } from "./RelatedHistory";
 import { ContactsType } from "constants/app";
+import { RelatedHistory } from "components-ui/RelatedHistory";
+import useBorrowData from "hooks/data/useBorrowData";
 
-import { ReactComponent as Manage } from "@unioncredit/ui/lib/icons/manage.svg";
 
 function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
   return (
@@ -17,21 +19,21 @@ function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
           <Stat
             label="Trust"
             tooltip="The DAI amount this address trusts you with"
-            value={<Dai value={format(trust, 2)} />}
+            value={<Dai value={format(formatUnits(trust), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             label="Vouch"
             tooltip="The DAI amount this address can underwrite based on their total staked DAI"
-            value={<Dai value={format(vouched, 2)} />}
+            value={<Dai value={format(formatUnits(vouched), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
             label="Available"
             tooltip="The DAI amount you can borrow from this address"
-            value={<Dai value={format(available, 2)} />}
+            value={<Dai value={format(formatUnits(available), 2)} />}
           />
         </Grid.Col>
       </Grid.Row>
@@ -89,7 +91,7 @@ function YouTrustContactDetails({
             mb="12px"
             label="Trust"
             tooltip="The DAI amount you trust this address to borrow"
-            value={<Dai value={format(trust, 2)} />}
+            value={<Dai value={format(formatUnits(trust), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
@@ -97,7 +99,7 @@ function YouTrustContactDetails({
             mb="12px"
             label="Vouch"
             tooltip="The DAI amount you can underwrite based on your total staked DAI"
-            value={<Dai value={format(vouched, 2)} />}
+            value={<Dai value={format(formatUnits(vouched), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
@@ -105,14 +107,20 @@ function YouTrustContactDetails({
             mb="12px"
             label="Available"
             tooltip="The DAI this address has available to borrow"
-            value={<Dai value={format(vouched - used, 2)} />}
+            value={<Dai value={format(formatUnits(vouched.sub(used)), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Balance owed" value={<Dai value={format(used, 2)} />} />
+          <Stat
+            label="Balance owed"
+            value={<Dai value={format(formatUnits(used), 2)} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
-          <Stat label="Min payment" value={<Dai value={roundUp(interest)} />} />
+          <Stat
+            label="Min payment"
+            value={<Dai value={roundUp(formatUnits(interest))} />}
+          />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat

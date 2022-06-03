@@ -1,7 +1,9 @@
 import { useLocation } from "react-router-dom";
+import { formatUnits } from "@ethersproject/units";
 import { Button, Text, Tooltip } from "@unioncredit/ui";
 import { ReactComponent as Union } from "@unioncredit/ui/lib/icons/union.svg";
 
+import { ZERO } from "constants/variables";
 import format from "util/formatValue";
 import useToken from "hooks/useToken";
 import useTokenBalance from "hooks/data/useTokenBalance";
@@ -11,13 +13,13 @@ import { useClaimModal } from "components-ui/modals";
 export function UnionWallet() {
   const UNION = useToken("UNION");
   const { pathname } = useLocation();
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { data: unionBalance = ZERO } = useTokenBalance(UNION);
   const { data: rewardsData } = useRewardsData();
   const { open: openClaimModal } = useClaimModal();
 
-  const { rewards = 0.0 } = !!rewardsData && rewardsData;
+  const { rewards = ZERO } = !!rewardsData && rewardsData;
 
-  const total = Number(rewards) + Number(unionBalance);
+  const total = rewards.add(unionBalance);
 
   const isGetStarted = pathname === "/get-started";
 
@@ -30,7 +32,7 @@ export function UnionWallet() {
       onClick={openClaimModal}
       label={
         <Text mb="0" ml="4px">
-          {format(total, 2)}
+          {format(formatUnits(total, 18), 2)}
         </Text>
       }
     />

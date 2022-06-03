@@ -1,69 +1,74 @@
 import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
-import { formatUnits } from "@ethersproject/units";
 import { JsonRpcProvider } from "@ethersproject/providers";
 
-import parseRes from "util/parseRes";
 import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 import useUToken from "hooks/contracts/useUToken";
+import useMulticall from "hooks/useMulticall";
 
-// TODO: better data fetching
-function fetchVouchData(userManager, uToken) {
-  return async function (_, account) {
-    const ethereumRpc = new JsonRpcProvider(
-      // TODO:
-      `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
-    );
+function fetchVouchData(userManager, uToken, multicall) {
+  return async function (_, address) {
+    const addresses = await userManager.getStakerAddresses(address);
 
-    const addresses = await userManager.getStakerAddresses(account);
+    const calls = addresses.map((staker) => [
+      {
+        address: userManager.address,
+        name: "getStakerAsset",
+        params: [address, staker],
+        itf: userManager.interface,
+      },
+      {
+        address: userManager.address,
+        name: "getStakerBalance",
+        params: [staker],
+        itf: userManager.interface,
+      },
+      {
+        address: uToken.address,
+        name: "checkIsOverdue",
+        params: [staker],
+        itf: uToken.interface,
+      },
+      {
+        address: userManager.address,
+        name: "checkIsMember",
+        params: [staker],
+        itf: userManager.interface,
+      },
+      {
+        address: userManager.address,
+        name: "getTotalLockedStake",
+        params: [staker],
+        itf: userManager.interface,
+      },
+    ]);
 
-    const list = await Promise.all(
-      addresses.map(async (address) => {
-        const { vouchingAmount, lockedStake, trustAmount } =
-          await userManager.getStakerAsset(account, address);
+    const resp = await multicall(calls);
 
-        const totalUsed = Number(
-          formatUnits(await userManager.getTotalLockedStake(address), 18)
-        );
+    return addresses.map((address, i) => {
+      const vouched = resp[i][0].vouchingAmount;
+      const used = resp[i][0].lockedStake;
+      const totalUsed = resp[i][4][0];
+      const staked = resp[i][1][0];
+      const availableVouch = vouched.sub(used);
+      const availableStake = staked.sub(totalUsed);
+      const available = availableVouch.gt(availableStake)
+        ? availableStake
+        : availableVouch;
 
-        const stakingAmount = Number(
-          formatUnits(await userManager.getStakerBalance(address), 18)
-        );
-
-        const isMember = await userManager.checkIsMember(address);
-        const isOverdue = await uToken.checkIsOverdue(address);
-        const vouched = parseRes(vouchingAmount);
-        const used = parseRes(lockedStake);
-        const trust = parseRes(trustAmount);
-
-        const freeStakingAmount =
-          stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
-
-        const available =
-          Number(vouched) - Number(used) > freeStakingAmount
-            ? freeStakingAmount.toFixed(2)
-            : Number(vouched - used).toFixed(2);
-
-        const utilized = used / vouched;
-
-        const ens = await ethereumRpc.lookupAddress(address);
-
-        return {
-          address,
-          available,
-          isOverdue,
-          trust,
-          used,
-          utilized,
-          vouched,
-          ens,
-          isMember,
-        };
-      })
-    );
-
-    return list;
+      return {
+        address,
+        isOverdue: resp[i][2][0],
+        staked,
+        available,
+        trust: resp[i][0].trustAmount,
+        used,
+        vouched,
+        ens: null,
+        isMember: resp[i][3][0],
+      };
+    });
   };
 }
 
@@ -72,13 +77,14 @@ export default function useVouchData(address) {
   const account = address || connectedAccount;
 
   const DAI = useToken("DAI");
-  const userManager = useUserManager(DAI);
   const uToken = useUToken(DAI);
+  const userManager = useUserManager(DAI);
+  const multicall = useMulticall();
 
-  const shouldFetch = userManager && uToken && account;
+  const shouldFetch = !!userManager && !!multicall && !!uToken;
 
   return useSWR(
     shouldFetch ? ["useVouchData", account] : null,
-    fetchVouchData(userManager, uToken)
+    fetchVouchData(userManager, uToken, multicall)
   );
 }

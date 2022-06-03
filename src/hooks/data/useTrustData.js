@@ -1,51 +1,50 @@
 import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
 import { JsonRpcProvider } from "@ethersproject/providers";
-import { formatUnits } from "@ethersproject/units";
 
 import useToken from "hooks/useToken";
 import useUToken from "hooks/contracts/useUToken";
 import useUserManager from "hooks/contracts/useUserManager";
+import useMulticall from "hooks/useMulticall";
 
-// TODO: convert this to use multicall
-function fetchTrustData(userManager, uToken) {
-  return async function (_, account) {
-    const ethereumRpc = new JsonRpcProvider(
-      // TODO:
-      `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
-    );
+function fetchTrustData(userManager, uToken, multicall) {
+  return async function (_, address) {
+    const addresses = await userManager.getBorrowerAddresses(address);
 
-    const addresses = await userManager.getBorrowerAddresses(account);
+    const calls = addresses.map((borrower) => [
+      {
+        address: userManager.address,
+        name: "getBorrowerAsset",
+        params: [address, borrower],
+        itf: userManager.interface,
+      },
+      {
+        address: uToken.address,
+        name: "checkIsOverdue",
+        params: [borrower],
+        itf: uToken.interface,
+      },
+      {
+        address: userManager.address,
+        name: "checkIsMember",
+        params: [borrower],
+        itf: userManager.interface,
+      },
+    ]);
 
-    const data = await Promise.all(
-      addresses.map(async (address) => {
-        const res = await userManager.getBorrowerAsset(account, address);
+    const resp = await multicall(calls);
 
-        const vouched = Number(formatUnits(res.vouchingAmount, 18));
-        const used = Number(formatUnits(res.lockedStake, 18));
-        const trust = Number(formatUnits(res.trustAmount, 18));
-        const percentage = vouched > 0 ? used / vouched : 0;
-        const isOverdue = await uToken.checkIsOverdue(address);
-        const health = isOverdue ? 0 : ((vouched - used) / vouched) * 100;
-        const ens = await ethereumRpc.lookupAddress(address);
-        const isMember = await userManager.checkIsMember(address);
-
-        return {
-          address,
-          health,
-          isOverdue,
-          percentage,
-          trust,
-          used,
-          utilized: percentage,
-          vouched,
-          ens,
-          isMember,
-        };
-      })
-    );
-
-    return data;
+    return addresses.map((address, i) => {
+      return {
+        address,
+        isOverdue: resp[i][1].isOverdue,
+        trust: resp[i][0].trustAmount,
+        used: resp[i][0].lockedStake,
+        vouched: resp[i][0].vouchingAmount,
+        ens: null,
+        isMember: resp[i][2][0],
+      };
+    });
   };
 }
 
@@ -54,13 +53,14 @@ export default function useTrustData(address) {
   const account = address || connectedAccount;
 
   const DAI = useToken("DAI");
-  const userManager = useUserManager(DAI);
   const uToken = useUToken(DAI);
+  const userManager = useUserManager(DAI);
+  const multicall = useMulticall();
 
-  const shouldFetch = userManager && uToken && account;
+  const shouldFetch = !!userManager && !!multicall && !!uToken;
 
   return useSWR(
-    shouldFetch ? ["useTrustData", account] : null,
-    fetchTrustData(userManager, uToken)
+    shouldFetch ? ["trustData", account] : null,
+    fetchTrustData(userManager, uToken, multicall)
   );
 }

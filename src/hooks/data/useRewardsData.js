@@ -1,9 +1,8 @@
 import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
 
-import parseRes from "util/parseRes";
-import useComptroller from "hooks/contracts/useComptroller";
 import useToken from "hooks/useToken";
+import useComptroller from "hooks/contracts/useComptroller";
 
 function fetchRewardsData(comptroller) {
   return async function (_, account, tokenAddress) {
@@ -14,8 +13,8 @@ function fetchRewardsData(comptroller) {
     );
 
     return {
-      rewards: parseRes(rewards, 3),
-      rewardsMultiplier: parseRes(rewardsMultiplier),
+      rewards,
+      rewardsMultiplier,
     };
   };
 }

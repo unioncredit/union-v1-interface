@@ -1,4 +1,3 @@
-import usePublicData from "hooks/usePublicData";
 import {
   Text,
   TableCell,
@@ -7,8 +6,11 @@ import {
   Box,
   Badge,
 } from "@unioncredit/ui";
+import { formatUnits } from "@ethersproject/units";
+
 import { Avatar, Dai } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
+import usePublicData from "hooks/usePublicData";
 import { ContactsType } from "constants/app";
 import format from "util/formatValue";
 import truncateName from "util/truncateName";
@@ -47,7 +49,7 @@ export function ContactsListItem(props) {
       </TableCell>
       <TableCell align="right">
         <Text>
-          <Dai value={format(trust, 2)} />
+          <Dai value={format(formatUnits(trust, 18), 2)} />
         </Text>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
