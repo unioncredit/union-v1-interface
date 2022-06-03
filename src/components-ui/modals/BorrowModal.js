@@ -38,9 +38,9 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const { library } = useWeb3React();
   const { close } = useBorrowModal();
 
-  const { data: maxBorrow } = useMaxBorrow();
-  const { data: loanableAmount } = useLoanableAmount();
-  const { data: minBorrow } = useMinBorrow();
+  const { data: maxBorrow = ZERO } = useMaxBorrow();
+  const { data: loanableAmount = ZERO } = useLoanableAmount();
+  const { data: minBorrow = ZERO } = useMinBorrow();
 
   const {
     borrowed = ZERO,
@@ -73,6 +73,8 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const totalBorrowView = format(formatUnits(totalBorrow, 18), 2);
   const newBalanceOwedView = format(formatUnits(newBalanceOwed, 18), 2);
   const amountView = format(formatUnits(amount, 18), 2);
+  const maxBorrowView = format(formatUnits(maxBorrow, 18), 2);
+  const minBorrowView = format(formatUnits(minBorrow, 18), 2);
   const maxBorrowAmountView = format(
     roundDown(formatUnits(maxBorrowAmount, 18)),
     2
@@ -90,11 +92,12 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
     if (isOverdue) return errorMessages.overdueBalance;
     if (isNaN(val)) return errorMessages.notANumber;
 
-    const bnValue = BigNumber.from(toFixed(val * 10 ** 18));
+    const scaled = String(toFixed(val * 10 ** 18));
+    const bnValue = BigNumber.from(scaled);
     if (bnValue.gt(maxBorrowAmount)) return errorMessages.notEnoughCredit;
-    if (bnValue.gt(maxBorrow)) return errorMessages.maxBorrow(maxBorrow);
+    if (bnValue.gt(maxBorrow)) return errorMessages.maxBorrow(maxBorrowView);
     if (bnValue.gt(loanableAmount)) return errorMessages.notEnoughPoolDAI;
-    if (bnValue.lt(minBorrow)) return errorMessages.minDAIBorrow(minBorrow);
+    if (bnValue.lt(minBorrow)) return errorMessages.minDAIBorrow(minBorrowView);
 
     return true;
   };

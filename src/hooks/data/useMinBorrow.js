@@ -1,17 +1,17 @@
 import useSWR from "swr";
-import { formatUnits } from "@ethersproject/units";
 
 import useUToken from "hooks/contracts/useUToken";
+import useToken from "hooks/useToken";
 
 function fetchMinBorrow(uToken) {
-  return async function () {
-    const minBorrow = await uToken.minBorrow();
-    return Number(formatUnits(minBorrow, 18));
+  return function () {
+    return uToken.minBorrow();
   };
 }
 
 export default function useMinBorrow() {
-  const uToken = useUToken();
+  const DAI = useToken("DAI");
+  const uToken = useUToken(DAI);
 
   const shouldFetch = !!uToken;
 

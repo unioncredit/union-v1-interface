@@ -1,6 +1,7 @@
 import useSWR from "swr";
 
 import useUToken from "hooks/contracts/useUToken";
+import useToken from "hooks/useToken";
 
 function fetchMaxBorrow(uToken) {
   return function () {
@@ -9,7 +10,8 @@ function fetchMaxBorrow(uToken) {
 }
 
 export default function useMaxBorrow() {
-  const uToken = useUToken();
+  const DAI = useToken("DAI");
+  const uToken = useUToken(DAI);
 
   const shouldFetch = !!uToken;
 

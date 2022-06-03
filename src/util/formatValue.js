@@ -50,6 +50,6 @@ export default function format(num, digits) {
     : "0";
 }
 
-export function formatScaled(num, scale = 18) {
-  return format(formatUnits(num, scale));
+export function formatScaled(num, digits, scale = 18) {
+  return format(formatUnits(num, scale), digits);
 }

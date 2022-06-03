@@ -26,7 +26,8 @@ export function BorrowStatsCard() {
   const { isOpen: isPaymentReminderOpen, open: openPaymentReminder } =
     usePaymentReminderModal();
 
-  const { data: creditLimit = ZERO, mutate: updateCreditLimit } = useCreditLimit();
+  const { data: creditLimit = ZERO, mutate: updateCreditLimit } =
+    useCreditLimit();
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
 
@@ -53,6 +54,8 @@ export function BorrowStatsCard() {
     await updateBorrowData();
   };
 
+  const creditLimitView = formatScaled(creditLimit, 2);
+
   return (
     <>
       <Card>
@@ -65,7 +68,7 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit, 2))} />}
+                  value={<Dai value={creditLimitView} />}
                 />
                 <Stat
                   mt="24px"
@@ -88,7 +91,7 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Balance owed"
-                  value={<Dai value={formatScaled(borrowed)} />}
+                  value={<Dai value={formatScaled(borrowed, 2)} />}
                 />
 
                 <Stat
