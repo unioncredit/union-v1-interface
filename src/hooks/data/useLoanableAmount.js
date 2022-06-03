@@ -2,8 +2,10 @@ import useSWR from "swr";
 import useToken from "hooks/useToken";
 import useAssetManager from "hooks/contracts/useAssetManager";
 
-function getLoanableAmount(_, assetManager, tokenAddress) {
-  return assetManager.getLoanableAmount(tokenAddress);
+function getLoanableAmount(assetManager) {
+  return function (_, tokenAddress) {
+    return assetManager.getLoanableAmount(tokenAddress);
+  };
 }
 
 export default function useLoanableAmount() {
@@ -13,7 +15,7 @@ export default function useLoanableAmount() {
   const shouldFetch = !!assetManager && DAI;
 
   return useSWR(
-    shouldFetch ? ["useLoanableAmount", assetManager, DAI] : null,
-    getLoanableAmount
+    shouldFetch ? ["useLoanableAmount", DAI] : null,
+    getLoanableAmount(assetManager)
   );
 }

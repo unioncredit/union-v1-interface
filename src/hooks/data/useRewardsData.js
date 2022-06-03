@@ -5,16 +5,18 @@ import parseRes from "util/parseRes";
 import useComptroller from "hooks/contracts/useComptroller";
 import useToken from "hooks/useToken";
 
-async function fetchRewardsData(_, comptroller, account, tokenAddress) {
-  const rewards = await comptroller.calculateRewards(account, tokenAddress);
-  const rewardsMultiplier = await comptroller.getRewardsMultiplier(
-    account,
-    tokenAddress
-  );
+function fetchRewardsData(comptroller) {
+  return async function (_, account, tokenAddress) {
+    const rewards = await comptroller.calculateRewards(account, tokenAddress);
+    const rewardsMultiplier = await comptroller.getRewardsMultiplier(
+      account,
+      tokenAddress
+    );
 
-  return {
-    rewards: parseRes(rewards, 3),
-    rewardsMultiplier: parseRes(rewardsMultiplier),
+    return {
+      rewards: parseRes(rewards, 3),
+      rewardsMultiplier: parseRes(rewardsMultiplier),
+    };
   };
 }
 
@@ -26,8 +28,8 @@ export default function useRewardsData() {
   const shouldFetch = comptroller && account && DAI;
 
   return useSWR(
-    shouldFetch ? ["RewardsData", comptroller, account, DAI] : null,
-    fetchRewardsData,
+    shouldFetch ? ["RewardsData", account, DAI] : null,
+    fetchRewardsData(comptroller),
     {
       refreshInterval: 30 * 1000,
     }

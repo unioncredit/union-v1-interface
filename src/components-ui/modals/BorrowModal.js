@@ -10,8 +10,8 @@ import {
 import { Modal, Dai } from "components-ui";
 import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
-import { roundDown } from "util/numbers";
-import { useForm } from "react-hook-form";
+import { roundDown, toFixed } from "util/numbers";
+import { useForm, useWatch } from "react-hook-form";
 import errorMessages from "util/errorMessages";
 import useMaxBorrow from "hooks/data/useMaxBorrow";
 import useLoanableAmount from "hooks/data/useLoanableAmount";
@@ -23,30 +23,34 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import useMinBorrow from "hooks/data/useMinBorrow";
-import { commify } from "@ethersproject/units";
+import { formatUnits, parseEther } from "@ethersproject/units";
+import { ZERO, WAD } from "constants/variables";
+import { BigNumber } from "@ethersproject/bignumber";
 
 export const BORROW_MODAL = "borrow-modal";
 
 export const useBorrowModal = () => useModal(BORROW_MODAL);
 
-export function BorrowModal({
-  balanceOwed,
-  fee,
-  creditLimit,
-  paymentDueDate,
-  paymentPeriod,
-  isOverdue,
-  onComplete,
-}) {
-  const addActivity = useAddActivity();
-  const { library } = useWeb3React();
+export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const borrow = useBorrow();
+  const addActivity = useAddActivity();
+
+  const { library } = useWeb3React();
   const { close } = useBorrowModal();
+
   const { data: maxBorrow } = useMaxBorrow();
   const { data: loanableAmount } = useLoanableAmount();
   const { data: minBorrow } = useMinBorrow();
 
-  const { errors, formState, register, watch, handleSubmit, setValue } =
+  const {
+    borrowed = ZERO,
+    paymentDueDate = "-",
+    paymentPeriod = "-",
+    fee = ZERO,
+    isOverdue = false,
+  } = !!borrowData && borrowData;
+
+  const { errors, formState, register, control, handleSubmit, setValue } =
     useForm({
       mode: "onChange",
       reValidateMode: "onChange",
@@ -54,26 +58,30 @@ export function BorrowModal({
 
   const { isDirty, isSubmitting } = formState;
 
-  const watchAmount = watch("amount", 0);
-  const amount = Number(watchAmount || 0);
+  const watchAmount = useWatch({ name: "amount", control });
+  const amount = BigNumber.from(parseEther(watchAmount || "0"));
 
-  const calcBalanceOwed = balanceOwed > 0 ? balanceOwed : 0;
+  const maxFeeAmount = creditLimit.mul(fee).div(WAD);
+  const maxBorrowAmount = creditLimit.sub(maxFeeAmount);
+  const borrowedAmount = borrowed > ZERO ? borrowed : ZERO;
+  const feeAmount = amount.mul(fee).div(WAD);
+  const totalBorrow = feeAmount.add(amount);
+  const newBalanceOwed = borrowedAmount.add(totalBorrow);
 
-  const calcMaxIncludingFee = roundDown(creditLimit * (1 - fee));
-
-  const calculateFee =
-    amount === calcMaxIncludingFee
-      ? roundDown(creditLimit * fee)
-      : amount * fee;
-
-  const amountWithFee = amount + calculateFee;
-  const calcNewBalanceOwed = calcBalanceOwed + amountWithFee;
-  const newBalanceOwed = calcNewBalanceOwed.toFixed(2);
+  const creditLimitView = format(formatUnits(creditLimit, 18), 2);
+  const borrowedView = format(formatUnits(borrowed, 18), 2);
+  const totalBorrowView = format(formatUnits(totalBorrow, 18), 2);
+  const newBalanceOwedView = format(formatUnits(newBalanceOwed, 18), 2);
+  const amountView = format(formatUnits(amount, 18), 2);
+  const maxBorrowAmountView = format(
+    roundDown(formatUnits(maxBorrowAmount, 18)),
+    2
+  );
 
   const nextPaymentDue =
     paymentDueDate !== "-" &&
     paymentDueDate !== "No Payment Due" &&
-    calcBalanceOwed > 0
+    borrowedAmount > 0
       ? paymentDueDate
       : paymentPeriod;
 
@@ -81,10 +89,12 @@ export function BorrowModal({
     if (!val) return errorMessages.required;
     if (isOverdue) return errorMessages.overdueBalance;
     if (isNaN(val)) return errorMessages.notANumber;
-    if (Number(val) > calcMaxIncludingFee) return errorMessages.notEnoughCredit;
-    if (Number(val) > maxBorrow) return errorMessages.maxBorrow(maxBorrow);
-    if (Number(val) > loanableAmount) return errorMessages.notEnoughPoolDAI;
-    if (Number(val) < minBorrow) return errorMessages.minDAIBorrow(minBorrow);
+
+    const bnValue = BigNumber.from(toFixed(val * 10 ** 18));
+    if (bnValue.gt(maxBorrowAmount)) return errorMessages.notEnoughCredit;
+    if (bnValue.gt(maxBorrow)) return errorMessages.maxBorrow(maxBorrow);
+    if (bnValue.gt(loanableAmount)) return errorMessages.notEnoughPoolDAI;
+    if (bnValue.lt(minBorrow)) return errorMessages.minDAIBorrow(minBorrow);
 
     return true;
   };
@@ -107,6 +117,12 @@ export function BorrowModal({
     }
   };
 
+  const setMaxBorrow = () =>
+    setValue("amount", roundDown(formatUnits(maxBorrowAmount, 18)), {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Borrow funds" onClose={close}>
@@ -118,7 +134,7 @@ export function BorrowModal({
                   size="medium"
                   align="center"
                   label="Available credit"
-                  value={<Dai value={format(roundDown(creditLimit), 2)} />}
+                  value={<Dai value={creditLimitView} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -126,7 +142,7 @@ export function BorrowModal({
                   size="medium"
                   align="center"
                   label="You owe"
-                  value={<Dai value={balanceOwed} />}
+                  value={<Dai value={borrowedView} />}
                 />
               </Grid.Col>
             </Grid.Row>
@@ -139,13 +155,8 @@ export function BorrowModal({
               label="Borrow"
               placeholder="0.0"
               suffix={<Dai />}
-              caption={`Max. ${format(calcMaxIncludingFee, 2)} DAI`}
-              onCaptionClick={() =>
-                setValue("amount", calcMaxIncludingFee, {
-                  shouldValidate: true,
-                  shouldDirty: true,
-                })
-              }
+              caption={`Max. ${maxBorrowAmountView} DAI`}
+              onCaptionClick={setMaxBorrow}
               error={errors.amount?.message || false}
             />
           </Box>
@@ -154,7 +165,7 @@ export function BorrowModal({
               Total including fee
             </Label>
             <Label as="p" size="small" grey={400}>
-              {format(amountWithFee, 2)} DAI
+              {totalBorrowView} DAI
             </Label>
           </Box>
           <Box justify="space-between">
@@ -170,13 +181,13 @@ export function BorrowModal({
               New balance owed
             </Label>
             <Label as="p" size="small" grey={400}>
-              {commify(newBalanceOwed)} DAI
+              {newBalanceOwedView} DAI
             </Label>
           </Box>
           <Button
             fluid
             mt="18px"
-            label={`Borrow ${commify(amount)} DAI`}
+            label={`Borrow ${amountView} DAI`}
             disabled={!isDirty}
             loading={isSubmitting}
             onClick={handleSubmit(handleBorrow)}

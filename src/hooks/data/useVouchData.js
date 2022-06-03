@@ -9,60 +9,62 @@ import useUserManager from "hooks/contracts/useUserManager";
 import useUToken from "hooks/contracts/useUToken";
 
 // TODO: better data fetching
-async function fetchVouchData(_, userManager, uToken, account) {
-  const ethereumRpc = new JsonRpcProvider(
-    // TODO:
-    `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
-  );
+function fetchVouchData(userManager, uToken) {
+  return async function (_, account) {
+    const ethereumRpc = new JsonRpcProvider(
+      // TODO:
+      `https://mainnet.infura.io/v3/05bc032e727c40d79202e3373090ed55`
+    );
 
-  const addresses = await userManager.getStakerAddresses(account);
+    const addresses = await userManager.getStakerAddresses(account);
 
-  const list = await Promise.all(
-    addresses.map(async (address) => {
-      const { vouchingAmount, lockedStake, trustAmount } =
-        await userManager.getStakerAsset(account, address);
+    const list = await Promise.all(
+      addresses.map(async (address) => {
+        const { vouchingAmount, lockedStake, trustAmount } =
+          await userManager.getStakerAsset(account, address);
 
-      const totalUsed = Number(
-        formatUnits(await userManager.getTotalLockedStake(address), 18)
-      );
+        const totalUsed = Number(
+          formatUnits(await userManager.getTotalLockedStake(address), 18)
+        );
 
-      const stakingAmount = Number(
-        formatUnits(await userManager.getStakerBalance(address), 18)
-      );
+        const stakingAmount = Number(
+          formatUnits(await userManager.getStakerBalance(address), 18)
+        );
 
-      const isMember = await userManager.checkIsMember(address);
-      const isOverdue = await uToken.checkIsOverdue(address);
-      const vouched = parseRes(vouchingAmount);
-      const used = parseRes(lockedStake);
-      const trust = parseRes(trustAmount);
+        const isMember = await userManager.checkIsMember(address);
+        const isOverdue = await uToken.checkIsOverdue(address);
+        const vouched = parseRes(vouchingAmount);
+        const used = parseRes(lockedStake);
+        const trust = parseRes(trustAmount);
 
-      const freeStakingAmount =
-        stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
+        const freeStakingAmount =
+          stakingAmount >= totalUsed ? stakingAmount - totalUsed : 0;
 
-      const available =
-        Number(vouched) - Number(used) > freeStakingAmount
-          ? freeStakingAmount.toFixed(2)
-          : Number(vouched - used).toFixed(2);
+        const available =
+          Number(vouched) - Number(used) > freeStakingAmount
+            ? freeStakingAmount.toFixed(2)
+            : Number(vouched - used).toFixed(2);
 
-      const utilized = used / vouched;
+        const utilized = used / vouched;
 
-      const ens = await ethereumRpc.lookupAddress(address);
+        const ens = await ethereumRpc.lookupAddress(address);
 
-      return {
-        address,
-        available,
-        isOverdue,
-        trust,
-        used,
-        utilized,
-        vouched,
-        ens,
-        isMember,
-      };
-    })
-  );
+        return {
+          address,
+          available,
+          isOverdue,
+          trust,
+          used,
+          utilized,
+          vouched,
+          ens,
+          isMember,
+        };
+      })
+    );
 
-  return list;
+    return list;
+  };
 }
 
 export default function useVouchData(address) {
@@ -76,7 +78,7 @@ export default function useVouchData(address) {
   const shouldFetch = userManager && uToken && account;
 
   return useSWR(
-    shouldFetch ? ["useVouchData", userManager, uToken, account] : null,
-    fetchVouchData
+    shouldFetch ? ["useVouchData", account] : null,
+    fetchVouchData(userManager, uToken)
   );
 }

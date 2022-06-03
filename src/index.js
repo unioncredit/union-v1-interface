@@ -23,7 +23,7 @@ root.render(
               refreshInterval: 0,
               errorRetryCount: 0,
               shouldRetryOnError: false,
-              revalidateOnFocus: true,
+              revalidateOnFocus: false,
               revalidateOnReconnect: false,
               revalidateOnMount: true,
               dedupingInterval: 5000,

@@ -1,13 +1,13 @@
 import useSWR from "swr";
-import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 
 import useUserManager from "hooks/contracts/useUserManager";
 import useToken from "hooks/useToken";
 
-async function fetchCreditLimit(_, userManager, account) {
-  const limit = await userManager.getCreditLimit(account);
-  return Number(formatUnits(limit, 18));
+function fetchCreditLimit(userManager) {
+  return function (_, account) {
+    return userManager.getCreditLimit(account);
+  };
 }
 
 export default function useCreditLimit(address) {
@@ -20,7 +20,7 @@ export default function useCreditLimit(address) {
   const shouldFetch = userManager && account;
 
   return useSWR(
-    shouldFetch ? ["useCreditLimit", userManager, account] : null,
-    fetchCreditLimit
+    shouldFetch ? ["useCreditLimit", account] : null,
+    fetchCreditLimit(userManager)
   );
 }

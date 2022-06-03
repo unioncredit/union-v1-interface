@@ -1,4 +1,4 @@
-import { commify } from "@ethersproject/units";
+import { formatUnits } from "@ethersproject/units";
 
 /**
  * @name format
@@ -48,4 +48,8 @@ export default function format(num, digits) {
   return item
     ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
     : "0";
+}
+
+export function formatScaled(num, scale = 18) {
+  return format(formatUnits(num, scale));
 }

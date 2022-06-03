@@ -1,3 +1,9 @@
+import { BigNumber } from "@ethersproject/bignumber";
+
+export const ZERO = BigNumber.from("0");
+
+export const WAD = BigNumber.from("1000000000000000000");
+
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 
 export const BLOCKS_PER_YEAR = {

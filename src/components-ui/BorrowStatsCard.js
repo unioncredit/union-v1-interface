@@ -1,3 +1,6 @@
+import { Stat, Button, Grid, Card, Label, Tooltip } from "@unioncredit/ui";
+import { ReactComponent as TooltipIcon } from "@unioncredit/ui/lib/icons/tooltip.svg";
+
 import {
   BorrowModal,
   useBorrowModal,
@@ -7,34 +10,30 @@ import {
   PaymentReminderModal,
 } from "components-ui/modals";
 import { Dai } from "components-ui";
-import { Stat, Button, Grid, Card, Label, Tooltip } from "@unioncredit/ui";
-import { ReactComponent as TooltipIcon } from "@unioncredit/ui/lib/icons/tooltip.svg";
-import format from "util/formatValue";
+import format, { formatScaled } from "util/formatValue";
 import { roundDown, roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
+import { ZERO } from "constants/variables";
 
 import styles from "./BorrowStatsCard.module.css";
+import { formatUnits } from "@ethersproject/units";
 
 export function BorrowStatsCard() {
-  const { isOpen: isBorrowModalOpen, open: openBorrowModal } = useBorrowModal();
-  const { isOpen: isPaymentReminderModalOpen, open: openPaymentReminderModal } =
+  const { isOpen: isBorrowOpen, open: openBorrow } = useBorrowModal();
+  const { isOpen: isPaymentOpen, open: openPayment } = usePaymentModal();
+  const { isOpen: isPaymentReminderOpen, open: openPaymentReminder } =
     usePaymentReminderModal();
-  const { isOpen: isPaymentModalOpen, open: openPaymentModal } =
-    usePaymentModal();
 
-  const { data: creditLimit = 0, mutate: updateCreditLimit } = useCreditLimit();
+  const { data: creditLimit = ZERO, mutate: updateCreditLimit } = useCreditLimit();
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
 
   const {
-    borrowedRounded = 0,
-    interest = 0,
+    borrowed = ZERO,
+    interest = ZERO,
     paymentDueDate = "-",
-    paymentPeriod = "-",
-    fee = 0,
-    isOverdue = false,
   } = !!borrowData && borrowData;
 
   const totalVouch = vouchData
@@ -75,37 +74,33 @@ export function BorrowStatsCard() {
                   value={<Dai value={format(totalVouch, 2)} />}
                   after={
                     <Label m={0}>
-                      {format(unavailable, 2) || 0} DAI unavailable
+                      {format(unavailable, 2)} DAI unavailable
                       <Tooltip content="These are funds which are currently tied up elsewhere and as a result, not available to borrow at this time">
                         <TooltipIcon width="16px" />
                       </Tooltip>
                     </Label>
                   }
                 />
-                <Button
-                  mt="28px"
-                  label="Borrow funds"
-                  onClick={openBorrowModal}
-                />
+                <Button mt="28px" label="Borrow funds" onClick={openBorrow} />
               </Grid.Col>
               <Grid.Col xs={6}>
                 <Stat
                   size="large"
                   align="center"
                   label="Balance owed"
-                  value={<Dai value={borrowedRounded} />}
+                  value={<Dai value={formatScaled(borrowed)} />}
                 />
 
                 <Stat
                   align="center"
                   label="Minimum due"
                   mt="24px"
-                  value={<Dai value={roundUp(interest)} />}
+                  value={<Dai value={roundUp(formatUnits(interest, 18))} />}
                   after={
                     <Label
                       size="small"
                       color="blue500"
-                      onClick={openPaymentReminderModal}
+                      onClick={openPaymentReminder}
                       className={styles.reminder}
                     >
                       {paymentDueDate}
@@ -114,7 +109,7 @@ export function BorrowStatsCard() {
                 />
                 <Button
                   label="Make a payment"
-                  onClick={openPaymentModal}
+                  onClick={openPayment}
                   variant="secondary"
                   mt="28px"
                 />
@@ -123,30 +118,24 @@ export function BorrowStatsCard() {
           </Grid>
         </Card.Body>
       </Card>
-      {isBorrowModalOpen && (
+      {isBorrowOpen && (
         <BorrowModal
-          {...{
-            fee,
-            isOverdue,
-            creditLimit,
-            paymentDueDate,
-            paymentPeriod,
-            balanceOwed: borrowedRounded,
-            onComplete,
-          }}
+          creditLimit={creditLimit}
+          borrowData={borrowData}
+          onComplete={onComplete}
         />
       )}
-      {isPaymentModalOpen && (
+      {isPaymentOpen && (
         <PaymentModal
           {...{
             paymentDueDate,
-            balanceOwed: borrowedRounded,
+            balanceOwed: borrowed,
             interest,
             onComplete,
           }}
         />
       )}
-      {isPaymentReminderModalOpen && <PaymentReminderModal />}
+      {isPaymentReminderOpen && <PaymentReminderModal />}
     </>
   );
 }

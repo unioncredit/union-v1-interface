@@ -3,9 +3,11 @@ import { formatUnits } from "@ethersproject/units";
 
 import useUToken from "hooks/contracts/useUToken";
 
-async function fetchMinBorrow(_, uToken) {
-  const minBorrow = await uToken.minBorrow();
-  return Number(formatUnits(minBorrow, 18));
+function fetchMinBorrow(uToken) {
+  return async function () {
+    const minBorrow = await uToken.minBorrow();
+    return Number(formatUnits(minBorrow, 18));
+  };
 }
 
 export default function useMinBorrow() {
@@ -13,5 +15,5 @@ export default function useMinBorrow() {
 
   const shouldFetch = !!uToken;
 
-  return useSWR(shouldFetch ? ["minBorrow", uToken] : null, fetchMinBorrow);
+  return useSWR(shouldFetch ? ["minBorrow"] : null, fetchMinBorrow(uToken));
 }
