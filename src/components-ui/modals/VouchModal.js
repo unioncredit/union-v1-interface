@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
@@ -37,8 +37,10 @@ export function VouchModal() {
   const { library, account } = useWeb3React();
   const { data: trustData, mutate: updateTrustData } = useTrustData();
 
-  // TODO: get this from url query ?address
-  const defaultAddressValue = null;
+  const defaultAddressValue = useMemo(() => {
+    const search = new URLSearchParams(window.location.search);
+    return search.get("address");
+  }, []);
 
   const {
     formState,
@@ -63,15 +65,6 @@ export function VouchModal() {
   if (!isOpen) return null;
 
   const { isDirty, isSubmitting, errors } = formState;
-
-  // TODO:
-  // useEffect(() => {
-  //   const handleComplete = () => close();
-  //   events.on("routeChangeComplete", handleComplete);
-  //   return () => {
-  //     events.off("routeChangeComplete", handleComplete);
-  //   };
-  // }, []);
 
   const onNavigateToProfile = () => {
     close();

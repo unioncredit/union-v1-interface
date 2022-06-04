@@ -2,13 +2,13 @@ import { useVouchModal } from "components-ui/modals";
 import { useEffect } from "react";
 
 export default function usePopTrustModal() {
-  // TODO:
-  // const { query } = useRouter();
-  // const { open: openVouchModal } = useVouchModal();
+  const { open: openVouchModal } = useVouchModal();
 
-  // useEffect(() => {
-  //   if (query.address || query.trust) {
-  //     openVouchModal();
-  //   }
-  // }, []);
+  useEffect(() => {
+    const search = new URLSearchParams(window.location.search);
+    const address = search.get("address");
+    if (address) {
+      openVouchModal();
+    }
+  }, []);
 }
