@@ -1,4 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
+import { Card, Heading, Button, Label, ButtonRow, Text } from "@unioncredit/ui";
+import { ReactComponent as Telegram } from "@unioncredit/ui/lib/icons/telegram.svg";
+import { ReactComponent as Twitter } from "@unioncredit/ui/lib/icons/twitter.svg";
+
 import {
   CreditRequestModal,
   useCreditRequestModal,
@@ -7,16 +11,12 @@ import generateLink, {
   generateTwitterLink,
   generateTelegramLink,
 } from "util/generateLink";
-import { Card, Heading, Button, Label, ButtonRow, Text } from "@unioncredit/ui";
-import { ReactComponent as Telegram } from "@unioncredit/ui/lib/icons/telegram.svg";
-import { ReactComponent as Twitter } from "@unioncredit/ui/lib/icons/twitter.svg";
 import { Copyable } from "./Copyable";
 import useIsMobile from "hooks/useIsMobile";
 
 export function ShareCard({ title, content, size }) {
   const { account, chainId } = useWeb3React();
-  const { isOpen: isCreditRequestOpen, open: openCreditRequest } =
-    useCreditRequestModal();
+  const { open: openCreditRequest } = useCreditRequestModal();
 
   const isMobile = useIsMobile();
 
@@ -67,7 +67,7 @@ export function ShareCard({ title, content, size }) {
           </ButtonRow>
         </Card.Body>
       </Card>
-      {isCreditRequestOpen && <CreditRequestModal />}
+      <CreditRequestModal />
     </>
   );
 }

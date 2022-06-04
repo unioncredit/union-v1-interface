@@ -1,21 +1,25 @@
-import { useState, useEffect } from "react";
-import { ModalOverlay, Text, Button, Box, ToggleMenu } from "@unioncredit/ui";
-import { Modal } from "components-ui";
-import { useModal } from "hooks/useModal";
 import { useForm } from "react-hook-form";
-import handleTxError from "util/handleTxError";
+import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
+import { ModalOverlay, Text, Button, Box, ToggleMenu } from "@unioncredit/ui";
+
+import isHash from "util/isHash";
+import getReceipt from "util/getReceipt";
+import handleTxError from "util/handleTxError";
+import activityLabels from "util/activityLabels";
 import useDelegate from "hooks/payables/useDelegate";
 import { useAddActivity } from "hooks/data/useActivity";
-import activityLabels from "util/activityLabels";
-import getReceipt from "util/getReceipt";
-import isHash from "util/isHash";
-import { AddressInput, generateHandleChange } from "components-ui/AddressInput";
+import { useModal, useModalOpen } from "hooks/useModal";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { Modal } from "components-ui";
+import { AddressInput, generateHandleChange } from "components-ui/AddressInput";
 
 export const VOTE_DELEGATION_MODAL = "vote-delegation-modal";
 
 export const useVoteDelegationModal = () => useModal(VOTE_DELEGATION_MODAL);
+
+export const useVoteDelegationModalOpen = () =>
+  useModalOpen(VOTE_DELEGATION_MODAL);
 
 const options = [
   { label: "To self", id: "self" },
@@ -23,31 +27,30 @@ const options = [
 ];
 
 export function VoteDelegationModal() {
-  const addActivity = useAddActivity();
-  const { library, account } = useWeb3React();
   const [selected, setSelected] = useState("self");
-  const { close } = useVoteDelegationModal();
+
   const delegate = useDelegate();
+  const addActivity = useAddActivity();
+
+  const { library, account } = useWeb3React();
+  const { close } = useVoteDelegationModal();
   const { mutate: updateVotingWalletData } = useVotingWalletData(account);
 
-  const {
-    handleSubmit,
-    register,
-    clearErrors,
-    setValue,
-    setError,
-    errors,
-    formState,
-  } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { handleSubmit, register, clearErrors, setValue, setError, formState } =
+    useForm({
+      mode: "onChange",
+      reValidateMode: "onChange",
+    });
 
   useEffect(() => {
     register("address");
   }, []);
 
-  const { isSubmitting } = formState;
+  const isOpen = useVoteDelegationModalOpen();
+
+  if (!isOpen) return null;
+
+  const { isSubmitting, errors } = formState;
 
   const handleDelegation = async (values) => {
     const delegateTo = selected === "self" ? account : values.address;

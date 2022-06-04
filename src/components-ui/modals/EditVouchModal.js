@@ -1,18 +1,20 @@
-import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
-import { useModal, useModalOpen } from "hooks/useModal";
-import { Dai, Modal } from "components-ui";
-import format from "util/formatValue";
-import errorMessages from "util/errorMessages";
 import { useForm } from "react-hook-form";
+import { useWeb3React } from "@web3-react/core";
+import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
+
+import { Dai, Modal } from "components-ui";
+import isHash from "util/isHash";
+import format from "util/formatValue";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
-import useAdjustTrust from "hooks/payables/useAdjustTrust";
+import errorMessages from "util/errorMessages";
+import activityLabels from "util/activityLabels";
 import useTrustData from "hooks/data/useTrustData";
-import { useWeb3React } from "@web3-react/core";
+import { useModal, useModalOpen } from "hooks/useModal";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
-import activityLabels from "util/activityLabels";
-import isHash from "util/isHash";
+import useAdjustTrust from "hooks/payables/useAdjustTrust";
+import { formatUnits } from "@ethersproject/units";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -81,7 +83,7 @@ export function EditVouchModal({ address, used, trust }) {
                   size="medium"
                   align="center"
                   label="Current trust"
-                  value={<Dai value={format(trust, 4)} />}
+                  value={<Dai value={format(formatUnits(trust), 2)} />}
                 />
               </Grid.Col>
               <Grid.Col>
@@ -90,7 +92,7 @@ export function EditVouchModal({ address, used, trust }) {
                   size="medium"
                   align="center"
                   label="Unpaid debt"
-                  value={<Dai value={format(used, 4)} />}
+                  value={<Dai value={format(formatUnits(used), 2)} />}
                 />
               </Grid.Col>
             </Grid.Row>

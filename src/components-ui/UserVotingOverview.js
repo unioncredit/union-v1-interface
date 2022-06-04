@@ -9,9 +9,11 @@ import {
   Tooltip,
   Label,
 } from "@unioncredit/ui";
-import { ReactComponent as TooltipIcon } from "@unioncredit/ui/lib/icons/tooltip.svg";
+import { Link } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
+import { ReactComponent as TooltipIcon } from "@unioncredit/ui/lib/icons/tooltip.svg";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/externalinline.svg";
+
 import {
   useVoteDelegationModal,
   VoteDelegationModal,
@@ -21,14 +23,12 @@ import usePublicData from "hooks/usePublicData";
 import truncateAddress from "util/truncateAddress";
 import { Avatar, Copyable } from "components-ui";
 import useVotingWalletData from "hooks/governance/useVotingWalletData";
-import { Link } from "react-router-dom";
 
 export function UserVotingOverview({ address }) {
   const { account } = useWeb3React();
   const { ENSName, BoxName } = usePublicData(account);
 
-  const { isOpen: isVoteDelegationOpen, open: openVoteDelegationModal } =
-    useVoteDelegationModal();
+  const { open: openVoteDelegationModal } = useVoteDelegationModal();
 
   const { data: votingWalletData } = useVotingWalletData(address);
 
@@ -135,7 +135,7 @@ export function UserVotingOverview({ address }) {
           </Grid>
         </Card.Body>
       </Card>
-      {isVoteDelegationOpen && <VoteDelegationModal />}
+      <VoteDelegationModal />
     </>
   );
 }

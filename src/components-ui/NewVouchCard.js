@@ -1,8 +1,9 @@
 import { Card, Heading, Button, Label } from "@unioncredit/ui";
+
 import { VouchModal, useVouchModal } from "components-ui/modals";
 
 export function NewVouchCard() {
-  const { open: openVouchModal, isOpen: isVouchModalOpen } = useVouchModal();
+  const { open: openVouchModal } = useVouchModal();
 
   return (
     <>
@@ -16,7 +17,7 @@ export function NewVouchCard() {
           <Button label="Vouch for someone" fluid onClick={openVouchModal} />
         </Card.Body>
       </Card>
-      {isVouchModalOpen && <VouchModal />}
+      <VouchModal />
     </>
   );
 }

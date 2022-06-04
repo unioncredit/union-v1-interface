@@ -27,6 +27,7 @@ import useTrustCountData from "hooks/data/useTrustCountData";
 import useStakeData from "hooks/data/useStakeData";
 
 import styles from "./getStarted.module.css";
+import { ZERO } from "constants/variables";
 
 export default function MembershipView() {
   const stakeStep = useRef();
@@ -34,21 +35,14 @@ export default function MembershipView() {
   const memberStep = useRef();
 
   const { data: trustCount = 0 } = useTrustCountData();
-  const { data: creditLimit = 0 } = useCreditLimit();
+  const { data: creditLimit = ZERO } = useCreditLimit();
   const { data: stakeData } = useStakeData();
 
   const { data: isMember, mutate: updateIsMember } = useIsMember();
 
-  const { isOpen: isCongratulationsModalOpen } = useCongratulationsModal();
-  const { isOpen: isStakeModalOpen } = useStakeModal();
+  const { totalStake = ZERO } = !!stakeData && stakeData;
 
-  const onComplete = async () => {
-    await updateIsMember();
-  };
-
-  const { totalStake = 0.0 } = !!stakeData && stakeData;
-
-  const stakeComplete = totalStake > 0;
+  const stakeComplete = totalStake.gt(0);
   const vouchComplete = trustCount >= 3;
 
   const completeCount = [stakeComplete, vouchComplete, isMember].reduce(
@@ -61,6 +55,10 @@ export default function MembershipView() {
     { number: 2, complete: vouchComplete, scrollTo: vouchStep },
     { number: 3, complete: isMember, scrollTo: memberStep },
   ];
+
+  const onComplete = async () => {
+    await updateIsMember();
+  };
 
   return (
     <View>
@@ -96,10 +94,8 @@ export default function MembershipView() {
       <div className={styles.miniProgressListWrapper}>
         <MiniProgressList items={miniProgressListItems} />
       </div>
-      {isStakeModalOpen && <StakeModal />}
-      {isCongratulationsModalOpen && (
-        <CongratulationsModal creditLimit={creditLimit} onClose={onComplete} />
-      )}
+      <StakeModal />
+      <CongratulationsModal creditLimit={creditLimit} onClose={onComplete} />
     </View>
   );
 }

@@ -1,13 +1,18 @@
+import { formatUnits } from "@ethersproject/units";
 import { ModalOverlay, Button, Box, Text, Heading } from "@unioncredit/ui";
 import { ReactComponent as NewMember } from "@unioncredit/ui/lib/icons/newMember.svg";
 import { ReactComponent as Twitter } from "@unioncredit/ui/lib/icons/twitter.svg";
+
 import { Modal } from "components-ui";
-import { useModal } from "hooks/useModal";
 import format from "util/formatValue";
+import { useModal, useModalOpen } from "hooks/useModal";
 
 export const CONGRATULATIONS_MODAL = "congratulations-modal";
 
 export const useCongratulationsModal = () => useModal(CONGRATULATIONS_MODAL);
+
+export const useCongratulationsModalOpen = () =>
+  useModalOpen(CONGRATULATIONS_MODAL);
 
 const SHARE_LINK = "https://union.finance";
 
@@ -19,9 +24,13 @@ const generateTwitterLink = (shareMessage) =>
 export function CongratulationsModal({ onClose, creditLimit }) {
   const { close } = useCongratulationsModal();
 
-  const formattedCreditLimit = format(creditLimit);
+  const isOpen = useCongratulationsModalOpen();
 
-  const shareMessage = `Thanks to my friends who backed me for a $${formattedCreditLimit} credit line`;
+  if (!isOpen) return null;
+
+  const creditLimitView = format(formatUnits(creditLimit), 2);
+
+  const shareMessage = `Thanks to my friends who backed me for a $${creditLimitView} credit line`;
 
   const handleClose = () => {
     close();
@@ -37,7 +46,7 @@ export function CongratulationsModal({ onClose, creditLimit }) {
         <Heading align="center">
           Congratulations! <br />
           You’re now a member of Union, <br />
-          with a starting credit line of {formattedCreditLimit} DAI
+          with a starting credit line of {creditLimitView} DAI
         </Heading>
         <Text align="center" mb="24px">
           Start by borrowing from your credit line in the Union Dashboard or go

@@ -29,8 +29,6 @@ export function Wrapper({ children }) {
 
   const { account, library } = useWeb3React();
 
-  const { isOpen: isClaimModalOpen } = useClaimModal();
-
   const contextMenuItemsLink = contextMenuItems.map((item) => {
     if (item.href.startsWith("/")) {
       return { ...item, as: ContextMenuLink };
@@ -98,7 +96,7 @@ export function Wrapper({ children }) {
           </Box>
         </Layout.Main>
       </Layout>
-      {isClaimModalOpen && <ClaimModal />}
+      <ClaimModal />
     </>
   );
 }

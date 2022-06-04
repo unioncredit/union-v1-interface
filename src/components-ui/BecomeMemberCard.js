@@ -17,7 +17,7 @@ import useTokenBalance from "hooks/data/useTokenBalance";
 import useUserManager from "hooks/contracts/useUserManager";
 import useRegisterMember from "hooks/payables/useRegisterMember";
 import { Approval } from "components-ui/Approval";
-import { useCongratulationsModal } from "components-ui/modals/ContratulationsModal";
+import { useCongratulationsModal } from "components-ui/modals/CongratulationsModal";
 
 export function BecomeMemberCard({ disabled }) {
   const { library } = useWeb3React();

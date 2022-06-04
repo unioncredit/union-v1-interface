@@ -1,18 +1,22 @@
+import { formatUnits } from "@ethersproject/units";
 import { ModalOverlay, Box, Grid, Stat } from "@unioncredit/ui";
 import { ReactComponent as UnionLogo } from "@unioncredit/ui/lib/icons/union.svg";
 
 import format from "util/formatValue";
-import { useModal } from "hooks/useModal";
-import useUnionSymbol from "hooks/useUnionSymbol";
 import useToken from "hooks/useToken";
-import useTokenBalance from "hooks/data/useTokenBalance";
+import useUnionSymbol from "hooks/useUnionSymbol";
 import useRewardsData from "hooks/data/useRewardsData";
+import { useModal, useModalOpen } from "hooks/useModal";
+import useTokenBalance from "hooks/data/useTokenBalance";
+import { ZERO } from "constants/variables";
 import { Modal, UnwrapButton } from "components-ui";
 import { ClaimButton } from "components-ui/ClaimButton";
 
 export const CLAIM_MODAL = "claim-modal";
 
 export const useClaimModal = () => useModal(CLAIM_MODAL);
+
+export const useClaimModalOpen = () => useModalOpen(CLAIM_MODAL);
 
 export function ClaimModal() {
   const { close } = useClaimModal();
@@ -22,12 +26,18 @@ export function ClaimModal() {
 
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
-  const { data: wrappedUnionBalance } = useTokenBalance(WRAPPED_UNION);
+  const { data: unionBalance = ZERO } = useTokenBalance(UNION);
+  const { data: wrappedUnionBalance = ZERO } = useTokenBalance(WRAPPED_UNION);
 
-  const { rewards = 0.0 } = !!rewardsData && rewardsData;
+  const isOpen = useClaimModalOpen();
 
-  const balance = Number(rewards) + Number(unionBalance);
+  if (!isOpen) return null;
+
+  const { rewards = ZERO } = !!rewardsData && rewardsData;
+
+  const balance = rewards.add(unionBalance);
+
+  const rewardsView = format(formatUnits(rewards), 4);
 
   return (
     <ModalOverlay onClick={close}>
@@ -44,7 +54,7 @@ export function ClaimModal() {
                 align="center"
                 size="large"
                 label={`Unclaimed ${unionSymbol}`}
-                value={format(rewards, 4)}
+                value={rewardsView}
               />
             </Grid.Col>
           </Grid.Row>
@@ -55,7 +65,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="In wallet"
-                value={format(unionBalance, 4)}
+                value={format(formatUnits(unionBalance), 4)}
               />
             </Grid.Col>
             <Grid.Col>
@@ -64,7 +74,7 @@ export function ClaimModal() {
                 align="center"
                 size="medium"
                 label="Total Balance"
-                value={format(balance, 4)}
+                value={format(formatUnits(balance), 4)}
               />
             </Grid.Col>
           </Grid.Row>
@@ -72,14 +82,17 @@ export function ClaimModal() {
         <ClaimButton
           m={0}
           fluid
-          label={`Claim ${format(rewards, 4)} ${unionSymbol}`}
+          label={`Claim ${rewardsView} ${unionSymbol}`}
         />
-        {wrappedUnionBalance > 0 && (
+        {wrappedUnionBalance.gt(0) && (
           <UnwrapButton
             fluid
             mt="8px"
             variant="secondary"
-            label={`Unwrap ${format(wrappedUnionBalance, 4)} Wrapped Union`}
+            label={`Unwrap ${format(
+              formatUnits(wrappedUnionBalance),
+              4
+            )} Wrapped Union`}
           />
         )}
       </Modal>

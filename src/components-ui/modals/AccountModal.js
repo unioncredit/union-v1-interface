@@ -9,31 +9,37 @@ import {
   Divider,
 } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
-import { useModal } from "hooks/useModal";
-import usePublicData from "hooks/usePublicData";
-import useActivity, { useClearActivity } from "hooks/data/useActivity";
-import { Copyable, Modal, NetworkSelect, Dai } from "components-ui";
-import { logout } from "lib/auth";
-import { walletconnect, injected } from "lib/connectors";
-import getEtherscanLink from "util/getEtherscanLink";
-
 import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
 import { ReactComponent as Failed } from "@unioncredit/ui/lib/icons/failed.svg";
 import { ReactComponent as Success } from "@unioncredit/ui/lib/icons/success.svg";
+
 import { Avatar } from "components-ui/Avatar";
+import { Copyable, Modal, NetworkSelect, Dai } from "components-ui";
+import { useModal, useModalOpen } from "hooks/useModal";
+import usePublicData from "hooks/usePublicData";
+import useActivity, { useClearActivity } from "hooks/data/useActivity";
+import { logout } from "lib/auth";
+import { walletconnect, injected } from "lib/connectors";
 import truncateAddress from "util/truncateAddress";
+import getEtherscanLink from "util/getEtherscanLink";
 
 export const ACCOUNT_MODAL = "account-modal";
 
 export const useAccountModal = () => useModal(ACCOUNT_MODAL);
 
+export const useAccountModalOpen = () => useModalOpen(ACCOUNT_MODAL);
+
 export function AccountModal() {
   const { chainId, account, connector, deactivate } = useWeb3React();
   const { name } = usePublicData(account);
   const { close } = useAccountModal();
+
   const activity = useActivity();
   const clearActivity = useClearActivity();
+  const isOpen = useAccountModalOpen();
+
+  if(!isOpen) return null;
 
   const handleSignOut = () => {
     if (connector === walletconnect) connector.close();

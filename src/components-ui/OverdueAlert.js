@@ -1,12 +1,12 @@
 import { Box, Alert } from "@unioncredit/ui";
-import { PaymentModal, usePaymentModal } from "components-ui/modals";
+
 import { roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
+import { PaymentModal, usePaymentModal } from "components-ui/modals";
 
 export function OverdueAlert() {
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
-  const { isOpen: isPaymentModalOpen, open: openPaymentModal } =
-    usePaymentModal();
+  const { open: openPaymentModal } = usePaymentModal();
 
   const {
     borrowedRounded = 0,
@@ -32,16 +32,14 @@ export function OverdueAlert() {
           action={{ label: "Make payment", onClick: openPaymentModal }}
         />
       </Box>
-      {isPaymentModalOpen && (
-        <PaymentModal
-          {...{
-            paymentDueDate,
-            balanceOwed: borrowedRounded,
-            interest,
-            onComplete,
-          }}
-        />
-      )}
+      <PaymentModal
+        {...{
+          paymentDueDate,
+          balanceOwed: borrowedRounded,
+          interest,
+          onComplete,
+        }}
+      />
     </>
   );
 }
