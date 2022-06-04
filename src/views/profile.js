@@ -10,29 +10,30 @@ import {
   Label,
   Divider,
 } from "@unioncredit/ui";
+import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
-import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
-import useVouchData from "hooks/data/useVouchData";
-import useTrustData from "hooks/data/useTrustData";
-import { useWeb3React } from "@web3-react/core";
-import usePublicData from "hooks/usePublicData";
-import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { ReactComponent as Link } from "@unioncredit/ui/lib/icons/link.svg";
+
+import isHash from "util/isHash";
 import format from "util/formatValue";
 import getReceipt from "util/getReceipt";
-import { addActivity } from "hooks/data/useActivity";
-import activityLabels from "util/activityLabels";
-import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
-import useDelegate from "hooks/payables/useDelegate";
-import { useVouchModal, VouchModal } from "components-ui/modals";
+import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
-import useAddressLabels from "hooks/useAddressLabels";
 import getEtherscanLink from "util/getEtherscanLink";
-import useChainId from "hooks/useChainId";
-import useIsMember from "hooks/data/useIsMember";
-import { ReactComponent as Link } from "@unioncredit/ui/lib/icons/link.svg";
 import useCopy from "hooks/useCopy";
+import useChainId from "hooks/useChainId";
+import usePublicData from "hooks/usePublicData";
+import useIsMember from "hooks/data/useIsMember";
+import useVouchData from "hooks/data/useVouchData";
+import useTrustData from "hooks/data/useTrustData";
+import { addActivity } from "hooks/data/useActivity";
+import useDelegate from "hooks/payables/useDelegate";
+import useAddressLabels from "hooks/useAddressLabels";
+import useVotingWalletData from "hooks/governance/useVotingWalletData";
+import { useVouchModal, VouchModal } from "components-ui/modals";
+import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
 
 export default function ProfileView({ address }) {
   const chainId = useChainId();

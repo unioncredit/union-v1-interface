@@ -3,8 +3,10 @@ import { useWeb3React } from "@web3-react/core";
 import useUserManager from "hooks/contracts/useUserManager";
 import useToken from "hooks/useToken";
 
-function fetchIsMember(_, userManager, account) {
-  return userManager.checkIsMember(account);
+function fetchIsMember(userManager) {
+  return function (_, account) {
+    return userManager.checkIsMember(account);
+  };
 }
 
 export default function useIsMember(address) {
@@ -17,7 +19,7 @@ export default function useIsMember(address) {
   const shouldFetch = userManager && account;
 
   return useSWRImmutable(
-    shouldFetch ? ["useIsMember", userManager, account] : null,
-    fetchIsMember
+    shouldFetch ? ["useIsMember", account] : null,
+    fetchIsMember(userManager)
   );
 }

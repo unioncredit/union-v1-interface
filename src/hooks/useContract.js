@@ -15,6 +15,8 @@ export default function useContract(address, ABI) {
     const provider =
       account && library ? library.getSigner(account) : readProvider;
 
+    if (!provider) return null;
+
     return new Contract(address, ABI, provider);
   }, [address, ABI, library, account, readProvider]);
 }

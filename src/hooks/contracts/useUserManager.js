@@ -14,7 +14,7 @@ function fetchUserManagerContractAddress(marketRegistry) {
 
 export default function useUserManager(underlying) {
   const marketRegistry = useMarketRegistry();
-  const shouldFetch = marketRegistry && ABI;
+  const shouldFetch = !!marketRegistry;
 
   const { data: userManagerAddress } = useSWR(
     shouldFetch ? ["userManager", underlying] : null,
