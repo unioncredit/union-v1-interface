@@ -7,7 +7,7 @@ import {
   Input,
   Box,
 } from "@unioncredit/ui";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
 import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
@@ -26,20 +26,27 @@ export const WRITE_OFF_DEBT = "write-off-debt-modal";
 
 export const useWriteOffDebtModal = () => useModal(WRITE_OFF_DEBT);
 
+export const useWriteOffDebtModalOpen = () => useModalOpen(WRITE_OFF_DEBT);
+
 export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   const addActivity = useAddActivity();
+  const writeOffDebt = useWriteOffDebt();
+
   const { library } = useWeb3React();
   const { close } = useWriteOffDebtModal();
   const { mutate: updateTrustData } = useTrustData();
   const { open: openManageContactModal } = useManageContactModal();
-  const writeOffDebt = useWriteOffDebt();
 
-  const { register, watch, formState, errors, setValue, handleSubmit } =
-    useForm({
-      mode: "onChange",
-      reValidateMode: "onChange",
-    });
-  const { isDirty, isSubmitting } = formState;
+  const { register, watch, formState, setValue, handleSubmit } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
+
+  const isOpen = useWriteOffDebtModalOpen();
+
+  if (!isOpen) return null;
+
+  const { isDirty, isSubmitting, errors } = formState;
 
   const watchAmount = watch("amount");
   const amount = Number(watchAmount || 0);

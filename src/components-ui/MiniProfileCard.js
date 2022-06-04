@@ -60,7 +60,6 @@ export function MiniProfileCard({ address, onClick }) {
           variant="secondary"
           disabled={!address}
           label="View Profile"
-          icon="external"
           iconPosition="end"
           onClick={handleClick}
           fluid

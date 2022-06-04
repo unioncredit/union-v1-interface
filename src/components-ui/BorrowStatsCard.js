@@ -11,7 +11,7 @@ import {
 } from "components-ui/modals";
 import { Dai } from "components-ui";
 import format, { formatScaled } from "util/formatValue";
-import { roundDown, roundUp } from "util/numbers";
+import { roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
@@ -21,10 +21,9 @@ import styles from "./BorrowStatsCard.module.css";
 import { formatUnits } from "@ethersproject/units";
 
 export function BorrowStatsCard() {
-  const { isOpen: isBorrowOpen, open: openBorrow } = useBorrowModal();
-  const { isOpen: isPaymentOpen, open: openPayment } = usePaymentModal();
-  const { isOpen: isPaymentReminderOpen, open: openPaymentReminder } =
-    usePaymentReminderModal();
+  const { open: openBorrow } = useBorrowModal();
+  const { open: openPayment } = usePaymentModal();
+  const { open: openPaymentReminder } = usePaymentReminderModal();
 
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
@@ -121,17 +120,13 @@ export function BorrowStatsCard() {
           </Grid>
         </Card.Body>
       </Card>
-      {isBorrowOpen && (
-        <BorrowModal
-          creditLimit={creditLimit}
-          borrowData={borrowData}
-          onComplete={onComplete}
-        />
-      )}
-      {isPaymentOpen && (
-        <PaymentModal borrowData={borrowData} onComplete={onComplete} />
-      )}
-      {isPaymentReminderOpen && <PaymentReminderModal />}
+      <BorrowModal
+        creditLimit={creditLimit}
+        borrowData={borrowData}
+        onComplete={onComplete}
+      />
+      <PaymentModal borrowData={borrowData} onComplete={onComplete} />
+      <PaymentReminderModal />
     </>
   );
 }

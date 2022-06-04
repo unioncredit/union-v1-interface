@@ -60,7 +60,7 @@ export default function useTrustData(address) {
   const shouldFetch = !!userManager && !!multicall && !!uToken;
 
   return useSWR(
-    shouldFetch ? ["trustData", account] : null,
+    shouldFetch ? ["useTrustData", account] : null,
     fetchTrustData(userManager, uToken, multicall)
   );
 }

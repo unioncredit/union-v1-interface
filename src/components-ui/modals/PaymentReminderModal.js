@@ -8,7 +8,7 @@ import {
 } from "@unioncredit/ui";
 import { ReactComponent as Calendar } from "@unioncredit/ui/lib/icons/calendar.svg";
 import { Modal } from "components-ui";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import useBorrowData from "hooks/data/useBorrowData";
 import { roundUp } from "util/numbers";
 import makeUrls from "add-event-to-calendar";
@@ -18,6 +18,9 @@ export const PAYMENT_REMINDER_MODAL = "payment-reminder-modal";
 
 export const usePaymentReminderModal = () => useModal(PAYMENT_REMINDER_MODAL);
 
+export const usePaymentReminderModalOpen = () =>
+  useModalOpen(PAYMENT_REMINDER_MODAL);
+
 export function PaymentReminderModal() {
   const { close } = usePaymentReminderModal();
 
@@ -25,11 +28,15 @@ export function PaymentReminderModal() {
 
   const { interest = 0, paymentDueDate = "-" } = !!borrowData && borrowData;
 
+  const isOpen = usePaymentReminderModalOpen();
+
   const date = useMemo(() => {
     const date = new Date();
     date.setDate(date.getDate() + 14);
     return date;
   }, []);
+
+  if (!isOpen) return null;
 
   const calendarData = {
     location: "",

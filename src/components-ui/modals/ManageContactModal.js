@@ -1,6 +1,6 @@
 import { useEditVouchModal, useWriteOffDebtModal } from "components-ui/modals";
 import { Button, ModalOverlay, Text, Label, Box } from "@unioncredit/ui";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import { MiniProfileCard, Modal, Dai, EditLabel } from "components-ui";
 import { useState } from "react";
 import { useAddActivity } from "hooks/data/useActivity";
@@ -13,11 +13,14 @@ import useRemoveVouch from "hooks/payables/useRemoveVouch";
 import format from "util/formatValue";
 import isHash from "util/isHash";
 import { ContactsType } from "constants/app";
-import {formatUnits} from "@ethersproject/units";
+import { formatUnits } from "@ethersproject/units";
 
 export const MANAGE_CONTACT_MODAL = "manage-contact-modal";
 
 export const useManageContactModal = () => useModal(MANAGE_CONTACT_MODAL);
+
+export const useManageContactModalOpen = () =>
+  useModalOpen(MANAGE_CONTACT_MODAL);
 
 export function ManageContactModal({
   address,
@@ -37,6 +40,10 @@ export function ManageContactModal({
   const { close } = useManageContactModal();
   const { open: openEditVouchModal } = useEditVouchModal();
   const { open: openWriteOffDebtModalOpen } = useWriteOffDebtModal();
+
+  const isOpen = useManageContactModalOpen();
+
+  if (!isOpen) return null;
 
   const handleEditVouch = () => {
     close();

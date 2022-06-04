@@ -1,5 +1,5 @@
 import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
@@ -18,6 +18,8 @@ export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
 export const useEditVouchModal = () => useModal(EDIT_VOUCH_MODAL);
 
+export const useEditVouchModalOpen = () => useModalOpen(EDIT_VOUCH_MODAL);
+
 export function EditVouchModal({ address, used, trust }) {
   const addActivity = useAddActivity();
   const { library } = useWeb3React();
@@ -26,11 +28,16 @@ export function EditVouchModal({ address, used, trust }) {
   const { mutate: updateTrustData } = useTrustData();
   const { mutate: updateCreditLimit } = useCreditLimit();
 
-  const { register, formState, errors, handleSubmit } = useForm({
+  const { register, formState, handleSubmit } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
-  const { isDirty, isSubmitting } = formState;
+
+  const isOpen = useEditVouchModalOpen();
+
+  if (!isOpen) return null;
+
+  const { isDirty, isSubmitting, errors } = formState;
 
   const validate = (val) => {
     if (Number(val) <= used) return errorMessages.cantRemoveStake;
@@ -90,8 +97,7 @@ export function EditVouchModal({ address, used, trust }) {
           </Grid>
           <Input
             type="number"
-            ref={register({ validate })}
-            name="amount"
+            {...register("amount", { validate })}
             label="New trust amount"
             suffix={<Dai />}
             error={errors.amount?.message}

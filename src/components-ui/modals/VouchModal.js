@@ -6,7 +6,7 @@ import { isAddress } from "@ethersproject/address";
 import { ReactComponent as Info } from "@unioncredit/ui/lib/icons/wireInfo.svg";
 import { ModalOverlay, Box, Input, Button, Alert } from "@unioncredit/ui";
 
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import useTrustData from "hooks/data/useTrustData";
 import useAddressLabels from "hooks/useAddressLabels";
 import { useAddActivity } from "hooks/data/useActivity";
@@ -25,14 +25,17 @@ export const VOUCH_MODAL = "vouch-modal";
 
 export const useVouchModal = () => useModal(VOUCH_MODAL);
 
-export function VouchModal() {
-  const { library, account } = useWeb3React();
-  const { close } = useVouchModal();
-  const addActivity = useAddActivity();
-  const { data: trustData, mutate: updateTrustData } = useTrustData();
-  const { setLabel } = useAddressLabels();
+export const useVouchModalOpen = () => useModalOpen(VOUCH_MODAL);
 
+export function VouchModal() {
+  const maxTrust = useMaxTrust();
   const adjustTrust = useAdjustTrust();
+  const addActivity = useAddActivity();
+
+  const { close } = useVouchModal();
+  const { setLabel } = useAddressLabels();
+  const { library, account } = useWeb3React();
+  const { data: trustData, mutate: updateTrustData } = useTrustData();
 
   // TODO: get this from url query ?address
   const defaultAddressValue = null;
@@ -41,7 +44,6 @@ export function VouchModal() {
     formState,
     handleSubmit,
     register,
-    errors,
     watch,
     setValue,
     setError,
@@ -51,11 +53,16 @@ export function VouchModal() {
     reValidateMode: "onChange",
     defaultValues: { address: defaultAddressValue },
   });
-  const { isDirty, isSubmitting } = formState;
 
   useEffect(() => {
     register("address");
   }, []);
+
+  const isOpen = useVouchModalOpen();
+
+  if (!isOpen) return null;
+
+  const { isDirty, isSubmitting, errors } = formState;
 
   // TODO:
   // useEffect(() => {
@@ -118,8 +125,6 @@ export function VouchModal() {
     },
   });
 
-  const maxTrust = useMaxTrust();
-
   const maxTrustData = trustData?.length >= maxTrust;
 
   return (
@@ -141,16 +146,15 @@ export function VouchModal() {
           />
           <Box mt="8px">
             <Input
-              ref={register}
-              name="alias"
               label="Alias"
+              {...register("alias")}
               disabled={maxTrustData}
               placeholder="e.g. Halkyone Olga"
             />
           </Box>
           <Box mt="16px">
             <Input
-              ref={register({
+              {...register("amount", {
                 required: errorMessages.required,
                 min: {
                   value: 1.0,
@@ -158,7 +162,6 @@ export function VouchModal() {
                 },
               })}
               suffix={<Dai />}
-              name="amount"
               type="number"
               label="Trust amount"
               placeholder="0.0"

@@ -25,7 +25,7 @@ import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import { toFixed } from "util/numbers";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
 import useRepay from "hooks/payables/useRepay";
 import useToken from "hooks/useToken";
@@ -42,6 +42,8 @@ export const PAYMENT_MODAL = "payment-modal";
 
 export const usePaymentModal = () => useModal(PAYMENT_MODAL);
 
+export const usePaymentModalOpen = () => useModalOpen(PAYMENT_MODAL);
+
 const PaymentType = {
   MIN: "min",
   MAX: "max",
@@ -56,6 +58,7 @@ export function PaymentModal({ borrowData, onComplete }) {
   const DAI = useToken("DAI");
   const utoken = useUToken(DAI);
   const addActivity = useAddActivity();
+  const isOpen = usePaymentModalOpen();
 
   const { close } = usePaymentModal();
   const { removePermit } = usePermits();
@@ -71,6 +74,8 @@ export function PaymentModal({ borrowData, onComplete }) {
   );
 
   const { isDirty, isSubmitting, errors } = formState;
+
+  if (!isOpen) return null;
 
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));

@@ -38,6 +38,7 @@ import {
   VouchModalManager,
   useWriteOffDebtModal,
   WriteOffDebtModal,
+  VouchModal,
 } from "components-ui/modals";
 import createArray from "util/createArray";
 import { ContactsType } from "constants/app";
@@ -89,13 +90,9 @@ export default function ContactsView({
   const [showFilters, setShowFilters] = useState(false);
   const [selectedContactIndex, setSelectedContact] = useState(null);
 
-  const { isOpen: isManageContactModalOpen } = useManageContactModal();
-  const { isOpen: isEditVouchModalOpen } = useEditVouchModal();
-  const { open: openVouchModal } = useVouchModal();
-  const { isOpen: isWriteOffDebtModalOpen } = useWriteOffDebtModal();
-
   const { data: trustData } = useTrustData();
   const { data: vouchData } = useVouchData();
+  const { open: openVouchModal } = useVouchModal();
 
   const data = contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
 
@@ -302,17 +299,14 @@ export default function ContactsView({
         </Grid>
       </View>
 
-      {/* modals */}
-      <VouchModalManager />
-      {isManageContactModalOpen && (
-        <ManageContactModal
-          {...selectedContact}
-          contactType={contactsType}
-          isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
-        />
-      )}
-      {isEditVouchModalOpen && <EditVouchModal {...selectedContact} />}
-      {isWriteOffDebtModalOpen && <WriteOffDebtModal {...selectedContact} />}
+      <VouchModal />
+      <ManageContactModal
+        {...selectedContact}
+        contactType={contactsType}
+        isLabelOnly={contactsType === ContactsType.TRUSTS_YOU}
+      />
+      <EditVouchModal {...selectedContact} />
+      <WriteOffDebtModal {...selectedContact} />
     </>
   );
 }

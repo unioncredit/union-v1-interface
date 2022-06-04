@@ -2,7 +2,7 @@ import { Stat, Button, Bar, Grid, Card } from "@unioncredit/ui";
 
 import { ZERO } from "constants/variables";
 import format from "util/formatValue";
-import { roundDown, toPercent } from "util/numbers";
+import { toPercent } from "util/numbers";
 import useStakeData from "hooks/data/useStakeData";
 import { Dai } from "components-ui/Dai";
 import { useStakeModal, StakeModal, StakeType } from "components-ui/modals";
@@ -10,7 +10,7 @@ import { formatUnits } from "@ethersproject/units";
 
 export function LendStatsCard() {
   const { data: stakeData } = useStakeData();
-  const { isOpen: isStakeModalOpen, open: openStakeModal } = useStakeModal();
+  const { open: openStakeModal } = useStakeModal();
 
   const {
     totalStake = ZERO,
@@ -99,7 +99,7 @@ export function LendStatsCard() {
           </Grid>
         </Card.Body>
       </Card>
-      {isStakeModalOpen && <StakeModal />}
+      <StakeModal />
     </>
   );
 }

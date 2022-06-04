@@ -8,7 +8,7 @@ import {
   Label,
 } from "@unioncredit/ui";
 import { Modal, Dai } from "components-ui";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import format from "util/formatValue";
 import { roundDown, toFixed } from "util/numbers";
 import { useForm } from "react-hook-form";
@@ -31,9 +31,12 @@ export const BORROW_MODAL = "borrow-modal";
 
 export const useBorrowModal = () => useModal(BORROW_MODAL);
 
+export const useBorrowModalOpen = () => useModalOpen(BORROW_MODAL);
+
 export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const borrow = useBorrow();
   const addActivity = useAddActivity();
+  const isOpen = useBorrowModalOpen();
 
   const { library } = useWeb3React();
   const { close } = useBorrowModal();
@@ -56,6 +59,8 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   });
 
   const { errors, isDirty, isSubmitting } = formState;
+
+  if(!isOpen) return null;
 
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));

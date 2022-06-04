@@ -3,7 +3,7 @@ import { newRidgeState } from "react-ridge-state";
 import { ModalOverlay, Grid, Stat, ToggleMenu } from "@unioncredit/ui";
 
 import format from "util/formatValue";
-import { useModal } from "hooks/useModal";
+import { useModal, useModalOpen } from "hooks/useModal";
 import useStakeData from "hooks/data/useStakeData";
 import useToken from "hooks/useToken";
 import useRewardsData from "hooks/data/useRewardsData";
@@ -48,13 +48,18 @@ export const useStakeModal = () => {
   return { ...props, open: handleOpenModal, type, setType };
 };
 
+const useStakeModalOpen = () => useModalOpen(STAKE_MODAL);
+
 export function StakeModal() {
   const { close, type, setType } = useStakeModal();
 
   const UNION = useToken("UNION");
+  const isOpen = useStakeModalOpen();
   const { mutate: updateUnionBalance } = useTokenBalance(UNION);
   const { data: stakeData, mutate: updateStakeData } = useStakeData();
   const { mutate: updateRewardsData } = useRewardsData();
+
+  if (!isOpen) return null;
 
   const { totalStake = ZERO, withdrawableStake = ZERO } =
     !!stakeData && stakeData;

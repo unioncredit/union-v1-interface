@@ -25,7 +25,7 @@ import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import handleTxError from "util/handleTxError";
 import useDelegate from "hooks/payables/useDelegate";
-import { useVouchModal, VouchModalManager } from "components-ui/modals";
+import { useVouchModal, VouchModal } from "components-ui/modals";
 import truncateAddress from "util/truncateAddress";
 import useAddressLabels from "hooks/useAddressLabels";
 import getEtherscanLink from "util/getEtherscanLink";
@@ -283,7 +283,7 @@ export default function ProfileView({ address }) {
         </Grid>
       </View>
 
-      <VouchModalManager />
+      <VouchModal />
     </>
   );
 }
