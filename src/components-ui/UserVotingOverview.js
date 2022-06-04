@@ -113,7 +113,8 @@ export function UserVotingOverview({ address }) {
                       "Self"
                     ) : (
                       <Link to={`/profile/${delegates}`}>
-                        {delegatesENS || delegatesName} <External />
+                        {delegatesENS || delegatesName}{" "}
+                        <External width="24px" height="24px" />
                       </Link>
                     )
                   }
