@@ -20,8 +20,7 @@ export default function ProfilePage() {
     return ens.address;
   }, [address, ens.address]);
 
-  // TODO:
-  const host = null;
+  const host = window.location.host;
 
   return (
     <>

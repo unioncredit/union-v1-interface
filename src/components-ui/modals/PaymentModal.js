@@ -110,14 +110,9 @@ export function PaymentModal({ borrowData, onComplete }) {
   };
 
   const handlePayment = async (values) => {
-    const amountToRepay = 0;
-    // TODO:
-    // const amountToRepay =
-    //   Number(values.amount) === calculateMaxValue
-    //     ? Number(values.amount * REPAY_MARGIN) > flooredDaiBalance
-    //       ? flooredDaiBalance
-    //       : Number(values.amount * REPAY_MARGIN)
-    //     : Number(values.amount);
+    const scaled = values.amount * 10 ** 18;
+    const bnValue = BigNumber.from(scaled);
+    const amountToRepay = bnValue.gt(daiBalance) ? daiBalance : bnValue;
 
     try {
       const { hash } = await repay(amountToRepay);

@@ -1,16 +1,17 @@
-import { useWeb3React } from "@web3-react/core";
-import LoggedOutView from "views/loggedOut";
-import ContactsView from "views/contacts";
-import { PageHead, CheckIsMember } from "components-ui";
-import { ContactsType } from "constants/app";
 import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
+
+import ContactsView from "views/contacts";
+import LoggedOutView from "views/loggedOut";
+import { ContactsType } from "constants/app";
+import { PageHead, CheckIsMember } from "components-ui";
 
 export default function ContactsPage() {
+  const { address } = useParams();
   const { account, library } = useWeb3React();
 
-  // TODO;
-  const host = null;
-  const address = null;
+  const host = window.location.host;
 
   return (
     <>

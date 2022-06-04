@@ -1,5 +1,4 @@
-import { Alert, Grid, Box } from "@unioncredit/ui";
-import Info from "@unioncredit/ui/lib/icons/wireInfo.svg";
+import { Grid, Box } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import {
   View,
@@ -7,6 +6,7 @@ import {
   RecentProposals,
   GovernanceStatsCard,
 } from "components-ui";
+import { GovernanceNotice } from "components-ui/GovernanceNotice";
 import useAllProposalData from "hooks/governance/useAllProposalData";
 
 import { config } from "./config";
@@ -21,20 +21,15 @@ export default function GovernanceView() {
 
   return (
     <>
-      {unsupportedFeature && (
-        <Alert
-          icon={<Info />}
-          packed
-          mb="16px"
-          size="small"
-          variant="info"
-          label="Governance is not supported on this chain. Showing governance data from mainnet"
-        />
-      )}
       <View tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
             <Grid.Col>
+              {unsupportedFeature && (
+                <Box mt="24px">
+                  <GovernanceNotice />
+                </Box>
+              )}
               <Box mt="24px">
                 <GovernanceStatsCard />
               </Box>
