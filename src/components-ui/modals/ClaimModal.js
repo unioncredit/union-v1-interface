@@ -41,7 +41,7 @@ export function ClaimModal() {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal onClose={close} size="medium">
+      <Modal title="Claim" onClose={close} size="medium">
         <Box justify="center" mt="32px">
           <UnionLogo width="48px" height="48px" />
         </Box>

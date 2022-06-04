@@ -62,7 +62,7 @@ export function AccountModal() {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal onClose={close}>
+      <Modal title="Account" onClose={close}>
         <Box align="center" justify="space-between">
           <Label as="p" size="small" mb="8px" grey={400}>
             {walletName?.toUpperCase()}
