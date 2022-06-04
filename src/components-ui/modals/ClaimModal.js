@@ -1,6 +1,6 @@
 import { formatUnits } from "@ethersproject/units";
-import { ModalOverlay, Box, Grid, Stat } from "@unioncredit/ui";
-import { ReactComponent as UnionLogo } from "@unioncredit/ui/lib/icons/union.svg";
+import { ModalOverlay, Box, Stat, Label, Button } from "@unioncredit/ui";
+import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
 
 import format from "util/formatValue";
 import useToken from "hooks/useToken";
@@ -11,6 +11,7 @@ import useTokenBalance from "hooks/data/useTokenBalance";
 import { ZERO } from "constants/variables";
 import { Modal, UnwrapButton } from "components-ui";
 import { ClaimButton } from "components-ui/ClaimButton";
+import { Union } from "components-ui/Union";
 
 export const CLAIM_MODAL = "claim-modal";
 
@@ -27,6 +28,7 @@ export function ClaimModal() {
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
   const { data: unionBalance = ZERO } = useTokenBalance(UNION);
+  // TODO: handle wrapper balance
   const { data: wrappedUnionBalance = ZERO } = useTokenBalance(WRAPPED_UNION);
 
   const isOpen = useClaimModalOpen();
@@ -38,63 +40,51 @@ export function ClaimModal() {
   const balance = rewards.add(unionBalance);
 
   const rewardsView = format(formatUnits(rewards), 4);
+  const balanceView = format(formatUnits(balance), 4);
+  const unionBalanceView = format(formatUnits(unionBalance), 4);
 
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Claim" onClose={close} size="medium">
-        <Box justify="center" mt="32px">
-          <UnionLogo width="48px" height="48px" />
+        <Box justify="center">
+          <Stat
+            align="center"
+            size="large"
+            label={`Unclaimed ${unionSymbol}`}
+            value={<Union value={balanceView} />}
+          />
         </Box>
-        <Grid>
-          <Grid.Row>
-            <Grid.Col>
-              <Stat
-                mt="20px"
-                mb="24px"
-                align="center"
-                size="large"
-                label={`Unclaimed ${unionSymbol}`}
-                value={rewardsView}
-              />
-            </Grid.Col>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Col>
-              <Stat
-                mb="44px"
-                align="center"
-                size="medium"
-                label="In wallet"
-                value={format(formatUnits(unionBalance), 4)}
-              />
-            </Grid.Col>
-            <Grid.Col>
-              <Stat
-                mb="44px"
-                align="center"
-                size="medium"
-                label="Total Balance"
-                value={format(formatUnits(balance), 4)}
-              />
-            </Grid.Col>
-          </Grid.Row>
-        </Grid>
+        <Box justify="space-between" mt="8px">
+          <Label as="p" grey={400}>
+            Wallet
+          </Label>
+          <Label as="p" grey={400} m={0}>
+            <Union value={unionBalanceView} />
+          </Label>
+        </Box>
+        <Box justify="space-between" mb="18px">
+          <Label as="p" grey={400}>
+            Unclaimed
+          </Label>
+          <Label as="p" grey={400} m={0}>
+            <Union value={rewardsView} />
+          </Label>
+        </Box>
         <ClaimButton
           m={0}
           fluid
           label={`Claim ${rewardsView} ${unionSymbol}`}
         />
-        {wrappedUnionBalance.gt(0) && (
-          <UnwrapButton
-            fluid
-            mt="8px"
-            variant="secondary"
-            label={`Unwrap ${format(
-              formatUnits(wrappedUnionBalance),
-              4
-            )} Wrapped Union`}
-          />
-        )}
+        <Button
+          fluid
+          mt="4px"
+          variant="secondary"
+          icon={External}
+          as="a"
+          href="/governance"
+          target="_blank"
+          label="Union Governance"
+        />
       </Modal>
     </ModalOverlay>
   );
