@@ -7,19 +7,14 @@ import {
   Heading,
   Card,
   Badge,
-  Label,
   Divider,
 } from "@unioncredit/ui";
+import { useParams } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
 import { ReactComponent as Link } from "@unioncredit/ui/lib/icons/link.svg";
 
-import isHash from "util/isHash";
-import format from "util/formatValue";
-import getReceipt from "util/getReceipt";
-import handleTxError from "util/handleTxError";
-import activityLabels from "util/activityLabels";
 import truncateAddress from "util/truncateAddress";
 import getEtherscanLink from "util/getEtherscanLink";
 import useCopy from "hooks/useCopy";
@@ -28,45 +23,24 @@ import usePublicData from "hooks/usePublicData";
 import useIsMember from "hooks/data/useIsMember";
 import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
-import { addActivity } from "hooks/data/useActivity";
-import useDelegate from "hooks/payables/useDelegate";
 import useAddressLabels from "hooks/useAddressLabels";
-import useVotingWalletData from "hooks/governance/useVotingWalletData";
 import { useVouchModal, VouchModal } from "components-ui/modals";
-import { View, Avatar, Copyable, UserVotingHistory } from "components-ui";
+import { View, Avatar, Copyable } from "components-ui";
+import ProfileGovernance from "components-ui/ProfileGovernance";
 
-export default function ProfileView({ address }) {
+export default function ProfileView() {
   const chainId = useChainId();
-  const { account, library } = useWeb3React();
+  const { account } = useWeb3React();
   const [isCopied, copy] = useCopy();
 
-  const delegate = useDelegate();
+  const { address } = useParams();
   const { getLabel } = useAddressLabels();
   const { name, ENSName } = usePublicData(address);
   const { data: rawVouchData } = useVouchData(address);
   const { data: rawTrustData } = useTrustData(address);
-  const { data: votingWalletData } = useVotingWalletData(address);
-  const { data: accountVotingWalletData } = useVotingWalletData(account);
   const { data: isMember } = useIsMember(address);
 
   const { open: openVouchModal } = useVouchModal();
-
-  const {
-    balanceOf = 0,
-    currentVotes = 0,
-    delegates,
-  } = !!votingWalletData && votingWalletData;
-
-  const isDelegatingToSelf = delegates === address;
-
-  const { balanceOf: accountBalanceOf = 0, delegates: accountDelegates } =
-    !!accountVotingWalletData && accountVotingWalletData;
-
-  const accountIsDelegating = accountDelegates === address;
-
-  const votesDelegated = isDelegatingToSelf
-    ? currentVotes - balanceOf
-    : currentVotes;
 
   const vouchData = rawVouchData || [];
   const trustData = rawTrustData || [];
@@ -80,18 +54,6 @@ export default function ProfileView({ address }) {
     : undefined;
 
   const label = getLabel(address);
-
-  const handleDelegation = async () => {
-    try {
-      const { hash } = await delegate(address);
-      await getReceipt(hash, library);
-      addActivity(activityLabels.delegate({ address, hash }));
-    } catch (err) {
-      const hash = isHash(err.message) && err.message;
-      handleTxError(err);
-      addActivity(activityLabels.delegate({ address, hash }, true));
-    }
-  };
 
   const truncatedAddress = (
     <Copyable value={address}>{truncateAddress(address)}</Copyable>
@@ -209,74 +171,7 @@ export default function ProfileView({ address }) {
                     </Grid.Row>
                   </Grid>
                   <Divider mt="24px" />
-                  <Grid>
-                    <Grid.Row>
-                      <Grid.Col>
-                        <Heading mt="24px" mb="24px">
-                          Governance
-                        </Heading>
-                      </Grid.Col>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Col>
-                        <Stat
-                          label="Total Votes"
-                          value={format(currentVotes)}
-                        />
-                      </Grid.Col>
-                      <Grid.Col>
-                        <Stat label="Union Balance" value={format(balanceOf)} />
-                      </Grid.Col>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Col>
-                        <Stat
-                          mt="16px"
-                          label="From others"
-                          value={format(votesDelegated)}
-                        />
-                      </Grid.Col>
-                      <Grid.Col>
-                        <Stat
-                          mt="16px"
-                          label="From you"
-                          value={
-                            accountIsDelegating ? format(accountBalanceOf) : 0
-                          }
-                        />
-                      </Grid.Col>
-                    </Grid.Row>
-                    <Grid.Row>
-                      <Grid.Col>
-                        <Label
-                          size="small"
-                          weight="medium"
-                          as="p"
-                          mt="24px"
-                          mb="16px"
-                          grey={400}
-                        >
-                          VOTING HISTORY
-                        </Label>
-                        <UserVotingHistory address={address} />
-                      </Grid.Col>
-                    </Grid.Row>
-                    {address &&
-                      address !== account &&
-                      library &&
-                      !accountIsDelegating && (
-                        <Grid.Row>
-                          <Grid.Col>
-                            <Button
-                              mt="24px"
-                              variant="secondary"
-                              label={`Delegate votes to ${name}`}
-                              onClick={handleDelegation}
-                            />
-                          </Grid.Col>
-                        </Grid.Row>
-                      )}
-                  </Grid>
+                  <ProfileGovernance />
                 </Card.Body>
               </Card>
             </Grid.Col>

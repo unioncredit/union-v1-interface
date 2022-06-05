@@ -22,6 +22,8 @@ export default function useChainId() {
     return acc;
   }, null);
 
+  if (!value) return DEFAULT_CHAIN_ID;
+
   const unsupported = chainIds?.includes(Number(value));
   return unsupported ? DEFAULT_CHAIN_ID : value;
 }

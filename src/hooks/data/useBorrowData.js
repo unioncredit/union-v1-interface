@@ -10,7 +10,7 @@ import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 
 const getPaymentDue = async (isOverdue, lastRepay, overdueBlocks, library) => {
   if (isOverdue) return "Overdue";
-  if (lastRepay === 0) return "No Payment Due";
+  if (lastRepay.lte(0)) return "No Payment Due";
 
   const chainId = library.network.chainId;
   const blockNumber = await getBlockNumber(library);

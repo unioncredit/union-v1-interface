@@ -48,7 +48,7 @@ export default function ProfilePage() {
           {forceConnect ? (
             <LoggedOutView />
           ) : userAddress ? (
-            <ProfileView address={userAddress} />
+            <ProfileView />
           ) : (
             <></>
           )}

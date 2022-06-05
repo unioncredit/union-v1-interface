@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from "react";
-import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { isAddress } from "@ethersproject/address";
@@ -185,7 +184,3 @@ export function VouchModal() {
     </ModalOverlay>
   );
 }
-
-VouchModal.propTypes = {
-  onNext: PropTypes.func.isRequired,
-};
