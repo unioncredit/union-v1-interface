@@ -2819,9 +2819,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@unioncredit/ui@^0.2.79":
-  version "0.2.88"
-  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.88.tgz#f8375186a86d2b61cf00423acee739ba48a10e68"
-  integrity sha512-edQPfMYvUAALJ38DhM3K/y/5NChgKzQi9bCd3OOJNOclllwXWugr//6ttIMGinSxVm1oW0XKjIfZQwve6MYO5g==
+  version "0.2.89"
+  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.89.tgz#6cfd106c9f0cee953a32efe886da5c325a8ffd6a"
+  integrity sha512-t3SpAtEDOkXXc5oRnZyicyf1M1ElIKlXodvmmL/+475MC0hSGlXBGdiWYgt0LfAPk4qvPXftIVWCbCqCXZxHdQ==
   dependencies:
     classnames "^2.3.1"
     node-sass "^7.0.1"

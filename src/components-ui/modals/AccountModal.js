@@ -39,7 +39,7 @@ export function AccountModal() {
   const clearActivity = useClearActivity();
   const isOpen = useAccountModalOpen();
 
-  if(!isOpen) return null;
+  if (!isOpen) return null;
 
   const handleSignOut = () => {
     if (connector === walletconnect) connector.close();
@@ -62,7 +62,7 @@ export function AccountModal() {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Account" onClose={close}>
+      <Modal title="Account" onClose={close} size="medium">
         <Box align="center" justify="space-between">
           <Label as="p" size="small" mb="8px" grey={400}>
             {walletName?.toUpperCase()}

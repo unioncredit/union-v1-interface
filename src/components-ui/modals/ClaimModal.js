@@ -45,7 +45,22 @@ export function ClaimModal() {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Claim" onClose={close} size="medium">
+      <Modal
+        title="Claim"
+        onClose={close}
+        size="medium"
+        footer={
+          <Box align="center">
+            <Box direction="vertical" fluid>
+              <div>
+                <Union value={420.69} />
+              </div>
+              <Label m={0}>arbUnion in wallet</Label>
+            </Box>
+            <Button label="Bridge" variant="pill" />
+          </Box>
+        }
+      >
         <Box justify="center">
           <Stat
             align="center"
