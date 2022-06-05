@@ -2819,9 +2819,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@unioncredit/ui@^0.2.79":
-  version "0.2.87"
-  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.87.tgz#8d9225f5e35405effab048c49e68b5c27af239e6"
-  integrity sha512-xqvv2rfg2F4VF90+e0GLBROXABBwAypCNirP7/7H5lgLyvFXBaTzSxLwwlQzONEGpV4hbTMVmNQz5nz6hL6Iyg==
+  version "0.2.88"
+  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.88.tgz#f8375186a86d2b61cf00423acee739ba48a10e68"
+  integrity sha512-edQPfMYvUAALJ38DhM3K/y/5NChgKzQi9bCd3OOJNOclllwXWugr//6ttIMGinSxVm1oW0XKjIfZQwve6MYO5g==
   dependencies:
     classnames "^2.3.1"
     node-sass "^7.0.1"
@@ -10979,7 +10979,12 @@ source-map@^0.5.7:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
-source-map@^0.7.1, source-map@^0.7.3:
+source-map@^0.7.1:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.4.tgz#a9bbe705c9d8846f4e08ff6765acf0f1b0898656"
+  integrity sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==
+
+source-map@^0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==

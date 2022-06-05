@@ -8,11 +8,13 @@ import {
   Heading,
   Label,
   Skeleton,
+  Card,
 } from "@unioncredit/ui";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
 import { defaultAbiCoder } from "@ethersproject/abi";
 import { ReactComponent as ArrowRight } from "@unioncredit/ui/lib/icons/arrowRight.svg";
 
@@ -25,6 +27,7 @@ import {
 import useChainId from "hooks/useChainId";
 import createArray from "util/createArray";
 import getEtherscanLink from "util/getEtherscanLink";
+import { options, switchChain } from "util/switchChain";
 import useProposalData from "hooks/governance/useProposalData";
 import { withUnsupportedChains } from "providers/UnsupportedChain";
 
@@ -32,10 +35,13 @@ import styles from "./proposal.module.css";
 
 function ProposalView() {
   const chainId = useChainId();
+  const { chainId: actualChainId, library } = useWeb3React();
 
   const { hash: proposalHash } = useParams();
 
   const data = useProposalData(proposalHash);
+
+  const unsupportedFeature = actualChainId && actualChainId !== chainId;
 
   const {
     proposer,
@@ -48,6 +54,10 @@ function ProposalView() {
   } = !!data && data;
 
   const isLoading = !data;
+
+  const handleSwitchChain = () => {
+    switchChain(options[0], library.provider);
+  };
 
   return (
     <View>
@@ -191,6 +201,20 @@ function ProposalView() {
           </Col>
           <Col md={4}>
             <VotingCard {...data} />
+            {unsupportedFeature && (
+              <Card variant="blue" packed mb="12px">
+                <Label as="p" my="12px" align="center" size="small">
+                  Voting only supported on Ethereum
+                </Label>
+                <Button
+                  fluid
+                  packed
+                  mb="12px"
+                  onClick={handleSwitchChain}
+                  label="Switch Network to Ethereum"
+                />
+              </Card>
+            )}
             <ProposalHistoryCard {...data} />
           </Col>
         </Row>
