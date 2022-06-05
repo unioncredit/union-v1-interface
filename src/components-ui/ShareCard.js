@@ -7,7 +7,7 @@ import {
   useCreditRequestModal,
 } from "components-ui/modals";
 
-export function ShareCard({ content, size }) {
+export function ShareCard({ content, size, buttonProps = { color: "blue" } }) {
   const { account } = useWeb3React();
   const { open: openCreditRequest } = useCreditRequestModal();
 
@@ -23,9 +23,9 @@ export function ShareCard({ content, size }) {
               fluid
               ml="4px"
               icon={Link}
-              color="blue"
               label="Get vouch link"
               onClick={openCreditRequest}
+              {...buttonProps}
             />
           </Box>
         </Card.Body>

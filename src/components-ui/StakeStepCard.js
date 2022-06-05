@@ -8,6 +8,8 @@ import useUnionSymbol from "hooks/useUnionSymbol";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import { Dai, Union } from "components-ui";
 import { useStakeModal, StakeType } from "components-ui/modals";
+import { ZERO } from "constants/variables";
+import { formatUnits } from "@ethersproject/units";
 
 export function StakeStepCard() {
   const UNION = useToken("UNION");
@@ -15,13 +17,13 @@ export function StakeStepCard() {
   const { open: openStakeModal } = useStakeModal();
   const { data: rewardsData } = useRewardsData();
   const { data: unionSymbol } = useUnionSymbol();
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { data: unionBalance = ZERO } = useTokenBalance(UNION);
 
-  const { totalStake = 0.0 } = !!stakeData && stakeData;
+  const { totalStake = ZERO } = !!stakeData && stakeData;
 
-  const { rewards = 0.0 } = !!rewardsData && rewardsData;
+  const { rewards = ZERO } = !!rewardsData && rewardsData;
 
-  const totalUnion = Number(rewards) + Number(unionBalance);
+  const totalUnion = rewards.add(unionBalance);
 
   return (
     <Card size="fluid" mb="24px">
@@ -38,7 +40,7 @@ export function StakeStepCard() {
                 size="large"
                 align="center"
                 label="TOTAL STAKE"
-                value={<Dai value={totalStake} />}
+                value={<Dai value={format(formatUnits(totalStake), 2)} />}
                 mb="32px"
               />
             </Grid.Col>
@@ -47,7 +49,7 @@ export function StakeStepCard() {
                 size="large"
                 align="center"
                 label={`${unionSymbol} Accrued`}
-                value={<Union value={format(totalUnion, 4)} />}
+                value={<Union value={format(formatUnits(totalUnion), 2)} />}
                 mb="32px"
               />
             </Grid.Col>

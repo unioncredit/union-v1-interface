@@ -8,7 +8,7 @@ import { Box, Card, CircleProgress, Table } from "@unioncredit/ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
 
-import styles from "./VouchStepCard.module.css";
+import "./VouchStepCard.scss";
 
 export function VouchStepCard() {
   const { data: trustCount = 0 } = useTrustCountData();
@@ -19,14 +19,14 @@ export function VouchStepCard() {
   const isVouchLoading = !vouchData;
 
   return (
-    <Card mb="24px" size="fluid">
+    <Card mb="24px" size="fluid" className="vouchStakeCard">
       <Card.Header
         title="Get 3 vouches"
         subTitle="To become a member, you’ll need 3 existing Union members to vouch for you. These vouches will form your starting credit line within Union."
       />
       <Card.Body>
-        <Box className={styles.vouchStakeCard}>
-          <Box my="16px" ml="16px" mr="24px" className={styles.circleProgress}>
+        <Box className="vouchStakeCardInner">
+          <Box my="16px" ml="16px" mr="24px" className="circleProgress">
             <CircleProgress
               percentage={(vouchCount / 3) * 100}
               complete={vouchCount >= 3}
@@ -45,7 +45,10 @@ export function VouchStepCard() {
                   ))}
           </Table>
         </Box>
-        <ShareCard size="fluid" />
+        <ShareCard
+          buttonProps={{ variant: "primary" }}
+          content="Share your vouch link with Union members who might be willing to vouch for you with their DAI."
+        />
       </Card.Body>
     </Card>
   );

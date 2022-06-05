@@ -24,7 +24,8 @@ export function BecomeMemberCard({ disabled }) {
   const [registering, setRegistering] = useState(false);
 
   const UNION = useToken("UNION");
-  const userManager = useUserManager();
+  const DAI = useToken("DAI");
+  const userManager = useUserManager(DAI);
   const registerMember = useRegisterMember();
 
   const { data: memberFee } = useMemberFee();
@@ -63,7 +64,7 @@ export function BecomeMemberCard({ disabled }) {
           disabled={disabled}
           amount={displayMemberFee || "0"}
           tokenAddress={UNION}
-          spender={userManager.address}
+          spender={userManager?.address}
           signatureKey={APPROVE_UNION_REGISTER_SIGNATURE_KEY}
           permitType={PermitType.ERC2612}
         >

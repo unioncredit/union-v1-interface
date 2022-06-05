@@ -1,5 +1,5 @@
 @media screen and (max-width: 600px) {
-  .vouchStakeCard {
+  .vouchStakeCardInner {
     flex-direction: column !important;
     align-items: center !important;
   }
@@ -7,4 +7,8 @@
   .circleProgress {
     margin-top: 0 !important;
   }
+}
+
+.vouchStakeCard .card--blue {
+  max-width: unset;
 }

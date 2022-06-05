@@ -11,7 +11,7 @@ export default function generateLink(address, chainId = 1) {
 
   const baseUrl = networkAppUrls[chainId] || window.location.origin;
 
-  return `${baseUrl}/contacts?address=${address}`;
+  return `${baseUrl}/profile/${address}`;
 }
 
 const SHARE_MESSAGE = `Please vouch for me on Union!`;
