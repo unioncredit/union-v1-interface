@@ -1,5 +1,6 @@
 import { Grid, Box } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
+
 import {
   View,
   UserVotingOverview,
@@ -7,14 +8,15 @@ import {
   GovernanceStatsCard,
 } from "components-ui";
 import { GovernanceNotice } from "components-ui/GovernanceNotice";
-import useAllProposalData from "hooks/governance/useAllProposalData";
+import useProposals from "hooks/governance/useProposals";
 
 import { config } from "./config";
 import useChainId from "hooks/useChainId";
+import { withUnsupportedChains } from "providers/UnsupportedChain";
 
-export default function GovernanceView() {
+function GovernanceView() {
   const chainId = useChainId();
-  const { data } = useAllProposalData();
+  const { data } = useProposals();
   const { chainId: actualChainId, account } = useWeb3React();
 
   const unsupportedFeature = actualChainId && actualChainId !== chainId;
@@ -24,7 +26,7 @@ export default function GovernanceView() {
       <View tabItems={config.tabItems}>
         <Grid>
           <Grid.Row justify="center">
-            <Grid.Col>
+            <Grid.Col xs={12} md={8} lg={6}>
               {unsupportedFeature && (
                 <Box mt="24px">
                   <GovernanceNotice />
@@ -46,3 +48,5 @@ export default function GovernanceView() {
     </>
   );
 }
+
+export default withUnsupportedChains(GovernanceView, [421611, 42161]);

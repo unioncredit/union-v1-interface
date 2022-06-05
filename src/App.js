@@ -36,10 +36,7 @@ function App() {
         <Route path="/profile/:address" element={<Profile />} />
         <Route path="/governance" element={<Governance />} />
         <Route path="/governance/proposals" element={<Proposals />} />
-        <Route
-          path="/governance/proposals/:proposalId"
-          element={<Proposal />}
-        />
+        <Route path="/governance/proposals/:hash" element={<Proposal />} />
         <Route
           path="/geo-restricted"
           element={

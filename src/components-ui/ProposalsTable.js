@@ -14,6 +14,8 @@ import createArray from "util/createArray";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import { ZERO } from "constants/variables";
+import { formatUnits } from "@ethersproject/units";
 
 dayjs.extend(relativeTime);
 
@@ -40,23 +42,26 @@ const statusColorMap = {
   defeated: "red",
 };
 
+const n = (x) => Number(x.toString());
+
 function ProposalsTableRow({
-  id,
-  againstCount,
-  forCount,
+  hash,
+  abstainVotes,
+  againstVotes,
+  forVotes,
   title,
   status,
   startTimestamp,
 }) {
   const navigate = useNavigate();
 
-  const total = againstCount + forCount;
-  const percentageFor = total > 0 ? forCount / total : 0;
+  const total = againstVotes.add(forVotes).add(abstainVotes);
+  const percentageFor = total.gt(ZERO) ? n(forVotes) / n(total) : ZERO;
 
   const maxStrLength = 46;
 
   const handleClick = () => {
-    navigate(`/governance/proposals/${id}`);
+    navigate(`/governance/proposals/${hash}`);
   };
 
   return (

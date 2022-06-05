@@ -1,12 +1,6 @@
-import useAllProposalData from "./useAllProposalData";
+import useProposals from "./useProposals";
 
-/**
- * @name useProposalData
- *
- * @param {string} id The ID of the proposal to pull the data for
- */
-export default function useProposalData(id) {
-  const { data } = useAllProposalData();
-
-  return data?.find((p) => p.id === id);
+export default function useProposalData(hash) {
+  const { data } = useProposals();
+  return data?.find((p) => p.hash === hash);
 }

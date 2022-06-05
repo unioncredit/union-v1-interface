@@ -1,9 +1,11 @@
 import useSWR from "swr";
 import { formatUnits } from "@ethersproject/units";
-import useGovernance from "hooks/contracts/useGovernance";
-import useAllProposalData from "hooks/governance/useAllProposalData";
 
-async function fetchProposalVoteHistory(_, gov, proposals, address) {
+import useGovernance from "hooks/contracts/useGovernance";
+import useProposals from "hooks/governance/useProposals";
+
+function fetchProposalVoteHistory(gov) {
+  return async function (_, proposals, address) {
     const allProposalsWithReceipt = await Promise.all(
       proposals.map(async (proposal) => {
         const receipt = await gov.getReceipt(proposal.pid, address);
@@ -23,15 +25,16 @@ async function fetchProposalVoteHistory(_, gov, proposals, address) {
 
     return allProposalsWithReceipt;
   };
+}
 
 export default function useUserProposalVoteHistory(address) {
   const gov = useGovernance();
-  const { data: proposals } = useAllProposalData();
+  const { data: proposals } = useProposals();
 
   const shouldFetch = address && gov && proposals;
 
   return useSWR(
-    shouldFetch ? ["ProposalVoteHistory", gov, proposals, address, proposals] : null,
-    fetchProposalVoteHistory
+    shouldFetch ? ["ProposalVoteHistory", proposals, address, proposals] : null,
+    fetchProposalVoteHistory(gov)
   );
 }

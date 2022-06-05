@@ -7,11 +7,9 @@ export default function useChainId() {
   const { chainId } = useWeb3React();
   const chainIds = useUnsupportedChains();
 
-  const unsupported = chainIds?.includes(chainId);
-
   if (chainId) {
-    // connected
-    return !unsupported ? chainId : DEFAULT_CHAIN_ID;
+    const unsupported = chainIds?.includes(Number(chainId));
+    return unsupported ? DEFAULT_CHAIN_ID : chainId;
   }
 
   const value = Object.keys(networkAppUrls).reduce((acc, chainId) => {
@@ -24,5 +22,6 @@ export default function useChainId() {
     return acc;
   }, null);
 
-  return value || DEFAULT_CHAIN_ID;
+  const unsupported = chainIds?.includes(Number(value));
+  return unsupported ? DEFAULT_CHAIN_ID : value;
 }
