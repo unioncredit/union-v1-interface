@@ -21,13 +21,10 @@ export default function BorrowView() {
             <Box mt="24px">
               <BorrowStatsCard />
             </Box>
+            <ShareCard content="Get more Union vouches to increase your total available credit." />
             <Box mt="24px">
               <CreditProvidersCard />
             </Box>
-            <ShareCard
-              title="Get extra credit"
-              content="Share your link with other Union members who might be willing to vouch for you with their DAI."
-            />
             <Card mt="24px">
               <Card.Header
                 title="Transaction History"
