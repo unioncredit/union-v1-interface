@@ -38,17 +38,10 @@ function ProposalView() {
   const data = useProposalData(proposalHash);
 
   const {
+    proposer,
+    hash,
     description = "-",
     title = "-",
-    proposer,
-    forCount = 0,
-    againstCount = 0,
-    status,
-    blockNumber,
-    pid,
-    hash,
-    endTimestamp,
-    startTimestamp,
     targets = [],
     signatures = [],
     calldatas = [],
@@ -197,20 +190,8 @@ function ProposalView() {
             </Box>
           </Col>
           <Col md={4}>
-            <VotingCard
-              forCount={forCount}
-              againstCount={againstCount}
-              status={status}
-              proposalId={pid}
-              endTimestamp={endTimestamp}
-              startTimestamp={startTimestamp}
-            />
-            <ProposalHistoryCard
-              id={pid}
-              blockNumber={blockNumber}
-              endTimestamp={endTimestamp}
-              startTimestamp={startTimestamp}
-            />
+            <VotingCard {...data} />
+            <ProposalHistoryCard {...data} />
           </Col>
         </Row>
       </Grid>

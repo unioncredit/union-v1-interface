@@ -1,11 +1,9 @@
 import useSWR from "swr";
-import { formatUnits } from "@ethersproject/units";
 
 import useGovernance from "hooks/contracts/useGovernance";
 
-async function fetchQuorum(_, gov) {
-  const res = await gov.quorumVotes();
-  return formatUnits(res, 18);
+function fetchQuorum(_, gov) {
+  return gov.quorumVotes();
 }
 
 export default function useProposalQuorum() {

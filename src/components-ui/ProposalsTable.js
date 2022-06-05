@@ -8,14 +8,13 @@ import {
   Skeleton,
   EmptyState,
 } from "@unioncredit/ui";
-
-import { roundDown, toPercent } from "util/numbers";
-import createArray from "util/createArray";
-import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+import createArray from "util/createArray";
 import { ZERO } from "constants/variables";
-import { formatUnits } from "@ethersproject/units";
+import { roundDown, toPercent, toNumber } from "util/numbers";
 
 dayjs.extend(relativeTime);
 
@@ -42,8 +41,6 @@ const statusColorMap = {
   defeated: "red",
 };
 
-const n = (x) => Number(x.toString());
-
 function ProposalsTableRow({
   hash,
   abstainVotes,
@@ -56,7 +53,9 @@ function ProposalsTableRow({
   const navigate = useNavigate();
 
   const total = againstVotes.add(forVotes).add(abstainVotes);
-  const percentageFor = total.gt(ZERO) ? n(forVotes) / n(total) : ZERO;
+  const percentageFor = total.gt(ZERO)
+    ? toNumber(forVotes) / toNumber(total)
+    : ZERO;
 
   const maxStrLength = 46;
 

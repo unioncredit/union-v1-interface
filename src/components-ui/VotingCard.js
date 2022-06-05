@@ -11,6 +11,7 @@ import {
   Label,
 } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
+import { formatUnits } from "@ethersproject/units";
 import { ReactComponent as WireCheck } from "@unioncredit/ui/lib/icons/wireCheck.svg";
 
 import useCastVote from "hooks/payables/useCastVote";
@@ -23,7 +24,7 @@ import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import format from "util/formatValue";
-import { toPercent } from "util/numbers";
+import { toPercent, toNumber } from "util/numbers";
 import relativeTime from "util/relativeTime";
 
 import styles from "./VotingCard.module.css";
@@ -43,9 +44,9 @@ const statusColorMap = {
 };
 
 export function VotingCard({
-  forCount,
-  againstCount,
-  proposalId,
+  forVotes,
+  againstVotes,
+  pid: proposalId,
   status,
   startTimestamp,
   endTimestamp,
@@ -57,12 +58,14 @@ export function VotingCard({
   const addActivity = useAddActivity();
   const { data: voteReceipt } = useProposalVoteReceipt(account, proposalId);
 
-  const totalCount = forCount + againstCount;
-  const percentageFor = (forCount / totalCount) * 100;
+  if (!proposalId) return null;
+
+  const totalCount = forVotes.add(againstVotes);
+  const percentageFor = forVotes.mul("100").div(totalCount);
   const percentageAgainst = 100 - percentageFor;
 
-  const totalVotePercent = totalCount / totalSupply;
-  const quorumPercent = quorum / totalSupply;
+  const totalVotePercent = toNumber(totalCount) / toNumber(totalSupply);
+  const quorumPercent = toNumber(quorum) / toNumber(totalSupply);
   const quorumProgress = totalVotePercent / quorumPercent;
 
   const handleCastVote = (type) => async () => {
@@ -113,7 +116,7 @@ export function VotingCard({
             For
           </Label>
           <Label as="p" m={0}>
-            {format(forCount)} Votes
+            {format(formatUnits(forVotes))} Votes
           </Label>
         </Box>
         <Bar percentage={percentageFor} size="large" color="green" />
@@ -122,7 +125,7 @@ export function VotingCard({
             Against
           </Label>
           <Label as="p" m={0}>
-            {format(againstCount)} Votes
+            {format(formatUnits(againstVotes))} Votes
           </Label>
         </Box>
         <Bar percentage={percentageAgainst} size="large" />

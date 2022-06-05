@@ -41,3 +41,5 @@ export function toFixed(x) {
   }
   return x;
 }
+
+export const toNumber = (x) => Number((x || 0).toString());
