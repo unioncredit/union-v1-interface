@@ -9,9 +9,10 @@ import useRewardsData from "hooks/data/useRewardsData";
 import { useModal, useModalOpen } from "hooks/useModal";
 import useTokenBalance from "hooks/data/useTokenBalance";
 import { ZERO } from "constants/variables";
-import { Modal, UnwrapButton } from "components-ui";
+import { Modal } from "components-ui";
 import { ClaimButton } from "components-ui/ClaimButton";
 import { Union } from "components-ui/Union";
+import { ClaimModalFooter } from "./ClaimModalFooter";
 
 export const CLAIM_MODAL = "claim-modal";
 
@@ -23,13 +24,10 @@ export function ClaimModal() {
   const { close } = useClaimModal();
 
   const UNION = useToken("UNION");
-  const WRAPPED_UNION = useToken("WRAPPED_UNION");
 
   const { data: unionSymbol } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
   const { data: unionBalance = ZERO } = useTokenBalance(UNION);
-  // TODO: handle wrapper balance
-  const { data: wrappedUnionBalance = ZERO } = useTokenBalance(WRAPPED_UNION);
 
   const isOpen = useClaimModalOpen();
 
@@ -49,17 +47,7 @@ export function ClaimModal() {
         title="Claim"
         onClose={close}
         size="medium"
-        footer={
-          <Box align="center">
-            <Box direction="vertical" fluid>
-              <div>
-                <Union value={420.69} />
-              </div>
-              <Label m={0}>arbUnion in wallet</Label>
-            </Box>
-            <Button label="Bridge" variant="pill" />
-          </Box>
-        }
+        footer={<ClaimModalFooter />}
       >
         <Box justify="center">
           <Stat
@@ -92,10 +80,10 @@ export function ClaimModal() {
         />
         <Button
           fluid
+          as="a"
           mt="4px"
           variant="secondary"
           icon={External}
-          as="a"
           href="/governance"
           target="_blank"
           label="Union Governance"

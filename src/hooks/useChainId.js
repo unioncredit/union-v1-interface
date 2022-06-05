@@ -1,7 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
+
+import { networkAppUrls } from "lib/connectors";
 import { DEFAULT_CHAIN_ID } from "constants/app";
 import { useUnsupportedChains } from "providers/UnsupportedChain";
-import { networkAppUrls } from "lib/connectors";
 
 export default function useChainId() {
   const { chainId } = useWeb3React();

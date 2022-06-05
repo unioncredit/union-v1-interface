@@ -10,18 +10,21 @@ import { useAddActivity } from "hooks/data/useActivity";
 import useUnwrapUnion from "hooks/payables/useUnwrapUnion";
 import useUnionSymbol from "hooks/useUnionSymbol";
 import format from "util/formatValue";
-import { TOKENS } from "constants/variables";
 import isHash from "util/isHash";
 import getReceipt from "util/getReceipt";
 import useTokenBalance from "hooks/data/useTokenBalance";
+import useToken from "hooks/useToken";
+import { ZERO } from "constants/variables";
 
 export const UnwrapButton = ({ onComplete, ...props }) => {
   const unwrap = useUnwrapUnion();
   const addActivity = useAddActivity();
-  const { library, chainId } = useWeb3React();
+  const WRAPPED_UNION = useToken("WRAPPED_UNION");
+
+  const { library } = useWeb3React();
   const [loading, setLoading] = useState(false);
   const { data: unionSymbol } = useUnionSymbol();
-  const { data: balance } = useTokenBalance(TOKENS[chainId]?.WRAPPED_UNION);
+  const { data: balance = ZERO } = useTokenBalance(WRAPPED_UNION);
 
   const displayBalance = format(formatEther(balance), 4);
 
