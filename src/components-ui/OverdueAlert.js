@@ -3,6 +3,8 @@ import { Box, Alert } from "@unioncredit/ui";
 import { roundUp } from "util/numbers";
 import useBorrowData from "hooks/data/useBorrowData";
 import { PaymentModal, usePaymentModal } from "components-ui/modals";
+import { formatUnits } from "@ethersproject/units";
+import format from "util/formatValue";
 
 export function OverdueAlert() {
   const { data: borrowData, mutate: updateBorrowData } = useBorrowData();
@@ -25,10 +27,11 @@ export function OverdueAlert() {
 
   return (
     <>
-      {" "}
       <Box w="100%" maxw="445px" mb="24px">
         <Alert
-          label={`Overdue payment of ${roundUp(interest)} DAI`}
+          label={`Overdue payment of ${format(
+            roundUp(formatUnits(interest))
+          )} DAI`}
           action={{ label: "Make payment", onClick: openPaymentModal }}
         />
       </Box>

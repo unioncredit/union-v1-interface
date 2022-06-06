@@ -3,11 +3,12 @@ import { networkAppUrls } from "lib/connectors";
 
 export const options = [
   {
+    type: "ethereum",
+    imageSrc: "/images/ethereum-avatar.png",
     value: "ethereum",
     label: "Ethereum",
     description:
       "Use Union on Ethereum’s main network. All Governance activity takes place here",
-    imageSrc: "/images/ethereum.png",
     avatar: "/images/ethereum-avatar.png",
     chainId: 1,
     networkData: {
@@ -19,11 +20,13 @@ export const options = [
     ],
   },
   {
+    label: "Arbitrum",
+    type: "arbitrum",
+    imageSrc: "/images/arbitrum-avatar.png",
     value: "arbitrum one",
     label: "Arbitrum One",
     description:
       "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
-    imageSrc: "/images/arbitrum.png",
     avatar: "/images/arbitrum-avatar.png",
     chainId: 42161,
     networkData: {
@@ -34,11 +37,12 @@ export const options = [
     badges: [{ label: "Low Gas Fees", color: "blue" }],
   },
   {
+    type: "kovan",
+    imageSrc: "/images/kovan-avatar.png",
     value: "kovan",
     label: "Kovan",
     description:
       "Use a test version of Ethereum to try out Union and learn more about how it works",
-    imageSrc: "/images/kovan.png",
     avatar: "/images/kovan-avatar.png",
     chainId: 42,
     networkData: {

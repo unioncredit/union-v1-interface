@@ -1,12 +1,4 @@
-import {
-  Nav,
-  NavItem,
-  NetworkSwitcher,
-  Button,
-  Box,
-  ContextMenu,
-  NetworkButton,
-} from "@unioncredit/ui";
+import { Nav, NavItem, Button, Box, ContextMenu } from "@unioncredit/ui";
 import { useMemo } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -17,27 +9,7 @@ import { contextMenuItems } from "constants/app";
 import { useForceConnect } from "hooks/useForceConnect";
 import useIsMember from "hooks/data/useIsMember";
 import { Wallet, ConnectButton, UnionWallet } from "components-ui";
-
-const networkOptions = [
-  {
-    label: "Ethereum",
-    type: "ethereum",
-    imageSrc: "/images/ethereum-avatar.png",
-    as: NetworkButton,
-  },
-  {
-    label: "Arbitrum",
-    type: "arbitrum",
-    imageSrc: "/images/arbitrum-avatar.png",
-    as: NetworkButton,
-  },
-  {
-    label: "Kovan",
-    type: "kovan",
-    imageSrc: "/images/kovan-avatar.png",
-    as: NetworkButton,
-  },
-];
+import { NetworkSelect } from "./NetworkSelect";
 
 export const Navigation = ({ mobile }) => {
   const navigate = useNavigate();
@@ -81,7 +53,7 @@ export const Navigation = ({ mobile }) => {
   return (
     <Nav mobile={mobile} onLogoClick={handleLogoClick}>
       <Box fluid align="center" justify="space-between">
-        <NetworkSwitcher options={networkOptions} />
+        <NetworkSelect />
         <Box>
           {account &&
             filteredNavItems.map(({ label, ...item }) => (
