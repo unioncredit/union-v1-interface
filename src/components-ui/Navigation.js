@@ -102,6 +102,7 @@ export const Navigation = ({ mobile }) => {
             <Button
               label="Login"
               variant="secondary"
+              className="loginButton"
               onClick={() => setForceConnect(true)}
             />
           )}
