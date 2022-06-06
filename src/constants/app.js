@@ -56,11 +56,6 @@ export const navItems = [
     pathname: "/contacts",
   },
   {
-    id: "profile",
-    label: "Profile",
-    pathname: "/profile",
-  },
-  {
     id: "governance",
     label: "Governance",
     pathname: "/governance",

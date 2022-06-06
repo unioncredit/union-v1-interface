@@ -10,7 +10,7 @@ import getLibrary from "lib/getLibrary";
 import UnsuportedChainProvider from "providers/UnsupportedChain";
 import Error from "pages/error";
 
-import "./index.css";
+import "./index.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

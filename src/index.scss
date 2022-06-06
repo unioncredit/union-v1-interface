@@ -38,6 +38,10 @@ a {
   justify-content: center;
 }
 
+.nav {
+  width: 100%;
+}
+
 .nav--mobile {
   position: fixed;
   left: 0;
@@ -108,8 +112,12 @@ ul {
 
 .union-wallet.button,
 .wallet.button {
-  height: 44px;
+  height: 32px;
   min-height: 0;
+
+  .text {
+    font-size: 14px !important;
+  }
 }
 
 .union-wallet.button {

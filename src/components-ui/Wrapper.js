@@ -1,40 +1,24 @@
 import {
-  Button,
   Layout,
   Box,
   Grid,
   Row,
   Col,
-  ContextMenu,
   Label,
   AlertBanner,
 } from "@unioncredit/ui";
-import { useWeb3React } from "@web3-react/core";
-import { Wallet, Navigation, ConnectButton, UnionWallet } from "components-ui";
-import { useClaimModal, ClaimModal } from "components-ui/modals";
+import { Navigation } from "components-ui";
+import { ClaimModal } from "components-ui/modals";
 import useInactiveListener from "hooks/useInactiveListener";
-import { useForceConnect, useUpdateForceConnect } from "hooks/useForceConnect";
-import { contextMenuItems } from "constants/app";
+import { useUpdateForceConnect } from "hooks/useForceConnect";
 import useBetaBanner from "hooks/useBetaBanner";
-import { ContextMenuLink } from "./ContextMenuLink";
 
 export function Wrapper({ children }) {
   useInactiveListener();
 
   useUpdateForceConnect();
 
-  const [, setForceConnect] = useForceConnect();
-
   const [showBetaBanner, hideBetaBanner] = useBetaBanner();
-
-  const { account, library } = useWeb3React();
-
-  const contextMenuItemsLink = contextMenuItems.map((item) => {
-    if (item.href.startsWith("/")) {
-      return { ...item, as: ContextMenuLink };
-    }
-    return item;
-  });
 
   return (
     <>
@@ -53,28 +37,6 @@ export function Wrapper({ children }) {
               <Col>
                 <Layout.Header align="center">
                   <Navigation />
-                  <Box align="center">
-                    <Box mr="4px">
-                      {account ? (
-                        <>
-                          <UnionWallet />
-                          <Wallet />
-                        </>
-                      ) : library ? (
-                        <ConnectButton
-                          label="Connect wallet"
-                          variant="secondary"
-                        />
-                      ) : (
-                        <Button
-                          label="Login"
-                          variant="secondary"
-                          onClick={() => setForceConnect(true)}
-                        />
-                      )}
-                    </Box>
-                    <ContextMenu position="left" items={contextMenuItemsLink} />
-                  </Box>
                 </Layout.Header>
                 <Box
                   fluid

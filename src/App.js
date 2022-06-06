@@ -15,8 +15,6 @@ import Proposal from "pages/governance/proposal";
 import Profile from "pages/profile";
 import GetStartedPage from "pages/index";
 
-import "./index.css";
-
 function App() {
   const navigate = useNavigate();
   const restricted = useGeoRestriction();
