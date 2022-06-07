@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
-import { Button, Box, Dai, Input } from "@unioncredit/ui";
+import { Button, Box, Dai, Input, Label } from "@unioncredit/ui";
 
 import isHash from "util/isHash";
 import format from "util/formatValue";
@@ -14,7 +14,12 @@ import errorMessages from "util/errorMessages";
 import { useAddActivity } from "hooks/data/useActivity";
 import useStakeWithdraw from "hooks/payables/useStakeWithdraw";
 
-export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
+export const WithdrawInput = ({
+  withdrawableStake,
+  utilizedStake,
+  totalStake,
+  onComplete,
+}) => {
   const addActivity = useAddActivity();
   const withdraw = useStakeWithdraw();
 
@@ -73,7 +78,7 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
         <Input
           type="number"
           label="Amount to unstake"
-          caption={`Max. ${withdrawableStakeView} DAI`}
+          caption={`Available: ${withdrawableStakeView} DAI`}
           onCaptionClick={handleMaxWithdraw}
           placeholder="0"
           suffix={<Dai />}
@@ -83,6 +88,32 @@ export const WithdrawInput = ({ withdrawableStake, onComplete }) => {
           })}
         />
       </Box>
+
+      <Box justify="space-between" mt="8px" mb="4px">
+        <Label as="p" grey={400}>
+          Currently Staked
+        </Label>
+        <Label as="p" grey={700} m={0}>
+          {format(formatUnits(totalStake, 18), 2)} DAI
+        </Label>
+      </Box>
+      <Box justify="space-between" mb="4px">
+        <Label as="p" grey={400}>
+          Utilized Stake
+        </Label>
+        <Label as="p" grey={700} m={0}>
+          {format(formatUnits(utilizedStake, 18), 2)} DAI
+        </Label>
+      </Box>
+      <Box justify="space-between" mb="4px">
+        <Label as="p" grey={400}>
+          Available to Unstake
+        </Label>
+        <Label as="p" grey={700} m={0}>
+          {format(formatUnits(withdrawableStake, 18), 2)} DAI
+        </Label>
+      </Box>
+
       <Button
         fluid
         type="submit"

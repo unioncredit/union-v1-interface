@@ -21,6 +21,8 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useWriteOffDebt from "hooks/payables/useWriteOffDebt";
 import isHash from "util/isHash";
+import { formatUnits } from "@ethersproject/units";
+import { BigNumber } from "@ethersproject/bignumber";
 
 export const WRITE_OFF_DEBT = "write-off-debt-modal";
 
@@ -50,12 +52,16 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   const watchAmount = watch("amount");
   const amount = Number(watchAmount || 0);
+  const usedView = format(formatUnits(used), 2);
 
   const validate = (val) => {
-    if (!isOverdue) return errorMessages.notOverDue;
-    if (Number(val) > used) return errorMessages.maxWriteOff;
-    if (Number(val) <= 0) return errorMessages.minValueZero;
     if (!val) return errorMessages.required;
+    if (!isOverdue) return errorMessages.notOverDue;
+
+    const scaled = String(Number(val) * 10 ** 18);
+    const bnValue = BigNumber.from(scaled);
+    if (bnValue.gt(used)) return errorMessages.maxWriteOff;
+    if (bnValue.lte(0)) return errorMessages.minValueZero;
 
     return true;
   };
@@ -87,7 +93,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   };
 
   const handleWriteOffMax = () => {
-    setValue("amount", used, {
+    setValue("amount", usedView, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -112,27 +118,26 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
                   size="medium"
                   align="center"
                   label="Unpaid debt"
-                  value={<Dai value={format(used, 4)} />}
+                  value={<Dai value={usedView} />}
                 />
               </Grid.Col>
             </Grid.Row>
           </Grid>
           <Input
             type="number"
-            ref={register({ validate })}
-            name="amount"
             label="Value"
             suffix={<Dai />}
-            caption="Write off max."
+            caption={`Write off max. ${usedView} DAI`}
             error={errors.amount?.message}
             onCaptionClick={handleWriteOffMax}
+            {...register("amount", { validate })}
           />
           <Box justify="space-between" mt="16px">
             <Label as="p" size="small" m={0}>
               New balance owed
             </Label>
             <Label as="p" size="small" m={0}>
-              {format(used - amount)}
+              {Number(formatUnits(used)) - amount}
             </Label>
           </Box>
           <Label align="center" as="p" size="small" color="red500" mt="16px">

@@ -1,18 +1,15 @@
 import { useCallback } from "react";
 import { newRidgeState } from "react-ridge-state";
-import { ModalOverlay, Grid, Stat, ToggleMenu } from "@unioncredit/ui";
+import { ModalOverlay, ToggleMenu } from "@unioncredit/ui";
 
-import format from "util/formatValue";
 import { useModal, useModalOpen } from "hooks/useModal";
 import useStakeData from "hooks/data/useStakeData";
 import useToken from "hooks/useToken";
 import useRewardsData from "hooks/data/useRewardsData";
 import useTokenBalance from "hooks/data/useTokenBalance";
-import { Dai } from "components-ui/Dai";
 import { Modal } from "components-ui/Modal";
 import { DepositInput } from "components-ui/DepositInput";
 import { WithdrawInput } from "components-ui/WithdrawInput";
-import { formatUnits } from "@ethersproject/units";
 import { ZERO } from "constants/variables";
 
 export const StakeType = {
@@ -61,8 +58,11 @@ export function StakeModal() {
 
   if (!isOpen) return null;
 
-  const { totalStake = ZERO, withdrawableStake = ZERO } =
-    !!stakeData && stakeData;
+  const {
+    totalStake = ZERO,
+    withdrawableStake = ZERO,
+    utilizedStake = ZERO,
+  } = !!stakeData && stakeData;
 
   const onComplete = async () => {
     await updateUnionBalance();
@@ -81,43 +81,26 @@ export function StakeModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Stake or Unstake DAI" onClose={close}>
-        <Grid>
-          <Grid.Row>
-            <Grid.Col>
-              <Stat
-                size="medium"
-                mb="24px"
-                align="center"
-                label="Dai Staked"
-                value={<Dai value={format(formatUnits(totalStake, 18), 2)} />}
-              />
-            </Grid.Col>
-            <Grid.Col>
-              <Stat
-                size="medium"
-                mb="24px"
-                align="center"
-                label="Withdrawable"
-                value={
-                  <Dai value={format(formatUnits(withdrawableStake, 18), 2)} />
-                }
-              />
-            </Grid.Col>
-          </Grid.Row>
-        </Grid>
         <ToggleMenu
           fluid
+          packed
           onChange={onToggleChange}
           items={toggleMenuOptions}
           initialActive={initialActiveIndex}
         />
         {type === StakeType.STAKE ? (
-          <DepositInput totalStake={totalStake} onComplete={onComplete} />
+          <DepositInput
+            totalStake={totalStake}
+            withdrawableStake={withdrawableStake}
+            onComplete={onComplete}
+            utilizedStake={utilizedStake}
+          />
         ) : (
           <WithdrawInput
             totalStake={totalStake}
-            onComplete={onComplete}
             withdrawableStake={withdrawableStake}
+            onComplete={onComplete}
+            utilizedStake={utilizedStake}
           />
         )}
       </Modal>
