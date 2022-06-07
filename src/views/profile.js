@@ -25,6 +25,7 @@ import useVouchData from "hooks/data/useVouchData";
 import useTrustData from "hooks/data/useTrustData";
 import useAddressLabels from "hooks/useAddressLabels";
 import { useVouchModal, VouchModal } from "components-ui/modals";
+import { LoadingOverlay } from "components-ui/LoadingOverlay";
 import { View, Avatar, Copyable } from "components-ui";
 import ProfileGovernance from "components-ui/ProfileGovernance";
 
@@ -62,6 +63,8 @@ export default function ProfileView() {
   const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
 
   const isAccountProfile = account === address;
+
+  const isLoading = !rawTrustData || !rawVouchData;
 
   return (
     <>
@@ -145,6 +148,7 @@ export default function ProfileView() {
                 </Card.Body>
               </Card>
               <Card mt="24px">
+                {isLoading && <LoadingOverlay />}
                 <Card.Body>
                   <Grid>
                     <Grid.Row>

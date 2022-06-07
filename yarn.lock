@@ -2819,9 +2819,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@unioncredit/ui@^0.2.79":
-  version "0.2.95"
-  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.95.tgz#4d7d8b9555de9a5f53ae49a5f89c870863fa718c"
-  integrity sha512-TPIzAiptuMnTfC5wBgi3rYBn68EA1MiKPK/1YnzhDjkBbK4JQg+e6Kp2vZAacix0TjLoW/rRgHvhJZ/CJGw3Eg==
+  version "0.2.96"
+  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.96.tgz#eb0031c2aeaf4a5ab7d32f7b0c4b700977acdac1"
+  integrity sha512-m+eRCpcTLHnmkQhLx0n6mSWgPakC6SXfvAhyXkO5InBX4K0pCQ8BxZ6srzoQBmw7C9j7Q5IVP8CIzBS/JN+Pig==
   dependencies:
     classnames "^2.3.1"
     node-sass "^7.0.1"
@@ -5354,9 +5354,9 @@ error-ex@^1.2.0, error-ex@^1.3.1:
     is-arrayish "^0.2.1"
 
 error-stack-parser@^2.0.6:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.1.3.tgz#ab877c676540507dbe6429974ea66833ae68b7cb"
-  integrity sha512-F9KypcaAvLzI4yXneZzOvzZoqakhbjuAGFK0aLy33tYaDqdu6v+lzrN/TTG/mM48Op624zZZ2RpXRx3wA0+zmg==
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.1.4.tgz#229cb01cdbfa84440bfa91876285b94680188286"
+  integrity sha512-Sk5V6wVazPhq5MhpO+AUxJn5x7XSXGl1R93Vn7i+zS15KDVxQijejNCrz8340/2bgLBjR9GtEG8ZVKONDjcqGQ==
   dependencies:
     stackframe "^1.3.4"
 
@@ -10428,7 +10428,7 @@ request@^2.88.0:
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
-  integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
+  integrity sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==
 
 require-from-string@^1.1.0:
   version "1.2.1"
@@ -10513,7 +10513,7 @@ resolve@^2.0.0-next.3:
 retry@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.12.0.tgz#1b42a6266a21f07421d1b0b54b7dc167b01c013b"
-  integrity sha1-G0KmJmoh8HQh0bC1S33BZ7AcATs=
+  integrity sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==
 
 retry@^0.13.1:
   version "0.13.1"
