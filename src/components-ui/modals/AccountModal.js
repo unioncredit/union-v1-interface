@@ -15,7 +15,7 @@ import { ReactComponent as Failed } from "@unioncredit/ui/lib/icons/failed.svg";
 import { ReactComponent as Success } from "@unioncredit/ui/lib/icons/success.svg";
 
 import { Avatar } from "components-ui/Avatar";
-import { Copyable, Modal, NetworkSelect, Dai } from "components-ui";
+import { Copyable, Modal, Dai } from "components-ui";
 import { useModal, useModalOpen } from "hooks/useModal";
 import usePublicData from "hooks/usePublicData";
 import useActivity, { useClearActivity } from "hooks/data/useActivity";
@@ -84,9 +84,6 @@ export function AccountModal() {
           <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
             <External width="24px" />
           </a>
-        </Box>
-        <Box mb="20px">
-          <NetworkSelect />
         </Box>
         <Divider />
         <Box align="center" justify="space-between" mt="20px" mb="12px">
