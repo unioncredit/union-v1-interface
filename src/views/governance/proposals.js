@@ -24,9 +24,8 @@ function ProposalsView() {
             )}
             <Card mt="24px">
               <Card.Header title="All Proposals" />
-              <Card.Body>
-                <ProposalsTable data={data} />
-              </Card.Body>
+              <Box mb="24px" />
+              <ProposalsTable data={data} />
             </Card>
           </Grid.Col>
         </Grid.Row>

@@ -1,5 +1,13 @@
 import { CreditContactsRow, CreditContactsRowSkeleton } from "components-ui";
-import { Table, Card, Pagination, EmptyState } from "@unioncredit/ui";
+import {
+  Table,
+  Card,
+  Pagination,
+  EmptyState,
+  TableRow,
+  TableHead,
+  Box,
+} from "@unioncredit/ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
 import { useNavigate } from "react-router-dom";
@@ -24,11 +32,19 @@ export function CreditProvidersCard() {
         title="Credit providers"
         subTitle="Accounts providing you with credit"
       />
-      <Card.Body>
-        {pagedVouchData.length <= 0 ? (
+      {pagedVouchData.length <= 0 ? (
+        <Card.Body>
           <EmptyState label="No credit providers" />
-        ) : (
-          <Table disableCondensed>
+        </Card.Body>
+      ) : (
+        <>
+          <Box mb="24px" />
+          <Table>
+            <TableRow>
+              <TableHead></TableHead>
+              <TableHead>Account</TableHead>
+              <TableHead align="right">Trust Limit (DAI)</TableHead>
+            </TableRow>
             {isVouchLoading
               ? createArray(3).map((_, i) => (
                   <CreditContactsRowSkeleton key={i} />
@@ -43,14 +59,14 @@ export function CreditProvidersCard() {
                   />
                 ))}
           </Table>
-        )}
-        <Pagination
-          mt="18px"
-          pages={maxPages}
-          activePage={page}
-          onClick={setPage}
-        />
-      </Card.Body>
+        </>
+      )}
+      <Pagination
+        my="24px"
+        pages={maxPages}
+        activePage={page}
+        onClick={setPage}
+      />
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-import { Card, Button } from "@unioncredit/ui";
+import { Card, Button, Box } from "@unioncredit/ui";
 import { Link } from "react-router-dom";
 import { ProposalsTable } from "./ProposalsTable";
 
@@ -14,9 +14,8 @@ export function RecentProposals({ data }) {
           </Link>
         }
       />
-      <Card.Body>
-        <ProposalsTable data={data} />
-      </Card.Body>
+      <Box mb="24px" />
+      <ProposalsTable data={data} />
     </Card>
   );
 }

@@ -22,11 +22,11 @@ export const CreditContactsRow = forwardRef((props, ref) => {
 
   return (
     <TableRow onClick={onClick && handleClick} ref={ref}>
+      <TableCell fixedSize>
+        <Avatar address={address} />
+      </TableCell>
       <TableCell>
-        <Box align="center">
-          <Avatar address={address} />
-          <Text ml="8px">{label || name}</Text>
-        </Box>
+        <Text>{label || name}</Text>
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>
@@ -40,13 +40,11 @@ export const CreditContactsRow = forwardRef((props, ref) => {
 export function CreditContactsRowSkeleton() {
   return (
     <TableRow>
+      <TableCell fixedSize>
+        <Skeleton variant="circle" size={24} grey={200} />
+      </TableCell>
       <TableCell span={2}>
-        <Box>
-          <Box align="center">
-            <Skeleton variant="circle" size={24} grey={200} />
-            <Skeleton width={100} height={10} grey={200} ml="8px" />
-          </Box>
-        </Box>
+        <Skeleton width={100} height={10} grey={200} ml="8px" />
       </TableCell>
       <TableCell>
         <Skeleton width={30} height={10} grey={200} ml="auto" />

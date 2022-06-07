@@ -14,6 +14,8 @@ import {
   EmptyState,
   Heading,
   Label,
+  TableRow,
+  TableHead,
 } from "@unioncredit/ui";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -217,28 +219,36 @@ export default function ContactsView({
                       </Card.Body>
                     </Card>
                   </Collapse>
-                  <Divider mt="16px" mb="16px" />
-                  <Table noBorder noPadding mb="20px" disableCondensed>
-                    {isLoading ? (
-                      createArray(3).map((_, i) => (
-                        <ContactsListItemSkeleton key={i} />
-                      ))
-                    ) : pagedData?.length <= 0 ? (
-                      <EmptyState label="No contacts" />
-                    ) : (
-                      pagedData.map((item) => (
-                        <ContactsListItem
-                          {...item}
-                          active={item.address === selectedContact?.address}
-                          variant={contactsType}
-                          key={`${item.address}-${contactsType}`}
-                          onClick={handleSelectContact(item)}
-                        />
-                      ))
+                </Card.Body>
+                <Table>
+                  <TableRow>
+                    <TableHead />
+                    <TableHead>Account</TableHead>
+                    {contactsType === ContactsType.YOU_TRUST && (
+                      <TableHead align="center">Status</TableHead>
                     )}
-                  </Table>
+                    <TableHead align="right">Trust Limit (DAI)</TableHead>
+                  </TableRow>
+                  {isLoading ? (
+                    createArray(3).map((_, i) => (
+                      <ContactsListItemSkeleton key={i} />
+                    ))
+                  ) : pagedData?.length <= 0 ? (
+                    <EmptyState label="No contacts" />
+                  ) : (
+                    pagedData.map((item) => (
+                      <ContactsListItem
+                        {...item}
+                        active={item.address === selectedContact?.address}
+                        variant={contactsType}
+                        key={`${item.address}-${contactsType}`}
+                        onClick={handleSelectContact(item)}
+                      />
+                    ))
+                  )}
+                </Table>
+                <Card.Body>
                   <Pagination
-                    mt="24px"
                     pages={maxPages}
                     activePage={page}
                     onClick={setPage}
@@ -271,13 +281,11 @@ export default function ContactsView({
 
               {selectedContact && (
                 <Card mt="24px">
-                  <Card.Body>
-                    <ContactDetailsVariant
-                      {...selectedContact}
-                      onClose={() => setSelectedContact(null)}
-                      contactsType={contactsType}
-                    />
-                  </Card.Body>
+                  <ContactDetailsVariant
+                    {...selectedContact}
+                    onClose={() => setSelectedContact(null)}
+                    contactsType={contactsType}
+                  />
                 </Card>
               )}
 

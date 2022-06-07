@@ -5,6 +5,7 @@ import {
   Skeleton,
   Box,
   Badge,
+  Label,
 } from "@unioncredit/ui";
 import { formatUnits } from "@ethersproject/units";
 
@@ -14,6 +15,7 @@ import usePublicData from "hooks/usePublicData";
 import { ContactsType } from "constants/app";
 import format from "util/formatValue";
 import truncateName from "util/truncateName";
+import truncateAddress from "util/truncateAddress";
 
 export function ContactsListItem(props) {
   const { address, trust, onClick, isOverdue, variant, active, isMember } =
@@ -39,21 +41,19 @@ export function ContactsListItem(props) {
       active={active}
       error={isOverdue && variant === ContactsType.YOU_TRUST}
     >
-      <TableCell span={4}>
-        <Box align="center">
-          <Avatar address={address} />
-          <Text grey={700} ml="8px">
-            {truncateName(primaryLabel)}
-          </Text>
-        </Box>
+      <TableCell fixedSize>
+        <Avatar address={address} />
       </TableCell>
-      <TableCell align="right">
-        <Text>
-          <Dai value={format(formatUnits(trust, 18), 2)} />
-        </Text>
+      <TableCell>
+        <Label as="p" grey={700} m={0}>
+          {truncateName(primaryLabel)}
+        </Label>
+        <Label as="p" size="small" grey={400} m={0}>
+          {truncateAddress(address)}
+        </Label>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
-        <TableCell align="right" className="hide-lt-600">
+        <TableCell align="center" className="hide-lt-600">
           {!isMember ? (
             <Badge color="grey" label="Not a member" />
           ) : isOverdue ? (
@@ -63,6 +63,9 @@ export function ContactsListItem(props) {
           )}
         </TableCell>
       )}
+      <TableCell align="right">
+        <Text>{format(formatUnits(trust, 18), 2)}</Text>
+      </TableCell>
     </TableRow>
   );
 }

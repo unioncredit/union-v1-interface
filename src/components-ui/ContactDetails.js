@@ -10,7 +10,6 @@ import { ContactsType } from "constants/app";
 import { RelatedHistory } from "components-ui/RelatedHistory";
 import useBorrowData from "hooks/data/useBorrowData";
 
-
 function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
   return (
     <>
@@ -148,27 +147,17 @@ function YouTrustContactDetails({
 }
 
 export function ContactDetails({ contactsType, ...props }) {
-  const { account } = useWeb3React();
-
-  const relatedHistoryProps =
-    contactsType === ContactsType.TRUSTS_YOU
-      ? { account: props.address, staker: props.address, borrower: account }
-      : { account: props.address, staker: account, borrower: props.address };
-
   return (
-    <>
-      <Card mb="24px">
-        <Card.Body>
-          <Grid>
-            {contactsType === ContactsType.YOU_TRUST ? (
-              <YouTrustContactDetails {...props} />
-            ) : (
-              <TrustsYouContactDetails {...props} />
-            )}
-          </Grid>
-        </Card.Body>
-      </Card>
-      <RelatedHistory {...relatedHistoryProps} />
-    </>
+    <Card>
+      <Card.Body>
+        <Grid>
+          {contactsType === ContactsType.YOU_TRUST ? (
+            <YouTrustContactDetails {...props} />
+          ) : (
+            <TrustsYouContactDetails {...props} />
+          )}
+        </Grid>
+      </Card.Body>
+    </Card>
   );
 }

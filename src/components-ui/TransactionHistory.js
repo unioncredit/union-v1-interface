@@ -8,6 +8,7 @@ import {
   Skeleton,
   Pagination,
   EmptyState,
+  TableHead,
 } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { Dai } from "components-ui";
@@ -74,23 +75,23 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
 
   return (
     <TableRow>
+      <TableCell fixedSize>
+        <Icon width="24px" />
+      </TableCell>
       <TableCell>
-        <Box align="center">
-          <Icon width="24px" />
-          <Box direction="vertical">
-            <Label as="p" ml="8px" grey={700} mb={0}>
-              {text}
-            </Label>
-            <Label
-              as="p"
-              ml="8px"
-              size="small"
-              className="hide-gt-600"
-              grey={400}
-            >
-              {formatDateTime(timestamp)}
-            </Label>
-          </Box>
+        <Box direction="vertical">
+          <Label as="p" grey={700} mb={0}>
+            {text}
+          </Label>
+          <Label
+            as="p"
+            ml="8px"
+            size="small"
+            className="hide-gt-600"
+            grey={400}
+          >
+            {formatDateTime(timestamp)}
+          </Label>
         </Box>
       </TableCell>
       <TableCell className="hide-lt-600">
@@ -113,11 +114,11 @@ function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
 function TransactionHistorySkeletonRow() {
   return (
     <TableRow>
+      <TableCell fixedSize>
+        <Skeleton shimmer variant="circle" size={24} grey={200} />
+      </TableCell>
       <TableCell>
-        <Box align="center">
-          <Skeleton shimmer variant="circle" size={24} grey={200} />
-          <Skeleton shimmer width={60} height={10} grey={200} ml="6px" />
-        </Box>
+        <Skeleton shimmer width={60} height={10} grey={200} />
       </TableCell>
       <TableCell>
         <Skeleton shimmer width={80} height={10} grey={200} />
@@ -138,7 +139,13 @@ export function TransactionHistory({ data }) {
 
   return (
     <>
-      <Table disableCondensed>
+      <Table>
+        <TableRow>
+          <TableHead></TableHead>
+          <TableHead>Event</TableHead>
+          <TableHead>Date</TableHead>
+          <TableHead align="right">Value</TableHead>
+        </TableRow>
         {data?.length <= 0 && <TransactionHistoryEmpty />}
 
         {pagedData.map((tx, i) => (
@@ -152,7 +159,7 @@ export function TransactionHistory({ data }) {
       </Table>
 
       <Pagination
-        mt="24px"
+        my="24px"
         pages={maxPages}
         activePage={page}
         onClick={setPage}
