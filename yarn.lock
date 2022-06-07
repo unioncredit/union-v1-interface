@@ -2818,10 +2818,10 @@
     "@typescript-eslint/types" "5.27.0"
     eslint-visitor-keys "^3.3.0"
 
-"@unioncredit/ui@^0.2.79":
-  version "0.2.96"
-  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.96.tgz#eb0031c2aeaf4a5ab7d32f7b0c4b700977acdac1"
-  integrity sha512-m+eRCpcTLHnmkQhLx0n6mSWgPakC6SXfvAhyXkO5InBX4K0pCQ8BxZ6srzoQBmw7C9j7Q5IVP8CIzBS/JN+Pig==
+"@unioncredit/ui@0.2.0-beta.0":
+  version "0.2.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@unioncredit/ui/-/ui-0.2.0-beta.0.tgz#aad72025f85d11796b51eb4367662f2627ca0bc1"
+  integrity sha512-Xy5kqIXNUALkbxWICwmvEEjH9wlYMNW9nYmyzssFgTpo29No6aIlDl1JdOoRqrmchNfw7Qd4wLf9FRSf5ntSyw==
   dependencies:
     classnames "^2.3.1"
     node-sass "^7.0.1"

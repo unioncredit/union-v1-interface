@@ -42,7 +42,6 @@ export * from "./Link";
 export * from "./ContactDetailsCard";
 export * from "./CheckIsMember";
 export * from "./View";
-export * from "./ConnectButton";
 export * from "./AddressHistory";
 export * from "./RelatedHistory";
 export * from "./ContactDetailsSkeleton";
