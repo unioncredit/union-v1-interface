@@ -7,22 +7,23 @@ import {
   Input,
   Box,
 } from "@unioncredit/ui";
+import { formatUnits } from "@ethersproject/units";
+import { useForm } from "react-hook-form";
+import { useWeb3React } from "@web3-react/core";
+import { BigNumber } from "@ethersproject/bignumber";
+
 import { useModal, useModalOpen } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
 import { Dai, Modal } from "components-ui";
 import format from "util/formatValue";
 import errorMessages from "util/errorMessages";
-import { useForm } from "react-hook-form";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import useTrustData from "hooks/data/useTrustData";
-import { useWeb3React } from "@web3-react/core";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import useWriteOffDebt from "hooks/payables/useWriteOffDebt";
 import isHash from "util/isHash";
-import { formatUnits } from "@ethersproject/units";
-import { BigNumber } from "@ethersproject/bignumber";
 
 export const WRITE_OFF_DEBT = "write-off-debt-modal";
 
@@ -101,7 +102,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Write-off debt" onClose={close}>
+      <Modal title="Write-off debt" onClose={close} onBack={handleGoBack}>
         <form onSubmit={handleSubmit(handleWriteOffDebt)}>
           <Grid>
             <Grid.Row>

@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
+import { formatUnits } from "@ethersproject/units";
 import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
 
 import { Dai, Modal } from "components-ui";
@@ -14,7 +15,7 @@ import { useModal, useModalOpen } from "hooks/useModal";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
-import { formatUnits } from "@ethersproject/units";
+import { useManageContactModal } from "./ManageContactModal";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -26,6 +27,7 @@ export function EditVouchModal({ address, used, trust }) {
   const addActivity = useAddActivity();
   const { library } = useWeb3React();
   const { close } = useEditVouchModal();
+  const { open: openManageModal } = useManageContactModal();
   const adjustTrust = useAdjustTrust();
   const { mutate: updateTrustData } = useTrustData();
   const { mutate: updateCreditLimit } = useCreditLimit();
@@ -49,6 +51,11 @@ export function EditVouchModal({ address, used, trust }) {
     return true;
   };
 
+  const back = () => {
+    close();
+    openManageModal();
+  };
+
   const handleAdjustTrust = async (values) => {
     try {
       const { hash } = await adjustTrust(address, values.amount);
@@ -58,7 +65,7 @@ export function EditVouchModal({ address, used, trust }) {
       );
       await updateTrustData();
       await updateCreditLimit();
-      close();
+      back();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(
@@ -73,7 +80,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Change trust amount" onClose={close}>
+      <Modal title="Change trust amount" onClose={close} onBack={back}>
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>
