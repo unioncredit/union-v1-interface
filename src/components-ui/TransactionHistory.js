@@ -30,6 +30,7 @@ import useChainId from "hooks/useChainId";
 import { Avatar } from "components-ui/Avatar";
 
 import "./TransactionHistory.scss";
+import { Link } from "./Link";
 
 const icons = {
   [TransactionTypes.CANCEL]: CancelledVouch,
@@ -44,8 +45,8 @@ const texts = {
   [TransactionTypes.CANCEL]: "Cancelled Vouch",
   [TransactionTypes.BORROW]: "Borrow",
   [TransactionTypes.REPAY]: "Repayment",
-  [TransactionTypes.TRUST]: "Trusted",
-  [TransactionTypes.TRUSTED]: "Trusted",
+  [TransactionTypes.TRUST]: "Sent vouch",
+  [TransactionTypes.TRUSTED]: "Received vouch",
   [TransactionTypes.REGISTER]: "Became a member",
 };
 
@@ -97,12 +98,9 @@ function TransactionHistoryRow({
             {text}{" "}
             {address && (
               <Label as="span" grey={400} m={0}>
-                <a
-                  href={getEtherscanLink(chainId, address[1], "ADDRESS")}
-                  target="_blank"
-                >
+                <Link to={`/profile/${address[1]}`}>
                   {truncateName(address[0]) || address[1].slice(0, 6)}
-                </a>
+                </Link>
               </Label>
             )}
           </Label>
