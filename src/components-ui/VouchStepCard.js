@@ -7,16 +7,21 @@ import useTrustCountData from "hooks/data/useTrustCountData";
 import { Box, Card, CircleProgress, Table } from "@unioncredit/ui";
 import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
+import useEffectiveNumber from "hooks/useEffectiveNumber";
+import { ZERO } from "constants/variables";
 
 import "./VouchStepCard.scss";
 
 export function VouchStepCard() {
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: vouchData } = useVouchData();
+  const { data: effectiveNumberBn = ZERO } = useEffectiveNumber();
 
   const vouchCount = trustCount >= 3 ? 3 : trustCount;
 
   const isVouchLoading = !vouchData;
+
+  const effectiveNumber = Number(effectiveNumberBn.toString());
 
   return (
     <Card mb="24px" size="fluid" className="vouchStakeCard">
@@ -28,9 +33,9 @@ export function VouchStepCard() {
         <Box className="vouchStakeCardInner">
           <Box my="16px" ml="16px" mr="24px" className="circleProgress">
             <CircleProgress
-              percentage={(vouchCount / 3) * 100}
-              complete={vouchCount >= 3}
-              label={`${vouchCount}/3`}
+              percentage={(vouchCount / effectiveNumber) * 100}
+              complete={vouchCount >= effectiveNumber}
+              label={`${vouchCount}/${effectiveNumber}`}
             />
           </Box>
           <Table>
@@ -39,7 +44,7 @@ export function VouchStepCard() {
                   <CreditContactsRowSkeleton key={i} />
                 ))
               : vouchData
-                  .slice(0, 3)
+                  .slice(0, effectiveNumber)
                   .map((item) => (
                     <CreditContactsRow key={item.address} {...item} />
                   ))}

@@ -8,6 +8,7 @@ function fetchProvider(_, chainId) {
   return new JsonRpcProvider(RPC_URLS[chainId]);
 }
 
+// TODO: use library tooo
 export default function useReadProvider() {
   const chainId = useChainId();
 

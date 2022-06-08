@@ -1,10 +1,4 @@
 import {
-  CongratulationsModal,
-  useCongratulationsModal,
-  StakeModal,
-  useStakeModal,
-} from "components-ui/modals";
-import {
   Grid,
   Row,
   Col,
@@ -14,26 +8,30 @@ import {
   ProgressListItem,
   MiniProgressList,
 } from "@unioncredit/ui";
+import { useRef } from "react";
+
 import {
   View,
   BecomeMemberCard,
   StakeStepCard,
   VouchStepCard,
 } from "components-ui";
-import { useRef } from "react";
 import useIsMember from "hooks/data/useIsMember";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useTrustCountData from "hooks/data/useTrustCountData";
 import useStakeData from "hooks/data/useStakeData";
+import { CongratulationsModal, StakeModal } from "components-ui/modals";
+import { ZERO } from "constants/variables";
+import useEffectiveNumber from "hooks/useEffectiveNumber";
 
 import styles from "./getStarted.module.css";
-import { ZERO } from "constants/variables";
 
 export default function MembershipView() {
   const stakeStep = useRef();
   const vouchStep = useRef();
   const memberStep = useRef();
 
+  const { data: effectiveNumber = ZERO } = useEffectiveNumber();
   const { data: trustCount = 0 } = useTrustCountData();
   const { data: creditLimit = ZERO } = useCreditLimit();
   const { data: stakeData } = useStakeData();
@@ -43,7 +41,7 @@ export default function MembershipView() {
   const { totalStake = ZERO } = !!stakeData && stakeData;
 
   const stakeComplete = totalStake.gt(0);
-  const vouchComplete = trustCount >= 3;
+  const vouchComplete = trustCount >= Number(effectiveNumber.toString());
 
   const completeCount = [stakeComplete, vouchComplete, isMember].reduce(
     (acc, completeness) => (completeness ? acc + 1 : acc),
