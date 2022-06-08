@@ -1,5 +1,4 @@
-import { useAutoEffect } from "hooks.macro";
-import { useCallback, useState } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { useCopyToClipboard } from "react-use";
 
 export default function useCopy(timeout = 1000) {
@@ -12,7 +11,7 @@ export default function useCopy(timeout = 1000) {
     setIsCopied(true);
   }, []);
 
-  useAutoEffect(() => {
+  useEffect(() => {
     if (isCopied) {
       const hide = setTimeout(() => {
         setIsCopied(false);
@@ -22,7 +21,7 @@ export default function useCopy(timeout = 1000) {
         clearTimeout(hide);
       };
     }
-  });
+  }, []);
 
   return [isCopied, copy];
 }

@@ -7,14 +7,14 @@ import {
   Label,
   Heading,
 } from "@unioncredit/ui";
+import { Fragment, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-import { useAutoEffect } from "hooks.macro";
+
+import { login } from "lib/auth";
 import useEagerConnect from "hooks/useEagerConnect";
 import useIsSanctioned from "hooks/useIsSanctioned";
-import { login } from "lib/auth";
 import { CONNECTORS, walletconnect } from "lib/connectors";
-import { Fragment, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { getWalletName, getWalletIcon } from "util/formatWalletDetails";
 import { NetworkSwitcher } from "./NetworkSwitcher";
 
@@ -86,16 +86,16 @@ export const SignInCard = () => {
 
   const [activatingConnector, setActivatingConnector] = useState();
 
-  useAutoEffect(() => {
+  useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
     }
-  });
+  }, [connector]);
 
   /**
    * Handle disconnecting from the wallet if an error occurs
    */
-  useAutoEffect(() => {
+  useEffect(() => {
     if (error) {
       if (connector === walletconnect) connector.close();
 
@@ -104,7 +104,7 @@ export const SignInCard = () => {
         setActivatingConnector(undefined);
       }
     }
-  });
+  }, [connector, deactivate, error]);
 
   const triedEager = useEagerConnect();
 

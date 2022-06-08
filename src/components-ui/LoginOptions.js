@@ -1,15 +1,16 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Card, Button, Box, Label, Grid, Text } from "@unioncredit/ui";
-import { ReactComponent as Chevron } from "@unioncredit/ui/lib/icons/chevron.svg";
-import useIsSanctioned from "hooks/useIsSanctioned";
 import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import { useState } from "react";
-import { useAutoEffect } from "hooks.macro";
+import { ReactComponent as Chevron } from "@unioncredit/ui/lib/icons/chevron.svg";
+
+import { login } from "lib/auth";
+import useIsSanctioned from "hooks/useIsSanctioned";
 import { CONNECTORS, walletconnect } from "lib/connectors";
 import { getWalletDescription, getWalletIcon } from "util/formatWalletDetails";
-import { login } from "lib/auth";
+
 import styles from "./loginOptions.module.css";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const resetWalletConnector = (connector) => {
   if (
@@ -28,16 +29,16 @@ export function LoginOptions({ triedEager }) {
   const { activate, error, connector, deactivate } = useWeb3React();
   const [activatingConnector, setActivatingConnector] = useState();
 
-  useAutoEffect(() => {
+  useEffect(() => {
     if (activatingConnector && activatingConnector === connector) {
       setActivatingConnector(undefined);
     }
-  });
+  }, [connector]);
 
   /**
    * Handle disconnecting from the wallet if an error occurs
    */
-  useAutoEffect(() => {
+  useEffect(() => {
     if (error) {
       if (connector === walletconnect) connector.close();
 
@@ -46,7 +47,7 @@ export function LoginOptions({ triedEager }) {
         setActivatingConnector(undefined);
       }
     }
-  });
+  }, [connector, deactivate, error]);
 
   return (
     <Grid.Col>

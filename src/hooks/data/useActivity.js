@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { newRidgeState } from "react-ridge-state";
 import { useWeb3React } from "@web3-react/core";
-import { useAutoCallback } from "hooks.macro";
 
 const MAX_SIZE = 8;
 const activityStorageKey = "union:activity";
@@ -38,14 +37,18 @@ export const clearActivity = (chainId, address) => {
 
 export function useAddActivity() {
   const { chainId, account } = useWeb3React();
-  return useAutoCallback(
-    (activity) => chainId && addActivity(chainId, account)(activity)
+  return useCallback(
+    (activity) => chainId && addActivity(chainId, account)(activity),
+    [account, chainId]
   );
 }
 
 export function useClearActivity() {
   const { chainId, account } = useWeb3React();
-  return useAutoCallback(() => chainId && clearActivity(chainId, account));
+  return useCallback(
+    () => chainId && clearActivity(chainId, account),
+    [chainId, account]
+  );
 }
 
 export default function useActivity() {
