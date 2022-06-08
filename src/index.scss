@@ -10,6 +10,10 @@ a {
   text-decoration: inherit;
 }
 
+table p a:hover {
+  color: #3b82f6;
+}
+
 @media screen and (max-width: 1000px) {
   .layout-main-wrapper {
     padding-bottom: 32px;

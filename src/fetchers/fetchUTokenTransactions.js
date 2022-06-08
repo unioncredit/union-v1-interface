@@ -8,12 +8,14 @@ export default async function fetchUTokenTransactions(chainId, address) {
   const query = gql`
     query ($first: Int, $account: Bytes) {
       ${TransactionTypes.BORROW}: borrows(first: $first, where: { account: $account }) {
+        id
         account
         amount
         fee
         timestamp
       }
       ${TransactionTypes.REPAY}: repays(first: $first, where: { account: $account }) {
+        id
         account
         amount
         timestamp

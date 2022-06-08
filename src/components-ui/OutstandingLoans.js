@@ -4,30 +4,39 @@ import {
   Table,
   TableCell,
   TableRow,
-  Box,
   Pagination,
   EmptyState,
+  Label,
+  TableHead,
 } from "@unioncredit/ui";
+import { formatUnits } from "@ethersproject/units";
+
 import usePublicData from "hooks/usePublicData";
-import { Avatar, Dai } from "components-ui";
+import { Avatar } from "components-ui";
 import format from "util/formatValue";
 import usePagination from "hooks/usePagination";
 import { useNavigate } from "react-router-dom";
-import { formatUnits } from "@ethersproject/units";
+import truncateName from "util/truncateName";
+import truncateAddress from "util/truncateAddress";
 
 function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
   const navigate = useNavigate();
-  const { name } = usePublicData(address);
+  const { name, ENSName } = usePublicData(address);
+
+  const [primaryLabel] = [ENSName, name].filter((label) => Boolean(label));
 
   return (
     <TableRow onClick={() => navigate(`/contacts?contact=${address}`)}>
-      <TableCell span={1}>
-        <Box align="center">
-          <Avatar address={address} />
-          <Text ml="8px" grey={400}>
-            {name}
-          </Text>
-        </Box>
+      <TableCell fixedSize>
+        <Avatar address={address} />
+      </TableCell>
+      <TableCell>
+        <Label as="p" grey={700} m={0}>
+          {truncateName(primaryLabel)}
+        </Label>
+        <Label as="p" size="small" grey={400} m={0}>
+          {truncateAddress(address)}
+        </Label>
       </TableCell>
       <TableCell>
         {!isMember ? (
@@ -39,9 +48,7 @@ function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
         )}
       </TableCell>
       <TableCell align="right">
-        <Text grey={700}>
-          <Dai value={format(formatUnits(used))} />
-        </Text>
+        <Text grey={700}>{format(formatUnits(used), 2)}</Text>
       </TableCell>
     </TableRow>
   );
@@ -59,6 +66,12 @@ export function OutstandingLoans({ data }) {
   return (
     <>
       <Table>
+        <TableRow>
+          <TableHead></TableHead>
+          <TableHead>Account</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead align="right">Trust Limit (DAI)</TableHead>
+        </TableRow>
         {loans && loans.length > 0 ? (
           pagedLoans.map((row, i) => <OutstandingLoansRow key={i} {...row} />)
         ) : (

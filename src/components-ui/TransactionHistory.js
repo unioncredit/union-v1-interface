@@ -10,13 +10,6 @@ import {
   EmptyState,
   TableHead,
 } from "@unioncredit/ui";
-import { useWeb3React } from "@web3-react/core";
-import { Dai } from "components-ui";
-import usePagination from "hooks/usePagination";
-import createArray from "util/createArray";
-import format from "util/formatValue";
-import formatDateTime from "util/formatDateTime";
-import truncateName from "util/truncateName";
 
 import { ReactComponent as Borrow } from "@unioncredit/ui/lib/icons/borrow.svg";
 import { ReactComponent as Repayment } from "@unioncredit/ui/lib/icons/repayment.svg";
@@ -27,6 +20,16 @@ import { ReactComponent as CancelledVouch } from "@unioncredit/ui/lib/icons/canc
 
 import { TransactionTypes } from "constants/app";
 import usePublicData from "hooks/usePublicData";
+import usePagination from "hooks/usePagination";
+import createArray from "util/createArray";
+import format from "util/formatValue";
+import formatDateTime from "util/formatDateTime";
+import truncateName from "util/truncateName";
+import getEtherscanLink from "util/getEtherscanLink";
+import useChainId from "hooks/useChainId";
+import { Avatar } from "components-ui/Avatar";
+
+import "./TransactionHistory.scss";
 
 const icons = {
   [TransactionTypes.CANCEL]: CancelledVouch,
@@ -38,74 +41,83 @@ const icons = {
 };
 
 const texts = {
-  [TransactionTypes.CANCEL]: ({ borrowerName }) => `Cancelled ${borrowerName}`,
-  [TransactionTypes.BORROW]: () => "Borrow",
-  [TransactionTypes.REPAY]: () => "Repayment",
-  [TransactionTypes.TRUST]: ({ borrowerName }) => `Trusted ${borrowerName}`,
-  [TransactionTypes.TRUSTED]: ({ stakerName }) => `Trusted by ${stakerName}`,
-  [TransactionTypes.REGISTER]: () => "Became a member",
+  [TransactionTypes.CANCEL]: "Cancelled Vouch",
+  [TransactionTypes.BORROW]: "Borrow",
+  [TransactionTypes.REPAY]: "Repayment",
+  [TransactionTypes.TRUST]: "Trusted",
+  [TransactionTypes.TRUSTED]: "Trusted",
+  [TransactionTypes.REGISTER]: "Became a member",
 };
 
-const parseName = (account, address, ENSName) => {
-  return account?.toLowerCase() === address?.toLowerCase()
-    ? "You"
-    : ENSName || address?.slice(0, 6);
-};
-function TransactionHistoryRow({ amount, type, timestamp, borrower, staker }) {
-  const { account } = useWeb3React();
+function TransactionHistoryRow({
+  amount,
+  type,
+  timestamp,
+  borrower,
+  staker,
+  id,
+}) {
+  const chainId = useChainId();
 
   const { ENSName: borrowerENS } = usePublicData(borrower);
   const { ENSName: stakerENS } = usePublicData(staker);
 
-  const borrowerName = parseName(account, borrower, borrowerENS);
-  const stakerName = parseName(account, staker, stakerENS);
-
   const Icon = icons[type];
 
-  const text = texts[type]?.({
-    amount,
-    type,
-    borrowerName: truncateName(borrowerName),
-    stakerName: truncateName(stakerName),
-  });
+  const text = texts[type];
 
   if (!Icon || !text) {
     return null;
   }
 
+  const address =
+    type === TransactionTypes.TRUSTED
+      ? [stakerENS, staker]
+      : type === TransactionTypes.TRUST
+      ? [borrowerENS, borrower]
+      : null;
+
+  const txHash = id && id.split("-")[0];
+
   return (
     <TableRow>
       <TableCell fixedSize>
-        <Icon width="24px" />
+        {address && address[1] ? (
+          <div className="avatarIcon">
+            <Avatar address={address[1]} size={24} />
+            <Icon width="16px" />
+          </div>
+        ) : (
+          <Icon width="24px" />
+        )}
       </TableCell>
       <TableCell>
         <Box direction="vertical">
-          <Label as="p" grey={700} mb={0}>
-            {text}
+          <Label as="p" grey={700} m={0}>
+            {text}{" "}
+            {address && (
+              <Label as="span" grey={400} m={0}>
+                <a
+                  href={getEtherscanLink(chainId, address[1], "ADDRESS")}
+                  target="_blank"
+                >
+                  {truncateName(address[0]) || address[1].slice(0, 6)}
+                </a>
+              </Label>
+            )}
           </Label>
-          <Label
-            as="p"
-            ml="8px"
-            size="small"
-            className="hide-gt-600"
-            grey={400}
-          >
-            {formatDateTime(timestamp)}
+          <Label as="p" size="small" grey={400} m={0}>
+            <a
+              href={getEtherscanLink(chainId, txHash, "TRANSACTION")}
+              target="_blank"
+            >
+              {formatDateTime(timestamp)}
+            </a>
           </Label>
         </Box>
       </TableCell>
-      <TableCell className="hide-lt-600">
-        <Label as="p" size="small" grey={400}>
-          {formatDateTime(timestamp)}
-        </Label>
-      </TableCell>
-
       <TableCell align="right">
-        {amount && (
-          <Text grey={700}>
-            <Dai value={format(amount, 2)} />
-          </Text>
-        )}
+        {amount && <Text grey={700}>{format(amount, 2)}</Text>}
       </TableCell>
     </TableRow>
   );
@@ -139,12 +151,11 @@ export function TransactionHistory({ data }) {
 
   return (
     <>
-      <Table>
+      <Table className="transactionHistory">
         <TableRow>
           <TableHead></TableHead>
           <TableHead>Event</TableHead>
-          <TableHead>Date</TableHead>
-          <TableHead align="right">Value</TableHead>
+          <TableHead align="right">Value (DAI)</TableHead>
         </TableRow>
         {data?.length <= 0 && <TransactionHistoryEmpty />}
 

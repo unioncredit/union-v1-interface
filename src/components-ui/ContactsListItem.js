@@ -3,13 +3,12 @@ import {
   TableCell,
   TableRow,
   Skeleton,
-  Box,
   Badge,
   Label,
 } from "@unioncredit/ui";
 import { formatUnits } from "@ethersproject/units";
 
-import { Avatar, Dai } from "components-ui";
+import { Avatar } from "components-ui";
 import useAddressLabels from "hooks/useAddressLabels";
 import usePublicData from "hooks/usePublicData";
 import { ContactsType } from "constants/app";

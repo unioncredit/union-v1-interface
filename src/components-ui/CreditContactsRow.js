@@ -1,24 +1,30 @@
 import { forwardRef } from "react";
 import { formatUnits } from "@ethersproject/units";
-import { Text, TableCell, TableRow, Skeleton, Box } from "@unioncredit/ui";
+import { Text, TableCell, TableRow, Skeleton, Label } from "@unioncredit/ui";
 
 import format from "util/formatValue";
 import { Avatar, Dai } from "components-ui";
 import usePublicData from "hooks/usePublicData";
 import useAddressLabels from "hooks/useAddressLabels";
+import truncateName from "util/truncateName";
+import truncateAddress from "util/truncateAddress";
 
 export const CreditContactsRow = forwardRef((props, ref) => {
   const { address, trust, onClick } = props;
-  const { name, ...publicData } = usePublicData(address);
+  const { name, ENSName } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
   const label = getLabel(address);
 
   const handleClick = (event) => {
     if (typeof onClick === "function") {
-      onClick(event, { ...props, name, ...publicData });
+      onClick(event, { ...props, name, ENSName });
     }
   };
+
+  const [primaryLabel] = [label, ENSName, name].filter((label) =>
+    Boolean(label)
+  );
 
   return (
     <TableRow onClick={onClick && handleClick} ref={ref}>
@@ -26,12 +32,15 @@ export const CreditContactsRow = forwardRef((props, ref) => {
         <Avatar address={address} />
       </TableCell>
       <TableCell>
-        <Text>{label || name}</Text>
+        <Label as="p" grey={700} m={0}>
+          {truncateName(primaryLabel)}
+        </Label>
+        <Label as="p" size="small" grey={400} m={0}>
+          {truncateAddress(address)}
+        </Label>
       </TableCell>
       <TableCell align="right">
-        <Text grey={700}>
-          <Dai value={format(formatUnits(trust))} />
-        </Text>
+        <Text grey={700}>{format(formatUnits(trust), 2)}</Text>
       </TableCell>
     </TableRow>
   );

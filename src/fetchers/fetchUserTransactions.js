@@ -12,17 +12,20 @@ const query = gql`
     $trustLinesFilter_Vouch: TrustLine_filter
   ) {
     ${TransactionTypes.CANCEL}: vouchCancellations(first: $first, where: $vouchCancellationsFilter) {
+      id
       borrower
       staker
       timestamp
     }
     ${TransactionTypes.TRUST}: trustLines(first: $first, where: $trustLinesFilter) {
+      id
       amount
       borrower
       staker
       timestamp
     }
     ${TransactionTypes.TRUSTED}: trustLines(first: $first, where: $trustLinesFilter_Vouch) {
+      id
       amount
       borrower
       staker

@@ -9,6 +9,7 @@ const query = gql`
     $memberApplicationsFilter: MemberApplication_filter,
   ) {
     ${TransactionTypes.REGISTER}: memberApplications(first: $first, where: $memberApplicationsFilter) {
+      id
       applicant
       timestamp
     }

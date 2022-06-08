@@ -52,8 +52,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "export REACT_APP_VERSION=$(git rev-parse HEAD) && react-app-rewired start",
+    "build": "export REACT_APP_VERSION=$(git rev-parse HEAD) && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
