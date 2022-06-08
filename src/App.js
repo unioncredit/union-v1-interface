@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { Wrapper } from "components-ui";
 import useGeoRestriction from "hooks/useGeoRestriction";
 import ErrorView from "views/error";
@@ -26,6 +26,7 @@ function App() {
   return (
     <Wrapper>
       <Routes>
+        <Route path="/" element={<Navigate to="/credit" replace={true} />} />
         <Route path="/get-started" element={<GetStartedPage />} />
         <Route path="/credit" element={<Credit />} />
         <Route path="/stake" element={<Stake />} />
