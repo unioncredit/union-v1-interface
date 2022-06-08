@@ -28,9 +28,8 @@ export default function StakeView() {
                 title="Active Borrowers"
                 subTitle="Contacts actively borrowing from your stake"
               />
-              <Card.Body>
-                <OutstandingLoans data={trustData} />
-              </Card.Body>
+              <Box mb="24px" />
+              <OutstandingLoans data={trustData} />
             </Card>
           </Grid.Col>
         </Grid.Row>

@@ -6,7 +6,6 @@ import {
   Table,
   ModalOverlay,
   Input,
-  Divider,
   Pagination,
   ButtonRow,
   Select,
@@ -189,7 +188,7 @@ export default function ContactsView({
                     </ButtonRow>
                   )}
                   <Collapse active={showFilters}>
-                    <Card packed>
+                    <Card packed overflow>
                       <Card.Body>
                         <Input
                           {...register("query")}
@@ -231,7 +230,10 @@ export default function ContactsView({
                   </TableRow>
                   {isLoading ? (
                     createArray(3).map((_, i) => (
-                      <ContactsListItemSkeleton key={i} />
+                      <ContactsListItemSkeleton
+                        key={i}
+                        variant={contactsType}
+                      />
                     ))
                   ) : pagedData?.length <= 0 ? (
                     <EmptyState label="No contacts" />
@@ -247,13 +249,11 @@ export default function ContactsView({
                     ))
                   )}
                 </Table>
-                <Card.Body>
-                  <Pagination
-                    pages={maxPages}
-                    activePage={page}
-                    onClick={setPage}
-                  />
-                </Card.Body>
+                <Pagination
+                  pages={maxPages}
+                  activePage={page}
+                  onClick={setPage}
+                />
               </Card>
             </Grid.Col>
             <Grid.Col md={6}>

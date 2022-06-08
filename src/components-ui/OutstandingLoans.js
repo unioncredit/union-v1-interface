@@ -65,12 +65,7 @@ export function OutstandingLoans({ data }) {
           <OutstandingLoansEmpty />
         )}
       </Table>
-      <Pagination
-        mt="18px"
-        pages={maxPages}
-        activePage={page}
-        onClick={setPage}
-      />
+      <Pagination pages={maxPages} activePage={page} onClick={setPage} />
     </>
   );
 }
