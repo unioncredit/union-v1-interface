@@ -17,6 +17,7 @@ import { ReactComponent as NewMember } from "@unioncredit/ui/lib/icons/newMember
 import { ReactComponent as NewVouch } from "@unioncredit/ui/lib/icons/newVouch.svg";
 import { ReactComponent as NewVouchRecieved } from "@unioncredit/ui/lib/icons/newVouchRecieved.svg";
 import { ReactComponent as CancelledVouch } from "@unioncredit/ui/lib/icons/cancelVouch.svg";
+import { ReactComponent as InlineExternal } from "@unioncredit/ui/lib/icons/externalinline.svg";
 
 import { TransactionTypes } from "constants/app";
 import usePublicData from "hooks/usePublicData";
@@ -109,7 +110,7 @@ function TransactionHistoryRow({
               href={getEtherscanLink(chainId, txHash, "TRANSACTION")}
               target="_blank"
             >
-              {formatDateTime(timestamp)}
+              {formatDateTime(timestamp)} <InlineExternal width="12px" />
             </a>
           </Label>
         </Box>
