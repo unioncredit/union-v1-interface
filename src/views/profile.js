@@ -9,7 +9,6 @@ import {
   Badge,
   Divider,
 } from "@unioncredit/ui";
-import { useParams } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
@@ -29,12 +28,11 @@ import { LoadingOverlay } from "components-ui/LoadingOverlay";
 import { View, Avatar, Copyable } from "components-ui";
 import ProfileGovernance from "components-ui/ProfileGovernance";
 
-export default function ProfileView() {
+export default function ProfileView({ address }) {
   const chainId = useChainId();
   const { account } = useWeb3React();
   const [isCopied, copy] = useCopy();
 
-  const { address } = useParams();
   const { getLabel } = useAddressLabels();
   const { name, ENSName } = usePublicData(address);
   const { data: rawVouchData } = useVouchData(address);
@@ -96,45 +94,44 @@ export default function ProfileView() {
                         <External width="24px" />
                       </a>
                     </Box>
-                    {vouchesForYou !== undefined &&
-                      vouchedForThem !== undefined && (
-                        <>
-                          {vouchesForYou && (
-                            <Text mt="20px" mb={0} grey={500}>
-                              Vouching for you
-                            </Text>
-                          )}
+                    {vouchesForYou && (
+                      <Text mt="20px" mb={0} grey={500}>
+                        Vouching for you
+                      </Text>
+                    )}
 
-                          {!vouchedForThem && !isAccountProfile && account && (
-                            <Button
-                              fluid
-                              mt="20px"
-                              icon="vouch"
-                              onClick={openVouchModal}
-                              label={`Vouch for ${name}`}
-                            />
-                          )}
+                    {vouchedForThem === false && (
+                      <Button
+                        fluid
+                        mt="20px"
+                        icon="vouch"
+                        onClick={openVouchModal}
+                        label={`Vouch for ${name}`}
+                      />
+                    )}
 
-                          {account === address && !ENSName && (
+                    {account === address && !ENSName && (
+                      <>
+                        <Button
+                          as="a"
+                          target="_blank"
+                          href="https://app.ens.domains/"
+                          mt="32px"
+                          mb="8px"
+                          fluid
+                          label={
                             <>
-                              <Button
-                                as="a"
-                                target="_blank"
-                                href="https://app.ens.domains/"
-                                mt="32px"
-                                mb="8px"
-                                fluid
-                                label={
-                                  <>
-                                    Get a custom ENS username
-                                    <ExternalInline />
-                                  </>
-                                }
-                              />
+                              Get a custom ENS username
+                              <ExternalInline />
                             </>
-                          )}
-                        </>
-                      )}
+                          }
+                        />
+                      </>
+                    )}
+
+                    {isLoading && (
+                      <Button fluid mt="20px" loading={true} label="" />
+                    )}
 
                     <Button
                       fluid
