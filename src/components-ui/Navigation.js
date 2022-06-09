@@ -65,8 +65,13 @@ export const Navigation = ({ mobile }) => {
             <Box>
               {account &&
                 filteredNavItems.map(({ label, ...item }) => (
-                  <Link key={item.id} to={item.pathname} passHref>
-                    <NavItem label={!mobile && label} {...item} />
+                  <Link
+                    passHref
+                    key={item.id}
+                    to={item.pathname}
+                    style={{ display: "block" }}
+                  >
+                    <NavItem as="div" label={!mobile && label} {...item} />
                   </Link>
                 ))}
             </Box>
