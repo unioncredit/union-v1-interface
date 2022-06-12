@@ -30,7 +30,7 @@ const getTrustCount =
 
         const isMember = await userManagerContract.checkIsMember(stakerAddress);
 
-        if (trustAmount > 0 && isMember) count++;
+        if (trustAmount.gt(0) && isMember) count++;
       })
     );
 
