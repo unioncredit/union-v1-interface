@@ -20,9 +20,8 @@ export default function useRegisterMember() {
 
   return useCallback(async () => {
     const signer = library.getSigner();
-    const { userManagerAddress } = await marketRegistryContract.tokens(
-      tokenAddress
-    );
+    const { userManager: userManagerAddress } =
+      await marketRegistryContract.tokens(tokenAddress);
     const userManagerContract = new Contract(
       userManagerAddress,
       USER_MANAGER_ABI,
