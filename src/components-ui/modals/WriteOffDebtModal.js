@@ -111,7 +111,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
                   size="medium"
                   align="center"
                   label="Vouch"
-                  value={<Dai value={format(vouched, 4)} />}
+                  value={<Dai value={format(formatUnits(vouched), 2)} />}
                 />
               </Grid.Col>
               <Grid.Col>

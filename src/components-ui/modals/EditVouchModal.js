@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
+import {BigNumber} from "@ethersproject/bignumber";
 import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
 
 import { Dai, Modal } from "components-ui";
@@ -16,6 +17,7 @@ import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import { useManageContactModal } from "./ManageContactModal";
+import {toFixed} from "util/numbers";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -44,9 +46,11 @@ export function EditVouchModal({ address, used, trust }) {
   const { isDirty, isSubmitting, errors } = formState;
 
   const validate = (val) => {
-    if (Number(val) <= used) return errorMessages.cantRemoveStake;
-    if (Number(val) <= 0) return errorMessages.minValueZero;
     if (!val) return errorMessages.required;
+    const scaled = String(toFixed(val * 10 ** 18));
+    const bnValue = BigNumber.from(scaled);
+    if (bnValue.lt(used)) return errorMessages.cantRemoveStake;
+    if (bnValue.lt(0)) return errorMessages.minValueZero;
 
     return true;
   };

@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { parseUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 
 import useToken from "hooks/useToken";
@@ -17,9 +16,8 @@ export default function useRepay() {
   const uToken = useUToken(DAI);
 
   return useCallback(
-    async (amount) => {
+    async (repayAmount) => {
       const permit = getPermit(APPROVE_DAI_REPAY_SIGNATURE_KEY);
-      const repayAmount = parseUnits(String(amount), 18);
 
       // if we have a valid permit use that to stake
       if (permit) {
@@ -52,6 +50,6 @@ export default function useRepay() {
 
       return uToken.repayBorrow(repayAmount);
     },
-    [account, uToken, DAIContract]
+    [account, uToken, DAIContract, chainId]
   );
 }

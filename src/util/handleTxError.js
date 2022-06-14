@@ -2,7 +2,7 @@ import { addToast, FLAVORS } from "hooks/useToast";
 import isHash from "./isHash";
 
 export default function handleTxError(error) {
-  let message = "Something went wrong";
+  let message = error.message;
 
   if (error?.message === "User rejected request" || error?.code === 4001)
     message = "Rejected transaction signature";
@@ -17,4 +17,6 @@ export default function handleTxError(error) {
   } else {
     addToast(FLAVORS.TX_ERROR(message));
   }
+
+  console.error(error);
 }

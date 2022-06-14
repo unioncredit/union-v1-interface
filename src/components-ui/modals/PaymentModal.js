@@ -110,11 +110,12 @@ export function PaymentModal({ borrowData, onComplete }) {
   };
 
   const handlePayment = async (values) => {
-    const scaled = values.amount * 10 ** 18;
-    const bnValue = BigNumber.from(scaled);
-    const amountToRepay = bnValue.gt(daiBalance) ? daiBalance : bnValue;
+    let amountToRepay = ZERO;
 
     try {
+      const scaled = String(values.amount * 10 ** 18);
+      const bnValue = BigNumber.from(scaled);
+      amountToRepay = bnValue.gt(daiBalance) ? daiBalance : bnValue;
       const { hash } = await repay(amountToRepay);
       await getReceipt(hash, library, {
         pending: `Paying back ${amountToRepay} DAI`,
