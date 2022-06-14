@@ -61,12 +61,7 @@ export function CreditProvidersCard() {
           </Table>
         </>
       )}
-      <Pagination
-        my="24px"
-        pages={maxPages}
-        activePage={page}
-        onClick={setPage}
-      />
+      <Pagination pages={maxPages} activePage={page} onClick={setPage} />
     </Card>
   );
 }
