@@ -131,9 +131,6 @@ function TransactionHistorySkeletonRow() {
       <TableCell>
         <Skeleton shimmer width={60} height={10} grey={200} />
       </TableCell>
-      <TableCell>
-        <Skeleton shimmer width={80} height={10} grey={200} />
-      </TableCell>
       <TableCell align="right">
         <Skeleton shimmer width={30} height={10} grey={200} />
       </TableCell>
