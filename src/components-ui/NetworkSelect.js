@@ -21,7 +21,7 @@ export function NetworkSelect() {
 
   return (
     <NetworkSwitcher
-      defaultOption={defaultValue}
+      selected={defaultValue}
       options={networkOptions}
       onChange={handleChangeNetwork}
     />

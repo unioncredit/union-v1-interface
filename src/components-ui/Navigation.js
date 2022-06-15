@@ -15,7 +15,7 @@ import { NetworkSelect } from "./NetworkSelect";
 export const Navigation = ({ mobile }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { account, library } = useWeb3React();
+  const { account } = useWeb3React();
   const [, setForceConnect] = useForceConnect();
 
   const { data: isMember } = useIsMember();

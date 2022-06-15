@@ -4,6 +4,7 @@ import { networkAppUrls } from "lib/connectors";
 export const options = [
   {
     type: "ethereum",
+    id: "ethereum",
     imageSrc: "/images/ethereum-avatar.png",
     value: "ethereum",
     label: "Ethereum",
@@ -22,6 +23,7 @@ export const options = [
   {
     label: "Arbitrum",
     type: "arbitrum",
+    id: "arbitrum",
     imageSrc: "/images/arbitrum-avatar.png",
     value: "arbitrum one",
     label: "Arbitrum One",
@@ -38,6 +40,7 @@ export const options = [
   },
   {
     type: "kovan",
+    id: "kovan",
     imageSrc: "/images/kovan-avatar.png",
     value: "kovan",
     label: "Kovan",
