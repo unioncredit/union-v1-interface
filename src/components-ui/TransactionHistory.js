@@ -46,8 +46,8 @@ const texts = {
   [TransactionTypes.CANCEL]: "Cancelled Vouch",
   [TransactionTypes.BORROW]: "Borrow",
   [TransactionTypes.REPAY]: "Repayment",
-  [TransactionTypes.TRUST]: "Sent vouch",
-  [TransactionTypes.TRUSTED]: "Received vouch",
+  [TransactionTypes.TRUST]: "You trusted",
+  [TransactionTypes.TRUSTED]: "Trusted by",
   [TransactionTypes.REGISTER]: "Became a member",
 };
 
