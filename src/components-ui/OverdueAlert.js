@@ -25,13 +25,16 @@ export function OverdueAlert() {
     return null;
   }
 
+  const interestScaledDown = Number(roundUp(formatUnits(interest)));
+  const interestNormalised =
+    interestScaledDown < 0.1 ? 0.1 : interestScaledDown;
+  const interestView = format(interestNormalised, 2);
+
   return (
     <>
       <Box w="100%" maxw="445px" mb="24px">
         <Alert
-          label={`Overdue payment of ${format(
-            roundUp(formatUnits(interest))
-          )} DAI`}
+          label={`Overdue payment of ${interestView} DAI`}
           action={{ label: "Make payment", onClick: openPaymentModal }}
         />
       </Box>
