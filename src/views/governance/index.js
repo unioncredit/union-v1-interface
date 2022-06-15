@@ -35,9 +35,11 @@ function GovernanceView() {
               <Box mt="24px">
                 <GovernanceStatsCard />
               </Box>
-              <Box mt="24px">
-                {account && <UserVotingOverview address={account} />}
-              </Box>
+              {!unsupportedFeature && (
+                <Box mt="24px">
+                  {account && <UserVotingOverview address={account} />}
+                </Box>
+              )}
               <Box mt="24px">
                 <RecentProposals data={data?.slice(0, 3)} />
               </Box>

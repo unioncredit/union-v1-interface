@@ -239,7 +239,9 @@ export default function ContactsView({
                       />
                     ))
                   ) : pagedData?.length <= 0 ? (
-                    <EmptyState label="No contacts" />
+                    <Box fluid m="12px">
+                      <EmptyState label="No contacts" />
+                    </Box>
                   ) : (
                     pagedData.map((item) => (
                       <ContactsListItem

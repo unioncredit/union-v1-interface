@@ -26,7 +26,7 @@ export const options = [
     id: "arbitrum",
     imageSrc: "/images/arbitrum-avatar.png",
     value: "arbitrum one",
-    label: "Arbitrum One",
+    label: "Arbitrum",
     description:
       "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
     avatar: "/images/arbitrum-avatar.png",

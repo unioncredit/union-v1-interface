@@ -10,18 +10,14 @@ import {
 } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
 import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
-import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
 import { ReactComponent as Failed } from "@unioncredit/ui/lib/icons/failed.svg";
 import { ReactComponent as Success } from "@unioncredit/ui/lib/icons/success.svg";
 
-import { Avatar } from "components-ui/Avatar";
-import { Copyable, Modal, Dai } from "components-ui";
+import { Modal, Dai } from "components-ui";
 import { useModal, useModalOpen } from "hooks/useModal";
-import usePublicData from "hooks/usePublicData";
 import useActivity, { useClearActivity } from "hooks/data/useActivity";
 import { logout } from "lib/auth";
 import { walletconnect, injected } from "lib/connectors";
-import truncateAddress from "util/truncateAddress";
 import getEtherscanLink from "util/getEtherscanLink";
 import { formatUnits } from "@ethersproject/units";
 import format from "util/formatValue";
@@ -35,7 +31,6 @@ export const useAccountModalOpen = () => useModalOpen(ACCOUNT_MODAL);
 
 export function AccountModal() {
   const { chainId, account, connector, deactivate } = useWeb3React();
-  const { name } = usePublicData(account);
   const { close } = useAccountModal();
 
   const activity = useActivity();
@@ -64,13 +59,13 @@ export function AccountModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Account" onClose={close}>
-        <MiniProfileCard address={account} />
-        <Box align="center" justify="space-between">
-          <Label as="p" size="small" mb="8px" grey={400}>
+        <Box align="center" justify="space-between" mb="20px">
+          <Label as="p" size="small" grey={400}>
             Connected with {walletName}
           </Label>
           <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
         </Box>
+        <MiniProfileCard address={account} />
         <Box align="center" justify="space-between" mt="20px" mb="12px">
           <Label as="p" size="small" mb="8px" grey={400}>
             ACTIVITY
