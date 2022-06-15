@@ -11,44 +11,19 @@ export default function format(num, digits) {
   num = Number(num);
   num = num <= 0 ? 0 : num;
 
-  if (num && num < 10000) {
-    if (!num) return "0." + Array(digits).fill("0").join();
-    const numStr = Number(num).toLocaleString("en", {
-      useGrouping: false,
-      minimumFractionDigits: digits,
-      maximumFractionDigits: digits,
-    });
+  if (!num) return "0";
+  const numStr = Number(num).toLocaleString("en", {
+    useGrouping: false,
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
 
-    const parts = numStr.split(".");
-    const lhs = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    if (digits > 0 && parts[1]) {
-      return `${lhs}.${parts[1]}`;
-    }
-    return lhs;
+  const parts = numStr.split(".");
+  const lhs = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  if (digits > 0 && parts[1]) {
+    return `${lhs}.${parts[1]}`;
   }
-
-  const lookup = [
-    { value: 1, symbol: "" },
-    { value: 1e3, symbol: "k" },
-    { value: 1e6, symbol: "M" },
-    { value: 1e9, symbol: "B" },
-    { value: 1e12, symbol: "T" },
-    { value: 1e15, symbol: "P" },
-    { value: 1e18, symbol: "E" },
-  ];
-
-  const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-
-  const item = lookup
-    .slice()
-    .reverse()
-    .find(function (item) {
-      return num >= item.value;
-    });
-
-  return item
-    ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
-    : "0";
+  return lhs;
 }
 
 export function formatScaled(num, digits, scale = 18) {
