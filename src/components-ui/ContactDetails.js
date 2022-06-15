@@ -1,4 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
 import { Stat, Grid, Card, Button, Badge } from "@unioncredit/ui";
 import { ReactComponent as Manage } from "@unioncredit/ui/lib/icons/manage.svg";
@@ -7,7 +6,6 @@ import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp } from "util/numbers";
 import { ContactsType } from "constants/app";
-import { RelatedHistory } from "components-ui/RelatedHistory";
 import useBorrowData from "hooks/data/useBorrowData";
 
 function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
@@ -148,7 +146,7 @@ function YouTrustContactDetails({
 
 export function ContactDetails({ contactsType, ...props }) {
   return (
-    <Card>
+    <Card overflow>
       <Card.Body>
         <Grid>
           {contactsType === ContactsType.YOU_TRUST ? (

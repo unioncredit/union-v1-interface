@@ -29,6 +29,7 @@
     "graphql-request": "^3.5.0",
     "https-browserify": "^1.0.0",
     "os-browserify": "^0.3.0",
+    "prettier": "^2.7.0",
     "process": "^0.11.10",
     "prop-types": "^15.7.2",
     "qrcode.react": "^1.0.0",
@@ -52,7 +53,8 @@
     "start": "export REACT_APP_VERSION=$(git rev-parse HEAD) && react-app-rewired start",
     "build": "export REACT_APP_VERSION=$(git rev-parse HEAD) && react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --check \"src/**/*.js\""
   },
   "eslintConfig": {
     "extends": [
