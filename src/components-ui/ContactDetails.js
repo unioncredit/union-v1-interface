@@ -5,10 +5,16 @@ import { ReactComponent as Manage } from "@unioncredit/ui/lib/icons/manage.svg";
 import { Dai } from "components-ui";
 import format from "util/formatValue";
 import { roundUp } from "util/numbers";
+import { ZERO } from "constants/variables";
 import { ContactsType } from "constants/app";
 import useBorrowData from "hooks/data/useBorrowData";
 
-function TrustsYouContactDetails({ trust, vouched, manageContact, available }) {
+function TrustsYouContactDetails({
+  trust = ZERO,
+  vouched = ZERO,
+  manageContact,
+  available = ZERO,
+}) {
   return (
     <>
       <Grid.Row>
