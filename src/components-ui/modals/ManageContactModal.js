@@ -59,7 +59,7 @@ export function ManageContactModal({
     {
       label: "Trust",
       value: <Dai value={format(formatUnits(trust), 2)} />,
-      buttonProps: { label: "Change limit" },
+      buttonProps: { label: "Change amount" },
       onClick: handleEditVouch,
     },
     {

@@ -43,7 +43,7 @@ export function CreditProvidersCard() {
             <TableRow>
               <TableHead></TableHead>
               <TableHead>Account</TableHead>
-              <TableHead align="right">Trust Limit (DAI)</TableHead>
+              <TableHead align="right">Trust Amount (DAI)</TableHead>
             </TableRow>
             {isVouchLoading
               ? createArray(3).map((_, i) => (
