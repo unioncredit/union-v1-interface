@@ -144,13 +144,13 @@ export default function ContactsView({
 
   const title =
     contactsType === ContactsType.YOU_TRUST
-      ? "Accounts you vouch for"
-      : "Accounts vouching for you";
+      ? `Accounts you trust · ${data.length}`
+      : `Accounts that trust you · ${data.length}`;
 
   const subTitle =
     contactsType === ContactsType.YOU_TRUST
-      ? "Accounts you’re currently vouching for"
-      : "Accounts providing you with credit";
+      ? "Addresses you’re currently vouching for"
+      : "Addresses providing you with credit";
 
   const selectedContact = data?.[selectedContactIndex];
 
