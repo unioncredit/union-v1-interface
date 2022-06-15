@@ -46,11 +46,6 @@ export function View({ children, tabItems }) {
 
   return (
     <>
-      {isMobile && !isGetStarted && (
-        <div className={styles.tabNavWrapper}>
-          <TabNav items={navItemLinks} />
-        </div>
-      )}
       <OverdueAlert />
       {tabItemLinks?.length > 0 && (
         <Box justify="center">

@@ -51,6 +51,22 @@ export const Navigation = ({ mobile }) => {
     return item;
   });
 
+  const navigation = (
+    <Box fluid justify="center">
+      {account &&
+        filteredNavItems.map(({ label, ...item }) => (
+          <Link
+            passHref
+            key={item.id}
+            to={item.pathname}
+            style={{ display: "block" }}
+          >
+            <NavItem as="div" label={!mobile && label} {...item} />
+          </Link>
+        ))}
+    </Box>
+  );
+
   return (
     <Nav mobile={mobile} onLogoClick={handleLogoClick}>
       <Grid>
@@ -61,20 +77,8 @@ export const Navigation = ({ mobile }) => {
               <NetworkSelect />
             </Box>
           </Grid.Col>
-          <Grid.Col align="center">
-            <Box>
-              {account &&
-                filteredNavItems.map(({ label, ...item }) => (
-                  <Link
-                    passHref
-                    key={item.id}
-                    to={item.pathname}
-                    style={{ display: "block" }}
-                  >
-                    <NavItem as="div" label={!mobile && label} {...item} />
-                  </Link>
-                ))}
-            </Box>
+          <Grid.Col align="center" className="hide-lt-850">
+            {navigation}
           </Grid.Col>
           <Grid.Col align="right">
             <Box justify="flex-end">
@@ -94,6 +98,11 @@ export const Navigation = ({ mobile }) => {
               <ContextMenu position="left" items={contextMenuItemsLink} />
             </Box>
           </Grid.Col>
+        </Grid.Row>
+        <Grid.Row>
+          <Box my="16px" className="hide-gt-850" fluid>
+            <Grid.Col align="center">{navigation}</Grid.Col>
+          </Box>
         </Grid.Row>
       </Grid>
     </Nav>
