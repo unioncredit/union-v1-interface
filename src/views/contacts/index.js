@@ -7,7 +7,6 @@ import {
   ModalOverlay,
   Input,
   Pagination,
-  ButtonRow,
   Select,
   Collapse,
   EmptyState,
@@ -48,6 +47,8 @@ import usePopTrustModal from "hooks/usePopTrustModal";
 import useFilterContacts from "hooks/useFilterContacts";
 
 import { config } from "./config";
+
+import "./contacts.scss";
 
 const statusOptions = [
   { id: "all", label: "All statuses" },
@@ -144,8 +145,8 @@ export default function ContactsView({
 
   const title =
     contactsType === ContactsType.YOU_TRUST
-      ? `Accounts you trust · ${data.length}`
-      : `Accounts that trust you · ${data.length}`;
+      ? `Accounts you trust · ${data?.length || 0}`
+      : `Accounts that trust you · ${data?.length || 0}`;
 
   const subTitle =
     contactsType === ContactsType.YOU_TRUST
@@ -164,37 +165,37 @@ export default function ContactsView({
             <Grid.Col md={6}>
               <Card mt="24px">
                 <Card.Header title={title} subTitle={subTitle} />
-                <Card.Body>
+                <Box fluid p="12px">
                   {!isEmpty && (
-                    <ButtonRow
-                      mb="8px"
-                      direction={isMobile ? "vertical" : "horizontal"}
-                    >
+                    <>
+                      <Input
+                        {...register("query")}
+                        suffix={<Search />}
+                        placeholder="Search"
+                      />
+                      <Button
+                        ml="8px"
+                        fluid
+                        icon={Filter}
+                        variant="secondary"
+                        onClick={toggleFilters}
+                      />
                       {contactsType === ContactsType.YOU_TRUST && (
                         <Button
                           fluid
+                          ml="8px"
                           label="New vouch"
                           icon={Vouch}
                           onClick={openVouchModal}
                         />
                       )}
-                      <Button
-                        fluid
-                        icon={Filter}
-                        variant="secondary"
-                        label={`${showFilters ? "Hide" : "Show"} filters`}
-                        onClick={toggleFilters}
-                      />
-                    </ButtonRow>
+                    </>
                   )}
-                  <Collapse active={showFilters}>
+                </Box>
+                <Collapse active={showFilters}>
+                  <Box pl="12px" pb="12px" pr="12px">
                     <Card packed overflow>
                       <Card.Body>
-                        <Input
-                          {...register("query")}
-                          suffix={<Search />}
-                          placeholder="Filter by ENS or address"
-                        />
                         {contactsType === ContactsType.YOU_TRUST && (
                           <Box mt="8px">
                             <Select
@@ -217,14 +218,16 @@ export default function ContactsView({
                         </Box>
                       </Card.Body>
                     </Card>
-                  </Collapse>
-                </Card.Body>
+                  </Box>
+                </Collapse>
                 <Table>
                   <TableRow>
                     <TableHead />
                     <TableHead>Account</TableHead>
                     {contactsType === ContactsType.YOU_TRUST && (
-                      <TableHead align="center">Status</TableHead>
+                      <TableHead align="center" className="hide-lt-400">
+                        Status
+                      </TableHead>
                     )}
                     <TableHead align="right">Trust Limit (DAI)</TableHead>
                   </TableRow>

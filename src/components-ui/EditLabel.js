@@ -6,6 +6,7 @@ import setEndOfContentEditable from "util/setEndOfContentEditable";
 export function EditLabel({ address }) {
   const labelEl = useRef(null);
   const [editting, setEditting] = useState(false);
+
   const { getLabel, setLabel } = useAddressLabels();
 
   const label = getLabel(address);
@@ -54,7 +55,7 @@ export function EditLabel({ address }) {
           ref={labelEl}
           className="editable-name"
         >
-          {label || ""}
+          {label || editting ? "" : "-"}
         </Text>
       </Box>
       <Box>

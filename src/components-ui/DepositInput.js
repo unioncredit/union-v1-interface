@@ -55,7 +55,7 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
   const daiBalanceView = format(roundDown(formatUnits(daiBalance)), 2);
 
   const handleMaxDeposit = () => {
-    setValue("amount", daiBalanceView, {
+    setValue("amount", roundDown(formatUnits(daiBalance)), {
       shouldDirty: true,
       shouldValidate: true,
     });

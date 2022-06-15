@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { formatUnits } from "@ethersproject/units";
-import {BigNumber} from "@ethersproject/bignumber";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
 
 import { Dai, Modal } from "components-ui";
@@ -17,7 +17,7 @@ import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import { useManageContactModal } from "./ManageContactModal";
-import {toFixed} from "util/numbers";
+import { toFixed } from "util/numbers";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -84,7 +84,12 @@ export function EditVouchModal({ address, used, trust }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Change trust amount" onClose={close} onBack={back}>
+      <Modal
+        title="Adjust trust"
+        onClose={close}
+        onBack={back}
+        size="medium"
+      >
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>
@@ -118,7 +123,7 @@ export function EditVouchModal({ address, used, trust }) {
           <Button
             mt="18px"
             fluid
-            label="Save"
+            label="Set new trust"
             fontSize="large"
             type="submit"
             disabled={!isDirty}

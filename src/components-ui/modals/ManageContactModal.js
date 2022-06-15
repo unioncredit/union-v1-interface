@@ -92,7 +92,7 @@ export function ManageContactModal({
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Manage contact" onClose={close}>
+      <Modal title="Manage contact" onClose={close} size="medium">
         <MiniProfileCard address={address} />
         <EditLabel address={address} />
         {!isLabelOnly &&

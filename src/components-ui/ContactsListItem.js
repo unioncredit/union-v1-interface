@@ -52,7 +52,7 @@ export function ContactsListItem(props) {
         </Label>
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
-        <TableCell align="center" className="hide-lt-600">
+        <TableCell align="center" className="hide-lt-400">
           {!isMember ? (
             <Badge color="grey" label="Not a member" />
           ) : isOverdue ? (
@@ -83,7 +83,14 @@ export function ContactsListItemSkeleton({ variant }) {
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
         <TableCell>
-          <Skeleton shimmer width={40} height={10} ml="auto" grey={200} />
+          <Skeleton
+            shimmer
+            width={40}
+            height={10}
+            ml="auto"
+            grey={200}
+            className="hide-lt-400"
+          />
         </TableCell>
       )}
     </TableRow>

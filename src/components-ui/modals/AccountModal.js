@@ -23,6 +23,9 @@ import { logout } from "lib/auth";
 import { walletconnect, injected } from "lib/connectors";
 import truncateAddress from "util/truncateAddress";
 import getEtherscanLink from "util/getEtherscanLink";
+import { formatUnits } from "@ethersproject/units";
+import format from "util/formatValue";
+import { MiniProfileCard } from "components-ui/MiniProfileCard";
 
 export const ACCOUNT_MODAL = "account-modal";
 
@@ -58,77 +61,53 @@ export function AccountModal() {
       ? "Metamask"
       : null;
 
-  const addressEtherscanLink = getEtherscanLink(chainId, account, "ADDRESS");
-
   return (
     <ModalOverlay onClick={close}>
       <Modal title="Account" onClose={close}>
+        <MiniProfileCard address={account} />
         <Box align="center" justify="space-between">
           <Label as="p" size="small" mb="8px" grey={400}>
-            {walletName?.toUpperCase()}
+            Connected with {walletName}
           </Label>
           <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
         </Box>
-        <Box fluid align="center" direction="vertical" mt="16px">
-          <Avatar address={account} size={56} />
-          <Heading mt="8px">{name}</Heading>
-        </Box>
-        <Box fluid justify="center" mb="16px">
-          <Badge
-            mr="4px"
-            color="grey"
-            label={
-              <Copyable value={account}>{truncateAddress(account)}</Copyable>
-            }
-          />
-          <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
-            <External width="24px" />
-          </a>
-        </Box>
-        <Divider />
         <Box align="center" justify="space-between" mt="20px" mb="12px">
           <Label as="p" size="small" mb="8px" grey={400}>
-            {"Activity".toUpperCase()}
+            ACTIVITY
           </Label>
-          <Button variant="pill" label="clear" onClick={clearActivity} />
+          <Button
+            variant="pill"
+            label="Clear Activity"
+            onClick={clearActivity}
+          />
         </Box>
         <Box mb="24px" direction="vertical" fluid>
           {isEmpty ? (
             <Text>No activity</Text>
           ) : (
-            activity.map(({ amount, label, hash, failed }) => {
-              const text =
-                amount && label ? (
-                  <>
-                    {label} <Dai value={amount} />
-                  </>
-                ) : (
-                  label
-                );
-
+            activity.map(({ amount, label, hash, failed }, i) => {
               return (
                 <Box
-                  key={hash}
+                  key={`${hash}-${label}-${i}`}
                   align="center"
                   justify="space-between"
                   mt="8px"
                   fluid
                 >
-                  <div>
-                    <Text color={failed && "red600"} m={0}>
-                      {hash ? (
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-                        >
-                          {text} <ExternalInline />
-                        </a>
-                      ) : (
-                        text
-                      )}
+                  <Box align="center">
+                    <Text
+                      m={0}
+                      as="a"
+                      target="_blank"
+                      rel="noreferrer"
+                      color={failed && "red600"}
+                      href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                    >
+                      {label}{" "}
+                      {amount && <Dai value={format(formatUnits(amount), 2)} />}
                     </Text>
-                  </div>
+                    <ExternalInline width="24px" />
+                  </Box>
                   {failed && <Failed width="22px" />}
                   {!failed && <Success width="22px" />}
                 </Box>

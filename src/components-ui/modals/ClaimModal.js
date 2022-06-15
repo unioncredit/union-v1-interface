@@ -1,5 +1,12 @@
 import { formatUnits } from "@ethersproject/units";
-import { ModalOverlay, Box, Stat, Label, Button } from "@unioncredit/ui";
+import {
+  ModalOverlay,
+  Box,
+  Stat,
+  Label,
+  Button,
+  Divider,
+} from "@unioncredit/ui";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
 
 import format from "util/formatValue";
@@ -25,7 +32,7 @@ export function ClaimModal() {
 
   const UNION = useToken("UNION");
 
-  const { data: unionSymbol } = useUnionSymbol();
+  const { data: unionSymbol = "UNION" } = useUnionSymbol();
   const { data: rewardsData } = useRewardsData();
   const { data: unionBalance = ZERO } = useTokenBalance(UNION);
 
@@ -44,16 +51,15 @@ export function ClaimModal() {
   return (
     <ModalOverlay onClick={close}>
       <Modal
-        title="Claim"
+        title={`${unionSymbol} Balance`}
         onClose={close}
-        size="medium"
         footer={<ClaimModalFooter />}
       >
         <Box justify="center">
           <Stat
             align="center"
             size="large"
-            label={`Unclaimed ${unionSymbol}`}
+            label="Total Balance"
             value={<Union value={balanceView} />}
           />
         </Box>
@@ -61,15 +67,16 @@ export function ClaimModal() {
           <Label as="p" grey={400}>
             Wallet
           </Label>
-          <Label as="p" grey={400} m={0}>
+          <Label as="p" grey={700} m={0}>
             <Union value={unionBalanceView} />
           </Label>
         </Box>
+        <Divider mb="8px" />
         <Box justify="space-between" mb="18px">
           <Label as="p" grey={400}>
             Unclaimed
           </Label>
-          <Label as="p" grey={400} m={0}>
+          <Label as="p" grey={700} m={0}>
             <Union value={rewardsView} />
           </Label>
         </Box>

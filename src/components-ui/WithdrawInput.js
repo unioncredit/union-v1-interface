@@ -36,7 +36,7 @@ export const WithdrawInput = ({
   const watchAmount = watch("amount", 0);
   const amount = Number(watchAmount || 0);
 
-  const withdrawableStakeView = format(formatUnits(withdrawableStake, 18), 2);
+  const withdrawableStakeView = format(formatUnits(withdrawableStake), 2);
 
   const onSubmit = async (values) => {
     try {
@@ -58,7 +58,7 @@ export const WithdrawInput = ({
   };
 
   const handleMaxWithdraw = () => {
-    setValue("amount", withdrawableStakeView, {
+    setValue("amount", formatUnits(withdrawableStake), {
       shouldDirty: true,
       shouldValidate: true,
     });
