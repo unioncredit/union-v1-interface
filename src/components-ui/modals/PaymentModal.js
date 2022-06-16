@@ -13,7 +13,7 @@ import {
   Collapse,
 } from "@unioncredit/ui";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
 import { formatUnits, parseEther } from "@ethersproject/units";
@@ -75,7 +75,11 @@ export function PaymentModal({ borrowData, onComplete }) {
 
   const { isDirty, isSubmitting, errors } = formState;
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      handleSelectOption(options[0]);
+    }
+  }, [isOpen]);
 
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
@@ -96,6 +100,8 @@ export function PaymentModal({ borrowData, onComplete }) {
       reset();
     }
   };
+
+  if (!isOpen) return null;
 
   const validate = async (val) => {
     if (!val) return errorMessages.required;
@@ -125,6 +131,7 @@ export function PaymentModal({ borrowData, onComplete }) {
       if (typeof onComplete === "function") await onComplete();
       removePermit(APPROVE_DAI_REPAY_SIGNATURE_KEY);
       close();
+      reset();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.repay({ amount: amountToRepay, hash }, true));
@@ -270,7 +277,7 @@ export function PaymentModal({ borrowData, onComplete }) {
                 fontSize="large"
                 disabled={!isDirty}
                 loading={isSubmitting}
-                label={`Repay ${format(formatUnits(amount, 18), 2)} DAI`}
+                label={`Repay ${format(formatUnits(amount), 2)} DAI`}
                 onClick={handleSubmit(handlePayment)}
               />
             </Approval>

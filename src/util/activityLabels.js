@@ -1,4 +1,4 @@
-import { formatEther } from "@ethersproject/units";
+import { formatEther, formatUnits } from "@ethersproject/units";
 import format from "./formatValue";
 import truncateAddress from "./truncateAddress";
 
@@ -6,12 +6,12 @@ const activityLabels = {
   becomeMember: { label: "Registered" },
   claim: ({ amount, hash }, failed) => ({
     hash,
-    label: `Claimed ${format(amount)} UNION`,
+    label: `Claimed ${format(formatUnits(amount))} UNION`,
     failed,
   }),
   unwrap: ({ balance, hash }, failed) => ({
     hash,
-    label: `Unwrapped ${format(formatEther(balance))} UNION`,
+    label: `Unwrapped ${format(formatUnits(balance))} UNION`,
     failed,
   }),
   delegate: ({ address, hash }, failed) => ({

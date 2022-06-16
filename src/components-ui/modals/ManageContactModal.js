@@ -122,9 +122,9 @@ export function ManageContactModal({
               </Box>
             </Box>
           ))}
-        {contactType === ContactsType.YOU_TRUST && used <= 0 && (
+        {contactType === ContactsType.YOU_TRUST && (
           <>
-            <Label as="p" align="center" mt="24px" grey={400}>
+            <Label as="p" align="center" mt="24px" grey={400} size="small">
               Contacts with outstanding balance can’t be removed
             </Label>
             <Button
@@ -136,6 +136,7 @@ export function ManageContactModal({
               label="Remove from contacts"
               loading={removing}
               onClick={handleRemoveContact}
+              disabled={used.gt(0)}
             />
           </>
         )}

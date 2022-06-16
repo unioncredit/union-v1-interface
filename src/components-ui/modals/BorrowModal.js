@@ -53,14 +53,16 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
     isOverdue = false,
   } = !!borrowData && borrowData;
 
-  const { formState, register, watch, handleSubmit, setValue } = useForm({
-    mode: "onChange",
-    reValidateMode: "onChange",
-  });
+  const { formState, reset, register, watch, handleSubmit, setValue } = useForm(
+    {
+      mode: "onChange",
+      reValidateMode: "onChange",
+    }
+  );
 
   const { errors, isDirty, isSubmitting } = formState;
 
-  if(!isOpen) return null;
+  if (!isOpen) return null;
 
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
@@ -117,6 +119,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
       if (typeof onComplete === "function") onComplete();
       addActivity(activityLabels.borrow({ amount, hash }));
       close();
+      reset();
     } catch (err) {
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.borrow({ amount: data.amount, hash }, true));
@@ -132,7 +135,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Borrow funds" onClose={close}>
+      <Modal title="Borrow funds" onClose={close} size="medium">
         <form onSubmit={handleSubmit(handleBorrow)}>
           <Grid>
             <Grid.Row>
@@ -171,7 +174,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
             <Label as="p" size="small" grey={400}>
               Total including fee
             </Label>
-            <Label as="p" size="small" grey={400}>
+            <Label as="p" size="small" grey={700}>
               {totalBorrowView} DAI
             </Label>
           </Box>
@@ -179,7 +182,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
             <Label as="p" size="small" grey={400}>
               First Payment Due
             </Label>
-            <Label as="p" size="small" grey={400}>
+            <Label as="p" size="small" grey={700}>
               {nextPaymentDue}
             </Label>
           </Box>
@@ -187,7 +190,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
             <Label as="p" size="small" grey={400}>
               New balance owed
             </Label>
-            <Label as="p" size="small" grey={400}>
+            <Label as="p" size="small" grey={700}>
               {newBalanceOwedView} DAI
             </Label>
           </Box>

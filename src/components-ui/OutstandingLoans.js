@@ -70,7 +70,7 @@ export function OutstandingLoans({ data }) {
           <TableHead></TableHead>
           <TableHead>Account</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead align="right">Trust Limit (DAI)</TableHead>
+          <TableHead align="right">Balance Owed (DAI)</TableHead>
         </TableRow>
         {loans && loans.length > 0 ? (
           pagedLoans.map((row, i) => <OutstandingLoansRow key={i} {...row} />)

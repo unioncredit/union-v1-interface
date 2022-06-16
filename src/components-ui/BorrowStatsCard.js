@@ -114,6 +114,7 @@ export function BorrowStatsCard() {
                   onClick={openPayment}
                   variant="secondary"
                   mt="28px"
+                  disabled={borrowed.lte(0)}
                 />
               </Grid.Col>
             </Grid.Row>
