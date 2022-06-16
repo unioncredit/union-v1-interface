@@ -67,8 +67,8 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
 
-  const maxFeeAmount = creditLimit.mul(fee).div(WAD);
-  const maxBorrowAmount = creditLimit.sub(maxFeeAmount);
+  const maxFeeAmount = WAD.add(fee);
+  const maxBorrowAmount = creditLimit.div(maxFeeAmount).mul(WAD);
   const borrowedAmount = borrowed > ZERO ? borrowed : ZERO;
   const feeAmount = amount.mul(fee).div(WAD);
   const totalBorrow = feeAmount.add(amount);

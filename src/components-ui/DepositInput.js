@@ -85,8 +85,7 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
 
     const scaled = String(toFixed(amount * 10 ** 18));
     const bnValue = BigNumber.from(scaled);
-    if (bnValue.add(totalStake).gt(maxAllowed))
-      return errorMessages.stakeLimitHit;
+    if (bnValue.gt(maxAllowed)) return errorMessages.stakeLimitHit;
     if (bnValue.gt(daiBalance)) return errorMessages.notEnoughBalanceDAI;
   };
 

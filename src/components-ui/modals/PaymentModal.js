@@ -123,9 +123,11 @@ export function PaymentModal({ borrowData, onComplete }) {
       const bnValue = BigNumber.from(scaled);
       amountToRepay = bnValue.gt(daiBalance) ? daiBalance : bnValue;
       const { hash } = await repay(amountToRepay);
+
+      const amountToRepayView = format(formatUnits(amountToRepay), 2);
       await getReceipt(hash, library, {
-        pending: `Paying back ${amountToRepay} DAI`,
-        success: `Paid back ${amountToRepay} DAI`,
+        pending: `Paying back ${amountToRepayView} DAI`,
+        success: `Paid back ${amountToRepayView} DAI`,
       });
       addActivity(activityLabels.repay({ amount: amountToRepay, hash }));
       if (typeof onComplete === "function") await onComplete();
