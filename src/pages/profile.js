@@ -1,12 +1,15 @@
 import { useMemo } from "react";
 import { Helmet } from "react-helmet";
-import ProfileView from "views/profile";
-import { PageHead } from "components-ui";
-import { useForceConnect } from "hooks/useForceConnect";
-import useENS from "hooks/useENS";
-import LoggedOutView from "views/loggedOut";
-import { isAddress } from "@ethersproject/address";
 import { useParams } from "react-router-dom";
+import { isAddress } from "@ethersproject/address";
+
+import { PageHead } from "components-ui";
+import ProfileView from "views/profile";
+import LoggedOutView from "views/loggedOut";
+import useENS from "hooks/useENS";
+import { useForceConnect } from "hooks/useForceConnect";
+
+const API_URL = "https://api.union.finance/api";
 
 export default function ProfilePage() {
   const [forceConnect] = useForceConnect();
@@ -20,8 +23,6 @@ export default function ProfilePage() {
     return ens.address;
   }, [address, ens.address]);
 
-  const host = window.location.host;
-
   return (
     <>
       <PageHead title="Profile | Union" />
@@ -29,12 +30,12 @@ export default function ProfilePage() {
         <meta
           key="og:image"
           property="og:image"
-          content={`https://${host}/api/og/profile?address=${userAddress}`}
+          content={`${API_URL}/profile?address=${userAddress}`}
         />
         <meta
           key="twitter:image"
           property="twitter:image"
-          content={`https://${host}/api/og/profile?address=${userAddress}`}
+          content={`${API_URL}/profile?address=${userAddress}`}
         />
         <meta
           property="twitter:title"

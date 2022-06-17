@@ -29,12 +29,14 @@ const restrictedCountryCodes = [
   "ZW",
 ];
 
+const GEO_URL = "https://api.union.finance/api/geo";
+
 export default function useGeoRestriction() {
   const [geo, setGeo] = useState();
 
   useEffect(() => {
     window
-      .fetch("/api/geo")
+      .fetch(GEO_URL)
       .then((resp) => resp.json())
       .then(setGeo);
   }, []);
