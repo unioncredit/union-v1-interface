@@ -1,13 +1,15 @@
+import { useState } from "react";
+import { parseEther } from "@ethersproject/units";
+import { BigNumber } from "@ethersproject/bignumber";
 import { Card, Button, Box, Label } from "@unioncredit/ui";
+
 import { ReactComponent as Switch } from "@unioncredit/ui/lib/icons/switch.svg";
 import { ReactComponent as Check } from "@unioncredit/ui/lib/icons/wireCheck.svg";
+import { ReactComponent as Info } from "@unioncredit/ui/lib/icons/wireInfo.svg";
 
-import useAllowance from "hooks/useAllowance";
-import { parseEther } from "@ethersproject/units";
-import { useState } from "react";
 import usePermits from "hooks/usePermits";
+import useAllowance from "hooks/useAllowance";
 import { PermitType, ApprovalTypes } from "constants/app";
-import { BigNumber } from "@ethersproject/bignumber";
 
 import styles from "./approval.module.css";
 
@@ -79,7 +81,7 @@ export function Approval({
 
   const typeText = approvalTypeText[approvalType];
 
-  if (!permit && (parsedAmount.lte("0") || allowance?.lt(parsedAmount))) {
+  if (!permit && allowance?.lt(parsedAmount)) {
     return (
       <Card variant="blue" packed className={styles.card}>
         <Box
@@ -115,6 +117,10 @@ export function Approval({
     );
   }
 
+  const [textLabel, Icon] = parsedAmount.lte(0)
+    ? ["Enter an amount", Info]
+    : ["Approved", Check];
+
   return (
     <Card variant="blue" packed className={styles.card}>
       <Box
@@ -126,10 +132,10 @@ export function Approval({
         onClick={toggleApprovalType}
       >
         <div className={styles.switchIcon}>
-          <Check width="24px" />
+          <Icon width="24px" />
         </div>
         <Label m={0} as="p" size="small" color="blue500" align="center">
-          Approved
+          {textLabel}
         </Label>
       </Box>
       {children}
