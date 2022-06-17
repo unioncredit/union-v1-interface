@@ -65,7 +65,7 @@ export function AccountModal() {
           </Label>
           <Button variant="pill" onClick={handleSignOut} label="Disconnect" />
         </Box>
-        <MiniProfileCard address={account} />
+        <MiniProfileCard address={account} onClick={close} />
         <Box align="center" justify="space-between" mt="20px" mb="12px">
           <Label as="p" size="small" mb="8px" grey={400}>
             ACTIVITY
