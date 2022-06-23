@@ -12,7 +12,7 @@ function fetchStakeData(userManager) {
 
     return {
       totalStake: totalStake,
-      utilizedStake: totalLocked.sub(totalFrozen),
+      utilizedStake: totalLocked.add(totalFrozen),
       withdrawableStake: totalStake.sub(totalLocked),
       defaultedStake: totalFrozen,
     };
