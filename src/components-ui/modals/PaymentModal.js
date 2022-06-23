@@ -35,7 +35,7 @@ import useUToken from "hooks/contracts/useUToken";
 import { Dai } from "components-ui/Dai";
 import { Modal } from "components-ui/Modal";
 import { Approval } from "components-ui/Approval";
-import { REPAY_MARGIN, MIN_REPAY, ZERO } from "constants/variables";
+import { REPAY_MARGIN, MIN_REPAY, ZERO, WAD } from "constants/variables";
 import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 
 export const PAYMENT_MODAL = "payment-modal";
@@ -84,7 +84,7 @@ export function PaymentModal({ borrowData, onComplete }) {
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
 
-  const borrowedFull = borrowed.mul(REPAY_MARGIN);
+  const borrowedFull = borrowed.mul(REPAY_MARGIN).div(WAD);
   const maxRepay = daiBalance.lt(borrowedFull) ? daiBalance : borrowedFull;
   const minRepay = interest.lt(MIN_REPAY) ? MIN_REPAY : interest;
   const newBalanceOwed = borrowed.sub(amount);

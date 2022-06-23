@@ -9,7 +9,7 @@ export const AddressZero = "0x0000000000000000000000000000000000000000";
 
 export const MIN_REPAY = parseEther("0.1");
 
-export const REPAY_MARGIN = BigNumber.from("1100000000000000000").div(WAD);
+export const REPAY_MARGIN = BigNumber.from("1100000000000000000");
 
 export const BLOCKS_PER_YEAR = {
   1: 2407328,
