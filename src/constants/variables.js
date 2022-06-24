@@ -9,7 +9,7 @@ export const AddressZero = "0x0000000000000000000000000000000000000000";
 
 export const MIN_REPAY = parseEther("0.1");
 
-export const REPAY_MARGIN = BigNumber.from("1100000000000000000");
+export const REPAY_MARGIN = BigNumber.from("1020000000000000000");
 
 export const BLOCKS_PER_YEAR = {
   1: 2407328,
@@ -46,7 +46,7 @@ export const MULTICALL_ADDRESSES = {
   80001: "0xe9939e7Ea7D7fb619Ac57f648Da7B1D425832631",
   42161: "0x7a7443f8c577d537f1d8cd4a629d40a3148dd7ee",
   421611: AddressZero,
-}
+};
 
 export const ASSET_MANAGER_ADDRESSES = {
   1: "0xb91a874D9AA8fF7E478bA61286ECc77c1A3E384d",

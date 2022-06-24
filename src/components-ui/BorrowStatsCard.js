@@ -32,6 +32,7 @@ export function BorrowStatsCard() {
 
   const {
     borrowed = ZERO,
+    owed = ZERO,
     interest = ZERO,
     paymentDueDate = "-",
   } = !!borrowData && borrowData;
@@ -90,7 +91,7 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Balance owed"
-                  value={<Dai value={formatScaled(borrowed, 2)} />}
+                  value={<Dai value={formatScaled(owed, 2)} />}
                 />
 
                 <Stat

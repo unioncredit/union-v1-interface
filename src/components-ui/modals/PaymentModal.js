@@ -64,7 +64,11 @@ export function PaymentModal({ borrowData, onComplete }) {
   const { removePermit } = usePermits();
   const { data: daiBalance = ZERO } = useTokenBalance(DAI);
 
-  const { borrowed = ZERO, interest = ZERO } = !!borrowData && borrowData;
+  const {
+    borrowed = ZERO,
+    interest = ZERO,
+    owed = ZERO,
+  } = !!borrowData && borrowData;
 
   const { reset, formState, register, watch, setValue, handleSubmit } = useForm(
     {
@@ -84,8 +88,7 @@ export function PaymentModal({ borrowData, onComplete }) {
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
 
-  const borrowedFull = borrowed.mul(REPAY_MARGIN).div(WAD);
-  const maxRepay = daiBalance.lt(borrowedFull) ? daiBalance : borrowedFull;
+  const maxRepay = daiBalance.lt(owed) ? daiBalance : owed;
   const minRepay = interest.lt(MIN_REPAY) ? MIN_REPAY : interest;
   const newBalanceOwed = borrowed.sub(amount);
 

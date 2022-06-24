@@ -6,7 +6,12 @@ import getBlockNumber from "util/getBlockNumber";
 import { formatDueDate } from "util/formatDueDate";
 import useToken from "hooks/useToken";
 import useUToken from "hooks/contracts/useUToken";
-import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
+import {
+  BLOCKS_PER_YEAR,
+  BLOCK_SPEED,
+  REPAY_MARGIN,
+  WAD,
+} from "constants/variables";
 
 const getPaymentDue = async (isOverdue, lastRepay, overdueBlocks, library) => {
   if (isOverdue) return "Overdue";
@@ -41,6 +46,8 @@ const fetchBorrowData = (uToken) => async (_, account, chainId, library) => {
     library
   );
 
+  const owed = borrowed.mul(REPAY_MARGIN).div(WAD);
+
   return {
     borrowRatePerBlock,
     borrowed,
@@ -51,6 +58,7 @@ const fetchBorrowData = (uToken) => async (_, account, chainId, library) => {
     lastRepay,
     paymentPeriod,
     paymentDueDate,
+    owed,
     apr: Number(formatUnits(borrowRatePerBlock, 18)) * BLOCKS_PER_YEAR[chainId],
   };
 };
