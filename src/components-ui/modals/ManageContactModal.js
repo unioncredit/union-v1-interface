@@ -92,7 +92,7 @@ export function ManageContactModal({
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Manage contact" onClose={close} size="medium">
+      <Modal title="Manage contact" onClose={close}>
         <MiniProfileCard address={address} />
         <EditLabel address={address} />
         {!isLabelOnly &&
@@ -108,7 +108,7 @@ export function ManageContactModal({
                 <Label size="small" grey={400} as="p" m={0}>
                   {label.toUpperCase()}
                 </Label>
-                <Text size="large" mb={0}>
+                <Text size="large" mb={0} grey={800}>
                   {value}
                 </Text>
               </Box>
