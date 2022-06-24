@@ -1,14 +1,15 @@
+import { Box, Card, CircleProgress, Table } from "@unioncredit/ui";
+
 import {
   CreditContactsRow,
   CreditContactsRowSkeleton,
   ShareCard,
 } from "components-ui";
-import useTrustCountData from "hooks/data/useTrustCountData";
-import { Box, Card, CircleProgress, Table } from "@unioncredit/ui";
-import useVouchData from "hooks/data/useVouchData";
 import createArray from "util/createArray";
-import useEffectiveNumber from "hooks/useEffectiveNumber";
 import { ZERO } from "constants/variables";
+import useVouchData from "hooks/data/useVouchData";
+import useEffectiveNumber from "hooks/useEffectiveNumber";
+import useTrustCountData from "hooks/data/useTrustCountData";
 
 import "./VouchStepCard.scss";
 
@@ -17,16 +18,17 @@ export function VouchStepCard() {
   const { data: vouchData } = useVouchData();
   const { data: effectiveNumberBn = ZERO } = useEffectiveNumber();
 
-  const vouchCount = trustCount >= 3 ? 3 : trustCount;
+  const effectiveNumber = Number(effectiveNumberBn.toString());
+
+  const vouchCount =
+    trustCount >= effectiveNumber ? effectiveNumber : trustCount;
 
   const isVouchLoading = !vouchData;
-
-  const effectiveNumber = Number(effectiveNumberBn.toString());
 
   return (
     <Card mb="24px" size="fluid" className="vouchStakeCard">
       <Card.Header
-        title="Get 3 vouches"
+        title={`Get ${effectiveNumber} vouches`}
         subTitle="To become a member, you’ll need 3 existing Union members to vouch for you. These vouches will form your starting credit line within Union."
       />
       <Card.Body>
