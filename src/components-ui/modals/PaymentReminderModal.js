@@ -6,13 +6,15 @@ import {
   Text,
   Label,
 } from "@unioncredit/ui";
+import { useMemo } from "react";
+import makeUrls from "add-event-to-calendar";
+import { formatUnits } from "@ethersproject/units";
 import { ReactComponent as Calendar } from "@unioncredit/ui/lib/icons/calendar.svg";
+
+import format from "util/formatValue";
 import { Modal } from "components-ui";
 import { useModal, useModalOpen } from "hooks/useModal";
 import useBorrowData from "hooks/data/useBorrowData";
-import { roundUp } from "util/numbers";
-import makeUrls from "add-event-to-calendar";
-import { useMemo } from "react";
 
 export const PAYMENT_REMINDER_MODAL = "payment-reminder-modal";
 
@@ -60,7 +62,7 @@ export function PaymentReminderModal() {
             First payment amount
           </Label>
           <Label as="p" size="small" grey={400}>
-            {roundUp(interest)} DAI
+            {format(formatUnits(interest), 2)} DAI
           </Label>
         </Box>
         <Box justify="space-between" mt="4px">
