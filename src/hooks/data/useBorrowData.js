@@ -14,8 +14,10 @@ const getPaymentDue = async (isOverdue, lastRepay, overdueBlocks, library) => {
 
   const chainId = library.network.chainId;
   const blockNumber = await getBlockNumber(library);
-  const seconds =
-    (lastRepay + overdueBlocks - blockNumber) * BLOCK_SPEED[chainId];
+  const seconds = lastRepay
+    .add(overdueBlocks)
+    .sub(blockNumber)
+    .mul(BLOCK_SPEED[chainId]);
 
   return formatDueDate(seconds);
 };
