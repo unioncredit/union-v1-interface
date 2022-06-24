@@ -1,27 +1,19 @@
-import {
-  ModalOverlay,
-  Label,
-  Badge,
-  Box,
-  Button,
-  Text,
-  Heading,
-  Divider,
-} from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
-import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
+import { BigNumber } from "@ethersproject/bignumber";
+import { formatUnits, parseUnits } from "@ethersproject/units";
+import { ModalOverlay, Label, Box, Button, Text } from "@unioncredit/ui";
 import { ReactComponent as Failed } from "@unioncredit/ui/lib/icons/failed.svg";
 import { ReactComponent as Success } from "@unioncredit/ui/lib/icons/success.svg";
+import { ReactComponent as ExternalInline } from "@unioncredit/ui/lib/icons/externalinline.svg";
 
-import { Modal, Dai } from "components-ui";
-import { useModal, useModalOpen } from "hooks/useModal";
-import useActivity, { useClearActivity } from "hooks/data/useActivity";
 import { logout } from "lib/auth";
-import { walletconnect, injected } from "lib/connectors";
-import getEtherscanLink from "util/getEtherscanLink";
-import { formatUnits } from "@ethersproject/units";
 import format from "util/formatValue";
+import { Modal, Dai } from "components-ui";
+import getEtherscanLink from "util/getEtherscanLink";
+import { useModal, useModalOpen } from "hooks/useModal";
+import { walletconnect, injected } from "lib/connectors";
 import { MiniProfileCard } from "components-ui/MiniProfileCard";
+import useActivity, { useClearActivity } from "hooks/data/useActivity";
 
 export const ACCOUNT_MODAL = "account-modal";
 
@@ -81,6 +73,9 @@ export function AccountModal() {
             <Text>No activity</Text>
           ) : (
             activity.map(({ amount, label, hash, failed }, i) => {
+              const scaledAmount =
+                amount instanceof BigNumber ? amount : parseUnits(amount);
+
               return (
                 <Box
                   key={`${hash}-${label}-${i}`}
@@ -99,7 +94,9 @@ export function AccountModal() {
                       href={getEtherscanLink(chainId, hash, "TRANSACTION")}
                     >
                       {label}{" "}
-                      {amount && <Dai value={format(formatUnits(amount), 2)} />}
+                      {amount && (
+                        <Dai value={format(formatUnits(scaledAmount), 2)} />
+                      )}
                     </Text>
                     <ExternalInline width="24px" />
                   </Box>
