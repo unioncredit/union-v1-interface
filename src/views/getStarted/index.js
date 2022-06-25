@@ -9,6 +9,7 @@ import {
   MiniProgressList,
 } from "@unioncredit/ui";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   View,
@@ -27,6 +28,7 @@ import useEffectiveNumber from "hooks/useEffectiveNumber";
 import styles from "./getStarted.module.css";
 
 export default function MembershipView() {
+  const navigate = useNavigate();
   const stakeStep = useRef();
   const vouchStep = useRef();
   const memberStep = useRef();
@@ -56,6 +58,7 @@ export default function MembershipView() {
 
   const onComplete = async () => {
     await updateIsMember();
+    navigate("/credit");
   };
 
   return (
