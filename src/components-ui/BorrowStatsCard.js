@@ -12,9 +12,11 @@ import {
 import { Dai } from "components-ui";
 import format, { formatScaled } from "util/formatValue";
 import { roundUp } from "util/numbers";
+import useToken from "hooks/useToken";
 import useBorrowData from "hooks/data/useBorrowData";
 import useCreditLimit from "hooks/data/useCreditLimit";
 import useVouchData from "hooks/data/useVouchData";
+import useTokenBalance from "hooks/data/useTokenBalance";
 import { ZERO } from "constants/variables";
 
 import styles from "./BorrowStatsCard.module.css";
@@ -29,6 +31,10 @@ export function BorrowStatsCard() {
   const { data: vouchData, mutate: updateVouchData } = useVouchData();
   const { data: creditLimit = ZERO, mutate: updateCreditLimit } =
     useCreditLimit();
+
+  const DAI = useToken("DAI");
+  const { data: daiBalance = ZERO, mutate: updateDaibalance } =
+    useTokenBalance(DAI);
 
   const {
     borrowed = ZERO,
@@ -52,6 +58,7 @@ export function BorrowStatsCard() {
     await updateCreditLimit();
     await updateVouchData();
     await updateBorrowData();
+    await updateDaibalance();
   };
 
   const creditLimitView = formatScaled(creditLimit, 2);
@@ -126,8 +133,13 @@ export function BorrowStatsCard() {
         creditLimit={creditLimit}
         borrowData={borrowData}
         onComplete={onComplete}
+        daiBalance={daiBalance}
       />
-      <PaymentModal borrowData={borrowData} onComplete={onComplete} />
+      <PaymentModal
+        daiBalance={daiBalance}
+        borrowData={borrowData}
+        onComplete={onComplete}
+      />
       <PaymentReminderModal />
     </>
   );

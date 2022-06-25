@@ -117,7 +117,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
         pending: `Borrowing ${amount} DAI`,
         success: `Borrowed ${amount} DAI`,
       });
-      if (typeof onComplete === "function") onComplete();
+      if (typeof onComplete === "function") await onComplete();
       addActivity(activityLabels.borrow({ amount, hash }));
       close();
       reset();

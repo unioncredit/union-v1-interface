@@ -29,7 +29,6 @@ import { useModal, useModalOpen } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
 import useRepay from "hooks/payables/useRepay";
 import useToken from "hooks/useToken";
-import useTokenBalance from "hooks/data/useTokenBalance";
 import { useAddActivity } from "hooks/data/useActivity";
 import useUToken from "hooks/contracts/useUToken";
 import { Dai } from "components-ui/Dai";
@@ -50,7 +49,7 @@ const PaymentType = {
   CUSTOM: "custom",
 };
 
-export function PaymentModal({ borrowData, onComplete }) {
+export function PaymentModal({ borrowData, daiBalance, onComplete }) {
   const { library } = useWeb3React();
   const [paymentType, setPaymentType] = useState(PaymentType.MIN);
 
@@ -62,7 +61,6 @@ export function PaymentModal({ borrowData, onComplete }) {
 
   const { close } = usePaymentModal();
   const { removePermit } = usePermits();
-  const { data: daiBalance = ZERO } = useTokenBalance(DAI);
 
   const {
     borrowed = ZERO,
