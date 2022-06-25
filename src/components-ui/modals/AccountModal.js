@@ -74,7 +74,9 @@ export function AccountModal() {
           ) : (
             activity.map(({ amount, label, hash, failed }, i) => {
               const scaledAmount =
-                amount instanceof BigNumber ? amount : parseUnits(amount);
+                amount instanceof BigNumber
+                  ? amount
+                  : parseUnits(amount.toString());
 
               return (
                 <Box
