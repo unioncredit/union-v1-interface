@@ -46,7 +46,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const { data: minBorrow = ZERO } = useMinBorrow();
 
   const {
-    borrowed = ZERO,
+    owed = ZERO,
     paymentDueDate = "-",
     paymentPeriod = "-",
     fee = ZERO,
@@ -68,14 +68,15 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const amount = BigNumber.from(parseEther(watchAmount));
 
   const maxFeeAmount = WAD.add(fee);
-  const maxBorrowAmount = creditLimit.div(maxFeeAmount).mul(WAD);
-  const borrowedAmount = borrowed > ZERO ? borrowed : ZERO;
+  const maxBorrowAmount = creditLimit.mul(WAD).div(maxFeeAmount);
+
+  const borrowedAmount = owed > ZERO ? owed : ZERO;
   const feeAmount = amount.mul(fee).div(WAD);
   const totalBorrow = feeAmount.add(amount);
   const newBalanceOwed = borrowedAmount.add(totalBorrow);
 
   const creditLimitView = format(formatUnits(creditLimit, 18), 2);
-  const borrowedView = format(formatUnits(borrowed, 18), 2);
+  const borrowedView = format(formatUnits(owed, 18), 2);
   const totalBorrowView = format(formatUnits(totalBorrow, 18), 2);
   const newBalanceOwedView = format(formatUnits(newBalanceOwed, 18), 2);
   const amountView = format(formatUnits(amount, 18), 2);
@@ -135,7 +136,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Borrow funds" onClose={close} size="medium">
+      <Modal title="Borrow funds" onClose={close}>
         <form onSubmit={handleSubmit(handleBorrow)}>
           <Grid>
             <Grid.Row>

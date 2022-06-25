@@ -2,16 +2,11 @@ import useSWR from "swr";
 import { formatUnits } from "@ethersproject/units";
 import { useWeb3React } from "@web3-react/core";
 
-import getBlockNumber from "util/getBlockNumber";
-import { formatDueDate } from "util/formatDueDate";
 import useToken from "hooks/useToken";
 import useUToken from "hooks/contracts/useUToken";
-import {
-  BLOCKS_PER_YEAR,
-  BLOCK_SPEED,
-  REPAY_MARGIN,
-  WAD,
-} from "constants/variables";
+import getBlockNumber from "util/getBlockNumber";
+import { formatDueDate } from "util/formatDueDate";
+import { BLOCKS_PER_YEAR, BLOCK_SPEED } from "constants/variables";
 
 const getPaymentDue = async (isOverdue, lastRepay, overdueBlocks, library) => {
   if (isOverdue) return "Overdue";
@@ -35,6 +30,7 @@ const fetchBorrowData = (uToken) => async (_, account, chainId, library) => {
   const overdueBlocks = await uToken.overdueBlocks();
   const isOverdue = await uToken.checkIsOverdue(account);
   const lastRepay = await uToken.getLastRepay(account);
+  const owed = await uToken.borrowBalanceView(account);
   const paymentPeriod = formatDueDate(
     overdueBlocks.mul(BLOCK_SPEED[chainId]).toNumber()
   );
@@ -45,8 +41,6 @@ const fetchBorrowData = (uToken) => async (_, account, chainId, library) => {
     overdueBlocks,
     library
   );
-
-  const owed = borrowed.mul(REPAY_MARGIN).div(WAD);
 
   return {
     borrowRatePerBlock,

@@ -91,11 +91,13 @@ export function PaymentModal({ borrowData, onComplete }) {
   const maxRepay = daiBalance.lt(owed) ? daiBalance : owed;
   const minRepay = interest.lt(MIN_REPAY) ? MIN_REPAY : interest;
   const newBalanceOwed = borrowed.sub(amount);
+  const maxRepayWithMargin = maxRepay.mul(REPAY_MARGIN).div(WAD);
 
   const handleSelectOption = (option) => {
     setPaymentType(option.paymentType);
     if (option.value) {
-      setValue("amount", option.value, {
+      const value = formatUnits(option.value);
+      setValue("amount", value, {
         shouldDirty: true,
         shouldValidate: true,
       });
@@ -123,8 +125,10 @@ export function PaymentModal({ borrowData, onComplete }) {
 
     try {
       const scaled = String(values.amount * 10 ** 18);
-      const bnValue = BigNumber.from(scaled);
-      amountToRepay = bnValue.gt(daiBalance) ? daiBalance : bnValue;
+      amountToRepay = BigNumber.from(scaled);
+      if (values.amount == formatUnits(maxRepay)) {
+        amountToRepay = maxRepayWithMargin;
+      }
       const { hash } = await repay(amountToRepay);
 
       const amountToRepayView = format(formatUnits(amountToRepay), 2);
@@ -149,7 +153,8 @@ export function PaymentModal({ borrowData, onComplete }) {
       title: "Pay minimum due",
       content:
         "Make the payment required to cover the interest due on your loan",
-      value: format(formatUnits(minRepay, 18), 2),
+      value: minRepay,
+      display: format(formatUnits(minRepay, 18), 2),
       paymentType: PaymentType.MIN,
     },
     {
@@ -159,7 +164,8 @@ export function PaymentModal({ borrowData, onComplete }) {
       content: maxRepay.gte(borrowed)
         ? "Make a payment to pay-off your current balance owed in its entirety"
         : "Make a payment with the maximum amount of DAI available in your connected wallet",
-      value: format(formatUnits(maxRepay, 18), 2),
+      display: format(formatUnits(maxRepay, 18), 2),
+      value: maxRepay,
       paymentType: PaymentType.MAX,
     },
   ];
@@ -219,11 +225,11 @@ export function PaymentModal({ borrowData, onComplete }) {
                         </Label>
                       </Collapse>
                     </Box>
-                    {option.value && (
+                    {option.display && (
                       <Badge
                         ml="8px"
                         color={selected ? "blue" : "grey"}
-                        label={<Dai value={option.value} />}
+                        label={<Dai value={option.display} />}
                       />
                     )}
                   </Box>
