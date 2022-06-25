@@ -74,8 +74,8 @@ export function AccountModal() {
           ) : (
             activity.map(({ amount, label, hash, failed }, i) => {
               const scaledAmount =
-                amount instanceof BigNumber
-                  ? amount
+                amount?.type == "BigNumber"
+                  ? BigNumber.from(amount.hex)
                   : parseUnits(amount.toString());
 
               return (
