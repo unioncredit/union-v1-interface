@@ -20,6 +20,7 @@ function TrustsYouContactDetails({
       <Grid.Row>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Trust"
             tooltip="The DAI amount this address trusts you with"
             value={<Dai value={format(formatUnits(trust), 2)} />}
@@ -27,6 +28,7 @@ function TrustsYouContactDetails({
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Vouch"
             tooltip="The DAI amount this address can underwrite based on their total staked DAI"
             value={<Dai value={format(formatUnits(vouched), 2)} />}
@@ -34,6 +36,7 @@ function TrustsYouContactDetails({
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Available"
             tooltip="The DAI amount you can borrow from this address"
             value={<Dai value={format(formatUnits(available), 2)} />}
@@ -73,6 +76,7 @@ function YouTrustContactDetails({
       <Grid.Row>
         <Grid.Col>
           <Stat
+            size="extra-small"
             mb="24px"
             label="Credit Status"
             value={
@@ -91,6 +95,7 @@ function YouTrustContactDetails({
       <Grid.Row>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             mb="12px"
             label="Trust"
             tooltip="The DAI amount you trust this address to borrow"
@@ -99,6 +104,7 @@ function YouTrustContactDetails({
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             mb="12px"
             label="Vouch"
             tooltip="The DAI amount you can underwrite based on your total staked DAI"
@@ -107,6 +113,7 @@ function YouTrustContactDetails({
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             mb="12px"
             label="Available"
             tooltip="The DAI this address has available to borrow"
@@ -115,18 +122,21 @@ function YouTrustContactDetails({
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Balance owed"
             value={<Dai value={format(formatUnits(used), 2)} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Min payment"
             value={<Dai value={roundUp(formatUnits(interest))} />}
           />
         </Grid.Col>
         <Grid.Col xs={4}>
           <Stat
+            size="extra-small"
             label="Payment due"
             value={
               paymentDueDate === "No Payment Due" ? "None" : paymentDueDate
