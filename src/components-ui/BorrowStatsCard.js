@@ -91,7 +91,7 @@ export function BorrowStatsCard() {
                   size="large"
                   align="center"
                   label="Balance owed"
-                  value={<Dai value={formatScaled(owed, 2)} />}
+                  value={<Dai value={formatScaled(borrowed, 2)} />}
                 />
 
                 <Stat
