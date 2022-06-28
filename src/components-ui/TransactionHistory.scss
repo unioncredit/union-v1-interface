@@ -1,0 +1,27 @@
+.transactionHistory {
+  .avatarIcon {
+    position: relative;
+    svg {
+      position: absolute;
+      bottom: -4px;
+      left: -4px;
+    }
+  }
+
+  .external-inline {
+    width: 18px;
+    display: inline-block;
+    vertical-align: middle;
+    left: -4px;
+    top: -1px;
+    position: relative;
+
+    path {
+      fill: #a8a29e;
+    }
+  }
+
+  a:hover .external-inline path {
+    fill: #3b82f6;
+  }
+}

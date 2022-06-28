@@ -1,0 +1,140 @@
+@import "@unioncredit/ui/lib";
+
+body {
+  background-color: #fff;
+  overflow-y: scroll;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+table p a:hover {
+  color: #3b82f6;
+}
+
+@media screen and (max-width: 1000px) {
+  .layout-main-wrapper {
+    padding-bottom: 32px;
+    box-sizing: border-box;
+  }
+}
+
+.qrcode {
+  border-radius: 5px;
+  border: 0.625px solid #e1e0e6;
+  padding: 7.5px;
+}
+
+.notification-stack {
+  z-index: 999999;
+}
+
+.loading-screen {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav {
+  width: 100%;
+}
+
+.nav--mobile {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999;
+  background: #fbfbfb;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow: inset 0px 1px 0px #e1e0e6;
+}
+
+@media screen and (max-width: 650px) {
+  .tooltip:not(.tooltip--alwaysShow) {
+    display: none;
+  }
+
+  .layout-header .heading {
+    font-size: 21px;
+  }
+}
+
+.copyable {
+  cursor: pointer;
+}
+
+.editable-name {
+  outline: none;
+  min-height: 28px;
+  min-width: 100px;
+}
+
+.button .icon-external {
+  margin-left: 4px;
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper-toggle-menu {
+    align-self: flex-end;
+  }
+}
+
+ol,
+ul {
+  list-style: normal;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.inverted-circle-logo {
+  background-color: #44403c;
+  border-radius: 100%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inverted-circle-logo svg path {
+  fill: white;
+}
+
+.identicon {
+  border-radius: 100%;
+}
+
+.union-wallet.button,
+.wallet.button,
+.loginButton.button {
+  height: 32px;
+  min-height: 0;
+
+  .text {
+    font-size: 14px !important;
+  }
+}
+
+.union-wallet.button {
+  padding: 8px;
+}
+
+.layout-main {
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 767px) {
+  .layout-header {
+    padding-bottom: 8px;
+  }
+}
