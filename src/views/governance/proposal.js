@@ -47,6 +47,8 @@ function ProposalView() {
     proposer,
     hash,
     description = "-",
+    actionItems = "-",
+    abstract = "-",
     title = "-",
     targets = [],
     signatures = [],
@@ -101,17 +103,8 @@ function ProposalView() {
                 {proposer ? <AddressLabel address={proposer} /> : "-"}
               </>
             )}
-            <Box mt="16px">
-              <a
-                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Button variant="pill" label="View bytecode" />
-              </a>
-            </Box>
-            <Box direction="vertical" mt="24px">
-              <Heading level={3}>Description</Heading>
+            <Box direction="vertical" mt="36px">
+              <Heading level={3}>Action Items</Heading>
               {isLoading ? (
                 createArray(3).map((_, i) => (
                   <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
@@ -137,66 +130,80 @@ function ProposalView() {
                     listItem: (props) => <Text as="li" {...props} />,
                   }}
                 >
-                  {description}
+                  {actionItems}
                 </ReactMarkdown>
               )}
             </Box>
-
-            <Box direction="vertical" mt="24px" mb="24px">
-              <Heading level={3}>Details</Heading>
-              {isLoading
-                ? createArray(3).map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      height={16}
-                      width={320}
-                      shimmer
-                      mb="8px"
-                    />
-                  ))
-                : targets.map((target, i) => {
-                    const signature = signatures[i];
-                    const calldata = calldatas[i];
-
-                    const args = signature
-                      .match(/\((.*?)\)/)?.[0]
-                      .replace("(", "")
-                      .replace(")", "")
-                      .split(",");
-
-                    const decoded =
-                      args &&
-                      calldata &&
-                      defaultAbiCoder.decode(args, calldata);
-                    const argumentString =
-                      decoded &&
-                      decoded.map((item) => item.toString()).join(",");
-
-                    return (
-                      <Fragment key={`${target}${signature}${calldata}`}>
-                        <Label
-                          as="a"
-                          w="100%"
-                          m={0}
-                          grey={800}
-                          href={getEtherscanLink(chainId, target, "ADDRESS")}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{ wordWrap: "break-word" }}
-                        >
-                          Contract: {target}
-                        </Label>
-                        <Label
-                          as="p"
-                          w="100%"
-                          style={{ wordWrap: "break-word" }}
-                        >
-                          Function: {signature.replace(/(\(=?)(.*)$/, "")}(
-                          {argumentString})
-                        </Label>
-                      </Fragment>
-                    );
-                  })}
+            <Box mt="0px">
+              <a
+                href={getEtherscanLink(chainId, hash, "TRANSACTION")}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button variant="pill" label="View bytecode" />
+              </a>
+            </Box>
+            <Box direction="vertical" mt="36px">
+              <Heading level={3}>Abstract</Heading>
+              {isLoading ? (
+                createArray(3).map((_, i) => (
+                  <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
+                ))
+              ) : (
+                <ReactMarkdown
+                  renderers={{
+                    link: (props) => (
+                      <Link to={props.href}>
+                        <Text as="a" {...props} color="blue600" />
+                      </Link>
+                    ),
+                    heading: (props) => (
+                      <Text
+                        size="large"
+                        grey={800}
+                        {...props}
+                        mb="8px"
+                        mt="24px"
+                      />
+                    ),
+                    paragraph: (props) => <Text {...props} mb="8px" />,
+                    listItem: (props) => <Text as="li" {...props} />,
+                  }}
+                >
+                  {abstract}
+                </ReactMarkdown>
+              )}
+            </Box>
+            <Box direction="vertical" mt="24px">
+              <Heading level={3}>Description</Heading>
+              {isLoading ? (
+                createArray(3).map((_, i) => (
+                  <Skeleton key={i} height={16} width={320} shimmer mb="8px" />
+                ))
+              ) : (
+                <ReactMarkdown
+                  renderers={{
+                    link: (props) => (
+                      <Link to={props.href}>
+                        <Text as="a" {...props} color="blue600" />
+                      </Link>
+                    ),
+                    heading: (props) => (
+                      <Text
+                        size="large"
+                        grey={800}
+                        {...props}
+                        mb="8px"
+                        mt="12px"
+                      />
+                    ),
+                    paragraph: (props) => <Text {...props} mb="8px" />,
+                    listItem: (props) => <Text as="li" {...props} />,
+                  }}
+                >
+                  {description}
+                </ReactMarkdown>
+              )}
             </Box>
           </Col>
           <Col md={4}>
