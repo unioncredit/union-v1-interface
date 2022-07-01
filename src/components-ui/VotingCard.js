@@ -61,7 +61,9 @@ export function VotingCard({
   if (!proposalId) return null;
 
   const totalCount = forVotes.add(againstVotes);
-  const percentageFor = forVotes.mul("100").div(totalCount);
+  const percentageFor = totalCount.gt(0)
+    ? forVotes.mul("100").div(totalCount)
+    : 0;
   const percentageAgainst = 100 - percentageFor;
 
   const totalVotePercent = toNumber(totalCount) / toNumber(totalSupply);
