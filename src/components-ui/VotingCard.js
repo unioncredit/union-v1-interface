@@ -64,7 +64,7 @@ export function VotingCard({
   const percentageFor = totalCount.gt(0)
     ? forVotes.mul("100").div(totalCount)
     : 0;
-  const percentageAgainst = 100 - percentageFor;
+  const percentageAgainst = totalCount.gt(0) ? 100 - percentageFor : 0;
 
   const totalVotePercent = toNumber(totalCount) / toNumber(totalSupply);
   const quorumPercent = toNumber(quorum) / toNumber(totalSupply);
