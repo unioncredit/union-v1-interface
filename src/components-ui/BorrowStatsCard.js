@@ -105,6 +105,7 @@ export function BorrowStatsCard() {
                   align="center"
                   label="Minimum due"
                   mt="24px"
+                  mb="4.5px"
                   value={<Dai value={roundUp(formatUnits(interest, 18))} />}
                   after={
                     <Label
