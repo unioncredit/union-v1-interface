@@ -26,7 +26,7 @@ export const useVouchModal = () => useModal(VOUCH_MODAL);
 
 export const useVouchModalOpen = () => useModalOpen(VOUCH_MODAL);
 
-export function VouchModal() {
+export function VouchModal({ address: inputAddress }) {
   const maxTrust = useMaxTrust();
   const adjustTrust = useAdjustTrust();
   const addActivity = useAddActivity();
@@ -37,9 +37,10 @@ export function VouchModal() {
   const { data: trustData, mutate: updateTrustData } = useTrustData();
 
   const defaultAddressValue = useMemo(() => {
+    if (inputAddress) return inputAddress;
     const search = new URLSearchParams(window.location.search);
     return search.get("address");
-  }, []);
+  }, [inputAddress]);
 
   const {
     formState,

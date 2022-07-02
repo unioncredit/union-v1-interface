@@ -1,13 +1,14 @@
 import { ReactComponent as EnsIcon } from "@unioncredit/ui/lib/icons/ens.svg";
 import makeBlockie from "ethereum-blockies-base64";
-import { Input, Box, Label, LoadingSpinner, Avatar } from "@unioncredit/ui";
+import { Input, Box, Label, LoadingSpinner } from "@unioncredit/ui";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchENS } from "fetchers/fetchEns";
 
 import styles from "./AddressInput.module.css";
 import errorMessages from "util/errorMessages";
 import validateAddress from "util/validateAddress";
+import { Avatar } from "components-ui/Avatar";
 
 export const generateHandleChange = ({
   clearErrors,
@@ -47,20 +48,30 @@ export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
   const [loading, setLoading] = useState(false);
   const [ensData, setEnsData] = useState(null);
 
+  const refresh = useCallback(async (value) => {
+    const ensData = await fetchENS(value);
+    const inputIsENS = value.endsWith(".eth");
+    setEnsData({ ...ensData, inputIsENS });
+    return inputIsENS ? ensData.address : value;
+  }, []);
+
+  useEffect(() => {
+    if (!defaultValue) return;
+    (async () => {
+      setLoading(true);
+      await refresh(defaultValue);
+      setLoading(false);
+    })();
+  }, [defaultValue, refresh]);
+
   const handleChange = (event) => {
-    setLoading(true);
     setEnsData(null);
+    setLoading(true);
 
     timer.current && clearTimeout(timer.current);
     timer.current = setTimeout(async () => {
-      const input = event.target.value;
-      const ensData = await fetchENS(input);
-      const inputIsENS = input.endsWith(".eth");
-
-      setEnsData({ ...ensData, inputIsENS });
-
-      const formValue = inputIsENS ? ensData.address : input;
-      onChange && onChange(formValue);
+      const value = await refresh(event.target.value);
+      onChange && onChange(value);
       setLoading(false);
     }, 1000);
   };
@@ -93,10 +104,7 @@ export const AddressInput = ({ onChange, error, defaultValue, ...props }) => {
           ensData ? (
             <Box direction="horizontal" align="center" mt="4px">
               {(ensData.avatar || ensData.address) && (
-                <Avatar
-                  size={16}
-                  src={ensData.avatar || makeBlockie(ensData.address)}
-                />
+                <Avatar size={16} address={ensData.address} />
               )}{" "}
               <Label mb={0} mt={0} ml="4px" size="small">
                 {ensData.inputIsENS

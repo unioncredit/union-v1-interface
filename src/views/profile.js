@@ -60,8 +60,6 @@ export default function ProfileView({ address }) {
 
   const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
 
-  const isAccountProfile = account === address;
-
   const isLoading = !rawTrustData || !rawVouchData;
 
   return (
@@ -180,7 +178,7 @@ export default function ProfileView({ address }) {
         </Grid>
       </View>
 
-      <VouchModal />
+      <VouchModal address={address} />
     </>
   );
 }
