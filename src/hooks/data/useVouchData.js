@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import { useWeb3React } from "@web3-react/core";
-import { JsonRpcProvider } from "@ethersproject/providers";
 
 import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 import useUToken from "hooks/contracts/useUToken";
 import useMulticall from "hooks/useMulticall";
+import { fetchENS } from "fetchers/fetchEns";
 
 function fetchVouchData(userManager, uToken, multicall) {
   return async function (_, address) {
@@ -44,7 +44,10 @@ function fetchVouchData(userManager, uToken, multicall) {
       },
     ]);
 
-    const resp = await multicall(calls);
+    const [ens, resp] = await Promise.all([
+      await Promise.all(addresses.map((address) => fetchENS(address))),
+      await multicall(calls),
+    ]);
 
     return addresses.map((address, i) => {
       const vouched = resp[i][0].vouchingAmount;
@@ -65,7 +68,7 @@ function fetchVouchData(userManager, uToken, multicall) {
         trust: resp[i][0].trustAmount,
         used,
         vouched,
-        ens: null,
+        ens: ens[i].name,
         isMember: resp[i][3][0],
       };
     });
