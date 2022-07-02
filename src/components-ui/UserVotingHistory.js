@@ -18,10 +18,14 @@ export function UserVotingHistory({ address }) {
         <Link key={i} to={`/proposals/${vote.id}`}>
           <a>
             <Box fluid justify="space-between">
-              <Label as="p" mb="4px" grey={400}>
-                {vote.title}
-                <ExtenalInline />
-              </Label>
+              <Box align="center" mb="4px">
+                <Label as="p" grey={400}>
+                  {vote.title}
+                </Label>
+                <Label as="p" grey={400}>
+                  <ExtenalInline width="24px" />
+                </Label>
+              </Box>
               <Badge
                 color={vote.receipt.support ? "green" : "red"}
                 label={vote.receipt.support ? "For" : "Against"}
