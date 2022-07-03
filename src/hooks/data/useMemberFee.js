@@ -3,7 +3,7 @@ import useSWR from "swr";
 import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 
-function fetchMemberFee(userManager) {
+function fetchMemberFee(_, userManager) {
   return userManager.newMemberFee();
 }
 
