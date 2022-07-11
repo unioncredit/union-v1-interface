@@ -49,7 +49,7 @@ const PaymentType = {
   CUSTOM: "custom",
 };
 
-export function PaymentModal({ borrowData, daiBalance, onComplete }) {
+export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   const { library } = useWeb3React();
   const [paymentType, setPaymentType] = useState(PaymentType.MIN);
 
