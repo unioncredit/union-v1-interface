@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
-import { formatUnits, parseEther } from "@ethersproject/units";
+import { formatUnits, parseEther, parseUnits } from "@ethersproject/units";
 
 import isHash from "util/isHash";
 import format from "util/formatValue";
@@ -86,7 +86,9 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   const watchAmount = String(watch("amount") || 0);
   const amount = BigNumber.from(parseEther(watchAmount));
   const maxRepay = daiBalance && daiBalance.lt(owed) ? daiBalance : owed;
-  const minRepay = interest.lt(MIN_REPAY) ? MIN_REPAY : interest;
+  const minRepay = interest.lt(MIN_REPAY)
+    ? MIN_REPAY
+    : interest.mul(1010).div(1000);
   const newBalanceOwed = borrowed.sub(amount);
   const maxRepayWithMargin = maxRepay.mul(REPAY_MARGIN).div(WAD);
 
@@ -108,8 +110,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   const validate = async (val) => {
     if (!val) return errorMessages.required;
 
-    const scaled = String(toFixed(val * 10 ** 18));
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(val);
     if (bnValue.gt(daiBalance)) {
       return errorMessages.notEnoughBalanceDAI;
     }
@@ -121,8 +122,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
     let amountToRepay = ZERO;
 
     try {
-      const scaled = String(values.amount * 10 ** 18);
-      amountToRepay = BigNumber.from(scaled);
+      amountToRepay = parseUnits(values.amount);
       if (values.amount == formatUnits(maxRepay)) {
         amountToRepay = maxRepayWithMargin;
       }
