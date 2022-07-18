@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { BigNumber } from "@ethersproject/bignumber";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { Button, Dai, Box, Input, Label } from "@unioncredit/ui";
 
 import { Approval } from "components-ui";
@@ -83,8 +82,7 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
     if (!amount || amount <= 0) return errorMessages.required;
     if (amount < 0.1) return errorMessages.minValuePointZeroOne;
 
-    const scaled = String(toFixed(amount * 10 ** 18));
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(amount);
     if (bnValue.gt(maxAllowed)) return errorMessages.stakeLimitHit;
     if (bnValue.gt(daiBalance)) return errorMessages.notEnoughBalanceDAI;
   };

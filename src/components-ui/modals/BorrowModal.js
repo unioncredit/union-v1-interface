@@ -23,7 +23,7 @@ import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
 import isHash from "util/isHash";
 import useMinBorrow from "hooks/data/useMinBorrow";
-import { formatUnits, parseEther } from "@ethersproject/units";
+import { formatUnits, parseEther, parseUnits } from "@ethersproject/units";
 import { ZERO, WAD } from "constants/variables";
 import { BigNumber } from "@ethersproject/bignumber";
 
@@ -65,7 +65,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   if (!isOpen) return null;
 
   const watchAmount = String(watch("amount") || 0);
-  const amount = BigNumber.from(parseEther(watchAmount));
+  const amount = parseEther(watchAmount);
 
   const maxFeeAmount = WAD.add(fee);
   const maxBorrowAmount = creditLimit.mul(WAD).div(maxFeeAmount);
@@ -99,8 +99,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
     if (isOverdue) return errorMessages.overdueBalance;
     if (isNaN(val)) return errorMessages.notANumber;
 
-    const scaled = String(toFixed(val * 10 ** 18));
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(val);
     if (bnValue.gt(maxBorrowAmount)) return errorMessages.notEnoughCredit;
     if (bnValue.gt(maxBorrow)) return errorMessages.maxBorrow(maxBorrowView);
     if (bnValue.gt(loanableAmount)) return errorMessages.notEnoughPoolDAI;

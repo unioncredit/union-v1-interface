@@ -7,10 +7,9 @@ import {
   Input,
   Box,
 } from "@unioncredit/ui";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { BigNumber } from "@ethersproject/bignumber";
 
 import { useModal, useModalOpen } from "hooks/useModal";
 import { useManageContactModal } from "components-ui/modals";
@@ -59,8 +58,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
     if (!val) return errorMessages.required;
     if (!isOverdue) return errorMessages.notOverDue;
 
-    const scaled = String(Number(val) * 10 ** 18);
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(val);
     if (bnValue.gt(used)) return errorMessages.maxWriteOff;
     if (bnValue.lte(0)) return errorMessages.minValueZero;
 

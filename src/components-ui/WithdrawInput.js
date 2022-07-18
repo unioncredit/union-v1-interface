@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber } from "@ethersproject/bignumber";
-import { formatUnits } from "@ethersproject/units";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { Button, Box, Dai, Input, Label } from "@unioncredit/ui";
 
 import isHash from "util/isHash";
@@ -67,8 +67,7 @@ export const WithdrawInput = ({
   const validate = (amount) => {
     if (!amount || amount <= 0) return errorMessages.required;
 
-    const scaled = String(toFixed(amount * 10 ** 18));
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(amount);
     if (bnValue.gt(withdrawableStake)) return errorMessages.notEnoughStake;
   };
 

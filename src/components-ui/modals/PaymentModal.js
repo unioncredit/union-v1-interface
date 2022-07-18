@@ -84,7 +84,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   }, [isOpen]);
 
   const watchAmount = String(watch("amount") || 0);
-  const amount = BigNumber.from(parseEther(watchAmount));
+  const amount = parseEther(watchAmount);
   const maxRepay = daiBalance && daiBalance.lt(owed) ? daiBalance : owed;
   const minRepay = interest.lt(MIN_REPAY)
     ? MIN_REPAY

@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useWeb3React } from "@web3-react/core";
-import { formatUnits } from "@ethersproject/units";
-import { BigNumber } from "@ethersproject/bignumber";
+import { formatUnits, parseUnits } from "@ethersproject/units";
 import { Grid, Button, ModalOverlay, Input, Stat } from "@unioncredit/ui";
 
 import { Dai, Modal } from "components-ui";
@@ -17,7 +16,6 @@ import useCreditLimit from "hooks/data/useCreditLimit";
 import { useAddActivity } from "hooks/data/useActivity";
 import useAdjustTrust from "hooks/payables/useAdjustTrust";
 import { useManageContactModal } from "./ManageContactModal";
-import { toFixed } from "util/numbers";
 
 export const EDIT_VOUCH_MODAL = "edit-vouch-modal";
 
@@ -47,8 +45,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   const validate = (val) => {
     if (!val) return errorMessages.required;
-    const scaled = String(toFixed(val * 10 ** 18));
-    const bnValue = BigNumber.from(scaled);
+    const bnValue = parseUnits(val);
     if (bnValue.lt(used)) return errorMessages.cantRemoveStake;
     if (bnValue.lt(0)) return errorMessages.minValueZero;
 
@@ -84,12 +81,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal
-        title="Adjust trust"
-        onClose={close}
-        onBack={back}
-        size="medium"
-      >
+      <Modal title="Adjust trust" onClose={close} onBack={back} size="medium">
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>
