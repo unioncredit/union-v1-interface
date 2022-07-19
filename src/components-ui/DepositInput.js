@@ -82,7 +82,7 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
     if (!amount || amount <= 0) return errorMessages.required;
     if (amount < 0.1) return errorMessages.minValuePointZeroOne;
 
-    const bnValue = parseUnits(amount);
+    const bnValue = parseUnits(String(amount));
     if (bnValue.gt(maxAllowed)) return errorMessages.stakeLimitHit;
     if (bnValue.gt(daiBalance)) return errorMessages.notEnoughBalanceDAI;
   };

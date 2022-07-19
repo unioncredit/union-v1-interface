@@ -67,7 +67,7 @@ export const WithdrawInput = ({
   const validate = (amount) => {
     if (!amount || amount <= 0) return errorMessages.required;
 
-    const bnValue = parseUnits(amount);
+    const bnValue = parseUnits(String(amount));
     if (bnValue.gt(withdrawableStake)) return errorMessages.notEnoughStake;
   };
 
