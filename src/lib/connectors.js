@@ -59,11 +59,7 @@ export const networks =
             return networkAppUrls[chainId]?.includes(host);
           });
 
-          if (
-            chainId &&
-            (chainId.toString() === "1" ||
-              chainId.toString() === key.toString())
-          ) {
+          if (chainId && chainId.toString() === key.toString()) {
             return { [key]: allNetworks[key], ...acc };
           }
 
