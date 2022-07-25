@@ -5,7 +5,7 @@ export const options = [
   {
     type: "ethereum",
     id: "ethereum",
-    imageSrc: "/images/ethereum-avatar.png",
+    imageSrc: "/images/ethereum.png",
     value: "ethereum",
     label: "Ethereum",
     description:
@@ -15,16 +15,12 @@ export const options = [
     networkData: {
       chainId: "0x1",
     },
-    badges: [
-      { label: "Governance", color: "blue" },
-      { label: "Higher Gas Fees", color: "yellow" },
-    ],
   },
   {
     label: "Arbitrum",
     type: "arbitrum",
     id: "arbitrum",
-    imageSrc: "/images/arbitrum-avatar.png",
+    imageSrc: "/images/arbitrum.png",
     value: "arbitrum one",
     label: "Arbitrum",
     description:
@@ -36,12 +32,11 @@ export const options = [
       rpcUrls: ["https://arb1.arbitrum.io/rpc"],
       chainName: "Arbitrum One",
     },
-    badges: [{ label: "Low Gas Fees", color: "blue" }],
   },
   {
     type: "kovan",
     id: "kovan",
-    imageSrc: "/images/kovan-avatar.png",
+    imageSrc: "/images/kovan.png",
     value: "kovan",
     label: "Kovan",
     description:
@@ -51,10 +46,6 @@ export const options = [
     networkData: {
       chainId: "0x2A",
     },
-    badges: [
-      { label: "Testing", color: "grey" },
-      { label: "Development", color: "grey" },
-    ],
   },
 ];
 
