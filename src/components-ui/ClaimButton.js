@@ -10,6 +10,8 @@ import activityLabels from "util/activityLabels";
 import useRewardsData from "hooks/data/useRewardsData";
 import isHash from "util/isHash";
 import { addToast, FLAVORS } from "hooks/useToast";
+import { formatUnits } from "@ethersproject/units";
+import format from "util/formatValue";
 
 export function ClaimButton({ onComplete, label, ...props }) {
   const addActivity = useAddActivity();
@@ -21,16 +23,19 @@ export function ClaimButton({ onComplete, label, ...props }) {
   const { rewards = 0.0 } = !!rewardsData && rewardsData;
 
   const handleClaim = async () => {
-    if (rewards <= 0) {
+    if (rewards.lte(0)) {
       addToast(FLAVORS.ERROR("No rewards to claim"));
       return;
     }
+
+    const displayRewards = format(formatUnits(rewards), 2);
+
     try {
       setLoading(true);
       const { hash } = await withdrawRewards();
       await getReceipt(hash, library, {
-        pending: `Claiming ${rewards} ${unionSymbol}`,
-        success: `Claimed ${rewards} ${unionSymbol}`,
+        pending: `Claiming ${displayRewards} ${unionSymbol}`,
+        success: `Claimed ${displayRewards} ${unionSymbol}`,
       });
       addActivity(activityLabels.claim({ amount: rewards, hash }));
       setLoading(false);
@@ -41,7 +46,7 @@ export function ClaimButton({ onComplete, label, ...props }) {
       setLoading(false);
       const hash = isHash(err.message) && err.message;
       addActivity(activityLabels.claim({ amount: rewards, hash }, true));
-      handleTxError(err, `Failed to claim ${rewards} ${unionSymbol}`);
+      handleTxError(err, `Failed to claim ${displayRewards} ${unionSymbol}`);
     }
   };
 

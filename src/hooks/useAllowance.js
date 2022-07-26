@@ -7,13 +7,12 @@ import isHash from "util/isHash";
 import getReceipt from "util/getReceipt";
 import { useAddActivity } from "hooks/data/useActivity";
 import activityLabels from "util/activityLabels";
-import truncateAddress from "util/truncateAddress";
 import handleTxError from "util/handleTxError";
 import useChainId from "hooks/useChainId";
 import useERC20 from "hooks/contracts/useERC20";
 import usePermits from "hooks/usePermits";
 
-const getAllowance = (_, contract, account, spender) => {
+const getAllowance = (contract) => (_, account, spender) => {
   return contract.allowance(account, spender);
 };
 
@@ -27,8 +26,8 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
   const shouldFetch = contract && account && chainId;
 
   const resp = useSWR(
-    shouldFetch ? ["Allowance", contract, account, spender] : null,
-    getAllowance
+    shouldFetch ? ["Allowance", account, spender] : null,
+    getAllowance(contract)
   );
 
   const approve = async () => {
@@ -38,10 +37,10 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
         pending: "Approving",
         success: "Approved",
       });
-      addActivity(activityLabels.claim({ hash, token: tokenAddress }));
+      addActivity(activityLabels.approve({ hash, token: tokenAddress }));
     } catch (err) {
       const hash = isHash(err.message) && err.message;
-      addActivity(activityLabels.claim({ hash, token: tokenAddress }), true);
+      addActivity(activityLabels.approve({ hash, token: tokenAddress }), true);
       handleTxError(err, "Failed to approve");
     }
   };
