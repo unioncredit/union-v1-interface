@@ -29,7 +29,7 @@ export function VouchStepCard() {
     <Card mb="24px" size="fluid" className="vouchStakeCard">
       <Card.Header
         title={`Get ${effectiveNumber} vouches`}
-        subTitle="To become a member, you’ll need 3 existing Union members to vouch for you. These vouches will form your starting credit line within Union."
+        subTitle="To become a member, you’ll need at least 1 existing Union member to vouch for you. These vouches will form your starting credit line within Union."
       />
       <Card.Body>
         <Box className="vouchStakeCardInner">
