@@ -68,7 +68,15 @@ export function CreditRequestModal() {
             <ShareQrCode link={url} />
           </Box>
           <Box mb="16px" direction="vertical" align="center">
-            <Label as="p" m={0}>
+            <Label
+              as="p"
+              m={0}
+              style={{
+                wordBreak: "break-all",
+                textAlign: "center",
+                padding: "0 10px",
+              }}
+            >
               {url}
             </Label>
             <Button
