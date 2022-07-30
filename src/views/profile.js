@@ -98,7 +98,7 @@ export default function ProfileView({ address }) {
                       </Text>
                     )}
 
-                    {vouchedForThem === false && (
+                    {vouchedForThem === false && account && (
                       <Button
                         fluid
                         mt="20px"
