@@ -15,7 +15,6 @@ import {
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { BigNumber } from "@ethersproject/bignumber";
 import { formatUnits, parseEther, parseUnits } from "@ethersproject/units";
 
 import isHash from "util/isHash";
@@ -24,7 +23,7 @@ import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
-import { toFixed } from "util/numbers";
+import { roundDown, toFixed } from "util/numbers";
 import { useModal, useModalOpen } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
 import useRepay from "hooks/payables/useRepay";
@@ -85,12 +84,13 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
 
   const watchAmount = String(watch("amount") || 0);
   const amount = parseEther(watchAmount);
-  const maxRepay = daiBalance && daiBalance.lt(owed) ? daiBalance : owed;
+  const maxRepayWithMargin = owed.mul(REPAY_MARGIN).div(WAD);
+  const maxRepay =
+    daiBalance && daiBalance.lt(owed) ? daiBalance : maxRepayWithMargin;
   const minRepay = interest.lt(MIN_REPAY)
     ? MIN_REPAY
     : interest.mul(1010).div(1000);
   const newBalanceOwed = borrowed.sub(amount);
-  const maxRepayWithMargin = maxRepay.mul(REPAY_MARGIN).div(WAD);
 
   const handleSelectOption = (option) => {
     setPaymentType(option.paymentType);
@@ -124,7 +124,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
     try {
       amountToRepay = parseUnits(values.amount);
       if (values.amount == formatUnits(maxRepay)) {
-        amountToRepay = maxRepayWithMargin;
+        amountToRepay = maxRepay;
       }
       const { hash } = await repay(amountToRepay);
 
