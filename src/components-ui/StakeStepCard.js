@@ -16,7 +16,7 @@ export function StakeStepCard() {
   const { data: stakeData } = useStakeData();
   const { open: openStakeModal } = useStakeModal();
   const { data: rewardsData } = useRewardsData();
-  const { data: unionSymbol } = useUnionSymbol();
+  const { data: unionSymbol = "UNION" } = useUnionSymbol();
   const { data: unionBalance = ZERO } = useTokenBalance(UNION);
 
   const { totalStake = ZERO } = !!stakeData && stakeData;
@@ -28,8 +28,8 @@ export function StakeStepCard() {
   return (
     <Card size="fluid" mb="24px">
       <Card.Header
-        title="Stake DAI to earn UNION"
-        subTitle="DAI is used to back trust you provide to other Union members. Staked DAI also accumulates UNION tokens, which is required to become a member of the network."
+        title={`Stake DAI to earn ${unionSymbol}`}
+        subTitle={`DAI is used to back trust you provide to other Union members. Staked DAI also accumulates ${unionSymbol} tokens, which is required to become a member of the network.`}
       />
       <Card.Body>
         <Divider mb="32px" />
