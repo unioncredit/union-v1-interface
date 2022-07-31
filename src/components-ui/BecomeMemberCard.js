@@ -18,6 +18,7 @@ import useUserManager from "hooks/contracts/useUserManager";
 import useRegisterMember from "hooks/payables/useRegisterMember";
 import { Approval } from "components-ui/Approval";
 import { useCongratulationsModal } from "components-ui/modals/CongratulationsModal";
+import { ZERO } from "constants/variables";
 
 export function BecomeMemberCard({ disabled }) {
   const { library } = useWeb3React();
@@ -28,10 +29,10 @@ export function BecomeMemberCard({ disabled }) {
   const userManager = useUserManager(DAI);
   const registerMember = useRegisterMember();
 
-  const { data: memberFee } = useMemberFee();
+  const { data: memberFee = ZERO } = useMemberFee();
   const { data: unionSymbol } = useUnionSymbol();
   const { data: isMember = null } = useIsMember();
-  const { data: unionBalance = 0.0 } = useTokenBalance(UNION);
+  const { data: unionBalance = ZERO } = useTokenBalance(UNION);
   const { open: openCongratulationsModal } = useCongratulationsModal();
 
   const handleRegister = async () => {
