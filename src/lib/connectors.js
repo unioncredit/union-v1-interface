@@ -1,9 +1,11 @@
 import { Avatar } from "@unioncredit/ui";
 import { ReactComponent as WalletConnect } from "@unioncredit/ui/lib/icons/walletconnect.svg";
 import { ReactComponent as Metamask } from "@unioncredit/ui/lib/icons/metamask.svg";
+import { ReactComponent as Coinbase } from "@unioncredit/ui/lib/icons/coinbase.svg";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { NetworkConnector } from "@web3-react/network-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 
 const POLLING_INTERVAL = 12000;
 
@@ -82,6 +84,12 @@ export const walletconnect = new WalletConnectConnector({
   pollingInterval: POLLING_INTERVAL,
 });
 
+const coinbaseWallet = new WalletLinkConnector({
+  url: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
+  appName: "Union",
+  supportedChainIds: Object.keys(networks).map(Number),
+});
+
 export const network = new NetworkConnector({
   urls: networks,
   defaultChainId: 1,
@@ -90,6 +98,7 @@ export const network = new NetworkConnector({
 export const CONNECTORS = {
   MetaMask: injected,
   WalletConnect: walletconnect,
+  CoinbaseWallet: coinbaseWallet,
 };
 
 /**
@@ -118,5 +127,12 @@ export const SUPPORTED_WALLETS = {
     description:
       "Connect by scanning a QR code with any supported mobile wallet, like Rainbow",
     icon: <Avatar size={48} icon={WalletConnect} />,
+  },
+  CoinbaseWallet: {
+    connector: coinbaseWallet,
+    name: "CoinbaseWallet",
+    color: "#4196FC",
+    description: "Connect by scanning a QR code with your coinbase wallet",
+    icon: <Avatar size={48} icon={Coinbase} />,
   },
 };
