@@ -50,7 +50,7 @@ export function BecomeMemberCard({ disabled }) {
 
   const displayMemberFee = memberFee ? formatEther(memberFee.toString()) : "0";
 
-  const hasEnoughUnion = unionBalance >= Number(displayMemberFee);
+  const hasEnoughUnion = unionBalance.gte(memberFee);
 
   return (
     <Card size="fluid">
