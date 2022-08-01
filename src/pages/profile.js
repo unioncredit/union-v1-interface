@@ -42,6 +42,9 @@ export default function ProfilePage() {
           key="twitter:title"
           content={`Union Member ${userAddress}`}
         />
+        <meta name="twitter:site" content="@unionprotocol" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@unionprotocol" />
       </Helmet>
 
       {address && (
@@ -57,10 +60,4 @@ export default function ProfilePage() {
       )}
     </>
   );
-}
-
-export function getServerSideProps(context) {
-  return {
-    props: { params: context.params, host: context.req.headers.host },
-  };
 }
