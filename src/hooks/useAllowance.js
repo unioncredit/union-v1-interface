@@ -23,10 +23,10 @@ export default function useAllowance(tokenAddress, spender, signatureKey) {
   const { account, library } = useWeb3React();
   const { signPermit } = usePermits();
 
-  const shouldFetch = contract && account && chainId;
+  const shouldFetch = tokenAddress && contract && account && chainId;
 
   const resp = useSWR(
-    shouldFetch ? ["Allowance", account, spender] : null,
+    shouldFetch ? [`Allowance-${tokenAddress}`, account, spender] : null,
     getAllowance(contract)
   );
 
