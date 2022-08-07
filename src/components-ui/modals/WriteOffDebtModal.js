@@ -58,7 +58,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
     if (!val) return errorMessages.required;
     if (!isOverdue) return errorMessages.notOverDue;
 
-    const bnValue = parseUnits(val);
+    const bnValue = parseUnits(String(val));
     if (bnValue.gt(used)) return errorMessages.maxWriteOff;
     if (bnValue.lte(0)) return errorMessages.minValueZero;
 

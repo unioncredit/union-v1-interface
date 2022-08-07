@@ -110,7 +110,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   const validate = async (val) => {
     if (!val) return errorMessages.required;
 
-    const bnValue = parseUnits(val);
+    const bnValue = parseUnits(String(val));
     if (bnValue.gt(daiBalance)) {
       return errorMessages.notEnoughBalanceDAI;
     }
@@ -122,7 +122,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
     let amountToRepay = ZERO;
 
     try {
-      amountToRepay = parseUnits(values.amount);
+      amountToRepay = parseUnits(String(values.amount));
       if (values.amount == formatUnits(maxRepay)) {
         amountToRepay = maxRepay;
       }

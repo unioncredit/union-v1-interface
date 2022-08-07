@@ -45,7 +45,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   const validate = (val) => {
     if (!val) return errorMessages.required;
-    const bnValue = parseUnits(val);
+    const bnValue = parseUnits(String(val));
     if (bnValue.lt(used)) return errorMessages.cantRemoveStake;
     if (bnValue.lt(0)) return errorMessages.minValueZero;
 

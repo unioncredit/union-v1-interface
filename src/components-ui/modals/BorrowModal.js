@@ -25,7 +25,6 @@ import isHash from "util/isHash";
 import useMinBorrow from "hooks/data/useMinBorrow";
 import { formatUnits, parseEther, parseUnits } from "@ethersproject/units";
 import { ZERO, WAD } from "constants/variables";
-import { BigNumber } from "@ethersproject/bignumber";
 
 export const BORROW_MODAL = "borrow-modal";
 
@@ -99,7 +98,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
     if (isOverdue) return errorMessages.overdueBalance;
     if (isNaN(val)) return errorMessages.notANumber;
 
-    const bnValue = parseUnits(val);
+    const bnValue = parseUnits(String(val));
     if (bnValue.gt(maxBorrowAmount)) return errorMessages.notEnoughCredit;
     if (bnValue.gt(maxBorrow)) return errorMessages.maxBorrow(maxBorrowView);
     if (bnValue.gt(loanableAmount)) return errorMessages.notEnoughPoolDAI;
