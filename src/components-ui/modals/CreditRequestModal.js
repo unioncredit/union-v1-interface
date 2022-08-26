@@ -90,6 +90,7 @@ export function CreditRequestModal() {
         <ButtonRow fluid mt="8px">
           <Button
             fluid
+            as="a"
             color="blue"
             variant="secondary"
             icon={Twitter}
@@ -98,6 +99,7 @@ export function CreditRequestModal() {
           />
           <Button
             fluid
+            as="a"
             color="blue"
             variant="secondary"
             icon={Telegram}
