@@ -11,30 +11,38 @@ const INFURA_KEY = "05bc032e727c40d79202e3373090ed55";
 
 export const RPC_URLS = {
   1: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
+  5: `https://goerli.infura.io/v3//${INFURA_KEY}`,
   42: `https://kovan.infura.io/v3/${INFURA_KEY}`,
   42161: "https://arb1.arbitrum.io/rpc",
   421611: "https://rinkeby.arbitrum.io/rpc",
+  421613: "https://goerli-rollup.arbitrum.io/rpc",
 };
 
 export const networkImages = {
   1: "/images/ethereum.png",
+  5: "/images/goerli.png",
   42: "/images/kovan.png",
   42161: "/images/arbitrum.png",
   421611: "/images/arbitrum.png",
+  421613: "/images/arbitrum.png",
 };
 
 const networkAppUrlsDev = {
   1: "http://app.test:3000",
+  5: "http://goerli.test:3000",
   42: "http://kovan.test:3000",
   42161: "http://arbitrum.test:3000",
   421611: "http://arbitrum-testnet.test:3000",
+  421613: "http://arbitrum-testnet.test:3000",
 };
 
 export const networkAppUrlsProd = {
   1: "https://app.union.finance",
+  5: "https://goerli.union.finance",
   42: "https://kovan.union.finance",
   42161: "https://arbitrum.union.finance",
   421611: "https://arbitrum-testnet.union.finance",
+  421613: "https://arbitrum-testnet.union.finance",
 };
 
 export const networkAppUrls =
@@ -44,9 +52,11 @@ export const networkAppUrls =
 
 const allNetworks = {
   1: RPC_URLS[1],
+  5: RPC_URLS[5],
   42: RPC_URLS[42],
   42161: RPC_URLS[42161],
   421611: RPC_URLS[421611],
+  421613: RPC_URLS[421613],
 };
 
 export const networks =
