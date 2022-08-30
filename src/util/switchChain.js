@@ -17,6 +17,20 @@ export const options = [
     },
   },
   {
+    type: "goerli",
+    id: "goerli",
+    imageSrc: "/images/ethereum.png",
+    value: "goerli",
+    label: "Goerli",
+    description:
+      "Use Union on Ethereum’s goerli network. All Governance activity takes place here",
+    avatar: "/images/ethereum-avatar.png",
+    chainId: 5,
+    networkData: {
+      chainId: "0x5",
+    },
+  },
+  {
     label: "Arbitrum",
     type: "arbitrum",
     id: "arbitrum",
@@ -31,6 +45,23 @@ export const options = [
       chainId: "0xA4B1",
       rpcUrls: ["https://arb1.arbitrum.io/rpc"],
       chainName: "Arbitrum One",
+    },
+  },
+  {
+    label: "Arbitrum goerli",
+    type: "arbitrum goerli",
+    id: "arbitrum-goerli",
+    imageSrc: "/images/arbitrum.png",
+    value: "arbitrum goerli one",
+    label: "Arbitrum goerli",
+    description:
+      "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
+    avatar: "/images/arbitrum-avatar.png",
+    chainId: 421613,
+    networkData: {
+      chainId: "0x66eed",
+      rpcUrls: ["https://goerli-rollup.arbitrum.io/rpc"],
+      chainName: "Arbitrum goerli",
     },
   },
   {
