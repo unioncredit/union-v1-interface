@@ -19,12 +19,12 @@ export const options = [
   {
     type: "goerli",
     id: "goerli",
-    imageSrc: "/images/ethereum.png",
+    imageSrc: "/images/gorli.png",
     value: "goerli",
     label: "Goerli",
     description:
       "Use Union on Ethereum’s goerli network. All Governance activity takes place here",
-    avatar: "/images/ethereum-avatar.png",
+    avatar: "/images/gorli-avatar.png",
     chainId: 5,
     networkData: {
       chainId: "0x5",
