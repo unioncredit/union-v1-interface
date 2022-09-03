@@ -9,7 +9,6 @@ function fetchStakeData(userManager) {
     const totalStake = await userManager.getStakerBalance(account);
     const totalLocked = await userManager.getTotalLockedStake(account);
     const totalFrozen = await userManager.getTotalFrozenAmount(account);
-    debugger;
 
     return {
       totalStake: totalStake,
