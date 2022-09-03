@@ -9,8 +9,10 @@ function fetchStakeData(userManager) {
     const totalStake = await userManager.getStakerBalance(account);
     const totalLocked = await userManager.getTotalLockedStake(account);
     const totalFrozen = await userManager.getTotalFrozenAmount(account);
+    const memberFrozen = await userManager.memberFrozen(account);
 
     return {
+      memberFrozen,
       totalStake: totalStake,
       utilizedStake: totalLocked,
       withdrawableStake: totalStake.sub(totalLocked),

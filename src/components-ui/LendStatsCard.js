@@ -17,14 +17,16 @@ export function LendStatsCard() {
     utilizedStake = ZERO,
     defaultedStake = ZERO,
     withdrawableStake = ZERO,
+    memberFrozen = ZERO,
   } = !!stakeData && stakeData;
 
   const percentageStake = utilizedStake / totalStake;
 
-  const defaultedStakeView = format(formatUnits(defaultedStake, 18), 2);
-  const totalStakeView = format(formatUnits(totalStake, 18), 2);
-  const utilizedStakeView = format(formatUnits(utilizedStake, 18), 2);
-  const withdrawableStakeView = format(formatUnits(withdrawableStake, 18), 2);
+  const defaultedStakeView = format(formatUnits(defaultedStake), 2);
+  const totalStakeView = format(formatUnits(totalStake), 2);
+  const utilizedStakeView = format(formatUnits(utilizedStake), 2);
+  const withdrawableStakeView = format(formatUnits(withdrawableStake), 2);
+  const memberFrozenView = format(formatUnits(memberFrozen), 2);
 
   const handleOpenStakeModal = (type) => () => {
     openStakeModal(type);
@@ -75,6 +77,7 @@ export function LendStatsCard() {
                   align="center"
                   label="Defaulted"
                   value={<Dai value={defaultedStakeView} />}
+                  after={`${memberFrozenView} frozen`}
                 />
               </Grid.Col>
             </Grid.Row>
