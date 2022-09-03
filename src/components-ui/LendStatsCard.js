@@ -75,7 +75,6 @@ export function LendStatsCard() {
                   align="center"
                   label="Defaulted"
                   value={<Dai value={defaultedStakeView} />}
-                  after="0 DAI frozen"
                 />
               </Grid.Col>
             </Grid.Row>
