@@ -11,7 +11,7 @@ const INFURA_KEY = "05bc032e727c40d79202e3373090ed55";
 
 export const RPC_URLS = {
   1: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
-  5: `https://goerli.infura.io/v3//${INFURA_KEY}`,
+  5: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   42: `https://kovan.infura.io/v3/${INFURA_KEY}`,
   42161: "https://arb1.arbitrum.io/rpc",
   421611: "https://rinkeby.arbitrum.io/rpc",

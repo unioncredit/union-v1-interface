@@ -350,34 +350,35 @@ export const GRAPHQL_URLS = {
     utoken: "https://api.thegraph.com/subgraphs/name/unioncredit/union-utoken",
   },
   42: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-kovan",
-    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-kovan",
-    rewards:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-kovan",
-    utoken:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-kovan",
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-kovan",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-kovan",
+    rewards: "https://api.thegraph.com/subgraphs/name/geraldhost/union-kovan",
+    utoken: "https://api.thegraph.com/subgraphs/name/geraldhost/union-kovan",
   },
   1: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-mainnet",
-    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
-    rewards:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-mainnet",
-    utoken:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-mainnet",
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union",
+    rewards: "https://api.thegraph.com/subgraphs/name/geraldhost/union",
+    utoken: "https://api.thegraph.com/subgraphs/name/geraldhost/union",
   },
   42161: {
-    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-user-arbitrum",
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-arbitrum",
     // governance uses L1 subgraph
-    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-gov-mainnet",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union",
     rewards:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-rewards-arbitrum",
-    utoken:
-      "https://api.thegraph.com/subgraphs/name/geraldhost/union-utoken-arbitrum",
+      "https://api.thegraph.com/subgraphs/name/geraldhost/union-arbitrum",
+    utoken: "https://api.thegraph.com/subgraphs/name/geraldhost/union-arbitrum",
   },
   4: {
     user: "",
     gov: "https://api.thegraph.com/subgraphs/id/Qmdz8GznZw2A8LKMn6gYpjLh7q4gUtA79M2GTwVo2n5gva",
     rewards: "",
     utoken: "",
+  },
+  5: {
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-goerli",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-goerli",
+    rewards: "https://api.thegraph.com/subgraphs/name/geraldhost/union-goerli",
+    utoken: "https://api.thegraph.com/subgraphs/name/geraldhost/union-goerli",
   },
 };
