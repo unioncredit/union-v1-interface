@@ -181,7 +181,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
                   align="center"
                   size="medium"
                   label="Balance owed"
-                  value={<Dai value={format(formatUnits(maxRepay, 18), 2)} />}
+                  value={<Dai value={format(formatUnits(owed, 18), 2)} />}
                 />
               </Grid.Col>
               <Grid.Col xs={6}>
