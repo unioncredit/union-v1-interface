@@ -47,37 +47,37 @@ export const options = [
       chainName: "Arbitrum One",
     },
   },
-  {
-    label: "Arbitrum goerli",
-    type: "arbitrum goerli",
-    id: "arbitrum-goerli",
-    imageSrc: "/images/arbitrum.png",
-    value: "arbitrum goerli one",
-    label: "Arbitrum goerli",
-    description:
-      "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
-    avatar: "/images/arbitrum-avatar.png",
-    chainId: 421613,
-    networkData: {
-      chainId: "0x66eed",
-      rpcUrls: ["https://goerli-rollup.arbitrum.io/rpc"],
-      chainName: "Arbitrum goerli",
-    },
-  },
-  {
-    type: "kovan",
-    id: "kovan",
-    imageSrc: "/images/kovan.png",
-    value: "kovan",
-    label: "Kovan",
-    description:
-      "Use a test version of Ethereum to try out Union and learn more about how it works",
-    avatar: "/images/kovan-avatar.png",
-    chainId: 42,
-    networkData: {
-      chainId: "0x2A",
-    },
-  },
+  // {
+  //   label: "Arbitrum goerli",
+  //   type: "arbitrum goerli",
+  //   id: "arbitrum-goerli",
+  //   imageSrc: "/images/arbitrum.png",
+  //   value: "arbitrum goerli one",
+  //   label: "Arbitrum goerli",
+  //   description:
+  //     "Use Arbitrum’s L2 to manage your credit in a cheaper and faster way",
+  //   avatar: "/images/arbitrum-avatar.png",
+  //   chainId: 421613,
+  //   networkData: {
+  //     chainId: "0x66eed",
+  //     rpcUrls: ["https://goerli-rollup.arbitrum.io/rpc"],
+  //     chainName: "Arbitrum goerli",
+  //   },
+  // },
+  // {
+  //   type: "kovan",
+  //   id: "kovan",
+  //   imageSrc: "/images/kovan.png",
+  //   value: "kovan",
+  //   label: "Kovan",
+  //   description:
+  //     "Use a test version of Ethereum to try out Union and learn more about how it works",
+  //   avatar: "/images/kovan-avatar.png",
+  //   chainId: 42,
+  //   networkData: {
+  //     chainId: "0x2A",
+  //   },
+  // },
 ];
 
 export const switchChain = async (value, provider) => {
