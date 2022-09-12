@@ -8,14 +8,35 @@ import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
 
 function fetchVouchData(userManager, uToken, multicall) {
-  return async function (_, address) {
-    const addresses = await userManager.getStakerAddresses(address);
+  return async function (_, borrower) {
+    const voucherCount = await userManager.getVoucherCount(borrower);
+
+    if (voucherCount.lte(0)) return [];
+
+    const voucherCalls = Array(Number(voucherCount.toString()))
+      .fill(null)
+      .map((_, i) => ({
+        address: userManager.address,
+        name: "vouchers",
+        params: [borrower, i],
+        itf: userManager.interface,
+      }));
+
+    const vouchersResp = await multicall(voucherCalls);
+
+    const addresses = Object.values(vouchersResp);
 
     const calls = addresses.map((staker) => [
       {
         address: userManager.address,
-        name: "getStakerAsset",
-        params: [address, staker],
+        name: "getVouchingAmount",
+        params: [borrower, staker],
+        itf: userManager.interface,
+      },
+      {
+        address: userManager.address,
+        name: "getLockedStake",
+        params: [borrower, staker],
         itf: userManager.interface,
       },
       {
@@ -50,10 +71,10 @@ function fetchVouchData(userManager, uToken, multicall) {
     ]);
 
     return addresses.map((address, i) => {
-      const vouched = resp[i][0].vouchingAmount;
-      const used = resp[i][0].lockedStake;
-      const totalUsed = resp[i][4][0];
-      const staked = resp[i][1][0];
+      const vouched = resp[i][0][0];
+      const used = resp[i][1][0];
+      const totalUsed = resp[i][5][0];
+      const staked = resp[i][2][0];
       const availableVouch = vouched.sub(used);
       const availableStake = staked.sub(totalUsed);
       const available = availableVouch.gt(availableStake)
@@ -62,14 +83,14 @@ function fetchVouchData(userManager, uToken, multicall) {
 
       return {
         address,
-        isOverdue: resp[i][2][0],
+        isOverdue: resp[i][3][0],
         staked,
         available,
         trust: resp[i][0].trustAmount,
         used,
         vouched,
         ens: ens[i].name,
-        isMember: resp[i][3][0],
+        isMember: resp[i][4][0],
       };
     });
   };

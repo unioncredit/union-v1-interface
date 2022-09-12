@@ -9,9 +9,13 @@ import useChainId from "hooks/useChainId";
 import { MULTICALL_ADDRESSES } from "constants/variables";
 
 export default function useMulticall() {
-	const chainId = useChainId();
+  const chainId = useChainId();
   const readProvider = useReadProvider();
-  const multiCall = useContract(MULTICALL_ADDRESSES[chainId], ABI, readProvider);
+  const multiCall = useContract(
+    MULTICALL_ADDRESSES[chainId],
+    ABI,
+    readProvider
+  );
 
   const mutliCallHandler = useCallback(
     async (calls) => {
@@ -23,9 +27,11 @@ export default function useMulticall() {
         call.address.toLowerCase(),
         call.itf.encodeFunctionData(call.name, call.params),
       ]);
+
       const { returnData } = await multiCall.aggregate(calldata, {
         gasLimit: 30000000,
       });
+
       const resp = returnData.map((call, i) =>
         callsFlat[i].itf.decodeFunctionResult(callsFlat[i].name, call)
       );

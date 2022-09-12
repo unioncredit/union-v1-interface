@@ -8,16 +8,25 @@ import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
 
 function fetchTrustData(userManager, uToken, multicall) {
-  return async function (_, address) {
-    const addresses = await userManager.getBorrowerAddresses(address);
+  return async function (_, staker) {
+    const voucheeCount = await userManager.getVoucherCount(staker);
+
+    if (voucheeCount.lte(0)) return [];
+
+    const voucheeCalls = Array(Number(voucheeCount.toString()))
+      .fill(null)
+      .map((_, i) => ({
+        address: userManager.address,
+        name: "vouchees",
+        params: [staker, i],
+        itf: userManager.interface,
+      }));
+
+    const vouchersResp = await multicall(voucheeCalls);
+
+    const addresses = Object.values(vouchersResp);
 
     const calls = addresses.map((borrower) => [
-      {
-        address: userManager.address,
-        name: "getBorrowerAsset",
-        params: [address, borrower],
-        itf: userManager.interface,
-      },
       {
         address: uToken.address,
         name: "checkIsOverdue",
@@ -30,6 +39,13 @@ function fetchTrustData(userManager, uToken, multicall) {
         params: [borrower],
         itf: userManager.interface,
       },
+      // TODO: getBorrowerAsset doesn't exist in V2
+      {
+        address: userManager.address,
+        name: "getBorrowerAsset",
+        params: [staker, borrower],
+        itf: userManager.interface,
+      },
     ]);
 
     const [ens, resp] = await Promise.all([
@@ -40,12 +56,12 @@ function fetchTrustData(userManager, uToken, multicall) {
     return addresses.map((address, i) => {
       return {
         address,
-        isOverdue: resp[i][1].isOverdue,
-        trust: resp[i][0].trustAmount,
-        used: resp[i][0].lockedStake,
-        vouched: resp[i][0].vouchingAmount,
+        isOverdue: resp[i][0][0],
+        trust: resp[i][3].trustAmount,
+        used: resp[i][3].lockedStake,
+        vouched: resp[i][3].vouchingAmount,
         ens: ens[i].name,
-        isMember: resp[i][2][0],
+        isMember: resp[i][1][0],
       };
     });
   };

@@ -1,5 +1,115 @@
 [
   {
+    "inputs": [],
+    "name": "AmountZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AssetManagerDepositFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AssetManagerWithdrawFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AuthFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ErrorSelfVouching",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExceedsLocked",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LockedRemaining",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LockedStakeNonZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MaxVouchees",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoExistingMember",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotEnoughStakers",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotOverdue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotPaused",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Paused",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SenderNotAdmin",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SenderNotGuardian",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SenderNotPendingAdmin",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StakeLimitReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TrustAmountLtLocked",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VouchWhenOverdue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "VoucherNotFound",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -30,132 +140,6 @@
     ],
     "name": "BeaconUpgraded",
     "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "implementation",
-        "type": "address"
-      }
-    ],
-    "name": "Upgraded",
-    "type": "event"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "fallback"
-  },
-  {
-    "stateMutability": "payable",
-    "type": "receive"
-  },
-  {
-    "inputs": [],
-    "name": "AddressZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AmountZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AssetManagerDepositFailed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AssetManagerWithdrawFailed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "AuthFailed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorData",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorSelfVouching",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ErrorTotalStake",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ExceedsLocked",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ExceedsTotalFrozen",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ExceedsTotalStaked",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InsufficientBalance",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LengthNotMatch",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LockedStakeNonZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "MaxTrustLimitReached",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NoExistingMember",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NotCreditLimitModel",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NotEnoughStakers",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NotOverdue",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "StakeLimitReached",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "TrustAmountTooLarge",
-    "type": "error"
   },
   {
     "anonymous": false,
@@ -220,11 +204,11 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "newCreditLimitModel",
+        "name": "account",
         "type": "address"
       }
     ],
-    "name": "LogNewCreditLimitModel",
+    "name": "LogPaused",
     "type": "event"
   },
   {
@@ -252,6 +236,44 @@
       {
         "indexed": false,
         "internalType": "uint256",
+        "name": "oldEffectiveCount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newEffectiveCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogSetEffectiveCount",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldMaxOverdueBlocks",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newMaxOverdueBlocks",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogSetMaxOverdueBlocks",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
         "name": "oldMaxStakeAmount",
         "type": "uint256"
       },
@@ -263,6 +285,19 @@
       }
     ],
     "name": "LogSetMaxStakeAmount",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "maxVouchers",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogSetMaxVouchers",
     "type": "event"
   },
   {
@@ -320,6 +355,19 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "LogUnpaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "account",
@@ -364,128 +412,14 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "account",
+        "name": "implementation",
         "type": "address"
       }
     ],
-    "name": "Paused",
+    "name": "Upgraded",
     "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "previousAdminRole",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "newAdminRole",
-        "type": "bytes32"
-      }
-    ],
-    "name": "RoleAdminChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleGranted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      }
-    ],
-    "name": "RoleRevoked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "Unpaused",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ROLE_ADMIN",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -519,11 +453,6 @@
       },
       {
         "internalType": "address",
-        "name": "creditLimitModel_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "comptroller_",
         "type": "address"
       },
@@ -531,6 +460,21 @@
         "internalType": "address",
         "name": "admin_",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxOverdueBlocks_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "effectiveCount_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxVouchers_",
+        "type": "uint256"
       }
     ],
     "name": "__UserManager_init",
@@ -539,14 +483,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "addAdmin",
+    "inputs": [],
+    "name": "acceptAdmin",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -566,7 +504,7 @@
   },
   {
     "inputs": [],
-    "name": "assetManager",
+    "name": "admin",
     "outputs": [
       {
         "internalType": "address",
@@ -578,21 +516,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "assetManager",
+    "outputs": [
       {
-        "internalType": "address[]",
-        "name": "accounts",
-        "type": "address[]"
-      },
-      {
-        "internalType": "bool[]",
-        "name": "isOverdues",
-        "type": "bool[]"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "name": "batchUpdateTotalFrozen",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -646,29 +579,21 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "creditLimitModel",
-    "outputs": [
-      {
-        "internalType": "contract ICreditLimitModel",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
+      {
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
       {
         "internalType": "address",
         "name": "borrower",
         "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint96",
         "name": "amount",
-        "type": "uint256"
+        "type": "uint96"
       }
     ],
     "name": "debtWriteOff",
@@ -677,52 +602,12 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getBorrowerAddresses",
+    "inputs": [],
+    "name": "effectiveCount",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "uint256",
         "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "borrower",
-        "type": "address"
-      }
-    ],
-    "name": "getBorrowerAsset",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "trustAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "vouchingAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lockedStake",
         "type": "uint256"
       }
     ],
@@ -740,9 +625,9 @@
     "name": "getCreditLimit",
     "outputs": [
       {
-        "internalType": "int256",
-        "name": "",
-        "type": "int256"
+        "internalType": "uint256",
+        "name": "total",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -761,11 +646,16 @@
         "type": "uint256"
       }
     ],
-    "name": "getFrozenCoinAge",
+    "name": "getFrozenInfo",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "memberTotalFrozen",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "memberFrozenCoinAge",
         "type": "uint256"
       }
     ],
@@ -799,103 +689,12 @@
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      }
-    ],
-    "name": "getRoleAdmin",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getStakerAddresses",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "staker",
-        "type": "address"
-      }
-    ],
-    "name": "getStakerAsset",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "trustAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "vouchingAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "lockedStake",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "account",
         "type": "address"
       }
     ],
     "name": "getStakerBalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "staker",
-        "type": "address"
-      }
-    ],
-    "name": "getTotalFrozenAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -929,7 +728,26 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "staker",
+        "name": "borrower",
+        "type": "address"
+      }
+    ],
+    "name": "getVoucherCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_staker",
         "type": "address"
       },
       {
@@ -944,48 +762,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "grantRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "hasRole",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1012,7 +788,33 @@
   },
   {
     "inputs": [],
+    "name": "maxOverdueBlocks",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "maxStakeAmount",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxVouchers",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1089,6 +891,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "pendingAdmin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -1140,80 +955,14 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "renounceAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "renounceRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
-        "name": "lastRepay",
+        "name": "_effectiveCount",
         "type": "uint256"
       }
     ],
-    "name": "repayLoanOverdue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes32",
-        "name": "role",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "revokeRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newCreditLimitModel",
-        "type": "address"
-      }
-    ],
-    "name": "setCreditLimitModel",
+    "name": "setEffectiveCount",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1235,11 +984,37 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "maxStakeAmount_",
+        "name": "_maxOverdueBlocks",
         "type": "uint256"
       }
     ],
+    "name": "setMaxOverdueBlocks",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint96",
+        "name": "maxStakeAmount_",
+        "type": "uint96"
+      }
+    ],
     "name": "setMaxStakeAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_maxVouchers",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxVouchers",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1261,6 +1036,19 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "setPendingAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "uToken_",
         "type": "address"
       }
@@ -1273,83 +1061,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint96",
         "name": "amount",
-        "type": "uint256"
+        "type": "uint96"
       }
     ],
     "name": "stake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "deadline",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "v",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "r",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "s",
-        "type": "bytes32"
-      }
-    ],
-    "name": "stakeWithERC20Permit",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "nonce",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expiry",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "v",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "r",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "bytes32",
-        "name": "s",
-        "type": "bytes32"
-      }
-    ],
-    "name": "stakeWithPermit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1365,9 +1082,19 @@
     "name": "stakers",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "isMember",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint96",
+        "name": "stakedAmount",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "locked",
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -1381,25 +1108,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes4",
-        "name": "interfaceId",
-        "type": "bytes4"
-      }
-    ],
-    "name": "supportsInterface",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1467,12 +1175,64 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint96",
         "name": "amount",
-        "type": "uint256"
+        "type": "uint96"
       }
     ],
     "name": "unstake",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pastBlocks",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateFrozenInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "borrower",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      },
+      {
+        "internalType": "bool",
+        "name": "lock",
+        "type": "bool"
+      }
+    ],
+    "name": "updateLocked",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1485,50 +1245,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isBorrow",
-        "type": "bool"
-      }
-    ],
-    "name": "updateLockedData",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isOverdue",
-        "type": "bool"
-      }
-    ],
-    "name": "updateTotalFrozen",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "borrower_",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
+        "internalType": "uint96",
         "name": "trustAmount",
-        "type": "uint256"
+        "type": "uint96"
       }
     ],
     "name": "updateTrust",
@@ -1568,31 +1287,132 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "withdrawRewards",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_logic",
-        "type": "address"
-      },
       {
         "internalType": "address",
         "name": "",
         "type": "address"
       },
       {
-        "internalType": "bytes",
-        "name": "_data",
-        "type": "bytes"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "stateMutability": "payable",
-    "type": "constructor"
+    "name": "voucheeIndexes",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "isSet",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint128",
+        "name": "idx",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "vouchees",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "voucherIndexes",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "isSet",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint128",
+        "name": "idx",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "vouchers",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "locked",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint64",
+        "name": "lastUpdated",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   }
 ]
+
