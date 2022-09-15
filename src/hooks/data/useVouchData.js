@@ -6,8 +6,9 @@ import useUserManager from "hooks/contracts/useUserManager";
 import useUToken from "hooks/contracts/useUToken";
 import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
+import useUnionLens from "hooks/contracts/useUnionLens";
 
-function fetchVouchData(userManager, uToken, multicall) {
+function fetchVouchData(userManager, uToken, multicall, unionLens, underlying) {
   return async function (_, borrower) {
     const voucherCount = await userManager.getVoucherCount(borrower);
 
@@ -24,44 +25,22 @@ function fetchVouchData(userManager, uToken, multicall) {
 
     const vouchersResp = await multicall(voucherCalls);
 
-    const addresses = Object.values(vouchersResp);
+    const addresses = Object.values(vouchersResp).map(
+      (voucher) => voucher.staker
+    );
 
     const calls = addresses.map((staker) => [
       {
-        address: userManager.address,
-        name: "getVouchingAmount",
-        params: [borrower, staker],
-        itf: userManager.interface,
+        address: unionLens.address,
+        name: "getUserInfo",
+        params: [underlying, staker],
+        itf: unionLens.interface,
       },
       {
-        address: userManager.address,
-        name: "getLockedStake",
-        params: [borrower, staker],
-        itf: userManager.interface,
-      },
-      {
-        address: userManager.address,
-        name: "getStakerBalance",
-        params: [staker],
-        itf: userManager.interface,
-      },
-      {
-        address: uToken.address,
-        name: "checkIsOverdue",
-        params: [staker],
-        itf: uToken.interface,
-      },
-      {
-        address: userManager.address,
-        name: "checkIsMember",
-        params: [staker],
-        itf: userManager.interface,
-      },
-      {
-        address: userManager.address,
-        name: "getTotalLockedStake",
-        params: [staker],
-        itf: userManager.interface,
+        address: unionLens.address,
+        name: "getRelatedInfo",
+        params: [underlying, staker, borrower],
+        itf: unionLens.interface,
       },
     ]);
 
@@ -71,10 +50,16 @@ function fetchVouchData(userManager, uToken, multicall) {
     ]);
 
     return addresses.map((address, i) => {
-      const vouched = resp[i][0][0];
-      const used = resp[i][1][0];
-      const totalUsed = resp[i][5][0];
-      const staked = resp[i][2][0];
+      const userInfo = resp[i][0].userInfo;
+      const related = resp[i][1].related;
+
+      // TODO should be vouch not trust
+      const vouched = related.vouchTrustAmount;
+      const trust = related.vouchTrustAmount;
+      const used = related.vouchLocked;
+      const totalUsed = userInfo.locked;
+      const staked = userInfo.stakedAmount;
+
       const availableVouch = vouched.sub(used);
       const availableStake = staked.sub(totalUsed);
       const available = availableVouch.gt(availableStake)
@@ -83,14 +68,15 @@ function fetchVouchData(userManager, uToken, multicall) {
 
       return {
         address,
-        isOverdue: resp[i][3][0],
+        // TODO: hardcoded value
+        isOverdue: false,
         staked,
         available,
-        trust: resp[i][0].trustAmount,
+        trust,
         used,
         vouched,
         ens: ens[i].name,
-        isMember: resp[i][4][0],
+        isMember: userInfo.isMember,
       };
     });
   };
@@ -104,11 +90,12 @@ export default function useVouchData(address) {
   const uToken = useUToken(DAI);
   const userManager = useUserManager(DAI);
   const multicall = useMulticall();
+  const unionLens = useUnionLens();
 
-  const shouldFetch = !!userManager && !!multicall && !!uToken;
+  const shouldFetch = !!userManager && !!multicall && !!uToken && !!unionLens;
 
   return useSWR(
     shouldFetch ? ["useVouchData", account] : null,
-    fetchVouchData(userManager, uToken, multicall)
+    fetchVouchData(userManager, uToken, multicall, unionLens, DAI)
   );
 }
