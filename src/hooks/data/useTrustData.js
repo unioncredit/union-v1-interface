@@ -10,64 +10,69 @@ import useUnionLens from "hooks/contracts/useUnionLens";
 
 function fetchTrustData(userManager, uToken, multicall, unionLens, underlying) {
   return async function (_, staker) {
-    const voucheeCount = await userManager.getVoucheeCount(staker);
+    try {
+      const voucheeCount = await userManager.getVoucheeCount(staker);
 
-    if (voucheeCount.lte(0)) return [];
+      if (voucheeCount.lte(0)) return [];
 
-    const voucheeCalls = Array(Number(voucheeCount.toString()))
-      .fill(null)
-      .map((_, i) => ({
-        address: userManager.address,
-        name: "vouchees",
-        params: [staker, i],
-        itf: userManager.interface,
-      }));
+      const voucheeCalls = Array(Number(voucheeCount.toString()))
+        .fill(null)
+        .map((_, i) => ({
+          address: userManager.address,
+          name: "vouchees",
+          params: [staker, i],
+          itf: userManager.interface,
+        }));
 
-    const vouchersResp = await multicall(voucheeCalls);
+      const vouchersResp = await multicall(voucheeCalls);
 
-    const addresses = Object.values(vouchersResp).map((vouchee) =>
-      vouchee[0].slice(0, 42)
-    );
+      const addresses = Object.values(vouchersResp).map((vouchee) =>
+        vouchee[0].slice(0, 42)
+      );
 
-    const calls = addresses.map((borrower) => [
-      {
-        address: uToken.address,
-        name: "checkIsOverdue",
-        params: [borrower],
-        itf: uToken.interface,
-      },
-      {
-        address: userManager.address,
-        name: "checkIsMember",
-        params: [borrower],
-        itf: userManager.interface,
-      },
-      {
-        address: unionLens.address,
-        name: "getRelatedInfo",
-        params: [underlying, staker, borrower],
-        itf: unionLens.interface,
-      },
-    ]);
+      const calls = addresses.map((borrower) => [
+        {
+          address: uToken.address,
+          name: "checkIsOverdue",
+          params: [borrower],
+          itf: uToken.interface,
+        },
+        {
+          address: userManager.address,
+          name: "checkIsMember",
+          params: [borrower],
+          itf: userManager.interface,
+        },
+        {
+          address: unionLens.address,
+          name: "getRelatedInfo",
+          params: [underlying, staker, borrower],
+          itf: unionLens.interface,
+        },
+      ]);
 
-    const [ens, resp] = await Promise.all([
-      await Promise.all(addresses.map((address) => fetchENS(address))),
-      await multicall(calls),
-    ]);
+      const [ens, resp] = await Promise.all([
+        await Promise.all(addresses.map((address) => fetchENS(address))),
+        await multicall(calls),
+      ]);
 
-    return addresses.map((address, i) => {
-      const related = resp[i][2].related;
+      return addresses.map((address, i) => {
+        const related = resp[i][2].related;
 
-      return {
-        address,
-        isOverdue: resp[i][0][0],
-        trust: related.voucher.trust,
-        used: related.voucher.locked,
-        vouched: related.voucher.vouch,
-        ens: ens[i].name,
-        isMember: resp[i][1][0],
-      };
-    });
+        return {
+          address,
+          isOverdue: resp[i][0][0],
+          trust: related.voucher.trust,
+          used: related.voucher.locked,
+          vouched: related.voucher.vouch,
+          ens: ens[i].name,
+          isMember: resp[i][1][0],
+        };
+      });
+    } catch (e) {
+      console.log(e);
+      debugger;
+    }
   };
 }
 

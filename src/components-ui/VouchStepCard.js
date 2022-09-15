@@ -7,21 +7,17 @@ import {
 } from "components-ui";
 import createArray from "util/createArray";
 import { ZERO } from "constants/variables";
-import useVouchData from "hooks/data/useVouchData";
 import useEffectiveNumber from "hooks/useEffectiveNumber";
-import useTrustCountData from "hooks/data/useTrustCountData";
 
 import "./VouchStepCard.scss";
 
-export function VouchStepCard() {
-  const { data: trustCount = 0 } = useTrustCountData();
-  const { data: vouchData } = useVouchData();
+export function VouchStepCard({ data: vouchData = [] }) {
   const { data: effectiveNumberBn = ZERO } = useEffectiveNumber();
 
   const effectiveNumber = Number(effectiveNumberBn.toString());
 
   const vouchCount =
-    trustCount >= effectiveNumber ? effectiveNumber : trustCount;
+    vouchData.length >= effectiveNumber ? effectiveNumber : vouchData.length;
 
   const isVouchLoading = !vouchData;
 

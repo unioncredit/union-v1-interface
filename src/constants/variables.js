@@ -60,7 +60,7 @@ export const MULTICALL_ADDRESSES = {
 export const UNION_LENS_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0xf8dd3D44F176Caf883E879fb33BeADC5ce067645",
+  5: "0xdF6C38f795300C40F102d933980076dF24295895",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -72,7 +72,7 @@ export const UNION_LENS_ADDRESSES = {
 export const ASSET_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x50Fa6A0282616dF17913d289A6AF8fB1B86AB0C3",
+  5: "0x0Fb3B58Dc75647A4c5224B0e1eC3f710110fDC45",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -84,7 +84,7 @@ export const ASSET_MANAGER_ADDRESSES = {
 export const MARKET_REGISTRY_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0xe5ac48b23ea8B621A9Cc617107d5f8247740467B",
+  5: "0x1317467564ce1eEaFD1760eF2d80DC7E71fb9c55",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -96,7 +96,7 @@ export const MARKET_REGISTRY_ADDRESSES = {
 export const USER_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x95532Eb0d22f1300551A5662d3A066f0393A086A",
+  5: "0xB2499C1D140cBFD499a4d29Da7d61d9a70462842",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -132,7 +132,7 @@ export const UNION_WRAPPED_TOKEN_ADDRESSES = {
 export const COMPTROLLER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0xaFA2A60755501FC6aE6dAb5b3aC74299c89D2563",
+  5: "0x5A571c18AB1B21797be988D38d3e08402c03a984",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -144,7 +144,7 @@ export const COMPTROLLER_ADDRESSES = {
 export const U_TOKEN_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x2ae0f3b949E623C3081126AAd9D5103aE91c03dd",
+  5: "0x68d089D45035a2da0d1F60a47B21Dd2e9C26F8fe",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -214,7 +214,7 @@ export const TIMELOCK_ADDRESSES = {
 export const FIXED_INTEREST_RATE_MODEL_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x8a0579beA4e4Cf720Fa66aB90aB3D8f64Aa66308",
+  5: "0xAe930fb9EcE01458C49e35b30091f1456b1A2ee4",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -238,7 +238,7 @@ export const COMPOUND_ADAPTER_ADDRESSES = {
 export const PURE_TOKEN_ADAPTER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x5FB2226948b16Ab2C9CA683724BA1c22401Cf6eE",
+  5: "0xd0bd1e60Bc3b64fE07e76A12424b22b8b51dBB2D",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -285,7 +285,7 @@ export const TOKENS = {
     WRAPPED_UNION: UNION_WRAPPED_TOKEN_ADDRESSES[4],
   },
   5: {
-    DAI: "0x73967c6a0904aa032c103b4104747e88c566b1a2",
+    DAI: "0xdc31ee1784292379fbb2964b3b9c4124d8f89c60",
     UNION: UNION_TOKEN_ADDRESSES[5],
     WRAPPED_UNION: UNION_WRAPPED_TOKEN_ADDRESSES[5],
   },

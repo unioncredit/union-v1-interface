@@ -19,13 +19,13 @@ import {
 } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import useCreditLimit from "hooks/data/useCreditLimit";
-import useTrustCountData from "hooks/data/useTrustCountData";
 import useStakeData from "hooks/data/useStakeData";
 import { CongratulationsModal, StakeModal } from "components-ui/modals";
 import { ZERO } from "constants/variables";
 import useEffectiveNumber from "hooks/useEffectiveNumber";
 
 import styles from "./getStarted.module.css";
+import useVouchData from "hooks/data/useVouchData";
 
 export default function MembershipView() {
   const navigate = useNavigate();
@@ -34,16 +34,16 @@ export default function MembershipView() {
   const memberStep = useRef();
 
   const { data: effectiveNumber = ZERO } = useEffectiveNumber();
-  const { data: trustCount = 0 } = useTrustCountData();
   const { data: creditLimit = ZERO } = useCreditLimit();
   const { data: stakeData } = useStakeData();
+  const { data: vouchData = [] } = useVouchData();
 
   const { data: isMember, mutate: updateIsMember } = useIsMember();
 
   const { totalStake = ZERO } = !!stakeData && stakeData;
 
   const stakeComplete = totalStake.gt(0);
-  const vouchComplete = trustCount >= Number(effectiveNumber.toString());
+  const vouchComplete = effectiveNumber.lte(vouchData.length);
 
   const completeCount = [stakeComplete, vouchComplete, isMember].reduce(
     (acc, completeness) => (completeness ? acc + 1 : acc),
@@ -80,7 +80,7 @@ export default function MembershipView() {
               </ProgressListItem>
               <ProgressListItem number={2} complete={vouchComplete}>
                 <div ref={vouchStep}>
-                  <VouchStepCard />
+                  <VouchStepCard data={vouchData} />
                 </div>
               </ProgressListItem>
               <ProgressListItem number={3} complete={isMember}>
