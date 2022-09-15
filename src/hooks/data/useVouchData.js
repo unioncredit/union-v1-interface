@@ -8,7 +8,7 @@ import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
 import useUnionLens from "hooks/contracts/useUnionLens";
 
-function fetchVouchData(userManager, uToken, multicall, unionLens, underlying) {
+function fetchVouchData(userManager, multicall, unionLens, underlying) {
   return async function (_, borrower) {
     const voucherCount = await userManager.getVoucherCount(borrower);
 
@@ -54,9 +54,9 @@ function fetchVouchData(userManager, uToken, multicall, unionLens, underlying) {
       const related = resp[i][1].related;
 
       // TODO should be vouch not trust
-      const vouched = related.vouchTrustAmount;
-      const trust = related.vouchTrustAmount;
-      const used = related.vouchLocked;
+      const vouched = related.voucher.vouch;
+      const trust = related.voucher.trust;
+      const used = related.voucher.locked;
       const totalUsed = userInfo.locked;
       const staked = userInfo.stakedAmount;
 
@@ -68,8 +68,7 @@ function fetchVouchData(userManager, uToken, multicall, unionLens, underlying) {
 
       return {
         address,
-        // TODO: hardcoded value
-        isOverdue: false,
+        isOverdue: userInfo.isOverdue,
         staked,
         available,
         trust,
@@ -87,15 +86,14 @@ export default function useVouchData(address) {
   const account = address || connectedAccount;
 
   const DAI = useToken("DAI");
-  const uToken = useUToken(DAI);
   const userManager = useUserManager(DAI);
   const multicall = useMulticall();
   const unionLens = useUnionLens();
 
-  const shouldFetch = !!userManager && !!multicall && !!uToken && !!unionLens;
+  const shouldFetch = !!userManager && !!multicall && !!unionLens;
 
   return useSWR(
     shouldFetch ? ["useVouchData", account] : null,
-    fetchVouchData(userManager, uToken, multicall, unionLens, DAI)
+    fetchVouchData(userManager, multicall, unionLens, DAI)
   );
 }

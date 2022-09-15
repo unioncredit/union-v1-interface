@@ -60,7 +60,7 @@ export const MULTICALL_ADDRESSES = {
 export const UNION_LENS_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x4a7F0a0b4246999DEaF0FCd79BD2816126507972",
+  5: "0xf8dd3D44F176Caf883E879fb33BeADC5ce067645",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,

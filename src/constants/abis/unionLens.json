@@ -33,24 +33,58 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "vouchTrustAmount",
-            "type": "uint256"
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "trust",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "vouch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "locked",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "lastUpdated",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct UnionLens.VouchInfo",
+            "name": "voucher",
+            "type": "tuple"
           },
           {
-            "internalType": "uint256",
-            "name": "vouchLocked",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "vouchLastUpdated",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "voucheeAmount",
-            "type": "uint256"
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "trust",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "vouch",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "locked",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "lastUpdated",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct UnionLens.VouchInfo",
+            "name": "vouchee",
+            "type": "tuple"
           }
         ],
         "internalType": "struct UnionLens.RelatedInfo",
@@ -84,6 +118,11 @@
             "type": "bool"
           },
           {
+            "internalType": "bool",
+            "name": "isOverdue",
+            "type": "bool"
+          },
+          {
             "internalType": "uint256",
             "name": "memberFrozen",
             "type": "uint256"
@@ -106,6 +145,11 @@
           {
             "internalType": "uint256",
             "name": "voucheeCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "accountBorrow",
             "type": "uint256"
           }
         ],

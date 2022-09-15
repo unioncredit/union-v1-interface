@@ -56,13 +56,14 @@ function fetchTrustData(userManager, uToken, multicall, unionLens, underlying) {
     ]);
 
     return addresses.map((address, i) => {
+      const related = resp[i][2].related;
+
       return {
         address,
         isOverdue: resp[i][0][0],
-        trust: resp[i][2].related.vouchTrustAmount,
-        used: resp[i][2].related.vouchLocked,
-        // TODO: this should be vouchAmount
-        vouched: resp[i][2].related.vouchTrustAmount,
+        trust: related.voucher.trust,
+        used: related.voucher.locked,
+        vouched: related.voucher.vouch,
         ens: ens[i].name,
         isMember: resp[i][1][0],
       };
