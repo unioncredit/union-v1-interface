@@ -1,0 +1,133 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "contract IMarketRegistry",
+        "name": "_marketRegistry",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "borrower",
+        "type": "address"
+      }
+    ],
+    "name": "getRelatedInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "vouchTrustAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vouchLocked",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "vouchLastUpdated",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "voucheeAmount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct UnionLens.RelatedInfo",
+        "name": "related",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "underlying",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserInfo",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "isMember",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "memberFrozen",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stakedAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "locked",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "voucherCount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "voucheeCount",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct UnionLens.UserInfo",
+        "name": "userInfo",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "marketRegistry",
+    "outputs": [
+      {
+        "internalType": "contract IMarketRegistry",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

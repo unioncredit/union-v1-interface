@@ -6,10 +6,11 @@ import useUToken from "hooks/contracts/useUToken";
 import useUserManager from "hooks/contracts/useUserManager";
 import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
+import useUnionLens from "hooks/contracts/useUnionLens";
 
-function fetchTrustData(userManager, uToken, multicall) {
+function fetchTrustData(userManager, uToken, multicall, unionLens, underlying) {
   return async function (_, staker) {
-    const voucheeCount = await userManager.getVoucherCount(staker);
+    const voucheeCount = await userManager.getVoucheeCount(staker);
 
     if (voucheeCount.lte(0)) return [];
 
@@ -24,7 +25,9 @@ function fetchTrustData(userManager, uToken, multicall) {
 
     const vouchersResp = await multicall(voucheeCalls);
 
-    const addresses = Object.values(vouchersResp);
+    const addresses = Object.values(vouchersResp).map((vouchee) =>
+      vouchee[0].slice(0, 42)
+    );
 
     const calls = addresses.map((borrower) => [
       {
@@ -39,12 +42,11 @@ function fetchTrustData(userManager, uToken, multicall) {
         params: [borrower],
         itf: userManager.interface,
       },
-      // TODO: getBorrowerAsset doesn't exist in V2
       {
-        address: userManager.address,
-        name: "getBorrowerAsset",
-        params: [staker, borrower],
-        itf: userManager.interface,
+        address: unionLens.address,
+        name: "getRelatedInfo",
+        params: [underlying, staker, borrower],
+        itf: unionLens.interface,
       },
     ]);
 
@@ -57,9 +59,10 @@ function fetchTrustData(userManager, uToken, multicall) {
       return {
         address,
         isOverdue: resp[i][0][0],
-        trust: resp[i][3].trustAmount,
-        used: resp[i][3].lockedStake,
-        vouched: resp[i][3].vouchingAmount,
+        trust: resp[i][2].related.vouchTrustAmount,
+        used: resp[i][2].related.vouchLocked,
+        // TODO: this should be vouchAmount
+        vouched: resp[i][2].related.vouchTrustAmount,
         ens: ens[i].name,
         isMember: resp[i][1][0],
       };
@@ -75,11 +78,12 @@ export default function useTrustData(address) {
   const uToken = useUToken(DAI);
   const userManager = useUserManager(DAI);
   const multicall = useMulticall();
+  const unionLens = useUnionLens();
 
-  const shouldFetch = !!userManager && !!multicall && !!uToken;
+  const shouldFetch = !!userManager && !!multicall && !!uToken && !!unionLens;
 
   return useSWR(
     shouldFetch ? ["useTrustData", account] : null,
-    fetchTrustData(userManager, uToken, multicall)
+    fetchTrustData(userManager, uToken, multicall, unionLens, DAI)
   );
 }

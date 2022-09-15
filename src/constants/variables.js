@@ -48,7 +48,19 @@ export const EVENT_BLOCK_INTERVAL = {
 export const MULTICALL_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: AddressZero,
+  5: "0x77dca2c955b15e9de4dbbcf1246b4b85b651e50e",
+  42: AddressZero,
+  137: AddressZero,
+  80001: AddressZero,
+  42161: AddressZero,
+  421611: AddressZero,
+  421613: AddressZero,
+};
+
+export const UNION_LENS_ADDRESSES = {
+  1: AddressZero,
+  4: AddressZero,
+  5: "0x4a7F0a0b4246999DEaF0FCd79BD2816126507972",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -60,7 +72,7 @@ export const MULTICALL_ADDRESSES = {
 export const ASSET_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x0683d30F7bCc69143023136329F55D14E434D436",
+  5: "0x50Fa6A0282616dF17913d289A6AF8fB1B86AB0C3",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -72,7 +84,7 @@ export const ASSET_MANAGER_ADDRESSES = {
 export const MARKET_REGISTRY_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0xC47d41874b9b4434da9D39eF5AD6820D6C32375b",
+  5: "0xe5ac48b23ea8B621A9Cc617107d5f8247740467B",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -84,7 +96,7 @@ export const MARKET_REGISTRY_ADDRESSES = {
 export const USER_MANAGER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x4A6aeBbfFFa78D9b3434d604B7c85f3C57aaE1C4",
+  5: "0x95532Eb0d22f1300551A5662d3A066f0393A086A",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -108,7 +120,7 @@ export const UNION_TOKEN_ADDRESSES = {
 export const UNION_WRAPPED_TOKEN_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "",
+  5: AddressZero,
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -120,7 +132,7 @@ export const UNION_WRAPPED_TOKEN_ADDRESSES = {
 export const COMPTROLLER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x6AB0c9c0C8f1a0C34c90e18d381b1d61910Fa742",
+  5: "0xaFA2A60755501FC6aE6dAb5b3aC74299c89D2563",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -132,7 +144,7 @@ export const COMPTROLLER_ADDRESSES = {
 export const U_TOKEN_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x79f3AD63E9016eD7b0FB7153509C4CaCba4812D9",
+  5: "0x2ae0f3b949E623C3081126AAd9D5103aE91c03dd",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -178,11 +190,10 @@ export const RESERVOIR_2_ADDRESSES = {
 export const GOVERNOR_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "",
+  5: AddressZero,
   42: AddressZero,
   137: AddressZero,
-  // 80001: AddressZero, // alpha
-  80001: AddressZero, // bravo
+  80001: AddressZero,
   42161: AddressZero,
   421611: AddressZero,
   421613: AddressZero,
@@ -191,11 +202,10 @@ export const GOVERNOR_ADDRESSES = {
 export const TIMELOCK_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "",
+  5: AddressZero,
   42: AddressZero,
   137: AddressZero,
-  // 80001: AddressZero, // alpha
-  80001: AddressZero, // bravo
+  80001: AddressZero,
   42161: AddressZero,
   421611: AddressZero,
   421613: AddressZero,
@@ -204,7 +214,7 @@ export const TIMELOCK_ADDRESSES = {
 export const FIXED_INTEREST_RATE_MODEL_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x628F018Dc633557a4B2e27325041a58CD49c47A8",
+  5: "0x8a0579beA4e4Cf720Fa66aB90aB3D8f64Aa66308",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,
@@ -228,7 +238,7 @@ export const COMPOUND_ADAPTER_ADDRESSES = {
 export const PURE_TOKEN_ADAPTER_ADDRESSES = {
   1: AddressZero,
   4: AddressZero,
-  5: "0x82f2A4a424ad41C1b2b7B31DA899377e4937f898",
+  5: "0x5FB2226948b16Ab2C9CA683724BA1c22401Cf6eE",
   42: AddressZero,
   137: AddressZero,
   80001: AddressZero,

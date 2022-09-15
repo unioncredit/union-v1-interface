@@ -728,6 +728,25 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "staker",
+        "type": "address"
+      }
+    ],
+    "name": "getVoucheeCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "borrower",
         "type": "address"
       }
@@ -1415,4 +1434,3 @@
     "type": "function"
   }
 ]
-
