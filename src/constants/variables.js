@@ -387,9 +387,9 @@ export const GRAPHQL_URLS = {
     utoken: "",
   },
   5: {
-    user: "",
-    gov: "",
-    rewards: "",
-    utoken: "",
+    user: "https://api.thegraph.com/subgraphs/name/geraldhost/union-v2-goerli",
+    gov: "https://api.thegraph.com/subgraphs/name/geraldhost/union-v2-goerli",
+    rewards: "https://api.thegraph.com/subgraphs/name/geraldhost/union-v2-goerli",
+    utoken: "https://api.thegraph.com/subgraphs/name/geraldhost/union-v2-goerli",
   },
 };
