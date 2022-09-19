@@ -251,15 +251,15 @@ export const AAVE_ADAPTER_ADDRESSES = {
 export const SCALE = 10 ** 18;
 
 export const BLOCK_SPEED = {
-  1: 13, //13.1,
+  1: 12, //12 seconds,
   4: 12,
   5: 12,
   42: 5, //5.49,
   137: 2,
   80001: 2,
-  42161: 13,
-  421611: 13,
-  421613: 13,
+  42161: 12,
+  421611: 12,
+  421613: 12,
 };
 
 export const TOKENS = {
