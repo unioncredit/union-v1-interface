@@ -17,7 +17,7 @@ export function NetworkSelect() {
     await switchChain(value, library.provider);
   };
 
-  if(!library) return null;
+  if (!library) return null;
 
   return (
     <NetworkSwitcher

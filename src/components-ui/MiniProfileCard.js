@@ -10,7 +10,7 @@ import {
 import { Avatar } from "components-ui";
 import useIsMember from "hooks/data/useIsMember";
 import usePublicData from "hooks/usePublicData";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import truncateAddress from "util/truncateAddress";
 
 export function MiniProfileCard({ address, onClick }) {

@@ -16,14 +16,12 @@ async function fetchProposalVoteReceipt(_, gov, address, proposalId) {
 }
 
 export default function useProposalVoteReceipt(address, proposalId) {
-  const gov= useGovernance();
+  const gov = useGovernance();
 
   const shouldFetch = address && proposalId && gov;
 
   return useSWR(
-    shouldFetch
-      ? ["ProposalVoteReceipt", gov, address, proposalId]
-      : null,
-    fetchProposalVoteReceipt,
+    shouldFetch ? ["ProposalVoteReceipt", gov, address, proposalId] : null,
+    fetchProposalVoteReceipt
   );
 }

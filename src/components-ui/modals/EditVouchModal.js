@@ -81,7 +81,7 @@ export function EditVouchModal({ address, used, trust }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal title="Adjust trust" onClose={close} onBack={back} size="medium">
+      <Modal title="Adjust trust" onClose={close} onBack={back}>
         <form onSubmit={handleSubmit(handleAdjustTrust)}>
           <Grid>
             <Grid.Row>

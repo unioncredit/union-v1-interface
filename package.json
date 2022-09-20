@@ -55,7 +55,8 @@
     "build": "export REACT_APP_VERSION=$(git rev-parse HEAD) && react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "format": "prettier --check \"src/**/*.js\""
+    "format": "prettier --check \"src/**/*.js\"",
+    "format:write": "prettier --write \"src/**/*.js\""
   },
   "eslintConfig": {
     "extends": [

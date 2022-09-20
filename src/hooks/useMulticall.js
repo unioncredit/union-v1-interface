@@ -9,9 +9,13 @@ import useChainId from "hooks/useChainId";
 import { MULTICALL_ADDRESSES } from "constants/variables";
 
 export default function useMulticall() {
-	const chainId = useChainId();
+  const chainId = useChainId();
   const readProvider = useReadProvider();
-  const multiCall = useContract(MULTICALL_ADDRESSES[chainId], ABI, readProvider);
+  const multiCall = useContract(
+    MULTICALL_ADDRESSES[chainId],
+    ABI,
+    readProvider
+  );
 
   const mutliCallHandler = useCallback(
     async (calls) => {

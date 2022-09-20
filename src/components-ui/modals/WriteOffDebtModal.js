@@ -100,12 +100,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   return (
     <ModalOverlay onClick={close}>
-      <Modal
-        title="Write-off debt"
-        onClose={close}
-        onBack={handleGoBack}
-        size="medium"
-      >
+      <Modal title="Write-off debt" onClose={close} onBack={handleGoBack}>
         <form onSubmit={handleSubmit(handleWriteOffDebt)}>
           <Grid>
             <Grid.Row>
