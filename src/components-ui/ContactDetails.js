@@ -1,5 +1,5 @@
 import { formatUnits } from "@ethersproject/units";
-import { Stat, Grid, Card, Button, Badge } from "@unioncredit/ui";
+import { Stat, Grid, Button, Label, Box } from "@unioncredit/ui";
 import { ReactComponent as Manage } from "@unioncredit/ui/lib/icons/manage.svg";
 
 import { Dai } from "components-ui";
@@ -64,8 +64,6 @@ function YouTrustContactDetails({
   used,
   vouched,
   trust,
-  isMember,
-  isOverdue,
 }) {
   const { data: borrowData } = useBorrowData(address);
 
@@ -73,25 +71,6 @@ function YouTrustContactDetails({
 
   return (
     <>
-      <Grid.Row>
-        <Grid.Col>
-          <Stat
-            size="extra-small"
-            mb="24px"
-            label="Credit Status"
-            value={
-              isMember ? (
-                <Badge
-                  color={isOverdue ? "red" : "blue"}
-                  label={isOverdue ? "Overdue" : "Healthy"}
-                />
-              ) : (
-                <Badge color="grey" label="Not a member" />
-              )
-            }
-          />
-        </Grid.Col>
-      </Grid.Row>
       <Grid.Row>
         <Grid.Col xs={4}>
           <Stat
@@ -115,39 +94,47 @@ function YouTrustContactDetails({
           <Stat
             size="extra-small"
             mb="12px"
+            align="right"
             label="Available"
             tooltip="The DAI this address has available to borrow"
             value={<Dai value={format(formatUnits(vouched.sub(used)), 2)} />}
           />
         </Grid.Col>
-        <Grid.Col xs={4}>
-          <Stat
-            size="extra-small"
-            label="Balance owed"
-            value={<Dai value={format(formatUnits(used), 2)} />}
-          />
-        </Grid.Col>
-        <Grid.Col xs={4}>
-          <Stat
-            size="extra-small"
-            label="Min payment"
-            value={<Dai value={roundUp(formatUnits(interest))} />}
-          />
-        </Grid.Col>
-        <Grid.Col xs={4}>
-          <Stat
-            size="extra-small"
-            label="Payment due"
-            value={
-              paymentDueDate === "No Payment Due" ? "None" : paymentDueDate
-            }
-          />
+      </Grid.Row>
+
+      <Grid.Row>
+        <Grid.Col xs={12}>
+          <Box justify="space-between" mt="8px">
+            <Label as="p" grey={400}>
+              Balance Owed
+            </Label>
+            <Label as="p" grey={700} m={0}>
+              {format(formatUnits(used), 2)}
+            </Label>
+          </Box>
+          <Box justify="space-between">
+            <Label as="p" grey={400}>
+              Min. Payment
+            </Label>
+            <Label as="p" grey={700} m={0}>
+              {roundUp(formatUnits(interest))}
+            </Label>
+          </Box>
+          <Box justify="space-between">
+            <Label as="p" grey={400}>
+              Payment Due
+            </Label>
+            <Label as="p" grey={700} m={0}>
+              {paymentDueDate === "No Payment Due" ? "None" : paymentDueDate}
+            </Label>
+          </Box>
         </Grid.Col>
       </Grid.Row>
+
       <Grid.Row>
         <Grid.Col xs={12}>
           <Button
-            mt="18px"
+            mt="12px"
             fluid
             variant="secondary"
             label="Manage Contact"
@@ -162,16 +149,12 @@ function YouTrustContactDetails({
 
 export function ContactDetails({ contactsType, ...props }) {
   return (
-    <Card overflow>
-      <Card.Body>
-        <Grid>
-          {contactsType === ContactsType.YOU_TRUST ? (
-            <YouTrustContactDetails {...props} />
-          ) : (
-            <TrustsYouContactDetails {...props} />
-          )}
-        </Grid>
-      </Card.Body>
-    </Card>
+    <Grid>
+      {contactsType === ContactsType.YOU_TRUST ? (
+        <YouTrustContactDetails {...props} />
+      ) : (
+        <TrustsYouContactDetails {...props} />
+      )}
+    </Grid>
   );
 }

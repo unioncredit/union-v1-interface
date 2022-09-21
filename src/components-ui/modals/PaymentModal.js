@@ -23,7 +23,6 @@ import errorMessages from "util/errorMessages";
 import getReceipt from "util/getReceipt";
 import handleTxError from "util/handleTxError";
 import activityLabels from "util/activityLabels";
-import { roundDown, toFixed } from "util/numbers";
 import { useModal, useModalOpen } from "hooks/useModal";
 import usePermits from "hooks/usePermits";
 import useRepay from "hooks/payables/useRepay";

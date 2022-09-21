@@ -71,7 +71,12 @@ const withMobileView =
   ({ onClose, contactsType, ...props }) =>
     (
       <ModalOverlay onClick={onClose}>
-        <Modal title="Contact details" onClose={onClose} size="large">
+        <Modal
+          title="Contact details"
+          onClose={onClose}
+          size="large"
+          className="contactDetailsModal"
+        >
           <Component {...props} variant={contactsType} />
         </Modal>
       </ModalOverlay>
@@ -285,7 +290,7 @@ export default function ContactsView({
               )}
 
               {selectedContact && (
-                <Card mt="24px">
+                <Card mt="24px" overflow>
                   <ContactDetailsVariant
                     {...selectedContact}
                     onClose={() => setSelectedContact(null)}

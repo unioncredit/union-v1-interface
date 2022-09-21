@@ -1,4 +1,4 @@
-import { Heading, Badge, Box } from "@unioncredit/ui";
+import { Heading, Badge, Box, BadgeRow } from "@unioncredit/ui";
 import { Avatar, Copyable } from "components-ui";
 import truncateAddress from "util/truncateAddress";
 import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
@@ -9,7 +9,7 @@ import getEtherscanLink from "util/getEtherscanLink";
 import useChainId from "hooks/useChainId";
 import { Link } from "react-router-dom";
 
-export function ContactDetailsHeader({ address }) {
+export function ContactDetailsHeader({ address, isMember, isOverdue }) {
   const chainId = useChainId();
   const { ENSName, BoxName } = usePublicData(address);
   const { getLabel } = useAddressLabels();
@@ -44,21 +44,18 @@ export function ContactDetailsHeader({ address }) {
             </Heading>
           </Link>
           <Box>
-            {(!ENSName || (ENSName && label)) && (
-              <Badge
-                color="grey"
-                mr="4px"
-                label={
-                  ENSName ? (
-                    <Copyable value={ENSName}>{ENSName}</Copyable>
-                  ) : (
-                    "No ENS"
-                  )
-                }
-              />
-            )}
+            <BadgeRow>
+              <Badge mr="4px" color="grey" label={truncatedAddress} />
 
-            <Badge mr="4px" color="grey" label={truncatedAddress} />
+              {isMember ? (
+                <Badge
+                  color={isOverdue ? "red" : "blue"}
+                  label={isOverdue ? "Overdue" : "Healthy"}
+                />
+              ) : (
+                <Badge color="purple" label="Not a member" />
+              )}
+            </BadgeRow>
 
             <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
               <External width="24px" />

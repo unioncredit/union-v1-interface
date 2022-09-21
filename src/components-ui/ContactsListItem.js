@@ -15,10 +15,20 @@ import { ContactsType } from "constants/app";
 import format from "util/formatValue";
 import truncateName from "util/truncateName";
 import truncateAddress from "util/truncateAddress";
+import { ZERO } from "constants/variables";
 
 export function ContactsListItem(props) {
-  const { address, trust, onClick, isOverdue, variant, active, isMember } =
-    props;
+  const {
+    used = ZERO,
+    address,
+    trust,
+    onClick,
+    isOverdue,
+    variant,
+    active,
+    isMember,
+  } = props;
+
   const { name, ENSName, BoxName, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
 
@@ -57,6 +67,8 @@ export function ContactsListItem(props) {
             <Badge color="grey" label="Not a member" />
           ) : isOverdue ? (
             <Badge color="red" label="Overdue" />
+          ) : used.lte(0) ? (
+            <Badge color="purple" label="Inactive" />
           ) : (
             <Badge color="blue" label="Healthy" />
           )}
