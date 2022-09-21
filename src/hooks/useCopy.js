@@ -21,7 +21,7 @@ export default function useCopy(timeout = 1000) {
         clearTimeout(hide);
       };
     }
-  }, []);
+  }, [isCopied]);
 
   return [isCopied, copy];
 }
