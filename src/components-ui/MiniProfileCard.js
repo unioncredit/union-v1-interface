@@ -1,70 +1,73 @@
-import {
-  Box,
-  Button,
-  Card,
-  Skeleton,
-  Badge,
-  Text,
-  Label,
-} from "@unioncredit/ui";
-import { Avatar } from "components-ui";
-import useIsMember from "hooks/data/useIsMember";
-import usePublicData from "hooks/usePublicData";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Heading, Badge, Box, BadgeRow } from "@unioncredit/ui";
+import { ReactComponent as External } from "@unioncredit/ui/lib/icons/external.svg";
+
+import { Avatar, Copyable } from "components-ui";
+import getEtherscanLink from "util/getEtherscanLink";
 import truncateAddress from "util/truncateAddress";
+import useChainId from "hooks/useChainId";
+import usePublicData from "hooks/usePublicData";
+import useIsMember from "hooks/data/useIsMember";
+import useIsOverdue from "hooks/data/useIsOverdue";
+import useAddressLabels from "hooks/useAddressLabels";
 
-export function MiniProfileCard({ address, onClick }) {
-  const navigate = useNavigate();
+export function MiniProfileCard({ address }) {
+  const chainId = useChainId();
+  const { ENSName, BoxName } = usePublicData(address);
   const { data: isMember } = useIsMember(address);
-  const { name, ENSName } = usePublicData(address);
+  const { data: isOverdue } = useIsOverdue(address);
 
-  const handleClick = () => {
-    onClick && onClick();
-    navigate(`/profile/${address}`);
-  };
+  const { getLabel } = useAddressLabels();
+  const label = getLabel(address);
+
+  const truncatedAddressText = truncateAddress(address);
+
+  const truncatedAddress = (
+    <Copyable value={address}>{truncatedAddressText}</Copyable>
+  );
+
+  const [primaryLabel] = [
+    { label },
+    { label: ENSName || BoxName },
+    { label: truncatedAddressText, value: address },
+  ].filter(({ label }) => Boolean(label));
+
+  const addressEtherscanLink = getEtherscanLink(chainId, address, "ADDRESS");
 
   return (
-    <Card packed mb="24px">
-      <Card.Body>
-        {address ? (
-          <Box>
-            <Box align="center">
-              <Avatar size={32} address={address} />
-              <Box direction="vertical" ml="8px">
-                <Text mb={0} grey={700}>
-                  {name}
-                </Text>
-                <Label size="small" m={0} grey={400}>
-                  {ENSName ? truncateAddress(address) : "No ENS"}
-                </Label>
-              </Box>
-            </Box>
-            {isMember ? (
-              <Badge label="Union Member" color="blue" ml="auto" />
-            ) : (
-              <Badge label="Not a Member" color="yellow" ml="auto" />
-            )}
-          </Box>
-        ) : (
-          <Box mb="16px" mt="2px">
-            <Skeleton variant="circle" size={32} grey={200} mr="8px" />
-            <Box direction="vertical">
-              <Skeleton width={80} height={18} grey={200} mb="4px" />
-              <Skeleton width={70} height={12} grey={100} />
-            </Box>
-            <Skeleton width={93} height={24} grey={200} ml="auto" />
-          </Box>
+    <Box mb="24px" align="center">
+      <Box align="center">
+        {address && (
+          <Link to={`/profile/${address}`}>
+            <Avatar size={54} address={address} />
+          </Link>
         )}
-        <Button
-          mt="14px"
-          variant="secondary"
-          disabled={!address}
-          label="View Profile"
-          iconPosition="end"
-          onClick={handleClick}
-          fluid
-        />
-      </Card.Body>
-    </Card>
+        <Box direction="vertical" mx="12px">
+          <Link to={`/profile/${address}`}>
+            <Heading level={2} mb="4px">
+              {primaryLabel.label}
+            </Heading>
+          </Link>
+          <Box>
+            <BadgeRow>
+              <Badge mr="4px" color="grey" label={truncatedAddress} />
+
+              {isMember ? (
+                <Badge
+                  color={isOverdue ? "red" : "blue"}
+                  label={isOverdue ? "Overdue" : "Healthy"}
+                />
+              ) : (
+                <Badge color="purple" label="Not a member" />
+              )}
+            </BadgeRow>
+
+            <a href={addressEtherscanLink} target="_blank" rel="noreferrer">
+              <External width="24px" />
+            </a>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
