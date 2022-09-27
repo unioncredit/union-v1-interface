@@ -32,7 +32,7 @@ import useUToken from "hooks/contracts/useUToken";
 import { Dai } from "components-ui/Dai";
 import { Modal } from "components-ui/Modal";
 import { Approval } from "components-ui/Approval";
-import { REPAY_MARGIN, MIN_REPAY, ZERO, WAD } from "constants/variables";
+import { MIN_REPAY, ZERO } from "constants/variables";
 import { APPROVE_DAI_REPAY_SIGNATURE_KEY } from "constants/app";
 
 export const PAYMENT_MODAL = "payment-modal";
@@ -87,7 +87,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
   const minRepay = interest.lt(MIN_REPAY)
     ? MIN_REPAY
     : interest.mul(1010).div(1000);
-  const newBalanceOwed = borrowed.sub(amount);
+  const newBalanceOwed = owed.sub(amount);
 
   const handleSelectOption = (option) => {
     setPaymentType(option.paymentType);
@@ -145,7 +145,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
       content:
         "Make the payment required to cover the interest due on your loan",
       value: minRepay,
-      display: format(formatUnits(minRepay, 18), 2),
+      display: format(formatUnits(interest), 2),
       paymentType: PaymentType.MIN,
     },
     {

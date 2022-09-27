@@ -7,7 +7,7 @@ export const WAD = BigNumber.from("1000000000000000000");
 
 export const AddressZero = "0x0000000000000000000000000000000000000000";
 
-export const MIN_REPAY = parseEther("0.1");
+export const MIN_REPAY = parseEther("0.01");
 
 export const REPAY_MARGIN = BigNumber.from("1000300000000000000");
 
