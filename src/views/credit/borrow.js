@@ -30,7 +30,6 @@ export default function BorrowView() {
                 title="Transaction History"
                 subTitle="Your credit based transaction history"
               />
-              <Box mb="24px" />
               <AddressHistory address={account} />
             </Card>
           </Col>

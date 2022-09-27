@@ -10,7 +10,7 @@ import { fetchENS } from "fetchers/fetchEns";
 function fetchTrustData(userManager, uToken, multicall) {
   return async function (_, address) {
     const addresses = await userManager.getBorrowerAddresses(address);
-
+    if (addresses.length === 0) return [];
     const calls = addresses.map((borrower) => [
       {
         address: userManager.address,

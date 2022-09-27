@@ -8,6 +8,9 @@ import {
   EmptyState,
   Label,
   TableHead,
+  Card,
+  Box,
+  Skeleton,
 } from "@unioncredit/ui";
 import { formatUnits } from "@ethersproject/units";
 
@@ -18,6 +21,7 @@ import usePagination from "hooks/usePagination";
 import { useNavigate } from "react-router-dom";
 import truncateName from "util/truncateName";
 import truncateAddress from "util/truncateAddress";
+import createArray from "util/createArray";
 
 function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
   const navigate = useNavigate();
@@ -54,31 +58,62 @@ function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
   );
 }
 
+function TransactionHistorySkeletonRow() {
+  return (
+    <TableRow>
+      <TableCell fixedSize>
+        <Skeleton shimmer variant="circle" size={24} grey={200} />
+      </TableCell>
+      <TableCell>
+        <Skeleton shimmer width={60} height={10} grey={200} />
+      </TableCell>
+      <TableCell>
+        <Skeleton shimmer width={60} height={10} grey={200} />
+      </TableCell>
+      <TableCell align="right">
+        <Skeleton shimmer width={30} height={10} grey={200} />
+      </TableCell>
+    </TableRow>
+  );
+}
+
 function OutstandingLoansEmpty() {
   return <EmptyState label="No loans" />;
 }
 
 export function OutstandingLoans({ data }) {
   const loans = data && data.filter((item) => item.used.gt("0"));
-
+  console.log(loans);
   const { data: pagedLoans, maxPages, page, setPage } = usePagination(loans);
-
+  console.log(data);
   return (
     <>
-      <Table>
-        <TableRow>
-          <TableHead></TableHead>
-          <TableHead>Account</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead align="right">Balance Owed (DAI)</TableHead>
-        </TableRow>
-        {loans && loans.length > 0 ? (
-          pagedLoans.map((row, i) => <OutstandingLoansRow key={i} {...row} />)
-        ) : (
+      {data?.length <= 0 ? (
+        <Card.Body>
           <OutstandingLoansEmpty />
-        )}
-      </Table>
-      <Pagination pages={maxPages} activePage={page} onClick={setPage} />
+        </Card.Body>
+      ) : (
+        <>
+          <Box mb="24px" />
+          <Table>
+            <TableRow>
+              <TableHead></TableHead>
+              <TableHead>Account</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead align="right">Balance Owed (DAI)</TableHead>
+            </TableRow>
+            {pagedLoans.map((row, i) => (
+              <OutstandingLoansRow key={i} {...row} />
+            ))}
+
+            {!data &&
+              createArray(3).map((_, i) => (
+                <TransactionHistorySkeletonRow key={i} />
+              ))}
+          </Table>
+          <Pagination pages={maxPages} activePage={page} onClick={setPage} />
+        </>
+      )}
     </>
   );
 }
