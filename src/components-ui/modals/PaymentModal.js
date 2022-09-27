@@ -83,9 +83,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
 
   const watchAmount = String(watch("amount") || 0);
   const amount = parseEther(watchAmount);
-  const maxRepayWithMargin = owed.mul(REPAY_MARGIN).div(WAD);
-  const maxRepay =
-    daiBalance && daiBalance.lt(owed) ? daiBalance : maxRepayWithMargin;
+  const maxRepay = daiBalance && daiBalance.lt(owed) ? daiBalance : owed;
   const minRepay = interest.lt(MIN_REPAY)
     ? MIN_REPAY
     : interest.mul(1010).div(1000);
@@ -122,9 +120,6 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
 
     try {
       amountToRepay = parseUnits(String(values.amount));
-      if (values.amount == formatUnits(maxRepay)) {
-        amountToRepay = maxRepay;
-      }
       const { hash } = await repay(amountToRepay);
 
       const amountToRepayView = format(formatUnits(amountToRepay), 2);
