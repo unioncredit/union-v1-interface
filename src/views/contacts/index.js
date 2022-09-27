@@ -175,7 +175,7 @@ export default function ContactsView({
                     <>
                       <Input
                         {...register("query")}
-                        suffix={<Search />}
+                        prefix={<Search />}
                         placeholder="Search"
                       />
                       <Button
