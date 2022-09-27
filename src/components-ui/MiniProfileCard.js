@@ -13,7 +13,7 @@ import useAddressLabels from "hooks/useAddressLabels";
 
 export function MiniProfileCard({ address }) {
   const chainId = useChainId();
-  const { ENSName, BoxName } = usePublicData(address);
+  const { ENSName } = usePublicData(address);
   const { data: isMember } = useIsMember(address);
   const { data: isOverdue } = useIsOverdue(address);
 
@@ -28,7 +28,7 @@ export function MiniProfileCard({ address }) {
 
   const [primaryLabel] = [
     { label },
-    { label: ENSName || BoxName },
+    { label: ENSName },
     { label: truncatedAddressText, value: address },
   ].filter(({ label }) => Boolean(label));
 
@@ -44,9 +44,16 @@ export function MiniProfileCard({ address }) {
         )}
         <Box direction="vertical" mx="12px">
           <Link to={`/profile/${address}`}>
-            <Heading level={2} mb="4px">
-              {primaryLabel.label}
-            </Heading>
+            <Box>
+              <Heading level={2} mb="4px">
+                {primaryLabel.label}{" "}
+              </Heading>
+              {ENSName && label && (
+                <Heading level={2} ml="4px" mb="4px" grey={500}>
+                  {`· ${ENSName}`}
+                </Heading>
+              )}
+            </Box>
           </Link>
           <Box>
             <BadgeRow>
