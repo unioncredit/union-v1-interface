@@ -73,7 +73,7 @@ const activityLabels = {
     hash,
   }),
   approve: ({ token, hash }, failed) => ({
-    label: `Approved ${token}`,
+    label: `Approved ${truncateAddress(token)}`,
     failed,
     hash,
   }),
