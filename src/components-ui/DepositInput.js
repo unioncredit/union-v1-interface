@@ -51,10 +51,11 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
   const amount = Number(watchAmount || 0);
 
   const maxAllowed = maxStake.sub(totalStake);
-  const daiBalanceView = format(roundDown(formatUnits(daiBalance)), 2);
+  const maxUserStake = maxAllowed.lt(daiBalance) ? maxAllowed : daiBalance;
+  const maxUserStakeView = format(roundDown(formatUnits(maxUserStake)), 2);
 
   const handleMaxDeposit = () => {
-    setValue("amount", roundDown(formatUnits(daiBalance)), {
+    setValue("amount", roundDown(formatUnits(maxUserStake)), {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -95,7 +96,7 @@ export const DepositInput = ({ totalStake, utilizedStake, onComplete }) => {
         <Input
           type="number"
           label="Amount to stake"
-          caption={`Balance: ${daiBalanceView} DAI`}
+          caption={`Max. ${maxUserStakeView} DAI`}
           onCaptionClick={handleMaxDeposit}
           placeholder="0"
           suffix={<Dai />}
