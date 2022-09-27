@@ -170,100 +170,102 @@ export default function ContactsView({
             <Grid.Col md={6}>
               <Card mt="24px">
                 <Card.Header title={title} subTitle={subTitle} />
-                <Box fluid p="12px">
-                  {!isEmpty && (
-                    <>
-                      <Input
-                        {...register("query")}
-                        suffix={<Search />}
-                        placeholder="Search"
-                      />
-                      <Button
-                        ml="8px"
-                        fluid
-                        icon={Filter}
-                        variant="secondary"
-                        onClick={toggleFilters}
-                      />
-                      {contactsType === ContactsType.YOU_TRUST && (
-                        <Button
-                          fluid
-                          ml="8px"
-                          label="New vouch"
-                          icon={Vouch}
-                          onClick={openVouchModal}
-                        />
-                      )}
-                    </>
-                  )}
-                </Box>
-                <Collapse active={showFilters}>
-                  <Box pl="12px" pb="12px" pr="12px">
-                    <Card packed overflow>
-                      <Card.Body>
-                        {contactsType === ContactsType.YOU_TRUST && (
-                          <Box mt="8px">
-                            <Select
-                              options={statusOptions}
-                              onChange={({ id }) => {
-                                setFilter(id);
-                              }}
-                              defaultValue={statusOptions[0]}
-                            />
-                          </Box>
-                        )}
-                        <Box mt="8px">
-                          <Select
-                            options={oderByOptions}
-                            onChange={({ id }) => {
-                              setOrderBy(id);
-                            }}
-                            defaultValue={oderByOptions[0]}
+                {pagedData?.length <= 0 ? (
+                  <Card.Body>
+                    <EmptyState label="No contacts" />
+                  </Card.Body>
+                ) : (
+                  <>
+                    <Box fluid p="12px">
+                      {!isEmpty && (
+                        <>
+                          <Input
+                            {...register("query")}
+                            suffix={<Search />}
+                            placeholder="Search"
                           />
-                        </Box>
-                      </Card.Body>
-                    </Card>
-                  </Box>
-                </Collapse>
-                <Table>
-                  <TableRow>
-                    <TableHead />
-                    <TableHead>Account</TableHead>
-                    {contactsType === ContactsType.YOU_TRUST && (
-                      <TableHead align="center" className="hide-lt-400">
-                        Status
-                      </TableHead>
-                    )}
-                    <TableHead align="right">Trust Limit (DAI)</TableHead>
-                  </TableRow>
-                  {isLoading ? (
-                    createArray(3).map((_, i) => (
-                      <ContactsListItemSkeleton
-                        key={i}
-                        variant={contactsType}
-                      />
-                    ))
-                  ) : pagedData?.length <= 0 ? (
-                    <Box fluid m="12px">
-                      <EmptyState label="No contacts" />
+                          <Button
+                            ml="8px"
+                            fluid
+                            icon={Filter}
+                            variant="secondary"
+                            onClick={toggleFilters}
+                          />
+                          {contactsType === ContactsType.YOU_TRUST && (
+                            <Button
+                              fluid
+                              ml="8px"
+                              label="New vouch"
+                              icon={Vouch}
+                              onClick={openVouchModal}
+                            />
+                          )}
+                        </>
+                      )}
                     </Box>
-                  ) : (
-                    pagedData.map((item) => (
-                      <ContactsListItem
-                        {...item}
-                        active={item.address === selectedContact?.address}
-                        variant={contactsType}
-                        key={`${item.address}-${contactsType}`}
-                        onClick={handleSelectContact(item)}
-                      />
-                    ))
-                  )}
-                </Table>
-                <Pagination
-                  pages={maxPages}
-                  activePage={page}
-                  onClick={setPage}
-                />
+                    <Collapse active={showFilters}>
+                      <Box pl="12px" pb="12px" pr="12px">
+                        <Card packed overflow>
+                          <Card.Body>
+                            {contactsType === ContactsType.YOU_TRUST && (
+                              <Box mt="8px">
+                                <Select
+                                  options={statusOptions}
+                                  onChange={({ id }) => {
+                                    setFilter(id);
+                                  }}
+                                  defaultValue={statusOptions[0]}
+                                />
+                              </Box>
+                            )}
+                            <Box mt="8px">
+                              <Select
+                                options={oderByOptions}
+                                onChange={({ id }) => {
+                                  setOrderBy(id);
+                                }}
+                                defaultValue={oderByOptions[0]}
+                              />
+                            </Box>
+                          </Card.Body>
+                        </Card>
+                      </Box>
+                    </Collapse>
+                    <Table>
+                      <TableRow>
+                        <TableHead />
+                        <TableHead>Account</TableHead>
+                        {contactsType === ContactsType.YOU_TRUST && (
+                          <TableHead align="center" className="hide-lt-400">
+                            Status
+                          </TableHead>
+                        )}
+                        <TableHead align="right">Trust Limit (DAI)</TableHead>
+                      </TableRow>
+                      {isLoading
+                        ? createArray(3).map((_, i) => (
+                            <ContactsListItemSkeleton
+                              key={i}
+                              variant={contactsType}
+                            />
+                          ))
+                        : pagedData.map((item) => (
+                            <ContactsListItem
+                              {...item}
+                              active={item.address === selectedContact?.address}
+                              variant={contactsType}
+                              key={`${item.address}-${contactsType}`}
+                              onClick={handleSelectContact(item)}
+                            />
+                          ))}
+                    </Table>
+                    <Pagination
+                      pages={maxPages}
+                      activePage={page}
+                      onClick={setPage}
+                    />
+                  </>
+                )}
               </Card>
             </Grid.Col>
             <Grid.Col md={6}>

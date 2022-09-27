@@ -9,6 +9,7 @@ import {
   Pagination,
   EmptyState,
   TableHead,
+  Card,
 } from "@unioncredit/ui";
 
 import { ReactComponent as Borrow } from "@unioncredit/ui/lib/icons/borrow.svg";
@@ -144,28 +145,34 @@ function TransactionHistoryEmpty() {
 
 export function TransactionHistory({ data }) {
   const { data: pagedData, page, maxPages, setPage } = usePagination(data);
-
   return (
     <>
-      <Table className="transactionHistory">
-        <TableRow>
-          <TableHead></TableHead>
-          <TableHead>Event</TableHead>
-          <TableHead align="right">Value (DAI)</TableHead>
-        </TableRow>
-        {data?.length <= 0 && <TransactionHistoryEmpty />}
+      {data?.length <= 0 ? (
+        <Card.Body>
+          <TransactionHistoryEmpty />
+        </Card.Body>
+      ) : (
+        <>
+          <Box mb="24px" />
+          <Table className="transactionHistory">
+            <TableRow>
+              <TableHead></TableHead>
+              <TableHead>Event</TableHead>
+              <TableHead align="right">Value (DAI)</TableHead>
+            </TableRow>
+            {pagedData.map((tx, i) => (
+              <TransactionHistoryRow key={i} {...tx} />
+            ))}
 
-        {pagedData.map((tx, i) => (
-          <TransactionHistoryRow key={i} {...tx} />
-        ))}
+            {!data &&
+              createArray(3).map((_, i) => (
+                <TransactionHistorySkeletonRow key={i} />
+              ))}
+          </Table>
 
-        {!data &&
-          createArray(3).map((_, i) => (
-            <TransactionHistorySkeletonRow key={i} />
-          ))}
-      </Table>
-
-      <Pagination pages={maxPages} activePage={page} onClick={setPage} />
+          <Pagination pages={maxPages} activePage={page} onClick={setPage} />
+        </>
+      )}
     </>
   );
 }
