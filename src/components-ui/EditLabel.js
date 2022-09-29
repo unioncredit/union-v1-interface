@@ -55,7 +55,7 @@ export function EditLabel({ address }) {
           ref={labelEl}
           className="editable-name"
         >
-          {label}
+          {label || (!editting && "-")}
         </Text>
       </Box>
       <Box>
