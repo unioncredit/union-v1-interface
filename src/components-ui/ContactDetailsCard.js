@@ -1,8 +1,9 @@
 import { Card } from "@unioncredit/ui";
 import { useWeb3React } from "@web3-react/core";
-import { ContactDetails, ContactDetailsHeader } from "components-ui";
+import { ContactDetails } from "components-ui";
 import { useManageContactModal } from "components-ui/modals";
 import { ContactsType } from "constants/app";
+import { MiniProfileCard } from "./MiniProfileCard";
 import { RelatedHistory } from "./RelatedHistory";
 
 export function ContactDetailsCard({ contactsType, ...props }) {
@@ -17,7 +18,7 @@ export function ContactDetailsCard({ contactsType, ...props }) {
   return (
     <>
       <Card.Body>
-        <ContactDetailsHeader {...props} contactsType={contactsType} />
+        <MiniProfileCard {...props} />
         <ContactDetails
           {...props}
           contactsType={contactsType}

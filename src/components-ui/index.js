@@ -19,7 +19,6 @@ export * from "./VotingCard";
 export * from "./ProposalHistoryCard";
 export * from "./UserVotingHistory";
 export * from "./ContactDetails";
-export * from "./ContactDetailsHeader";
 export * from "./Dai";
 export * from "./ClaimButton";
 export * from "./Notifications";
