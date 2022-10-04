@@ -1,5 +1,4 @@
 import {
-  Badge,
   Text,
   Table,
   TableCell,
@@ -18,8 +17,9 @@ import usePagination from "hooks/usePagination";
 import { useNavigate } from "react-router-dom";
 import truncateName from "util/truncateName";
 import truncateAddress from "util/truncateAddress";
+import { StatusBadge } from "./StatusBadge";
 
-function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
+function OutstandingLoansRow({ address, used }) {
   const navigate = useNavigate();
   const { name, ENSName } = usePublicData(address);
 
@@ -39,13 +39,7 @@ function OutstandingLoansRow({ address, used, isMember, isOverdue }) {
         </Label>
       </TableCell>
       <TableCell>
-        {!isMember ? (
-          <Badge color="grey" label="Not a member" />
-        ) : isOverdue ? (
-          <Badge color="red" label="Overdue" />
-        ) : (
-          <Badge color="blue" label="Healthy" />
-        )}
+        <StatusBadge address={address} />
       </TableCell>
       <TableCell align="right">
         <Text grey={700}>{format(formatUnits(used), 2)}</Text>
@@ -59,7 +53,7 @@ function OutstandingLoansEmpty() {
 }
 
 export function OutstandingLoans({ data }) {
-  const loans = data && data.filter((item) => item.used.gt("0"));
+  const loans = data && data.filter((item) => item.used.gt(0));
 
   const { data: pagedLoans, maxPages, page, setPage } = usePagination(loans);
 

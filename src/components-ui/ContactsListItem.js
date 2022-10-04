@@ -1,11 +1,4 @@
-import {
-  Text,
-  TableCell,
-  TableRow,
-  Skeleton,
-  Badge,
-  Label,
-} from "@unioncredit/ui";
+import { Text, TableCell, TableRow, Skeleton, Label } from "@unioncredit/ui";
 import { formatUnits } from "@ethersproject/units";
 
 import { Avatar } from "components-ui";
@@ -15,19 +8,10 @@ import { ContactsType } from "constants/app";
 import format from "util/formatValue";
 import truncateName from "util/truncateName";
 import truncateAddress from "util/truncateAddress";
-import { ZERO } from "constants/variables";
+import { StatusBadge } from "./StatusBadge";
 
 export function ContactsListItem(props) {
-  const {
-    used = ZERO,
-    address,
-    trust,
-    onClick,
-    isOverdue,
-    variant,
-    active,
-    isMember,
-  } = props;
+  const { address, trust, onClick, isOverdue, variant, active } = props;
 
   const { name, ENSName, BoxName, ...publicData } = usePublicData(address);
   const { getLabel } = useAddressLabels();
@@ -63,15 +47,7 @@ export function ContactsListItem(props) {
       </TableCell>
       {variant === ContactsType.YOU_TRUST && (
         <TableCell align="center" className="hide-lt-400">
-          {!isMember ? (
-            <Badge color="grey" label="Not a member" />
-          ) : isOverdue ? (
-            <Badge color="red" label="Overdue" />
-          ) : used.lte(0) ? (
-            <Badge color="purple" label="Inactive" />
-          ) : (
-            <Badge color="blue" label="Healthy" />
-          )}
+          <StatusBadge address={address} />
         </TableCell>
       )}
       <TableCell align="right">
