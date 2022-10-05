@@ -55,3 +55,4 @@ export * from "./ContextMenuLink";
 export * from "./AddressInput";
 export * from "./UnwrapButton";
 export * from "./MiniAccountSummary";
+export * from "./StatusBadge";
