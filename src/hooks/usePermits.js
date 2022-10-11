@@ -8,7 +8,7 @@ export const permitsState = newRidgeState({});
 
 export default function usePermits() {
   const { account, library, chainId } = useWeb3React();
-  const [permits, setPermits] = permitsState.use();
+  const [, setPermits] = permitsState.use();
 
   const savePermit = (key, permit) => {
     setPermits((x) => ({ ...x, [key]: permit }));
@@ -19,7 +19,7 @@ export default function usePermits() {
   };
 
   const getPermit = (key) => {
-    const permit = permits[key];
+    const permit = permitsState.get()[key];
 
     const expiry = permit?.expiry || permit?.deadline;
 
