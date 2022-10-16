@@ -37,7 +37,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const addActivity = useAddActivity();
   const isOpen = useBorrowModalOpen();
 
-  const { library } = useWeb3React();
+  const { account, library } = useWeb3React();
   const { close } = useBorrowModal();
 
   const { data: maxBorrow = ZERO } = useMaxBorrow();
@@ -110,7 +110,7 @@ export function BorrowModal({ borrowData, creditLimit, onComplete }) {
   const handleBorrow = async (data) => {
     try {
       const { amount } = data;
-      const { hash } = await borrow(amount);
+      const { hash } = await borrow(account, amount);
       await getReceipt(hash, library, {
         pending: `Borrowing ${amount} DAI`,
         success: `Borrowed ${amount} DAI`,

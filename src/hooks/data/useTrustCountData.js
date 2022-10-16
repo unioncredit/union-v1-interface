@@ -5,7 +5,7 @@ import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 
 async function fetchTrustCount(_, userManager, account) {
-  const addresses = await userManager.getStakerAddresses(account);
+  const addresses = await userManager.vouchers(account);
 
   const vouchers = await Promise.all(
     addresses.map(async (staker) => {

@@ -9,7 +9,7 @@ import { fetchENS } from "fetchers/fetchEns";
 
 function fetchVouchData(userManager, uToken, multicall) {
   return async function (_, address) {
-    const addresses = await userManager.getStakerAddresses(address);
+    const addresses = await userManager.vouchers(address);
 
     const calls = addresses.map((staker) => [
       {

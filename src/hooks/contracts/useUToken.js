@@ -6,8 +6,8 @@ import useMarketRegistry from "hooks/contracts/useMarketRegistry";
 
 function fetchUTokenContractAddress(marketRegistry) {
   return async function (_, underlying) {
-    const resp = await marketRegistry.tokens(underlying);
-    return resp.uToken;
+    const resp = await marketRegistry.uTokens(underlying);
+    return resp;
   };
 }
 

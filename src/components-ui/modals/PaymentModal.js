@@ -48,7 +48,7 @@ const PaymentType = {
 };
 
 export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
-  const { library } = useWeb3React();
+  const { account, library } = useWeb3React();
   const [paymentType, setPaymentType] = useState(PaymentType.MIN);
 
   const repay = useRepay();
@@ -120,7 +120,7 @@ export function PaymentModal({ borrowData, daiBalance = ZERO, onComplete }) {
 
     try {
       amountToRepay = parseUnits(String(values.amount));
-      const { hash } = await repay(amountToRepay);
+      const { hash } = await repay(account, amountToRepay);
 
       const amountToRepayView = format(formatUnits(amountToRepay), 2);
       await getReceipt(hash, library, {

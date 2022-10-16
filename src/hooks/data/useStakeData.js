@@ -6,18 +6,23 @@ import useUserManager from "hooks/contracts/useUserManager";
 
 function fetchStakeData(userManager) {
   return async function (_, account) {
-    const totalStake = await userManager.getStakerBalance(account);
-    const totalLocked = await userManager.getTotalLockedStake(account);
-    const totalFrozen = await userManager.getTotalFrozenAmount(account);
-    const memberFrozen = await userManager.memberFrozen(account);
+    try {
+      const totalStake = await userManager.getStakerBalance(account);
+      const totalLocked = await userManager.getTotalLockedStake(account);
+      const frozenInfo = await userManager.getFrozenInfo(account, 0);
+      const totalFrozen = frozenInfo.memberTotalFrozen;
+      const memberFrozen = await userManager.memberFrozen(account);
 
-    return {
-      memberFrozen,
-      totalStake: totalStake,
-      utilizedStake: totalLocked,
-      withdrawableStake: totalStake.sub(totalLocked),
-      defaultedStake: totalFrozen,
-    };
+      return {
+        memberFrozen,
+        totalStake: totalStake,
+        utilizedStake: totalLocked,
+        withdrawableStake: totalStake.sub(totalLocked),
+        defaultedStake: totalFrozen,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

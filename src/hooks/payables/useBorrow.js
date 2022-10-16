@@ -9,9 +9,9 @@ export default function useBorrow() {
   const uToken = useUToken(DAI);
 
   return useCallback(
-    async (amount) => {
+    async (borrower, amount) => {
       const borrowAmount = parseUnits(String(amount), 18);
-      return uToken.borrow(borrowAmount.toString());
+      return uToken.borrow(borrower, borrowAmount.toString());
     },
     [uToken]
   );

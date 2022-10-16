@@ -34,7 +34,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
   const addActivity = useAddActivity();
   const writeOffDebt = useWriteOffDebt();
 
-  const { library } = useWeb3React();
+  const { userAccount, library } = useWeb3React();
   const { close } = useWriteOffDebtModal();
   const { mutate: updateTrustData } = useTrustData();
   const { open: openManageContactModal } = useManageContactModal();
@@ -72,7 +72,7 @@ export function WriteOffDebtModal({ address, used, vouched, isOverdue }) {
 
   const handleWriteOffDebt = async (values) => {
     try {
-      const { hash } = await writeOffDebt(address, values.amount);
+      const { hash } = await writeOffDebt(userAccount, address, values.amount);
       await getReceipt(hash, library);
       addActivity(
         activityLabels.writeOffDebt({ address, amount: values.amount, hash })

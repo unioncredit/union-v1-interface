@@ -16,7 +16,7 @@ export default function useRepay() {
   const uToken = useUToken(DAI);
 
   return useCallback(
-    async (repayAmount) => {
+    async (borrower, repayAmount) => {
       const permit = getPermit(APPROVE_DAI_REPAY_SIGNATURE_KEY);
 
       // if we have a valid permit use that to stake
@@ -48,7 +48,7 @@ export default function useRepay() {
         throw new Error("Allowance not enough");
       }
 
-      return uToken.repayBorrow(repayAmount);
+      return uToken.repayBorrow(borrower, repayAmount);
     },
     [account, uToken, DAIContract, chainId]
   );

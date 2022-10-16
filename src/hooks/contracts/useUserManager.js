@@ -7,8 +7,8 @@ import ABI from "constants/abis/userManager.json";
 
 function fetchUserManagerContractAddress(marketRegistry) {
   return async function (_, underlying) {
-    const resp = await marketRegistry.tokens(underlying);
-    return resp.userManager;
+    const resp = await marketRegistry.userManagers(underlying);
+    return resp;
   };
 }
 
