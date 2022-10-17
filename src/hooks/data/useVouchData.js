@@ -8,52 +8,64 @@ import useMulticall from "hooks/useMulticall";
 import { fetchENS } from "fetchers/fetchEns";
 
 function fetchVouchData(userManager, uToken, multicall) {
-  return async function (_, address) {
-    const addresses = await userManager.vouchers(address);
+  return async function (_, borrower) {
+    const count = await userManager.getVoucherCount(borrower);
+    const vouchers = await Promise.all(
+      [...Array(count).keys()].map(async (i) => {
+        const voucher = await userManager.vouchers(borrower, i);
+        return voucher;
+      })
+    );
 
-    const calls = addresses.map((staker) => [
+    const calls = vouchers.map((voucher) => [
       {
         address: userManager.address,
-        name: "getStakerAsset",
-        params: [address, staker],
+        name: "vouchers",
+        params: [borrower, voucher.staker],
+        itf: userManager.interface,
+      },
+      {
+        address: userManager.address,
+        name: "getVouchingAmount",
+        params: [voucher.staker, borrower],
         itf: userManager.interface,
       },
       {
         address: userManager.address,
         name: "getStakerBalance",
-        params: [staker],
+        params: [voucher.staker],
         itf: userManager.interface,
       },
       {
         address: uToken.address,
         name: "checkIsOverdue",
-        params: [staker],
+        params: [voucher.staker],
         itf: uToken.interface,
       },
       {
         address: userManager.address,
         name: "checkIsMember",
-        params: [staker],
+        params: [voucher.staker],
         itf: userManager.interface,
       },
       {
         address: userManager.address,
         name: "getTotalLockedStake",
-        params: [staker],
+        params: [voucher.staker],
         itf: userManager.interface,
       },
     ]);
 
     const [ens, resp] = await Promise.all([
-      await Promise.all(addresses.map((address) => fetchENS(address))),
+      await Promise.all(vouchers.map((voucher) => fetchENS(voucher.staker))),
       await multicall(calls),
     ]);
 
-    return addresses.map((address, i) => {
-      const vouched = resp[i][0].vouchingAmount;
-      const used = resp[i][0].lockedStake;
-      const totalUsed = resp[i][4][0];
-      const staked = resp[i][1][0];
+    return vouchers.map((voucher, i) => {
+      const vouched = resp[i][1];
+      const used = resp[i][0].locked;
+      const totalUsed = resp[i][5][0];
+      const staked = resp[i][2][0];
       const availableVouch = vouched.sub(used);
       const availableStake = staked.sub(totalUsed);
       const available = availableVouch.gt(availableStake)
@@ -61,15 +73,15 @@ function fetchVouchData(userManager, uToken, multicall) {
         : availableVouch;
 
       return {
-        address,
-        isOverdue: resp[i][2][0],
+        address: voucher.staker,
+        isOverdue: resp[i][3][0],
         staked,
         available,
-        trust: resp[i][0].trustAmount,
+        trust: resp[i][0].trust,
         used,
         vouched,
         ens: ens[i].name,
-        isMember: resp[i][3][0],
+        isMember: resp[i][4][0],
       };
     });
   };

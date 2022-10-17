@@ -5,14 +5,13 @@ import useToken from "hooks/useToken";
 import useUserManager from "hooks/contracts/useUserManager";
 
 async function fetchTrustCount(_, userManager, account) {
-  const addresses = await userManager.vouchers(account);
+  const count = await userManager.getVoucherCount(account);
 
   const vouchers = await Promise.all(
-    addresses.map(async (staker) => {
+    [...Array(count).keys()].map(async (index) => {
+      const staker = await userManager.vouchers(account, index);
       const trustAmount = await userManager.getVouchingAmount(staker, account);
-      const isMember = await userManager.checkIsMember(staker);
-
-      return trustAmount > 0 && isMember;
+      return trustAmount > 0;
     })
   );
 
