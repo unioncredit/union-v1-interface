@@ -9,57 +9,60 @@ import { fetchENS } from "fetchers/fetchEns";
 
 function fetchTrustData(userManager, uToken, multicall) {
   return async function (_, staker) {
-    const count = await userManager.getVoucheeCount(staker);
-    const vouchees = await Promise.all(
-      [...Array(count).keys()].map(async (i) => {
-        const vouchee = await userManager.vouchees(staker, i);
-        return vouchee;
-      })
-    );
-
-    const calls = vouchees.map((vouchee) => [
-      {
-        address: userManager.address,
-        name: "vouchers",
-        params: [vouchee.borrower, vouchee.voucherIndex],
-        itf: userManager.interface,
-      },
-      {
-        address: userManager.address,
-        name: "getVouchingAmount",
-        params: [staker, vouchee.borrower],
-        itf: userManager.interface,
-      },
-      {
-        address: uToken.address,
-        name: "checkIsOverdue",
-        params: [vouchee.borrower],
-        itf: uToken.interface,
-      },
-      {
-        address: userManager.address,
-        name: "checkIsMember",
-        params: [vouchee.borrower],
-        itf: userManager.interface,
-      },
-    ]);
-
-    const [ens, resp] = await Promise.all([
-      await Promise.all(vouchees.map((vouchee) => fetchENS(vouchee.borrower))),
-      await multicall(calls),
-    ]);
-
-    return vouchees.map((vouchee, i) => {
-      return {
-        address: vouchee.borrower,
-        isOverdue: resp[i][2].isOverdue,
-        trust: resp[i][0].trust,
-        used: resp[i][0].locked,
-        vouched: resp[i][1],
-        ens: ens[i].name,
-        isMember: resp[i][3][0],
-      };
-    });
+    try {
+      const count = await userManager.getVoucheeCount(staker);
+      const vouchees = await Promise.all(
+        [...Array(count).keys()].map(async (i) => {
+          const vouchee = await userManager.vouchees(staker, i);
+          return vouchee;
+        })
+      );
+      const calls = vouchees.map((vouchee) => [
+        {
+          address: userManager.address,
+          name: "vouchers",
+          params: [vouchee.borrower, vouchee.voucherIndex.toString()],
+          itf: userManager.interface,
+        },
+        {
+          address: userManager.address,
+          name: "getVouchingAmount",
+          params: [staker, vouchee.borrower],
+          itf: userManager.interface,
+        },
+        {
+          address: uToken.address,
+          name: "checkIsOverdue",
+          params: [vouchee.borrower],
+          itf: uToken.interface,
+        },
+        {
+          address: userManager.address,
+          name: "checkIsMember",
+          params: [vouchee.borrower],
+          itf: userManager.interface,
+        },
+      ]);
+      const [ens, resp] = await Promise.all([
+        await Promise.all(
+          vouchees.map((vouchee) => fetchENS(vouchee.borrower))
+        ),
+        await multicall(calls),
+      ]);
+      return vouchees.map((vouchee, i) => {
+        return {
+          address: vouchee.borrower,
+          isOverdue: resp[i][2].isOverdue,
+          trust: resp[i][0].trust,
+          used: resp[i][0].locked,
+          vouched: resp[i][1],
+          ens: ens[i].name,
+          isMember: resp[i][3][0],
+        };
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

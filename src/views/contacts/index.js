@@ -113,7 +113,7 @@ export default function ContactsView({
   const queryContact = searchParams.get("contact");
 
   useEffect(() => {
-    if (!vouchData || !trustData || selectedContactIndex !== null) return;
+    if ((!vouchData && !trustData) || selectedContactIndex !== null) return;
 
     const data =
       contactsType === ContactsType.TRUSTS_YOU ? vouchData : trustData;
