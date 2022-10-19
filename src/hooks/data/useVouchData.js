@@ -91,6 +91,7 @@ function fetchVouchData(userManager, uToken, multicall) {
       });
     } catch (error) {
       console.log(error);
+      return [];
     }
   };
 }
