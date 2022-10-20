@@ -10,9 +10,9 @@ async function fetchTrustCount(_, userManager, account) {
 
     const vouchers = await Promise.all(
       [...Array(count).keys()].map(async (index) => {
-        const staker = await userManager.vouchers(account, index);
+        const voucher = await userManager.vouchers(account, index);
         const trustAmount = await userManager.getVouchingAmount(
-          staker,
+          voucher.staker,
           account
         );
         return trustAmount > 0;
