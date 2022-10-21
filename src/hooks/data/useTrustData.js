@@ -12,7 +12,7 @@ function fetchTrustData(userManager, uToken, multicall) {
     try {
       const count = await userManager.getVoucheeCount(staker);
       const vouchees = await Promise.all(
-        [...Array(count).keys()].map(async (i) => {
+        [...Array(parseInt(count.toString())).keys()].map(async (i) => {
           const vouchee = await userManager.vouchees(staker, i);
           return vouchee;
         })

@@ -9,7 +9,7 @@ async function fetchTrustCount(_, userManager, account) {
     const count = await userManager.getVoucherCount(account);
 
     const vouchers = await Promise.all(
-      [...Array(count).keys()].map(async (index) => {
+      [...Array(parseInt(count.toString())).keys()].map(async (index) => {
         const voucher = await userManager.vouchers(account, index);
         const trustAmount = await userManager.getVouchingAmount(
           voucher.staker,

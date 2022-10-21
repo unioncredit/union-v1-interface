@@ -12,7 +12,7 @@ function fetchVouchData(userManager, uToken, multicall) {
     try {
       const count = await userManager.getVoucherCount(borrower);
       const vouchers = await Promise.all(
-        [...Array(count).keys()].map(async (i) => {
+        [...Array(parseInt(count.toString())).keys()].map(async (i) => {
           const voucher = await userManager.vouchers(borrower, i);
           const voucherIndex = await userManager.voucherIndexes(
             borrower,
