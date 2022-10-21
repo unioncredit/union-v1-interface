@@ -55,7 +55,7 @@ function fetchTrustData(userManager, uToken, multicall) {
           isOverdue: resp[i][2].isOverdue,
           trust: resp[i][0].trust,
           used: resp[i][0].locked,
-          vouched: resp[i][1],
+          vouched: resp[i][1][0],
           ens: ens[i].name,
           isMember: resp[i][3][0],
         };
