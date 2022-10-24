@@ -1,0 +1,7 @@
+.box {
+  padding: 8px 0;
+}
+
+.box .right {
+  float: right;
+}

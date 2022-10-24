@@ -1,4 +1,12 @@
-import { Grid, Card, Stat, Button, ButtonRow, Divider } from "@unioncredit/ui";
+import {
+  Grid,
+  Card,
+  Stat,
+  Button,
+  ButtonRow,
+  Divider,
+  Label,
+} from "@unioncredit/ui";
 
 import format from "util/formatValue";
 import useToken from "hooks/useToken";
@@ -10,6 +18,8 @@ import { Dai, Union } from "components-ui";
 import { useStakeModal, StakeType } from "components-ui/modals";
 import { ZERO } from "constants/variables";
 import { formatUnits } from "@ethersproject/units";
+import { ReactComponent as Tooltip } from "@unioncredit/ui/lib/icons/tooltip.svg";
+import styles from "./Box.module.css";
 
 export function StakeStepCard() {
   const UNION = useToken("UNION");
@@ -29,7 +39,7 @@ export function StakeStepCard() {
     <Card size="fluid" mb="24px">
       <Card.Header
         title={`Stake DAI to earn ${unionSymbol}`}
-        subTitle={`DAI is used to back trust you provide to other Union members. Staked DAI also accumulates ${unionSymbol} tokens, which is required to become a member of the network.`}
+        subTitle={`Your staked DAI is used to back vouches you provide to other members. It also accrues UNION at a rate relative to the amount of DAI you have staked.`}
       />
       <Card.Body>
         <Divider mb="32px" />
@@ -38,23 +48,40 @@ export function StakeStepCard() {
             <Grid.Col xs={6}>
               <Stat
                 size="large"
-                align="center"
+                align="left"
                 label="TOTAL STAKE"
                 value={<Dai value={format(formatUnits(totalStake), 2)} />}
-                mb="32px"
               />
             </Grid.Col>
             <Grid.Col xs={6}>
               <Stat
                 size="large"
-                align="center"
+                align="left"
                 label={`${unionSymbol} Accrued`}
                 value={<Union value={format(formatUnits(totalUnion), 2)} />}
-                mb="32px"
               />
             </Grid.Col>
           </Grid.Row>
         </Grid>
+        <div className={styles.box}>
+          <Label as="span" align="left" grey={500}>
+            Membership Fee
+          </Label>
+          <Tooltip width="12px" pl="4px" />
+          <Label as="span" align="right" grey={500} className={styles.right}>
+            {"0"} UNION
+          </Label>
+        </div>
+        <Divider />
+        <div className={styles.box}>
+          <Label as="span" align="left" grey={500}>
+            Estimated daily earnings
+          </Label>
+          <Tooltip width="12px" pl="4px" />
+          <Label as="span" align="right" grey={500} className={styles.right}>
+            {"0"} UNION
+          </Label>
+        </div>
         <ButtonRow fluid>
           <Button
             fluid
