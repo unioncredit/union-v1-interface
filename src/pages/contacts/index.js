@@ -3,14 +3,16 @@ import { useParams } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
 
 import ContactsView from "views/contacts";
+import BlacklistedView from "views/blacklisted";
 import LoggedOutView from "views/loggedOut";
 import { ContactsType } from "constants/app";
 import { PageHead, CheckIsMember } from "components-ui";
+import useIsBlacklisted from "hooks/useIsBlacklisted";
 
 export default function ContactsPage() {
   const { address } = useParams();
   const { account, library } = useWeb3React();
-
+  const isBlacklisted = useIsBlacklisted();
   const host = window.location.host;
 
   return (
@@ -37,9 +39,13 @@ export default function ContactsPage() {
       )}
 
       {account && library ? (
-        <CheckIsMember>
-          <ContactsView contactsType={ContactsType.YOU_TRUST} />
-        </CheckIsMember>
+        isBlacklisted ? (
+          <BlacklistedView></BlacklistedView>
+        ) : (
+          <CheckIsMember>
+            <ContactsView contactsType={ContactsType.YOU_TRUST} />
+          </CheckIsMember>
+        )
       ) : (
         <LoggedOutView />
       )}
