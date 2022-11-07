@@ -1,9 +1,10 @@
 const urls = {
   1: "https://etherscan.io",
-  137: "https://polygonscan.com",
+  5: "https://goerli.etherscan.io",
   42: "https://kovan.etherscan.io",
   42161: "https://arbiscan.io",
-  421611: "https://arbiscan.io",
+  421611: "https://testnet.arbiscan.io",
+  421613: "https://goerli.arbiscan.io",
 };
 
 /**
