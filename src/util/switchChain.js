@@ -47,6 +47,20 @@ export const options = [
       chainName: "Arbitrum One",
     },
   },
+  {
+    type: "goerli-optimism",
+    id: "goerli-optimism",
+    imageSrc: "/images/ethereum.png",
+    value: "goerli-optimism",
+    label: "goerli-optimism",
+    description:
+      "Use Union on Optimism test network. All Governance activity takes place here",
+    avatar: "/images/ethereum-avatar.png",
+    chainId: 420,
+    networkData: {
+      chainId: "0x1a4",
+    },
+  },
   // {
   //   label: "Arbitrum goerli",
   //   type: "arbitrum goerli",
